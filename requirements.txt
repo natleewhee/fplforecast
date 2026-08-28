@@ -1,0 +1,2 @@
+# Step zero (snapshotter) uses only the Python stdlib — nothing to install yet.
+# Later phases (pandas, statsmodels, scikit-learn, PuLP) get added here as they're built.

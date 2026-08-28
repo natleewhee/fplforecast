@@ -1,0 +1,38 @@
+name: Snapshot FPL data
+
+on:
+  schedule:
+    # 03:00 UTC daily = 11:00 SGT. Cheap, and gives the season a full daily history
+    # instead of just the weekly cadence the rest of the plan uses.
+    - cron: "0 3 * * *"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Run snapshotter
+        env:
+          FPL_TEAM_ID: "1168513"
+        run: python scripts/snapshot.py
+
+      - name: Commit snapshot
+        run: |
+          git config user.name "fpl-snapshotter"
+          git config user.email "actions@users.noreply.github.com"
+          git add data/
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "Snapshot FPL data $(date -u +%Y-%m-%d)"
+            git push
+          fi
