@@ -25,6 +25,9 @@ jobs:
           FPL_TEAM_ID: "1168513"
         run: python scripts/snapshot.py
 
+      - name: Resolve player identities across past seasons
+        run: python scripts/resolve_entities.py
+
       - name: Fit minutes model
         run: python scripts/minutes_model.py
 
