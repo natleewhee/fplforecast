@@ -51,6 +51,7 @@ export type ForecastPlayer = {
   projected: number;
   component: "minutes-model" | "rolling-average";
   expectedMinutes: number | null;
+  fdrMultiplier?: number; // absent in forecasts committed before FDR weighting shipped
 };
 
 export type Forecast = {

@@ -10,6 +10,13 @@ the plan doc). Projection per player, in order of preference:
 Both are scaled by a hard availability multiplier (injury/suspension veto,
 or the partial chance_of_playing_next_round) applied *after* the projection,
 per the plan's "availability is a veto, not a feature" principle.
+
+Also scaled by FPL's own fixture difficulty rating (FDR) for the target
+gameweek — an interim, explicitly crude opponent-strength signal per the
+plan doc ("FDR is crude; replace with own λ"). A blank gameweek (no fixture)
+zeroes the projection; a double gameweek sums both legs' multipliers, so it
+naturally comes out around 2x a single game rather than needing special-
+casing.
 """
 
 from __future__ import annotations
@@ -75,6 +82,30 @@ def load_rolling_averages() -> dict[int, float]:
             points_by_player.setdefault(pid, []).append(total)
 
     return {pid: sum(vals) / len(vals) for pid, vals in points_by_player.items()}
+
+
+def load_fixtures() -> list[dict]:
+    path = latest_file("fixtures")
+    return load_json(path).get("fixtures", []) if path else []
+
+
+def fdr_multiplier(difficulty: int) -> float:
+    """FDR runs 1 (easiest) to 5 (hardest). Linear, symmetric around 3 -> 1.0x.
+    Deliberately simple — this is the placeholder the plan wants replaced
+    with a real expected-goals λ model, not a tuned formula."""
+    return 1.2 - 0.1 * (difficulty - 1)
+
+
+def team_fixture_multiplier(team_id: int, target_gw: int, fixtures: list[dict]) -> float:
+    total = 0.0
+    for fx in fixtures:
+        if fx.get("event") != target_gw:
+            continue
+        if fx.get("team_h") == team_id:
+            total += fdr_multiplier(fx["team_h_difficulty"])
+        elif fx.get("team_a") == team_id:
+            total += fdr_multiplier(fx["team_a_difficulty"])
+    return total  # 0.0 for a blank gameweek, ~2x for a double gameweek
 
 
 def load_minutes_model() -> dict[str, dict]:
@@ -179,6 +210,7 @@ def main() -> int:
 
     rolling = load_rolling_averages()
     minutes_model = load_minutes_model()
+    fixtures = load_fixtures()
     elements_by_id = {el["id"]: el for el in bootstrap["elements"]}
     teams_by_id = {t["id"]: t["short_name"] for t in bootstrap["teams"]}
 
@@ -193,6 +225,7 @@ def main() -> int:
         picks = apply_overrides(picks, overrides)
         print(f"overrides: applied {len(overrides)} manual transfer(s)")
 
+    target_gw = gw + 1
     squad = []
     for pick in picks:
         el = elements_by_id.get(pick["element"])
@@ -207,7 +240,8 @@ def main() -> int:
             base = rolling.get(el["id"], 0.0)
             component = "rolling-average"
 
-        projected = base * availability_multiplier(el)
+        fdr_mult = team_fixture_multiplier(el["team"], target_gw, fixtures)
+        projected = base * availability_multiplier(el) * fdr_mult
         squad.append(
             {
                 "id": el["id"],
@@ -218,6 +252,7 @@ def main() -> int:
                 "projected": round(projected, 2),
                 "component": component,
                 "expectedMinutes": mm["expectedMinutes"] if mm else None,
+                "fdrMultiplier": round(fdr_mult, 2),
             }
         )
 
