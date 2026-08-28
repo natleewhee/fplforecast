@@ -1,12 +1,15 @@
-"""The dumb slice: last-5-GW rolling average x hard availability multiplier.
+"""Best XI + captain, from projected points per player in the squad.
 
-last-5-GW rolling average x availability multiplier
-  -> my 15
-  -> best XI + captain
-  -> committed JSON for the webapp to render
+Phase 1 has started replacing the dumb slice one component at a time (see
+the plan doc). Projection per player, in order of preference:
 
-Deliberately stupid. Establishes the weekly ritual now; gets replaced
-component by component later. See the plan doc for why.
+  1. minutes model (scripts/minutes_model.py): expected_minutes/90 x per_90_points
+  2. last-ROLLING_WINDOW-GW flat average total points (the original dumb slice,
+     used as a fallback — e.g. for a player the minutes model hasn't seen yet)
+
+Both are scaled by a hard availability multiplier (injury/suspension veto,
+or the partial chance_of_playing_next_round) applied *after* the projection,
+per the plan's "availability is a veto, not a feature" principle.
 """
 
 from __future__ import annotations
@@ -74,6 +77,16 @@ def load_rolling_averages() -> dict[int, float]:
     return {pid: sum(vals) / len(vals) for pid, vals in points_by_player.items()}
 
 
+def load_minutes_model() -> dict[str, dict]:
+    d = DATA_DIR / "minutes-model"
+    if not d.exists():
+        return {}
+    files = sorted(d.glob("*.json"))
+    if not files:
+        return {}
+    return load_json(files[-1]).get("predictions", {})
+
+
 def load_latest_picks() -> tuple[int, list[dict]] | None:
     picks_dir = DATA_DIR / f"picks-{TEAM_ID}"
     if not picks_dir.exists():
@@ -136,6 +149,7 @@ def main() -> int:
         return 1
 
     rolling = load_rolling_averages()
+    minutes_model = load_minutes_model()
     elements_by_id = {el["id"]: el for el in bootstrap["elements"]}
     teams_by_id = {t["id"]: t["short_name"] for t in bootstrap["teams"]}
 
@@ -150,7 +164,16 @@ def main() -> int:
         el = elements_by_id.get(pick["element"])
         if el is None:
             continue
-        projected = rolling.get(el["id"], 0.0) * availability_multiplier(el)
+
+        mm = minutes_model.get(str(el["id"]))
+        if mm:
+            base = (mm["expectedMinutes"] / 90) * mm["per90Points"]
+            component = "minutes-model"
+        else:
+            base = rolling.get(el["id"], 0.0)
+            component = "rolling-average"
+
+        projected = base * availability_multiplier(el)
         squad.append(
             {
                 "id": el["id"],
@@ -159,6 +182,8 @@ def main() -> int:
                 "position": POSITIONS[el["element_type"]],
                 "element_type": el["element_type"],
                 "projected": round(projected, 2),
+                "component": component,
+                "expectedMinutes": mm["expectedMinutes"] if mm else None,
             }
         )
 

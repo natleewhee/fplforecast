@@ -49,6 +49,8 @@ export type ForecastPlayer = {
   position: string;
   element_type: number;
   projected: number;
+  component: "minutes-model" | "rolling-average";
+  expectedMinutes: number | null;
 };
 
 export type Forecast = {

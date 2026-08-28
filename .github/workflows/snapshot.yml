@@ -25,6 +25,9 @@ jobs:
           FPL_TEAM_ID: "1168513"
         run: python scripts/snapshot.py
 
+      - name: Fit minutes model
+        run: python scripts/minutes_model.py
+
       - name: Compute forecast
         run: python scripts/compute_forecast.py
 

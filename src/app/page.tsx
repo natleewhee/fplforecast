@@ -16,6 +16,9 @@ function PlayerRow({ player, tag }: { player: ForecastPlayer; tag?: string }) {
       </td>
       <td className="py-1">{player.position}</td>
       <td className="py-1">{player.team}</td>
+      <td className="py-1 text-right text-neutral-400">
+        {player.expectedMinutes !== null ? Math.round(player.expectedMinutes) : "—"}
+      </td>
       <td className="py-1 text-right">{player.projected.toFixed(1)}</td>
     </tr>
   );
@@ -59,6 +62,7 @@ export default function Home() {
               <th className="py-1">Player</th>
               <th className="py-1">Pos</th>
               <th className="py-1">Team</th>
+              <th className="py-1 text-right">Mins</th>
               <th className="py-1 text-right">Proj</th>
             </tr>
           </thead>
