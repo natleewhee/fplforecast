@@ -1,26 +1,80 @@
 @import "tailwindcss";
 
+/*
+  One deliberate light theme, not light+dark. The old dark-mode-via-
+  prefers-color-scheme setup never gave form controls explicit colors, so a
+  dark-mode desktop browser rendered the native <select> popup in its own
+  dark scheme while our classes assumed light -- text and background
+  collided. Forcing color-scheme: light here is what actually fixes that,
+  everything else is theming on top.
+*/
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  color-scheme: light;
+
+  --pitch-dark: #0d4d2b;
+  --pitch: #1a7a3f;
+  --pitch-light: #2e9955;
+  --chalk: #f7faf7;
+  --ink: #0f1f14;
+  --ink-soft: #4b5f52;
+  --line: #d7e4da;
+
+  --gkp: #e8a317;
+  --def: #2f7fd6;
+  --mid: #7b3fd6;
+  --fwd: #e0483e;
+
+  --card: #ffffff;
+  --background: var(--chalk);
+  --foreground: var(--ink);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-pitch-dark: var(--pitch-dark);
+  --color-pitch: var(--pitch);
+  --color-pitch-light: var(--pitch-light);
+  --color-chalk: var(--chalk);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-line: var(--line);
+  --color-gkp: var(--gkp);
+  --color-def: var(--def);
+  --color-mid: var(--mid);
+  --color-fwd: var(--fwd);
+  --color-card: var(--card);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+}
+
+/* Explicit contrast for every form control, in both states, so nothing
+   depends on the browser's own light/dark guess. */
+select,
+input,
+textarea {
+  background-color: #ffffff;
+  color: var(--ink);
+}
+
+select:disabled,
+input:disabled {
+  background-color: var(--line);
+  color: var(--ink-soft);
+}
+
+.pitch-stripes {
+  background-image: repeating-linear-gradient(
+    90deg,
+    var(--pitch-dark) 0px,
+    var(--pitch-dark) 24px,
+    var(--pitch) 24px,
+    var(--pitch) 48px
+  );
 }
