@@ -42,6 +42,39 @@ export function latestSnapshotDate(endpointDir: string): string | null {
   return latestFile(endpointDir)?.date ?? null;
 }
 
+export type ForecastPlayer = {
+  id: number;
+  webName: string;
+  team: string;
+  position: string;
+  element_type: number;
+  projected: number;
+};
+
+export type Forecast = {
+  generatedAt: string;
+  basedOnGameweek: number;
+  rollingWindow: number;
+  startingXI: ForecastPlayer[];
+  bench: ForecastPlayer[];
+  captain: string | null;
+  captainId: number | null;
+  viceCaptain: string | null;
+  viceCaptainId: number | null;
+};
+
+export function loadLatestForecast(): Forecast | null {
+  const dir = path.join(DATA_DIR, "forecast");
+  if (!fs.existsSync(dir)) return null;
+  const files = fs
+    .readdirSync(dir)
+    .filter((f) => /^gw\d+\.json$/.test(f))
+    .sort((a, b) => parseInt(a.slice(2)) - parseInt(b.slice(2)));
+  if (files.length === 0) return null;
+  const latest = files[files.length - 1];
+  return JSON.parse(fs.readFileSync(path.join(dir, latest), "utf-8"));
+}
+
 export function loadBootstrapSnapshot(): BootstrapSnapshot | null {
   const found = latestFile("bootstrap-static");
   if (!found) return null;

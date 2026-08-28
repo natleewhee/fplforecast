@@ -35,13 +35,14 @@ def save(endpoint_dir: str, payload: dict) -> Path:
     return out_path
 
 
-def snapshot_bootstrap_static() -> None:
+def snapshot_bootstrap_static() -> dict:
     payload = fetch(f"{FPL_BASE}/bootstrap-static/")
     n_players = len(payload.get("elements", []))
     if n_players < 500:
         raise RuntimeError(f"bootstrap-static returned only {n_players} players — schema change? aborting")
     path = save("bootstrap-static", payload)
     print(f"bootstrap-static: {n_players} players -> {path}")
+    return payload
 
 
 def snapshot_fixtures() -> None:
@@ -65,18 +66,82 @@ def snapshot_entry() -> None:
     print(f"entry {TEAM_ID}: -> {path}")
 
 
+def finished_gameweeks(bootstrap: dict) -> list[int]:
+    return sorted(e["id"] for e in bootstrap.get("events", []) if e.get("finished"))
+
+
+def snapshot_event_live(gw: int) -> None:
+    """Per-GW live points, keyed by gameweek not date — once finished it stops changing."""
+    out_path = DATA_DIR / "event-live" / f"gw{gw}.json"
+    if out_path.exists():
+        return
+    payload = fetch(f"{FPL_BASE}/event/{gw}/live/")
+    if not payload.get("elements"):
+        raise RuntimeError(f"event/{gw}/live returned no elements — schema change? aborting")
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+    out_path.write_text(json.dumps(payload, indent=2, sort_keys=True))
+    print(f"event-live gw{gw}: -> {out_path}")
+
+
+def snapshot_event_live_history(bootstrap: dict) -> None:
+    gws = finished_gameweeks(bootstrap)
+    if not gws:
+        print("event-live: no finished gameweeks yet, skipping")
+        return
+    for gw in gws:
+        snapshot_event_live(gw)
+
+
+def snapshot_picks(bootstrap: dict) -> None:
+    """My squad. Pre-deadline picks need auth cookies we don't have — only the last
+    completed gameweek's picks are public. Keyed by gameweek, not date."""
+    if not TEAM_ID:
+        print("picks: no FPL_TEAM_ID set, skipping")
+        return
+    gws = finished_gameweeks(bootstrap)
+    if not gws:
+        print("picks: no finished gameweeks yet, skipping")
+        return
+    gw = gws[-1]
+    out_path = DATA_DIR / f"picks-{TEAM_ID}" / f"gw{gw}.json"
+    if out_path.exists():
+        return
+    try:
+        payload = fetch(f"{FPL_BASE}/entry/{TEAM_ID}/event/{gw}/picks/")
+    except urllib.error.HTTPError as exc:
+        print(f"picks: fetch failed ({exc}) — non-fatal, continuing")
+        return
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+    out_path.write_text(json.dumps(payload, indent=2, sort_keys=True))
+    print(f"picks gw{gw}: -> {out_path}")
+
+
 def main() -> int:
     failures = []
-    for name, fn in (
-        ("bootstrap-static", snapshot_bootstrap_static),
-        ("fixtures", snapshot_fixtures),
-        ("entry", snapshot_entry),
-    ):
+    bootstrap: dict | None = None
+    try:
+        bootstrap = snapshot_bootstrap_static()
+    except Exception as exc:  # noqa: BLE001
+        print(f"bootstrap-static: FAILED - {exc}", file=sys.stderr)
+        failures.append("bootstrap-static")
+
+    steps: list[tuple[str, object]] = [("fixtures", snapshot_fixtures)]
+    if bootstrap is not None:
+        steps += [
+            ("entry", snapshot_entry),
+            ("event-live", lambda: snapshot_event_live_history(bootstrap)),
+            ("picks", lambda: snapshot_picks(bootstrap)),
+        ]
+    else:
+        print("bootstrap-static unavailable — skipping entry/event-live/picks", file=sys.stderr)
+
+    for name, fn in steps:
         try:
             fn()
         except Exception as exc:  # noqa: BLE001 - fail loudly per-endpoint, don't let one kill the others
             print(f"{name}: FAILED - {exc}", file=sys.stderr)
             failures.append(name)
+
     if failures:
         print(f"Snapshot completed with failures: {failures}", file=sys.stderr)
         return 1

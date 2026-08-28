@@ -25,6 +25,9 @@ jobs:
           FPL_TEAM_ID: "1168513"
         run: python scripts/snapshot.py
 
+      - name: Compute forecast
+        run: python scripts/compute_forecast.py
+
       - name: Commit snapshot
         run: |
           git config user.name "fpl-snapshotter"
