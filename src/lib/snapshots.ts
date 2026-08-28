@@ -57,6 +57,7 @@ export type Forecast = {
   generatedAt: string;
   basedOnGameweek: number;
   rollingWindow: number;
+  overridesApplied: number;
   startingXI: ForecastPlayer[];
   bench: ForecastPlayer[];
   captain: string | null;
@@ -64,6 +65,63 @@ export type Forecast = {
   viceCaptain: string | null;
   viceCaptainId: number | null;
 };
+
+export type ChipUsage = { name: string; event: number };
+
+export type ChipStatus = {
+  name: string;
+  used: ChipUsage[];
+  remaining: number;
+};
+
+const TEAM_ID = "1168513";
+
+// Standard 2025/26 allocation (2x wildcard, one per half; 1x each of the
+// others). Not re-verified against 2026/27's live bootstrap-static — see
+// the plan doc's open question on rules drifting season to season.
+const ASSUMED_CHIP_ALLOCATION: Record<string, number> = {
+  wildcard: 2,
+  freehit: 1,
+  bboost: 1,
+  "3xc": 1,
+  manager: 1,
+};
+
+export function loadChipStatus(): ChipStatus[] | null {
+  const dir = path.join(DATA_DIR, `history-${TEAM_ID}`);
+  if (!fs.existsSync(dir)) return null;
+  const files = fs.readdirSync(dir).filter((f) => f.endsWith(".json")).sort();
+  if (files.length === 0) return null;
+  const raw = JSON.parse(fs.readFileSync(path.join(dir, files[files.length - 1]), "utf-8"));
+  const chips: { name: string; event: number }[] = raw.chips ?? [];
+
+  const usedByName = new Map<string, ChipUsage[]>();
+  for (const c of chips) {
+    const list = usedByName.get(c.name) ?? [];
+    list.push({ name: c.name, event: c.event });
+    usedByName.set(c.name, list);
+  }
+
+  const allNames = new Set([...Object.keys(ASSUMED_CHIP_ALLOCATION), ...usedByName.keys()]);
+  return [...allNames].map((name) => {
+    const used = usedByName.get(name) ?? [];
+    const allocation = ASSUMED_CHIP_ALLOCATION[name] ?? 1;
+    return { name, used, remaining: Math.max(0, allocation - used.length) };
+  });
+}
+
+export type PendingTransfer = { out: number; in: number; note?: string };
+
+export type OverridesFile = {
+  basedOnGw: number;
+  transfers: PendingTransfer[];
+};
+
+export function loadOverrides(): OverridesFile | null {
+  const filePath = path.join(DATA_DIR, "overrides", "transfers.json");
+  if (!fs.existsSync(filePath)) return null;
+  return JSON.parse(fs.readFileSync(filePath, "utf-8"));
+}
 
 export function loadLatestForecast(): Forecast | null {
   const dir = path.join(DATA_DIR, "forecast");

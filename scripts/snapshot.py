@@ -66,6 +66,21 @@ def snapshot_entry() -> None:
     print(f"entry {TEAM_ID}: -> {path}")
 
 
+def snapshot_history() -> None:
+    """My chip usage and season-by-season history. Mutates as chips get played,
+    so dated like bootstrap-static rather than keyed by gameweek."""
+    if not TEAM_ID:
+        print("history: no FPL_TEAM_ID set, skipping")
+        return
+    try:
+        payload = fetch(f"{FPL_BASE}/entry/{TEAM_ID}/history/")
+    except urllib.error.HTTPError as exc:
+        print(f"history: fetch failed ({exc}) — non-fatal, continuing")
+        return
+    path = save(f"history-{TEAM_ID}", payload)
+    print(f"history {TEAM_ID}: -> {path}")
+
+
 def finished_gameweeks(bootstrap: dict) -> list[int]:
     return sorted(e["id"] for e in bootstrap.get("events", []) if e.get("finished"))
 
@@ -129,6 +144,7 @@ def main() -> int:
     if bootstrap is not None:
         steps += [
             ("entry", snapshot_entry),
+            ("history", snapshot_history),
             ("event-live", lambda: snapshot_event_live_history(bootstrap)),
             ("picks", lambda: snapshot_picks(bootstrap)),
         ]

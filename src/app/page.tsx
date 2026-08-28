@@ -2,8 +2,11 @@ import {
   latestSnapshotDate,
   loadBootstrapSnapshot,
   loadLatestForecast,
+  loadChipStatus,
+  loadOverrides,
   type ForecastPlayer,
 } from "@/lib/snapshots";
+import TransferForm from "./TransferForm";
 
 export const dynamic = "force-static";
 
@@ -29,6 +32,8 @@ export default function Home() {
   const fixturesDate = latestSnapshotDate("fixtures");
   const entryDate = latestSnapshotDate("entry-1168513");
   const forecast = loadLatestForecast();
+  const chips = loadChipStatus();
+  const overrides = loadOverrides();
 
   if (!bootstrap) {
     return (
@@ -54,6 +59,27 @@ export default function Home() {
           Captain: <span className="font-medium">{forecast.captain}</span> · Vice:{" "}
           <span className="font-medium">{forecast.viceCaptain}</span>
         </p>
+
+        {forecast.overridesApplied > 0 && (
+          <p className="mt-2 rounded bg-amber-50 px-2 py-1 text-xs text-amber-700">
+            {forecast.overridesApplied} manual transfer(s) applied on top of the auto-pulled squad
+          </p>
+        )}
+
+        {chips && (
+          <div className="mt-3 flex flex-wrap gap-2 text-xs">
+            {chips.map((c) => (
+              <span
+                key={c.name}
+                className={`rounded px-2 py-1 ${
+                  c.remaining > 0 ? "bg-neutral-100 text-neutral-700" : "bg-neutral-50 text-neutral-300 line-through"
+                }`}
+              >
+                {c.name} {c.remaining > 0 ? `(${c.remaining} left)` : "used"}
+              </span>
+            ))}
+          </div>
+        )}
 
         <h2 className="mt-4 text-sm font-semibold text-neutral-600">Starting XI</h2>
         <table className="mt-1 w-full text-sm">
@@ -85,6 +111,18 @@ export default function Home() {
             ))}
           </tbody>
         </table>
+
+        {overrides && overrides.basedOnGw === forecast.basedOnGameweek && overrides.transfers.length > 0 && (
+          <p className="mt-2 text-xs text-neutral-400">
+            Pending: {overrides.transfers.map((t) => `out ${t.out} → in ${t.in}`).join(", ")}
+          </p>
+        )}
+
+        <TransferForm
+          squad={[...forecast.startingXI, ...forecast.bench]}
+          allPlayers={bootstrap.players}
+          basedOnGw={forecast.basedOnGameweek}
+        />
 
         <p className="mt-6 text-xs text-neutral-400">
           Snapshot {bootstrap.date}

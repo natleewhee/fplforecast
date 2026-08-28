@@ -103,6 +103,35 @@ def load_latest_picks() -> tuple[int, list[dict]] | None:
     return gw, data.get("picks", [])
 
 
+def load_overrides(gw: int) -> list[dict]:
+    """Manual transfers made since the last auto-pulled picks snapshot, applied
+    on top of it. Only valid for the gw they were recorded against — if picks
+    have since been re-pulled for a later gw, the auto-pulled squad already
+    reflects reality and a stale override would double-apply, so it's dropped."""
+    path = DATA_DIR / "overrides" / "transfers.json"
+    if not path.exists():
+        return []
+    data = load_json(path)
+    if data.get("basedOnGw") != gw:
+        print(f"overrides: ignoring stale overrides (recorded for GW{data.get('basedOnGw')}, picks are GW{gw})")
+        return []
+    return data.get("transfers", [])
+
+
+def apply_overrides(picks: list[dict], overrides: list[dict]) -> list[dict]:
+    """Swap 'out' player ids for 'in' player ids. Does NOT validate budget or
+    selling-price arithmetic — that's an explicitly deferred risk in the plan
+    doc (D3/'Selling-price arithmetic'). Treat the resulting squad as
+    directionally right, not budget-verified."""
+    element_ids = [p["element"] for p in picks]
+    for override in overrides:
+        if override["out"] in element_ids:
+            element_ids[element_ids.index(override["out"])] = override["in"]
+        else:
+            print(f"overrides: 'out' player {override['out']} not in current squad, skipping")
+    return [{"element": eid} for eid in element_ids]
+
+
 def availability_multiplier(el: dict) -> float:
     if el.get("status") in UNAVAILABLE_STATUSES:
         return 0.0
@@ -159,6 +188,11 @@ def main() -> int:
         return 0
 
     gw, picks = picks_result
+    overrides = load_overrides(gw)
+    if overrides:
+        picks = apply_overrides(picks, overrides)
+        print(f"overrides: applied {len(overrides)} manual transfer(s)")
+
     squad = []
     for pick in picks:
         el = elements_by_id.get(pick["element"])
@@ -199,6 +233,7 @@ def main() -> int:
         "generatedAt": datetime.now(timezone.utc).isoformat(),
         "basedOnGameweek": gw,
         "rollingWindow": ROLLING_WINDOW,
+        "overridesApplied": len(overrides),
         "startingXI": starting,
         "bench": bench,
         "captain": captain["webName"] if captain else None,
