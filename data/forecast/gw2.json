@@ -1,0 +1,133 @@
+{
+  "basedOnGameweek": 1,
+  "bench": [
+    {
+      "element_type": 1,
+      "id": 496,
+      "position": "GKP",
+      "projected": 2.0,
+      "team": "TOT",
+      "webName": "Kinsky"
+    },
+    {
+      "element_type": 2,
+      "id": 418,
+      "position": "DEF",
+      "projected": 1.0,
+      "team": "MUN",
+      "webName": "Maguire"
+    },
+    {
+      "element_type": 4,
+      "id": 346,
+      "position": "FWD",
+      "projected": 1.0,
+      "team": "LEE",
+      "webName": "Calvert-Lewin"
+    },
+    {
+      "element_type": 3,
+      "id": 212,
+      "position": "MID",
+      "projected": 0.0,
+      "team": "CRY",
+      "webName": "Hughes"
+    }
+  ],
+  "captain": "Jo\u00e3o Pedro",
+  "captainId": 165,
+  "generatedAt": "2026-08-28T06:20:42.689940+00:00",
+  "rollingWindow": 5,
+  "startingXI": [
+    {
+      "element_type": 1,
+      "id": 1,
+      "position": "GKP",
+      "projected": 6.0,
+      "team": "ARS",
+      "webName": "Raya"
+    },
+    {
+      "element_type": 2,
+      "id": 11,
+      "position": "DEF",
+      "projected": 6.0,
+      "team": "ARS",
+      "webName": "Mosquera"
+    },
+    {
+      "element_type": 2,
+      "id": 504,
+      "position": "DEF",
+      "projected": 6.0,
+      "team": "BHA",
+      "webName": "Vuskovic"
+    },
+    {
+      "element_type": 2,
+      "id": 334,
+      "position": "DEF",
+      "projected": 6.0,
+      "team": "LEE",
+      "webName": "Muharemovi\u0107"
+    },
+    {
+      "element_type": 2,
+      "id": 305,
+      "position": "DEF",
+      "projected": 2.0,
+      "team": "IPS",
+      "webName": "Davis"
+    },
+    {
+      "element_type": 3,
+      "id": 557,
+      "position": "MID",
+      "projected": 6.0,
+      "team": "ARS",
+      "webName": "Tzolis"
+    },
+    {
+      "element_type": 3,
+      "id": 426,
+      "position": "MID",
+      "projected": 2.0,
+      "team": "MUN",
+      "webName": "B.Fernandes"
+    },
+    {
+      "element_type": 3,
+      "id": 124,
+      "position": "MID",
+      "projected": 2.0,
+      "team": "BHA",
+      "webName": "Gro\u00df"
+    },
+    {
+      "element_type": 3,
+      "id": 366,
+      "position": "MID",
+      "projected": 2.0,
+      "team": "LIV",
+      "webName": "Wirtz"
+    },
+    {
+      "element_type": 4,
+      "id": 165,
+      "position": "FWD",
+      "projected": 11.0,
+      "team": "CHE",
+      "webName": "Jo\u00e3o Pedro"
+    },
+    {
+      "element_type": 4,
+      "id": 411,
+      "position": "FWD",
+      "projected": 2.0,
+      "team": "MCI",
+      "webName": "Haaland"
+    }
+  ],
+  "viceCaptain": "Raya",
+  "viceCaptainId": 1
+}
