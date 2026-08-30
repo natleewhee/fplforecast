@@ -129,6 +129,8 @@ def build_feature_frame(
     rows: list[dict] = []
     for r in raw:
         et = r["element_type"]
+        score_target = score_prior.get(et, 0.0)  # unknown position (bad archive row) -> no prior
+        ict_target = ict_prior.get(et, 0.0)
         rows.append(
             {
                 "player_id": r["player_id"],
@@ -137,9 +139,9 @@ def build_feature_frame(
                 "price": r["price"],
                 "cold_start": r["cold_start"],
                 "games_recent": r["games_recent"],
-                "hist_scoring_avg": (r["_app_pts"] + k * score_prior[et]) / (r["_app_n"] + k),
-                "form_recent": (r["_form_sum"] + k * score_prior[et]) / (r["_form_n"] + k),
-                "ict_recent": (r["_app_ict"] + k * ict_prior[et]) / (r["_app_ict_n"] + k),
+                "hist_scoring_avg": (r["_app_pts"] + k * score_target) / (r["_app_n"] + k),
+                "form_recent": (r["_form_sum"] + k * score_target) / (r["_form_n"] + k),
+                "ict_recent": (r["_app_ict"] + k * ict_target) / (r["_app_ict_n"] + k),
             }
         )
 

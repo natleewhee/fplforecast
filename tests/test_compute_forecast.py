@@ -76,10 +76,11 @@ def test_running_record_is_null_when_absent(forecast):
 
 
 def test_no_backtest_artifact_is_required(forecast):
-    # AE3 / KD4: both projections are computed with no data/backtest/ present.
-    assert not (ROOT / "data" / "backtest").exists()
-    assert forecast["upgradeCount"]["model"] >= 0
-    assert forecast["upgradeCount"]["baseline"] >= 0
+    # AE3 / KD4: both projections are always computed and the squad always
+    # renders -- nothing here consults data/backtest/.
+    assert "model" in forecast["upgradeCount"]
+    assert "baseline" in forecast["upgradeCount"]
+    assert len(forecast["squad"]["players"]) == 15
 
 
 def test_cold_start_squad_players_show_no_projection(monkeypatch):

@@ -13,10 +13,10 @@ import pytest
 import scripts.ingest_history as ih
 
 GW_CSV = """\
-name,element,kickoff_time,minutes,total_points,ict_index,was_home,opponent_team,expected_goals,expected_assists,GW
-Player A,10,2024-08-16T14:00:00Z,90,6,12.3,True,5,0.40,0.10,1
-Player B,11,2024-08-16T14:00:00Z,0,1,,False,5,0.00,0.00,1
-Player A,10,2024-08-24T14:00:00Z,78,3,4.5,False,8,0.20,0.00,2
+name,position,team,element,kickoff_time,minutes,total_points,ict_index,was_home,opponent_team,expected_goals,expected_assists,GW
+Player A,MID,Arsenal,10,2024-08-16T14:00:00Z,90,6,12.3,True,5,0.40,0.10,1
+Player B,GK,Chelsea,11,2024-08-16T14:00:00Z,0,1,,False,5,0.00,0.00,1
+Player A,MID,Arsenal,10,2024-08-24T14:00:00Z,78,3,4.5,False,8,0.20,0.00,2
 """
 
 GW_CSV_NO_XG = """\
@@ -56,6 +56,8 @@ def test_normalise_gw_rows_keys_by_gameweek_off_the_element_column():
     assert row_a["minutes"] == 90 and row_a["total_points"] == 6
     assert row_a["was_home"] is True
     assert row_a["expected_goals"] == 0.40
+    assert row_a["element_type"] == 3 and row_a["team"] == "Arsenal"  # MID
+    assert rows_by_gw[1][1]["element_type"] == 1  # GK -> 1
 
 
 def test_empty_ict_index_cell_is_null_not_zero():

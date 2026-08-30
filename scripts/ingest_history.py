@@ -35,6 +35,7 @@ VAASTAV_BASE = "https://raw.githubusercontent.com/vaastav/Fantasy-Premier-League
 # normalised field -> merged_gw.csv column. Always expected.
 GW_FIELD_COLUMNS = {
     "web_name": "name",
+    "team": "team",
     "kickoff_time": "kickoff_time",
     "minutes": "minutes",
     "total_points": "total_points",
@@ -42,6 +43,10 @@ GW_FIELD_COLUMNS = {
     "was_home": "was_home",
     "opponent_team": "opponent_team",
 }
+
+# vaastav's per-GW position string -> FPL element_type, so the archive matches
+# the live feature frame (U11's select_squad needs position quotas).
+POSITION_TO_TYPE = {"GK": 1, "GKP": 1, "DEF": 2, "MID": 3, "FWD": 4}
 # Richer fields, kept per row only for seasons whose CSV carries them (R3).
 GW_RICH_COLUMNS = {
     "expected_goals": "expected_goals",
@@ -131,9 +136,12 @@ def normalise_gw_rows(csv_text: str, season: str) -> tuple[dict[int, list[dict]]
         row = {"season": season, "gw": gw, "historical_id": int(raw["element"])}
         for field, col in (*base_present.items(), *rich_present.items()):
             row[field] = _coerce(field, raw.get(col))
+        if "position" in header:
+            row["element_type"] = POSITION_TO_TYPE.get((raw.get("position") or "").strip())
         rows_by_gw.setdefault(gw, []).append(row)
 
-    fields_present = sorted(["historical_id", *base_present, *rich_present])
+    extra = ["element_type"] if "position" in header else []
+    fields_present = sorted(["historical_id", *extra, *base_present, *rich_present])
     return rows_by_gw, fields_present, rows_read
 
 
