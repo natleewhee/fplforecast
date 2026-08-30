@@ -51,6 +51,17 @@ DISPLAY_GAP_ROWS = 3
 # Pre-deadline write window, in hours, for the prediction log (U9, KTD7).
 PREDICTION_WINDOW_HOURS = 48
 
+# --- Team strength (scoped extension of KTD10) ---
+# How much the opponent's attack/defence strength moves a projection once
+# blended with the FDR multiplier: combined = fdr * (1 + WEIGHT * (strength - 1)).
+TEAM_STRENGTH_WEIGHT = 0.5
+# Bounds on the per-opponent strength multiplier, so one extreme rating can't
+# blow up a projection.
+TEAM_STRENGTH_CLAMP = (0.75, 1.35)
+# Empirical-Bayes pull toward the league average for teams with few archived
+# seasons (mirrors the minutes model's shrinkage).
+TEAM_STRENGTH_SHRINKAGE_SEASONS = 1.5
+
 
 if sum(BASELINE_WEIGHTS.values()) <= 0:
     raise ValueError("BASELINE_WEIGHTS must sum to a positive number")
