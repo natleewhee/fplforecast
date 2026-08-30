@@ -13,6 +13,8 @@ from __future__ import annotations
 
 import pandas as pd
 
+from engine.config import FEATURE_SHRINKAGE_GAMES
+
 UNAVAILABLE_STATUSES = {"i", "s", "u", "n"}  # injured, suspended, unavailable, not in squad
 
 POSITIONS = {1: "GKP", 2: "DEF", 3: "MID", 4: "FWD"}
@@ -79,8 +81,10 @@ def build_feature_frame(
     Columns (indexed by ``player_id``): element_type, team, price,
     ``hist_scoring_avg`` (mean total_points per appearance), ``ict_recent`` and
     ``form_recent`` (means over the recent window, DNP gameweeks included as 0),
-    ``games_recent``, ``cold_start``. A window shorter than ``rolling_window``
-    averages over what is available rather than dividing by the full window.
+    ``games_recent``, ``cold_start``. Each mean is empirical-Bayes shrunk toward
+    its position's average with ``FEATURE_SHRINKAGE_GAMES`` pseudo-observations,
+    so one big early-season gameweek does not dominate. A window shorter than
+    ``rolling_window`` averages over what is available.
     """
     recent = live_history[-rolling_window:] if rolling_window else list(live_history)
 
@@ -96,24 +100,46 @@ def build_feature_frame(
                 )
             )
 
-    rows: list[dict] = []
+    raw: list[dict] = []
     for player in players:
         pid = player["id"]
         games = games_by_id.get(pid, [])
-        appearances = [tp for tp, mn, _ in games if (mn or 0) > 0 and tp is not None]
-        points = [tp for tp, _, _ in games if tp is not None]
-        icts = [ict for _, _, ict in games if ict is not None]
-        rows.append(
+        appearances = [(tp, ict) for tp, mn, ict in games if (mn or 0) > 0 and tp is not None]
+        form_pts = [tp for tp, _, _ in games if tp is not None]
+        raw.append(
             {
                 "player_id": pid,
                 "element_type": player["element_type"],
                 "team": player["team"],
                 "price": player.get("now_cost", 0) / 10,
-                "hist_scoring_avg": sum(appearances) / len(appearances) if appearances else 0.0,
-                "ict_recent": sum(icts) / len(icts) if icts else 0.0,
-                "form_recent": sum(points) / len(points) if points else 0.0,
-                "games_recent": len(games),
                 "cold_start": bool(is_cold_start(pid)),
+                "games_recent": len(games),
+                "_app_n": len(appearances),
+                "_app_pts": float(sum(tp for tp, _ in appearances)),
+                "_app_ict": float(sum(ict for _, ict in appearances if ict is not None)),
+                "_app_ict_n": sum(1 for _, ict in appearances if ict is not None),
+                "_form_n": len(form_pts),
+                "_form_sum": float(sum(form_pts)),
+            }
+        )
+
+    score_prior, ict_prior = _position_priors(raw)
+    k = FEATURE_SHRINKAGE_GAMES
+
+    rows: list[dict] = []
+    for r in raw:
+        et = r["element_type"]
+        rows.append(
+            {
+                "player_id": r["player_id"],
+                "element_type": et,
+                "team": r["team"],
+                "price": r["price"],
+                "cold_start": r["cold_start"],
+                "games_recent": r["games_recent"],
+                "hist_scoring_avg": (r["_app_pts"] + k * score_prior[et]) / (r["_app_n"] + k),
+                "form_recent": (r["_form_sum"] + k * score_prior[et]) / (r["_form_n"] + k),
+                "ict_recent": (r["_app_ict"] + k * ict_prior[et]) / (r["_app_ict_n"] + k),
             }
         )
 
@@ -121,4 +147,26 @@ def build_feature_frame(
     if not frame.empty:
         frame = frame.set_index("player_id", drop=False)
     return frame
+
+
+def _position_priors(raw: list[dict]) -> tuple[dict[int, float], dict[int, float]]:
+    """Per-position mean points-per-appearance and ICT-per-appearance, over
+    players who have actually appeared. The shrinkage target: a thin sample is
+    pulled toward a stable position baseline, not toward zero. Falls back to the
+    overall mean for a position with no appearances yet."""
+    score: dict[int, float] = {}
+    ict: dict[int, float] = {}
+    all_pts = sum(r["_app_pts"] for r in raw)
+    all_n = sum(r["_app_n"] for r in raw)
+    overall = all_pts / all_n if all_n else 0.0
+    for et in (1, 2, 3, 4):
+        pts_n = sum(r["_app_n"] for r in raw if r["element_type"] == et)
+        ict_n = sum(r["_app_ict_n"] for r in raw if r["element_type"] == et)
+        score[et] = (
+            sum(r["_app_pts"] for r in raw if r["element_type"] == et) / pts_n if pts_n else overall
+        )
+        ict[et] = (
+            sum(r["_app_ict"] for r in raw if r["element_type"] == et) / ict_n if ict_n else 0.0
+        )
+    return score, ict
 

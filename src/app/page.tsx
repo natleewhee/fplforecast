@@ -5,11 +5,9 @@ import {
   loadLatestForecast,
   loadChipStatus,
   loadOverrides,
-  type ForecastPlayer,
-  type GapRow,
   type RunningRecord,
 } from "@/lib/snapshots";
-import ProjectionCell from "./ProjectionCell";
+import SquadList from "./SquadList";
 import TransferForm from "./TransferForm";
 
 export const dynamic = "force-static";
@@ -30,123 +28,6 @@ function PositionBadge({ position }: { position: string }) {
     >
       {position}
     </span>
-  );
-}
-
-function MinutesRiskTag() {
-  return (
-    <span
-      className="ml-1.5 rounded bg-amber-50 px-1 py-0.5 text-[10px] font-semibold text-amber-800"
-      title="Minutes risk: the model puts this player below a safe start probability"
-    >
-      mins risk
-    </span>
-  );
-}
-
-function Opponents({ player }: { player: ForecastPlayer }) {
-  if (player.opponents.length === 0) {
-    return <span className="text-[11px] text-ink-soft">blank GW</span>;
-  }
-  return (
-    <span className="text-[11px] text-ink-soft">
-      {player.opponents
-        .map((o) => `${o.wasHome ? "vs" : "@"} ${o.team ?? "?"} (${o.fdrRating ?? "—"})`)
-        .join(" · ")}
-    </span>
-  );
-}
-
-function PlayerLine({ player }: { player: ForecastPlayer }) {
-  return (
-    <div className="flex items-baseline justify-between gap-2 py-1.5">
-      <div className="min-w-0">
-        <div className="flex items-center">
-          <PositionBadge position={player.position} />
-          <span className="ml-2 truncate font-medium text-ink">{player.webName}</span>
-          {player.minutesRisk && <MinutesRiskTag />}
-        </div>
-        <div className="ml-11">
-          <span className="text-[11px] text-ink-soft">{player.team}</span>{" "}
-          <Opponents player={player} />
-        </div>
-      </div>
-      <ProjectionCell points={player.projectedPoints} breakdown={player.breakdown} />
-    </div>
-  );
-}
-
-function GapColumn({
-  title,
-  rows,
-  primary = false,
-}: {
-  title: string;
-  rows: GapRow[];
-  primary?: boolean;
-}) {
-  return (
-    <Card className={primary ? "" : "bg-background"}>
-      <h2
-        className={`text-sm font-bold uppercase tracking-wide ${
-          primary ? "text-[var(--pitch-dark)]" : "text-ink-soft"
-        }`}
-      >
-        {title}
-      </h2>
-      {rows.length === 0 ? (
-        <p className="mt-2 text-sm text-ink-soft">No upgrade found at any position.</p>
-      ) : (
-        <ul className="mt-2 space-y-3">
-          {rows.map((row, i) => (
-            <li key={i} className="border-b border-line pb-3 last:border-0 last:pb-0">
-              {row.squadPlayer && (
-                <div>
-                  <p className="text-[10px] uppercase tracking-wide text-ink-soft">Out</p>
-                  <PlayerLine player={row.squadPlayer} />
-                </div>
-              )}
-              {row.bestAlternative && (
-                <div className="mt-1">
-                  <p className="text-[10px] uppercase tracking-wide text-ink-soft">
-                    In · +{row.gapPoints.toFixed(1)} over {rowWindowLabel()}
-                  </p>
-                  <PlayerLine player={row.bestAlternative} />
-                </div>
-              )}
-            </li>
-          ))}
-        </ul>
-      )}
-    </Card>
-  );
-}
-
-function rowWindowLabel() {
-  return "5 GWs";
-}
-
-function CurrentSquadColumn({
-  windowPoints,
-  players,
-}: {
-  windowPoints: number;
-  players: ForecastPlayer[];
-}) {
-  return (
-    <Card className="bg-background">
-      <div className="flex items-baseline justify-between">
-        <h2 className="text-sm font-bold uppercase tracking-wide text-ink-soft">Current squad</h2>
-        <span className="text-xs text-ink-soft">
-          5-GW proj <span className="font-semibold text-ink tabular-nums">{windowPoints.toFixed(0)}</span>
-        </span>
-      </div>
-      <div className="mt-1 divide-y divide-line">
-        {players.map((p) => (
-          <PlayerLine key={p.id} player={p} />
-        ))}
-      </div>
-    </Card>
   );
 }
 
@@ -230,10 +111,9 @@ export default function Home() {
     );
   }
 
-  if (forecast && forecast.columns) {
-    const { model, baseline, currentSquad } = forecast.columns;
+  if (forecast && forecast.squad) {
     return (
-      <main className="mx-auto min-h-screen max-w-md bg-background pb-12 md:max-w-4xl">
+      <main className="mx-auto min-h-screen max-w-md bg-background pb-12 md:max-w-2xl">
         <Header
           subtitle={`GW${forecast.targetGameweek} pick · from your GW${forecast.basedOnGameweek} squad`}
         />
@@ -242,20 +122,19 @@ export default function Home() {
           <RunningRecordHeader record={forecast.runningRecord} />
 
           <Card>
-            <div className="flex items-center gap-3">
+            <div className="flex items-baseline justify-between gap-3">
               <div>
                 <p className="text-[11px] uppercase tracking-wide text-ink-soft">
                   Captain · model · GW{forecast.targetGameweek}
                 </p>
                 <p className="text-base font-bold text-ink">{forecast.captain?.webName ?? "—"}</p>
               </div>
+              {forecast.overridesApplied > 0 && (
+                <p className="rounded-lg bg-amber-50 px-2.5 py-1.5 text-xs font-medium text-amber-800">
+                  {forecast.overridesApplied} manual transfer(s) applied
+                </p>
+              )}
             </div>
-
-            {forecast.overridesApplied > 0 && (
-              <p className="mt-3 rounded-lg bg-amber-50 px-2.5 py-1.5 text-xs font-medium text-amber-800">
-                {forecast.overridesApplied} manual transfer(s) applied on top of the auto-pulled squad
-              </p>
-            )}
 
             {chips && (
               <div className="mt-3 flex flex-wrap gap-1.5">
@@ -275,14 +154,7 @@ export default function Home() {
             )}
           </Card>
 
-          <div className="grid gap-4 md:grid-cols-3">
-            <GapColumn title="Model — upgrades" rows={model} primary />
-            <GapColumn title="Baseline — upgrades" rows={baseline} />
-            <CurrentSquadColumn
-              windowPoints={currentSquad.windowPoints}
-              players={currentSquad.players}
-            />
-          </div>
+          <SquadList forecast={forecast} />
 
           {overrides &&
             overrides.basedOnGw === forecast.basedOnGameweek &&
@@ -294,7 +166,7 @@ export default function Home() {
 
           <Card>
             <TransferForm
-              squad={currentSquad.players}
+              squad={forecast.squad.players}
               allPlayers={bootstrap.players}
               basedOnGw={forecast.basedOnGameweek}
             />

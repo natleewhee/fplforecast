@@ -48,8 +48,17 @@ PRICE_BAND_M = 0.3
 # Gap rows shown per column in the weekly three-column view (U8/U13).
 DISPLAY_GAP_ROWS = 3
 
+# 5-GW window-points gain at or above which a suggested swap is worth
+# surfacing prominently in the weekly view; smaller gains are shown muted.
+MEANINGFUL_UPGRADE_GAP = 5.0
+
 # Pre-deadline write window, in hours, for the prediction log (U9, KTD7).
 PREDICTION_WINDOW_HOURS = 48
+
+# Pseudo-observations that pull a player's noisy recent scoring/form means
+# toward their position's average (empirical-Bayes, as in the minutes model).
+# Early in a season one big gameweek would otherwise dominate every projection.
+FEATURE_SHRINKAGE_GAMES = 4
 
 # --- Team strength (scoped extension of KTD10) ---
 # How much the opponent's attack/defence strength moves a projection once

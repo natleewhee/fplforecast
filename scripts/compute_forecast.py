@@ -1,11 +1,13 @@
-"""Three-column weekly view (U8): the model's preferred moves, the composite
-baseline's preferred moves, and the current squad's projected outcome.
+"""Squad-anchored weekly view: your fifteen held players, each carrying the
+model's and the composite baseline's suggested swap (better same-position,
+similar-price alternative + 5-GW gain), or nothing when the held player is
+already the best option.
 
 Thin CLI wrapper. It loads the latest snapshots from ``data/``, builds the
-shared feature frame once, calls the pure ``engine/`` library for the two
-gap-ranking columns and the current-squad projection, and writes
-``data/forecast/gwNN.json``. All three columns are always written, regardless
-of any backtest artifact (KTD8, AE3).
+shared feature frame once, calls the pure ``engine/`` library for the pool
+ranking and the per-player projections, and writes ``data/forecast/gwNN.json``.
+Both projections are always computed -- a backtest artifact is never required
+(KD4, KTD8, AE3).
 """
 
 from __future__ import annotations
@@ -17,11 +19,11 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 from engine import baseline, model
-from engine.config import DISPLAY_GAP_ROWS, ROLLING_WINDOW
+from engine.config import MEANINGFUL_UPGRADE_GAP, ROLLING_WINDOW
 from engine.features import POSITIONS, build_feature_frame
 from engine.history import ColdStart, classify, load_history
 from engine.model import ModelContext
-from engine.squad import rank_against_pool, top_gap_rows, window_points
+from engine.squad import rank_against_pool, window_points
 from engine.strength import team_strength_table
 
 DATA_DIR = Path(__file__).resolve().parent.parent / "data"
@@ -132,36 +134,42 @@ def _player_card(pid: int, elements_by_id: dict, teams_by_id: dict) -> dict:
     }
 
 
-def _enrich_gap_rows(
-    rows: list[dict],
+def _enrich_card(
+    pid: int,
     feature_frame,
     target_gw: int,
     ctx: ModelContext,
     window_pts: dict,
     elements_by_id: dict,
     teams_by_id: dict,
-) -> list[dict]:
-    """Turn id-only gap rows into render-ready rows: player cards, next-GW
-    projected points, the window total the ranking used, and the full
-    calculation breakdown for the hover."""
-    out: list[dict] = []
-    for row in rows:
-        enriched = {"gapPoints": row["gapPoints"], "minutesRisk": row["minutesRisk"]}
-        for role in ("squadPlayer", "bestAlternative"):
-            pid = row[role]
-            if pid is None:
-                enriched[role] = None
-                continue
-            detail = model.project_detail(feature_frame.loc[pid], target_gw, ctx)
-            card = _player_card(pid, elements_by_id, teams_by_id)
-            card["projectedPoints"] = detail.get("points")
-            card["windowPoints"] = round(window_pts[pid], 2) if window_pts.get(pid) is not None else None
-            card["coldStart"] = detail["coldStart"]
-            card["opponents"] = detail["opponents"]
-            card["breakdown"] = detail
-            enriched[role] = card
-        out.append(enriched)
-    return out
+) -> dict:
+    """A render-ready player card: identity, next-GW projected points, the
+    5-GW window total the ranking used, cold-start flag, per-leg opponents,
+    and the full calculation breakdown for the hover."""
+    detail = model.project_detail(feature_frame.loc[pid], target_gw, ctx)
+    card = _player_card(pid, elements_by_id, teams_by_id)
+    card["projectedPoints"] = detail.get("points")
+    card["windowPoints"] = round(window_pts[pid], 2) if window_pts.get(pid) is not None else None
+    card["coldStart"] = detail["coldStart"]
+    card["opponents"] = detail["opponents"]
+    card["breakdown"] = detail
+    return card
+
+
+def _upgrade_for(gap_row: dict, alt_card_fn) -> dict | None:
+    """One projection's suggestion for a squad player: the better same-position,
+    similar-price alternative and the 5-GW gain -- or ``None`` when nothing in
+    the pool beats the held player. ``meaningful`` marks a gain big enough to
+    surface prominently (``MEANINGFUL_UPGRADE_GAP``); smaller gains are shown
+    muted so the weekly view isn't a wall of marginal swaps."""
+    alt_id = gap_row["bestAlternative"]
+    if alt_id is None or gap_row["gapPoints"] <= 0:
+        return None
+    return {
+        "alternative": alt_card_fn(alt_id),
+        "gapPoints": gap_row["gapPoints"],
+        "meaningful": gap_row["gapPoints"] >= MEANINGFUL_UPGRADE_GAP,
+    }
 
 
 def main() -> int:
@@ -228,40 +236,47 @@ def main() -> int:
         pid for pid in feature_frame.index if elements_by_id.get(pid, {}).get("status") == "a"
     ]
 
-    model_rows = rank_against_pool(
-        squad_ids, pool_ids, model_window, price_by_id, position_by_id, minutes_risk_by_id
-    )
-    baseline_rows = rank_against_pool(
-        squad_ids, pool_ids, baseline_window, price_by_id, position_by_id, minutes_risk_by_id
-    )
+    model_rows = {
+        r["squadPlayer"]: r
+        for r in rank_against_pool(
+            squad_ids, pool_ids, model_window, price_by_id, position_by_id, minutes_risk_by_id
+        )
+    }
+    baseline_rows = {
+        r["squadPlayer"]: r
+        for r in rank_against_pool(
+            squad_ids, pool_ids, baseline_window, price_by_id, position_by_id, minutes_risk_by_id
+        )
+    }
 
-    model_column = _enrich_gap_rows(
-        top_gap_rows(model_rows, DISPLAY_GAP_ROWS), feature_frame, target_gw, ctx,
-        model_window, elements_by_id, teams_by_id,
-    )
-    baseline_column = _enrich_gap_rows(
-        top_gap_rows(baseline_rows, DISPLAY_GAP_ROWS), feature_frame, target_gw, ctx,
-        baseline_window, elements_by_id, teams_by_id,
-    )
+    def alt_card(pid: int) -> dict:
+        return _enrich_card(
+            pid, feature_frame, target_gw, ctx, model_window, elements_by_id, teams_by_id
+        )
 
-    # Current-squad column: a direct model projection of the fifteen held
-    # players -- a total plus per-player rows, not a pool ranking (KTD8, R11).
-    current_players: list[dict] = []
+    # Your squad is the anchor: the fifteen held players, each with the model's
+    # and the baseline's suggested swap hanging off it (KD4/KTD8 -- both are
+    # always computed; a backtest artifact is never required).
+    players: list[dict] = []
     squad_window_total = 0.0
     captain = None
     captain_score = None
     for pid in squad_ids:
         if pid not in feature_frame.index:
             continue
-        row = feature_frame.loc[pid]
-        detail = model.project_detail(row, target_gw, ctx)
+        detail = model.project_detail(feature_frame.loc[pid], target_gw, ctx)
         card = _player_card(pid, elements_by_id, teams_by_id)
         card["projectedPoints"] = detail.get("points")
+        card["windowPoints"] = round(model_window[pid], 2) if model_window.get(pid) is not None else None
         card["coldStart"] = detail["coldStart"]
         card["minutesRisk"] = bool(minutes_risk_by_id.get(pid, False))
         card["opponents"] = detail["opponents"]
         card["breakdown"] = detail
-        current_players.append(card)
+        card["modelUpgrade"] = _upgrade_for(model_rows[pid], alt_card) if pid in model_rows else None
+        card["baselineUpgrade"] = (
+            _upgrade_for(baseline_rows[pid], alt_card) if pid in baseline_rows else None
+        )
+        players.append(card)
 
         if model_window.get(pid) is not None:
             squad_window_total += model_window[pid]
@@ -271,25 +286,35 @@ def main() -> int:
         ):
             captain, captain_score = card, single_gw
 
+    if captain is not None:
+        captain["isCaptain"] = True
+    for card in players:
+        card.setdefault("isCaptain", False)
+
+    def _agree(card: dict) -> bool:
+        mu, bu = card["modelUpgrade"], card["baselineUpgrade"]
+        return bool(mu and bu and mu["alternative"]["id"] == bu["alternative"]["id"])
+
+    def _meaningful(card: dict) -> bool:
+        mu, bu = card["modelUpgrade"], card["baselineUpgrade"]
+        return bool((mu and mu["meaningful"]) or (bu and bu["meaningful"]))
+
+    upgrade_count = {
+        "model": sum(1 for c in players if c["modelUpgrade"]),
+        "baseline": sum(1 for c in players if c["baselineUpgrade"]),
+        "agree": sum(1 for c in players if _agree(c)),
+        "meaningful": sum(1 for c in players if _meaningful(c)),
+    }
+
     forecast = {
         "generatedAt": datetime.now(timezone.utc).isoformat(),
         "basedOnGameweek": based_on_gw,
         "targetGameweek": target_gw,
         "rollingWindow": ROLLING_WINDOW,
         "overridesApplied": len(overrides),
-        "columns": {
-            "model": model_column,
-            "baseline": baseline_column,
-            "currentSquad": {
-                "windowPoints": round(squad_window_total, 2),
-                "players": current_players,
-            },
-        },
-        "captain": (
-            {"webName": captain["webName"], "id": captain["id"], "column": "model"}
-            if captain
-            else None
-        ),
+        "squad": {"windowPoints": round(squad_window_total, 2), "players": players},
+        "upgradeCount": upgrade_count,
+        "captain": {"webName": captain["webName"], "id": captain["id"]} if captain else None,
         "runningRecord": load_running_record(),
     }
 
@@ -299,8 +324,9 @@ def main() -> int:
     out_path.write_text(json.dumps(forecast, indent=2, sort_keys=True))
     print(f"forecast for GW{target_gw} (based on GW{based_on_gw} squad): -> {out_path}")
     print(
-        f"model upgrades: {len(model_column)}, baseline upgrades: {len(baseline_column)}, "
-        f"captain: {forecast['captain']['webName'] if forecast['captain'] else None}"
+        f"upgrades — meaningful: {upgrade_count['meaningful']}, model: {upgrade_count['model']}, "
+        f"baseline: {upgrade_count['baseline']}, agree: {upgrade_count['agree']}; captain: "
+        f"{forecast['captain']['webName'] if forecast['captain'] else None}"
     )
     return 0
 

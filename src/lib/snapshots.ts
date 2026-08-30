@@ -62,24 +62,29 @@ export type ProjectionBreakdown = {
   opponents: OpponentLeg[];
 };
 
-export type ForecastPlayer = {
+export type AlternativeCard = {
   id: number;
   webName: string;
   team: string;
   position: string;
-  projectedPoints: number | null; // null == cold-start, "no history"
+  projectedPoints: number | null;
   windowPoints?: number | null;
   coldStart: boolean;
-  minutesRisk?: boolean;
   opponents: OpponentLeg[];
   breakdown: ProjectionBreakdown;
 };
 
-export type GapRow = {
-  squadPlayer: ForecastPlayer | null;
-  bestAlternative: ForecastPlayer | null;
-  gapPoints: number;
-  minutesRisk: boolean;
+export type Upgrade = {
+  alternative: AlternativeCard;
+  gapPoints: number; // 5-GW window-points gain
+  meaningful: boolean; // gain >= MEANINGFUL_UPGRADE_GAP
+};
+
+export type ForecastPlayer = AlternativeCard & {
+  minutesRisk?: boolean;
+  isCaptain: boolean;
+  modelUpgrade: Upgrade | null;
+  baselineUpgrade: Upgrade | null;
 };
 
 export type RunningRecord = {
@@ -96,12 +101,9 @@ export type Forecast = {
   targetGameweek: number;
   rollingWindow: number;
   overridesApplied: number;
-  columns: {
-    model: GapRow[];
-    baseline: GapRow[];
-    currentSquad: { windowPoints: number; players: ForecastPlayer[] };
-  };
-  captain: { webName: string; id: number; column: string } | null;
+  squad: { windowPoints: number; players: ForecastPlayer[] };
+  upgradeCount: { model: number; baseline: number; agree: number; meaningful: number };
+  captain: { webName: string; id: number } | null;
   runningRecord: RunningRecord | null;
 };
 

@@ -1,4 +1,4 @@
-"""U8 coverage: the three-column ``data/forecast/gwNN.json`` contract.
+"""Contract coverage for the squad-anchored ``data/forecast/gwNN.json``.
 
 The integration tests run the wrapper against the committed snapshots and
 assert on the file it writes, restoring it afterwards.
@@ -20,7 +20,7 @@ FORECAST = ROOT / "data" / "forecast" / "gw2.json"
 
 
 @pytest.fixture(scope="module")
-def written_forecast():
+def forecast():
     """Run ``main()`` once against the committed data, hand back the parsed
     output, and put the committed file back afterwards."""
     original = FORECAST.read_bytes()
@@ -31,76 +31,66 @@ def written_forecast():
         FORECAST.write_bytes(original)
 
 
-def test_three_column_shape(written_forecast):
-    columns = written_forecast["columns"]
-    assert isinstance(columns["model"], list)
-    assert isinstance(columns["baseline"], list)
-
-    current = columns["currentSquad"]
-    assert isinstance(current["windowPoints"], (int, float))
-    assert len(current["players"]) == 15
+def test_squad_is_the_anchor(forecast):
+    squad = forecast["squad"]
+    assert isinstance(squad["windowPoints"], (int, float))
+    assert len(squad["players"]) == 15
+    assert "columns" not in forecast  # the three-column shape is gone
 
 
-def test_target_and_based_on_gameweek(written_forecast):
-    assert written_forecast["targetGameweek"] == written_forecast["basedOnGameweek"] + 1
+def test_target_and_based_on_gameweek(forecast):
+    assert forecast["targetGameweek"] == forecast["basedOnGameweek"] + 1
 
 
-def test_captain_is_a_model_column_starter(written_forecast):
-    captain = written_forecast["captain"]
-    assert captain["column"] == "model"
-    squad_ids = {p["id"] for p in written_forecast["columns"]["currentSquad"]["players"]}
-    assert captain["id"] in squad_ids
-
-
-def test_gap_rows_carry_a_breakdown_and_opponents(written_forecast):
-    rows = written_forecast["columns"]["model"] + written_forecast["columns"]["baseline"]
-    for row in rows:
-        for role in ("squadPlayer", "bestAlternative"):
-            card = row[role]
-            if card is None:
+def test_each_player_carries_both_projections_suggestion(forecast):
+    for p in forecast["squad"]["players"]:
+        for key in ("modelUpgrade", "baselineUpgrade"):
+            upgrade = p[key]
+            if upgrade is None:
                 continue
-            assert {"id", "webName", "team", "position", "breakdown", "opponents"} <= set(card)
-            assert "fdrRating" in card["breakdown"]["opponents"][0] or card["opponents"] == []
+            assert upgrade["gapPoints"] > 0
+            assert isinstance(upgrade["meaningful"], bool)
+            alt = upgrade["alternative"]
+            assert {"id", "webName", "team", "position", "breakdown", "opponents"} <= set(alt)
+            assert alt["position"] == p["position"]  # like-for-like swap
 
 
-def test_running_record_is_null_when_absent(written_forecast):
-    # The committed repo has no data/record/running.json.
-    assert written_forecast["runningRecord"] is None
+def test_exactly_one_captain_and_it_is_a_squad_member(forecast):
+    captains = [p for p in forecast["squad"]["players"] if p["isCaptain"]]
+    assert len(captains) == 1
+    assert forecast["captain"]["id"] == captains[0]["id"]
 
 
-def test_all_three_columns_render_with_no_backtest_artifact(written_forecast):
-    # AE3: nothing about the columns depends on data/backtest/ existing.
+def test_upgrade_count_matches_the_players(forecast):
+    players = forecast["squad"]["players"]
+    uc = forecast["upgradeCount"]
+    assert uc["model"] == sum(1 for p in players if p["modelUpgrade"])
+    assert uc["baseline"] == sum(1 for p in players if p["baselineUpgrade"])
+    assert uc["meaningful"] <= max(uc["model"], uc["baseline"])
+    assert uc["agree"] <= min(uc["model"], uc["baseline"])
+
+
+def test_running_record_is_null_when_absent(forecast):
+    assert forecast["runningRecord"] is None
+    assert not (ROOT / "data" / "record" / "running.json").exists()
+
+
+def test_no_backtest_artifact_is_required(forecast):
+    # AE3 / KD4: both projections are computed with no data/backtest/ present.
     assert not (ROOT / "data" / "backtest").exists()
-    assert "model" in written_forecast["columns"]
-    assert "baseline" in written_forecast["columns"]
-    assert "currentSquad" in written_forecast["columns"]
-
-
-def test_empty_column_serialises_as_a_list(monkeypatch):
-    original = FORECAST.read_bytes()
-    monkeypatch.setattr(cf, "top_gap_rows", lambda rows, *a, **k: [])
-    try:
-        assert cf.main() == 0
-        out = json.loads(FORECAST.read_text())
-        assert out["columns"]["model"] == []
-        assert out["columns"]["baseline"] == []
-        assert len(out["columns"]["currentSquad"]["players"]) == 15
-    finally:
-        FORECAST.write_bytes(original)
+    assert forecast["upgradeCount"]["model"] >= 0
+    assert forecast["upgradeCount"]["baseline"] >= 0
 
 
 def test_cold_start_squad_players_show_no_projection(monkeypatch):
     original = FORECAST.read_bytes()
     monkeypatch.setattr(cf, "load_entity_resolution", lambda: {})
     monkeypatch.setattr(
-        cf,
-        "load_history",
-        lambda _data_dir: HistoryArchive(frame=pd.DataFrame(), coverage={}),
+        cf, "load_history", lambda _d: HistoryArchive(frame=pd.DataFrame(), coverage={})
     )
     try:
         assert cf.main() == 0
-        out = json.loads(FORECAST.read_text())
-        players = out["columns"]["currentSquad"]["players"]
+        players = json.loads(FORECAST.read_text())["squad"]["players"]
         assert all(p["coldStart"] for p in players)
         assert all(p["projectedPoints"] is None for p in players)
     finally:
@@ -109,8 +99,7 @@ def test_cold_start_squad_players_show_no_projection(monkeypatch):
 
 def test_apply_overrides_swaps_ids():
     assert cf.apply_overrides([1, 2, 3], [{"out": 2, "in": 99}]) == [1, 99, 3]
-    # an 'out' id not in the squad is skipped, not fatal
-    assert cf.apply_overrides([1, 2], [{"out": 7, "in": 8}]) == [1, 2]
+    assert cf.apply_overrides([1, 2], [{"out": 7, "in": 8}]) == [1, 2]  # unknown 'out' skipped
 
 
 def test_team_id_comes_from_the_environment(monkeypatch):

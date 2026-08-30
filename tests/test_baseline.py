@@ -46,21 +46,39 @@ def test_project_pool_returns_one_row_per_player_none_cold():
 
     assert list(pool.index) == [1, 2, 3]
     assert not pool["cold_start"].any()
-    assert pool.loc[1, "points"] == pytest.approx((6.0 + 6.0 + 6.0) / 3)
+    assert pool.loc[1, "points"] > 0  # exact value is shrinkage-dependent
 
 
-def test_hist_scoring_avg_uses_current_season_appearances_only():
-    # Two finished GWs: played 90 for 6, then DNP. hist_scoring_avg is the mean
-    # over appearances (6.0), not over both gameweeks (3.0).
+def _el(pid, tp, mn):
+    return {"id": pid, "stats": {"total_points": tp, "minutes": mn, "ict_index": "0"}}
+
+
+def test_hist_ignores_dnp_gameweeks_but_form_counts_them():
+    # Players 1 and 2 both scored 8 on their one appearance; player 2 also has a
+    # trailing DNP gameweek. Same hist (appearances only), lower form for 2.
+    live = [
+        {"elements": [_el(1, 8, 90), _el(2, 8, 90)]},
+        {"elements": [_el(1, 8, 90), _el(2, 0, 0)]},
+    ]
+    frame = build_feature_frame([player(1), player(2)], live, NEVER_COLD, rolling_window=5)
+
+    assert frame.loc[1, "hist_scoring_avg"] == pytest.approx(frame.loc[2, "hist_scoring_avg"])
+    assert frame.loc[2, "form_recent"] < frame.loc[1, "form_recent"]
+
+
+def test_shrinkage_pulls_a_thin_sample_toward_the_position_prior():
+    fillers = [
+        {"elements": [{"id": fid, "stats": {"total_points": 3, "minutes": 90, "ict_index": "0"}}]}
+        for fid in (91, 92, 93, 94)
+    ]
+    hot = {"elements": [{"id": 1, "stats": {"total_points": 15, "minutes": 90, "ict_index": "0"}}]}
+    live = [{"elements": hot["elements"] + sum((f["elements"] for f in fillers), [])}]
+
     frame = build_feature_frame(
-        [player(1)],
-        [live_gw((1, 6, 90, 4.0)), live_gw((1, 0, 0, 0.0))],
-        NEVER_COLD,
-        rolling_window=5,
+        [player(1), *(player(fid) for fid in (91, 92, 93, 94))], live, NEVER_COLD, rolling_window=5
     )
-    assert frame.loc[1, "hist_scoring_avg"] == pytest.approx(6.0)
-    # form_recent is over both gameweeks including the DNP zero.
-    assert frame.loc[1, "form_recent"] == pytest.approx(3.0)
+    # 15 on one appearance is pulled well below halfway toward the 3.0 prior.
+    assert frame.loc[1, "hist_scoring_avg"] < (15 + 3) / 2
 
 
 def test_short_history_averages_over_available_gameweeks():
