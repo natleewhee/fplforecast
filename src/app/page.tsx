@@ -32,7 +32,7 @@ function PositionBadge({ position }: { position: string }) {
 }
 
 function RunningRecordHeader({ record }: { record: RunningRecord | null }) {
-  if (!record) {
+  if (!record || record.gameweeksScored === 0) {
     return (
       <Card>
         <p className="text-xs text-ink-soft">

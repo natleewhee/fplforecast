@@ -185,8 +185,8 @@ def replay(
                 season_rows.loc[season_rows["gw"] == gw, "total_points"],
             )
         )
-        model_total += _xi_actual_points(select_squad(model_proj), actuals)
-        baseline_total += _xi_actual_points(select_squad(base_proj), actuals)
+        model_total += xi_actual_points(select_squad(model_proj), actuals)
+        baseline_total += xi_actual_points(select_squad(base_proj), actuals)
         scored += 1
 
     return {
@@ -198,7 +198,7 @@ def replay(
     }
 
 
-def _xi_actual_points(selected: list[dict], actuals: dict) -> float:
+def xi_actual_points(selected: list[dict], actuals: dict) -> float:
     """Pick the best XI from the fifteen by projection, then score those eleven
     on what they actually did that gameweek."""
     if not selected:

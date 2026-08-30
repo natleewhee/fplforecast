@@ -9,6 +9,7 @@ from datetime import datetime, timedelta, timezone
 import pytest
 
 import scripts.log_predictions as lp
+import scripts.score_predictions as sp
 from engine.history import ColdStart, HasHistory
 
 NOW = datetime(2026, 9, 1, 12, 0, tzinfo=timezone.utc)
@@ -101,3 +102,86 @@ def test_season_over_is_a_clean_exit(wired, monkeypatch):
 
     assert lp.main(now=NOW) == 0
     assert not (wired / "predictions").exists()
+
+
+# --- U10: scoring pass ---------------------------------------------------------
+
+ELEMENTS = [
+    {"id": i, "element_type": 1 if i <= 4 else 2 if i <= 12 else 3 if i <= 22 else 4, "team": (i % 5) + 1}
+    for i in range(1, 31)
+]
+
+
+def _score_bootstrap(data_checked_gws):
+    return {
+        "events": [
+            {"id": gw, "data_checked": gw in data_checked_gws, "finished": True} for gw in range(1, 8)
+        ],
+        "elements": ELEMENTS,
+    }
+
+
+def _prediction_file(path, gw):
+    # model rates low ids high, baseline rates high ids high -> different squads
+    model = {str(e["id"]): float(30 - e["id"]) for e in ELEMENTS}
+    baseline = {str(e["id"]): float(e["id"]) for e in ELEMENTS}
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps({"gameweek": gw, "model": model, "baseline": baseline}))
+
+
+def _live(points_by_id):
+    return {"elements": [{"id": i, "stats": {"total_points": p}} for i, p in points_by_id.items()]}
+
+
+@pytest.fixture
+def score_wired(monkeypatch, tmp_path):
+    monkeypatch.setattr(sp, "DATA_DIR", tmp_path)
+    return tmp_path
+
+
+def test_scores_a_data_checked_gameweek_with_a_stored_prediction(score_wired, monkeypatch):
+    monkeypatch.setattr(sp.cf, "load_bootstrap", lambda: _score_bootstrap({5}))
+    _prediction_file(score_wired / "predictions" / "gw5.json", 5)
+    live = _live({e["id"]: (2 if e["id"] % 2 else 6) for e in ELEMENTS})
+
+    assert sp.main(fetch=lambda gw: live) == 0
+    record = json.loads((score_wired / "record" / "running.json").read_text())
+    gw5 = next(e for e in record["entries"] if e["gameweek"] == 5)
+    assert {"modelPoints", "baselinePoints", "delta"} <= set(gw5)
+    assert record["summary"]["gameweeksScored"] == 1
+
+
+def test_data_checked_false_gameweek_is_not_scored(score_wired, monkeypatch):
+    monkeypatch.setattr(sp.cf, "load_bootstrap", lambda: _score_bootstrap(set()))  # none checked
+
+    assert sp.main(fetch=lambda gw: _live({})) == 0
+    record = json.loads((score_wired / "record" / "running.json").read_text())
+    assert record["entries"] == []
+    assert record["summary"]["gameweeksScored"] == 0
+
+
+def test_missing_prediction_is_recorded_as_no_prediction(score_wired, monkeypatch):
+    monkeypatch.setattr(sp.cf, "load_bootstrap", lambda: _score_bootstrap({6}))  # no gw6.json
+
+    assert sp.main(fetch=lambda gw: _live({})) == 0
+    record = json.loads((score_wired / "record" / "running.json").read_text())
+    assert record["entries"] == [{"gameweek": 6, "status": "no_prediction"}]
+    assert record["summary"]["gameweeksScored"] == 0  # not counted
+
+
+def test_summary_meaningful_flag_tracks_the_threshold():
+    over = sp.summarise([{"gameweek": 1, "modelPoints": 50.0, "baselinePoints": 49.65}])
+    under = sp.summarise([{"gameweek": 1, "modelPoints": 50.0, "baselinePoints": 49.8}])
+    assert over["pooledDeltaPerGw"] == pytest.approx(0.35) and over["meaningful"] is True
+    assert under["pooledDeltaPerGw"] == pytest.approx(0.2) and under["meaningful"] is False
+
+
+def test_scoring_pass_is_idempotent(score_wired, monkeypatch):
+    monkeypatch.setattr(sp.cf, "load_bootstrap", lambda: _score_bootstrap({5}))
+    _prediction_file(score_wired / "predictions" / "gw5.json", 5)
+    live = _live({e["id"]: e["id"] % 4 for e in ELEMENTS})
+
+    assert sp.main(fetch=lambda gw: live) == 0
+    first = (score_wired / "record" / "running.json").read_bytes()
+    assert sp.main(fetch=lambda gw: live) == 0
+    assert (score_wired / "record" / "running.json").read_bytes() == first
