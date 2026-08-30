@@ -43,6 +43,13 @@ def test_no_minutes_model_leaves_the_minutes_term_at_one():
     assert project(feature_row(), 2, ctx(minutes_model={})) == pytest.approx(6.0)  # 5.0 * 1.2
 
 
+def test_minutes_multiplier_is_capped_at_one_match():
+    # The reused minutes model can shrink to > 90 on thin data; a leg is still
+    # worth at most one match.
+    blown = ctx(minutes_model={"1": {"expectedMinutes": 284.0, "per90Points": 5.0, "pStart": 1.0}})
+    assert project(feature_row(), 2, blown) == pytest.approx(6.0)  # 5.0 * 1.2 * min(284,90)/90
+
+
 def test_minutes_risk_flag_reads_pstart_against_the_threshold():
     risky = ctx(minutes_model={"1": {"expectedMinutes": 60, "per90Points": 4.0, "pStart": 0.4}})
     safe = ctx(minutes_model={"1": {"expectedMinutes": 88, "per90Points": 5.0, "pStart": 0.9}})

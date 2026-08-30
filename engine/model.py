@@ -87,7 +87,10 @@ def project_detail(feature_row: Mapping, target_gw: int, ctx: ModelContext) -> d
         return {"points": None, "coldStart": True, "opponents": opponents}
 
     entry = _minutes_entry(feature_row, ctx)
-    minutes_mult = (entry["expectedMinutes"] / 90) if entry else 1.0
+    # A player contributes at most one match's worth of minutes per fixture leg;
+    # doubles are already handled by summing legs in the fixture multiplier. The
+    # reused minutes model can shrink to > 90 on thin data, so cap here.
+    minutes_mult = (min(entry["expectedMinutes"], 90) / 90) if entry else 1.0
     element = (ctx.elements_by_id or {}).get(int(feature_row["player_id"]), {})
     availability_mult = availability_multiplier(element)
 

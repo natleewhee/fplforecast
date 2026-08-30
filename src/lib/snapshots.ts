@@ -42,29 +42,67 @@ export function latestSnapshotDate(endpointDir: string): string | null {
   return latestFile(endpointDir)?.date ?? null;
 }
 
+export type OpponentLeg = {
+  team: string | null;
+  wasHome: boolean;
+  fdrRating: number | null; // FPL's 1 (easiest) .. 5 (hardest) rating
+  fdrMultiplier: number;
+  strengthMultiplier: number; // opponent attack/defence adjustment, ~1.0
+};
+
+export type ProjectionBreakdown = {
+  points: number | null;
+  coldStart: boolean;
+  base?: number;
+  fixtureMultiplier?: number;
+  minutesMultiplier?: number;
+  availabilityMultiplier?: number;
+  expectedMinutes?: number | null;
+  minutesRisk?: boolean;
+  opponents: OpponentLeg[];
+};
+
 export type ForecastPlayer = {
   id: number;
   webName: string;
   team: string;
   position: string;
-  element_type: number;
-  projected: number;
-  component: "minutes-model" | "rolling-average";
-  expectedMinutes: number | null;
-  fdrMultiplier?: number; // absent in forecasts committed before FDR weighting shipped
+  projectedPoints: number | null; // null == cold-start, "no history"
+  windowPoints?: number | null;
+  coldStart: boolean;
+  minutesRisk?: boolean;
+  opponents: OpponentLeg[];
+  breakdown: ProjectionBreakdown;
+};
+
+export type GapRow = {
+  squadPlayer: ForecastPlayer | null;
+  bestAlternative: ForecastPlayer | null;
+  gapPoints: number;
+  minutesRisk: boolean;
+};
+
+export type RunningRecord = {
+  gameweeksScored: number;
+  modelTotal: number;
+  baselineTotal: number;
+  pooledDeltaPerGw: number;
+  meaningful: boolean;
 };
 
 export type Forecast = {
   generatedAt: string;
   basedOnGameweek: number;
+  targetGameweek: number;
   rollingWindow: number;
   overridesApplied: number;
-  startingXI: ForecastPlayer[];
-  bench: ForecastPlayer[];
-  captain: string | null;
-  captainId: number | null;
-  viceCaptain: string | null;
-  viceCaptainId: number | null;
+  columns: {
+    model: GapRow[];
+    baseline: GapRow[];
+    currentSquad: { windowPoints: number; players: ForecastPlayer[] };
+  };
+  captain: { webName: string; id: number; column: string } | null;
+  runningRecord: RunningRecord | null;
 };
 
 export type ChipUsage = { name: string; event: number };

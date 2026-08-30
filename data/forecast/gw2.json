@@ -1,179 +1,1035 @@
 {
   "basedOnGameweek": 1,
-  "bench": [
-    {
-      "component": "minutes-model",
-      "element_type": 1,
-      "expectedMinutes": 90.0,
-      "fdrMultiplier": 1.1,
-      "id": 496,
-      "position": "GKP",
-      "projected": 2.83,
-      "team": "TOT",
-      "webName": "Kinsky"
+  "captain": {
+    "column": "model",
+    "id": 165,
+    "webName": "Jo\u00e3o Pedro"
+  },
+  "columns": {
+    "baseline": [
+      {
+        "bestAlternative": {
+          "breakdown": {
+            "availabilityMultiplier": 1.0,
+            "base": 9.7,
+            "coldStart": false,
+            "expectedMinutes": 86.7,
+            "fixtureMultiplier": 1.1,
+            "minutesMultiplier": 0.963,
+            "minutesRisk": false,
+            "opponents": [
+              {
+                "fdrMultiplier": 1.1,
+                "fdrRating": 2,
+                "strengthMultiplier": 1.0,
+                "team": "BHA",
+                "wasHome": true
+              }
+            ],
+            "points": 10.28
+          },
+          "coldStart": false,
+          "id": 40,
+          "opponents": [
+            {
+              "fdrMultiplier": 1.1,
+              "fdrRating": 2,
+              "strengthMultiplier": 1.0,
+              "team": "BHA",
+              "wasHome": true
+            }
+          ],
+          "position": "MID",
+          "projectedPoints": 10.28,
+          "team": "CHE",
+          "webName": "Rogers",
+          "windowPoints": 48.5
+        },
+        "gapPoints": 32.33,
+        "minutesRisk": false,
+        "squadPlayer": {
+          "breakdown": {
+            "availabilityMultiplier": 1.0,
+            "base": 3.23,
+            "coldStart": false,
+            "expectedMinutes": 81.4,
+            "fixtureMultiplier": 1.0,
+            "minutesMultiplier": 0.904,
+            "minutesRisk": false,
+            "opponents": [
+              {
+                "fdrMultiplier": 1.0,
+                "fdrRating": 3,
+                "strengthMultiplier": 1.0,
+                "team": "NFO",
+                "wasHome": true
+              }
+            ],
+            "points": 2.92
+          },
+          "coldStart": false,
+          "id": 366,
+          "opponents": [
+            {
+              "fdrMultiplier": 1.0,
+              "fdrRating": 3,
+              "strengthMultiplier": 1.0,
+              "team": "NFO",
+              "wasHome": true
+            }
+          ],
+          "position": "MID",
+          "projectedPoints": 2.92,
+          "team": "LIV",
+          "webName": "Wirtz",
+          "windowPoints": 16.17
+        }
+      },
+      {
+        "bestAlternative": {
+          "breakdown": {
+            "availabilityMultiplier": 1.0,
+            "base": 9.77,
+            "coldStart": false,
+            "expectedMinutes": 80.8,
+            "fixtureMultiplier": 0.9,
+            "minutesMultiplier": 0.898,
+            "minutesRisk": false,
+            "opponents": [
+              {
+                "fdrMultiplier": 0.9,
+                "fdrRating": 4,
+                "strengthMultiplier": 1.0,
+                "team": "AVL",
+                "wasHome": false
+              }
+            ],
+            "points": 7.89
+          },
+          "coldStart": false,
+          "id": 10,
+          "opponents": [
+            {
+              "fdrMultiplier": 0.9,
+              "fdrRating": 4,
+              "strengthMultiplier": 1.0,
+              "team": "AVL",
+              "wasHome": false
+            }
+          ],
+          "position": "DEF",
+          "projectedPoints": 7.89,
+          "team": "ARS",
+          "webName": "White",
+          "windowPoints": 48.83
+        },
+        "gapPoints": 26.33,
+        "minutesRisk": false,
+        "squadPlayer": {
+          "breakdown": {
+            "availabilityMultiplier": 1.0,
+            "base": 4.5,
+            "coldStart": false,
+            "expectedMinutes": 104.7,
+            "fixtureMultiplier": 0.9,
+            "minutesMultiplier": 1.0,
+            "minutesRisk": false,
+            "opponents": [
+              {
+                "fdrMultiplier": 0.9,
+                "fdrRating": 4,
+                "strengthMultiplier": 1.0,
+                "team": "AVL",
+                "wasHome": false
+              }
+            ],
+            "points": 4.05
+          },
+          "coldStart": false,
+          "id": 11,
+          "opponents": [
+            {
+              "fdrMultiplier": 0.9,
+              "fdrRating": 4,
+              "strengthMultiplier": 1.0,
+              "team": "AVL",
+              "wasHome": false
+            }
+          ],
+          "position": "DEF",
+          "projectedPoints": 4.05,
+          "team": "ARS",
+          "webName": "Mosquera",
+          "windowPoints": 22.5
+        }
+      },
+      {
+        "bestAlternative": {
+          "breakdown": {
+            "availabilityMultiplier": 1.0,
+            "base": 9.4,
+            "coldStart": false,
+            "expectedMinutes": 89.3,
+            "fixtureMultiplier": 1.0,
+            "minutesMultiplier": 0.992,
+            "minutesRisk": false,
+            "opponents": [
+              {
+                "fdrMultiplier": 1.0,
+                "fdrRating": 3,
+                "strengthMultiplier": 1.0,
+                "team": "LEE",
+                "wasHome": false
+              }
+            ],
+            "points": 9.33
+          },
+          "coldStart": false,
+          "id": 86,
+          "opponents": [
+            {
+              "fdrMultiplier": 1.0,
+              "fdrRating": 3,
+              "strengthMultiplier": 1.0,
+              "team": "LEE",
+              "wasHome": false
+            }
+          ],
+          "position": "MID",
+          "projectedPoints": 9.33,
+          "team": "BRE",
+          "webName": "Lewis-Potter",
+          "windowPoints": 47.0
+        },
+        "gapPoints": 26.0,
+        "minutesRisk": false,
+        "squadPlayer": {
+          "breakdown": {
+            "availabilityMultiplier": 1.0,
+            "base": 4.2,
+            "coldStart": false,
+            "expectedMinutes": 90.7,
+            "fixtureMultiplier": 0.9,
+            "minutesMultiplier": 1.0,
+            "minutesRisk": false,
+            "opponents": [
+              {
+                "fdrMultiplier": 0.9,
+                "fdrRating": 4,
+                "strengthMultiplier": 1.0,
+                "team": "CHE",
+                "wasHome": false
+              }
+            ],
+            "points": 3.78
+          },
+          "coldStart": false,
+          "id": 124,
+          "opponents": [
+            {
+              "fdrMultiplier": 0.9,
+              "fdrRating": 4,
+              "strengthMultiplier": 1.0,
+              "team": "CHE",
+              "wasHome": false
+            }
+          ],
+          "position": "MID",
+          "projectedPoints": 3.78,
+          "team": "BHA",
+          "webName": "Gro\u00df",
+          "windowPoints": 21.0
+        }
+      }
+    ],
+    "currentSquad": {
+      "players": [
+        {
+          "breakdown": {
+            "availabilityMultiplier": 1.0,
+            "base": 4.4,
+            "coldStart": false,
+            "expectedMinutes": 90.0,
+            "fixtureMultiplier": 0.9,
+            "minutesMultiplier": 1.0,
+            "minutesRisk": false,
+            "opponents": [
+              {
+                "fdrMultiplier": 0.9,
+                "fdrRating": 4,
+                "strengthMultiplier": 1.0,
+                "team": "AVL",
+                "wasHome": false
+              }
+            ],
+            "points": 3.96
+          },
+          "coldStart": false,
+          "id": 1,
+          "minutesRisk": false,
+          "opponents": [
+            {
+              "fdrMultiplier": 0.9,
+              "fdrRating": 4,
+              "strengthMultiplier": 1.0,
+              "team": "AVL",
+              "wasHome": false
+            }
+          ],
+          "position": "GKP",
+          "projectedPoints": 3.96,
+          "team": "ARS",
+          "webName": "Raya"
+        },
+        {
+          "breakdown": {
+            "availabilityMultiplier": 1.0,
+            "base": 3.1,
+            "coldStart": false,
+            "expectedMinutes": 87.6,
+            "fixtureMultiplier": 1.1,
+            "minutesMultiplier": 0.973,
+            "minutesRisk": false,
+            "opponents": [
+              {
+                "fdrMultiplier": 1.1,
+                "fdrRating": 2,
+                "strengthMultiplier": 1.0,
+                "team": "IPS",
+                "wasHome": true
+              }
+            ],
+            "points": 3.32
+          },
+          "coldStart": false,
+          "id": 418,
+          "minutesRisk": false,
+          "opponents": [
+            {
+              "fdrMultiplier": 1.1,
+              "fdrRating": 2,
+              "strengthMultiplier": 1.0,
+              "team": "IPS",
+              "wasHome": true
+            }
+          ],
+          "position": "DEF",
+          "projectedPoints": 3.32,
+          "team": "MUN",
+          "webName": "Maguire"
+        },
+        {
+          "breakdown": {
+            "availabilityMultiplier": 1.0,
+            "base": 4.5,
+            "coldStart": false,
+            "expectedMinutes": 104.7,
+            "fixtureMultiplier": 0.9,
+            "minutesMultiplier": 1.0,
+            "minutesRisk": false,
+            "opponents": [
+              {
+                "fdrMultiplier": 0.9,
+                "fdrRating": 4,
+                "strengthMultiplier": 1.0,
+                "team": "AVL",
+                "wasHome": false
+              }
+            ],
+            "points": 4.05
+          },
+          "coldStart": false,
+          "id": 11,
+          "minutesRisk": false,
+          "opponents": [
+            {
+              "fdrMultiplier": 0.9,
+              "fdrRating": 4,
+              "strengthMultiplier": 1.0,
+              "team": "AVL",
+              "wasHome": false
+            }
+          ],
+          "position": "DEF",
+          "projectedPoints": 4.05,
+          "team": "ARS",
+          "webName": "Mosquera"
+        },
+        {
+          "breakdown": {
+            "availabilityMultiplier": 1.0,
+            "base": 4.97,
+            "coldStart": false,
+            "expectedMinutes": 51.4,
+            "fixtureMultiplier": 0.9,
+            "minutesMultiplier": 0.571,
+            "minutesRisk": false,
+            "opponents": [
+              {
+                "fdrMultiplier": 0.9,
+                "fdrRating": 4,
+                "strengthMultiplier": 1.0,
+                "team": "CHE",
+                "wasHome": false
+              }
+            ],
+            "points": 2.55
+          },
+          "coldStart": false,
+          "id": 504,
+          "minutesRisk": false,
+          "opponents": [
+            {
+              "fdrMultiplier": 0.9,
+              "fdrRating": 4,
+              "strengthMultiplier": 1.0,
+              "team": "CHE",
+              "wasHome": false
+            }
+          ],
+          "position": "DEF",
+          "projectedPoints": 2.55,
+          "team": "BHA",
+          "webName": "Vuskovic"
+        },
+        {
+          "breakdown": {
+            "availabilityMultiplier": 1.0,
+            "base": 4.43,
+            "coldStart": false,
+            "expectedMinutes": 88.2,
+            "fixtureMultiplier": 1.1,
+            "minutesMultiplier": 0.98,
+            "minutesRisk": false,
+            "opponents": [
+              {
+                "fdrMultiplier": 1.1,
+                "fdrRating": 2,
+                "strengthMultiplier": 1.0,
+                "team": "IPS",
+                "wasHome": true
+              }
+            ],
+            "points": 4.78
+          },
+          "coldStart": false,
+          "id": 426,
+          "minutesRisk": false,
+          "opponents": [
+            {
+              "fdrMultiplier": 1.1,
+              "fdrRating": 2,
+              "strengthMultiplier": 1.0,
+              "team": "IPS",
+              "wasHome": true
+            }
+          ],
+          "position": "MID",
+          "projectedPoints": 4.78,
+          "team": "MUN",
+          "webName": "B.Fernandes"
+        },
+        {
+          "breakdown": {
+            "availabilityMultiplier": 1.0,
+            "base": 4.2,
+            "coldStart": false,
+            "expectedMinutes": 90.7,
+            "fixtureMultiplier": 0.9,
+            "minutesMultiplier": 1.0,
+            "minutesRisk": false,
+            "opponents": [
+              {
+                "fdrMultiplier": 0.9,
+                "fdrRating": 4,
+                "strengthMultiplier": 1.0,
+                "team": "CHE",
+                "wasHome": false
+              }
+            ],
+            "points": 3.78
+          },
+          "coldStart": false,
+          "id": 124,
+          "minutesRisk": false,
+          "opponents": [
+            {
+              "fdrMultiplier": 0.9,
+              "fdrRating": 4,
+              "strengthMultiplier": 1.0,
+              "team": "CHE",
+              "wasHome": false
+            }
+          ],
+          "position": "MID",
+          "projectedPoints": 3.78,
+          "team": "BHA",
+          "webName": "Gro\u00df"
+        },
+        {
+          "breakdown": {
+            "availabilityMultiplier": 1.0,
+            "base": 3.23,
+            "coldStart": false,
+            "expectedMinutes": 81.4,
+            "fixtureMultiplier": 1.0,
+            "minutesMultiplier": 0.904,
+            "minutesRisk": false,
+            "opponents": [
+              {
+                "fdrMultiplier": 1.0,
+                "fdrRating": 3,
+                "strengthMultiplier": 1.0,
+                "team": "NFO",
+                "wasHome": true
+              }
+            ],
+            "points": 2.92
+          },
+          "coldStart": false,
+          "id": 366,
+          "minutesRisk": false,
+          "opponents": [
+            {
+              "fdrMultiplier": 1.0,
+              "fdrRating": 3,
+              "strengthMultiplier": 1.0,
+              "team": "NFO",
+              "wasHome": true
+            }
+          ],
+          "position": "MID",
+          "projectedPoints": 2.92,
+          "team": "LIV",
+          "webName": "Wirtz"
+        },
+        {
+          "breakdown": {
+            "coldStart": true,
+            "opponents": [
+              {
+                "fdrMultiplier": 0.9,
+                "fdrRating": 4,
+                "strengthMultiplier": 1.0,
+                "team": "AVL",
+                "wasHome": false
+              }
+            ],
+            "points": null
+          },
+          "coldStart": true,
+          "id": 557,
+          "minutesRisk": false,
+          "opponents": [
+            {
+              "fdrMultiplier": 0.9,
+              "fdrRating": 4,
+              "strengthMultiplier": 1.0,
+              "team": "AVL",
+              "wasHome": false
+            }
+          ],
+          "position": "MID",
+          "projectedPoints": null,
+          "team": "ARS",
+          "webName": "Tzolis"
+        },
+        {
+          "breakdown": {
+            "availabilityMultiplier": 1.0,
+            "base": 0.9,
+            "coldStart": false,
+            "expectedMinutes": 90.5,
+            "fixtureMultiplier": 1.0,
+            "minutesMultiplier": 1.0,
+            "minutesRisk": false,
+            "opponents": [
+              {
+                "fdrMultiplier": 1.0,
+                "fdrRating": 3,
+                "strengthMultiplier": 1.0,
+                "team": "BRE",
+                "wasHome": true
+              }
+            ],
+            "points": 0.9
+          },
+          "coldStart": false,
+          "id": 346,
+          "minutesRisk": false,
+          "opponents": [
+            {
+              "fdrMultiplier": 1.0,
+              "fdrRating": 3,
+              "strengthMultiplier": 1.0,
+              "team": "BRE",
+              "wasHome": true
+            }
+          ],
+          "position": "FWD",
+          "projectedPoints": 0.9,
+          "team": "LEE",
+          "webName": "Calvert-Lewin"
+        },
+        {
+          "breakdown": {
+            "availabilityMultiplier": 1.0,
+            "base": 3.3,
+            "coldStart": false,
+            "expectedMinutes": 87.6,
+            "fixtureMultiplier": 1.0,
+            "minutesMultiplier": 0.973,
+            "minutesRisk": false,
+            "opponents": [
+              {
+                "fdrMultiplier": 1.0,
+                "fdrRating": 3,
+                "strengthMultiplier": 1.0,
+                "team": "CRY",
+                "wasHome": false
+              }
+            ],
+            "points": 3.21
+          },
+          "coldStart": false,
+          "id": 411,
+          "minutesRisk": false,
+          "opponents": [
+            {
+              "fdrMultiplier": 1.0,
+              "fdrRating": 3,
+              "strengthMultiplier": 1.0,
+              "team": "CRY",
+              "wasHome": false
+            }
+          ],
+          "position": "FWD",
+          "projectedPoints": 3.21,
+          "team": "MCI",
+          "webName": "Haaland"
+        },
+        {
+          "breakdown": {
+            "availabilityMultiplier": 1.0,
+            "base": 11.03,
+            "coldStart": false,
+            "expectedMinutes": 86.8,
+            "fixtureMultiplier": 1.1,
+            "minutesMultiplier": 0.964,
+            "minutesRisk": false,
+            "opponents": [
+              {
+                "fdrMultiplier": 1.1,
+                "fdrRating": 2,
+                "strengthMultiplier": 1.0,
+                "team": "BHA",
+                "wasHome": true
+              }
+            ],
+            "points": 11.71
+          },
+          "coldStart": false,
+          "id": 165,
+          "minutesRisk": false,
+          "opponents": [
+            {
+              "fdrMultiplier": 1.1,
+              "fdrRating": 2,
+              "strengthMultiplier": 1.0,
+              "team": "BHA",
+              "wasHome": true
+            }
+          ],
+          "position": "FWD",
+          "projectedPoints": 11.71,
+          "team": "CHE",
+          "webName": "Jo\u00e3o Pedro"
+        },
+        {
+          "breakdown": {
+            "availabilityMultiplier": 1.0,
+            "base": 2.8,
+            "coldStart": false,
+            "expectedMinutes": 90.0,
+            "fixtureMultiplier": 1.1,
+            "minutesMultiplier": 1.0,
+            "minutesRisk": false,
+            "opponents": [
+              {
+                "fdrMultiplier": 1.1,
+                "fdrRating": 2,
+                "strengthMultiplier": 1.0,
+                "team": "NEW",
+                "wasHome": true
+              }
+            ],
+            "points": 3.08
+          },
+          "coldStart": false,
+          "id": 496,
+          "minutesRisk": false,
+          "opponents": [
+            {
+              "fdrMultiplier": 1.1,
+              "fdrRating": 2,
+              "strengthMultiplier": 1.0,
+              "team": "NEW",
+              "wasHome": true
+            }
+          ],
+          "position": "GKP",
+          "projectedPoints": 3.08,
+          "team": "TOT",
+          "webName": "Kinsky"
+        },
+        {
+          "breakdown": {
+            "availabilityMultiplier": 1.0,
+            "base": 0.0,
+            "coldStart": false,
+            "expectedMinutes": 61.6,
+            "fixtureMultiplier": 0.9,
+            "minutesMultiplier": 0.684,
+            "minutesRisk": true,
+            "opponents": [
+              {
+                "fdrMultiplier": 0.9,
+                "fdrRating": 4,
+                "strengthMultiplier": 1.0,
+                "team": "MCI",
+                "wasHome": true
+              }
+            ],
+            "points": 0.0
+          },
+          "coldStart": false,
+          "id": 212,
+          "minutesRisk": true,
+          "opponents": [
+            {
+              "fdrMultiplier": 0.9,
+              "fdrRating": 4,
+              "strengthMultiplier": 1.0,
+              "team": "MCI",
+              "wasHome": true
+            }
+          ],
+          "position": "MID",
+          "projectedPoints": 0.0,
+          "team": "CRY",
+          "webName": "Hughes"
+        },
+        {
+          "breakdown": {
+            "availabilityMultiplier": 1.0,
+            "base": 1.93,
+            "coldStart": false,
+            "expectedMinutes": 51.4,
+            "fixtureMultiplier": 0.9,
+            "minutesMultiplier": 0.571,
+            "minutesRisk": false,
+            "opponents": [
+              {
+                "fdrMultiplier": 0.9,
+                "fdrRating": 4,
+                "strengthMultiplier": 1.0,
+                "team": "MUN",
+                "wasHome": false
+              }
+            ],
+            "points": 0.99
+          },
+          "coldStart": false,
+          "id": 305,
+          "minutesRisk": false,
+          "opponents": [
+            {
+              "fdrMultiplier": 0.9,
+              "fdrRating": 4,
+              "strengthMultiplier": 1.0,
+              "team": "MUN",
+              "wasHome": false
+            }
+          ],
+          "position": "DEF",
+          "projectedPoints": 0.99,
+          "team": "IPS",
+          "webName": "Davis"
+        },
+        {
+          "breakdown": {
+            "coldStart": true,
+            "opponents": [
+              {
+                "fdrMultiplier": 1.0,
+                "fdrRating": 3,
+                "strengthMultiplier": 1.0,
+                "team": "BRE",
+                "wasHome": true
+              }
+            ],
+            "points": null
+          },
+          "coldStart": true,
+          "id": 334,
+          "minutesRisk": false,
+          "opponents": [
+            {
+              "fdrMultiplier": 1.0,
+              "fdrRating": 3,
+              "strengthMultiplier": 1.0,
+              "team": "BRE",
+              "wasHome": true
+            }
+          ],
+          "position": "DEF",
+          "projectedPoints": null,
+          "team": "LEE",
+          "webName": "Muharemovi\u0107"
+        }
+      ],
+      "windowPoints": 223.57
     },
-    {
-      "component": "minutes-model",
-      "element_type": 3,
-      "expectedMinutes": 41.7,
-      "fdrMultiplier": 0.9,
-      "id": 557,
-      "position": "MID",
-      "projected": 2.32,
-      "team": "ARS",
-      "webName": "Tzolis"
-    },
-    {
-      "component": "minutes-model",
-      "element_type": 2,
-      "expectedMinutes": 51.4,
-      "fdrMultiplier": 0.9,
-      "id": 305,
-      "position": "DEF",
-      "projected": 1.69,
-      "team": "IPS",
-      "webName": "Davis"
-    },
-    {
-      "component": "minutes-model",
-      "element_type": 3,
-      "expectedMinutes": 61.6,
-      "fdrMultiplier": 0.9,
-      "id": 212,
-      "position": "MID",
-      "projected": 1.6,
-      "team": "CRY",
-      "webName": "Hughes"
-    }
-  ],
-  "captain": "Jo\u00e3o Pedro",
-  "captainId": 165,
-  "generatedAt": "2026-08-30T09:02:41.079030+00:00",
+    "model": [
+      {
+        "bestAlternative": {
+          "breakdown": {
+            "availabilityMultiplier": 1.0,
+            "base": 9.7,
+            "coldStart": false,
+            "expectedMinutes": 86.7,
+            "fixtureMultiplier": 1.1,
+            "minutesMultiplier": 0.963,
+            "minutesRisk": false,
+            "opponents": [
+              {
+                "fdrMultiplier": 1.1,
+                "fdrRating": 2,
+                "strengthMultiplier": 1.0,
+                "team": "BHA",
+                "wasHome": true
+              }
+            ],
+            "points": 10.28
+          },
+          "coldStart": false,
+          "id": 40,
+          "opponents": [
+            {
+              "fdrMultiplier": 1.1,
+              "fdrRating": 2,
+              "strengthMultiplier": 1.0,
+              "team": "BHA",
+              "wasHome": true
+            }
+          ],
+          "position": "MID",
+          "projectedPoints": 10.28,
+          "team": "CHE",
+          "webName": "Rogers",
+          "windowPoints": 46.72
+        },
+        "gapPoints": 31.81,
+        "minutesRisk": false,
+        "squadPlayer": {
+          "breakdown": {
+            "availabilityMultiplier": 1.0,
+            "base": 3.23,
+            "coldStart": false,
+            "expectedMinutes": 81.4,
+            "fixtureMultiplier": 1.0,
+            "minutesMultiplier": 0.904,
+            "minutesRisk": false,
+            "opponents": [
+              {
+                "fdrMultiplier": 1.0,
+                "fdrRating": 3,
+                "strengthMultiplier": 1.0,
+                "team": "NFO",
+                "wasHome": true
+              }
+            ],
+            "points": 2.92
+          },
+          "coldStart": false,
+          "id": 366,
+          "opponents": [
+            {
+              "fdrMultiplier": 1.0,
+              "fdrRating": 3,
+              "strengthMultiplier": 1.0,
+              "team": "NFO",
+              "wasHome": true
+            }
+          ],
+          "position": "MID",
+          "projectedPoints": 2.92,
+          "team": "LIV",
+          "webName": "Wirtz",
+          "windowPoints": 14.91
+        }
+      },
+      {
+        "bestAlternative": {
+          "breakdown": {
+            "availabilityMultiplier": 1.0,
+            "base": 7.97,
+            "coldStart": false,
+            "expectedMinutes": 89.9,
+            "fixtureMultiplier": 1.0,
+            "minutesMultiplier": 0.999,
+            "minutesRisk": false,
+            "opponents": [
+              {
+                "fdrMultiplier": 1.0,
+                "fdrRating": 3,
+                "strengthMultiplier": 1.0,
+                "team": "BRE",
+                "wasHome": true
+              }
+            ],
+            "points": 7.96
+          },
+          "coldStart": false,
+          "id": 327,
+          "opponents": [
+            {
+              "fdrMultiplier": 1.0,
+              "fdrRating": 3,
+              "strengthMultiplier": 1.0,
+              "team": "BRE",
+              "wasHome": true
+            }
+          ],
+          "position": "DEF",
+          "projectedPoints": 7.96,
+          "team": "LEE",
+          "webName": "Bijol",
+          "windowPoints": 39.0
+        },
+        "gapPoints": 24.82,
+        "minutesRisk": false,
+        "squadPlayer": {
+          "breakdown": {
+            "availabilityMultiplier": 1.0,
+            "base": 4.97,
+            "coldStart": false,
+            "expectedMinutes": 51.4,
+            "fixtureMultiplier": 0.9,
+            "minutesMultiplier": 0.571,
+            "minutesRisk": false,
+            "opponents": [
+              {
+                "fdrMultiplier": 0.9,
+                "fdrRating": 4,
+                "strengthMultiplier": 1.0,
+                "team": "CHE",
+                "wasHome": false
+              }
+            ],
+            "points": 2.55
+          },
+          "coldStart": false,
+          "id": 504,
+          "opponents": [
+            {
+              "fdrMultiplier": 0.9,
+              "fdrRating": 4,
+              "strengthMultiplier": 1.0,
+              "team": "CHE",
+              "wasHome": false
+            }
+          ],
+          "position": "DEF",
+          "projectedPoints": 2.55,
+          "team": "BHA",
+          "webName": "Vuskovic",
+          "windowPoints": 14.18
+        }
+      },
+      {
+        "bestAlternative": {
+          "breakdown": {
+            "availabilityMultiplier": 1.0,
+            "base": 9.4,
+            "coldStart": false,
+            "expectedMinutes": 89.3,
+            "fixtureMultiplier": 1.0,
+            "minutesMultiplier": 0.992,
+            "minutesRisk": false,
+            "opponents": [
+              {
+                "fdrMultiplier": 1.0,
+                "fdrRating": 3,
+                "strengthMultiplier": 1.0,
+                "team": "LEE",
+                "wasHome": false
+              }
+            ],
+            "points": 9.33
+          },
+          "coldStart": false,
+          "id": 86,
+          "opponents": [
+            {
+              "fdrMultiplier": 1.0,
+              "fdrRating": 3,
+              "strengthMultiplier": 1.0,
+              "team": "LEE",
+              "wasHome": false
+            }
+          ],
+          "position": "MID",
+          "projectedPoints": 9.33,
+          "team": "BRE",
+          "webName": "Lewis-Potter",
+          "windowPoints": 45.7
+        },
+        "gapPoints": 24.7,
+        "minutesRisk": false,
+        "squadPlayer": {
+          "breakdown": {
+            "availabilityMultiplier": 1.0,
+            "base": 4.2,
+            "coldStart": false,
+            "expectedMinutes": 90.7,
+            "fixtureMultiplier": 0.9,
+            "minutesMultiplier": 1.0,
+            "minutesRisk": false,
+            "opponents": [
+              {
+                "fdrMultiplier": 0.9,
+                "fdrRating": 4,
+                "strengthMultiplier": 1.0,
+                "team": "CHE",
+                "wasHome": false
+              }
+            ],
+            "points": 3.78
+          },
+          "coldStart": false,
+          "id": 124,
+          "opponents": [
+            {
+              "fdrMultiplier": 0.9,
+              "fdrRating": 4,
+              "strengthMultiplier": 1.0,
+              "team": "CHE",
+              "wasHome": false
+            }
+          ],
+          "position": "MID",
+          "projectedPoints": 3.78,
+          "team": "BHA",
+          "webName": "Gro\u00df",
+          "windowPoints": 21.0
+        }
+      }
+    ]
+  },
+  "generatedAt": "2026-08-30T11:18:33.387258+00:00",
   "overridesApplied": 0,
   "rollingWindow": 5,
-  "startingXI": [
-    {
-      "component": "minutes-model",
-      "element_type": 1,
-      "expectedMinutes": 90.0,
-      "fdrMultiplier": 0.9,
-      "id": 1,
-      "position": "GKP",
-      "projected": 4.43,
-      "team": "ARS",
-      "webName": "Raya"
-    },
-    {
-      "component": "minutes-model",
-      "element_type": 2,
-      "expectedMinutes": 104.7,
-      "fdrMultiplier": 0.9,
-      "id": 11,
-      "position": "DEF",
-      "projected": 4.64,
-      "team": "ARS",
-      "webName": "Mosquera"
-    },
-    {
-      "component": "minutes-model",
-      "element_type": 2,
-      "expectedMinutes": 87.6,
-      "fdrMultiplier": 1.1,
-      "id": 418,
-      "position": "DEF",
-      "projected": 3.87,
-      "team": "MUN",
-      "webName": "Maguire"
-    },
-    {
-      "component": "minutes-model",
-      "element_type": 2,
-      "expectedMinutes": 51.4,
-      "fdrMultiplier": 1.0,
-      "id": 334,
-      "position": "DEF",
-      "projected": 2.64,
-      "team": "LEE",
-      "webName": "Muharemovi\u0107"
-    },
-    {
-      "component": "minutes-model",
-      "element_type": 2,
-      "expectedMinutes": 51.4,
-      "fdrMultiplier": 0.9,
-      "id": 504,
-      "position": "DEF",
-      "projected": 2.37,
-      "team": "BHA",
-      "webName": "Vuskovic"
-    },
-    {
-      "component": "minutes-model",
-      "element_type": 3,
-      "expectedMinutes": 88.2,
-      "fdrMultiplier": 1.1,
-      "id": 426,
-      "position": "MID",
-      "projected": 5.68,
-      "team": "MUN",
-      "webName": "B.Fernandes"
-    },
-    {
-      "component": "minutes-model",
-      "element_type": 3,
-      "expectedMinutes": 81.4,
-      "fdrMultiplier": 1.0,
-      "id": 366,
-      "position": "MID",
-      "projected": 3.86,
-      "team": "LIV",
-      "webName": "Wirtz"
-    },
-    {
-      "component": "minutes-model",
-      "element_type": 3,
-      "expectedMinutes": 90.7,
-      "fdrMultiplier": 0.9,
-      "id": 124,
-      "position": "MID",
-      "projected": 3.2,
-      "team": "BHA",
-      "webName": "Gro\u00df"
-    },
-    {
-      "component": "minutes-model",
-      "element_type": 4,
-      "expectedMinutes": 86.8,
-      "fdrMultiplier": 1.1,
-      "id": 165,
-      "position": "FWD",
-      "projected": 8.13,
-      "team": "CHE",
-      "webName": "Jo\u00e3o Pedro"
-    },
-    {
-      "component": "minutes-model",
-      "element_type": 4,
-      "expectedMinutes": 87.6,
-      "fdrMultiplier": 1.0,
-      "id": 411,
-      "position": "FWD",
-      "projected": 5.37,
-      "team": "MCI",
-      "webName": "Haaland"
-    },
-    {
-      "component": "minutes-model",
-      "element_type": 4,
-      "expectedMinutes": 90.5,
-      "fdrMultiplier": 1.0,
-      "id": 346,
-      "position": "FWD",
-      "projected": 3.48,
-      "team": "LEE",
-      "webName": "Calvert-Lewin"
-    }
-  ],
-  "viceCaptain": "B.Fernandes",
-  "viceCaptainId": 426
+  "runningRecord": null,
+  "targetGameweek": 2
 }
