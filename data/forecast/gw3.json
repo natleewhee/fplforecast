@@ -1,17 +1,17 @@
 {
   "basedOnGameweek": 1,
   "captain": {
-    "id": 124,
-    "webName": "Gro\u00df"
+    "id": 411,
+    "webName": "Haaland"
   },
-  "generatedAt": "2026-08-30T13:04:33.068159+00:00",
+  "generatedAt": "2026-08-30T14:16:13.716610+00:00",
   "overridesApplied": 0,
   "rollingWindow": 5,
   "runningRecord": null,
   "squad": {
     "bench": [
-      496,
-      305,
+      1,
+      212,
       557,
       334
     ],
@@ -21,22 +21,32 @@
         "baselineUpgrade": null,
         "breakdown": {
           "availabilityMultiplier": 1.0,
-          "base": 3.37,
           "coldStart": false,
+          "components": {
+            "appearance": 2.0,
+            "assists": 0.08,
+            "bonus": 0.09,
+            "cards": -0.02,
+            "cleanSheet": 1.06,
+            "defensiveContribution": 0.0,
+            "goals": 0.23,
+            "goalsConceded": -0.66,
+            "saves": 0.52
+          },
           "expectedMinutes": 90.0,
-          "fixtureMultiplier": 0.903,
-          "minutesMultiplier": 1.0,
           "minutesRisk": false,
           "opponents": [
             {
-              "fdrMultiplier": 0.9,
+              "attackAdjust": 1.286,
+              "cleanSheetProb": 0.265,
               "fdrRating": 4,
-              "strengthMultiplier": 1.007,
+              "lambdaAgainst": 1.33,
+              "lambdaFor": 1.86,
               "team": "CHE",
               "wasHome": true
             }
           ],
-          "points": 3.04
+          "points": 3.3
         },
         "coldStart": false,
         "elementType": 1,
@@ -46,200 +56,260 @@
         "modelUpgrade": null,
         "opponents": [
           {
-            "fdrMultiplier": 0.9,
+            "attackAdjust": 1.286,
+            "cleanSheetProb": 0.265,
             "fdrRating": 4,
-            "strengthMultiplier": 1.007,
+            "lambdaAgainst": 1.33,
+            "lambdaFor": 1.86,
             "team": "CHE",
             "wasHome": true
           }
         ],
         "position": "GKP",
-        "projectedPoints": 3.04,
-        "role": "start",
+        "projectedPoints": 3.3,
+        "role": "bench",
         "team": "ARS",
         "webName": "Raya",
-        "windowPoints": 16.9
+        "windowPoints": 15.68
       },
       {
         "alternatives": [
           {
             "breakdown": {
               "availabilityMultiplier": 1.0,
-              "base": 4.15,
               "coldStart": false,
+              "components": {
+                "appearance": 2.0,
+                "assists": 0.17,
+                "bonus": 1.31,
+                "cards": -0.06,
+                "cleanSheet": 0.78,
+                "defensiveContribution": 2.0,
+                "goals": 0.58,
+                "goalsConceded": -0.81,
+                "saves": 0.0
+              },
               "expectedMinutes": 89.9,
-              "fixtureMultiplier": 1.005,
-              "minutesMultiplier": 0.999,
               "minutesRisk": false,
               "opponents": [
                 {
-                  "fdrMultiplier": 1.0,
+                  "attackAdjust": 0.989,
+                  "cleanSheetProb": 0.196,
                   "fdrRating": 3,
-                  "strengthMultiplier": 1.01,
+                  "lambdaAgainst": 1.63,
+                  "lambdaFor": 1.43,
                   "team": "BHA",
                   "wasHome": false
                 }
               ],
-              "points": 4.16
+              "points": 5.98
             },
             "coldStart": false,
             "elementType": 2,
-            "gapPoints": 4.53,
+            "gapPoints": 8.53,
             "id": 327,
             "opponents": [
               {
-                "fdrMultiplier": 1.0,
+                "attackAdjust": 0.989,
+                "cleanSheetProb": 0.196,
                 "fdrRating": 3,
-                "strengthMultiplier": 1.01,
+                "lambdaAgainst": 1.63,
+                "lambdaFor": 1.43,
                 "team": "BHA",
                 "wasHome": false
               }
             ],
             "position": "DEF",
-            "projectedPoints": 4.16,
+            "projectedPoints": 5.98,
             "team": "LEE",
             "webName": "Bijol",
-            "windowPoints": 19.67
+            "windowPoints": 30.51
           },
           {
             "breakdown": {
               "availabilityMultiplier": 1.0,
-              "base": 3.81,
               "coldStart": false,
-              "expectedMinutes": 81.2,
-              "fixtureMultiplier": 1.101,
-              "minutesMultiplier": 0.902,
+              "components": {
+                "appearance": 2.0,
+                "assists": 0.69,
+                "bonus": 0.47,
+                "cards": -0.05,
+                "cleanSheet": 0.95,
+                "defensiveContribution": 1.89,
+                "goals": 0.29,
+                "goalsConceded": -0.72,
+                "saves": 0.0
+              },
+              "expectedMinutes": 90.5,
               "minutesRisk": false,
               "opponents": [
                 {
-                  "fdrMultiplier": 1.1,
+                  "attackAdjust": 1.165,
+                  "cleanSheetProb": 0.237,
+                  "fdrRating": 3,
+                  "lambdaAgainst": 1.44,
+                  "lambdaFor": 1.69,
+                  "team": "BOU",
+                  "wasHome": true
+                }
+              ],
+              "points": 5.52
+            },
+            "coldStart": false,
+            "elementType": 2,
+            "gapPoints": 4.96,
+            "id": 449,
+            "opponents": [
+              {
+                "attackAdjust": 1.165,
+                "cleanSheetProb": 0.237,
+                "fdrRating": 3,
+                "lambdaAgainst": 1.44,
+                "lambdaFor": 1.69,
+                "team": "BOU",
+                "wasHome": true
+              }
+            ],
+            "position": "DEF",
+            "projectedPoints": 5.52,
+            "team": "NEW",
+            "webName": "Hall",
+            "windowPoints": 26.94
+          },
+          {
+            "breakdown": {
+              "availabilityMultiplier": 1.0,
+              "coldStart": false,
+              "components": {
+                "appearance": 2.0,
+                "assists": 0.19,
+                "bonus": 0.71,
+                "cards": -0.05,
+                "cleanSheet": 0.95,
+                "defensiveContribution": 1.7,
+                "goals": 0.55,
+                "goalsConceded": -0.65,
+                "saves": 0.0
+              },
+              "expectedMinutes": 81.2,
+              "minutesRisk": false,
+              "opponents": [
+                {
+                  "attackAdjust": 1.123,
+                  "cleanSheetProb": 0.238,
                   "fdrRating": 2,
-                  "strengthMultiplier": 1.002,
+                  "lambdaAgainst": 1.43,
+                  "lambdaFor": 1.63,
                   "team": "LEE",
                   "wasHome": true
                 }
               ],
-              "points": 3.79
+              "points": 5.41
             },
             "coldStart": false,
             "elementType": 2,
-            "gapPoints": 2.27,
+            "gapPoints": 4.2,
             "id": 130,
             "opponents": [
               {
-                "fdrMultiplier": 1.1,
+                "attackAdjust": 1.123,
+                "cleanSheetProb": 0.238,
                 "fdrRating": 2,
-                "strengthMultiplier": 1.002,
+                "lambdaAgainst": 1.43,
+                "lambdaFor": 1.63,
                 "team": "LEE",
                 "wasHome": true
               }
             ],
             "position": "DEF",
-            "projectedPoints": 3.79,
+            "projectedPoints": 5.41,
             "team": "BHA",
             "webName": "Wieffer",
-            "windowPoints": 17.41
-          },
-          {
-            "breakdown": {
-              "availabilityMultiplier": 1.0,
-              "base": 3.24,
-              "coldStart": false,
-              "expectedMinutes": 90.8,
-              "fixtureMultiplier": 1.006,
-              "minutesMultiplier": 1.0,
-              "minutesRisk": false,
-              "opponents": [
-                {
-                  "fdrMultiplier": 1.0,
-                  "fdrRating": 3,
-                  "strengthMultiplier": 1.012,
-                  "team": "FUL",
-                  "wasHome": false
-                }
-              ],
-              "points": 3.26
-            },
-            "coldStart": false,
-            "elementType": 2,
-            "gapPoints": 1.5,
-            "id": 202,
-            "opponents": [
-              {
-                "fdrMultiplier": 1.0,
-                "fdrRating": 3,
-                "strengthMultiplier": 1.012,
-                "team": "FUL",
-                "wasHome": false
-              }
-            ],
-            "position": "DEF",
-            "projectedPoints": 3.26,
-            "team": "CRY",
-            "webName": "Richards",
-            "windowPoints": 16.64
+            "windowPoints": 26.18
           }
         ],
         "baselineUpgrade": {
           "alternative": {
             "breakdown": {
               "availabilityMultiplier": 1.0,
-              "base": 4.15,
               "coldStart": false,
+              "components": {
+                "appearance": 2.0,
+                "assists": 0.17,
+                "bonus": 1.31,
+                "cards": -0.06,
+                "cleanSheet": 0.78,
+                "defensiveContribution": 2.0,
+                "goals": 0.58,
+                "goalsConceded": -0.81,
+                "saves": 0.0
+              },
               "expectedMinutes": 89.9,
-              "fixtureMultiplier": 1.005,
-              "minutesMultiplier": 0.999,
               "minutesRisk": false,
               "opponents": [
                 {
-                  "fdrMultiplier": 1.0,
+                  "attackAdjust": 0.989,
+                  "cleanSheetProb": 0.196,
                   "fdrRating": 3,
-                  "strengthMultiplier": 1.01,
+                  "lambdaAgainst": 1.63,
+                  "lambdaFor": 1.43,
                   "team": "BHA",
                   "wasHome": false
                 }
               ],
-              "points": 4.16
+              "points": 5.98
             },
             "coldStart": false,
             "elementType": 2,
             "id": 327,
             "opponents": [
               {
-                "fdrMultiplier": 1.0,
+                "attackAdjust": 0.989,
+                "cleanSheetProb": 0.196,
                 "fdrRating": 3,
-                "strengthMultiplier": 1.01,
+                "lambdaAgainst": 1.63,
+                "lambdaFor": 1.43,
                 "team": "BHA",
                 "wasHome": false
               }
             ],
             "position": "DEF",
-            "projectedPoints": 4.16,
+            "projectedPoints": 5.98,
             "team": "LEE",
             "webName": "Bijol",
-            "windowPoints": 19.67
+            "windowPoints": 30.51
           },
           "gapPoints": 4.87,
           "meaningful": false
         },
         "breakdown": {
           "availabilityMultiplier": 1.0,
-          "base": 3.17,
           "coldStart": false,
+          "components": {
+            "appearance": 2.0,
+            "assists": 0.66,
+            "bonus": 0.06,
+            "cards": -0.05,
+            "cleanSheet": 0.75,
+            "defensiveContribution": 1.26,
+            "goals": 0.4,
+            "goalsConceded": -0.81,
+            "saves": 0.0
+          },
           "expectedMinutes": 87.6,
-          "fixtureMultiplier": 0.994,
-          "minutesMultiplier": 0.973,
           "minutesRisk": false,
           "opponents": [
             {
-              "fdrMultiplier": 1.0,
+              "attackAdjust": 1.045,
+              "cleanSheetProb": 0.188,
               "fdrRating": 3,
-              "strengthMultiplier": 0.987,
+              "lambdaAgainst": 1.67,
+              "lambdaFor": 1.52,
               "team": "EVE",
               "wasHome": false
             }
           ],
-          "points": 3.07
+          "points": 4.26
         },
         "coldStart": false,
         "elementType": 2,
@@ -250,240 +320,312 @@
           "alternative": {
             "breakdown": {
               "availabilityMultiplier": 1.0,
-              "base": 4.15,
               "coldStart": false,
+              "components": {
+                "appearance": 2.0,
+                "assists": 0.17,
+                "bonus": 1.31,
+                "cards": -0.06,
+                "cleanSheet": 0.78,
+                "defensiveContribution": 2.0,
+                "goals": 0.58,
+                "goalsConceded": -0.81,
+                "saves": 0.0
+              },
               "expectedMinutes": 89.9,
-              "fixtureMultiplier": 1.005,
-              "minutesMultiplier": 0.999,
               "minutesRisk": false,
               "opponents": [
                 {
-                  "fdrMultiplier": 1.0,
+                  "attackAdjust": 0.989,
+                  "cleanSheetProb": 0.196,
                   "fdrRating": 3,
-                  "strengthMultiplier": 1.01,
+                  "lambdaAgainst": 1.63,
+                  "lambdaFor": 1.43,
                   "team": "BHA",
                   "wasHome": false
                 }
               ],
-              "points": 4.16
+              "points": 5.98
             },
             "coldStart": false,
             "elementType": 2,
             "id": 327,
             "opponents": [
               {
-                "fdrMultiplier": 1.0,
+                "attackAdjust": 0.989,
+                "cleanSheetProb": 0.196,
                 "fdrRating": 3,
-                "strengthMultiplier": 1.01,
+                "lambdaAgainst": 1.63,
+                "lambdaFor": 1.43,
                 "team": "BHA",
                 "wasHome": false
               }
             ],
             "position": "DEF",
-            "projectedPoints": 4.16,
+            "projectedPoints": 5.98,
             "team": "LEE",
             "webName": "Bijol",
-            "windowPoints": 19.67
+            "windowPoints": 30.51
           },
-          "gapPoints": 4.53,
-          "meaningful": false
+          "gapPoints": 8.53,
+          "meaningful": true
         },
         "opponents": [
           {
-            "fdrMultiplier": 1.0,
+            "attackAdjust": 1.045,
+            "cleanSheetProb": 0.188,
             "fdrRating": 3,
-            "strengthMultiplier": 0.987,
+            "lambdaAgainst": 1.67,
+            "lambdaFor": 1.52,
             "team": "EVE",
             "wasHome": false
           }
         ],
         "position": "DEF",
-        "projectedPoints": 3.07,
+        "projectedPoints": 4.26,
         "role": "start",
         "team": "MUN",
         "webName": "Maguire",
-        "windowPoints": 15.14
+        "windowPoints": 21.98
       },
       {
         "alternatives": [
           {
             "breakdown": {
               "availabilityMultiplier": 1.0,
-              "base": 4.27,
               "coldStart": false,
-              "expectedMinutes": 86.7,
-              "fixtureMultiplier": 1.1,
-              "minutesMultiplier": 0.963,
-              "minutesRisk": false,
-              "opponents": [
-                {
-                  "fdrMultiplier": 1.1,
-                  "fdrRating": 2,
-                  "strengthMultiplier": 1.0,
-                  "team": "COV",
-                  "wasHome": true
-                }
-              ],
-              "points": 4.53
-            },
-            "coldStart": false,
-            "elementType": 2,
-            "gapPoints": 3.66,
-            "id": 391,
-            "opponents": [
-              {
-                "fdrMultiplier": 1.1,
-                "fdrRating": 2,
-                "strengthMultiplier": 1.0,
-                "team": "COV",
-                "wasHome": true
-              }
-            ],
-            "position": "DEF",
-            "projectedPoints": 4.53,
-            "team": "MCI",
-            "webName": "Gvardiol",
-            "windowPoints": 20.98
-          },
-          {
-            "breakdown": {
-              "availabilityMultiplier": 1.0,
-              "base": 4.51,
-              "coldStart": false,
+              "components": {
+                "appearance": 2.0,
+                "assists": 0.47,
+                "bonus": 1.18,
+                "cards": -0.05,
+                "cleanSheet": 1.06,
+                "defensiveContribution": 1.3,
+                "goals": 0.97,
+                "goalsConceded": -0.6,
+                "saves": 0.0
+              },
               "expectedMinutes": 80.8,
-              "fixtureMultiplier": 0.903,
-              "minutesMultiplier": 0.898,
               "minutesRisk": false,
               "opponents": [
                 {
-                  "fdrMultiplier": 0.9,
+                  "attackAdjust": 1.286,
+                  "cleanSheetProb": 0.265,
                   "fdrRating": 4,
-                  "strengthMultiplier": 1.007,
+                  "lambdaAgainst": 1.33,
+                  "lambdaFor": 1.86,
                   "team": "CHE",
                   "wasHome": true
                 }
               ],
-              "points": 3.65
+              "points": 6.32
             },
             "coldStart": false,
             "elementType": 2,
-            "gapPoints": 2.97,
+            "gapPoints": 9.16,
             "id": 10,
             "opponents": [
               {
-                "fdrMultiplier": 0.9,
+                "attackAdjust": 1.286,
+                "cleanSheetProb": 0.265,
                 "fdrRating": 4,
-                "strengthMultiplier": 1.007,
+                "lambdaAgainst": 1.33,
+                "lambdaFor": 1.86,
                 "team": "CHE",
                 "wasHome": true
               }
             ],
             "position": "DEF",
-            "projectedPoints": 3.65,
+            "projectedPoints": 6.32,
             "team": "ARS",
             "webName": "White",
-            "windowPoints": 20.29
+            "windowPoints": 30.21
           },
           {
             "breakdown": {
               "availabilityMultiplier": 1.0,
-              "base": 3.52,
               "coldStart": false,
-              "expectedMinutes": 95.1,
-              "fixtureMultiplier": 0.897,
-              "minutesMultiplier": 1.0,
+              "components": {
+                "appearance": 2.0,
+                "assists": 0.23,
+                "bonus": 0.56,
+                "cards": -0.05,
+                "cleanSheet": 1.06,
+                "defensiveContribution": 1.37,
+                "goals": 0.89,
+                "goalsConceded": -0.64,
+                "saves": 0.0
+              },
+              "expectedMinutes": 86.7,
               "minutesRisk": false,
               "opponents": [
                 {
-                  "fdrMultiplier": 0.9,
-                  "fdrRating": 4,
-                  "strengthMultiplier": 0.993,
-                  "team": "MUN",
+                  "attackAdjust": 1.237,
+                  "cleanSheetProb": 0.265,
+                  "fdrRating": 2,
+                  "lambdaAgainst": 1.33,
+                  "lambdaFor": 1.79,
+                  "team": "COV",
                   "wasHome": true
                 }
               ],
-              "points": 3.16
+              "points": 5.4
             },
             "coldStart": false,
             "elementType": 2,
-            "gapPoints": 0.4,
-            "id": 230,
+            "gapPoints": 5.07,
+            "id": 391,
             "opponents": [
               {
-                "fdrMultiplier": 0.9,
-                "fdrRating": 4,
-                "strengthMultiplier": 0.993,
-                "team": "MUN",
+                "attackAdjust": 1.237,
+                "cleanSheetProb": 0.265,
+                "fdrRating": 2,
+                "lambdaAgainst": 1.33,
+                "lambdaFor": 1.79,
+                "team": "COV",
                 "wasHome": true
               }
             ],
             "position": "DEF",
-            "projectedPoints": 3.16,
-            "team": "EVE",
-            "webName": "Branthwaite",
-            "windowPoints": 17.72
+            "projectedPoints": 5.4,
+            "team": "MCI",
+            "webName": "Gvardiol",
+            "windowPoints": 26.12
+          },
+          {
+            "breakdown": {
+              "availabilityMultiplier": 1.0,
+              "coldStart": false,
+              "components": {
+                "appearance": 2.0,
+                "assists": 0.47,
+                "bonus": 0.06,
+                "cards": -0.05,
+                "cleanSheet": 0.98,
+                "defensiveContribution": 1.92,
+                "goals": 0.39,
+                "goalsConceded": -0.67,
+                "saves": 0.0
+              },
+              "expectedMinutes": 86.4,
+              "minutesRisk": false,
+              "opponents": [
+                {
+                  "attackAdjust": 1.133,
+                  "cleanSheetProb": 0.245,
+                  "fdrRating": 3,
+                  "lambdaAgainst": 1.41,
+                  "lambdaFor": 1.64,
+                  "team": "TOT",
+                  "wasHome": true
+                }
+              ],
+              "points": 5.1
+            },
+            "coldStart": false,
+            "elementType": 2,
+            "gapPoints": 3.04,
+            "id": 472,
+            "opponents": [
+              {
+                "attackAdjust": 1.133,
+                "cleanSheetProb": 0.245,
+                "fdrRating": 3,
+                "lambdaAgainst": 1.41,
+                "lambdaFor": 1.64,
+                "team": "TOT",
+                "wasHome": true
+              }
+            ],
+            "position": "DEF",
+            "projectedPoints": 5.1,
+            "team": "NFO",
+            "webName": "Murillo",
+            "windowPoints": 24.09
           }
         ],
         "baselineUpgrade": {
           "alternative": {
             "breakdown": {
               "availabilityMultiplier": 1.0,
-              "base": 4.51,
               "coldStart": false,
+              "components": {
+                "appearance": 2.0,
+                "assists": 0.47,
+                "bonus": 1.18,
+                "cards": -0.05,
+                "cleanSheet": 1.06,
+                "defensiveContribution": 1.3,
+                "goals": 0.97,
+                "goalsConceded": -0.6,
+                "saves": 0.0
+              },
               "expectedMinutes": 80.8,
-              "fixtureMultiplier": 0.903,
-              "minutesMultiplier": 0.898,
               "minutesRisk": false,
               "opponents": [
                 {
-                  "fdrMultiplier": 0.9,
+                  "attackAdjust": 1.286,
+                  "cleanSheetProb": 0.265,
                   "fdrRating": 4,
-                  "strengthMultiplier": 1.007,
+                  "lambdaAgainst": 1.33,
+                  "lambdaFor": 1.86,
                   "team": "CHE",
                   "wasHome": true
                 }
               ],
-              "points": 3.65
+              "points": 6.32
             },
             "coldStart": false,
             "elementType": 2,
             "id": 10,
             "opponents": [
               {
-                "fdrMultiplier": 0.9,
+                "attackAdjust": 1.286,
+                "cleanSheetProb": 0.265,
                 "fdrRating": 4,
-                "strengthMultiplier": 1.007,
+                "lambdaAgainst": 1.33,
+                "lambdaFor": 1.86,
                 "team": "CHE",
                 "wasHome": true
               }
             ],
             "position": "DEF",
-            "projectedPoints": 3.65,
+            "projectedPoints": 6.32,
             "team": "ARS",
             "webName": "White",
-            "windowPoints": 20.29
+            "windowPoints": 30.21
           },
           "gapPoints": 5.27,
           "meaningful": true
         },
         "breakdown": {
           "availabilityMultiplier": 1.0,
-          "base": 3.45,
           "coldStart": false,
+          "components": {
+            "appearance": 2.0,
+            "assists": 0.17,
+            "bonus": 0.06,
+            "cards": -0.06,
+            "cleanSheet": 1.06,
+            "defensiveContribution": 1.47,
+            "goals": 0.41,
+            "goalsConceded": -0.66,
+            "saves": 0.0
+          },
           "expectedMinutes": 104.7,
-          "fixtureMultiplier": 0.903,
-          "minutesMultiplier": 1.0,
           "minutesRisk": false,
           "opponents": [
             {
-              "fdrMultiplier": 0.9,
+              "attackAdjust": 1.286,
+              "cleanSheetProb": 0.265,
               "fdrRating": 4,
-              "strengthMultiplier": 1.007,
+              "lambdaAgainst": 1.33,
+              "lambdaFor": 1.86,
               "team": "CHE",
               "wasHome": true
             }
           ],
-          "points": 3.12
+          "points": 4.44
         },
         "coldStart": false,
         "elementType": 2,
@@ -494,240 +636,312 @@
           "alternative": {
             "breakdown": {
               "availabilityMultiplier": 1.0,
-              "base": 4.27,
               "coldStart": false,
-              "expectedMinutes": 86.7,
-              "fixtureMultiplier": 1.1,
-              "minutesMultiplier": 0.963,
+              "components": {
+                "appearance": 2.0,
+                "assists": 0.47,
+                "bonus": 1.18,
+                "cards": -0.05,
+                "cleanSheet": 1.06,
+                "defensiveContribution": 1.3,
+                "goals": 0.97,
+                "goalsConceded": -0.6,
+                "saves": 0.0
+              },
+              "expectedMinutes": 80.8,
               "minutesRisk": false,
               "opponents": [
                 {
-                  "fdrMultiplier": 1.1,
-                  "fdrRating": 2,
-                  "strengthMultiplier": 1.0,
-                  "team": "COV",
+                  "attackAdjust": 1.286,
+                  "cleanSheetProb": 0.265,
+                  "fdrRating": 4,
+                  "lambdaAgainst": 1.33,
+                  "lambdaFor": 1.86,
+                  "team": "CHE",
                   "wasHome": true
                 }
               ],
-              "points": 4.53
+              "points": 6.32
             },
             "coldStart": false,
             "elementType": 2,
-            "id": 391,
+            "id": 10,
             "opponents": [
               {
-                "fdrMultiplier": 1.1,
-                "fdrRating": 2,
-                "strengthMultiplier": 1.0,
-                "team": "COV",
+                "attackAdjust": 1.286,
+                "cleanSheetProb": 0.265,
+                "fdrRating": 4,
+                "lambdaAgainst": 1.33,
+                "lambdaFor": 1.86,
+                "team": "CHE",
                 "wasHome": true
               }
             ],
             "position": "DEF",
-            "projectedPoints": 4.53,
-            "team": "MCI",
-            "webName": "Gvardiol",
-            "windowPoints": 20.98
+            "projectedPoints": 6.32,
+            "team": "ARS",
+            "webName": "White",
+            "windowPoints": 30.21
           },
-          "gapPoints": 3.66,
-          "meaningful": false
+          "gapPoints": 9.16,
+          "meaningful": true
         },
         "opponents": [
           {
-            "fdrMultiplier": 0.9,
+            "attackAdjust": 1.286,
+            "cleanSheetProb": 0.265,
             "fdrRating": 4,
-            "strengthMultiplier": 1.007,
+            "lambdaAgainst": 1.33,
+            "lambdaFor": 1.86,
             "team": "CHE",
             "wasHome": true
           }
         ],
         "position": "DEF",
-        "projectedPoints": 3.12,
+        "projectedPoints": 4.44,
         "role": "start",
         "team": "ARS",
         "webName": "Mosquera",
-        "windowPoints": 17.32
+        "windowPoints": 21.05
       },
       {
         "alternatives": [
           {
             "breakdown": {
               "availabilityMultiplier": 1.0,
-              "base": 4.15,
               "coldStart": false,
+              "components": {
+                "appearance": 2.0,
+                "assists": 0.17,
+                "bonus": 1.31,
+                "cards": -0.06,
+                "cleanSheet": 0.78,
+                "defensiveContribution": 2.0,
+                "goals": 0.58,
+                "goalsConceded": -0.81,
+                "saves": 0.0
+              },
               "expectedMinutes": 89.9,
-              "fixtureMultiplier": 1.005,
-              "minutesMultiplier": 0.999,
               "minutesRisk": false,
               "opponents": [
                 {
-                  "fdrMultiplier": 1.0,
+                  "attackAdjust": 0.989,
+                  "cleanSheetProb": 0.196,
                   "fdrRating": 3,
-                  "strengthMultiplier": 1.01,
+                  "lambdaAgainst": 1.63,
+                  "lambdaFor": 1.43,
                   "team": "BHA",
                   "wasHome": false
                 }
               ],
-              "points": 4.16
+              "points": 5.98
             },
             "coldStart": false,
             "elementType": 2,
-            "gapPoints": 9.42,
+            "gapPoints": 12.8,
             "id": 327,
             "opponents": [
               {
-                "fdrMultiplier": 1.0,
+                "attackAdjust": 0.989,
+                "cleanSheetProb": 0.196,
                 "fdrRating": 3,
-                "strengthMultiplier": 1.01,
+                "lambdaAgainst": 1.63,
+                "lambdaFor": 1.43,
                 "team": "BHA",
                 "wasHome": false
               }
             ],
             "position": "DEF",
-            "projectedPoints": 4.16,
+            "projectedPoints": 5.98,
             "team": "LEE",
             "webName": "Bijol",
-            "windowPoints": 19.67
+            "windowPoints": 30.51
           },
           {
             "breakdown": {
               "availabilityMultiplier": 1.0,
-              "base": 3.81,
               "coldStart": false,
-              "expectedMinutes": 81.2,
-              "fixtureMultiplier": 1.101,
-              "minutesMultiplier": 0.902,
+              "components": {
+                "appearance": 2.0,
+                "assists": 0.69,
+                "bonus": 0.47,
+                "cards": -0.05,
+                "cleanSheet": 0.95,
+                "defensiveContribution": 1.89,
+                "goals": 0.29,
+                "goalsConceded": -0.72,
+                "saves": 0.0
+              },
+              "expectedMinutes": 90.5,
               "minutesRisk": false,
               "opponents": [
                 {
-                  "fdrMultiplier": 1.1,
+                  "attackAdjust": 1.165,
+                  "cleanSheetProb": 0.237,
+                  "fdrRating": 3,
+                  "lambdaAgainst": 1.44,
+                  "lambdaFor": 1.69,
+                  "team": "BOU",
+                  "wasHome": true
+                }
+              ],
+              "points": 5.52
+            },
+            "coldStart": false,
+            "elementType": 2,
+            "gapPoints": 9.23,
+            "id": 449,
+            "opponents": [
+              {
+                "attackAdjust": 1.165,
+                "cleanSheetProb": 0.237,
+                "fdrRating": 3,
+                "lambdaAgainst": 1.44,
+                "lambdaFor": 1.69,
+                "team": "BOU",
+                "wasHome": true
+              }
+            ],
+            "position": "DEF",
+            "projectedPoints": 5.52,
+            "team": "NEW",
+            "webName": "Hall",
+            "windowPoints": 26.94
+          },
+          {
+            "breakdown": {
+              "availabilityMultiplier": 1.0,
+              "coldStart": false,
+              "components": {
+                "appearance": 2.0,
+                "assists": 0.19,
+                "bonus": 0.71,
+                "cards": -0.05,
+                "cleanSheet": 0.95,
+                "defensiveContribution": 1.7,
+                "goals": 0.55,
+                "goalsConceded": -0.65,
+                "saves": 0.0
+              },
+              "expectedMinutes": 81.2,
+              "minutesRisk": false,
+              "opponents": [
+                {
+                  "attackAdjust": 1.123,
+                  "cleanSheetProb": 0.238,
                   "fdrRating": 2,
-                  "strengthMultiplier": 1.002,
+                  "lambdaAgainst": 1.43,
+                  "lambdaFor": 1.63,
                   "team": "LEE",
                   "wasHome": true
                 }
               ],
-              "points": 3.79
+              "points": 5.41
             },
             "coldStart": false,
             "elementType": 2,
-            "gapPoints": 7.16,
+            "gapPoints": 8.47,
             "id": 130,
             "opponents": [
               {
-                "fdrMultiplier": 1.1,
+                "attackAdjust": 1.123,
+                "cleanSheetProb": 0.238,
                 "fdrRating": 2,
-                "strengthMultiplier": 1.002,
+                "lambdaAgainst": 1.43,
+                "lambdaFor": 1.63,
                 "team": "LEE",
                 "wasHome": true
               }
             ],
             "position": "DEF",
-            "projectedPoints": 3.79,
+            "projectedPoints": 5.41,
             "team": "BHA",
             "webName": "Wieffer",
-            "windowPoints": 17.41
-          },
-          {
-            "breakdown": {
-              "availabilityMultiplier": 1.0,
-              "base": 3.24,
-              "coldStart": false,
-              "expectedMinutes": 90.8,
-              "fixtureMultiplier": 1.006,
-              "minutesMultiplier": 1.0,
-              "minutesRisk": false,
-              "opponents": [
-                {
-                  "fdrMultiplier": 1.0,
-                  "fdrRating": 3,
-                  "strengthMultiplier": 1.012,
-                  "team": "FUL",
-                  "wasHome": false
-                }
-              ],
-              "points": 3.26
-            },
-            "coldStart": false,
-            "elementType": 2,
-            "gapPoints": 6.39,
-            "id": 202,
-            "opponents": [
-              {
-                "fdrMultiplier": 1.0,
-                "fdrRating": 3,
-                "strengthMultiplier": 1.012,
-                "team": "FUL",
-                "wasHome": false
-              }
-            ],
-            "position": "DEF",
-            "projectedPoints": 3.26,
-            "team": "CRY",
-            "webName": "Richards",
-            "windowPoints": 16.64
+            "windowPoints": 26.18
           }
         ],
         "baselineUpgrade": {
           "alternative": {
             "breakdown": {
               "availabilityMultiplier": 1.0,
-              "base": 4.15,
               "coldStart": false,
+              "components": {
+                "appearance": 2.0,
+                "assists": 0.17,
+                "bonus": 1.31,
+                "cards": -0.06,
+                "cleanSheet": 0.78,
+                "defensiveContribution": 2.0,
+                "goals": 0.58,
+                "goalsConceded": -0.81,
+                "saves": 0.0
+              },
               "expectedMinutes": 89.9,
-              "fixtureMultiplier": 1.005,
-              "minutesMultiplier": 0.999,
               "minutesRisk": false,
               "opponents": [
                 {
-                  "fdrMultiplier": 1.0,
+                  "attackAdjust": 0.989,
+                  "cleanSheetProb": 0.196,
                   "fdrRating": 3,
-                  "strengthMultiplier": 1.01,
+                  "lambdaAgainst": 1.63,
+                  "lambdaFor": 1.43,
                   "team": "BHA",
                   "wasHome": false
                 }
               ],
-              "points": 4.16
+              "points": 5.98
             },
             "coldStart": false,
             "elementType": 2,
             "id": 327,
             "opponents": [
               {
-                "fdrMultiplier": 1.0,
+                "attackAdjust": 0.989,
+                "cleanSheetProb": 0.196,
                 "fdrRating": 3,
-                "strengthMultiplier": 1.01,
+                "lambdaAgainst": 1.63,
+                "lambdaFor": 1.43,
                 "team": "BHA",
                 "wasHome": false
               }
             ],
             "position": "DEF",
-            "projectedPoints": 4.16,
+            "projectedPoints": 5.98,
             "team": "LEE",
             "webName": "Bijol",
-            "windowPoints": 19.67
+            "windowPoints": 30.51
           },
           "gapPoints": 3.0,
           "meaningful": false
         },
         "breakdown": {
           "availabilityMultiplier": 1.0,
-          "base": 3.55,
           "coldStart": false,
+          "components": {
+            "appearance": 2.0,
+            "assists": 0.1,
+            "bonus": 0.04,
+            "cards": -0.03,
+            "cleanSheet": 0.95,
+            "defensiveContribution": 0.64,
+            "goals": 0.4,
+            "goalsConceded": -0.41,
+            "saves": 0.0
+          },
           "expectedMinutes": 51.4,
-          "fixtureMultiplier": 1.101,
-          "minutesMultiplier": 0.571,
           "minutesRisk": false,
           "opponents": [
             {
-              "fdrMultiplier": 1.1,
+              "attackAdjust": 1.123,
+              "cleanSheetProb": 0.238,
               "fdrRating": 2,
-              "strengthMultiplier": 1.002,
+              "lambdaAgainst": 1.43,
+              "lambdaFor": 1.63,
               "team": "LEE",
               "wasHome": true
             }
           ],
-          "points": 2.23
+          "points": 3.69
         },
         "coldStart": false,
         "elementType": 2,
@@ -738,81 +952,105 @@
           "alternative": {
             "breakdown": {
               "availabilityMultiplier": 1.0,
-              "base": 4.15,
               "coldStart": false,
+              "components": {
+                "appearance": 2.0,
+                "assists": 0.17,
+                "bonus": 1.31,
+                "cards": -0.06,
+                "cleanSheet": 0.78,
+                "defensiveContribution": 2.0,
+                "goals": 0.58,
+                "goalsConceded": -0.81,
+                "saves": 0.0
+              },
               "expectedMinutes": 89.9,
-              "fixtureMultiplier": 1.005,
-              "minutesMultiplier": 0.999,
               "minutesRisk": false,
               "opponents": [
                 {
-                  "fdrMultiplier": 1.0,
+                  "attackAdjust": 0.989,
+                  "cleanSheetProb": 0.196,
                   "fdrRating": 3,
-                  "strengthMultiplier": 1.01,
+                  "lambdaAgainst": 1.63,
+                  "lambdaFor": 1.43,
                   "team": "BHA",
                   "wasHome": false
                 }
               ],
-              "points": 4.16
+              "points": 5.98
             },
             "coldStart": false,
             "elementType": 2,
             "id": 327,
             "opponents": [
               {
-                "fdrMultiplier": 1.0,
+                "attackAdjust": 0.989,
+                "cleanSheetProb": 0.196,
                 "fdrRating": 3,
-                "strengthMultiplier": 1.01,
+                "lambdaAgainst": 1.63,
+                "lambdaFor": 1.43,
                 "team": "BHA",
                 "wasHome": false
               }
             ],
             "position": "DEF",
-            "projectedPoints": 4.16,
+            "projectedPoints": 5.98,
             "team": "LEE",
             "webName": "Bijol",
-            "windowPoints": 19.67
+            "windowPoints": 30.51
           },
-          "gapPoints": 9.42,
+          "gapPoints": 12.8,
           "meaningful": true
         },
         "opponents": [
           {
-            "fdrMultiplier": 1.1,
+            "attackAdjust": 1.123,
+            "cleanSheetProb": 0.238,
             "fdrRating": 2,
-            "strengthMultiplier": 1.002,
+            "lambdaAgainst": 1.43,
+            "lambdaFor": 1.63,
             "team": "LEE",
             "wasHome": true
           }
         ],
         "position": "DEF",
-        "projectedPoints": 2.23,
+        "projectedPoints": 3.69,
         "role": "start",
         "team": "BHA",
         "webName": "Vuskovic",
-        "windowPoints": 10.25
+        "windowPoints": 17.71
       },
       {
         "alternatives": [],
         "baselineUpgrade": null,
         "breakdown": {
           "availabilityMultiplier": 1.0,
-          "base": 3.45,
           "coldStart": false,
+          "components": {
+            "appearance": 2.0,
+            "assists": 0.58,
+            "bonus": 0.1,
+            "cards": -0.09,
+            "cleanSheet": 0.19,
+            "defensiveContribution": 1.18,
+            "goals": 0.65,
+            "goalsConceded": 0.0,
+            "saves": 0.0
+          },
           "expectedMinutes": 88.2,
-          "fixtureMultiplier": 1.019,
-          "minutesMultiplier": 0.98,
           "minutesRisk": false,
           "opponents": [
             {
-              "fdrMultiplier": 1.0,
+              "attackAdjust": 1.045,
+              "cleanSheetProb": 0.188,
               "fdrRating": 3,
-              "strengthMultiplier": 1.038,
+              "lambdaAgainst": 1.67,
+              "lambdaFor": 1.52,
               "team": "EVE",
               "wasHome": false
             }
           ],
-          "points": 3.45
+          "points": 4.61
         },
         "coldStart": false,
         "elementType": 3,
@@ -822,444 +1060,576 @@
         "modelUpgrade": null,
         "opponents": [
           {
-            "fdrMultiplier": 1.0,
+            "attackAdjust": 1.045,
+            "cleanSheetProb": 0.188,
             "fdrRating": 3,
-            "strengthMultiplier": 1.038,
+            "lambdaAgainst": 1.67,
+            "lambdaFor": 1.52,
             "team": "EVE",
             "wasHome": false
           }
         ],
         "position": "MID",
-        "projectedPoints": 3.45,
+        "projectedPoints": 4.61,
         "role": "start",
         "team": "MUN",
         "webName": "B.Fernandes",
-        "windowPoints": 16.53
+        "windowPoints": 23.24
       },
       {
         "alternatives": [
           {
             "breakdown": {
               "availabilityMultiplier": 1.0,
-              "base": 4.45,
               "coldStart": false,
+              "components": {
+                "appearance": 2.0,
+                "assists": 0.41,
+                "bonus": 1.34,
+                "cards": -0.09,
+                "cleanSheet": 0.23,
+                "defensiveContribution": 1.47,
+                "goals": 2.51,
+                "goalsConceded": 0.0,
+                "saves": 0.0
+              },
               "expectedMinutes": 89.3,
-              "fixtureMultiplier": 1.115,
-              "minutesMultiplier": 0.992,
               "minutesRisk": false,
               "opponents": [
                 {
-                  "fdrMultiplier": 1.1,
+                  "attackAdjust": 1.176,
+                  "cleanSheetProb": 0.229,
                   "fdrRating": 2,
-                  "strengthMultiplier": 1.027,
+                  "lambdaAgainst": 1.47,
+                  "lambdaFor": 1.71,
                   "team": "SUN",
                   "wasHome": true
                 }
               ],
-              "points": 4.92
+              "points": 7.87
             },
             "coldStart": false,
             "elementType": 3,
-            "gapPoints": 3.59,
+            "gapPoints": 17.06,
             "id": 86,
             "opponents": [
               {
-                "fdrMultiplier": 1.1,
+                "attackAdjust": 1.176,
+                "cleanSheetProb": 0.229,
                 "fdrRating": 2,
-                "strengthMultiplier": 1.027,
+                "lambdaAgainst": 1.47,
+                "lambdaFor": 1.71,
                 "team": "SUN",
                 "wasHome": true
               }
             ],
             "position": "MID",
-            "projectedPoints": 4.92,
+            "projectedPoints": 7.87,
             "team": "BRE",
             "webName": "Lewis-Potter",
-            "windowPoints": 20.98
+            "windowPoints": 37.71
           },
           {
             "breakdown": {
               "availabilityMultiplier": 1.0,
-              "base": 4.15,
               "coldStart": false,
-              "expectedMinutes": 87.0,
-              "fixtureMultiplier": 1.019,
-              "minutesMultiplier": 0.967,
-              "minutesRisk": false,
-              "opponents": [
-                {
-                  "fdrMultiplier": 1.0,
-                  "fdrRating": 3,
-                  "strengthMultiplier": 1.039,
-                  "team": "CRY",
-                  "wasHome": true
-                }
-              ],
-              "points": 4.09
-            },
-            "coldStart": false,
-            "elementType": 3,
-            "gapPoints": 2.65,
-            "id": 268,
-            "opponents": [
-              {
-                "fdrMultiplier": 1.0,
-                "fdrRating": 3,
-                "strengthMultiplier": 1.039,
-                "team": "CRY",
-                "wasHome": true
-              }
-            ],
-            "position": "MID",
-            "projectedPoints": 4.09,
-            "team": "FUL",
-            "webName": "King",
-            "windowPoints": 20.04
-          },
-          {
-            "breakdown": {
-              "availabilityMultiplier": 1.0,
-              "base": 4.1,
-              "coldStart": false,
+              "components": {
+                "appearance": 2.0,
+                "assists": 0.31,
+                "bonus": 1.35,
+                "cards": -0.09,
+                "cleanSheet": 0.18,
+                "defensiveContribution": 1.79,
+                "goals": 0.54,
+                "goalsConceded": 0.0,
+                "saves": 0.0
+              },
               "expectedMinutes": 90.5,
-              "fixtureMultiplier": 1.007,
-              "minutesMultiplier": 1.0,
               "minutesRisk": false,
               "opponents": [
                 {
-                  "fdrMultiplier": 1.0,
+                  "attackAdjust": 1.017,
+                  "cleanSheetProb": 0.182,
                   "fdrRating": 3,
-                  "strengthMultiplier": 1.015,
+                  "lambdaAgainst": 1.71,
+                  "lambdaFor": 1.47,
                   "team": "BRE",
                   "wasHome": false
                 }
               ],
-              "points": 4.13
+              "points": 6.08
             },
             "coldStart": false,
             "elementType": 3,
-            "gapPoints": 1.98,
+            "gapPoints": 9.76,
             "id": 544,
             "opponents": [
               {
-                "fdrMultiplier": 1.0,
+                "attackAdjust": 1.017,
+                "cleanSheetProb": 0.182,
                 "fdrRating": 3,
-                "strengthMultiplier": 1.015,
+                "lambdaAgainst": 1.71,
+                "lambdaFor": 1.47,
                 "team": "BRE",
                 "wasHome": false
               }
             ],
             "position": "MID",
-            "projectedPoints": 4.13,
+            "projectedPoints": 6.08,
             "team": "SUN",
             "webName": "Xhaka",
-            "windowPoints": 19.37
+            "windowPoints": 30.41
+          },
+          {
+            "breakdown": {
+              "availabilityMultiplier": 1.0,
+              "coldStart": false,
+              "components": {
+                "appearance": 2.0,
+                "assists": 0.52,
+                "bonus": 0.1,
+                "cards": -0.09,
+                "cleanSheet": 0.25,
+                "defensiveContribution": 1.58,
+                "goals": 0.64,
+                "goalsConceded": 0.0,
+                "saves": 0.0
+              },
+              "expectedMinutes": 126.2,
+              "minutesRisk": false,
+              "opponents": [
+                {
+                  "attackAdjust": 1.133,
+                  "cleanSheetProb": 0.245,
+                  "fdrRating": 3,
+                  "lambdaAgainst": 1.41,
+                  "lambdaFor": 1.64,
+                  "team": "TOT",
+                  "wasHome": true
+                }
+              ],
+              "points": 5.01
+            },
+            "coldStart": false,
+            "elementType": 3,
+            "gapPoints": 3.94,
+            "id": 486,
+            "opponents": [
+              {
+                "attackAdjust": 1.133,
+                "cleanSheetProb": 0.245,
+                "fdrRating": 3,
+                "lambdaAgainst": 1.41,
+                "lambdaFor": 1.64,
+                "team": "TOT",
+                "wasHome": true
+              }
+            ],
+            "position": "MID",
+            "projectedPoints": 5.01,
+            "team": "NFO",
+            "webName": "McAtee",
+            "windowPoints": 24.59
           }
         ],
         "baselineUpgrade": {
           "alternative": {
             "breakdown": {
               "availabilityMultiplier": 1.0,
-              "base": 4.45,
               "coldStart": false,
+              "components": {
+                "appearance": 2.0,
+                "assists": 0.41,
+                "bonus": 1.34,
+                "cards": -0.09,
+                "cleanSheet": 0.23,
+                "defensiveContribution": 1.47,
+                "goals": 2.51,
+                "goalsConceded": 0.0,
+                "saves": 0.0
+              },
               "expectedMinutes": 89.3,
-              "fixtureMultiplier": 1.115,
-              "minutesMultiplier": 0.992,
               "minutesRisk": false,
               "opponents": [
                 {
-                  "fdrMultiplier": 1.1,
+                  "attackAdjust": 1.176,
+                  "cleanSheetProb": 0.229,
                   "fdrRating": 2,
-                  "strengthMultiplier": 1.027,
+                  "lambdaAgainst": 1.47,
+                  "lambdaFor": 1.71,
                   "team": "SUN",
                   "wasHome": true
                 }
               ],
-              "points": 4.92
+              "points": 7.87
             },
             "coldStart": false,
             "elementType": 3,
             "id": 86,
             "opponents": [
               {
-                "fdrMultiplier": 1.1,
+                "attackAdjust": 1.176,
+                "cleanSheetProb": 0.229,
                 "fdrRating": 2,
-                "strengthMultiplier": 1.027,
+                "lambdaAgainst": 1.47,
+                "lambdaFor": 1.71,
                 "team": "SUN",
                 "wasHome": true
               }
             ],
             "position": "MID",
-            "projectedPoints": 4.92,
+            "projectedPoints": 7.87,
             "team": "BRE",
             "webName": "Lewis-Potter",
-            "windowPoints": 20.98
+            "windowPoints": 37.71
           },
           "gapPoints": 5.2,
           "meaningful": true
         },
         "breakdown": {
           "availabilityMultiplier": 1.0,
-          "base": 3.41,
           "coldStart": false,
+          "components": {
+            "appearance": 2.0,
+            "assists": 0.66,
+            "bonus": 0.1,
+            "cards": -0.5,
+            "cleanSheet": 0.24,
+            "defensiveContribution": 1.25,
+            "goals": 0.43,
+            "goalsConceded": 0.0,
+            "saves": 0.0
+          },
           "expectedMinutes": 90.7,
-          "fixtureMultiplier": 1.093,
-          "minutesMultiplier": 1.0,
           "minutesRisk": false,
           "opponents": [
             {
-              "fdrMultiplier": 1.1,
+              "attackAdjust": 1.123,
+              "cleanSheetProb": 0.238,
               "fdrRating": 2,
-              "strengthMultiplier": 0.987,
+              "lambdaAgainst": 1.43,
+              "lambdaFor": 1.63,
               "team": "LEE",
               "wasHome": true
             }
           ],
-          "points": 3.72
+          "points": 4.19
         },
         "coldStart": false,
         "elementType": 3,
         "id": 124,
-        "isCaptain": true,
+        "isCaptain": false,
         "minutesRisk": false,
         "modelUpgrade": {
           "alternative": {
             "breakdown": {
               "availabilityMultiplier": 1.0,
-              "base": 4.45,
               "coldStart": false,
+              "components": {
+                "appearance": 2.0,
+                "assists": 0.41,
+                "bonus": 1.34,
+                "cards": -0.09,
+                "cleanSheet": 0.23,
+                "defensiveContribution": 1.47,
+                "goals": 2.51,
+                "goalsConceded": 0.0,
+                "saves": 0.0
+              },
               "expectedMinutes": 89.3,
-              "fixtureMultiplier": 1.115,
-              "minutesMultiplier": 0.992,
               "minutesRisk": false,
               "opponents": [
                 {
-                  "fdrMultiplier": 1.1,
+                  "attackAdjust": 1.176,
+                  "cleanSheetProb": 0.229,
                   "fdrRating": 2,
-                  "strengthMultiplier": 1.027,
+                  "lambdaAgainst": 1.47,
+                  "lambdaFor": 1.71,
                   "team": "SUN",
                   "wasHome": true
                 }
               ],
-              "points": 4.92
+              "points": 7.87
             },
             "coldStart": false,
             "elementType": 3,
             "id": 86,
             "opponents": [
               {
-                "fdrMultiplier": 1.1,
+                "attackAdjust": 1.176,
+                "cleanSheetProb": 0.229,
                 "fdrRating": 2,
-                "strengthMultiplier": 1.027,
+                "lambdaAgainst": 1.47,
+                "lambdaFor": 1.71,
                 "team": "SUN",
                 "wasHome": true
               }
             ],
             "position": "MID",
-            "projectedPoints": 4.92,
+            "projectedPoints": 7.87,
             "team": "BRE",
             "webName": "Lewis-Potter",
-            "windowPoints": 20.98
+            "windowPoints": 37.71
           },
-          "gapPoints": 3.59,
-          "meaningful": false
+          "gapPoints": 17.06,
+          "meaningful": true
         },
         "opponents": [
           {
-            "fdrMultiplier": 1.1,
+            "attackAdjust": 1.123,
+            "cleanSheetProb": 0.238,
             "fdrRating": 2,
-            "strengthMultiplier": 0.987,
+            "lambdaAgainst": 1.43,
+            "lambdaFor": 1.63,
             "team": "LEE",
             "wasHome": true
           }
         ],
         "position": "MID",
-        "projectedPoints": 3.72,
+        "projectedPoints": 4.19,
         "role": "start",
         "team": "BHA",
         "webName": "Gro\u00df",
-        "windowPoints": 17.39
+        "windowPoints": 20.65
       },
       {
         "alternatives": [
           {
             "breakdown": {
               "availabilityMultiplier": 1.0,
-              "base": 4.51,
               "coldStart": false,
+              "components": {
+                "appearance": 2.0,
+                "assists": 0.29,
+                "bonus": 0.76,
+                "cards": -0.09,
+                "cleanSheet": 0.16,
+                "defensiveContribution": 1.3,
+                "goals": 2.41,
+                "goalsConceded": 0.0,
+                "saves": 0.0
+              },
               "expectedMinutes": 86.7,
-              "fixtureMultiplier": 0.769,
-              "minutesMultiplier": 0.963,
               "minutesRisk": false,
               "opponents": [
                 {
-                  "fdrMultiplier": 0.8,
+                  "attackAdjust": 0.917,
+                  "cleanSheetProb": 0.155,
                   "fdrRating": 5,
-                  "strengthMultiplier": 0.923,
+                  "lambdaAgainst": 1.86,
+                  "lambdaFor": 1.33,
                   "team": "ARS",
                   "wasHome": false
                 }
               ],
-              "points": 3.34
+              "points": 6.83
             },
             "coldStart": false,
             "elementType": 3,
-            "gapPoints": 6.53,
+            "gapPoints": 11.45,
             "id": 40,
             "opponents": [
               {
-                "fdrMultiplier": 0.8,
+                "attackAdjust": 0.917,
+                "cleanSheetProb": 0.155,
                 "fdrRating": 5,
-                "strengthMultiplier": 0.923,
+                "lambdaAgainst": 1.86,
+                "lambdaFor": 1.33,
                 "team": "ARS",
                 "wasHome": false
               }
             ],
             "position": "MID",
-            "projectedPoints": 3.34,
+            "projectedPoints": 6.83,
             "team": "CHE",
             "webName": "Rogers",
-            "windowPoints": 21.28
+            "windowPoints": 36.41
           },
           {
             "breakdown": {
               "availabilityMultiplier": 1.0,
-              "base": 4.25,
               "coldStart": false,
+              "components": {
+                "appearance": 1.0,
+                "assists": 2.07,
+                "bonus": 1.36,
+                "cards": -0.27,
+                "cleanSheet": 0.0,
+                "defensiveContribution": 0.76,
+                "goals": 0.73,
+                "goalsConceded": 0.0,
+                "saves": 0.0
+              },
               "expectedMinutes": 76.7,
-              "fixtureMultiplier": 1.1,
-              "minutesMultiplier": 0.852,
               "minutesRisk": true,
               "opponents": [
                 {
-                  "fdrMultiplier": 1.1,
+                  "attackAdjust": 1.237,
+                  "cleanSheetProb": 0.265,
                   "fdrRating": 2,
-                  "strengthMultiplier": 1.0,
+                  "lambdaAgainst": 1.33,
+                  "lambdaFor": 1.79,
                   "team": "COV",
                   "wasHome": true
                 }
               ],
-              "points": 3.98
+              "points": 5.65
             },
             "coldStart": false,
             "elementType": 3,
-            "gapPoints": 3.73,
+            "gapPoints": 2.54,
             "id": 399,
             "opponents": [
               {
-                "fdrMultiplier": 1.1,
+                "attackAdjust": 1.237,
+                "cleanSheetProb": 0.265,
                 "fdrRating": 2,
-                "strengthMultiplier": 1.0,
+                "lambdaAgainst": 1.33,
+                "lambdaFor": 1.79,
                 "team": "COV",
                 "wasHome": true
               }
             ],
             "position": "MID",
-            "projectedPoints": 3.98,
+            "projectedPoints": 5.65,
             "team": "MCI",
             "webName": "Cherki",
-            "windowPoints": 18.48
+            "windowPoints": 27.5
           },
           {
             "breakdown": {
               "availabilityMultiplier": 1.0,
-              "base": 3.07,
               "coldStart": false,
+              "components": {
+                "appearance": 2.0,
+                "assists": 0.44,
+                "bonus": 0.1,
+                "cards": -0.09,
+                "cleanSheet": 0.26,
+                "defensiveContribution": 1.35,
+                "goals": 0.71,
+                "goalsConceded": 0.0,
+                "saves": 0.0
+              },
               "expectedMinutes": 83.0,
-              "fixtureMultiplier": 0.888,
-              "minutesMultiplier": 0.922,
               "minutesRisk": false,
               "opponents": [
                 {
-                  "fdrMultiplier": 0.9,
+                  "attackAdjust": 1.286,
+                  "cleanSheetProb": 0.265,
                   "fdrRating": 4,
-                  "strengthMultiplier": 0.973,
+                  "lambdaAgainst": 1.33,
+                  "lambdaFor": 1.86,
                   "team": "CHE",
                   "wasHome": true
                 }
               ],
-              "points": 2.51
+              "points": 4.77
             },
             "coldStart": false,
             "elementType": 3,
-            "gapPoints": -0.62,
+            "gapPoints": -1.63,
             "id": 13,
             "opponents": [
               {
-                "fdrMultiplier": 0.9,
+                "attackAdjust": 1.286,
+                "cleanSheetProb": 0.265,
                 "fdrRating": 4,
-                "strengthMultiplier": 0.973,
+                "lambdaAgainst": 1.33,
+                "lambdaFor": 1.86,
                 "team": "CHE",
                 "wasHome": true
               }
             ],
             "position": "MID",
-            "projectedPoints": 2.51,
+            "projectedPoints": 4.77,
             "team": "ARS",
             "webName": "Rice",
-            "windowPoints": 14.13
+            "windowPoints": 23.33
           }
         ],
         "baselineUpgrade": {
           "alternative": {
             "breakdown": {
               "availabilityMultiplier": 1.0,
-              "base": 4.51,
               "coldStart": false,
+              "components": {
+                "appearance": 2.0,
+                "assists": 0.29,
+                "bonus": 0.76,
+                "cards": -0.09,
+                "cleanSheet": 0.16,
+                "defensiveContribution": 1.3,
+                "goals": 2.41,
+                "goalsConceded": 0.0,
+                "saves": 0.0
+              },
               "expectedMinutes": 86.7,
-              "fixtureMultiplier": 0.769,
-              "minutesMultiplier": 0.963,
               "minutesRisk": false,
               "opponents": [
                 {
-                  "fdrMultiplier": 0.8,
+                  "attackAdjust": 0.917,
+                  "cleanSheetProb": 0.155,
                   "fdrRating": 5,
-                  "strengthMultiplier": 0.923,
+                  "lambdaAgainst": 1.86,
+                  "lambdaFor": 1.33,
                   "team": "ARS",
                   "wasHome": false
                 }
               ],
-              "points": 3.34
+              "points": 6.83
             },
             "coldStart": false,
             "elementType": 3,
             "id": 40,
             "opponents": [
               {
-                "fdrMultiplier": 0.8,
+                "attackAdjust": 0.917,
+                "cleanSheetProb": 0.155,
                 "fdrRating": 5,
-                "strengthMultiplier": 0.923,
+                "lambdaAgainst": 1.86,
+                "lambdaFor": 1.33,
                 "team": "ARS",
                 "wasHome": false
               }
             ],
             "position": "MID",
-            "projectedPoints": 3.34,
+            "projectedPoints": 6.83,
             "team": "CHE",
             "webName": "Rogers",
-            "windowPoints": 21.28
+            "windowPoints": 36.41
           },
           "gapPoints": 6.47,
           "meaningful": true
         },
         "breakdown": {
           "availabilityMultiplier": 1.0,
-          "base": 3.21,
           "coldStart": false,
+          "components": {
+            "appearance": 2.0,
+            "assists": 0.33,
+            "bonus": 0.09,
+            "cards": -0.22,
+            "cleanSheet": 0.22,
+            "defensiveContribution": 1.24,
+            "goals": 1.3,
+            "goalsConceded": 0.0,
+            "saves": 0.0
+          },
           "expectedMinutes": 81.4,
-          "fixtureMultiplier": 1.113,
-          "minutesMultiplier": 0.904,
           "minutesRisk": false,
           "opponents": [
             {
-              "fdrMultiplier": 1.1,
+              "attackAdjust": 1.106,
+              "cleanSheetProb": 0.223,
               "fdrRating": 2,
-              "strengthMultiplier": 1.024,
+              "lambdaAgainst": 1.5,
+              "lambdaFor": 1.6,
               "team": "IPS",
               "wasHome": false
             }
           ],
-          "points": 3.23
+          "points": 4.96
         },
         "coldStart": false,
         "elementType": 3,
@@ -1270,120 +1640,105 @@
           "alternative": {
             "breakdown": {
               "availabilityMultiplier": 1.0,
-              "base": 4.51,
               "coldStart": false,
+              "components": {
+                "appearance": 2.0,
+                "assists": 0.29,
+                "bonus": 0.76,
+                "cards": -0.09,
+                "cleanSheet": 0.16,
+                "defensiveContribution": 1.3,
+                "goals": 2.41,
+                "goalsConceded": 0.0,
+                "saves": 0.0
+              },
               "expectedMinutes": 86.7,
-              "fixtureMultiplier": 0.769,
-              "minutesMultiplier": 0.963,
               "minutesRisk": false,
               "opponents": [
                 {
-                  "fdrMultiplier": 0.8,
+                  "attackAdjust": 0.917,
+                  "cleanSheetProb": 0.155,
                   "fdrRating": 5,
-                  "strengthMultiplier": 0.923,
+                  "lambdaAgainst": 1.86,
+                  "lambdaFor": 1.33,
                   "team": "ARS",
                   "wasHome": false
                 }
               ],
-              "points": 3.34
+              "points": 6.83
             },
             "coldStart": false,
             "elementType": 3,
             "id": 40,
             "opponents": [
               {
-                "fdrMultiplier": 0.8,
+                "attackAdjust": 0.917,
+                "cleanSheetProb": 0.155,
                 "fdrRating": 5,
-                "strengthMultiplier": 0.923,
+                "lambdaAgainst": 1.86,
+                "lambdaFor": 1.33,
                 "team": "ARS",
                 "wasHome": false
               }
             ],
             "position": "MID",
-            "projectedPoints": 3.34,
+            "projectedPoints": 6.83,
             "team": "CHE",
             "webName": "Rogers",
-            "windowPoints": 21.28
+            "windowPoints": 36.41
           },
-          "gapPoints": 6.53,
+          "gapPoints": 11.45,
           "meaningful": true
         },
         "opponents": [
           {
-            "fdrMultiplier": 1.1,
+            "attackAdjust": 1.106,
+            "cleanSheetProb": 0.223,
             "fdrRating": 2,
-            "strengthMultiplier": 1.024,
+            "lambdaAgainst": 1.5,
+            "lambdaFor": 1.6,
             "team": "IPS",
             "wasHome": false
           }
         ],
         "position": "MID",
-        "projectedPoints": 3.23,
+        "projectedPoints": 4.96,
         "role": "start",
         "team": "LIV",
         "webName": "Wirtz",
-        "windowPoints": 14.75
+        "windowPoints": 24.96
       },
       {
         "alternatives": [
           {
             "breakdown": {
               "availabilityMultiplier": 1.0,
-              "base": 4.69,
               "coldStart": false,
-              "expectedMinutes": 88.2,
-              "fixtureMultiplier": 0.896,
-              "minutesMultiplier": 0.98,
-              "minutesRisk": false,
-              "opponents": [
-                {
-                  "fdrMultiplier": 0.9,
-                  "fdrRating": 4,
-                  "strengthMultiplier": 0.99,
-                  "team": "MUN",
-                  "wasHome": true
-                }
-              ],
-              "points": 4.11
-            },
-            "coldStart": false,
-            "elementType": 3,
-            "gapPoints": null,
-            "id": 236,
-            "opponents": [
-              {
-                "fdrMultiplier": 0.9,
-                "fdrRating": 4,
-                "strengthMultiplier": 0.99,
-                "team": "MUN",
-                "wasHome": true
-              }
-            ],
-            "position": "MID",
-            "projectedPoints": 4.11,
-            "team": "EVE",
-            "webName": "Dewsbury-Hall",
-            "windowPoints": 22.93
-          },
-          {
-            "breakdown": {
-              "availabilityMultiplier": 1.0,
-              "base": 4.85,
-              "coldStart": false,
+              "components": {
+                "appearance": 2.0,
+                "assists": 0.48,
+                "bonus": 1.47,
+                "cards": -0.08,
+                "cleanSheet": 0.26,
+                "defensiveContribution": 1.37,
+                "goals": 1.18,
+                "goalsConceded": 0.0,
+                "saves": 0.0
+              },
               "expectedMinutes": 82.6,
-              "fixtureMultiplier": 0.888,
-              "minutesMultiplier": 0.918,
               "minutesRisk": false,
               "opponents": [
                 {
-                  "fdrMultiplier": 0.9,
+                  "attackAdjust": 1.286,
+                  "cleanSheetProb": 0.265,
                   "fdrRating": 4,
-                  "strengthMultiplier": 0.973,
+                  "lambdaAgainst": 1.33,
+                  "lambdaFor": 1.86,
                   "team": "CHE",
                   "wasHome": true
                 }
               ],
-              "points": 3.95
+              "points": 6.68
             },
             "coldStart": false,
             "elementType": 3,
@@ -1391,38 +1746,101 @@
             "id": 15,
             "opponents": [
               {
-                "fdrMultiplier": 0.9,
+                "attackAdjust": 1.286,
+                "cleanSheetProb": 0.265,
                 "fdrRating": 4,
-                "strengthMultiplier": 0.973,
+                "lambdaAgainst": 1.33,
+                "lambdaFor": 1.86,
                 "team": "CHE",
                 "wasHome": true
               }
             ],
             "position": "MID",
-            "projectedPoints": 3.95,
+            "projectedPoints": 6.68,
             "team": "ARS",
             "webName": "\u00d8degaard",
-            "windowPoints": 22.26
+            "windowPoints": 32.69
           },
           {
             "breakdown": {
               "availabilityMultiplier": 1.0,
-              "base": 3.28,
               "coldStart": false,
-              "expectedMinutes": 84.6,
-              "fixtureMultiplier": 1.115,
-              "minutesMultiplier": 0.94,
+              "components": {
+                "appearance": 2.0,
+                "assists": 0.45,
+                "bonus": 1.57,
+                "cards": -0.08,
+                "cleanSheet": 0.22,
+                "defensiveContribution": 1.45,
+                "goals": 0.69,
+                "goalsConceded": 0.0,
+                "saves": 0.0
+              },
+              "expectedMinutes": 88.2,
               "minutesRisk": false,
               "opponents": [
                 {
-                  "fdrMultiplier": 1.1,
+                  "attackAdjust": 1.154,
+                  "cleanSheetProb": 0.22,
+                  "fdrRating": 4,
+                  "lambdaAgainst": 1.52,
+                  "lambdaFor": 1.67,
+                  "team": "MUN",
+                  "wasHome": true
+                }
+              ],
+              "points": 6.29
+            },
+            "coldStart": false,
+            "elementType": 3,
+            "gapPoints": null,
+            "id": 236,
+            "opponents": [
+              {
+                "attackAdjust": 1.154,
+                "cleanSheetProb": 0.22,
+                "fdrRating": 4,
+                "lambdaAgainst": 1.52,
+                "lambdaFor": 1.67,
+                "team": "MUN",
+                "wasHome": true
+              }
+            ],
+            "position": "MID",
+            "projectedPoints": 6.29,
+            "team": "EVE",
+            "webName": "Dewsbury-Hall",
+            "windowPoints": 31.1
+          },
+          {
+            "breakdown": {
+              "availabilityMultiplier": 1.0,
+              "coldStart": false,
+              "components": {
+                "appearance": 2.0,
+                "assists": 0.78,
+                "bonus": 0.1,
+                "cards": -0.09,
+                "cleanSheet": 0.23,
+                "defensiveContribution": 1.34,
+                "goals": 0.69,
+                "goalsConceded": 0.0,
+                "saves": 0.0
+              },
+              "expectedMinutes": 84.6,
+              "minutesRisk": false,
+              "opponents": [
+                {
+                  "attackAdjust": 1.176,
+                  "cleanSheetProb": 0.229,
                   "fdrRating": 2,
-                  "strengthMultiplier": 1.027,
+                  "lambdaAgainst": 1.47,
+                  "lambdaFor": 1.71,
                   "team": "SUN",
                   "wasHome": true
                 }
               ],
-              "points": 3.44
+              "points": 5.05
             },
             "coldStart": false,
             "elementType": 3,
@@ -1430,18 +1848,20 @@
             "id": 95,
             "opponents": [
               {
-                "fdrMultiplier": 1.1,
+                "attackAdjust": 1.176,
+                "cleanSheetProb": 0.229,
                 "fdrRating": 2,
-                "strengthMultiplier": 1.027,
+                "lambdaAgainst": 1.47,
+                "lambdaFor": 1.71,
                 "team": "SUN",
                 "wasHome": true
               }
             ],
             "position": "MID",
-            "projectedPoints": 3.44,
+            "projectedPoints": 5.05,
             "team": "BRE",
             "webName": "O.Dango",
-            "windowPoints": 14.66
+            "windowPoints": 24.39
           }
         ],
         "baselineUpgrade": null,
@@ -1449,9 +1869,11 @@
           "coldStart": true,
           "opponents": [
             {
-              "fdrMultiplier": 0.9,
+              "attackAdjust": 1.286,
+              "cleanSheetProb": 0.265,
               "fdrRating": 4,
-              "strengthMultiplier": 0.973,
+              "lambdaAgainst": 1.33,
+              "lambdaFor": 1.86,
               "team": "CHE",
               "wasHome": true
             }
@@ -1466,9 +1888,11 @@
         "modelUpgrade": null,
         "opponents": [
           {
-            "fdrMultiplier": 0.9,
+            "attackAdjust": 1.286,
+            "cleanSheetProb": 0.265,
             "fdrRating": 4,
-            "strengthMultiplier": 0.973,
+            "lambdaAgainst": 1.33,
+            "lambdaFor": 1.86,
             "team": "CHE",
             "wasHome": true
           }
@@ -1485,181 +1909,239 @@
           {
             "breakdown": {
               "availabilityMultiplier": 1.0,
-              "base": 3.32,
               "coldStart": false,
+              "components": {
+                "appearance": 2.0,
+                "assists": 0.22,
+                "bonus": 0.38,
+                "cards": -0.5,
+                "cleanSheet": 0.0,
+                "defensiveContribution": 1.12,
+                "goals": 2.72,
+                "goalsConceded": 0.0,
+                "saves": 0.0
+              },
               "expectedMinutes": 119.4,
-              "fixtureMultiplier": 1.009,
-              "minutesMultiplier": 1.0,
               "minutesRisk": false,
               "opponents": [
                 {
-                  "fdrMultiplier": 1.0,
+                  "attackAdjust": 1.165,
+                  "cleanSheetProb": 0.237,
                   "fdrRating": 3,
-                  "strengthMultiplier": 1.017,
+                  "lambdaAgainst": 1.44,
+                  "lambdaFor": 1.69,
                   "team": "BOU",
                   "wasHome": true
                 }
               ],
-              "points": 3.35
+              "points": 5.94
             },
             "coldStart": false,
             "elementType": 4,
-            "gapPoints": 5.16,
+            "gapPoints": 11.43,
             "id": 464,
             "opponents": [
               {
-                "fdrMultiplier": 1.0,
+                "attackAdjust": 1.165,
+                "cleanSheetProb": 0.237,
                 "fdrRating": 3,
-                "strengthMultiplier": 1.017,
+                "lambdaAgainst": 1.44,
+                "lambdaFor": 1.69,
                 "team": "BOU",
                 "wasHome": true
               }
             ],
             "position": "FWD",
-            "projectedPoints": 3.35,
+            "projectedPoints": 5.94,
             "team": "NEW",
             "webName": "Wissa",
-            "windowPoints": 17.21
+            "windowPoints": 28.63
           },
           {
             "breakdown": {
               "availabilityMultiplier": 1.0,
-              "base": 3.11,
               "coldStart": false,
-              "expectedMinutes": 82.7,
-              "fixtureMultiplier": 0.992,
-              "minutesMultiplier": 0.919,
+              "components": {
+                "appearance": 2.0,
+                "assists": 0.19,
+                "bonus": 0.08,
+                "cards": -0.16,
+                "cleanSheet": 0.0,
+                "defensiveContribution": 0.74,
+                "goals": 1.53,
+                "goalsConceded": 0.0,
+                "saves": 0.0
+              },
+              "expectedMinutes": 83.9,
               "minutesRisk": false,
               "opponents": [
                 {
-                  "fdrMultiplier": 1.0,
+                  "attackAdjust": 1.133,
+                  "cleanSheetProb": 0.245,
                   "fdrRating": 3,
-                  "strengthMultiplier": 0.984,
+                  "lambdaAgainst": 1.41,
+                  "lambdaFor": 1.64,
+                  "team": "TOT",
+                  "wasHome": true
+                }
+              ],
+              "points": 4.39
+            },
+            "coldStart": false,
+            "elementType": 4,
+            "gapPoints": 4.38,
+            "id": 491,
+            "opponents": [
+              {
+                "attackAdjust": 1.133,
+                "cleanSheetProb": 0.245,
+                "fdrRating": 3,
+                "lambdaAgainst": 1.41,
+                "lambdaFor": 1.64,
+                "team": "TOT",
+                "wasHome": true
+              }
+            ],
+            "position": "FWD",
+            "projectedPoints": 4.39,
+            "team": "NFO",
+            "webName": "Igor Jesus",
+            "windowPoints": 21.58
+          },
+          {
+            "breakdown": {
+              "availabilityMultiplier": 1.0,
+              "coldStart": false,
+              "components": {
+                "appearance": 2.0,
+                "assists": 0.36,
+                "bonus": 0.08,
+                "cards": -0.46,
+                "cleanSheet": 0.0,
+                "defensiveContribution": 1.05,
+                "goals": 0.95,
+                "goalsConceded": 0.0,
+                "saves": 0.0
+              },
+              "expectedMinutes": 82.7,
+              "minutesRisk": false,
+              "opponents": [
+                {
+                  "attackAdjust": 0.993,
+                  "cleanSheetProb": 0.185,
+                  "fdrRating": 3,
+                  "lambdaAgainst": 1.69,
+                  "lambdaFor": 1.44,
                   "team": "NEW",
                   "wasHome": false
                 }
               ],
-              "points": 2.84
+              "points": 3.99
             },
             "coldStart": false,
             "elementType": 4,
-            "gapPoints": 1.84,
+            "gapPoints": 3.17,
             "id": 79,
             "opponents": [
               {
-                "fdrMultiplier": 1.0,
+                "attackAdjust": 0.993,
+                "cleanSheetProb": 0.185,
                 "fdrRating": 3,
-                "strengthMultiplier": 0.984,
+                "lambdaAgainst": 1.69,
+                "lambdaFor": 1.44,
                 "team": "NEW",
                 "wasHome": false
               }
             ],
             "position": "FWD",
-            "projectedPoints": 2.84,
+            "projectedPoints": 3.99,
             "team": "BOU",
             "webName": "Evanilson",
-            "windowPoints": 13.89
-          },
-          {
-            "breakdown": {
-              "availabilityMultiplier": 1.0,
-              "base": 2.77,
-              "coldStart": false,
-              "expectedMinutes": 104.5,
-              "fixtureMultiplier": 0.888,
-              "minutesMultiplier": 1.0,
-              "minutesRisk": true,
-              "opponents": [
-                {
-                  "fdrMultiplier": 0.9,
-                  "fdrRating": 4,
-                  "strengthMultiplier": 0.973,
-                  "team": "CHE",
-                  "wasHome": true
-                }
-              ],
-              "points": 2.46
-            },
-            "coldStart": false,
-            "elementType": 4,
-            "gapPoints": 1.78,
-            "id": 27,
-            "opponents": [
-              {
-                "fdrMultiplier": 0.9,
-                "fdrRating": 4,
-                "strengthMultiplier": 0.973,
-                "team": "CHE",
-                "wasHome": true
-              }
-            ],
-            "position": "FWD",
-            "projectedPoints": 2.46,
-            "team": "ARS",
-            "webName": "G.Jesus",
-            "windowPoints": 13.83
+            "windowPoints": 20.37
           }
         ],
         "baselineUpgrade": {
           "alternative": {
             "breakdown": {
               "availabilityMultiplier": 1.0,
-              "base": 3.32,
               "coldStart": false,
+              "components": {
+                "appearance": 2.0,
+                "assists": 0.22,
+                "bonus": 0.38,
+                "cards": -0.5,
+                "cleanSheet": 0.0,
+                "defensiveContribution": 1.12,
+                "goals": 2.72,
+                "goalsConceded": 0.0,
+                "saves": 0.0
+              },
               "expectedMinutes": 119.4,
-              "fixtureMultiplier": 1.009,
-              "minutesMultiplier": 1.0,
               "minutesRisk": false,
               "opponents": [
                 {
-                  "fdrMultiplier": 1.0,
+                  "attackAdjust": 1.165,
+                  "cleanSheetProb": 0.237,
                   "fdrRating": 3,
-                  "strengthMultiplier": 1.017,
+                  "lambdaAgainst": 1.44,
+                  "lambdaFor": 1.69,
                   "team": "BOU",
                   "wasHome": true
                 }
               ],
-              "points": 3.35
+              "points": 5.94
             },
             "coldStart": false,
             "elementType": 4,
             "id": 464,
             "opponents": [
               {
-                "fdrMultiplier": 1.0,
+                "attackAdjust": 1.165,
+                "cleanSheetProb": 0.237,
                 "fdrRating": 3,
-                "strengthMultiplier": 1.017,
+                "lambdaAgainst": 1.44,
+                "lambdaFor": 1.69,
                 "team": "BOU",
                 "wasHome": true
               }
             ],
             "position": "FWD",
-            "projectedPoints": 3.35,
+            "projectedPoints": 5.94,
             "team": "NEW",
             "webName": "Wissa",
-            "windowPoints": 17.21
+            "windowPoints": 28.63
           },
           "gapPoints": 3.9,
           "meaningful": false
         },
         "breakdown": {
           "availabilityMultiplier": 1.0,
-          "base": 2.54,
           "coldStart": false,
+          "components": {
+            "appearance": 2.0,
+            "assists": 0.11,
+            "bonus": 0.09,
+            "cards": -0.5,
+            "cleanSheet": 0.0,
+            "defensiveContribution": 0.68,
+            "goals": 0.99,
+            "goalsConceded": 0.0,
+            "saves": 0.0
+          },
           "expectedMinutes": 90.5,
-          "fixtureMultiplier": 0.995,
-          "minutesMultiplier": 1.0,
           "minutesRisk": false,
           "opponents": [
             {
-              "fdrMultiplier": 1.0,
+              "attackAdjust": 0.989,
+              "cleanSheetProb": 0.196,
               "fdrRating": 3,
-              "strengthMultiplier": 0.991,
+              "lambdaAgainst": 1.63,
+              "lambdaFor": 1.43,
               "team": "BHA",
               "wasHome": false
             }
           ],
-          "points": 2.53
+          "points": 3.37
         },
         "coldStart": false,
         "elementType": 4,
@@ -1670,204 +2152,264 @@
           "alternative": {
             "breakdown": {
               "availabilityMultiplier": 1.0,
-              "base": 3.32,
               "coldStart": false,
+              "components": {
+                "appearance": 2.0,
+                "assists": 0.22,
+                "bonus": 0.38,
+                "cards": -0.5,
+                "cleanSheet": 0.0,
+                "defensiveContribution": 1.12,
+                "goals": 2.72,
+                "goalsConceded": 0.0,
+                "saves": 0.0
+              },
               "expectedMinutes": 119.4,
-              "fixtureMultiplier": 1.009,
-              "minutesMultiplier": 1.0,
               "minutesRisk": false,
               "opponents": [
                 {
-                  "fdrMultiplier": 1.0,
+                  "attackAdjust": 1.165,
+                  "cleanSheetProb": 0.237,
                   "fdrRating": 3,
-                  "strengthMultiplier": 1.017,
+                  "lambdaAgainst": 1.44,
+                  "lambdaFor": 1.69,
                   "team": "BOU",
                   "wasHome": true
                 }
               ],
-              "points": 3.35
+              "points": 5.94
             },
             "coldStart": false,
             "elementType": 4,
             "id": 464,
             "opponents": [
               {
-                "fdrMultiplier": 1.0,
+                "attackAdjust": 1.165,
+                "cleanSheetProb": 0.237,
                 "fdrRating": 3,
-                "strengthMultiplier": 1.017,
+                "lambdaAgainst": 1.44,
+                "lambdaFor": 1.69,
                 "team": "BOU",
                 "wasHome": true
               }
             ],
             "position": "FWD",
-            "projectedPoints": 3.35,
+            "projectedPoints": 5.94,
             "team": "NEW",
             "webName": "Wissa",
-            "windowPoints": 17.21
+            "windowPoints": 28.63
           },
-          "gapPoints": 5.16,
+          "gapPoints": 11.43,
           "meaningful": true
         },
         "opponents": [
           {
-            "fdrMultiplier": 1.0,
+            "attackAdjust": 0.989,
+            "cleanSheetProb": 0.196,
             "fdrRating": 3,
-            "strengthMultiplier": 0.991,
+            "lambdaAgainst": 1.63,
+            "lambdaFor": 1.43,
             "team": "BHA",
             "wasHome": false
           }
         ],
         "position": "FWD",
-        "projectedPoints": 2.53,
+        "projectedPoints": 3.37,
         "role": "start",
         "team": "LEE",
         "webName": "Calvert-Lewin",
-        "windowPoints": 12.05
+        "windowPoints": 17.2
       },
       {
         "alternatives": [],
         "baselineUpgrade": null,
         "breakdown": {
           "availabilityMultiplier": 1.0,
-          "base": 3.02,
           "coldStart": false,
+          "components": {
+            "appearance": 2.0,
+            "assists": 0.2,
+            "bonus": 0.49,
+            "cards": -0.03,
+            "cleanSheet": 0.0,
+            "defensiveContribution": 0.83,
+            "goals": 2.64,
+            "goalsConceded": 0.0,
+            "saves": 0.0
+          },
           "expectedMinutes": 87.6,
-          "fixtureMultiplier": 1.1,
-          "minutesMultiplier": 0.973,
           "minutesRisk": false,
           "opponents": [
             {
-              "fdrMultiplier": 1.1,
+              "attackAdjust": 1.237,
+              "cleanSheetProb": 0.265,
               "fdrRating": 2,
-              "strengthMultiplier": 1.0,
+              "lambdaAgainst": 1.33,
+              "lambdaFor": 1.79,
               "team": "COV",
               "wasHome": true
             }
           ],
-          "points": 3.23
+          "points": 6.13
         },
         "coldStart": false,
         "elementType": 4,
         "id": 411,
-        "isCaptain": false,
+        "isCaptain": true,
         "minutesRisk": false,
         "modelUpgrade": null,
         "opponents": [
           {
-            "fdrMultiplier": 1.1,
+            "attackAdjust": 1.237,
+            "cleanSheetProb": 0.265,
             "fdrRating": 2,
-            "strengthMultiplier": 1.0,
+            "lambdaAgainst": 1.33,
+            "lambdaFor": 1.79,
             "team": "COV",
             "wasHome": true
           }
         ],
         "position": "FWD",
-        "projectedPoints": 3.23,
+        "projectedPoints": 6.13,
         "role": "start",
         "team": "MCI",
         "webName": "Haaland",
-        "windowPoints": 15.0
+        "windowPoints": 29.91
       },
       {
         "alternatives": [
           {
             "breakdown": {
               "availabilityMultiplier": 1.0,
-              "base": 3.66,
               "coldStart": false,
+              "components": {
+                "appearance": 2.0,
+                "assists": 0.22,
+                "bonus": 0.09,
+                "cards": -0.03,
+                "cleanSheet": 0.0,
+                "defensiveContribution": 0.68,
+                "goals": 1.51,
+                "goalsConceded": 0.0,
+                "saves": 0.0
+              },
               "expectedMinutes": 84.3,
-              "fixtureMultiplier": 0.888,
-              "minutesMultiplier": 0.937,
               "minutesRisk": false,
               "opponents": [
                 {
-                  "fdrMultiplier": 0.9,
+                  "attackAdjust": 1.286,
+                  "cleanSheetProb": 0.265,
                   "fdrRating": 4,
-                  "strengthMultiplier": 0.973,
+                  "lambdaAgainst": 1.33,
+                  "lambdaFor": 1.86,
                   "team": "CHE",
                   "wasHome": true
                 }
               ],
-              "points": 3.04
+              "points": 4.47
             },
             "coldStart": false,
             "elementType": 4,
-            "gapPoints": -4.47,
+            "gapPoints": -9.03,
             "id": 26,
             "opponents": [
               {
-                "fdrMultiplier": 0.9,
+                "attackAdjust": 1.286,
+                "cleanSheetProb": 0.265,
                 "fdrRating": 4,
-                "strengthMultiplier": 0.973,
+                "lambdaAgainst": 1.33,
+                "lambdaFor": 1.86,
                 "team": "CHE",
                 "wasHome": true
               }
             ],
             "position": "FWD",
-            "projectedPoints": 3.04,
+            "projectedPoints": 4.47,
             "team": "ARS",
             "webName": "Havertz",
-            "windowPoints": 17.12
+            "windowPoints": 21.78
           },
           {
             "breakdown": {
               "availabilityMultiplier": 1.0,
-              "base": 2.77,
               "coldStart": false,
+              "components": {
+                "appearance": 0.0,
+                "assists": 0.21,
+                "bonus": 0.17,
+                "cards": -0.06,
+                "cleanSheet": 0.0,
+                "defensiveContribution": 0.56,
+                "goals": 1.51,
+                "goalsConceded": 0.0,
+                "saves": 0.0
+              },
               "expectedMinutes": 64.0,
-              "fixtureMultiplier": 0.888,
-              "minutesMultiplier": 0.711,
               "minutesRisk": true,
               "opponents": [
                 {
-                  "fdrMultiplier": 0.9,
+                  "attackAdjust": 1.286,
+                  "cleanSheetProb": 0.265,
                   "fdrRating": 4,
-                  "strengthMultiplier": 0.973,
+                  "lambdaAgainst": 1.33,
+                  "lambdaFor": 1.86,
                   "team": "CHE",
                   "wasHome": true
                 }
               ],
-              "points": 1.75
+              "points": 2.4
             },
             "coldStart": false,
             "elementType": 4,
-            "gapPoints": -11.75,
+            "gapPoints": -19.38,
             "id": 25,
             "opponents": [
               {
-                "fdrMultiplier": 0.9,
+                "attackAdjust": 1.286,
+                "cleanSheetProb": 0.265,
                 "fdrRating": 4,
-                "strengthMultiplier": 0.973,
+                "lambdaAgainst": 1.33,
+                "lambdaFor": 1.86,
                 "team": "CHE",
                 "wasHome": true
               }
             ],
             "position": "FWD",
-            "projectedPoints": 1.75,
+            "projectedPoints": 2.4,
             "team": "ARS",
             "webName": "Gy\u00f6keres",
-            "windowPoints": 9.84
+            "windowPoints": 11.43
           }
         ],
         "baselineUpgrade": null,
         "breakdown": {
           "availabilityMultiplier": 1.0,
-          "base": 4.56,
           "coldStart": false,
+          "components": {
+            "appearance": 2.0,
+            "assists": 0.21,
+            "bonus": 1.29,
+            "cards": -0.03,
+            "cleanSheet": 0.0,
+            "defensiveContribution": 0.8,
+            "goals": 1.62,
+            "goalsConceded": 0.0,
+            "saves": 0.0
+          },
           "expectedMinutes": 86.8,
-          "fixtureMultiplier": 0.769,
-          "minutesMultiplier": 0.964,
           "minutesRisk": false,
           "opponents": [
             {
-              "fdrMultiplier": 0.8,
+              "attackAdjust": 0.917,
+              "cleanSheetProb": 0.155,
               "fdrRating": 5,
-              "strengthMultiplier": 0.923,
+              "lambdaAgainst": 1.86,
+              "lambdaFor": 1.33,
               "team": "ARS",
               "wasHome": false
             }
           ],
-          "points": 3.39
+          "points": 5.89
         },
         "coldStart": false,
         "elementType": 4,
@@ -1877,444 +2419,523 @@
         "modelUpgrade": null,
         "opponents": [
           {
-            "fdrMultiplier": 0.8,
+            "attackAdjust": 0.917,
+            "cleanSheetProb": 0.155,
             "fdrRating": 5,
-            "strengthMultiplier": 0.923,
+            "lambdaAgainst": 1.86,
+            "lambdaFor": 1.33,
             "team": "ARS",
             "wasHome": false
           }
         ],
         "position": "FWD",
-        "projectedPoints": 3.39,
+        "projectedPoints": 5.89,
         "role": "start",
         "team": "CHE",
         "webName": "Jo\u00e3o Pedro",
-        "windowPoints": 21.59
+        "windowPoints": 30.81
       },
       {
         "alternatives": [
           {
             "breakdown": {
               "availabilityMultiplier": 1.0,
-              "base": 3.34,
               "coldStart": false,
-              "expectedMinutes": 90.0,
-              "fixtureMultiplier": 1.101,
-              "minutesMultiplier": 1.0,
+              "components": {
+                "appearance": 2.0,
+                "assists": 0.08,
+                "bonus": 0.09,
+                "cards": -0.02,
+                "cleanSheet": 0.82,
+                "defensiveContribution": 0.0,
+                "goals": 0.38,
+                "goalsConceded": -0.79,
+                "saves": 1.07
+              },
+              "expectedMinutes": 95.6,
               "minutesRisk": false,
               "opponents": [
                 {
-                  "fdrMultiplier": 1.1,
+                  "attackAdjust": 1.022,
+                  "cleanSheetProb": 0.204,
                   "fdrRating": 2,
-                  "strengthMultiplier": 1.002,
-                  "team": "LEE",
-                  "wasHome": true
+                  "lambdaAgainst": 1.59,
+                  "lambdaFor": 1.48,
+                  "team": "HUL",
+                  "wasHome": false
                 }
               ],
-              "points": 3.67
+              "points": 3.63
             },
             "coldStart": false,
             "elementType": 1,
-            "gapPoints": 1.66,
-            "id": 109,
+            "gapPoints": -0.31,
+            "id": 29,
             "opponents": [
               {
-                "fdrMultiplier": 1.1,
+                "attackAdjust": 1.022,
+                "cleanSheetProb": 0.204,
                 "fdrRating": 2,
-                "strengthMultiplier": 1.002,
-                "team": "LEE",
-                "wasHome": true
+                "lambdaAgainst": 1.59,
+                "lambdaFor": 1.48,
+                "team": "HUL",
+                "wasHome": false
               }
             ],
             "position": "GKP",
-            "projectedPoints": 3.67,
-            "team": "BHA",
-            "webName": "Verbruggen",
-            "windowPoints": 16.88
+            "projectedPoints": 3.63,
+            "team": "AVL",
+            "webName": "M.Bizot",
+            "windowPoints": 18.51
           },
           {
             "breakdown": {
               "availabilityMultiplier": 1.0,
-              "base": 2.96,
               "coldStart": false,
+              "components": {
+                "appearance": 2.0,
+                "assists": 0.05,
+                "bonus": 0.09,
+                "cards": -0.02,
+                "cleanSheet": 0.74,
+                "defensiveContribution": 0.0,
+                "goals": 0.14,
+                "goalsConceded": -0.84,
+                "saves": 1.45
+              },
               "expectedMinutes": 90.0,
-              "fixtureMultiplier": 1.003,
-              "minutesMultiplier": 1.0,
               "minutesRisk": false,
               "opponents": [
                 {
-                  "fdrMultiplier": 1.0,
+                  "attackAdjust": 0.993,
+                  "cleanSheetProb": 0.185,
                   "fdrRating": 3,
-                  "strengthMultiplier": 1.007,
-                  "team": "CRY",
-                  "wasHome": true
-                }
-              ],
-              "points": 2.97
-            },
-            "coldStart": false,
-            "elementType": 1,
-            "gapPoints": -0.46,
-            "id": 250,
-            "opponents": [
-              {
-                "fdrMultiplier": 1.0,
-                "fdrRating": 3,
-                "strengthMultiplier": 1.007,
-                "team": "CRY",
-                "wasHome": true
-              }
-            ],
-            "position": "GKP",
-            "projectedPoints": 2.97,
-            "team": "FUL",
-            "webName": "Leno",
-            "windowPoints": 14.76
-          },
-          {
-            "breakdown": {
-              "availabilityMultiplier": 1.0,
-              "base": 3.0,
-              "coldStart": false,
-              "expectedMinutes": 90.0,
-              "fixtureMultiplier": 1.002,
-              "minutesMultiplier": 1.0,
-              "minutesRisk": false,
-              "opponents": [
-                {
-                  "fdrMultiplier": 1.0,
-                  "fdrRating": 3,
-                  "strengthMultiplier": 1.004,
+                  "lambdaAgainst": 1.69,
+                  "lambdaFor": 1.44,
                   "team": "NEW",
                   "wasHome": false
                 }
               ],
-              "points": 3.01
+              "points": 3.6
             },
             "coldStart": false,
             "elementType": 1,
-            "gapPoints": -0.54,
+            "gapPoints": -0.39,
             "id": 57,
             "opponents": [
               {
-                "fdrMultiplier": 1.0,
+                "attackAdjust": 0.993,
+                "cleanSheetProb": 0.185,
                 "fdrRating": 3,
-                "strengthMultiplier": 1.004,
+                "lambdaAgainst": 1.69,
+                "lambdaFor": 1.44,
                 "team": "NEW",
                 "wasHome": false
               }
             ],
             "position": "GKP",
-            "projectedPoints": 3.01,
+            "projectedPoints": 3.6,
             "team": "BOU",
             "webName": "Petrovi\u0107",
-            "windowPoints": 14.68
+            "windowPoints": 18.43
+          },
+          {
+            "breakdown": {
+              "availabilityMultiplier": 1.0,
+              "coldStart": false,
+              "components": {
+                "appearance": 2.0,
+                "assists": 0.07,
+                "bonus": 0.09,
+                "cards": -0.02,
+                "cleanSheet": 0.91,
+                "defensiveContribution": 0.0,
+                "goals": 0.24,
+                "goalsConceded": -0.74,
+                "saves": 1.0
+              },
+              "expectedMinutes": 90.0,
+              "minutesRisk": false,
+              "opponents": [
+                {
+                  "attackAdjust": 1.18,
+                  "cleanSheetProb": 0.228,
+                  "fdrRating": 3,
+                  "lambdaAgainst": 1.48,
+                  "lambdaFor": 1.71,
+                  "team": "CRY",
+                  "wasHome": true
+                }
+              ],
+              "points": 3.56
+            },
+            "coldStart": false,
+            "elementType": 1,
+            "gapPoints": -1.48,
+            "id": 250,
+            "opponents": [
+              {
+                "attackAdjust": 1.18,
+                "cleanSheetProb": 0.228,
+                "fdrRating": 3,
+                "lambdaAgainst": 1.48,
+                "lambdaFor": 1.71,
+                "team": "CRY",
+                "wasHome": true
+              }
+            ],
+            "position": "GKP",
+            "projectedPoints": 3.56,
+            "team": "FUL",
+            "webName": "Leno",
+            "windowPoints": 17.34
           }
         ],
         "baselineUpgrade": {
           "alternative": {
             "breakdown": {
               "availabilityMultiplier": 1.0,
-              "base": 3.34,
               "coldStart": false,
+              "components": {
+                "appearance": 2.0,
+                "assists": 0.07,
+                "bonus": 0.09,
+                "cards": -0.02,
+                "cleanSheet": 0.95,
+                "defensiveContribution": 0.0,
+                "goals": 0.19,
+                "goalsConceded": -0.72,
+                "saves": 0.35
+              },
               "expectedMinutes": 90.0,
-              "fixtureMultiplier": 1.101,
-              "minutesMultiplier": 1.0,
               "minutesRisk": false,
               "opponents": [
                 {
-                  "fdrMultiplier": 1.1,
+                  "attackAdjust": 1.123,
+                  "cleanSheetProb": 0.238,
                   "fdrRating": 2,
-                  "strengthMultiplier": 1.002,
+                  "lambdaAgainst": 1.43,
+                  "lambdaFor": 1.63,
                   "team": "LEE",
                   "wasHome": true
                 }
               ],
-              "points": 3.67
+              "points": 2.92
             },
             "coldStart": false,
             "elementType": 1,
             "id": 109,
             "opponents": [
               {
-                "fdrMultiplier": 1.1,
+                "attackAdjust": 1.123,
+                "cleanSheetProb": 0.238,
                 "fdrRating": 2,
-                "strengthMultiplier": 1.002,
+                "lambdaAgainst": 1.43,
+                "lambdaFor": 1.63,
                 "team": "LEE",
                 "wasHome": true
               }
             ],
             "position": "GKP",
-            "projectedPoints": 3.67,
+            "projectedPoints": 2.92,
             "team": "BHA",
             "webName": "Verbruggen",
-            "windowPoints": 16.88
+            "windowPoints": 13.91
           },
           "gapPoints": 1.43,
           "meaningful": false
         },
         "breakdown": {
           "availabilityMultiplier": 1.0,
-          "base": 3.05,
           "coldStart": false,
+          "components": {
+            "appearance": 2.0,
+            "assists": 0.08,
+            "bonus": 0.09,
+            "cards": -0.02,
+            "cleanSheet": 0.77,
+            "defensiveContribution": 0.0,
+            "goals": 0.22,
+            "goalsConceded": -0.82,
+            "saves": 1.34
+          },
           "expectedMinutes": 90.0,
-          "fixtureMultiplier": 0.998,
-          "minutesMultiplier": 1.0,
           "minutesRisk": false,
           "opponents": [
             {
-              "fdrMultiplier": 1.0,
+              "attackAdjust": 0.97,
+              "cleanSheetProb": 0.193,
               "fdrRating": 3,
-              "strengthMultiplier": 0.996,
+              "lambdaAgainst": 1.64,
+              "lambdaFor": 1.41,
               "team": "NFO",
               "wasHome": false
             }
           ],
-          "points": 3.04
+          "points": 3.66
         },
         "coldStart": false,
         "elementType": 1,
         "id": 496,
         "isCaptain": false,
         "minutesRisk": false,
-        "modelUpgrade": {
-          "alternative": {
-            "breakdown": {
-              "availabilityMultiplier": 1.0,
-              "base": 3.34,
-              "coldStart": false,
-              "expectedMinutes": 90.0,
-              "fixtureMultiplier": 1.101,
-              "minutesMultiplier": 1.0,
-              "minutesRisk": false,
-              "opponents": [
-                {
-                  "fdrMultiplier": 1.1,
-                  "fdrRating": 2,
-                  "strengthMultiplier": 1.002,
-                  "team": "LEE",
-                  "wasHome": true
-                }
-              ],
-              "points": 3.67
-            },
-            "coldStart": false,
-            "elementType": 1,
-            "id": 109,
-            "opponents": [
-              {
-                "fdrMultiplier": 1.1,
-                "fdrRating": 2,
-                "strengthMultiplier": 1.002,
-                "team": "LEE",
-                "wasHome": true
-              }
-            ],
-            "position": "GKP",
-            "projectedPoints": 3.67,
-            "team": "BHA",
-            "webName": "Verbruggen",
-            "windowPoints": 16.88
-          },
-          "gapPoints": 1.66,
-          "meaningful": false
-        },
+        "modelUpgrade": null,
         "opponents": [
           {
-            "fdrMultiplier": 1.0,
+            "attackAdjust": 0.97,
+            "cleanSheetProb": 0.193,
             "fdrRating": 3,
-            "strengthMultiplier": 0.996,
+            "lambdaAgainst": 1.64,
+            "lambdaFor": 1.41,
             "team": "NFO",
             "wasHome": false
           }
         ],
         "position": "GKP",
-        "projectedPoints": 3.04,
-        "role": "bench",
+        "projectedPoints": 3.66,
+        "role": "start",
         "team": "TOT",
         "webName": "Kinsky",
-        "windowPoints": 15.22
+        "windowPoints": 18.82
       },
       {
         "alternatives": [
           {
             "breakdown": {
               "availabilityMultiplier": 1.0,
-              "base": 3.21,
               "coldStart": false,
-              "expectedMinutes": null,
-              "fixtureMultiplier": 1.1,
-              "minutesMultiplier": 1.0,
+              "components": {
+                "appearance": 2.0,
+                "assists": 0.07,
+                "bonus": 0.05,
+                "cards": -0.04,
+                "cleanSheet": 0.2,
+                "defensiveContribution": 0.49,
+                "goals": 0.19,
+                "goalsConceded": 0.0,
+                "saves": 0.0
+              },
+              "expectedMinutes": 41.2,
               "minutesRisk": false,
               "opponents": [
                 {
-                  "fdrMultiplier": 1.1,
+                  "attackAdjust": 1.022,
+                  "cleanSheetProb": 0.204,
                   "fdrRating": 2,
-                  "strengthMultiplier": 1.0,
+                  "lambdaAgainst": 1.59,
+                  "lambdaFor": 1.48,
+                  "team": "HUL",
+                  "wasHome": false
+                }
+              ],
+              "points": 2.96
+            },
+            "coldStart": false,
+            "elementType": 3,
+            "gapPoints": 6.74,
+            "id": 51,
+            "opponents": [
+              {
+                "attackAdjust": 1.022,
+                "cleanSheetProb": 0.204,
+                "fdrRating": 2,
+                "lambdaAgainst": 1.59,
+                "lambdaFor": 1.48,
+                "team": "HUL",
+                "wasHome": false
+              }
+            ],
+            "position": "MID",
+            "projectedPoints": 2.96,
+            "team": "AVL",
+            "webName": "George Hemmings",
+            "windowPoints": 14.92
+          },
+          {
+            "breakdown": {
+              "availabilityMultiplier": 1.0,
+              "coldStart": false,
+              "components": {
+                "appearance": 0.9,
+                "assists": 0.22,
+                "bonus": 0.06,
+                "cards": -0.05,
+                "cleanSheet": 0.09,
+                "defensiveContribution": 0.33,
+                "goals": 1.23,
+                "goalsConceded": 0.0,
+                "saves": 0.0
+              },
+              "expectedMinutes": null,
+              "minutesRisk": false,
+              "opponents": [
+                {
+                  "attackAdjust": 1.237,
+                  "cleanSheetProb": 0.265,
+                  "fdrRating": 2,
+                  "lambdaAgainst": 1.33,
+                  "lambdaFor": 1.79,
                   "team": "COV",
                   "wasHome": true
                 }
               ],
-              "points": 3.53
+              "points": 2.78
             },
             "coldStart": false,
             "elementType": 3,
-            "gapPoints": 5.8,
+            "gapPoints": 5.32,
             "id": 621,
             "opponents": [
               {
-                "fdrMultiplier": 1.1,
+                "attackAdjust": 1.237,
+                "cleanSheetProb": 0.265,
                 "fdrRating": 2,
-                "strengthMultiplier": 1.0,
+                "lambdaAgainst": 1.33,
+                "lambdaFor": 1.79,
                 "team": "COV",
                 "wasHome": true
               }
             ],
             "position": "MID",
-            "projectedPoints": 3.53,
+            "projectedPoints": 2.78,
             "team": "MCI",
             "webName": "McAidoo",
-            "windowPoints": 16.38
+            "windowPoints": 13.5
           },
           {
             "breakdown": {
               "availabilityMultiplier": 1.0,
-              "base": 3.0,
               "coldStart": false,
+              "components": {
+                "appearance": 0.0,
+                "assists": 0.34,
+                "bonus": 0.27,
+                "cards": -0.24,
+                "cleanSheet": 0.0,
+                "defensiveContribution": 1.26,
+                "goals": 0.79,
+                "goalsConceded": 0.0,
+                "saves": 0.0
+              },
               "expectedMinutes": 225.8,
-              "fixtureMultiplier": 0.991,
-              "minutesMultiplier": 1.0,
               "minutesRisk": true,
               "opponents": [
                 {
-                  "fdrMultiplier": 1.0,
+                  "attackAdjust": 1.133,
+                  "cleanSheetProb": 0.245,
                   "fdrRating": 3,
-                  "strengthMultiplier": 0.982,
+                  "lambdaAgainst": 1.41,
+                  "lambdaFor": 1.64,
                   "team": "TOT",
                   "wasHome": true
                 }
               ],
-              "points": 2.98
+              "points": 2.43
             },
             "coldStart": false,
             "elementType": 3,
-            "gapPoints": 4.06,
+            "gapPoints": 3.72,
             "id": 489,
             "opponents": [
               {
-                "fdrMultiplier": 1.0,
+                "attackAdjust": 1.133,
+                "cleanSheetProb": 0.245,
                 "fdrRating": 3,
-                "strengthMultiplier": 0.982,
+                "lambdaAgainst": 1.41,
+                "lambdaFor": 1.64,
                 "team": "TOT",
                 "wasHome": true
               }
             ],
             "position": "MID",
-            "projectedPoints": 2.98,
+            "projectedPoints": 2.43,
             "team": "NFO",
             "webName": "Yates",
-            "windowPoints": 14.64
-          },
-          {
-            "breakdown": {
-              "availabilityMultiplier": 1.0,
-              "base": 3.0,
-              "coldStart": false,
-              "expectedMinutes": 66.8,
-              "fixtureMultiplier": 1.019,
-              "minutesMultiplier": 0.742,
-              "minutesRisk": true,
-              "opponents": [
-                {
-                  "fdrMultiplier": 1.0,
-                  "fdrRating": 3,
-                  "strengthMultiplier": 1.039,
-                  "team": "CRY",
-                  "wasHome": true
-                }
-              ],
-              "points": 2.27
-            },
-            "coldStart": false,
-            "elementType": 3,
-            "gapPoints": 0.55,
-            "id": 270,
-            "opponents": [
-              {
-                "fdrMultiplier": 1.0,
-                "fdrRating": 3,
-                "strengthMultiplier": 1.039,
-                "team": "CRY",
-                "wasHome": true
-              }
-            ],
-            "position": "MID",
-            "projectedPoints": 2.27,
-            "team": "FUL",
-            "webName": "Reed",
-            "windowPoints": 11.13
+            "windowPoints": 11.9
           }
         ],
         "baselineUpgrade": {
           "alternative": {
             "breakdown": {
               "availabilityMultiplier": 1.0,
-              "base": 3.21,
               "coldStart": false,
+              "components": {
+                "appearance": 0.9,
+                "assists": 0.22,
+                "bonus": 0.06,
+                "cards": -0.05,
+                "cleanSheet": 0.09,
+                "defensiveContribution": 0.33,
+                "goals": 1.23,
+                "goalsConceded": 0.0,
+                "saves": 0.0
+              },
               "expectedMinutes": null,
-              "fixtureMultiplier": 1.1,
-              "minutesMultiplier": 1.0,
               "minutesRisk": false,
               "opponents": [
                 {
-                  "fdrMultiplier": 1.1,
+                  "attackAdjust": 1.237,
+                  "cleanSheetProb": 0.265,
                   "fdrRating": 2,
-                  "strengthMultiplier": 1.0,
+                  "lambdaAgainst": 1.33,
+                  "lambdaFor": 1.79,
                   "team": "COV",
                   "wasHome": true
                 }
               ],
-              "points": 3.53
+              "points": 2.78
             },
             "coldStart": false,
             "elementType": 3,
             "id": 621,
             "opponents": [
               {
-                "fdrMultiplier": 1.1,
+                "attackAdjust": 1.237,
+                "cleanSheetProb": 0.265,
                 "fdrRating": 2,
-                "strengthMultiplier": 1.0,
+                "lambdaAgainst": 1.33,
+                "lambdaFor": 1.79,
                 "team": "COV",
                 "wasHome": true
               }
             ],
             "position": "MID",
-            "projectedPoints": 3.53,
+            "projectedPoints": 2.78,
             "team": "MCI",
             "webName": "McAidoo",
-            "windowPoints": 16.38
+            "windowPoints": 13.5
           },
           "gapPoints": 1.01,
           "meaningful": false
         },
         "breakdown": {
           "availabilityMultiplier": 1.0,
-          "base": 3.0,
           "coldStart": false,
+          "components": {
+            "appearance": 0.0,
+            "assists": 0.21,
+            "bonus": 0.19,
+            "cards": -0.16,
+            "cleanSheet": 0.0,
+            "defensiveContribution": 1.03,
+            "goals": 0.34,
+            "goalsConceded": 0.0,
+            "saves": 0.0
+          },
           "expectedMinutes": 61.6,
-          "fixtureMultiplier": 1.013,
-          "minutesMultiplier": 0.684,
           "minutesRisk": true,
           "opponents": [
             {
-              "fdrMultiplier": 1.0,
+              "attackAdjust": 1.02,
+              "cleanSheetProb": 0.181,
               "fdrRating": 3,
-              "strengthMultiplier": 1.027,
+              "lambdaAgainst": 1.71,
+              "lambdaFor": 1.48,
               "team": "FUL",
               "wasHome": false
             }
           ],
-          "points": 2.08
+          "points": 1.61
         },
         "coldStart": false,
         "elementType": 3,
@@ -2325,240 +2946,312 @@
           "alternative": {
             "breakdown": {
               "availabilityMultiplier": 1.0,
-              "base": 3.21,
               "coldStart": false,
-              "expectedMinutes": null,
-              "fixtureMultiplier": 1.1,
-              "minutesMultiplier": 1.0,
+              "components": {
+                "appearance": 2.0,
+                "assists": 0.07,
+                "bonus": 0.05,
+                "cards": -0.04,
+                "cleanSheet": 0.2,
+                "defensiveContribution": 0.49,
+                "goals": 0.19,
+                "goalsConceded": 0.0,
+                "saves": 0.0
+              },
+              "expectedMinutes": 41.2,
               "minutesRisk": false,
               "opponents": [
                 {
-                  "fdrMultiplier": 1.1,
+                  "attackAdjust": 1.022,
+                  "cleanSheetProb": 0.204,
                   "fdrRating": 2,
-                  "strengthMultiplier": 1.0,
-                  "team": "COV",
-                  "wasHome": true
+                  "lambdaAgainst": 1.59,
+                  "lambdaFor": 1.48,
+                  "team": "HUL",
+                  "wasHome": false
                 }
               ],
-              "points": 3.53
+              "points": 2.96
             },
             "coldStart": false,
             "elementType": 3,
-            "id": 621,
+            "id": 51,
             "opponents": [
               {
-                "fdrMultiplier": 1.1,
+                "attackAdjust": 1.022,
+                "cleanSheetProb": 0.204,
                 "fdrRating": 2,
-                "strengthMultiplier": 1.0,
-                "team": "COV",
-                "wasHome": true
+                "lambdaAgainst": 1.59,
+                "lambdaFor": 1.48,
+                "team": "HUL",
+                "wasHome": false
               }
             ],
             "position": "MID",
-            "projectedPoints": 3.53,
-            "team": "MCI",
-            "webName": "McAidoo",
-            "windowPoints": 16.38
+            "projectedPoints": 2.96,
+            "team": "AVL",
+            "webName": "George Hemmings",
+            "windowPoints": 14.92
           },
-          "gapPoints": 5.8,
+          "gapPoints": 6.74,
           "meaningful": true
         },
         "opponents": [
           {
-            "fdrMultiplier": 1.0,
+            "attackAdjust": 1.02,
+            "cleanSheetProb": 0.181,
             "fdrRating": 3,
-            "strengthMultiplier": 1.027,
+            "lambdaAgainst": 1.71,
+            "lambdaFor": 1.48,
             "team": "FUL",
             "wasHome": false
           }
         ],
         "position": "MID",
-        "projectedPoints": 2.08,
-        "role": "start",
+        "projectedPoints": 1.61,
+        "role": "bench",
         "team": "CRY",
         "webName": "Hughes",
-        "windowPoints": 10.58
+        "windowPoints": 8.18
       },
       {
         "alternatives": [
           {
             "breakdown": {
               "availabilityMultiplier": 1.0,
-              "base": 2.89,
               "coldStart": false,
-              "expectedMinutes": 98.6,
-              "fixtureMultiplier": 0.867,
-              "minutesMultiplier": 1.0,
+              "components": {
+                "appearance": 2.0,
+                "assists": 0.17,
+                "bonus": 0.2,
+                "cards": -0.03,
+                "cleanSheet": 0.67,
+                "defensiveContribution": 1.08,
+                "goals": 0.21,
+                "goalsConceded": -0.51,
+                "saves": 0.0
+              },
+              "expectedMinutes": 51.4,
               "minutesRisk": false,
               "opponents": [
                 {
-                  "fdrMultiplier": 0.9,
-                  "fdrRating": 4,
-                  "strengthMultiplier": 0.926,
-                  "team": "LIV",
-                  "wasHome": true
-                }
-              ],
-              "points": 2.5
-            },
-            "coldStart": false,
-            "elementType": 2,
-            "gapPoints": 5.69,
-            "id": 259,
-            "opponents": [
-              {
-                "fdrMultiplier": 0.9,
-                "fdrRating": 4,
-                "strengthMultiplier": 0.926,
-                "team": "LIV",
-                "wasHome": true
-              }
-            ],
-            "position": "DEF",
-            "projectedPoints": 2.5,
-            "team": "IPS",
-            "webName": "Diop",
-            "windowPoints": 13.65
-          },
-          {
-            "breakdown": {
-              "availabilityMultiplier": 1.0,
-              "base": 2.8,
-              "coldStart": false,
-              "expectedMinutes": 101.2,
-              "fixtureMultiplier": 1.002,
-              "minutesMultiplier": 1.0,
-              "minutesRisk": false,
-              "opponents": [
-                {
-                  "fdrMultiplier": 1.0,
-                  "fdrRating": 3,
-                  "strengthMultiplier": 1.004,
-                  "team": "BRE",
+                  "attackAdjust": 0.917,
+                  "cleanSheetProb": 0.166,
+                  "fdrRating": 5,
+                  "lambdaAgainst": 1.79,
+                  "lambdaFor": 1.33,
+                  "team": "MCI",
                   "wasHome": false
                 }
               ],
-              "points": 2.8
+              "points": 3.78
             },
             "coldStart": false,
             "elementType": 2,
-            "gapPoints": 5.28,
-            "id": 539,
+            "gapPoints": 3.02,
+            "id": 173,
             "opponents": [
               {
-                "fdrMultiplier": 1.0,
-                "fdrRating": 3,
-                "strengthMultiplier": 1.004,
-                "team": "BRE",
+                "attackAdjust": 0.917,
+                "cleanSheetProb": 0.166,
+                "fdrRating": 5,
+                "lambdaAgainst": 1.79,
+                "lambdaFor": 1.33,
+                "team": "MCI",
                 "wasHome": false
               }
             ],
             "position": "DEF",
-            "projectedPoints": 2.8,
-            "team": "SUN",
-            "webName": "O'Nien",
-            "windowPoints": 13.24
+            "projectedPoints": 3.78,
+            "team": "COV",
+            "webName": "Thomas",
+            "windowPoints": 20.14
           },
           {
             "breakdown": {
               "availabilityMultiplier": 1.0,
-              "base": 3.93,
               "coldStart": false,
+              "components": {
+                "appearance": 2.0,
+                "assists": 0.06,
+                "bonus": 0.11,
+                "cards": -0.03,
+                "cleanSheet": 0.91,
+                "defensiveContribution": 1.14,
+                "goals": 0.16,
+                "goalsConceded": -0.42,
+                "saves": 0.0
+              },
               "expectedMinutes": 51.4,
-              "fixtureMultiplier": 0.989,
-              "minutesMultiplier": 0.571,
               "minutesRisk": false,
               "opponents": [
                 {
-                  "fdrMultiplier": 1.0,
+                  "attackAdjust": 1.095,
+                  "cleanSheetProb": 0.227,
                   "fdrRating": 3,
-                  "strengthMultiplier": 0.978,
+                  "lambdaAgainst": 1.48,
+                  "lambdaFor": 1.59,
                   "team": "AVL",
                   "wasHome": true
                 }
               ],
-              "points": 2.22
+              "points": 3.94
             },
             "coldStart": false,
             "elementType": 2,
-            "gapPoints": 3.04,
+            "gapPoints": 2.0,
             "id": 277,
             "opponents": [
               {
-                "fdrMultiplier": 1.0,
+                "attackAdjust": 1.095,
+                "cleanSheetProb": 0.227,
                 "fdrRating": 3,
-                "strengthMultiplier": 0.978,
+                "lambdaAgainst": 1.48,
+                "lambdaFor": 1.59,
                 "team": "AVL",
                 "wasHome": true
               }
             ],
             "position": "DEF",
-            "projectedPoints": 2.22,
+            "projectedPoints": 3.94,
             "team": "HUL",
             "webName": "Egan",
-            "windowPoints": 11.0
+            "windowPoints": 19.12
+          },
+          {
+            "breakdown": {
+              "availabilityMultiplier": 1.0,
+              "coldStart": false,
+              "components": {
+                "appearance": 2.0,
+                "assists": 0.19,
+                "bonus": 0.04,
+                "cards": -0.03,
+                "cleanSheet": 0.81,
+                "defensiveContribution": 1.14,
+                "goals": 0.16,
+                "goalsConceded": -0.46,
+                "saves": 0.0
+              },
+              "expectedMinutes": 51.4,
+              "minutesRisk": false,
+              "opponents": [
+                {
+                  "attackAdjust": 1.034,
+                  "cleanSheetProb": 0.201,
+                  "fdrRating": 4,
+                  "lambdaAgainst": 1.6,
+                  "lambdaFor": 1.5,
+                  "team": "LIV",
+                  "wasHome": true
+                }
+              ],
+              "points": 3.84
+            },
+            "coldStart": false,
+            "elementType": 2,
+            "gapPoints": 1.6,
+            "id": 304,
+            "opponents": [
+              {
+                "attackAdjust": 1.034,
+                "cleanSheetProb": 0.201,
+                "fdrRating": 4,
+                "lambdaAgainst": 1.6,
+                "lambdaFor": 1.5,
+                "team": "LIV",
+                "wasHome": true
+              }
+            ],
+            "position": "DEF",
+            "projectedPoints": 3.84,
+            "team": "IPS",
+            "webName": "O'Shea",
+            "windowPoints": 18.72
           }
         ],
         "baselineUpgrade": {
           "alternative": {
             "breakdown": {
               "availabilityMultiplier": 1.0,
-              "base": 3.93,
               "coldStart": false,
+              "components": {
+                "appearance": 2.0,
+                "assists": 0.06,
+                "bonus": 0.11,
+                "cards": -0.03,
+                "cleanSheet": 0.91,
+                "defensiveContribution": 1.14,
+                "goals": 0.16,
+                "goalsConceded": -0.42,
+                "saves": 0.0
+              },
               "expectedMinutes": 51.4,
-              "fixtureMultiplier": 0.989,
-              "minutesMultiplier": 0.571,
               "minutesRisk": false,
               "opponents": [
                 {
-                  "fdrMultiplier": 1.0,
+                  "attackAdjust": 1.095,
+                  "cleanSheetProb": 0.227,
                   "fdrRating": 3,
-                  "strengthMultiplier": 0.978,
+                  "lambdaAgainst": 1.48,
+                  "lambdaFor": 1.59,
                   "team": "AVL",
                   "wasHome": true
                 }
               ],
-              "points": 2.22
+              "points": 3.94
             },
             "coldStart": false,
             "elementType": 2,
             "id": 277,
             "opponents": [
               {
-                "fdrMultiplier": 1.0,
+                "attackAdjust": 1.095,
+                "cleanSheetProb": 0.227,
                 "fdrRating": 3,
-                "strengthMultiplier": 0.978,
+                "lambdaAgainst": 1.48,
+                "lambdaFor": 1.59,
                 "team": "AVL",
                 "wasHome": true
               }
             ],
             "position": "DEF",
-            "projectedPoints": 2.22,
+            "projectedPoints": 3.94,
             "team": "HUL",
             "webName": "Egan",
-            "windowPoints": 11.0
+            "windowPoints": 19.12
           },
           "gapPoints": 4.93,
           "meaningful": false
         },
         "breakdown": {
           "availabilityMultiplier": 1.0,
-          "base": 2.94,
           "coldStart": false,
+          "components": {
+            "appearance": 2.0,
+            "assists": 0.1,
+            "bonus": 0.04,
+            "cards": -0.03,
+            "cleanSheet": 0.81,
+            "defensiveContribution": 0.82,
+            "goals": 0.25,
+            "goalsConceded": -0.46,
+            "saves": 0.0
+          },
           "expectedMinutes": 51.4,
-          "fixtureMultiplier": 0.867,
-          "minutesMultiplier": 0.571,
           "minutesRisk": false,
           "opponents": [
             {
-              "fdrMultiplier": 0.9,
+              "attackAdjust": 1.034,
+              "cleanSheetProb": 0.201,
               "fdrRating": 4,
-              "strengthMultiplier": 0.926,
+              "lambdaAgainst": 1.6,
+              "lambdaFor": 1.5,
               "team": "LIV",
               "wasHome": true
             }
           ],
-          "points": 1.46
+          "points": 3.52
         },
         "coldStart": false,
         "elementType": 2,
@@ -2569,81 +3262,105 @@
           "alternative": {
             "breakdown": {
               "availabilityMultiplier": 1.0,
-              "base": 2.89,
               "coldStart": false,
-              "expectedMinutes": 98.6,
-              "fixtureMultiplier": 0.867,
-              "minutesMultiplier": 1.0,
+              "components": {
+                "appearance": 2.0,
+                "assists": 0.17,
+                "bonus": 0.2,
+                "cards": -0.03,
+                "cleanSheet": 0.67,
+                "defensiveContribution": 1.08,
+                "goals": 0.21,
+                "goalsConceded": -0.51,
+                "saves": 0.0
+              },
+              "expectedMinutes": 51.4,
               "minutesRisk": false,
               "opponents": [
                 {
-                  "fdrMultiplier": 0.9,
-                  "fdrRating": 4,
-                  "strengthMultiplier": 0.926,
-                  "team": "LIV",
-                  "wasHome": true
+                  "attackAdjust": 0.917,
+                  "cleanSheetProb": 0.166,
+                  "fdrRating": 5,
+                  "lambdaAgainst": 1.79,
+                  "lambdaFor": 1.33,
+                  "team": "MCI",
+                  "wasHome": false
                 }
               ],
-              "points": 2.5
+              "points": 3.78
             },
             "coldStart": false,
             "elementType": 2,
-            "id": 259,
+            "id": 173,
             "opponents": [
               {
-                "fdrMultiplier": 0.9,
-                "fdrRating": 4,
-                "strengthMultiplier": 0.926,
-                "team": "LIV",
-                "wasHome": true
+                "attackAdjust": 0.917,
+                "cleanSheetProb": 0.166,
+                "fdrRating": 5,
+                "lambdaAgainst": 1.79,
+                "lambdaFor": 1.33,
+                "team": "MCI",
+                "wasHome": false
               }
             ],
             "position": "DEF",
-            "projectedPoints": 2.5,
-            "team": "IPS",
-            "webName": "Diop",
-            "windowPoints": 13.65
+            "projectedPoints": 3.78,
+            "team": "COV",
+            "webName": "Thomas",
+            "windowPoints": 20.14
           },
-          "gapPoints": 5.69,
-          "meaningful": true
+          "gapPoints": 3.02,
+          "meaningful": false
         },
         "opponents": [
           {
-            "fdrMultiplier": 0.9,
+            "attackAdjust": 1.034,
+            "cleanSheetProb": 0.201,
             "fdrRating": 4,
-            "strengthMultiplier": 0.926,
+            "lambdaAgainst": 1.6,
+            "lambdaFor": 1.5,
             "team": "LIV",
             "wasHome": true
           }
         ],
         "position": "DEF",
-        "projectedPoints": 1.46,
-        "role": "bench",
+        "projectedPoints": 3.52,
+        "role": "start",
         "team": "IPS",
         "webName": "Davis",
-        "windowPoints": 7.96
+        "windowPoints": 17.12
       },
       {
         "alternatives": [
           {
             "breakdown": {
               "availabilityMultiplier": 1.0,
-              "base": 4.15,
               "coldStart": false,
+              "components": {
+                "appearance": 2.0,
+                "assists": 0.17,
+                "bonus": 1.31,
+                "cards": -0.06,
+                "cleanSheet": 0.78,
+                "defensiveContribution": 2.0,
+                "goals": 0.58,
+                "goalsConceded": -0.81,
+                "saves": 0.0
+              },
               "expectedMinutes": 89.9,
-              "fixtureMultiplier": 1.005,
-              "minutesMultiplier": 0.999,
               "minutesRisk": false,
               "opponents": [
                 {
-                  "fdrMultiplier": 1.0,
+                  "attackAdjust": 0.989,
+                  "cleanSheetProb": 0.196,
                   "fdrRating": 3,
-                  "strengthMultiplier": 1.01,
+                  "lambdaAgainst": 1.63,
+                  "lambdaFor": 1.43,
                   "team": "BHA",
                   "wasHome": false
                 }
               ],
-              "points": 4.16
+              "points": 5.98
             },
             "coldStart": false,
             "elementType": 2,
@@ -2651,38 +3368,101 @@
             "id": 327,
             "opponents": [
               {
-                "fdrMultiplier": 1.0,
+                "attackAdjust": 0.989,
+                "cleanSheetProb": 0.196,
                 "fdrRating": 3,
-                "strengthMultiplier": 1.01,
+                "lambdaAgainst": 1.63,
+                "lambdaFor": 1.43,
                 "team": "BHA",
                 "wasHome": false
               }
             ],
             "position": "DEF",
-            "projectedPoints": 4.16,
+            "projectedPoints": 5.98,
             "team": "LEE",
             "webName": "Bijol",
-            "windowPoints": 19.67
+            "windowPoints": 30.51
           },
           {
             "breakdown": {
               "availabilityMultiplier": 1.0,
-              "base": 3.81,
               "coldStart": false,
-              "expectedMinutes": 81.2,
-              "fixtureMultiplier": 1.101,
-              "minutesMultiplier": 0.902,
+              "components": {
+                "appearance": 2.0,
+                "assists": 0.69,
+                "bonus": 0.47,
+                "cards": -0.05,
+                "cleanSheet": 0.95,
+                "defensiveContribution": 1.89,
+                "goals": 0.29,
+                "goalsConceded": -0.72,
+                "saves": 0.0
+              },
+              "expectedMinutes": 90.5,
               "minutesRisk": false,
               "opponents": [
                 {
-                  "fdrMultiplier": 1.1,
+                  "attackAdjust": 1.165,
+                  "cleanSheetProb": 0.237,
+                  "fdrRating": 3,
+                  "lambdaAgainst": 1.44,
+                  "lambdaFor": 1.69,
+                  "team": "BOU",
+                  "wasHome": true
+                }
+              ],
+              "points": 5.52
+            },
+            "coldStart": false,
+            "elementType": 2,
+            "gapPoints": null,
+            "id": 449,
+            "opponents": [
+              {
+                "attackAdjust": 1.165,
+                "cleanSheetProb": 0.237,
+                "fdrRating": 3,
+                "lambdaAgainst": 1.44,
+                "lambdaFor": 1.69,
+                "team": "BOU",
+                "wasHome": true
+              }
+            ],
+            "position": "DEF",
+            "projectedPoints": 5.52,
+            "team": "NEW",
+            "webName": "Hall",
+            "windowPoints": 26.94
+          },
+          {
+            "breakdown": {
+              "availabilityMultiplier": 1.0,
+              "coldStart": false,
+              "components": {
+                "appearance": 2.0,
+                "assists": 0.19,
+                "bonus": 0.71,
+                "cards": -0.05,
+                "cleanSheet": 0.95,
+                "defensiveContribution": 1.7,
+                "goals": 0.55,
+                "goalsConceded": -0.65,
+                "saves": 0.0
+              },
+              "expectedMinutes": 81.2,
+              "minutesRisk": false,
+              "opponents": [
+                {
+                  "attackAdjust": 1.123,
+                  "cleanSheetProb": 0.238,
                   "fdrRating": 2,
-                  "strengthMultiplier": 1.002,
+                  "lambdaAgainst": 1.43,
+                  "lambdaFor": 1.63,
                   "team": "LEE",
                   "wasHome": true
                 }
               ],
-              "points": 3.79
+              "points": 5.41
             },
             "coldStart": false,
             "elementType": 2,
@@ -2690,57 +3470,20 @@
             "id": 130,
             "opponents": [
               {
-                "fdrMultiplier": 1.1,
+                "attackAdjust": 1.123,
+                "cleanSheetProb": 0.238,
                 "fdrRating": 2,
-                "strengthMultiplier": 1.002,
+                "lambdaAgainst": 1.43,
+                "lambdaFor": 1.63,
                 "team": "LEE",
                 "wasHome": true
               }
             ],
             "position": "DEF",
-            "projectedPoints": 3.79,
+            "projectedPoints": 5.41,
             "team": "BHA",
             "webName": "Wieffer",
-            "windowPoints": 17.41
-          },
-          {
-            "breakdown": {
-              "availabilityMultiplier": 1.0,
-              "base": 3.24,
-              "coldStart": false,
-              "expectedMinutes": 90.8,
-              "fixtureMultiplier": 1.006,
-              "minutesMultiplier": 1.0,
-              "minutesRisk": false,
-              "opponents": [
-                {
-                  "fdrMultiplier": 1.0,
-                  "fdrRating": 3,
-                  "strengthMultiplier": 1.012,
-                  "team": "FUL",
-                  "wasHome": false
-                }
-              ],
-              "points": 3.26
-            },
-            "coldStart": false,
-            "elementType": 2,
-            "gapPoints": null,
-            "id": 202,
-            "opponents": [
-              {
-                "fdrMultiplier": 1.0,
-                "fdrRating": 3,
-                "strengthMultiplier": 1.012,
-                "team": "FUL",
-                "wasHome": false
-              }
-            ],
-            "position": "DEF",
-            "projectedPoints": 3.26,
-            "team": "CRY",
-            "webName": "Richards",
-            "windowPoints": 16.64
+            "windowPoints": 26.18
           }
         ],
         "baselineUpgrade": null,
@@ -2748,9 +3491,11 @@
           "coldStart": true,
           "opponents": [
             {
-              "fdrMultiplier": 1.0,
+              "attackAdjust": 0.989,
+              "cleanSheetProb": 0.196,
               "fdrRating": 3,
-              "strengthMultiplier": 1.01,
+              "lambdaAgainst": 1.63,
+              "lambdaFor": 1.43,
               "team": "BHA",
               "wasHome": false
             }
@@ -2765,9 +3510,11 @@
         "modelUpgrade": null,
         "opponents": [
           {
-            "fdrMultiplier": 1.0,
+            "attackAdjust": 0.989,
+            "cleanSheetProb": 0.196,
             "fdrRating": 3,
-            "strengthMultiplier": 1.01,
+            "lambdaAgainst": 1.63,
+            "lambdaFor": 1.43,
             "team": "BHA",
             "wasHome": false
           }
@@ -2781,25 +3528,25 @@
       }
     ],
     "startingXi": [
-      1,
+      496,
       11,
       418,
       504,
-      124,
-      426,
+      305,
       366,
-      212,
-      165,
+      426,
+      124,
       411,
+      165,
       346
     ],
-    "windowPoints": 190.68
+    "windowPoints": 267.31
   },
   "targetGameweek": 3,
   "upgradeCount": {
-    "agree": 7,
+    "agree": 6,
     "baseline": 9,
     "meaningful": 7,
-    "model": 9
+    "model": 8
   }
 }

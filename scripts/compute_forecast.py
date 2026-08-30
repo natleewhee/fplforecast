@@ -138,6 +138,44 @@ def _player_card(pid: int, elements_by_id: dict, teams_by_id: dict) -> dict:
     }
 
 
+def archive_rates(resolved_map: dict, history_frame) -> dict[int, dict]:
+    """``{current_player_id: {xg90, xa90, dc90}}`` from prior seasons -- the
+    deepest slice of the model's per-90 rate blend. Rates are per historical id,
+    averaged over the seasons a current player resolves to."""
+    if history_frame is None or getattr(history_frame, "empty", True):
+        return {}
+
+    df = history_frame.reset_index()
+    by_hist: dict[int, dict] = {}
+    for hist_id, sub in df.groupby("historical_id"):
+        minutes = float(sub["minutes"].sum())
+        if minutes <= 0:
+            continue
+        per90 = minutes / 90.0
+        rec = {
+            "xg90": float(sub["expected_goals"].sum()) / per90,
+            "xa90": float(sub["expected_assists"].sum()) / per90,
+        }
+        if "defensive_contribution" in sub:
+            dc = sub[sub["defensive_contribution"].notna() & (sub["minutes"] > 0)]
+            if not dc.empty and dc["minutes"].sum() > 0:
+                rec["dc90"] = float(dc["defensive_contribution"].sum()) / (dc["minutes"].sum() / 90.0)
+        by_hist[int(hist_id)] = rec
+
+    out: dict[int, dict] = {}
+    for current_id, entry in resolved_map.items():
+        recs = [by_hist[h] for h in entry.get("bySeason", {}).values() if h in by_hist]
+        if not recs:
+            continue
+        agg: dict[str, float] = {}
+        for key in ("xg90", "xa90", "dc90"):
+            vals = [r[key] for r in recs if key in r]
+            if vals:
+                agg[key] = sum(vals) / len(vals)
+        out[int(current_id)] = agg
+    return out
+
+
 def upcoming_gameweek(bootstrap: dict, now: datetime, fallback: int) -> int:
     """The gameweek to forecast: the first whose deadline is still in the
     future, so the view rolls forward on its own as gameweeks pass."""
@@ -218,7 +256,11 @@ def main(now: datetime | None = None) -> int:
         return isinstance(classify(pid, resolved_map, archive.frame), ColdStart)
 
     feature_frame = build_feature_frame(
-        bootstrap["elements"], load_event_live_history(), is_cold_start, ROLLING_WINDOW
+        bootstrap["elements"],
+        load_event_live_history(),
+        is_cold_start,
+        ROLLING_WINDOW,
+        archive_rates=archive_rates(resolved_map, archive.frame),
     )
 
     ctx = ModelContext(

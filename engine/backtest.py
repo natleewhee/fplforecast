@@ -22,6 +22,7 @@ from engine.features import build_feature_frame
 from engine.history import ColdStart
 from engine.model import ModelContext
 from engine.squad import best_xi
+from engine.strength import team_strength_table
 
 DEFAULT_QUOTAS = {1: 2, 2: 5, 3: 5, 4: 3}  # GKP, DEF, MID, FWD
 SQUAD_SIZE = sum(DEFAULT_QUOTAS.values())
@@ -80,18 +81,40 @@ def _adapt_history(rows: pd.DataFrame, name_to_id: dict) -> tuple[list[dict], li
             {
                 "elements": [
                     {
-                        "id": int(r.historical_id),
+                        "id": int(row["historical_id"]),
                         "stats": {
-                            "total_points": r.total_points,
-                            "minutes": r.minutes,
-                            "ict_index": r.ict_index,
+                            "total_points": row.get("total_points"),
+                            "minutes": row.get("minutes"),
+                            "ict_index": row.get("ict_index"),
+                            "expected_goals": row.get("expected_goals"),
+                            "expected_assists": row.get("expected_assists"),
+                            "defensive_contribution": row.get("defensive_contribution"),
                         },
                     }
-                    for r in gw_rows.itertuples()
+                    for _, row in gw_rows.iterrows()
                 ]
             }
         )
     return players, payloads
+
+
+def _history_minutes_model(before: pd.DataFrame, window: int = 6) -> dict:
+    """A minutes model for a replayed gameweek, built only from rows before its
+    deadline: recent mean minutes and the share of recent games started 60+ /
+    played as a cameo. Leak-safe -- it is the same shape ``engine.model``
+    consumes live, just derived from history instead of team news."""
+    mm: dict[str, dict] = {}
+    for hist_id, sub in before.groupby("historical_id"):
+        mins = sub.sort_values("gw")["minutes"].tail(window).fillna(0.0).tolist()
+        if not mins:
+            continue
+        n = len(mins)
+        mm[str(int(hist_id))] = {
+            "expectedMinutes": sum(mins) / n,
+            "pStart": sum(1 for m in mins if m >= 60) / n,
+            "pCameo": sum(1 for m in mins if 0 < m < 60) / n,
+        }
+    return mm
 
 
 def _first_int(series: pd.Series) -> int | None:
@@ -117,8 +140,9 @@ def replay(
 ) -> dict:
     """Replay one season. Returns per-season model/baseline XI points, their
     delta, and the number of gameweeks scored."""
-    id_to_name = {t["id"]: t.get("name") for t in teams}
+    id_to_short = {t["id"]: t.get("short_name") for t in teams}
     name_to_id = {t.get("name"): t["id"] for t in teams}
+    strength = team_strength_table({season: teams}) if teams else None
     ctx_fixtures = [
         {
             "event": f["gw"],
@@ -158,10 +182,10 @@ def replay(
 
         ctx = ModelContext(
             fixtures=ctx_fixtures,
-            minutes_model=None,
+            minutes_model=_history_minutes_model(before),  # from pre-deadline rows only
             elements_by_id={},
-            teams_by_id=id_to_name,
-            team_strength=None,
+            teams_by_id=id_to_short,
+            team_strength=strength,
         )
 
         model_proj: list[dict] = []
@@ -174,7 +198,7 @@ def replay(
             meta = {
                 "id": int(pid),
                 "element_type": int(row["element_type"]),
-                "team": id_to_name.get(row["team"], row["team"]),
+                "team": id_to_short.get(row["team"], row["team"]),
             }
             model_proj.append({**meta, "points": float(m)})
             base_proj.append({**meta, "points": float(b)})

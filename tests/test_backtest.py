@@ -54,6 +54,9 @@ def _row(season, gw, hid, kickoff, pts=2, mins=90, et=3):
         "team": 1,
         "was_home": True,
         "opponent_team": 2,
+        "expected_goals": 0.1,
+        "expected_assists": 0.1,
+        "defensive_contribution": 3.0,
     }
 
 

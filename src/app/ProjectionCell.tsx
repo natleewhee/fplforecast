@@ -1,38 +1,51 @@
 "use client";
 
 import { useState } from "react";
-import type { ProjectionBreakdown } from "@/lib/snapshots";
+import type { ProjectionBreakdown, ProjectionComponents } from "@/lib/snapshots";
 
-function fmt(n: number | undefined | null, digits = 2): string {
-  return n === undefined || n === null ? "—" : n.toFixed(digits);
-}
+const COMPONENT_LABELS: [keyof ProjectionComponents, string][] = [
+  ["appearance", "appearance"],
+  ["goals", "goals"],
+  ["assists", "assists"],
+  ["cleanSheet", "clean sheet"],
+  ["goalsConceded", "goals conceded"],
+  ["saves", "saves"],
+  ["defensiveContribution", "def. contribution"],
+  ["bonus", "bonus"],
+  ["cards", "cards"],
+];
 
 function BreakdownPanel({ breakdown }: { breakdown: ProjectionBreakdown }) {
-  const b = breakdown;
+  const c = breakdown.components;
+  const opp = breakdown.opponents;
   return (
     <span
       role="tooltip"
       className="absolute right-0 top-full z-20 mt-1 block w-60 rounded-lg border border-line bg-card p-3 text-left text-xs font-normal text-ink shadow-lg"
     >
-      <span className="mb-1 block font-semibold text-ink">How this is projected</span>
-      <span className="grid grid-cols-[1fr_auto] gap-x-2 gap-y-0.5 tabular-nums">
-        <span className="text-ink-soft">base (avg · ICT · form)</span>
-        <span>{fmt(b.base)}</span>
-        <span className="text-ink-soft">× fixture (FDR + strength)</span>
-        <span>{fmt(b.fixtureMultiplier)}</span>
-        <span className="text-ink-soft">× minutes</span>
-        <span>{fmt(b.minutesMultiplier)}</span>
-        <span className="text-ink-soft">× availability</span>
-        <span>{fmt(b.availabilityMultiplier)}</span>
-        <span className="mt-0.5 border-t border-line pt-0.5 font-semibold">projected</span>
-        <span className="mt-0.5 border-t border-line pt-0.5 font-semibold">{fmt(b.points, 1)}</span>
-      </span>
-      {b.opponents.length > 0 && (
+      <span className="mb-1 block font-semibold text-ink">Expected points</span>
+      {c && (
+        <span className="grid grid-cols-[1fr_auto] gap-x-2 gap-y-0.5 tabular-nums">
+          {COMPONENT_LABELS.filter(([k]) => k === "appearance" || c[k] !== 0).map(([k, label]) => (
+            <span key={k} className="contents">
+              <span className="text-ink-soft">{label}</span>
+              <span>{c[k] > 0 ? "+" : ""}{c[k].toFixed(2)}</span>
+            </span>
+          ))}
+          <span className="mt-0.5 border-t border-line pt-0.5 font-semibold">projected</span>
+          <span className="mt-0.5 border-t border-line pt-0.5 font-semibold">
+            {breakdown.points?.toFixed(1) ?? "—"}
+          </span>
+        </span>
+      )}
+      {opp.length > 0 && (
         <span className="mt-1.5 block border-t border-line pt-1.5 text-ink-soft">
-          {b.opponents.map((o, i) => (
+          {opp.map((o, i) => (
             <span key={i} className="block">
-              {o.wasHome ? "vs" : "@"} {o.team ?? "?"} · FDR {o.fdrRating ?? "—"}
-              {o.strengthMultiplier !== 1 && ` · strength ×${o.strengthMultiplier.toFixed(2)}`}
+              {o.wasHome ? "vs" : "@"} {o.team ?? "?"}
+              {o.fdrRating != null && ` · FDR ${o.fdrRating}`}
+              {o.lambdaFor != null && ` · goals for ${o.lambdaFor.toFixed(1)} / against ${o.lambdaAgainst?.toFixed(1)}`}
+              {o.cleanSheetProb != null && ` · CS ${Math.round(o.cleanSheetProb * 100)}%`}
             </span>
           ))}
         </span>
@@ -58,7 +71,7 @@ export default function ProjectionCell({
     <span
       className="relative inline-block cursor-help font-semibold text-[var(--pitch-dark)] underline decoration-dotted decoration-1 underline-offset-2 tabular-nums"
       tabIndex={0}
-      aria-label={`Projected ${points.toFixed(1)} points — tap for the calculation`}
+      aria-label={`Projected ${points.toFixed(1)} points — tap for the breakdown`}
       onMouseEnter={() => setOpen(true)}
       onMouseLeave={() => setOpen(false)}
       onFocus={() => setOpen(true)}

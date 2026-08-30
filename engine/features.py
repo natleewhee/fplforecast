@@ -13,7 +13,14 @@ from __future__ import annotations
 
 import pandas as pd
 
-from engine.config import FEATURE_SHRINKAGE_GAMES, RATE_BLEND, RATE_FORM_WINDOW, RATE_PRIOR_WEIGHT
+from engine.config import (
+    FEATURE_SHRINKAGE_GAMES,
+    RATE_ARCHIVE_GAMES,
+    RATE_BLEND,
+    RATE_CLAMP,
+    RATE_FORM_WINDOW,
+    RATE_PRIOR_GAMES,
+)
 
 UNAVAILABLE_STATUSES = {"i", "s", "u", "n"}  # injured, suspended, unavailable, not in squad
 
@@ -197,13 +204,19 @@ def _rate_features(
             for name, stat in _LIVE_RATE_STATS.items():
                 bucket[name] += _to_number(stats.get(stat)) or 0.0
 
-    # pass 1: blend per player without the position prior
+    # pass 1: blend per player without the position prior, tracking how many
+    # games of evidence sit behind the blend.
     blended: dict[int, dict] = {}
+    evidence: dict[int, float] = {}
     for player in players:
         pid = player["id"]
         sources: dict[str, list[tuple[float, float]]] = {n: [] for n in _RATE_NAMES}
 
         season_min = _to_number(player.get("minutes")) or 0.0
+        recent_games = recent_min.get(pid, 0.0) / 90.0
+        has_archive = bool(archive_rates.get(pid))
+        evidence[pid] = season_min / 90.0 + recent_games + (RATE_ARCHIVE_GAMES if has_archive else 0.0)
+
         if season_min > 0:
             per90 = season_min / 90.0
             for name, field in _SEASON_RATE_FIELDS.items():
@@ -246,19 +259,19 @@ def _rate_features(
             ]
             prior[(et, name)] = sum(vals) / len(vals) if vals else 0.0
 
-    # pass 2: shrink toward the prior
+    # pass 2: empirical-Bayes shrink toward the position prior by games of
+    # evidence, then clamp to a sane ceiling.
     out: dict[int, dict] = {}
     for player in players:
         pid = player["id"]
         et = player["element_type"]
+        n = evidence.get(pid, 0.0)
         row = {}
         for name in _RATE_NAMES:
-            value, weight = blended[pid][name]
+            value, _weight = blended[pid][name]
             p = prior.get((et, name), 0.0)
-            if value is None:
-                row[name] = p
-            else:
-                row[name] = (weight * value + RATE_PRIOR_WEIGHT * p) / (weight + RATE_PRIOR_WEIGHT)
+            shrunk = p if value is None else (n * value + RATE_PRIOR_GAMES * p) / (n + RATE_PRIOR_GAMES)
+            row[name] = min(shrunk, RATE_CLAMP.get(name, shrunk))
         out[pid] = row
     return out
 

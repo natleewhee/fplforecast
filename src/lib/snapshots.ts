@@ -46,16 +46,28 @@ export type OpponentLeg = {
   team: string | null;
   wasHome: boolean;
   fdrRating: number | null; // FPL's 1 (easiest) .. 5 (hardest) rating
-  fdrMultiplier: number;
-  strengthMultiplier: number; // opponent attack/defence adjustment, ~1.0
+  lambdaFor?: number; // expected goals the player's team scores
+  lambdaAgainst?: number; // expected goals conceded
+  cleanSheetProb?: number; // exp(-lambdaAgainst)
+  attackAdjust?: number; // scaling applied to the player's own xG/xA rate
+};
+
+export type ProjectionComponents = {
+  appearance: number;
+  goals: number;
+  assists: number;
+  cleanSheet: number;
+  goalsConceded: number;
+  saves: number;
+  defensiveContribution: number;
+  bonus: number;
+  cards: number;
 };
 
 export type ProjectionBreakdown = {
   points: number | null;
   coldStart: boolean;
-  base?: number;
-  fixtureMultiplier?: number;
-  minutesMultiplier?: number;
+  components?: ProjectionComponents;
   availabilityMultiplier?: number;
   expectedMinutes?: number | null;
   minutesRisk?: boolean;

@@ -97,9 +97,23 @@ TEAM_LAMBDA_CLAMP = (0.3, 3.5)
 RATE_BLEND = {"archive": 0.3, "season": 0.3, "recent": 0.4}
 # Recent-form window, in gameweeks, for the "recent" slice of a rate blend.
 RATE_FORM_WINDOW = 6
-# Weight of the position-mean prior when shrinking a blended per-90 rate, so a
-# thin early-season sample doesn't dominate (as with the points means).
-RATE_PRIOR_WEIGHT = 0.5
+# Pseudo-games of the position-mean prior mixed into a blended per-90 rate.
+# A player with few games of data is pulled hard toward their position's
+# average; the pull fades as real minutes accumulate (empirical Bayes).
+RATE_PRIOR_GAMES = 6
+# A prior-seasons rate is treated as this many games of evidence.
+RATE_ARCHIVE_GAMES = 8
+# Ceilings on a blended per-90 rate -- no real player exceeds these, and they
+# stop a freak small-sample value (a couple of penalties) running away.
+RATE_CLAMP = {
+    "xg90": 1.4,
+    "xa90": 0.8,
+    "dc90": 20.0,
+    "gc90": 3.0,
+    "saves90": 5.0,
+    "bonus90": 1.6,
+    "yellow90": 0.5,
+}
 
 
 if sum(BASELINE_WEIGHTS.values()) <= 0:
