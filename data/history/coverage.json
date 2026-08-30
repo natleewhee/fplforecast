@@ -1,0 +1,39 @@
+{
+  "2023-24": [
+    "expected_assists",
+    "expected_goals",
+    "historical_id",
+    "ict_index",
+    "kickoff_time",
+    "minutes",
+    "opponent_team",
+    "total_points",
+    "was_home",
+    "web_name"
+  ],
+  "2024-25": [
+    "expected_assists",
+    "expected_goals",
+    "historical_id",
+    "ict_index",
+    "kickoff_time",
+    "minutes",
+    "opponent_team",
+    "total_points",
+    "was_home",
+    "web_name"
+  ],
+  "2025-26": [
+    "defensive_contribution",
+    "expected_assists",
+    "expected_goals",
+    "historical_id",
+    "ict_index",
+    "kickoff_time",
+    "minutes",
+    "opponent_team",
+    "total_points",
+    "was_home",
+    "web_name"
+  ]
+}

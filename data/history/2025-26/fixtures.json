@@ -1,0 +1,3045 @@
+{
+  "fixtures": [
+    {
+      "gw": 1,
+      "kickoff_time": "2025-08-15T19:00:00Z",
+      "team_a": 4,
+      "team_a_difficulty": 4,
+      "team_h": 12,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 1,
+      "kickoff_time": "2025-08-16T11:30:00Z",
+      "team_a": 15,
+      "team_a_difficulty": 4,
+      "team_h": 2,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 1,
+      "kickoff_time": "2025-08-16T14:00:00Z",
+      "team_a": 10,
+      "team_a_difficulty": 4,
+      "team_h": 6,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 1,
+      "kickoff_time": "2025-08-16T14:00:00Z",
+      "team_a": 3,
+      "team_a_difficulty": 3,
+      "team_h": 18,
+      "team_h_difficulty": 1
+    },
+    {
+      "gw": 1,
+      "kickoff_time": "2025-08-16T14:00:00Z",
+      "team_a": 19,
+      "team_a_difficulty": 3,
+      "team_h": 17,
+      "team_h_difficulty": 2
+    },
+    {
+      "gw": 1,
+      "kickoff_time": "2025-08-16T16:30:00Z",
+      "team_a": 13,
+      "team_a_difficulty": 2,
+      "team_h": 20,
+      "team_h_difficulty": 4
+    },
+    {
+      "gw": 1,
+      "kickoff_time": "2025-08-17T13:00:00Z",
+      "team_a": 8,
+      "team_a_difficulty": 3,
+      "team_h": 7,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 1,
+      "kickoff_time": "2025-08-17T13:00:00Z",
+      "team_a": 5,
+      "team_a_difficulty": 3,
+      "team_h": 16,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 1,
+      "kickoff_time": "2025-08-17T15:30:00Z",
+      "team_a": 1,
+      "team_a_difficulty": 4,
+      "team_h": 14,
+      "team_h_difficulty": 4
+    },
+    {
+      "gw": 1,
+      "kickoff_time": "2025-08-18T19:00:00Z",
+      "team_a": 9,
+      "team_a_difficulty": 3,
+      "team_h": 11,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 2,
+      "kickoff_time": "2025-08-22T19:00:00Z",
+      "team_a": 7,
+      "team_a_difficulty": 3,
+      "team_h": 19,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 2,
+      "kickoff_time": "2025-08-23T11:30:00Z",
+      "team_a": 18,
+      "team_a_difficulty": 5,
+      "team_h": 13,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 2,
+      "kickoff_time": "2025-08-23T14:00:00Z",
+      "team_a": 20,
+      "team_a_difficulty": 4,
+      "team_h": 4,
+      "team_h_difficulty": 1
+    },
+    {
+      "gw": 2,
+      "kickoff_time": "2025-08-23T14:00:00Z",
+      "team_a": 2,
+      "team_a_difficulty": 3,
+      "team_h": 5,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 2,
+      "kickoff_time": "2025-08-23T14:00:00Z",
+      "team_a": 17,
+      "team_a_difficulty": 2,
+      "team_h": 3,
+      "team_h_difficulty": 2
+    },
+    {
+      "gw": 2,
+      "kickoff_time": "2025-08-23T16:30:00Z",
+      "team_a": 11,
+      "team_a_difficulty": 5,
+      "team_h": 1,
+      "team_h_difficulty": 2
+    },
+    {
+      "gw": 2,
+      "kickoff_time": "2025-08-24T13:00:00Z",
+      "team_a": 16,
+      "team_a_difficulty": 3,
+      "team_h": 8,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 2,
+      "kickoff_time": "2025-08-24T13:00:00Z",
+      "team_a": 6,
+      "team_a_difficulty": 3,
+      "team_h": 9,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 2,
+      "kickoff_time": "2025-08-24T15:30:00Z",
+      "team_a": 14,
+      "team_a_difficulty": 3,
+      "team_h": 10,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 2,
+      "kickoff_time": "2025-08-25T19:00:00Z",
+      "team_a": 12,
+      "team_a_difficulty": 3,
+      "team_h": 15,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 3,
+      "kickoff_time": "2025-08-30T11:30:00Z",
+      "team_a": 10,
+      "team_a_difficulty": 3,
+      "team_h": 7,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 3,
+      "kickoff_time": "2025-08-30T14:00:00Z",
+      "team_a": 3,
+      "team_a_difficulty": 4,
+      "team_h": 14,
+      "team_h_difficulty": 1
+    },
+    {
+      "gw": 3,
+      "kickoff_time": "2025-08-30T14:00:00Z",
+      "team_a": 4,
+      "team_a_difficulty": 3,
+      "team_h": 18,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 3,
+      "kickoff_time": "2025-08-30T14:00:00Z",
+      "team_a": 5,
+      "team_a_difficulty": 3,
+      "team_h": 17,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 3,
+      "kickoff_time": "2025-08-30T14:00:00Z",
+      "team_a": 9,
+      "team_a_difficulty": 2,
+      "team_h": 20,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 3,
+      "kickoff_time": "2025-08-30T16:30:00Z",
+      "team_a": 15,
+      "team_a_difficulty": 3,
+      "team_h": 11,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 3,
+      "kickoff_time": "2025-08-31T13:00:00Z",
+      "team_a": 13,
+      "team_a_difficulty": 4,
+      "team_h": 6,
+      "team_h_difficulty": 4
+    },
+    {
+      "gw": 3,
+      "kickoff_time": "2025-08-31T13:00:00Z",
+      "team_a": 19,
+      "team_a_difficulty": 3,
+      "team_h": 16,
+      "team_h_difficulty": 2
+    },
+    {
+      "gw": 3,
+      "kickoff_time": "2025-08-31T15:30:00Z",
+      "team_a": 1,
+      "team_a_difficulty": 4,
+      "team_h": 12,
+      "team_h_difficulty": 4
+    },
+    {
+      "gw": 3,
+      "kickoff_time": "2025-08-31T18:00:00Z",
+      "team_a": 8,
+      "team_a_difficulty": 4,
+      "team_h": 2,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 4,
+      "kickoff_time": "2025-09-13T11:30:00Z",
+      "team_a": 16,
+      "team_a_difficulty": 5,
+      "team_h": 1,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 4,
+      "kickoff_time": "2025-09-13T14:00:00Z",
+      "team_a": 6,
+      "team_a_difficulty": 4,
+      "team_h": 4,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 4,
+      "kickoff_time": "2025-09-13T14:00:00Z",
+      "team_a": 17,
+      "team_a_difficulty": 3,
+      "team_h": 8,
+      "team_h_difficulty": 2
+    },
+    {
+      "gw": 4,
+      "kickoff_time": "2025-09-13T14:00:00Z",
+      "team_a": 2,
+      "team_a_difficulty": 3,
+      "team_h": 9,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 4,
+      "kickoff_time": "2025-09-13T14:00:00Z",
+      "team_a": 11,
+      "team_a_difficulty": 3,
+      "team_h": 10,
+      "team_h_difficulty": 2
+    },
+    {
+      "gw": 4,
+      "kickoff_time": "2025-09-13T14:00:00Z",
+      "team_a": 20,
+      "team_a_difficulty": 3,
+      "team_h": 15,
+      "team_h_difficulty": 1
+    },
+    {
+      "gw": 4,
+      "kickoff_time": "2025-09-13T16:30:00Z",
+      "team_a": 18,
+      "team_a_difficulty": 3,
+      "team_h": 19,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 4,
+      "kickoff_time": "2025-09-13T19:00:00Z",
+      "team_a": 7,
+      "team_a_difficulty": 3,
+      "team_h": 5,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 4,
+      "kickoff_time": "2025-09-14T13:00:00Z",
+      "team_a": 12,
+      "team_a_difficulty": 2,
+      "team_h": 3,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 4,
+      "kickoff_time": "2025-09-14T15:30:00Z",
+      "team_a": 14,
+      "team_a_difficulty": 5,
+      "team_h": 13,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 5,
+      "kickoff_time": "2025-09-20T11:30:00Z",
+      "team_a": 9,
+      "team_a_difficulty": 4,
+      "team_h": 12,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 5,
+      "kickoff_time": "2025-09-20T14:00:00Z",
+      "team_a": 18,
+      "team_a_difficulty": 4,
+      "team_h": 6,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 5,
+      "kickoff_time": "2025-09-20T14:00:00Z",
+      "team_a": 16,
+      "team_a_difficulty": 2,
+      "team_h": 3,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 5,
+      "kickoff_time": "2025-09-20T14:00:00Z",
+      "team_a": 8,
+      "team_a_difficulty": 3,
+      "team_h": 19,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 5,
+      "kickoff_time": "2025-09-20T14:00:00Z",
+      "team_a": 11,
+      "team_a_difficulty": 2,
+      "team_h": 20,
+      "team_h_difficulty": 2
+    },
+    {
+      "gw": 5,
+      "kickoff_time": "2025-09-20T16:30:00Z",
+      "team_a": 7,
+      "team_a_difficulty": 4,
+      "team_h": 14,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 5,
+      "kickoff_time": "2025-09-20T19:00:00Z",
+      "team_a": 5,
+      "team_a_difficulty": 3,
+      "team_h": 10,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 5,
+      "kickoff_time": "2025-09-21T13:00:00Z",
+      "team_a": 15,
+      "team_a_difficulty": 4,
+      "team_h": 4,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 5,
+      "kickoff_time": "2025-09-21T13:00:00Z",
+      "team_a": 2,
+      "team_a_difficulty": 3,
+      "team_h": 17,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 5,
+      "kickoff_time": "2025-09-21T15:30:00Z",
+      "team_a": 13,
+      "team_a_difficulty": 5,
+      "team_h": 1,
+      "team_h_difficulty": 4
+    },
+    {
+      "gw": 6,
+      "kickoff_time": "2025-09-27T11:30:00Z",
+      "team_a": 14,
+      "team_a_difficulty": 3,
+      "team_h": 5,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 6,
+      "kickoff_time": "2025-09-27T14:00:00Z",
+      "team_a": 6,
+      "team_a_difficulty": 3,
+      "team_h": 7,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 6,
+      "kickoff_time": "2025-09-27T14:00:00Z",
+      "team_a": 12,
+      "team_a_difficulty": 3,
+      "team_h": 8,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 6,
+      "kickoff_time": "2025-09-27T14:00:00Z",
+      "team_a": 4,
+      "team_a_difficulty": 3,
+      "team_h": 11,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 6,
+      "kickoff_time": "2025-09-27T14:00:00Z",
+      "team_a": 3,
+      "team_a_difficulty": 5,
+      "team_h": 13,
+      "team_h_difficulty": 1
+    },
+    {
+      "gw": 6,
+      "kickoff_time": "2025-09-27T16:30:00Z",
+      "team_a": 17,
+      "team_a_difficulty": 3,
+      "team_h": 16,
+      "team_h_difficulty": 2
+    },
+    {
+      "gw": 6,
+      "kickoff_time": "2025-09-27T19:00:00Z",
+      "team_a": 20,
+      "team_a_difficulty": 3,
+      "team_h": 18,
+      "team_h_difficulty": 1
+    },
+    {
+      "gw": 6,
+      "kickoff_time": "2025-09-28T13:00:00Z",
+      "team_a": 10,
+      "team_a_difficulty": 4,
+      "team_h": 2,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 6,
+      "kickoff_time": "2025-09-28T15:30:00Z",
+      "team_a": 1,
+      "team_a_difficulty": 3,
+      "team_h": 15,
+      "team_h_difficulty": 4
+    },
+    {
+      "gw": 6,
+      "kickoff_time": "2025-09-29T19:00:00Z",
+      "team_a": 19,
+      "team_a_difficulty": 3,
+      "team_h": 9,
+      "team_h_difficulty": 2
+    },
+    {
+      "gw": 7,
+      "kickoff_time": "2025-10-03T19:00:00Z",
+      "team_a": 10,
+      "team_a_difficulty": 4,
+      "team_h": 4,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 7,
+      "kickoff_time": "2025-10-04T11:30:00Z",
+      "team_a": 18,
+      "team_a_difficulty": 3,
+      "team_h": 11,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 7,
+      "kickoff_time": "2025-10-04T14:00:00Z",
+      "team_a": 19,
+      "team_a_difficulty": 5,
+      "team_h": 1,
+      "team_h_difficulty": 2
+    },
+    {
+      "gw": 7,
+      "kickoff_time": "2025-10-04T14:00:00Z",
+      "team_a": 17,
+      "team_a_difficulty": 4,
+      "team_h": 14,
+      "team_h_difficulty": 2
+    },
+    {
+      "gw": 7,
+      "kickoff_time": "2025-10-04T16:30:00Z",
+      "team_a": 12,
+      "team_a_difficulty": 3,
+      "team_h": 7,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 7,
+      "kickoff_time": "2025-10-05T13:00:00Z",
+      "team_a": 3,
+      "team_a_difficulty": 4,
+      "team_h": 2,
+      "team_h_difficulty": 1
+    },
+    {
+      "gw": 7,
+      "kickoff_time": "2025-10-05T13:00:00Z",
+      "team_a": 8,
+      "team_a_difficulty": 3,
+      "team_h": 9,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 7,
+      "kickoff_time": "2025-10-05T13:00:00Z",
+      "team_a": 16,
+      "team_a_difficulty": 3,
+      "team_h": 15,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 7,
+      "kickoff_time": "2025-10-05T13:00:00Z",
+      "team_a": 6,
+      "team_a_difficulty": 2,
+      "team_h": 20,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 7,
+      "kickoff_time": "2025-10-05T15:30:00Z",
+      "team_a": 13,
+      "team_a_difficulty": 3,
+      "team_h": 5,
+      "team_h_difficulty": 4
+    },
+    {
+      "gw": 8,
+      "kickoff_time": "2025-10-18T11:30:00Z",
+      "team_a": 7,
+      "team_a_difficulty": 3,
+      "team_h": 16,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 8,
+      "kickoff_time": "2025-10-18T14:00:00Z",
+      "team_a": 15,
+      "team_a_difficulty": 4,
+      "team_h": 6,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 8,
+      "kickoff_time": "2025-10-18T14:00:00Z",
+      "team_a": 11,
+      "team_a_difficulty": 2,
+      "team_h": 3,
+      "team_h_difficulty": 2
+    },
+    {
+      "gw": 8,
+      "kickoff_time": "2025-10-18T14:00:00Z",
+      "team_a": 4,
+      "team_a_difficulty": 3,
+      "team_h": 8,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 8,
+      "kickoff_time": "2025-10-18T14:00:00Z",
+      "team_a": 9,
+      "team_a_difficulty": 5,
+      "team_h": 13,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 8,
+      "kickoff_time": "2025-10-18T14:00:00Z",
+      "team_a": 20,
+      "team_a_difficulty": 3,
+      "team_h": 17,
+      "team_h_difficulty": 1
+    },
+    {
+      "gw": 8,
+      "kickoff_time": "2025-10-18T16:30:00Z",
+      "team_a": 1,
+      "team_a_difficulty": 3,
+      "team_h": 10,
+      "team_h_difficulty": 4
+    },
+    {
+      "gw": 8,
+      "kickoff_time": "2025-10-19T13:00:00Z",
+      "team_a": 2,
+      "team_a_difficulty": 3,
+      "team_h": 18,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 8,
+      "kickoff_time": "2025-10-19T15:30:00Z",
+      "team_a": 14,
+      "team_a_difficulty": 4,
+      "team_h": 12,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 8,
+      "kickoff_time": "2025-10-20T19:00:00Z",
+      "team_a": 5,
+      "team_a_difficulty": 3,
+      "team_h": 19,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 9,
+      "kickoff_time": "2025-10-24T19:00:00Z",
+      "team_a": 19,
+      "team_a_difficulty": 3,
+      "team_h": 11,
+      "team_h_difficulty": 2
+    },
+    {
+      "gw": 9,
+      "kickoff_time": "2025-10-25T14:00:00Z",
+      "team_a": 17,
+      "team_a_difficulty": 3,
+      "team_h": 7,
+      "team_h_difficulty": 2
+    },
+    {
+      "gw": 9,
+      "kickoff_time": "2025-10-25T14:00:00Z",
+      "team_a": 10,
+      "team_a_difficulty": 3,
+      "team_h": 15,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 9,
+      "kickoff_time": "2025-10-25T16:30:00Z",
+      "team_a": 6,
+      "team_a_difficulty": 4,
+      "team_h": 14,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 9,
+      "kickoff_time": "2025-10-25T19:00:00Z",
+      "team_a": 12,
+      "team_a_difficulty": 3,
+      "team_h": 5,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 9,
+      "kickoff_time": "2025-10-26T14:00:00Z",
+      "team_a": 8,
+      "team_a_difficulty": 5,
+      "team_h": 1,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 9,
+      "kickoff_time": "2025-10-26T14:00:00Z",
+      "team_a": 13,
+      "team_a_difficulty": 4,
+      "team_h": 2,
+      "team_h_difficulty": 4
+    },
+    {
+      "gw": 9,
+      "kickoff_time": "2025-10-26T14:00:00Z",
+      "team_a": 16,
+      "team_a_difficulty": 4,
+      "team_h": 4,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 9,
+      "kickoff_time": "2025-10-26T14:00:00Z",
+      "team_a": 3,
+      "team_a_difficulty": 2,
+      "team_h": 20,
+      "team_h_difficulty": 1
+    },
+    {
+      "gw": 9,
+      "kickoff_time": "2025-10-26T16:30:00Z",
+      "team_a": 18,
+      "team_a_difficulty": 3,
+      "team_h": 9,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 10,
+      "kickoff_time": "2025-11-01T15:00:00Z",
+      "team_a": 11,
+      "team_a_difficulty": 4,
+      "team_h": 6,
+      "team_h_difficulty": 2
+    },
+    {
+      "gw": 10,
+      "kickoff_time": "2025-11-01T15:00:00Z",
+      "team_a": 1,
+      "team_a_difficulty": 2,
+      "team_h": 3,
+      "team_h_difficulty": 4
+    },
+    {
+      "gw": 10,
+      "kickoff_time": "2025-11-01T15:00:00Z",
+      "team_a": 5,
+      "team_a_difficulty": 3,
+      "team_h": 8,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 10,
+      "kickoff_time": "2025-11-01T15:00:00Z",
+      "team_a": 20,
+      "team_a_difficulty": 3,
+      "team_h": 10,
+      "team_h_difficulty": 1
+    },
+    {
+      "gw": 10,
+      "kickoff_time": "2025-11-01T15:00:00Z",
+      "team_a": 14,
+      "team_a_difficulty": 3,
+      "team_h": 16,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 10,
+      "kickoff_time": "2025-11-01T17:30:00Z",
+      "team_a": 7,
+      "team_a_difficulty": 3,
+      "team_h": 18,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 10,
+      "kickoff_time": "2025-11-01T20:00:00Z",
+      "team_a": 2,
+      "team_a_difficulty": 4,
+      "team_h": 12,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 10,
+      "kickoff_time": "2025-11-02T14:00:00Z",
+      "team_a": 15,
+      "team_a_difficulty": 3,
+      "team_h": 19,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 10,
+      "kickoff_time": "2025-11-02T16:30:00Z",
+      "team_a": 4,
+      "team_a_difficulty": 5,
+      "team_h": 13,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 10,
+      "kickoff_time": "2025-11-03T20:00:00Z",
+      "team_a": 9,
+      "team_a_difficulty": 3,
+      "team_h": 17,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 11,
+      "kickoff_time": "2025-11-08T12:30:00Z",
+      "team_a": 14,
+      "team_a_difficulty": 3,
+      "team_h": 18,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 11,
+      "kickoff_time": "2025-11-08T15:00:00Z",
+      "team_a": 10,
+      "team_a_difficulty": 3,
+      "team_h": 9,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 11,
+      "kickoff_time": "2025-11-08T15:00:00Z",
+      "team_a": 3,
+      "team_a_difficulty": 3,
+      "team_h": 19,
+      "team_h_difficulty": 1
+    },
+    {
+      "gw": 11,
+      "kickoff_time": "2025-11-08T17:30:00Z",
+      "team_a": 1,
+      "team_a_difficulty": 3,
+      "team_h": 17,
+      "team_h_difficulty": 4
+    },
+    {
+      "gw": 11,
+      "kickoff_time": "2025-11-08T20:00:00Z",
+      "team_a": 20,
+      "team_a_difficulty": 3,
+      "team_h": 7,
+      "team_h_difficulty": 1
+    },
+    {
+      "gw": 11,
+      "kickoff_time": "2025-11-09T14:00:00Z",
+      "team_a": 4,
+      "team_a_difficulty": 4,
+      "team_h": 2,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 11,
+      "kickoff_time": "2025-11-09T14:00:00Z",
+      "team_a": 15,
+      "team_a_difficulty": 3,
+      "team_h": 5,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 11,
+      "kickoff_time": "2025-11-09T14:00:00Z",
+      "team_a": 6,
+      "team_a_difficulty": 3,
+      "team_h": 8,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 11,
+      "kickoff_time": "2025-11-09T14:00:00Z",
+      "team_a": 11,
+      "team_a_difficulty": 3,
+      "team_h": 16,
+      "team_h_difficulty": 2
+    },
+    {
+      "gw": 11,
+      "kickoff_time": "2025-11-09T16:30:00Z",
+      "team_a": 12,
+      "team_a_difficulty": 5,
+      "team_h": 13,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 12,
+      "kickoff_time": "2025-11-22T12:30:00Z",
+      "team_a": 7,
+      "team_a_difficulty": 2,
+      "team_h": 3,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 12,
+      "kickoff_time": "2025-11-22T15:00:00Z",
+      "team_a": 19,
+      "team_a_difficulty": 4,
+      "team_h": 4,
+      "team_h_difficulty": 2
+    },
+    {
+      "gw": 12,
+      "kickoff_time": "2025-11-22T15:00:00Z",
+      "team_a": 5,
+      "team_a_difficulty": 4,
+      "team_h": 6,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 12,
+      "kickoff_time": "2025-11-22T15:00:00Z",
+      "team_a": 17,
+      "team_a_difficulty": 3,
+      "team_h": 10,
+      "team_h_difficulty": 2
+    },
+    {
+      "gw": 12,
+      "kickoff_time": "2025-11-22T15:00:00Z",
+      "team_a": 16,
+      "team_a_difficulty": 4,
+      "team_h": 12,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 12,
+      "kickoff_time": "2025-11-22T15:00:00Z",
+      "team_a": 8,
+      "team_a_difficulty": 2,
+      "team_h": 20,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 12,
+      "kickoff_time": "2025-11-22T17:30:00Z",
+      "team_a": 13,
+      "team_a_difficulty": 3,
+      "team_h": 15,
+      "team_h_difficulty": 4
+    },
+    {
+      "gw": 12,
+      "kickoff_time": "2025-11-23T14:00:00Z",
+      "team_a": 2,
+      "team_a_difficulty": 3,
+      "team_h": 11,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 12,
+      "kickoff_time": "2025-11-23T16:30:00Z",
+      "team_a": 18,
+      "team_a_difficulty": 5,
+      "team_h": 1,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 12,
+      "kickoff_time": "2025-11-24T20:00:00Z",
+      "team_a": 9,
+      "team_a_difficulty": 4,
+      "team_h": 14,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 13,
+      "kickoff_time": "2025-11-29T15:00:00Z",
+      "team_a": 3,
+      "team_a_difficulty": 3,
+      "team_h": 5,
+      "team_h_difficulty": 1
+    },
+    {
+      "gw": 13,
+      "kickoff_time": "2025-11-29T15:00:00Z",
+      "team_a": 11,
+      "team_a_difficulty": 5,
+      "team_h": 13,
+      "team_h_difficulty": 2
+    },
+    {
+      "gw": 13,
+      "kickoff_time": "2025-11-29T15:00:00Z",
+      "team_a": 4,
+      "team_a_difficulty": 3,
+      "team_h": 17,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 13,
+      "kickoff_time": "2025-11-29T17:30:00Z",
+      "team_a": 15,
+      "team_a_difficulty": 3,
+      "team_h": 9,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 13,
+      "kickoff_time": "2025-11-29T20:00:00Z",
+      "team_a": 10,
+      "team_a_difficulty": 3,
+      "team_h": 18,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 13,
+      "kickoff_time": "2025-11-30T12:00:00Z",
+      "team_a": 14,
+      "team_a_difficulty": 3,
+      "team_h": 8,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 13,
+      "kickoff_time": "2025-11-30T14:05:00Z",
+      "team_a": 20,
+      "team_a_difficulty": 4,
+      "team_h": 2,
+      "team_h_difficulty": 1
+    },
+    {
+      "gw": 13,
+      "kickoff_time": "2025-11-30T14:05:00Z",
+      "team_a": 6,
+      "team_a_difficulty": 3,
+      "team_h": 16,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 13,
+      "kickoff_time": "2025-11-30T14:05:00Z",
+      "team_a": 12,
+      "team_a_difficulty": 3,
+      "team_h": 19,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 13,
+      "kickoff_time": "2025-11-30T16:30:00Z",
+      "team_a": 1,
+      "team_a_difficulty": 3,
+      "team_h": 7,
+      "team_h_difficulty": 4
+    },
+    {
+      "gw": 14,
+      "kickoff_time": "2025-12-02T19:30:00Z",
+      "team_a": 9,
+      "team_a_difficulty": 4,
+      "team_h": 4,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 14,
+      "kickoff_time": "2025-12-02T19:30:00Z",
+      "team_a": 13,
+      "team_a_difficulty": 3,
+      "team_h": 10,
+      "team_h_difficulty": 4
+    },
+    {
+      "gw": 14,
+      "kickoff_time": "2025-12-02T20:15:00Z",
+      "team_a": 18,
+      "team_a_difficulty": 3,
+      "team_h": 15,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 14,
+      "kickoff_time": "2025-12-03T19:30:00Z",
+      "team_a": 5,
+      "team_a_difficulty": 5,
+      "team_h": 1,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 14,
+      "kickoff_time": "2025-12-03T19:30:00Z",
+      "team_a": 2,
+      "team_a_difficulty": 4,
+      "team_h": 6,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 14,
+      "kickoff_time": "2025-12-03T19:30:00Z",
+      "team_a": 8,
+      "team_a_difficulty": 2,
+      "team_h": 3,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 14,
+      "kickoff_time": "2025-12-03T19:30:00Z",
+      "team_a": 16,
+      "team_a_difficulty": 2,
+      "team_h": 20,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 14,
+      "kickoff_time": "2025-12-03T20:15:00Z",
+      "team_a": 7,
+      "team_a_difficulty": 3,
+      "team_h": 11,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 14,
+      "kickoff_time": "2025-12-03T20:15:00Z",
+      "team_a": 17,
+      "team_a_difficulty": 4,
+      "team_h": 12,
+      "team_h_difficulty": 2
+    },
+    {
+      "gw": 14,
+      "kickoff_time": "2025-12-04T20:00:00Z",
+      "team_a": 19,
+      "team_a_difficulty": 4,
+      "team_h": 14,
+      "team_h_difficulty": 2
+    },
+    {
+      "gw": 15,
+      "kickoff_time": "2025-12-06T12:30:00Z",
+      "team_a": 1,
+      "team_a_difficulty": 4,
+      "team_h": 2,
+      "team_h_difficulty": 4
+    },
+    {
+      "gw": 15,
+      "kickoff_time": "2025-12-06T15:00:00Z",
+      "team_a": 7,
+      "team_a_difficulty": 4,
+      "team_h": 4,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 15,
+      "kickoff_time": "2025-12-06T15:00:00Z",
+      "team_a": 16,
+      "team_a_difficulty": 3,
+      "team_h": 9,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 15,
+      "kickoff_time": "2025-12-06T15:00:00Z",
+      "team_a": 17,
+      "team_a_difficulty": 5,
+      "team_h": 13,
+      "team_h_difficulty": 2
+    },
+    {
+      "gw": 15,
+      "kickoff_time": "2025-12-06T15:00:00Z",
+      "team_a": 3,
+      "team_a_difficulty": 3,
+      "team_h": 15,
+      "team_h_difficulty": 1
+    },
+    {
+      "gw": 15,
+      "kickoff_time": "2025-12-06T15:00:00Z",
+      "team_a": 5,
+      "team_a_difficulty": 3,
+      "team_h": 18,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 15,
+      "kickoff_time": "2025-12-06T17:30:00Z",
+      "team_a": 12,
+      "team_a_difficulty": 3,
+      "team_h": 11,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 15,
+      "kickoff_time": "2025-12-07T14:00:00Z",
+      "team_a": 19,
+      "team_a_difficulty": 4,
+      "team_h": 6,
+      "team_h_difficulty": 2
+    },
+    {
+      "gw": 15,
+      "kickoff_time": "2025-12-07T16:30:00Z",
+      "team_a": 8,
+      "team_a_difficulty": 3,
+      "team_h": 10,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 15,
+      "kickoff_time": "2025-12-08T20:00:00Z",
+      "team_a": 14,
+      "team_a_difficulty": 2,
+      "team_h": 20,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 16,
+      "kickoff_time": "2025-12-13T15:00:00Z",
+      "team_a": 9,
+      "team_a_difficulty": 3,
+      "team_h": 7,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 16,
+      "kickoff_time": "2025-12-13T15:00:00Z",
+      "team_a": 6,
+      "team_a_difficulty": 4,
+      "team_h": 12,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 16,
+      "kickoff_time": "2025-12-13T17:30:00Z",
+      "team_a": 10,
+      "team_a_difficulty": 2,
+      "team_h": 3,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 16,
+      "kickoff_time": "2025-12-13T20:00:00Z",
+      "team_a": 20,
+      "team_a_difficulty": 5,
+      "team_h": 1,
+      "team_h_difficulty": 1
+    },
+    {
+      "gw": 16,
+      "kickoff_time": "2025-12-14T14:00:00Z",
+      "team_a": 13,
+      "team_a_difficulty": 3,
+      "team_h": 8,
+      "team_h_difficulty": 4
+    },
+    {
+      "gw": 16,
+      "kickoff_time": "2025-12-14T14:00:00Z",
+      "team_a": 18,
+      "team_a_difficulty": 3,
+      "team_h": 16,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 16,
+      "kickoff_time": "2025-12-14T14:00:00Z",
+      "team_a": 15,
+      "team_a_difficulty": 3,
+      "team_h": 17,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 16,
+      "kickoff_time": "2025-12-14T14:00:00Z",
+      "team_a": 2,
+      "team_a_difficulty": 3,
+      "team_h": 19,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 16,
+      "kickoff_time": "2025-12-14T16:30:00Z",
+      "team_a": 11,
+      "team_a_difficulty": 3,
+      "team_h": 5,
+      "team_h_difficulty": 2
+    },
+    {
+      "gw": 16,
+      "kickoff_time": "2025-12-15T20:00:00Z",
+      "team_a": 4,
+      "team_a_difficulty": 4,
+      "team_h": 14,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 17,
+      "kickoff_time": "2025-12-20T12:30:00Z",
+      "team_a": 7,
+      "team_a_difficulty": 3,
+      "team_h": 15,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 17,
+      "kickoff_time": "2025-12-20T15:00:00Z",
+      "team_a": 3,
+      "team_a_difficulty": 4,
+      "team_h": 4,
+      "team_h_difficulty": 1
+    },
+    {
+      "gw": 17,
+      "kickoff_time": "2025-12-20T15:00:00Z",
+      "team_a": 17,
+      "team_a_difficulty": 4,
+      "team_h": 6,
+      "team_h_difficulty": 2
+    },
+    {
+      "gw": 17,
+      "kickoff_time": "2025-12-20T15:00:00Z",
+      "team_a": 19,
+      "team_a_difficulty": 5,
+      "team_h": 13,
+      "team_h_difficulty": 2
+    },
+    {
+      "gw": 17,
+      "kickoff_time": "2025-12-20T15:00:00Z",
+      "team_a": 5,
+      "team_a_difficulty": 2,
+      "team_h": 20,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 17,
+      "kickoff_time": "2025-12-20T17:30:00Z",
+      "team_a": 12,
+      "team_a_difficulty": 3,
+      "team_h": 18,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 17,
+      "kickoff_time": "2025-12-20T20:00:00Z",
+      "team_a": 1,
+      "team_a_difficulty": 3,
+      "team_h": 9,
+      "team_h_difficulty": 4
+    },
+    {
+      "gw": 17,
+      "kickoff_time": "2025-12-20T20:00:00Z",
+      "team_a": 8,
+      "team_a_difficulty": 3,
+      "team_h": 11,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 17,
+      "kickoff_time": "2025-12-21T16:30:00Z",
+      "team_a": 14,
+      "team_a_difficulty": 4,
+      "team_h": 2,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 17,
+      "kickoff_time": "2025-12-22T20:00:00Z",
+      "team_a": 16,
+      "team_a_difficulty": 3,
+      "team_h": 10,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 18,
+      "kickoff_time": "2025-12-26T20:00:00Z",
+      "team_a": 15,
+      "team_a_difficulty": 4,
+      "team_h": 14,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 18,
+      "kickoff_time": "2025-12-27T12:30:00Z",
+      "team_a": 13,
+      "team_a_difficulty": 3,
+      "team_h": 16,
+      "team_h_difficulty": 4
+    },
+    {
+      "gw": 18,
+      "kickoff_time": "2025-12-27T15:00:00Z",
+      "team_a": 6,
+      "team_a_difficulty": 5,
+      "team_h": 1,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 18,
+      "kickoff_time": "2025-12-27T15:00:00Z",
+      "team_a": 4,
+      "team_a_difficulty": 3,
+      "team_h": 5,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 18,
+      "kickoff_time": "2025-12-27T15:00:00Z",
+      "team_a": 9,
+      "team_a_difficulty": 2,
+      "team_h": 3,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 18,
+      "kickoff_time": "2025-12-27T15:00:00Z",
+      "team_a": 20,
+      "team_a_difficulty": 4,
+      "team_h": 12,
+      "team_h_difficulty": 1
+    },
+    {
+      "gw": 18,
+      "kickoff_time": "2025-12-27T15:00:00Z",
+      "team_a": 10,
+      "team_a_difficulty": 3,
+      "team_h": 19,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 18,
+      "kickoff_time": "2025-12-27T17:30:00Z",
+      "team_a": 2,
+      "team_a_difficulty": 3,
+      "team_h": 7,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 18,
+      "kickoff_time": "2025-12-28T14:00:00Z",
+      "team_a": 11,
+      "team_a_difficulty": 3,
+      "team_h": 17,
+      "team_h_difficulty": 2
+    },
+    {
+      "gw": 18,
+      "kickoff_time": "2025-12-28T16:30:00Z",
+      "team_a": 18,
+      "team_a_difficulty": 3,
+      "team_h": 8,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 19,
+      "kickoff_time": "2025-12-30T19:30:00Z",
+      "team_a": 15,
+      "team_a_difficulty": 2,
+      "team_h": 3,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 19,
+      "kickoff_time": "2025-12-30T19:30:00Z",
+      "team_a": 4,
+      "team_a_difficulty": 3,
+      "team_h": 7,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 19,
+      "kickoff_time": "2025-12-30T19:30:00Z",
+      "team_a": 9,
+      "team_a_difficulty": 3,
+      "team_h": 16,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 19,
+      "kickoff_time": "2025-12-30T19:30:00Z",
+      "team_a": 6,
+      "team_a_difficulty": 3,
+      "team_h": 19,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 19,
+      "kickoff_time": "2025-12-30T20:15:00Z",
+      "team_a": 2,
+      "team_a_difficulty": 5,
+      "team_h": 1,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 19,
+      "kickoff_time": "2025-12-30T20:15:00Z",
+      "team_a": 20,
+      "team_a_difficulty": 4,
+      "team_h": 14,
+      "team_h_difficulty": 1
+    },
+    {
+      "gw": 19,
+      "kickoff_time": "2026-01-01T17:30:00Z",
+      "team_a": 10,
+      "team_a_difficulty": 3,
+      "team_h": 8,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 19,
+      "kickoff_time": "2026-01-01T17:30:00Z",
+      "team_a": 11,
+      "team_a_difficulty": 4,
+      "team_h": 12,
+      "team_h_difficulty": 2
+    },
+    {
+      "gw": 19,
+      "kickoff_time": "2026-01-01T20:00:00Z",
+      "team_a": 18,
+      "team_a_difficulty": 3,
+      "team_h": 5,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 19,
+      "kickoff_time": "2026-01-01T20:00:00Z",
+      "team_a": 13,
+      "team_a_difficulty": 3,
+      "team_h": 17,
+      "team_h_difficulty": 4
+    },
+    {
+      "gw": 20,
+      "kickoff_time": "2026-01-03T12:30:00Z",
+      "team_a": 16,
+      "team_a_difficulty": 4,
+      "team_h": 2,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 20,
+      "kickoff_time": "2026-01-03T15:00:00Z",
+      "team_a": 3,
+      "team_a_difficulty": 4,
+      "team_h": 6,
+      "team_h_difficulty": 1
+    },
+    {
+      "gw": 20,
+      "kickoff_time": "2026-01-03T15:00:00Z",
+      "team_a": 19,
+      "team_a_difficulty": 2,
+      "team_h": 20,
+      "team_h_difficulty": 2
+    },
+    {
+      "gw": 20,
+      "kickoff_time": "2026-01-03T17:30:00Z",
+      "team_a": 1,
+      "team_a_difficulty": 4,
+      "team_h": 4,
+      "team_h_difficulty": 4
+    },
+    {
+      "gw": 20,
+      "kickoff_time": "2026-01-04T12:30:00Z",
+      "team_a": 14,
+      "team_a_difficulty": 3,
+      "team_h": 11,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 20,
+      "kickoff_time": "2026-01-04T15:00:00Z",
+      "team_a": 5,
+      "team_a_difficulty": 3,
+      "team_h": 9,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 20,
+      "kickoff_time": "2026-01-04T15:00:00Z",
+      "team_a": 8,
+      "team_a_difficulty": 3,
+      "team_h": 15,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 20,
+      "kickoff_time": "2026-01-04T15:00:00Z",
+      "team_a": 17,
+      "team_a_difficulty": 3,
+      "team_h": 18,
+      "team_h_difficulty": 2
+    },
+    {
+      "gw": 20,
+      "kickoff_time": "2026-01-04T15:15:00Z",
+      "team_a": 12,
+      "team_a_difficulty": 3,
+      "team_h": 10,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 20,
+      "kickoff_time": "2026-01-04T17:30:00Z",
+      "team_a": 7,
+      "team_a_difficulty": 5,
+      "team_h": 13,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 21,
+      "kickoff_time": "2026-01-06T20:00:00Z",
+      "team_a": 16,
+      "team_a_difficulty": 3,
+      "team_h": 19,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 21,
+      "kickoff_time": "2026-01-07T19:30:00Z",
+      "team_a": 18,
+      "team_a_difficulty": 4,
+      "team_h": 4,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 21,
+      "kickoff_time": "2026-01-07T19:30:00Z",
+      "team_a": 17,
+      "team_a_difficulty": 3,
+      "team_h": 5,
+      "team_h_difficulty": 2
+    },
+    {
+      "gw": 21,
+      "kickoff_time": "2026-01-07T19:30:00Z",
+      "team_a": 2,
+      "team_a_difficulty": 3,
+      "team_h": 8,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 21,
+      "kickoff_time": "2026-01-07T19:30:00Z",
+      "team_a": 20,
+      "team_a_difficulty": 3,
+      "team_h": 9,
+      "team_h_difficulty": 1
+    },
+    {
+      "gw": 21,
+      "kickoff_time": "2026-01-07T19:30:00Z",
+      "team_a": 7,
+      "team_a_difficulty": 3,
+      "team_h": 10,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 21,
+      "kickoff_time": "2026-01-07T19:30:00Z",
+      "team_a": 6,
+      "team_a_difficulty": 5,
+      "team_h": 13,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 21,
+      "kickoff_time": "2026-01-07T20:15:00Z",
+      "team_a": 14,
+      "team_a_difficulty": 2,
+      "team_h": 3,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 21,
+      "kickoff_time": "2026-01-07T20:15:00Z",
+      "team_a": 11,
+      "team_a_difficulty": 3,
+      "team_h": 15,
+      "team_h_difficulty": 2
+    },
+    {
+      "gw": 21,
+      "kickoff_time": "2026-01-08T20:00:00Z",
+      "team_a": 12,
+      "team_a_difficulty": 5,
+      "team_h": 1,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 22,
+      "kickoff_time": "2026-01-17T12:30:00Z",
+      "team_a": 13,
+      "team_a_difficulty": 4,
+      "team_h": 14,
+      "team_h_difficulty": 4
+    },
+    {
+      "gw": 22,
+      "kickoff_time": "2026-01-17T15:00:00Z",
+      "team_a": 5,
+      "team_a_difficulty": 3,
+      "team_h": 7,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 22,
+      "kickoff_time": "2026-01-17T15:00:00Z",
+      "team_a": 10,
+      "team_a_difficulty": 3,
+      "team_h": 11,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 22,
+      "kickoff_time": "2026-01-17T15:00:00Z",
+      "team_a": 3,
+      "team_a_difficulty": 4,
+      "team_h": 12,
+      "team_h_difficulty": 1
+    },
+    {
+      "gw": 22,
+      "kickoff_time": "2026-01-17T15:00:00Z",
+      "team_a": 19,
+      "team_a_difficulty": 3,
+      "team_h": 18,
+      "team_h_difficulty": 2
+    },
+    {
+      "gw": 22,
+      "kickoff_time": "2026-01-17T15:00:00Z",
+      "team_a": 8,
+      "team_a_difficulty": 3,
+      "team_h": 17,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 22,
+      "kickoff_time": "2026-01-17T17:30:00Z",
+      "team_a": 1,
+      "team_a_difficulty": 3,
+      "team_h": 16,
+      "team_h_difficulty": 4
+    },
+    {
+      "gw": 22,
+      "kickoff_time": "2026-01-18T14:00:00Z",
+      "team_a": 15,
+      "team_a_difficulty": 2,
+      "team_h": 20,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 22,
+      "kickoff_time": "2026-01-18T16:30:00Z",
+      "team_a": 9,
+      "team_a_difficulty": 4,
+      "team_h": 2,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 22,
+      "kickoff_time": "2026-01-19T20:00:00Z",
+      "team_a": 4,
+      "team_a_difficulty": 4,
+      "team_h": 6,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 23,
+      "kickoff_time": "2026-01-24T12:30:00Z",
+      "team_a": 17,
+      "team_a_difficulty": 3,
+      "team_h": 19,
+      "team_h_difficulty": 2
+    },
+    {
+      "gw": 23,
+      "kickoff_time": "2026-01-24T15:00:00Z",
+      "team_a": 18,
+      "team_a_difficulty": 2,
+      "team_h": 3,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 23,
+      "kickoff_time": "2026-01-24T15:00:00Z",
+      "team_a": 6,
+      "team_a_difficulty": 3,
+      "team_h": 10,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 23,
+      "kickoff_time": "2026-01-24T15:00:00Z",
+      "team_a": 20,
+      "team_a_difficulty": 5,
+      "team_h": 13,
+      "team_h_difficulty": 1
+    },
+    {
+      "gw": 23,
+      "kickoff_time": "2026-01-24T17:30:00Z",
+      "team_a": 12,
+      "team_a_difficulty": 4,
+      "team_h": 4,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 23,
+      "kickoff_time": "2026-01-25T14:00:00Z",
+      "team_a": 16,
+      "team_a_difficulty": 3,
+      "team_h": 5,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 23,
+      "kickoff_time": "2026-01-25T14:00:00Z",
+      "team_a": 7,
+      "team_a_difficulty": 3,
+      "team_h": 8,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 23,
+      "kickoff_time": "2026-01-25T14:00:00Z",
+      "team_a": 2,
+      "team_a_difficulty": 3,
+      "team_h": 15,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 23,
+      "kickoff_time": "2026-01-25T16:30:00Z",
+      "team_a": 14,
+      "team_a_difficulty": 5,
+      "team_h": 1,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 23,
+      "kickoff_time": "2026-01-26T20:00:00Z",
+      "team_a": 11,
+      "team_a_difficulty": 3,
+      "team_h": 9,
+      "team_h_difficulty": 2
+    },
+    {
+      "gw": 24,
+      "kickoff_time": "2026-01-31T15:00:00Z",
+      "team_a": 9,
+      "team_a_difficulty": 4,
+      "team_h": 6,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 24,
+      "kickoff_time": "2026-01-31T15:00:00Z",
+      "team_a": 1,
+      "team_a_difficulty": 3,
+      "team_h": 11,
+      "team_h_difficulty": 4
+    },
+    {
+      "gw": 24,
+      "kickoff_time": "2026-01-31T15:00:00Z",
+      "team_a": 4,
+      "team_a_difficulty": 2,
+      "team_h": 20,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 24,
+      "kickoff_time": "2026-01-31T17:30:00Z",
+      "team_a": 19,
+      "team_a_difficulty": 3,
+      "team_h": 7,
+      "team_h_difficulty": 2
+    },
+    {
+      "gw": 24,
+      "kickoff_time": "2026-01-31T20:00:00Z",
+      "team_a": 15,
+      "team_a_difficulty": 4,
+      "team_h": 12,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 24,
+      "kickoff_time": "2026-02-01T14:00:00Z",
+      "team_a": 5,
+      "team_a_difficulty": 4,
+      "team_h": 2,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 24,
+      "kickoff_time": "2026-02-01T14:00:00Z",
+      "team_a": 10,
+      "team_a_difficulty": 4,
+      "team_h": 14,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 24,
+      "kickoff_time": "2026-02-01T14:00:00Z",
+      "team_a": 8,
+      "team_a_difficulty": 3,
+      "team_h": 16,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 24,
+      "kickoff_time": "2026-02-01T16:30:00Z",
+      "team_a": 13,
+      "team_a_difficulty": 3,
+      "team_h": 18,
+      "team_h_difficulty": 4
+    },
+    {
+      "gw": 24,
+      "kickoff_time": "2026-02-02T20:00:00Z",
+      "team_a": 3,
+      "team_a_difficulty": 3,
+      "team_h": 17,
+      "team_h_difficulty": 1
+    },
+    {
+      "gw": 25,
+      "kickoff_time": "2026-02-06T20:00:00Z",
+      "team_a": 16,
+      "team_a_difficulty": 3,
+      "team_h": 11,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 25,
+      "kickoff_time": "2026-02-07T12:30:00Z",
+      "team_a": 18,
+      "team_a_difficulty": 4,
+      "team_h": 14,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 25,
+      "kickoff_time": "2026-02-07T15:00:00Z",
+      "team_a": 17,
+      "team_a_difficulty": 5,
+      "team_h": 1,
+      "team_h_difficulty": 2
+    },
+    {
+      "gw": 25,
+      "kickoff_time": "2026-02-07T15:00:00Z",
+      "team_a": 2,
+      "team_a_difficulty": 4,
+      "team_h": 4,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 25,
+      "kickoff_time": "2026-02-07T15:00:00Z",
+      "team_a": 19,
+      "team_a_difficulty": 2,
+      "team_h": 3,
+      "team_h_difficulty": 2
+    },
+    {
+      "gw": 25,
+      "kickoff_time": "2026-02-07T15:00:00Z",
+      "team_a": 9,
+      "team_a_difficulty": 3,
+      "team_h": 10,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 25,
+      "kickoff_time": "2026-02-07T15:00:00Z",
+      "team_a": 7,
+      "team_a_difficulty": 2,
+      "team_h": 20,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 25,
+      "kickoff_time": "2026-02-07T17:30:00Z",
+      "team_a": 5,
+      "team_a_difficulty": 3,
+      "team_h": 15,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 25,
+      "kickoff_time": "2026-02-08T14:00:00Z",
+      "team_a": 8,
+      "team_a_difficulty": 4,
+      "team_h": 6,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 25,
+      "kickoff_time": "2026-02-08T16:30:00Z",
+      "team_a": 13,
+      "team_a_difficulty": 4,
+      "team_h": 12,
+      "team_h_difficulty": 4
+    },
+    {
+      "gw": 26,
+      "kickoff_time": "2026-02-10T19:30:00Z",
+      "team_a": 11,
+      "team_a_difficulty": 3,
+      "team_h": 7,
+      "team_h_difficulty": 2
+    },
+    {
+      "gw": 26,
+      "kickoff_time": "2026-02-10T19:30:00Z",
+      "team_a": 4,
+      "team_a_difficulty": 3,
+      "team_h": 9,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 26,
+      "kickoff_time": "2026-02-10T19:30:00Z",
+      "team_a": 15,
+      "team_a_difficulty": 3,
+      "team_h": 18,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 26,
+      "kickoff_time": "2026-02-10T20:15:00Z",
+      "team_a": 14,
+      "team_a_difficulty": 3,
+      "team_h": 19,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 26,
+      "kickoff_time": "2026-02-11T19:30:00Z",
+      "team_a": 6,
+      "team_a_difficulty": 4,
+      "team_h": 2,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 26,
+      "kickoff_time": "2026-02-11T19:30:00Z",
+      "team_a": 10,
+      "team_a_difficulty": 5,
+      "team_h": 13,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 26,
+      "kickoff_time": "2026-02-11T19:30:00Z",
+      "team_a": 20,
+      "team_a_difficulty": 3,
+      "team_h": 16,
+      "team_h_difficulty": 1
+    },
+    {
+      "gw": 26,
+      "kickoff_time": "2026-02-11T19:40:00Z",
+      "team_a": 3,
+      "team_a_difficulty": 3,
+      "team_h": 8,
+      "team_h_difficulty": 1
+    },
+    {
+      "gw": 26,
+      "kickoff_time": "2026-02-11T20:15:00Z",
+      "team_a": 12,
+      "team_a_difficulty": 3,
+      "team_h": 17,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 26,
+      "kickoff_time": "2026-02-12T20:00:00Z",
+      "team_a": 1,
+      "team_a_difficulty": 3,
+      "team_h": 5,
+      "team_h_difficulty": 4
+    },
+    {
+      "gw": 26,
+      "kickoff_time": "2026-02-18T20:00:00Z",
+      "team_a": 1,
+      "team_a_difficulty": 2,
+      "team_h": 20,
+      "team_h_difficulty": 4
+    },
+    {
+      "gw": 27,
+      "kickoff_time": "2026-02-21T15:00:00Z",
+      "team_a": 11,
+      "team_a_difficulty": 4,
+      "team_h": 2,
+      "team_h_difficulty": 2
+    },
+    {
+      "gw": 27,
+      "kickoff_time": "2026-02-21T15:00:00Z",
+      "team_a": 6,
+      "team_a_difficulty": 3,
+      "team_h": 5,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 27,
+      "kickoff_time": "2026-02-21T15:00:00Z",
+      "team_a": 3,
+      "team_a_difficulty": 3,
+      "team_h": 7,
+      "team_h_difficulty": 1
+    },
+    {
+      "gw": 27,
+      "kickoff_time": "2026-02-21T17:30:00Z",
+      "team_a": 4,
+      "team_a_difficulty": 3,
+      "team_h": 19,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 27,
+      "kickoff_time": "2026-02-21T20:00:00Z",
+      "team_a": 15,
+      "team_a_difficulty": 5,
+      "team_h": 13,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 27,
+      "kickoff_time": "2026-02-22T14:00:00Z",
+      "team_a": 20,
+      "team_a_difficulty": 3,
+      "team_h": 8,
+      "team_h_difficulty": 1
+    },
+    {
+      "gw": 27,
+      "kickoff_time": "2026-02-22T14:00:00Z",
+      "team_a": 12,
+      "team_a_difficulty": 3,
+      "team_h": 16,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 27,
+      "kickoff_time": "2026-02-22T14:00:00Z",
+      "team_a": 10,
+      "team_a_difficulty": 3,
+      "team_h": 17,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 27,
+      "kickoff_time": "2026-02-22T16:30:00Z",
+      "team_a": 1,
+      "team_a_difficulty": 3,
+      "team_h": 18,
+      "team_h_difficulty": 4
+    },
+    {
+      "gw": 27,
+      "kickoff_time": "2026-02-23T20:00:00Z",
+      "team_a": 14,
+      "team_a_difficulty": 3,
+      "team_h": 9,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 28,
+      "kickoff_time": "2026-02-27T20:00:00Z",
+      "team_a": 2,
+      "team_a_difficulty": 2,
+      "team_h": 20,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 28,
+      "kickoff_time": "2026-02-28T12:30:00Z",
+      "team_a": 17,
+      "team_a_difficulty": 4,
+      "team_h": 4,
+      "team_h_difficulty": 2
+    },
+    {
+      "gw": 28,
+      "kickoff_time": "2026-02-28T15:00:00Z",
+      "team_a": 5,
+      "team_a_difficulty": 2,
+      "team_h": 3,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 28,
+      "kickoff_time": "2026-02-28T15:00:00Z",
+      "team_a": 19,
+      "team_a_difficulty": 4,
+      "team_h": 12,
+      "team_h_difficulty": 2
+    },
+    {
+      "gw": 28,
+      "kickoff_time": "2026-02-28T15:00:00Z",
+      "team_a": 9,
+      "team_a_difficulty": 3,
+      "team_h": 15,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 28,
+      "kickoff_time": "2026-02-28T17:30:00Z",
+      "team_a": 13,
+      "team_a_difficulty": 3,
+      "team_h": 11,
+      "team_h_difficulty": 4
+    },
+    {
+      "gw": 28,
+      "kickoff_time": "2026-03-01T14:00:00Z",
+      "team_a": 16,
+      "team_a_difficulty": 4,
+      "team_h": 6,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 28,
+      "kickoff_time": "2026-03-01T14:00:00Z",
+      "team_a": 18,
+      "team_a_difficulty": 3,
+      "team_h": 10,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 28,
+      "kickoff_time": "2026-03-01T14:00:00Z",
+      "team_a": 8,
+      "team_a_difficulty": 4,
+      "team_h": 14,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 28,
+      "kickoff_time": "2026-03-01T16:30:00Z",
+      "team_a": 7,
+      "team_a_difficulty": 5,
+      "team_h": 1,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 29,
+      "kickoff_time": "2026-03-03T19:30:00Z",
+      "team_a": 5,
+      "team_a_difficulty": 4,
+      "team_h": 4,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 29,
+      "kickoff_time": "2026-03-03T19:30:00Z",
+      "team_a": 3,
+      "team_a_difficulty": 3,
+      "team_h": 9,
+      "team_h_difficulty": 1
+    },
+    {
+      "gw": 29,
+      "kickoff_time": "2026-03-03T19:30:00Z",
+      "team_a": 17,
+      "team_a_difficulty": 3,
+      "team_h": 11,
+      "team_h_difficulty": 2
+    },
+    {
+      "gw": 29,
+      "kickoff_time": "2026-03-03T20:15:00Z",
+      "team_a": 12,
+      "team_a_difficulty": 2,
+      "team_h": 20,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 29,
+      "kickoff_time": "2026-03-04T19:30:00Z",
+      "team_a": 7,
+      "team_a_difficulty": 4,
+      "team_h": 2,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 29,
+      "kickoff_time": "2026-03-04T19:30:00Z",
+      "team_a": 1,
+      "team_a_difficulty": 4,
+      "team_h": 6,
+      "team_h_difficulty": 4
+    },
+    {
+      "gw": 29,
+      "kickoff_time": "2026-03-04T19:30:00Z",
+      "team_a": 19,
+      "team_a_difficulty": 3,
+      "team_h": 10,
+      "team_h_difficulty": 2
+    },
+    {
+      "gw": 29,
+      "kickoff_time": "2026-03-04T19:30:00Z",
+      "team_a": 16,
+      "team_a_difficulty": 5,
+      "team_h": 13,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 29,
+      "kickoff_time": "2026-03-04T20:15:00Z",
+      "team_a": 14,
+      "team_a_difficulty": 3,
+      "team_h": 15,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 29,
+      "kickoff_time": "2026-03-05T20:00:00Z",
+      "team_a": 8,
+      "team_a_difficulty": 3,
+      "team_h": 18,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 30,
+      "kickoff_time": "2026-03-14T15:00:00Z",
+      "team_a": 4,
+      "team_a_difficulty": 2,
+      "team_h": 3,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 30,
+      "kickoff_time": "2026-03-14T15:00:00Z",
+      "team_a": 6,
+      "team_a_difficulty": 3,
+      "team_h": 17,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 30,
+      "kickoff_time": "2026-03-14T17:30:00Z",
+      "team_a": 9,
+      "team_a_difficulty": 5,
+      "team_h": 1,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 30,
+      "kickoff_time": "2026-03-14T17:30:00Z",
+      "team_a": 15,
+      "team_a_difficulty": 3,
+      "team_h": 7,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 30,
+      "kickoff_time": "2026-03-14T20:00:00Z",
+      "team_a": 13,
+      "team_a_difficulty": 3,
+      "team_h": 19,
+      "team_h_difficulty": 4
+    },
+    {
+      "gw": 30,
+      "kickoff_time": "2026-03-15T14:00:00Z",
+      "team_a": 11,
+      "team_a_difficulty": 3,
+      "team_h": 8,
+      "team_h_difficulty": 2
+    },
+    {
+      "gw": 30,
+      "kickoff_time": "2026-03-15T14:00:00Z",
+      "team_a": 2,
+      "team_a_difficulty": 4,
+      "team_h": 14,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 30,
+      "kickoff_time": "2026-03-15T14:00:00Z",
+      "team_a": 10,
+      "team_a_difficulty": 3,
+      "team_h": 16,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 30,
+      "kickoff_time": "2026-03-15T16:30:00Z",
+      "team_a": 18,
+      "team_a_difficulty": 4,
+      "team_h": 12,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 30,
+      "kickoff_time": "2026-03-16T20:00:00Z",
+      "team_a": 20,
+      "team_a_difficulty": 3,
+      "team_h": 5,
+      "team_h_difficulty": 1
+    },
+    {
+      "gw": 31,
+      "kickoff_time": "2026-03-20T20:00:00Z",
+      "team_a": 14,
+      "team_a_difficulty": 4,
+      "team_h": 4,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 31,
+      "kickoff_time": "2026-03-21T12:45:00Z",
+      "team_a": 12,
+      "team_a_difficulty": 4,
+      "team_h": 6,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 31,
+      "kickoff_time": "2026-03-21T15:00:00Z",
+      "team_a": 3,
+      "team_a_difficulty": 3,
+      "team_h": 10,
+      "team_h_difficulty": 1
+    },
+    {
+      "gw": 31,
+      "kickoff_time": "2026-03-21T17:30:00Z",
+      "team_a": 7,
+      "team_a_difficulty": 3,
+      "team_h": 9,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 31,
+      "kickoff_time": "2026-03-21T20:00:00Z",
+      "team_a": 5,
+      "team_a_difficulty": 3,
+      "team_h": 11,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 31,
+      "kickoff_time": "2026-03-22T12:00:00Z",
+      "team_a": 17,
+      "team_a_difficulty": 3,
+      "team_h": 15,
+      "team_h_difficulty": 2
+    },
+    {
+      "gw": 31,
+      "kickoff_time": "2026-03-22T14:15:00Z",
+      "team_a": 19,
+      "team_a_difficulty": 4,
+      "team_h": 2,
+      "team_h_difficulty": 2
+    },
+    {
+      "gw": 31,
+      "kickoff_time": "2026-03-22T14:15:00Z",
+      "team_a": 16,
+      "team_a_difficulty": 3,
+      "team_h": 18,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 32,
+      "kickoff_time": "2026-04-10T19:00:00Z",
+      "team_a": 20,
+      "team_a_difficulty": 3,
+      "team_h": 19,
+      "team_h_difficulty": 1
+    },
+    {
+      "gw": 32,
+      "kickoff_time": "2026-04-11T11:30:00Z",
+      "team_a": 4,
+      "team_a_difficulty": 5,
+      "team_h": 1,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 32,
+      "kickoff_time": "2026-04-11T14:00:00Z",
+      "team_a": 9,
+      "team_a_difficulty": 3,
+      "team_h": 5,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 32,
+      "kickoff_time": "2026-04-11T14:00:00Z",
+      "team_a": 6,
+      "team_a_difficulty": 2,
+      "team_h": 3,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 32,
+      "kickoff_time": "2026-04-11T16:30:00Z",
+      "team_a": 10,
+      "team_a_difficulty": 4,
+      "team_h": 12,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 32,
+      "kickoff_time": "2026-04-12T13:00:00Z",
+      "team_a": 15,
+      "team_a_difficulty": 3,
+      "team_h": 8,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 32,
+      "kickoff_time": "2026-04-12T13:00:00Z",
+      "team_a": 2,
+      "team_a_difficulty": 3,
+      "team_h": 16,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 32,
+      "kickoff_time": "2026-04-12T13:00:00Z",
+      "team_a": 18,
+      "team_a_difficulty": 3,
+      "team_h": 17,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 32,
+      "kickoff_time": "2026-04-12T15:30:00Z",
+      "team_a": 13,
+      "team_a_difficulty": 3,
+      "team_h": 7,
+      "team_h_difficulty": 4
+    },
+    {
+      "gw": 32,
+      "kickoff_time": "2026-04-13T19:00:00Z",
+      "team_a": 11,
+      "team_a_difficulty": 4,
+      "team_h": 14,
+      "team_h_difficulty": 2
+    },
+    {
+      "gw": 33,
+      "kickoff_time": "2026-04-18T11:30:00Z",
+      "team_a": 10,
+      "team_a_difficulty": 3,
+      "team_h": 5,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 33,
+      "kickoff_time": "2026-04-18T14:00:00Z",
+      "team_a": 20,
+      "team_a_difficulty": 3,
+      "team_h": 11,
+      "team_h_difficulty": 1
+    },
+    {
+      "gw": 33,
+      "kickoff_time": "2026-04-18T14:00:00Z",
+      "team_a": 4,
+      "team_a_difficulty": 3,
+      "team_h": 15,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 33,
+      "kickoff_time": "2026-04-18T16:30:00Z",
+      "team_a": 6,
+      "team_a_difficulty": 3,
+      "team_h": 18,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 33,
+      "kickoff_time": "2026-04-18T19:00:00Z",
+      "team_a": 14,
+      "team_a_difficulty": 3,
+      "team_h": 7,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 33,
+      "kickoff_time": "2026-04-19T13:00:00Z",
+      "team_a": 17,
+      "team_a_difficulty": 4,
+      "team_h": 2,
+      "team_h_difficulty": 2
+    },
+    {
+      "gw": 33,
+      "kickoff_time": "2026-04-19T13:00:00Z",
+      "team_a": 12,
+      "team_a_difficulty": 3,
+      "team_h": 9,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 33,
+      "kickoff_time": "2026-04-19T13:00:00Z",
+      "team_a": 3,
+      "team_a_difficulty": 3,
+      "team_h": 16,
+      "team_h_difficulty": 1
+    },
+    {
+      "gw": 33,
+      "kickoff_time": "2026-04-19T15:30:00Z",
+      "team_a": 1,
+      "team_a_difficulty": 5,
+      "team_h": 13,
+      "team_h_difficulty": 4
+    },
+    {
+      "gw": 33,
+      "kickoff_time": "2026-04-20T19:00:00Z",
+      "team_a": 19,
+      "team_a_difficulty": 3,
+      "team_h": 8,
+      "team_h_difficulty": 2
+    },
+    {
+      "gw": 33,
+      "kickoff_time": "2026-04-21T19:00:00Z",
+      "team_a": 7,
+      "team_a_difficulty": 4,
+      "team_h": 6,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 33,
+      "kickoff_time": "2026-04-22T19:00:00Z",
+      "team_a": 11,
+      "team_a_difficulty": 4,
+      "team_h": 4,
+      "team_h_difficulty": 2
+    },
+    {
+      "gw": 33,
+      "kickoff_time": "2026-04-22T19:00:00Z",
+      "team_a": 13,
+      "team_a_difficulty": 2,
+      "team_h": 3,
+      "team_h_difficulty": 4
+    },
+    {
+      "gw": 34,
+      "kickoff_time": "2026-04-24T19:00:00Z",
+      "team_a": 16,
+      "team_a_difficulty": 3,
+      "team_h": 17,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 34,
+      "kickoff_time": "2026-04-25T11:30:00Z",
+      "team_a": 2,
+      "team_a_difficulty": 3,
+      "team_h": 10,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 34,
+      "kickoff_time": "2026-04-25T14:00:00Z",
+      "team_a": 8,
+      "team_a_difficulty": 4,
+      "team_h": 12,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 34,
+      "kickoff_time": "2026-04-25T14:00:00Z",
+      "team_a": 9,
+      "team_a_difficulty": 3,
+      "team_h": 19,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 34,
+      "kickoff_time": "2026-04-25T14:00:00Z",
+      "team_a": 18,
+      "team_a_difficulty": 2,
+      "team_h": 20,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 34,
+      "kickoff_time": "2026-04-25T16:30:00Z",
+      "team_a": 15,
+      "team_a_difficulty": 5,
+      "team_h": 1,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 34,
+      "kickoff_time": "2026-04-27T19:00:00Z",
+      "team_a": 5,
+      "team_a_difficulty": 4,
+      "team_h": 14,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 35,
+      "kickoff_time": "2026-05-01T19:00:00Z",
+      "team_a": 3,
+      "team_a_difficulty": 3,
+      "team_h": 11,
+      "team_h_difficulty": 1
+    },
+    {
+      "gw": 35,
+      "kickoff_time": "2026-05-02T14:00:00Z",
+      "team_a": 19,
+      "team_a_difficulty": 3,
+      "team_h": 5,
+      "team_h_difficulty": 2
+    },
+    {
+      "gw": 35,
+      "kickoff_time": "2026-05-02T14:00:00Z",
+      "team_a": 6,
+      "team_a_difficulty": 3,
+      "team_h": 15,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 35,
+      "kickoff_time": "2026-05-02T14:00:00Z",
+      "team_a": 17,
+      "team_a_difficulty": 2,
+      "team_h": 20,
+      "team_h_difficulty": 2
+    },
+    {
+      "gw": 35,
+      "kickoff_time": "2026-05-02T16:30:00Z",
+      "team_a": 10,
+      "team_a_difficulty": 5,
+      "team_h": 1,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 35,
+      "kickoff_time": "2026-05-03T13:00:00Z",
+      "team_a": 8,
+      "team_a_difficulty": 4,
+      "team_h": 4,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 35,
+      "kickoff_time": "2026-05-03T14:30:00Z",
+      "team_a": 12,
+      "team_a_difficulty": 4,
+      "team_h": 14,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 35,
+      "kickoff_time": "2026-05-03T18:00:00Z",
+      "team_a": 18,
+      "team_a_difficulty": 4,
+      "team_h": 2,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 35,
+      "kickoff_time": "2026-05-04T14:00:00Z",
+      "team_a": 16,
+      "team_a_difficulty": 3,
+      "team_h": 7,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 35,
+      "kickoff_time": "2026-05-04T19:00:00Z",
+      "team_a": 13,
+      "team_a_difficulty": 3,
+      "team_h": 9,
+      "team_h_difficulty": 4
+    },
+    {
+      "gw": 36,
+      "kickoff_time": "2026-05-09T11:30:00Z",
+      "team_a": 7,
+      "team_a_difficulty": 4,
+      "team_h": 12,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 36,
+      "kickoff_time": "2026-05-09T14:00:00Z",
+      "team_a": 20,
+      "team_a_difficulty": 4,
+      "team_h": 6,
+      "team_h_difficulty": 1
+    },
+    {
+      "gw": 36,
+      "kickoff_time": "2026-05-09T14:00:00Z",
+      "team_a": 4,
+      "team_a_difficulty": 3,
+      "team_h": 10,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 36,
+      "kickoff_time": "2026-05-09T14:00:00Z",
+      "team_a": 14,
+      "team_a_difficulty": 3,
+      "team_h": 17,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 36,
+      "kickoff_time": "2026-05-09T16:30:00Z",
+      "team_a": 5,
+      "team_a_difficulty": 5,
+      "team_h": 13,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 36,
+      "kickoff_time": "2026-05-10T13:00:00Z",
+      "team_a": 2,
+      "team_a_difficulty": 2,
+      "team_h": 3,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 36,
+      "kickoff_time": "2026-05-10T13:00:00Z",
+      "team_a": 9,
+      "team_a_difficulty": 3,
+      "team_h": 8,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 36,
+      "kickoff_time": "2026-05-10T13:00:00Z",
+      "team_a": 15,
+      "team_a_difficulty": 3,
+      "team_h": 16,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 36,
+      "kickoff_time": "2026-05-10T15:30:00Z",
+      "team_a": 1,
+      "team_a_difficulty": 3,
+      "team_h": 19,
+      "team_h_difficulty": 4
+    },
+    {
+      "gw": 36,
+      "kickoff_time": "2026-05-11T19:00:00Z",
+      "team_a": 11,
+      "team_a_difficulty": 3,
+      "team_h": 18,
+      "team_h_difficulty": 2
+    },
+    {
+      "gw": 36,
+      "kickoff_time": "2026-05-13T19:00:00Z",
+      "team_a": 8,
+      "team_a_difficulty": 5,
+      "team_h": 13,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 37,
+      "kickoff_time": "2026-05-15T19:00:00Z",
+      "team_a": 12,
+      "team_a_difficulty": 4,
+      "team_h": 2,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 37,
+      "kickoff_time": "2026-05-17T11:30:00Z",
+      "team_a": 16,
+      "team_a_difficulty": 4,
+      "team_h": 14,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 37,
+      "kickoff_time": "2026-05-17T14:00:00Z",
+      "team_a": 8,
+      "team_a_difficulty": 3,
+      "team_h": 5,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 37,
+      "kickoff_time": "2026-05-17T14:00:00Z",
+      "team_a": 17,
+      "team_a_difficulty": 3,
+      "team_h": 9,
+      "team_h_difficulty": 2
+    },
+    {
+      "gw": 37,
+      "kickoff_time": "2026-05-17T14:00:00Z",
+      "team_a": 6,
+      "team_a_difficulty": 3,
+      "team_h": 11,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 37,
+      "kickoff_time": "2026-05-17T14:00:00Z",
+      "team_a": 10,
+      "team_a_difficulty": 2,
+      "team_h": 20,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 37,
+      "kickoff_time": "2026-05-17T16:30:00Z",
+      "team_a": 19,
+      "team_a_difficulty": 3,
+      "team_h": 15,
+      "team_h_difficulty": 2
+    },
+    {
+      "gw": 37,
+      "kickoff_time": "2026-05-18T19:00:00Z",
+      "team_a": 3,
+      "team_a_difficulty": 5,
+      "team_h": 1,
+      "team_h_difficulty": 1
+    },
+    {
+      "gw": 37,
+      "kickoff_time": "2026-05-19T18:30:00Z",
+      "team_a": 13,
+      "team_a_difficulty": 4,
+      "team_h": 4,
+      "team_h_difficulty": 4
+    },
+    {
+      "gw": 37,
+      "kickoff_time": "2026-05-19T19:15:00Z",
+      "team_a": 18,
+      "team_a_difficulty": 3,
+      "team_h": 7,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 38,
+      "kickoff_time": "2026-05-24T15:00:00Z",
+      "team_a": 14,
+      "team_a_difficulty": 4,
+      "team_h": 6,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 38,
+      "kickoff_time": "2026-05-24T15:00:00Z",
+      "team_a": 20,
+      "team_a_difficulty": 2,
+      "team_h": 3,
+      "team_h_difficulty": 1
+    },
+    {
+      "gw": 38,
+      "kickoff_time": "2026-05-24T15:00:00Z",
+      "team_a": 1,
+      "team_a_difficulty": 3,
+      "team_h": 8,
+      "team_h_difficulty": 4
+    },
+    {
+      "gw": 38,
+      "kickoff_time": "2026-05-24T15:00:00Z",
+      "team_a": 15,
+      "team_a_difficulty": 3,
+      "team_h": 10,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 38,
+      "kickoff_time": "2026-05-24T15:00:00Z",
+      "team_a": 5,
+      "team_a_difficulty": 4,
+      "team_h": 12,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 38,
+      "kickoff_time": "2026-05-24T15:00:00Z",
+      "team_a": 2,
+      "team_a_difficulty": 5,
+      "team_h": 13,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 38,
+      "kickoff_time": "2026-05-24T15:00:00Z",
+      "team_a": 4,
+      "team_a_difficulty": 3,
+      "team_h": 16,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 38,
+      "kickoff_time": "2026-05-24T15:00:00Z",
+      "team_a": 9,
+      "team_a_difficulty": 3,
+      "team_h": 18,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 38,
+      "kickoff_time": "2026-05-24T15:00:00Z",
+      "team_a": 7,
+      "team_a_difficulty": 3,
+      "team_h": 17,
+      "team_h_difficulty": 3
+    },
+    {
+      "gw": 38,
+      "kickoff_time": "2026-05-24T15:00:00Z",
+      "team_a": 11,
+      "team_a_difficulty": 3,
+      "team_h": 19,
+      "team_h_difficulty": 2
+    }
+  ],
+  "season": "2025-26"
+}
