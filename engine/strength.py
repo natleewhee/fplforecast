@@ -4,8 +4,9 @@ FDR rates the opponent as one number. This adds the *shape* of that opponent:
 a team with a weak defence lets a strong attacker score more; a team with a
 weak attack lets a defender or keeper keep more clean sheets. The signal is
 FPL's own ``strength_attack_*`` / ``strength_defence_*`` ratings, aggregated
-across the archived seasons (``data/history/<season>/teams.json``, U3) by
-stable team *name* and normalised to the league average.
+across the archived seasons (``data/history/<season>/teams.json``, U3) by team
+*short name* (``ARS``, ``LIV`` -- stable across seasons) and normalised to the
+league average.
 
 Pure: every function takes already-loaded dicts and returns plain data. The
 full expected-goals λ model stays Deferred to Follow-Up Work; this is the
@@ -65,7 +66,9 @@ def team_strength_table(
 
     for teams in teams_by_season.values():
         for team in teams:
-            name = team.get("name")
+            # keyed by short_name ("ARS", "LIV", ...) -- stable across seasons
+            # and what the weekly view shows, unlike the per-season team id.
+            name = team.get("short_name") or team.get("name")
             if not name:
                 continue
             bucket = per_team.setdefault(name, {r: [] for r in _RATINGS})
