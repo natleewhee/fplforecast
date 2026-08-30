@@ -49,6 +49,20 @@ GW_RICH_COLUMNS = {
     "defensive_contribution": "defensive_contribution",
 }
 
+# FPL's own per-team strength ratings, home/away and attack/defence split
+# (populated in vaastav's archived teams.csv even though the live bootstrap
+# leaves them 0 until the season is under way). The team-strength model (U6,
+# engine/strength.py) reads these; a scoped extension of KTD10.
+TEAM_STRENGTH_FIELDS = (
+    "strength",
+    "strength_overall_home",
+    "strength_overall_away",
+    "strength_attack_home",
+    "strength_attack_away",
+    "strength_defence_home",
+    "strength_defence_away",
+)
+
 _INT_FIELDS = {
     "gw",
     "minutes",
@@ -58,6 +72,8 @@ _INT_FIELDS = {
     "team_a",
     "team_h_difficulty",
     "team_a_difficulty",
+    "id",
+    *TEAM_STRENGTH_FIELDS,
 }
 _FLOAT_FIELDS = {"ict_index", "expected_goals", "expected_assists", "defensive_contribution"}
 _BOOL_FIELDS = {"was_home"}
@@ -140,6 +156,23 @@ def normalise_fixtures(csv_text: str) -> list[dict]:
     return fixtures
 
 
+def normalise_teams(csv_text: str) -> list[dict]:
+    """Per-team id, name, short_name, and FPL's attack/defence/overall strength
+    ratings (home & away) -- the raw signal for engine/strength.py."""
+    reader = csv.DictReader(StringIO(csv_text))
+    teams: list[dict] = []
+    for raw in reader:
+        team = {
+            "id": _coerce("id", raw.get("id")),
+            "name": raw.get("name"),
+            "short_name": raw.get("short_name"),
+        }
+        for field in TEAM_STRENGTH_FIELDS:
+            team[field] = _coerce(field, raw.get(field))
+        teams.append(team)
+    return teams
+
+
 def reconcile_row_counts(rows_read: int, rows_normalised: int) -> None:
     if rows_normalised != rows_read:
         raise RuntimeError(
@@ -180,13 +213,19 @@ def write_fixtures(season: str, fixtures: list[dict], history_dir: Path) -> None
     _atomic_write(path, json.dumps({"season": season, "fixtures": fixtures}, indent=2, sort_keys=True))
 
 
+def write_teams(season: str, teams: list[dict], history_dir: Path) -> None:
+    path = history_dir / season / "teams.json"
+    path.parent.mkdir(parents=True, exist_ok=True)
+    _atomic_write(path, json.dumps({"season": season, "teams": teams}, indent=2, sort_keys=True))
+
+
 def main() -> int:
     HISTORY_DIR.mkdir(parents=True, exist_ok=True)
 
     # Phase 1: fetch + normalise every season into memory. A season whose CSV
     # can't be fetched or parsed is logged and skipped -- the rest still ingest
     # (the plan's "404s or is short ... skipped, not fatal" degradation).
-    prepared: list[tuple[str, dict[int, list[dict]], list[str], list[dict]]] = []
+    prepared: list[tuple[str, dict[int, list[dict]], list[str], list[dict], list[dict]]] = []
     total_read = total_normalised = 0
 
     for season in ARCHIVE_SEASONS:
@@ -207,8 +246,17 @@ def main() -> int:
         except (urllib.error.URLError, ValueError, KeyError) as exc:
             print(f"  {season}: fixtures.csv unusable ({exc!r})", file=sys.stderr)
 
-        prepared.append((season, rows_by_gw, fields_present, fixtures))
-        print(f"  {season}: {rows_read} rows -> {len(rows_by_gw)} GWs, {len(fixtures)} fixtures")
+        teams: list[dict] = []
+        try:
+            teams = normalise_teams(fetch_text(f"{VAASTAV_BASE}/{season}/teams.csv"))
+        except (urllib.error.URLError, ValueError, KeyError) as exc:
+            print(f"  {season}: teams.csv unusable ({exc!r})", file=sys.stderr)
+
+        prepared.append((season, rows_by_gw, fields_present, fixtures, teams))
+        print(
+            f"  {season}: {rows_read} rows -> {len(rows_by_gw)} GWs, "
+            f"{len(fixtures)} fixtures, {len(teams)} teams"
+        )
 
     if not prepared:
         print("No seasons ingested (network unavailable?)", file=sys.stderr)
@@ -220,10 +268,12 @@ def main() -> int:
 
     # Phase 2: write.
     coverage: dict[str, list[str]] = {}
-    for season, rows_by_gw, fields_present, fixtures in prepared:
+    for season, rows_by_gw, fields_present, fixtures, teams in prepared:
         written, skipped = write_season(season, rows_by_gw, HISTORY_DIR)
         if fixtures:
             write_fixtures(season, fixtures, HISTORY_DIR)
+        if teams:
+            write_teams(season, teams, HISTORY_DIR)
         coverage[season] = fields_present
         print(f"  {season}: {written} GW files written, {skipped} already present")
 

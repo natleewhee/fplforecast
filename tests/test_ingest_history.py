@@ -36,6 +36,12 @@ code,event,finished,id,kickoff_time,team_a,team_a_score,team_h,team_h_score,stat
 1002,,False,2,,7,0,15,0,[],2,5,100
 """
 
+TEAMS_CSV = """\
+code,draw,form,id,loss,name,played,points,position,short_name,strength,team_division,unavailable,win,strength_overall_home,strength_overall_away,strength_attack_home,strength_attack_away,strength_defence_home,strength_defence_away,pulse_id
+3,0,,1,0,Arsenal,0,0,2,ARS,5,,False,0,1350,1350,1390,1400,1310,1300,1
+7,0,,2,0,Aston Villa,0,0,6,AVL,3,,False,0,1145,1240,1130,1180,1160,1300,2
+"""
+
 
 def test_normalise_gw_rows_keys_by_gameweek_off_the_element_column():
     rows_by_gw, fields, rows_read = ih.normalise_gw_rows(GW_CSV, "2024-25")
@@ -141,15 +147,36 @@ def test_main_skips_a_404_season_and_still_writes_the_rest(tmp_path, monkeypatch
             raise urllib.error.HTTPError(url, 404, "Not Found", hdrs=None, fp=None)
         if url.endswith("fixtures.csv"):
             return FIXTURES_CSV
+        if url.endswith("teams.csv"):
+            return TEAMS_CSV
         return GW_CSV
 
     monkeypatch.setattr(ih, "fetch_text", fake_fetch)
 
     assert ih.main() == 0
     assert (tmp_path / "S1" / "gw1.json").exists()
+    assert (tmp_path / "S1" / "teams.json").exists()
     assert not (tmp_path / "S2" / "gw1.json").exists()
     coverage = json.loads((tmp_path / "coverage.json").read_text())
     assert set(coverage) == {"S1"}
+
+
+def test_normalise_teams_carries_attack_and_defence_strength():
+    teams = ih.normalise_teams(TEAMS_CSV)
+
+    assert len(teams) == 2
+    assert teams[0] == {
+        "id": 1,
+        "name": "Arsenal",
+        "short_name": "ARS",
+        "strength": 5,
+        "strength_overall_home": 1350,
+        "strength_overall_away": 1350,
+        "strength_attack_home": 1390,
+        "strength_attack_away": 1400,
+        "strength_defence_home": 1310,
+        "strength_defence_away": 1300,
+    }
 
 
 def test_main_returns_1_when_no_season_can_be_fetched(tmp_path, monkeypatch):
