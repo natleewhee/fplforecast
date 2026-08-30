@@ -73,13 +73,13 @@ def test_no_write_when_the_deadline_has_passed(wired, monkeypatch):
     assert not (wired / "predictions" / "gw7.json").exists()
 
 
-def test_cold_start_player_is_null_in_both_maps(wired, monkeypatch):
+def test_newcomer_has_a_model_prediction_but_no_baseline_one(wired, monkeypatch):
     monkeypatch.setattr(lp.cf, "load_bootstrap", lambda: _bootstrap(NOW + timedelta(hours=10)))
 
     lp.main(now=NOW)
     out = json.loads((wired / "predictions" / "gw7.json").read_text())
-    assert out["model"]["999"] is None
-    assert out["baseline"]["999"] is None
+    assert out["model"]["999"] is not None  # provisional projection is still logged
+    assert out["baseline"]["999"] is None  # the fixture-blind baseline can't project a newcomer
 
 
 def test_second_run_in_the_window_is_a_no_op(wired, monkeypatch):

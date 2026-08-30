@@ -75,14 +75,8 @@ def test_running_record_is_null_until_a_gameweek_is_scored(forecast):
     assert forecast["runningRecord"] is None
 
 
-def test_cold_start_alternatives_have_no_gap_number(forecast):
-    # a cold-start held player has no baseline to measure a gain against
-    for p in forecast["squad"]["players"]:
-        if p["coldStart"]:
-            assert all(a["gapPoints"] is None for a in p["alternatives"])
-
-
-def test_cold_start_squad_players_show_no_projection(monkeypatch):
+def test_newcomers_get_a_provisional_projection(monkeypatch):
+    # No entity resolution + an empty archive -> every player is cold-start.
     path = _target_path()
     original = path.read_bytes() if path.exists() else None
     monkeypatch.setattr(cf, "load_entity_resolution", lambda: {})
@@ -90,8 +84,10 @@ def test_cold_start_squad_players_show_no_projection(monkeypatch):
     try:
         assert cf.main(now=NOW) == 0
         players = json.loads(path.read_text())["squad"]["players"]
-        assert all(p["coldStart"] for p in players)
-        assert all(p["projectedPoints"] is None for p in players)
+        assert all(p["provisional"] for p in players)
+        assert all(p["projectedPoints"] is not None for p in players)  # a number, not "no history"
+        # a provisional player is still rankable -- gets real alternative gaps
+        assert any(a["gapPoints"] is not None for p in players for a in p["alternatives"])
     finally:
         if original is not None:
             path.write_bytes(original)

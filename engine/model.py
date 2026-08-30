@@ -19,8 +19,12 @@ Team goal expectations (``lambda_for`` / ``lambda_against``) come from
 ``engine.strength`` -- FPL's league-normalised attack / defence ratings plus a
 home factor, not bookmaker odds. With ``team_strength`` absent the model falls
 back to the FDR multiplier for the attacking adjustment and league-average
-lambdas. Blank gameweek -> 0; double gameweek sums both legs; a cold-start
-player is a marker, never a number (KTD11).
+lambdas. Blank gameweek -> 0; double gameweek sums both legs.
+
+A player with no Premier League history still gets a projection -- built from
+whatever provisional per-90 rates the feature frame carries (a price-tier
+prior, or discounted cross-league form) -- and is flagged ``provisional``.
+This supersedes KTD11's marker-not-a-number rule per user direction.
 """
 
 from __future__ import annotations
@@ -41,7 +45,6 @@ from engine.config import (
     SAVE_POINTS_PER_SAVE,
 )
 from engine.features import availability_multiplier, fdr_multiplier, team_fixtures
-from engine.history import ColdStart
 from engine.strength import expected_goals
 
 _GK, _DEF = 1, 2
@@ -131,12 +134,16 @@ def _leg_context(feature_row: Mapping, leg: dict, ctx: ModelContext) -> dict:
 
 
 def project_detail(feature_row: Mapping, target_gw: int, ctx: ModelContext) -> dict:
-    """The projected points and every component behind them."""
+    """The projected points and every component behind them.
+
+    A player with no Premier League history still gets a number -- built from
+    the provisional per-90 rates the feature frame supplies (a price-tier prior,
+    or discounted cross-league form) -- flagged ``provisional`` so the view can
+    show it as an estimate.
+    """
+    provisional = bool(feature_row.get("provisional") or feature_row.get("cold_start"))
     legs = team_fixtures(feature_row["team"], target_gw, ctx.fixtures)
     opponents = [_leg_context(feature_row, leg, ctx)["opponent"] for leg in legs]
-
-    if feature_row["cold_start"]:
-        return {"points": None, "coldStart": True, "opponents": opponents}
 
     et = int(feature_row["element_type"])
     mins90, p_start60, p_appear, expected_minutes = _minutes_profile(feature_row, ctx)
@@ -177,7 +184,7 @@ def project_detail(feature_row: Mapping, target_gw: int, ctx: ModelContext) -> d
 
     return {
         "points": round(points, 2),
-        "coldStart": False,
+        "provisional": provisional,
         "components": {name: round(value, 2) for name, value in totals.items()},
         "availabilityMultiplier": round(availability, 3),
         "expectedMinutes": expected_minutes,
@@ -186,12 +193,10 @@ def project_detail(feature_row: Mapping, target_gw: int, ctx: ModelContext) -> d
     }
 
 
-def project(feature_row: Mapping, target_gw: int, ctx: ModelContext) -> float | ColdStart:
-    """Projected points, or ``ColdStart`` when the player has no history (KTD11)."""
-    detail = project_detail(feature_row, target_gw, ctx)
-    if detail["coldStart"]:
-        return ColdStart()
-    return detail["points"]
+def project(feature_row: Mapping, target_gw: int, ctx: ModelContext) -> float:
+    """Projected points for the upcoming gameweek -- always a number now, even
+    for a player with no Premier League history (see ``project_detail``)."""
+    return project_detail(feature_row, target_gw, ctx)["points"]
 
 
 def minutes_risk_flag(feature_row: Mapping, ctx: ModelContext) -> bool:

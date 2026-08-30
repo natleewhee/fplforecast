@@ -202,7 +202,7 @@ def _enrich_card(
     card = _player_card(pid, elements_by_id, teams_by_id)
     card["projectedPoints"] = detail.get("points")
     card["windowPoints"] = round(window_pts[pid], 2) if window_pts.get(pid) is not None else None
-    card["coldStart"] = detail["coldStart"]
+    card["provisional"] = detail.get("provisional", False)
     card["opponents"] = detail["opponents"]
     card["breakdown"] = detail
     return card
@@ -326,7 +326,7 @@ def main(now: datetime | None = None) -> int:
         card = _player_card(pid, elements_by_id, teams_by_id)
         card["projectedPoints"] = detail.get("points")
         card["windowPoints"] = round(model_window[pid], 2) if model_window.get(pid) is not None else None
-        card["coldStart"] = detail["coldStart"]
+        card["provisional"] = detail.get("provisional", False)
         card["minutesRisk"] = bool(minutes_risk_by_id.get(pid, False))
         card["opponents"] = detail["opponents"]
         card["breakdown"] = detail
@@ -343,7 +343,7 @@ def main(now: datetime | None = None) -> int:
         if model_window.get(pid) is not None:
             squad_window_total += model_window[pid]
         single_gw = detail.get("points")
-        if not detail["coldStart"] and single_gw is not None and (
+        if not detail.get("provisional") and single_gw is not None and (
             captain_score is None or single_gw > captain_score
         ):
             captain, captain_score = card, single_gw

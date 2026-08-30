@@ -81,8 +81,7 @@ def main(now: datetime | None = None) -> int:
     baseline_map: dict[str, float | None] = {}
     for pid, row in feature_frame.iterrows():
         b = baseline.project(row)
-        m = model.project(row, gw, ctx)
-        model_map[str(pid)] = None if isinstance(m, ColdStart) else m
+        model_map[str(pid)] = model.project(row, gw, ctx)  # always a number now
         baseline_map[str(pid)] = None if isinstance(b, ColdStart) else float(b)
 
     payload = {

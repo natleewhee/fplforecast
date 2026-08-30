@@ -7,7 +7,6 @@ import math
 import pytest
 
 from engine.config import CLEAN_SHEET_POINTS, DC_THRESHOLD, GOAL_POINTS, LEAGUE_AVG_GOALS_PER_TEAM
-from engine.history import ColdStart
 from engine.model import ModelContext, minutes_risk_flag, project, project_detail
 from engine.strength import team_strength_table
 
@@ -138,11 +137,12 @@ def test_availability_veto_zeroes_an_injured_player():
     assert project(feature_row(xg90=0.8), 3, injured) == 0.0
 
 
-def test_cold_start_returns_a_marker():
-    result = project(feature_row(cold_start=True, xg90=1.0), 3, ctx())
-    assert isinstance(result, ColdStart)
-    d = project_detail(feature_row(cold_start=True), 3, ctx())
-    assert d["coldStart"] is True and "points" not in d or d.get("points") is None
+def test_cold_start_player_still_gets_a_provisional_number():
+    result = project(feature_row(cold_start=True, xg90=0.5), 3, ctx())
+    assert isinstance(result, float) and result > 0
+    d = project_detail(feature_row(cold_start=True, xg90=0.5), 3, ctx())
+    assert d["provisional"] is True
+    assert d["points"] is not None
 
 
 def test_no_minutes_model_assumes_a_full_match():
