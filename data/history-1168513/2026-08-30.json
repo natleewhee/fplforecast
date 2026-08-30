@@ -1,0 +1,49 @@
+{
+  "chips": [],
+  "current": [
+    {
+      "bank": 0,
+      "event": 1,
+      "event_transfers": 0,
+      "event_transfers_cost": 0,
+      "overall_rank": 4087187,
+      "overall_rank_percentage": "46",
+      "percentile_rank": 50,
+      "points": 51,
+      "points_on_bench": 10,
+      "rank": 4087192,
+      "rank_sort": 4124749,
+      "total_points": 51,
+      "value": 1000
+    },
+    {
+      "bank": 0,
+      "event": 2,
+      "event_transfers": 0,
+      "event_transfers_cost": 0,
+      "overall_rank": 6478400,
+      "overall_rank_percentage": "65",
+      "percentile_rank": 85,
+      "points": 17,
+      "points_on_bench": 1,
+      "rank": 7940094,
+      "rank_sort": 7962758,
+      "total_points": 68,
+      "value": 1001
+    }
+  ],
+  "past": [
+    {
+      "rank": 2014262,
+      "rank_percentage": "18",
+      "season_name": "2024/25",
+      "total_points": 2260
+    },
+    {
+      "rank": 241694,
+      "rank_percentage": "2",
+      "season_name": "2025/26",
+      "total_points": 2287
+    }
+  ]
+}
