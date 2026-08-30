@@ -18,6 +18,9 @@ from __future__ import annotations
 from dataclasses import dataclass
 
 from engine.config import (
+    HOME_GOALS_FACTOR,
+    LEAGUE_AVG_GOALS_PER_TEAM,
+    TEAM_LAMBDA_CLAMP,
     TEAM_STRENGTH_CLAMP,
     TEAM_STRENGTH_SHRINKAGE_SEASONS,
     TEAM_STRENGTH_WEIGHT,
@@ -144,3 +147,29 @@ def blend_with_fdr(
     """Fold the strength multiplier into the FDR multiplier at ``weight``.
     ``weight = 0`` leaves FDR untouched; ``weight = 1`` applies strength fully."""
     return fdr_multiplier * (1.0 + weight * (strength_multiplier - 1.0))
+
+
+def expected_goals(
+    table: dict[str, TeamStrength],
+    attacking_team: str | None,
+    defending_team: str | None,
+    *,
+    attacker_home: bool,
+    base: float = LEAGUE_AVG_GOALS_PER_TEAM,
+    home_factor: float = HOME_GOALS_FACTOR,
+) -> float:
+    """Expected goals the ``attacking_team`` scores against ``defending_team``
+    in one fixture: ``base * attack_ratio / opponent_defence_ratio``, times the
+    home factor when the attacker is at home. An unknown team contributes a
+    neutral ratio of 1.0. Clamped to a sane band."""
+    atk = table.get(attacking_team) if attacking_team else None
+    dfn = table.get(defending_team) if defending_team else None
+    atk_ratio = (atk.attack_home if attacker_home else atk.attack_away) if atk else 1.0
+    # the defender plays the opposite venue to the attacker
+    def_ratio = (dfn.defence_away if attacker_home else dfn.defence_home) if dfn else 1.0
+
+    lam = base * atk_ratio / (def_ratio or 1.0)
+    if attacker_home:
+        lam *= home_factor
+    lo, hi = TEAM_LAMBDA_CLAMP
+    return max(lo, min(hi, lam))

@@ -13,7 +13,7 @@ from __future__ import annotations
 
 import pandas as pd
 
-from engine.config import FEATURE_SHRINKAGE_GAMES
+from engine.config import FEATURE_SHRINKAGE_GAMES, RATE_BLEND, RATE_FORM_WINDOW, RATE_PRIOR_WEIGHT
 
 UNAVAILABLE_STATUSES = {"i", "s", "u", "n"}  # injured, suspended, unavailable, not in squad
 
@@ -64,29 +64,58 @@ def _to_number(value) -> float | None:
         return None
 
 
+# Per-90 rate -> its bootstrap season-to-date field / its per-GW event-live stat.
+_SEASON_RATE_FIELDS = {
+    "xg90": "expected_goals_per_90",
+    "xa90": "expected_assists_per_90",
+    "dc90": "defensive_contribution_per_90",
+    "gc90": "goals_conceded_per_90",
+    "saves90": "saves_per_90",
+}
+_SEASON_TOTAL_RATES = {"bonus90": "bonus", "yellow90": "yellow_cards"}
+_LIVE_RATE_STATS = {
+    "xg90": "expected_goals",
+    "xa90": "expected_assists",
+    "dc90": "defensive_contribution",
+    "gc90": "goals_conceded",
+    "saves90": "saves",
+    "bonus90": "bonus",
+    "yellow90": "yellow_cards",
+}
+_RATE_NAMES = tuple(_LIVE_RATE_STATS)
+_ARCHIVE_RATE_NAMES = ("xg90", "xa90", "dc90")
+
+
 def build_feature_frame(
     players: list[dict],
     live_history: list[dict],
     is_cold_start,
     rolling_window: int,
+    *,
+    archive_rates: dict[int, dict] | None = None,
 ) -> pd.DataFrame:
-    """One feature row per player for the composite baseline and the model.
+    """One feature row per player for the composite baseline and the component
+    model.
 
-    ``players``      -- bootstrap ``elements`` dicts (id, element_type, team, now_cost).
-    ``live_history`` -- current-season ``event-live`` payloads, oldest first;
-                        only the last ``rolling_window`` are used (KTD4: current
-                        season only for v1).
+    ``players``      -- bootstrap ``elements`` dicts (id, element_type, team,
+                        now_cost, plus the per-90 rate fields the model reads).
+    ``live_history`` -- current-season ``event-live`` payloads, oldest first.
     ``is_cold_start``-- ``player_id -> bool`` (wired to ``engine.history.classify``).
+    ``archive_rates``-- optional ``{player_id: {xg90, xa90, dc90}}`` from prior
+                        seasons, for the deepest slice of each rate blend.
 
     Columns (indexed by ``player_id``): element_type, team, price,
-    ``hist_scoring_avg`` (mean total_points per appearance), ``ict_recent`` and
-    ``form_recent`` (means over the recent window, DNP gameweeks included as 0),
-    ``games_recent``, ``cold_start``. Each mean is empirical-Bayes shrunk toward
-    its position's average with ``FEATURE_SHRINKAGE_GAMES`` pseudo-observations,
-    so one big early-season gameweek does not dominate. A window shorter than
-    ``rolling_window`` averages over what is available.
+    ``hist_scoring_avg`` / ``ict_recent`` / ``form_recent`` (the baseline's
+    inputs, unchanged), ``games_recent``, ``cold_start``, and the per-90 rates
+    ``xg90 xa90 dc90 gc90 saves90 bonus90 yellow90`` -- each a weighted blend of
+    prior seasons / this season / the recent window, shrunk toward its
+    position's mean so a thin early-season sample doesn't dominate.
     """
     recent = live_history[-rolling_window:] if rolling_window else list(live_history)
+    rate_recent = (
+        live_history[-max(rolling_window, RATE_FORM_WINDOW):] if rolling_window else list(live_history)
+    )
+    rates_by_id = _rate_features(players, rate_recent, archive_rates or {})
 
     games_by_id: dict[int, list[tuple]] = {}
     for payload in recent:
@@ -142,6 +171,7 @@ def build_feature_frame(
                 "hist_scoring_avg": (r["_app_pts"] + k * score_target) / (r["_app_n"] + k),
                 "form_recent": (r["_form_sum"] + k * score_target) / (r["_form_n"] + k),
                 "ict_recent": (r["_app_ict"] + k * ict_target) / (r["_app_ict_n"] + k),
+                **rates_by_id.get(r["player_id"], {n: 0.0 for n in _RATE_NAMES}),
             }
         )
 
@@ -149,6 +179,88 @@ def build_feature_frame(
     if not frame.empty:
         frame = frame.set_index("player_id", drop=False)
     return frame
+
+
+def _rate_features(
+    players: list[dict], recent_payloads: list[dict], archive_rates: dict[int, dict]
+) -> dict[int, dict]:
+    """Per player, each per-90 rate as a weighted blend of prior seasons / this
+    season / the recent window, then shrunk toward its position's mean."""
+    recent_sum: dict[int, dict] = {}
+    recent_min: dict[int, float] = {}
+    for payload in recent_payloads:
+        for el in payload.get("elements", []):
+            pid = el["id"]
+            stats = el.get("stats", {})
+            recent_min[pid] = recent_min.get(pid, 0.0) + (_to_number(stats.get("minutes")) or 0.0)
+            bucket = recent_sum.setdefault(pid, dict.fromkeys(_RATE_NAMES, 0.0))
+            for name, stat in _LIVE_RATE_STATS.items():
+                bucket[name] += _to_number(stats.get(stat)) or 0.0
+
+    # pass 1: blend per player without the position prior
+    blended: dict[int, dict] = {}
+    for player in players:
+        pid = player["id"]
+        sources: dict[str, list[tuple[float, float]]] = {n: [] for n in _RATE_NAMES}
+
+        season_min = _to_number(player.get("minutes")) or 0.0
+        if season_min > 0:
+            per90 = season_min / 90.0
+            for name, field in _SEASON_RATE_FIELDS.items():
+                value = _to_number(player.get(field))
+                if value is not None:
+                    sources[name].append((RATE_BLEND["season"], value))
+            for name, total_field in _SEASON_TOTAL_RATES.items():
+                value = _to_number(player.get(total_field))
+                if value is not None:
+                    sources[name].append((RATE_BLEND["season"], value / per90))
+
+        rmin = recent_min.get(pid, 0.0)
+        if rmin > 0:
+            rp90 = rmin / 90.0
+            for name in _RATE_NAMES:
+                sources[name].append((RATE_BLEND["recent"], recent_sum[pid][name] / rp90))
+
+        arc = archive_rates.get(pid) or {}
+        for name in _ARCHIVE_RATE_NAMES:
+            value = arc.get(name)
+            if value is not None:
+                sources[name].append((RATE_BLEND["archive"], float(value)))
+
+        blended[pid] = {}
+        for name in _RATE_NAMES:
+            srcs = sources[name]
+            weight = sum(w for w, _ in srcs)
+            blended[pid][name] = (
+                (sum(w * v for w, v in srcs) / weight, weight) if weight else (None, 0.0)
+            )
+
+    # position means over players who have a blended value
+    prior: dict[tuple[int, str], float] = {}
+    for et in (1, 2, 3, 4):
+        for name in _RATE_NAMES:
+            vals = [
+                blended[p["id"]][name][0]
+                for p in players
+                if p["element_type"] == et and blended[p["id"]][name][0] is not None
+            ]
+            prior[(et, name)] = sum(vals) / len(vals) if vals else 0.0
+
+    # pass 2: shrink toward the prior
+    out: dict[int, dict] = {}
+    for player in players:
+        pid = player["id"]
+        et = player["element_type"]
+        row = {}
+        for name in _RATE_NAMES:
+            value, weight = blended[pid][name]
+            p = prior.get((et, name), 0.0)
+            if value is None:
+                row[name] = p
+            else:
+                row[name] = (weight * value + RATE_PRIOR_WEIGHT * p) / (weight + RATE_PRIOR_WEIGHT)
+        out[pid] = row
+    return out
 
 
 def _position_priors(raw: list[dict]) -> tuple[dict[int, float], dict[int, float]]:

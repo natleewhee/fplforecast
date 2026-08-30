@@ -71,6 +71,36 @@ TEAM_STRENGTH_CLAMP = (0.75, 1.35)
 # seasons (mirrors the minutes model's shrinkage).
 TEAM_STRENGTH_SHRINKAGE_SEASONS = 1.5
 
+# --- Component expected-points model (the deferred KTD10 rebuild) ---
+# FPL scoring by element_type (1 GKP, 2 DEF, 3 MID, 4 FWD).
+GOAL_POINTS = {1: 6, 2: 6, 3: 5, 4: 4}
+CLEAN_SHEET_POINTS = {1: 4, 2: 4, 3: 1, 4: 0}
+ASSIST_POINTS = 3
+# Goals-conceded penalty (GKP/DEF): -1 per 2 conceded -> -0.5 in expectation.
+GOALS_CONCEDED_PENALTY_PER_GOAL = 0.5
+SAVE_POINTS_PER_SAVE = 1 / 3
+# Defensive-contribution points (2025-26 rule): +2 once per match at the action
+# threshold -- 10 for DEF, 12 (incl. recoveries) for MID/FWD; GKP not eligible.
+DC_POINTS = 2
+DC_THRESHOLD = {2: 10, 3: 12, 4: 12}
+
+# Team expected goals (lambda). base * attack_ratio / opp_defence_ratio, then
+# the home side's lambda is multiplied by HOME_GOALS_FACTOR (long-run home bias).
+LEAGUE_AVG_GOALS_PER_TEAM = 1.45
+HOME_GOALS_FACTOR = 1.15
+# Bounds on a single-fixture team lambda so one extreme rating can't run away.
+TEAM_LAMBDA_CLAMP = (0.3, 3.5)
+
+# Weighting of the three windows a per-90 rate (xG/90, xA/90, ...) is blended
+# from -- prior seasons / this season so far / the recent form window. The split
+# the pundit models use; renormalised over whichever sources a player has.
+RATE_BLEND = {"archive": 0.3, "season": 0.3, "recent": 0.4}
+# Recent-form window, in gameweeks, for the "recent" slice of a rate blend.
+RATE_FORM_WINDOW = 6
+# Weight of the position-mean prior when shrinking a blended per-90 rate, so a
+# thin early-season sample doesn't dominate (as with the points means).
+RATE_PRIOR_WEIGHT = 0.5
+
 
 if sum(BASELINE_WEIGHTS.values()) <= 0:
     raise ValueError("BASELINE_WEIGHTS must sum to a positive number")

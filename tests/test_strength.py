@@ -4,8 +4,13 @@ from __future__ import annotations
 
 import pytest
 
-from engine.config import TEAM_STRENGTH_CLAMP
-from engine.strength import blend_with_fdr, opponent_multiplier, team_strength_table
+from engine.config import LEAGUE_AVG_GOALS_PER_TEAM, TEAM_LAMBDA_CLAMP, TEAM_STRENGTH_CLAMP
+from engine.strength import (
+    blend_with_fdr,
+    expected_goals,
+    opponent_multiplier,
+    team_strength_table,
+)
 
 
 def team(name, atk_h, atk_a, def_h, def_a):
@@ -115,6 +120,39 @@ def test_blend_with_fdr_scales_by_weight():
     assert blend_with_fdr(1.0, 1.3, weight=0.5) == pytest.approx(1.15)
     assert blend_with_fdr(1.0, 1.3, weight=0.0) == pytest.approx(1.0)
     assert blend_with_fdr(0.9, 0.8, weight=1.0) == pytest.approx(0.9 * 0.8)
+
+
+def test_expected_goals_uses_attack_over_opponent_defence_and_home_boost():
+    season = [
+        team("Sharp", 1300, 1300, 1100, 1100),  # strong attack
+        team("Leaky", 1100, 1100, 900, 900),  # weak defence
+        team("Wall", 1100, 1100, 1400, 1400),  # strong defence
+        team("Mid", 1100, 1100, 1100, 1100),
+    ]
+    table = team_strength_table({"2024-25": season, "2023-24": season})
+
+    vs_leaky = expected_goals(table, "Sharp", "Leaky", attacker_home=True)
+    vs_wall = expected_goals(table, "Sharp", "Wall", attacker_home=True)
+    away = expected_goals(table, "Sharp", "Leaky", attacker_home=False)
+
+    assert vs_leaky > vs_wall  # weaker opponent defence -> more goals
+    assert vs_leaky > away  # home boost
+    assert vs_leaky == pytest.approx(away * 1.15, rel=0.01)
+
+
+def test_expected_goals_neutral_for_unknown_teams_and_clamped():
+    table = team_strength_table({"2024-25": [team("Known", 1100, 1100, 1100, 1100)]})
+
+    neutral = expected_goals(table, "Promoted", "AlsoNew", attacker_home=False)
+    assert neutral == pytest.approx(LEAGUE_AVG_GOALS_PER_TEAM)
+
+    absurd = [
+        team("Cannon", 5000, 5000, 1100, 1100),
+        team("Sieve", 1100, 1100, 10, 10),
+        team("Mid", 1100, 1100, 1100, 1100),
+    ]
+    t2 = team_strength_table({"2024-25": absurd, "2023-24": absurd})
+    assert expected_goals(t2, "Cannon", "Sieve", attacker_home=True) == pytest.approx(TEAM_LAMBDA_CLAMP[1])
 
 
 def test_zero_ratings_are_ignored_not_treated_as_data():
