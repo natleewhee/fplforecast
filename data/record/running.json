@@ -1,0 +1,15 @@
+{
+  "entries": [
+    {
+      "gameweek": 1,
+      "status": "no_prediction"
+    }
+  ],
+  "summary": {
+    "baselineTotal": 0,
+    "gameweeksScored": 0,
+    "meaningful": false,
+    "modelTotal": 0,
+    "pooledDeltaPerGw": 0.0
+  }
+}

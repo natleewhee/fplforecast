@@ -20,16 +20,32 @@ jobs:
         with:
           python-version: "3.12"
 
+      - name: Install dependencies and the engine package
+        run: |
+          pip install -r requirements.txt
+          pip install -e .
+
       - name: Run snapshotter
         env:
           FPL_TEAM_ID: "1168513"
         run: python scripts/snapshot.py
+
+      - name: Ingest multi-season history archive
+        # Cheap once data/history/ is populated — existing gameweek files are skipped.
+        run: python scripts/ingest_history.py
 
       - name: Resolve player identities across past seasons
         run: python scripts/resolve_entities.py
 
       - name: Fit minutes model
         run: python scripts/minutes_model.py
+
+      - name: Log pre-deadline predictions
+        # No-op outside the 48h window before a deadline, or once the file exists.
+        run: python scripts/log_predictions.py
+
+      - name: Score finished gameweeks
+        run: python scripts/score_predictions.py
 
       - name: Compute forecast
         run: python scripts/compute_forecast.py

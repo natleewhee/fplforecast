@@ -70,9 +70,10 @@ def test_upgrade_count_matches_the_players(forecast):
     assert uc["agree"] <= min(uc["model"], uc["baseline"])
 
 
-def test_running_record_is_null_when_absent(forecast):
+def test_running_record_is_null_until_a_gameweek_is_scored(forecast):
+    # data/record/running.json may exist with an all-zero (no_prediction only)
+    # summary; that reads as no record.
     assert forecast["runningRecord"] is None
-    assert not (ROOT / "data" / "record" / "running.json").exists()
 
 
 def test_no_backtest_artifact_is_required(forecast):

@@ -118,10 +118,13 @@ def apply_overrides(squad_ids: list[int], overrides: list[dict]) -> list[int]:
 
 
 def load_running_record() -> dict | None:
+    """The out-of-sample summary, or ``None`` until at least one gameweek has
+    actually been scored (an empty record reads as no record)."""
     path = DATA_DIR / "record" / "running.json"
     if not path.exists():
         return None
-    return load_json(path).get("summary")
+    summary = load_json(path).get("summary") or {}
+    return summary if summary.get("gameweeksScored", 0) > 0 else None
 
 
 def _player_card(pid: int, elements_by_id: dict, teams_by_id: dict) -> dict:
