@@ -67,11 +67,13 @@ export type AlternativeCard = {
   webName: string;
   team: string;
   position: string;
+  elementType?: number | null;
   projectedPoints: number | null;
   windowPoints?: number | null;
   coldStart: boolean;
   opponents: OpponentLeg[];
   breakdown: ProjectionBreakdown;
+  gapPoints?: number; // present when this card is an alternative
 };
 
 export type Upgrade = {
@@ -83,8 +85,10 @@ export type Upgrade = {
 export type ForecastPlayer = AlternativeCard & {
   minutesRisk?: boolean;
   isCaptain: boolean;
+  role?: "start" | "bench";
   modelUpgrade: Upgrade | null;
   baselineUpgrade: Upgrade | null;
+  alternatives: AlternativeCard[];
 };
 
 export type RunningRecord = {
@@ -101,7 +105,12 @@ export type Forecast = {
   targetGameweek: number;
   rollingWindow: number;
   overridesApplied: number;
-  squad: { windowPoints: number; players: ForecastPlayer[] };
+  squad: {
+    windowPoints: number;
+    players: ForecastPlayer[];
+    startingXi: number[];
+    bench: number[];
+  };
   upgradeCount: { model: number; baseline: number; agree: number; meaningful: number };
   captain: { webName: string; id: number } | null;
   runningRecord: RunningRecord | null;

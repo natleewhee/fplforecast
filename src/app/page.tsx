@@ -7,7 +7,7 @@ import {
   loadOverrides,
   type RunningRecord,
 } from "@/lib/snapshots";
-import SquadList from "./SquadList";
+import Pitch from "./Pitch";
 import TransferForm from "./TransferForm";
 
 export const dynamic = "force-static";
@@ -111,11 +111,11 @@ export default function Home() {
     );
   }
 
-  if (forecast && forecast.squad) {
+  if (forecast && forecast.squad && forecast.squad.startingXi) {
     return (
-      <main className="mx-auto min-h-screen max-w-md bg-background pb-12 md:max-w-2xl">
+      <main className="mx-auto min-h-screen max-w-md bg-background pb-12 md:max-w-4xl">
         <Header
-          subtitle={`GW${forecast.targetGameweek} pick · from your GW${forecast.basedOnGameweek} squad`}
+          subtitle={`GW${forecast.targetGameweek} · your GW${forecast.basedOnGameweek} squad`}
         />
 
         <div className="space-y-4 p-4">
@@ -154,7 +154,7 @@ export default function Home() {
             )}
           </Card>
 
-          <SquadList forecast={forecast} />
+          <Pitch forecast={forecast} />
 
           {overrides &&
             overrides.basedOnGw === forecast.basedOnGameweek &&

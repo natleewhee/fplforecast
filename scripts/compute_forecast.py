@@ -23,7 +23,7 @@ from engine.config import MEANINGFUL_UPGRADE_GAP, ROLLING_WINDOW
 from engine.features import POSITIONS, build_feature_frame
 from engine.history import ColdStart, classify, load_history
 from engine.model import ModelContext
-from engine.squad import rank_against_pool, window_points
+from engine.squad import best_xi, rank_against_pool, top_alternatives, window_points
 from engine.strength import team_strength_table
 
 DATA_DIR = Path(__file__).resolve().parent.parent / "data"
@@ -134,7 +134,18 @@ def _player_card(pid: int, elements_by_id: dict, teams_by_id: dict) -> dict:
         "webName": el.get("web_name", "???"),
         "team": teams_by_id.get(el.get("team"), "???"),
         "position": POSITIONS.get(el.get("element_type"), "???"),
+        "elementType": el.get("element_type"),
     }
+
+
+def upcoming_gameweek(bootstrap: dict, now: datetime, fallback: int) -> int:
+    """The gameweek to forecast: the first whose deadline is still in the
+    future, so the view rolls forward on its own as gameweeks pass."""
+    for event in bootstrap.get("events", []):
+        deadline = datetime.fromisoformat(event["deadline_time"].replace("Z", "+00:00"))
+        if deadline > now:
+            return event["id"]
+    return fallback
 
 
 def _enrich_card(
@@ -175,7 +186,9 @@ def _upgrade_for(gap_row: dict, alt_card_fn) -> dict | None:
     }
 
 
-def main() -> int:
+def main(now: datetime | None = None) -> int:
+    now = now or datetime.now(timezone.utc)
+
     bootstrap = load_bootstrap()
     if bootstrap is None:
         print("No bootstrap-static snapshot yet — run scripts/snapshot.py first", file=sys.stderr)
@@ -187,7 +200,7 @@ def main() -> int:
         return 0
 
     based_on_gw, picks = picks_result
-    target_gw = based_on_gw + 1
+    target_gw = upcoming_gameweek(bootstrap, now, fallback=based_on_gw + 1)
 
     elements_by_id = {el["id"]: el for el in bootstrap["elements"]}
     teams_by_id = {t["id"]: t["short_name"] for t in bootstrap["teams"]}
@@ -279,6 +292,10 @@ def main() -> int:
         card["baselineUpgrade"] = (
             _upgrade_for(baseline_rows[pid], alt_card) if pid in baseline_rows else None
         )
+        card["alternatives"] = [
+            {**alt_card(a["id"]), "gapPoints": a["gapPoints"]}
+            for a in top_alternatives(pid, pool_ids, model_window, price_by_id, position_by_id, limit=3)
+        ]
         players.append(card)
 
         if model_window.get(pid) is not None:
@@ -293,6 +310,22 @@ def main() -> int:
         captain["isCaptain"] = True
     for card in players:
         card.setdefault("isCaptain", False)
+
+    # Recommended XI vs bench for the upcoming gameweek (KTD8-style: a direct
+    # projection of the held squad, best legal formation by projected points).
+    xi_input = [
+        {
+            "id": c["id"],
+            "element_type": c["elementType"] or 4,
+            "projected": c["projectedPoints"] if c["projectedPoints"] is not None else -1.0,
+        }
+        for c in players
+    ]
+    starting, bench = best_xi(xi_input)
+    starting_ids = [p["id"] for p in starting]
+    bench_ids = [p["id"] for p in bench]
+    for c in players:
+        c["role"] = "start" if c["id"] in starting_ids else "bench"
 
     def _agree(card: dict) -> bool:
         mu, bu = card["modelUpgrade"], card["baselineUpgrade"]
@@ -310,12 +343,17 @@ def main() -> int:
     }
 
     forecast = {
-        "generatedAt": datetime.now(timezone.utc).isoformat(),
+        "generatedAt": now.isoformat(),
         "basedOnGameweek": based_on_gw,
         "targetGameweek": target_gw,
         "rollingWindow": ROLLING_WINDOW,
         "overridesApplied": len(overrides),
-        "squad": {"windowPoints": round(squad_window_total, 2), "players": players},
+        "squad": {
+            "windowPoints": round(squad_window_total, 2),
+            "players": players,
+            "startingXi": starting_ids,
+            "bench": bench_ids,
+        },
         "upgradeCount": upgrade_count,
         "captain": {"webName": captain["webName"], "id": captain["id"]} if captain else None,
         "runningRecord": load_running_record(),

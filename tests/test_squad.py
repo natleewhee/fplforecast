@@ -7,7 +7,7 @@ import pytest
 
 from engine.config import DISPLAY_GAP_ROWS, PRICE_BAND_M, ROLLING_WINDOW
 from engine.history import ColdStart
-from engine.squad import rank_against_pool, top_gap_rows, window_points
+from engine.squad import rank_against_pool, top_alternatives, top_gap_rows, window_points
 
 
 def frame(*ids: int) -> pd.DataFrame:
@@ -118,3 +118,24 @@ def test_minutes_risk_is_attached_to_the_recommended_alternative():
     rows = rank_against_pool([1], [2], {1: 3.0, 2: 6.0}, price, pos, minutes_risk_by_id={2: True})
 
     assert rows[0]["minutesRisk"] is True
+
+
+def test_top_alternatives_returns_ranked_slice_within_band():
+    pos = {i: "MID" for i in (1, 10, 11, 12, 13)}
+    price = {i: 7.0 for i in (1, 10, 11, 12)}
+    price[13] = 7.0 + PRICE_BAND_M + 0.1  # out of band
+    window_pts = {1: 4.0, 10: 9.0, 11: 7.0, 12: 6.0, 13: 99.0}
+
+    alts = top_alternatives(1, [10, 11, 12, 13], window_pts, price, pos, limit=2)
+
+    assert [a["id"] for a in alts] == [10, 11]  # best two in band, 13 excluded
+    assert alts[0]["gapPoints"] == 5.0  # 9.0 - 4.0
+
+
+def test_top_alternatives_gap_is_none_when_the_held_player_is_cold_start():
+    pos = {1: "FWD", 2: "FWD"}
+    price = {1: 8.0, 2: 8.0}
+    alts = top_alternatives(1, [2], {1: None, 2: 30.0}, price, pos)
+
+    assert alts[0]["id"] == 2
+    assert alts[0]["gapPoints"] is None  # no baseline to measure a gain against

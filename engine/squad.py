@@ -132,3 +132,44 @@ def rank_against_pool(
 def top_gap_rows(rows: list[dict], limit: int = DISPLAY_GAP_ROWS) -> list[dict]:
     """The display slice: the ``limit`` largest positive-gap rows (R12)."""
     return [row for row in rows if row["gapPoints"] > 0][:limit]
+
+
+def top_alternatives(
+    squad_id,
+    pool_ids: list,
+    window_pts: dict,
+    price_by_id: dict,
+    position_by_id: dict,
+    limit: int = 3,
+) -> list[dict]:
+    """The ``limit`` best same-position, in-price-band alternatives to one squad
+    player, ordered by window points (largest gain first). Cold-start pool
+    players are excluded (KTD11). Each row: ``id``, ``gapPoints`` (``None`` when
+    the held player is himself cold-start -- no baseline to measure a gain
+    against)."""
+    squad_pts = window_pts.get(squad_id)  # None when the held player is cold-start
+    squad_price = price_by_id.get(squad_id)
+    squad_pos = position_by_id.get(squad_id)
+    if squad_price is None:
+        return []
+
+    candidates = []
+    for cand_id in pool_ids:
+        if cand_id == squad_id or position_by_id.get(cand_id) != squad_pos:
+            continue
+        cand_pts = window_pts.get(cand_id)
+        cand_price = price_by_id.get(cand_id)
+        if cand_pts is None or cand_price is None:
+            continue
+        if abs(cand_price - squad_price) > PRICE_BAND_M:
+            continue
+        candidates.append((cand_id, cand_pts))
+
+    candidates.sort(key=lambda c: c[1], reverse=True)
+    return [
+        {
+            "id": cand_id,
+            "gapPoints": None if squad_pts is None else round(cand_pts - squad_pts, 2),
+        }
+        for cand_id, cand_pts in candidates[:limit]
+    ]
