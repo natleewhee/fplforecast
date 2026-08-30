@@ -108,7 +108,12 @@ def classify(
     bootstrap_element: dict | None = None,
 ) -> ColdStart | HasHistory:
     """``ColdStart`` when the player has no ``bySeason`` entry and no archive
-    row for any mapped id; otherwise ``HasHistory`` with the row count."""
+    row for any mapped id; otherwise ``HasHistory`` with the row count.
+
+    ``bootstrap_element`` is accepted for call-site symmetry with the U5
+    feature builder and is currently unused -- classification is purely a
+    function of the resolution map and the archive.
+    """
     series = player_series(current_id, resolved_map, history_frame)
     if len(series) == 0:
         return ColdStart()
@@ -125,10 +130,19 @@ def assert_match_rate(
     keyed on the wrong column and would silently mislabel everyone cold-start."""
     if not resolved_map:
         return 1.0
+
+    present: set[tuple[str, int]] = set()
+    if not history_frame.empty:
+        present = set(
+            zip(
+                history_frame.index.get_level_values("season"),
+                history_frame.index.get_level_values("historical_id"),
+            )
+        )
     matched = sum(
         1
-        for current_id in resolved_map
-        if len(player_series(current_id, resolved_map, history_frame)) > 0
+        for entry in resolved_map.values()
+        if any((season, hist_id) in present for season, hist_id in entry.get("bySeason", {}).items())
     )
     rate = matched / len(resolved_map)
     if rate < floor:

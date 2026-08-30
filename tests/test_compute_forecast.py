@@ -10,6 +10,7 @@ timestamp.
 from __future__ import annotations
 
 import json
+import os
 import subprocess
 import sys
 from pathlib import Path
@@ -17,7 +18,7 @@ from pathlib import Path
 import pytest
 
 import scripts.compute_forecast as cf
-from engine.features import project_squad
+from engine.features import availability_multiplier, project_squad, team_fixture_multiplier
 from engine.squad import best_xi
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -109,7 +110,9 @@ def test_missing_minutes_model_entry_falls_back_to_rolling_average(inputs):
 
     assert row["component"] == "rolling-average"
     assert row["expectedMinutes"] is None
-    assert row["projected"] == round(7.0 * row["fdrMultiplier"], 2)
+    el = inputs["elements_by_id"][target_id]
+    fdr = team_fixture_multiplier(el["team"], inputs["target_gw"], inputs["fixtures"])
+    assert row["projected"] == round(7.0 * availability_multiplier(el) * fdr, 2)
 
 
 def test_blank_gameweek_zeroes_every_projection(inputs):
@@ -131,6 +134,9 @@ def test_script_end_to_end_reproduces_the_golden():
             cwd=ROOT,
             capture_output=True,
             text=True,
+            # The subprocess doesn't inherit conftest's sys.path tweak, so make
+            # `import engine` resolve without relying on `pip install -e .`.
+            env={**os.environ, "PYTHONPATH": str(ROOT)},
         )
         assert result.returncode == 0, result.stderr
 

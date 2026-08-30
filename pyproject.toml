@@ -7,7 +7,7 @@ name = "fplforecast-engine"
 version = "0.1.0"
 description = "Headless FPL projection library (engine/) for the FPL Decision Engine."
 requires-python = ">=3.12"
-dependencies = ["pandas"]
+dependencies = ["pandas", "numpy"]
 
 [tool.setuptools]
 packages = ["engine"]

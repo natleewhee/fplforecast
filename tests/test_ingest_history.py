@@ -70,6 +70,18 @@ def test_fields_present_reflects_the_seasons_columns():
         assert always in with_xg and always in without_xg
 
 
+def test_a_missing_base_column_is_absent_from_coverage_and_rows():
+    csv_no_ict = """\
+name,element,kickoff_time,minutes,total_points,was_home,opponent_team,GW
+Player A,10,2024-08-16T14:00:00Z,90,6,True,5,1
+"""
+    rows_by_gw, fields, _ = ih.normalise_gw_rows(csv_no_ict, "2024-25")
+
+    assert "ict_index" not in fields
+    assert "ict_index" not in rows_by_gw[1][0]
+    assert "minutes" in fields
+
+
 def test_normalise_fixtures_carries_difficulty_and_kickoff():
     fixtures = ih.normalise_fixtures(FIXTURES_CSV)
 

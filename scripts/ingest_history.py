@@ -98,6 +98,10 @@ def normalise_gw_rows(csv_text: str, season: str) -> tuple[dict[int, list[dict]]
     """
     reader = csv.DictReader(StringIO(csv_text))
     header = set(reader.fieldnames or [])
+    # Only fields the season's CSV actually carries -- a missing column is
+    # recorded as absent (R3), never emitted as a null the reader can't
+    # distinguish from a real gap.
+    base_present = {f: col for f, col in GW_FIELD_COLUMNS.items() if col in header}
     rich_present = {f: col for f, col in GW_RICH_COLUMNS.items() if col in header}
 
     rows_by_gw: dict[int, list[dict]] = {}
@@ -109,13 +113,11 @@ def normalise_gw_rows(csv_text: str, season: str) -> tuple[dict[int, list[dict]]
             continue
         gw = int(gw_raw)
         row = {"season": season, "gw": gw, "historical_id": int(raw["element"])}
-        for field, col in GW_FIELD_COLUMNS.items():
-            row[field] = _coerce(field, raw.get(col))
-        for field, col in rich_present.items():
+        for field, col in (*base_present.items(), *rich_present.items()):
             row[field] = _coerce(field, raw.get(col))
         rows_by_gw.setdefault(gw, []).append(row)
 
-    fields_present = sorted(["historical_id", *GW_FIELD_COLUMNS, *rich_present])
+    fields_present = sorted(["historical_id", *base_present, *rich_present])
     return rows_by_gw, fields_present, rows_read
 
 
@@ -146,6 +148,15 @@ def reconcile_row_counts(rows_read: int, rows_normalised: int) -> None:
         )
 
 
+def _atomic_write(path: Path, text: str) -> None:
+    """Write via a temp file + rename so an interrupted run never leaves a
+    truncated JSON file -- which, under the never-rewrite rule, would poison
+    every later load_history()."""
+    tmp = path.with_name(path.name + ".tmp")
+    tmp.write_text(text)
+    tmp.replace(path)
+
+
 def write_season(season: str, rows_by_gw: dict[int, list[dict]], history_dir: Path) -> tuple[int, int]:
     """Write one file per gameweek. A gameweek already on disk is left alone
     (mirrors snapshot.py's finished-gameweek rule). Returns (written, skipped)."""
@@ -158,7 +169,7 @@ def write_season(season: str, rows_by_gw: dict[int, list[dict]], history_dir: Pa
             skipped += 1
             continue
         payload = {"season": season, "gw": gw, "rows": rows}
-        path.write_text(json.dumps(payload, indent=2, sort_keys=True))
+        _atomic_write(path, json.dumps(payload, indent=2, sort_keys=True))
         written += 1
     return written, skipped
 
@@ -166,53 +177,57 @@ def write_season(season: str, rows_by_gw: dict[int, list[dict]], history_dir: Pa
 def write_fixtures(season: str, fixtures: list[dict], history_dir: Path) -> None:
     path = history_dir / season / "fixtures.json"
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps({"season": season, "fixtures": fixtures}, indent=2, sort_keys=True))
+    _atomic_write(path, json.dumps({"season": season, "fixtures": fixtures}, indent=2, sort_keys=True))
 
 
 def main() -> int:
     HISTORY_DIR.mkdir(parents=True, exist_ok=True)
-    coverage: dict[str, list[str]] = {}
+
+    # Phase 1: fetch + normalise every season into memory. A season whose CSV
+    # can't be fetched or parsed is logged and skipped -- the rest still ingest
+    # (the plan's "404s or is short ... skipped, not fatal" degradation).
+    prepared: list[tuple[str, dict[int, list[dict]], list[str], list[dict]]] = []
     total_read = total_normalised = 0
-    seasons_done = 0
 
     for season in ARCHIVE_SEASONS:
         print(f"{season}: fetching merged_gw.csv ...")
         try:
             gw_text = fetch_text(f"{VAASTAV_BASE}/{season}/gws/merged_gw.csv")
-        except urllib.error.HTTPError as exc:
-            print(f"  {season}: merged_gw.csv fetch failed ({exc}) -- skipping season", file=sys.stderr)
+            rows_by_gw, fields_present, rows_read = normalise_gw_rows(gw_text, season)
+        except (urllib.error.URLError, ValueError, KeyError) as exc:
+            print(f"  {season}: merged_gw.csv unusable ({exc!r}) -- skipping season", file=sys.stderr)
             continue
 
-        rows_by_gw, fields_present, rows_read = normalise_gw_rows(gw_text, season)
-        normalised = sum(len(rows) for rows in rows_by_gw.values())
         total_read += rows_read
-        total_normalised += normalised
+        total_normalised += sum(len(rows) for rows in rows_by_gw.values())
 
-        written, skipped = write_season(season, rows_by_gw, HISTORY_DIR)
-        coverage[season] = fields_present
-        print(
-            f"  {season}: {rows_read} rows -> {len(rows_by_gw)} GWs "
-            f"({written} written, {skipped} already present)"
-        )
-
+        fixtures: list[dict] = []
         try:
-            fx_text = fetch_text(f"{VAASTAV_BASE}/{season}/fixtures.csv")
-        except urllib.error.HTTPError as exc:
-            print(f"  {season}: fixtures.csv fetch failed ({exc})", file=sys.stderr)
-        else:
-            fixtures = normalise_fixtures(fx_text)
-            write_fixtures(season, fixtures, HISTORY_DIR)
-            print(f"  {season}: {len(fixtures)} fixtures")
+            fixtures = normalise_fixtures(fetch_text(f"{VAASTAV_BASE}/{season}/fixtures.csv"))
+        except (urllib.error.URLError, ValueError, KeyError) as exc:
+            print(f"  {season}: fixtures.csv unusable ({exc!r})", file=sys.stderr)
 
-        seasons_done += 1
+        prepared.append((season, rows_by_gw, fields_present, fixtures))
+        print(f"  {season}: {rows_read} rows -> {len(rows_by_gw)} GWs, {len(fixtures)} fixtures")
 
-    if seasons_done == 0:
+    if not prepared:
         print("No seasons ingested (network unavailable?)", file=sys.stderr)
         return 1
 
+    # Reconcile BEFORE anything reaches disk: a short archive that lands under
+    # the never-rewrite rule can't self-heal on a re-run.
     reconcile_row_counts(total_read, total_normalised)
 
-    (HISTORY_DIR / "coverage.json").write_text(json.dumps(coverage, indent=2, sort_keys=True))
+    # Phase 2: write.
+    coverage: dict[str, list[str]] = {}
+    for season, rows_by_gw, fields_present, fixtures in prepared:
+        written, skipped = write_season(season, rows_by_gw, HISTORY_DIR)
+        if fixtures:
+            write_fixtures(season, fixtures, HISTORY_DIR)
+        coverage[season] = fields_present
+        print(f"  {season}: {written} GW files written, {skipped} already present")
+
+    _atomic_write(HISTORY_DIR / "coverage.json", json.dumps(coverage, indent=2, sort_keys=True))
     print("coverage.json: " + ", ".join(f"{s}={len(c)} fields" for s, c in coverage.items()))
     return 0
 

@@ -5,4 +5,5 @@
 # Install order for local dev and CI: `pip install -r requirements.txt` then
 # `pip install -e .` (puts the engine/ package on the path for `python scripts/*`).
 pandas
+numpy
 pytest
