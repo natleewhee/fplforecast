@@ -1,8 +1,14 @@
-"""Best-XI selection over projected points. Pure — no I/O. ``best_xi`` and
-``VALID_FORMATIONS`` are lifted verbatim from ``scripts/compute_forecast.py``
-(U1)."""
+"""Best-XI selection over projected points, and squad-vs-pool gap ranking.
+Pure -- no I/O. ``best_xi`` / ``VALID_FORMATIONS`` are lifted verbatim from
+``scripts/compute_forecast.py`` (U1); ``window_points`` / ``rank_against_pool``
+are U7 (R12, R13, KD8, KTD5, KTD11)."""
 
 from __future__ import annotations
+
+from collections.abc import Callable, Mapping
+
+from engine.config import DISPLAY_GAP_ROWS, PRICE_BAND_M, ROLLING_WINDOW
+from engine.history import ColdStart
 
 # (GKP, DEF, MID, FWD) counts for every legal starting XI shape.
 VALID_FORMATIONS = [
@@ -43,3 +49,86 @@ def best_xi(squad: list[dict]) -> tuple[list[dict], list[dict]]:
     bench = [p for p in squad if p["id"] not in starting_ids]
     bench.sort(key=lambda p: p["projected"], reverse=True)
     return best_combo, bench
+
+
+def window_points(
+    feature_frame,
+    project_fn: Callable[[Mapping, int], float | ColdStart],
+    start_gw: int,
+    window: int = ROLLING_WINDOW,
+) -> dict:
+    """Sum of ``project_fn(row, gw)`` over ``start_gw .. start_gw + window - 1``
+    per player (``window`` defaults to KD8's 5; pass ``window=1`` for the
+    captaincy score). A player who is cold-start in any gameweek of the window
+    maps to ``None`` -- never a partial total."""
+    totals: dict = {}
+    for player_id, row in feature_frame.iterrows():
+        total = 0.0
+        for gw in range(start_gw, start_gw + window):
+            projected = project_fn(row, gw)
+            if isinstance(projected, ColdStart):
+                total = None
+                break
+            total += projected
+        totals[player_id] = total
+    return totals
+
+
+def rank_against_pool(
+    squad_ids: list,
+    pool_ids: list,
+    window_pts: dict,
+    price_by_id: dict,
+    position_by_id: dict,
+    minutes_risk_by_id: dict | None = None,
+) -> list[dict]:
+    """One row per squad player: the best same-position pool alternative within
+    ``engine.config.PRICE_BAND_M`` of their price, and the window-points gap to
+    it. Cold-start pool players (``window_pts`` is ``None``) are never offered
+    as an alternative (KTD11). Rows are sorted by gap, largest first; the caller
+    slices the top ``DISPLAY_GAP_ROWS`` with a positive gap."""
+    minutes_risk_by_id = minutes_risk_by_id or {}
+    rows: list[dict] = []
+
+    for squad_id in squad_ids:
+        squad_pts = window_pts.get(squad_id)
+        squad_price = price_by_id.get(squad_id)
+        squad_pos = position_by_id.get(squad_id)
+
+        best_id = None
+        best_pts = None
+        for cand_id in pool_ids:
+            if cand_id == squad_id or position_by_id.get(cand_id) != squad_pos:
+                continue
+            cand_pts = window_pts.get(cand_id)
+            if cand_pts is None:  # cold-start pool player
+                continue
+            cand_price = price_by_id.get(cand_id)
+            if cand_price is None or squad_price is None:
+                continue
+            if abs(cand_price - squad_price) > PRICE_BAND_M:
+                continue
+            if best_pts is None or cand_pts > best_pts:
+                best_id, best_pts = cand_id, cand_pts
+
+        if best_id is None or squad_pts is None:
+            gap = 0.0
+        else:
+            gap = best_pts - squad_pts
+
+        rows.append(
+            {
+                "squadPlayer": squad_id,
+                "bestAlternative": best_id,
+                "gapPoints": round(gap, 2),
+                "minutesRisk": bool(minutes_risk_by_id.get(best_id, False)),
+            }
+        )
+
+    rows.sort(key=lambda r: r["gapPoints"], reverse=True)
+    return rows
+
+
+def top_gap_rows(rows: list[dict], limit: int = DISPLAY_GAP_ROWS) -> list[dict]:
+    """The display slice: the ``limit`` largest positive-gap rows (R12)."""
+    return [row for row in rows if row["gapPoints"] > 0][:limit]
