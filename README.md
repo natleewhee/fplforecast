@@ -51,6 +51,9 @@ branch other than `main` (defaults to `main`).
 ```bash
 npm install
 npm run dev       # needs data/bootstrap-static/<date>.json to show anything
+
+pip install -r requirements.txt
+pip install -e .  # puts the engine/ package on the path for the scripts below
 python3 scripts/snapshot.py            # populate data/ locally (needs network access)
 python3 scripts/resolve_entities.py
 python3 scripts/minutes_model.py

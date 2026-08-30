@@ -15,16 +15,12 @@ import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
-# Until U2's pyproject.toml makes `engine` a pip-installable package, put the
-# repo root on sys.path so `python scripts/compute_forecast.py` can import it.
-sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
-
+from engine.config import ROLLING_WINDOW
 from engine.features import project_squad
 from engine.squad import best_xi
 
 DATA_DIR = Path(__file__).resolve().parent.parent / "data"
 TEAM_ID = "1168513"
-ROLLING_WINDOW = 5
 
 
 def latest_file(subdir: str) -> Path | None:

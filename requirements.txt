@@ -1,2 +1,8 @@
-# Step zero (snapshotter) uses only the Python stdlib — nothing to install yet.
-# Later phases (pandas, statsmodels, scikit-learn, PuLP) get added here as they're built.
+# The snapshotter and the entity / minutes scripts use only the Python stdlib.
+# The engine/ library and its test suite add the two below; later phases
+# (statsmodels, scikit-learn, PuLP) get added here as they're built.
+#
+# Install order for local dev and CI: `pip install -r requirements.txt` then
+# `pip install -e .` (puts the engine/ package on the path for `python scripts/*`).
+pandas
+pytest
