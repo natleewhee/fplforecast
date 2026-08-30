@@ -141,7 +141,7 @@ def build_feature_frame(
 
     frame = pd.DataFrame.from_records(rows)
     if not frame.empty:
-        frame = frame.set_index("player_id")
+        frame = frame.set_index("player_id", drop=False)
     return frame
 
 
