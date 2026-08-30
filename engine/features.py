@@ -100,6 +100,7 @@ def build_feature_frame(
     rolling_window: int,
     *,
     archive_rates: dict[int, dict] | None = None,
+    newcomer_rates: dict[int, dict] | None = None,
 ) -> pd.DataFrame:
     """One feature row per player for the composite baseline and the component
     model.
@@ -122,7 +123,7 @@ def build_feature_frame(
     rate_recent = (
         live_history[-max(rolling_window, RATE_FORM_WINDOW):] if rolling_window else list(live_history)
     )
-    rates_by_id = _rate_features(players, rate_recent, archive_rates or {})
+    rates_by_id = _rate_features(players, rate_recent, archive_rates or {}, newcomer_rates or {})
 
     games_by_id: dict[int, list[tuple]] = {}
     for payload in recent:
@@ -178,7 +179,8 @@ def build_feature_frame(
                 "hist_scoring_avg": (r["_app_pts"] + k * score_target) / (r["_app_n"] + k),
                 "form_recent": (r["_form_sum"] + k * score_target) / (r["_form_n"] + k),
                 "ict_recent": (r["_app_ict"] + k * ict_target) / (r["_app_ict_n"] + k),
-                **rates_by_id.get(r["player_id"], {n: 0.0 for n in _RATE_NAMES}),
+                "rate_source": rates_by_id.get(r["player_id"], {}).get("source", "history"),
+                **{n: rates_by_id.get(r["player_id"], {}).get(n, 0.0) for n in _RATE_NAMES},
             }
         )
 
@@ -189,10 +191,16 @@ def build_feature_frame(
 
 
 def _rate_features(
-    players: list[dict], recent_payloads: list[dict], archive_rates: dict[int, dict]
+    players: list[dict],
+    recent_payloads: list[dict],
+    archive_rates: dict[int, dict],
+    newcomer_rates: dict[int, dict],
 ) -> dict[int, dict]:
     """Per player, each per-90 rate as a weighted blend of prior seasons / this
-    season / the recent window, then shrunk toward its position's mean."""
+    season / the recent window, shrunk toward a prior. The prior is the
+    position mean, except for a newcomer -- there it is the provisional rate
+    ``engine.newcomer`` supplies (a price-tier or discounted cross-league
+    estimate), which their own minutes then pull them off as they play."""
     recent_sum: dict[int, dict] = {}
     recent_min: dict[int, float] = {}
     for payload in recent_payloads:
@@ -266,10 +274,13 @@ def _rate_features(
         pid = player["id"]
         et = player["element_type"]
         n = evidence.get(pid, 0.0)
+        newcomer = newcomer_rates.get(pid)
         row = {}
+        if newcomer and "source" in newcomer:
+            row["source"] = newcomer["source"]
         for name in _RATE_NAMES:
             value, _weight = blended[pid][name]
-            p = prior.get((et, name), 0.0)
+            p = newcomer[name] if newcomer and name in newcomer else prior.get((et, name), 0.0)
             shrunk = p if value is None else (n * value + RATE_PRIOR_GAMES * p) / (n + RATE_PRIOR_GAMES)
             row[name] = min(shrunk, RATE_CLAMP.get(name, shrunk))
         out[pid] = row

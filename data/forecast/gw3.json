@@ -4,15 +4,15 @@
     "id": 411,
     "webName": "Haaland"
   },
-  "generatedAt": "2026-08-30T14:38:40.109899+00:00",
+  "generatedAt": "2026-08-30T14:49:41.632121+00:00",
   "overridesApplied": 0,
   "rollingWindow": 5,
   "runningRecord": null,
   "squad": {
     "bench": [
-      305,
-      346,
       1,
+      334,
+      557,
       212
     ],
     "players": [
@@ -46,7 +46,8 @@
             }
           ],
           "points": 3.3,
-          "provisional": false
+          "provisional": false,
+          "rateSource": "history"
         },
         "elementType": 1,
         "id": 1,
@@ -67,6 +68,7 @@
         "position": "GKP",
         "projectedPoints": 3.3,
         "provisional": false,
+        "rateSource": "history",
         "role": "bench",
         "team": "ARS",
         "webName": "Raya",
@@ -102,7 +104,8 @@
                 }
               ],
               "points": 5.98,
-              "provisional": false
+              "provisional": false,
+              "rateSource": "history"
             },
             "elementType": 2,
             "gapPoints": 8.53,
@@ -121,6 +124,7 @@
             "position": "DEF",
             "projectedPoints": 5.98,
             "provisional": false,
+            "rateSource": "history",
             "team": "LEE",
             "webName": "Bijol",
             "windowPoints": 30.51
@@ -153,7 +157,8 @@
                 }
               ],
               "points": 5.52,
-              "provisional": false
+              "provisional": false,
+              "rateSource": "history"
             },
             "elementType": 2,
             "gapPoints": 4.96,
@@ -172,6 +177,7 @@
             "position": "DEF",
             "projectedPoints": 5.52,
             "provisional": false,
+            "rateSource": "history",
             "team": "NEW",
             "webName": "Hall",
             "windowPoints": 26.94
@@ -204,7 +210,8 @@
                 }
               ],
               "points": 5.41,
-              "provisional": false
+              "provisional": false,
+              "rateSource": "history"
             },
             "elementType": 2,
             "gapPoints": 4.2,
@@ -223,6 +230,7 @@
             "position": "DEF",
             "projectedPoints": 5.41,
             "provisional": false,
+            "rateSource": "history",
             "team": "BHA",
             "webName": "Wieffer",
             "windowPoints": 26.18
@@ -257,7 +265,8 @@
                 }
               ],
               "points": 5.98,
-              "provisional": false
+              "provisional": false,
+              "rateSource": "history"
             },
             "elementType": 2,
             "id": 327,
@@ -275,6 +284,7 @@
             "position": "DEF",
             "projectedPoints": 5.98,
             "provisional": false,
+            "rateSource": "history",
             "team": "LEE",
             "webName": "Bijol",
             "windowPoints": 30.51
@@ -309,7 +319,8 @@
             }
           ],
           "points": 4.26,
-          "provisional": false
+          "provisional": false,
+          "rateSource": "history"
         },
         "elementType": 2,
         "id": 418,
@@ -344,7 +355,8 @@
                 }
               ],
               "points": 5.98,
-              "provisional": false
+              "provisional": false,
+              "rateSource": "history"
             },
             "elementType": 2,
             "id": 327,
@@ -362,6 +374,7 @@
             "position": "DEF",
             "projectedPoints": 5.98,
             "provisional": false,
+            "rateSource": "history",
             "team": "LEE",
             "webName": "Bijol",
             "windowPoints": 30.51
@@ -383,6 +396,7 @@
         "position": "DEF",
         "projectedPoints": 4.26,
         "provisional": false,
+        "rateSource": "history",
         "role": "start",
         "team": "MUN",
         "webName": "Maguire",
@@ -418,7 +432,8 @@
                 }
               ],
               "points": 6.32,
-              "provisional": false
+              "provisional": false,
+              "rateSource": "history"
             },
             "elementType": 2,
             "gapPoints": 9.16,
@@ -437,6 +452,7 @@
             "position": "DEF",
             "projectedPoints": 6.32,
             "provisional": false,
+            "rateSource": "history",
             "team": "ARS",
             "webName": "White",
             "windowPoints": 30.21
@@ -469,7 +485,8 @@
                 }
               ],
               "points": 5.4,
-              "provisional": false
+              "provisional": false,
+              "rateSource": "history"
             },
             "elementType": 2,
             "gapPoints": 5.07,
@@ -488,6 +505,7 @@
             "position": "DEF",
             "projectedPoints": 5.4,
             "provisional": false,
+            "rateSource": "history",
             "team": "MCI",
             "webName": "Gvardiol",
             "windowPoints": 26.12
@@ -520,7 +538,8 @@
                 }
               ],
               "points": 5.1,
-              "provisional": false
+              "provisional": false,
+              "rateSource": "history"
             },
             "elementType": 2,
             "gapPoints": 3.04,
@@ -539,6 +558,7 @@
             "position": "DEF",
             "projectedPoints": 5.1,
             "provisional": false,
+            "rateSource": "history",
             "team": "NFO",
             "webName": "Murillo",
             "windowPoints": 24.09
@@ -573,7 +593,8 @@
                 }
               ],
               "points": 6.32,
-              "provisional": false
+              "provisional": false,
+              "rateSource": "history"
             },
             "elementType": 2,
             "id": 10,
@@ -591,6 +612,7 @@
             "position": "DEF",
             "projectedPoints": 6.32,
             "provisional": false,
+            "rateSource": "history",
             "team": "ARS",
             "webName": "White",
             "windowPoints": 30.21
@@ -625,7 +647,8 @@
             }
           ],
           "points": 4.44,
-          "provisional": false
+          "provisional": false,
+          "rateSource": "history"
         },
         "elementType": 2,
         "id": 11,
@@ -660,7 +683,8 @@
                 }
               ],
               "points": 6.32,
-              "provisional": false
+              "provisional": false,
+              "rateSource": "history"
             },
             "elementType": 2,
             "id": 10,
@@ -678,6 +702,7 @@
             "position": "DEF",
             "projectedPoints": 6.32,
             "provisional": false,
+            "rateSource": "history",
             "team": "ARS",
             "webName": "White",
             "windowPoints": 30.21
@@ -699,6 +724,7 @@
         "position": "DEF",
         "projectedPoints": 4.44,
         "provisional": false,
+        "rateSource": "history",
         "role": "start",
         "team": "ARS",
         "webName": "Mosquera",
@@ -734,7 +760,8 @@
                 }
               ],
               "points": 5.98,
-              "provisional": false
+              "provisional": false,
+              "rateSource": "history"
             },
             "elementType": 2,
             "gapPoints": 12.8,
@@ -753,6 +780,7 @@
             "position": "DEF",
             "projectedPoints": 5.98,
             "provisional": false,
+            "rateSource": "history",
             "team": "LEE",
             "webName": "Bijol",
             "windowPoints": 30.51
@@ -785,7 +813,8 @@
                 }
               ],
               "points": 5.52,
-              "provisional": false
+              "provisional": false,
+              "rateSource": "history"
             },
             "elementType": 2,
             "gapPoints": 9.23,
@@ -804,6 +833,7 @@
             "position": "DEF",
             "projectedPoints": 5.52,
             "provisional": false,
+            "rateSource": "history",
             "team": "NEW",
             "webName": "Hall",
             "windowPoints": 26.94
@@ -836,7 +866,8 @@
                 }
               ],
               "points": 5.41,
-              "provisional": false
+              "provisional": false,
+              "rateSource": "history"
             },
             "elementType": 2,
             "gapPoints": 8.47,
@@ -855,6 +886,7 @@
             "position": "DEF",
             "projectedPoints": 5.41,
             "provisional": false,
+            "rateSource": "history",
             "team": "BHA",
             "webName": "Wieffer",
             "windowPoints": 26.18
@@ -889,7 +921,8 @@
                 }
               ],
               "points": 5.98,
-              "provisional": false
+              "provisional": false,
+              "rateSource": "history"
             },
             "elementType": 2,
             "id": 327,
@@ -907,6 +940,7 @@
             "position": "DEF",
             "projectedPoints": 5.98,
             "provisional": false,
+            "rateSource": "history",
             "team": "LEE",
             "webName": "Bijol",
             "windowPoints": 30.51
@@ -941,7 +975,8 @@
             }
           ],
           "points": 3.69,
-          "provisional": false
+          "provisional": false,
+          "rateSource": "history"
         },
         "elementType": 2,
         "id": 504,
@@ -976,7 +1011,8 @@
                 }
               ],
               "points": 5.98,
-              "provisional": false
+              "provisional": false,
+              "rateSource": "history"
             },
             "elementType": 2,
             "id": 327,
@@ -994,6 +1030,7 @@
             "position": "DEF",
             "projectedPoints": 5.98,
             "provisional": false,
+            "rateSource": "history",
             "team": "LEE",
             "webName": "Bijol",
             "windowPoints": 30.51
@@ -1015,6 +1052,7 @@
         "position": "DEF",
         "projectedPoints": 3.69,
         "provisional": false,
+        "rateSource": "history",
         "role": "start",
         "team": "BHA",
         "webName": "Vuskovic",
@@ -1050,7 +1088,8 @@
             }
           ],
           "points": 4.61,
-          "provisional": false
+          "provisional": false,
+          "rateSource": "history"
         },
         "elementType": 3,
         "id": 426,
@@ -1071,6 +1110,7 @@
         "position": "MID",
         "projectedPoints": 4.61,
         "provisional": false,
+        "rateSource": "history",
         "role": "start",
         "team": "MUN",
         "webName": "B.Fernandes",
@@ -1106,7 +1146,8 @@
                 }
               ],
               "points": 7.87,
-              "provisional": false
+              "provisional": false,
+              "rateSource": "history"
             },
             "elementType": 3,
             "gapPoints": 17.06,
@@ -1125,6 +1166,7 @@
             "position": "MID",
             "projectedPoints": 7.87,
             "provisional": false,
+            "rateSource": "history",
             "team": "BRE",
             "webName": "Lewis-Potter",
             "windowPoints": 37.71
@@ -1157,7 +1199,8 @@
                 }
               ],
               "points": 6.08,
-              "provisional": false
+              "provisional": false,
+              "rateSource": "history"
             },
             "elementType": 3,
             "gapPoints": 9.76,
@@ -1176,6 +1219,7 @@
             "position": "MID",
             "projectedPoints": 6.08,
             "provisional": false,
+            "rateSource": "history",
             "team": "SUN",
             "webName": "Xhaka",
             "windowPoints": 30.41
@@ -1208,7 +1252,8 @@
                 }
               ],
               "points": 5.01,
-              "provisional": false
+              "provisional": false,
+              "rateSource": "history"
             },
             "elementType": 3,
             "gapPoints": 3.94,
@@ -1227,6 +1272,7 @@
             "position": "MID",
             "projectedPoints": 5.01,
             "provisional": false,
+            "rateSource": "history",
             "team": "NFO",
             "webName": "McAtee",
             "windowPoints": 24.59
@@ -1261,7 +1307,8 @@
                 }
               ],
               "points": 7.87,
-              "provisional": false
+              "provisional": false,
+              "rateSource": "history"
             },
             "elementType": 3,
             "id": 86,
@@ -1279,6 +1326,7 @@
             "position": "MID",
             "projectedPoints": 7.87,
             "provisional": false,
+            "rateSource": "history",
             "team": "BRE",
             "webName": "Lewis-Potter",
             "windowPoints": 37.71
@@ -1313,7 +1361,8 @@
             }
           ],
           "points": 4.19,
-          "provisional": false
+          "provisional": false,
+          "rateSource": "history"
         },
         "elementType": 3,
         "id": 124,
@@ -1348,7 +1397,8 @@
                 }
               ],
               "points": 7.87,
-              "provisional": false
+              "provisional": false,
+              "rateSource": "history"
             },
             "elementType": 3,
             "id": 86,
@@ -1366,6 +1416,7 @@
             "position": "MID",
             "projectedPoints": 7.87,
             "provisional": false,
+            "rateSource": "history",
             "team": "BRE",
             "webName": "Lewis-Potter",
             "windowPoints": 37.71
@@ -1387,6 +1438,7 @@
         "position": "MID",
         "projectedPoints": 4.19,
         "provisional": false,
+        "rateSource": "history",
         "role": "start",
         "team": "BHA",
         "webName": "Gro\u00df",
@@ -1422,7 +1474,8 @@
                 }
               ],
               "points": 6.83,
-              "provisional": false
+              "provisional": false,
+              "rateSource": "history"
             },
             "elementType": 3,
             "gapPoints": 11.45,
@@ -1441,6 +1494,7 @@
             "position": "MID",
             "projectedPoints": 6.83,
             "provisional": false,
+            "rateSource": "history",
             "team": "CHE",
             "webName": "Rogers",
             "windowPoints": 36.41
@@ -1473,7 +1527,8 @@
                 }
               ],
               "points": 5.65,
-              "provisional": false
+              "provisional": false,
+              "rateSource": "history"
             },
             "elementType": 3,
             "gapPoints": 2.54,
@@ -1492,6 +1547,7 @@
             "position": "MID",
             "projectedPoints": 5.65,
             "provisional": false,
+            "rateSource": "history",
             "team": "MCI",
             "webName": "Cherki",
             "windowPoints": 27.5
@@ -1524,7 +1580,8 @@
                 }
               ],
               "points": 4.77,
-              "provisional": false
+              "provisional": false,
+              "rateSource": "history"
             },
             "elementType": 3,
             "gapPoints": -1.63,
@@ -1543,6 +1600,7 @@
             "position": "MID",
             "projectedPoints": 4.77,
             "provisional": false,
+            "rateSource": "history",
             "team": "ARS",
             "webName": "Rice",
             "windowPoints": 23.33
@@ -1577,7 +1635,8 @@
                 }
               ],
               "points": 6.83,
-              "provisional": false
+              "provisional": false,
+              "rateSource": "history"
             },
             "elementType": 3,
             "id": 40,
@@ -1595,6 +1654,7 @@
             "position": "MID",
             "projectedPoints": 6.83,
             "provisional": false,
+            "rateSource": "history",
             "team": "CHE",
             "webName": "Rogers",
             "windowPoints": 36.41
@@ -1629,7 +1689,8 @@
             }
           ],
           "points": 4.96,
-          "provisional": false
+          "provisional": false,
+          "rateSource": "history"
         },
         "elementType": 3,
         "id": 366,
@@ -1664,7 +1725,8 @@
                 }
               ],
               "points": 6.83,
-              "provisional": false
+              "provisional": false,
+              "rateSource": "history"
             },
             "elementType": 3,
             "id": 40,
@@ -1682,6 +1744,7 @@
             "position": "MID",
             "projectedPoints": 6.83,
             "provisional": false,
+            "rateSource": "history",
             "team": "CHE",
             "webName": "Rogers",
             "windowPoints": 36.41
@@ -1703,6 +1766,7 @@
         "position": "MID",
         "projectedPoints": 4.96,
         "provisional": false,
+        "rateSource": "history",
         "role": "start",
         "team": "LIV",
         "webName": "Wirtz",
@@ -1738,10 +1802,11 @@
                 }
               ],
               "points": 6.68,
-              "provisional": false
+              "provisional": false,
+              "rateSource": "history"
             },
             "elementType": 3,
-            "gapPoints": 14.69,
+            "gapPoints": 19.92,
             "id": 15,
             "opponents": [
               {
@@ -1757,6 +1822,7 @@
             "position": "MID",
             "projectedPoints": 6.68,
             "provisional": false,
+            "rateSource": "history",
             "team": "ARS",
             "webName": "\u00d8degaard",
             "windowPoints": 32.69
@@ -1789,10 +1855,11 @@
                 }
               ],
               "points": 6.29,
-              "provisional": false
+              "provisional": false,
+              "rateSource": "history"
             },
             "elementType": 3,
-            "gapPoints": 13.1,
+            "gapPoints": 18.33,
             "id": 236,
             "opponents": [
               {
@@ -1808,6 +1875,7 @@
             "position": "MID",
             "projectedPoints": 6.29,
             "provisional": false,
+            "rateSource": "history",
             "team": "EVE",
             "webName": "Dewsbury-Hall",
             "windowPoints": 31.1
@@ -1840,10 +1908,11 @@
                 }
               ],
               "points": 5.05,
-              "provisional": false
+              "provisional": false,
+              "rateSource": "history"
             },
             "elementType": 3,
-            "gapPoints": 6.39,
+            "gapPoints": 11.62,
             "id": 95,
             "opponents": [
               {
@@ -1859,6 +1928,7 @@
             "position": "MID",
             "projectedPoints": 5.05,
             "provisional": false,
+            "rateSource": "history",
             "team": "BRE",
             "webName": "O.Dango",
             "windowPoints": 24.39
@@ -1869,12 +1939,12 @@
           "availabilityMultiplier": 1.0,
           "components": {
             "appearance": 2.0,
-            "assists": 0.23,
-            "bonus": 0.1,
-            "cards": -0.09,
+            "assists": 0.07,
+            "bonus": 0.0,
+            "cards": 0.0,
             "cleanSheet": 0.26,
-            "defensiveContribution": 0.69,
-            "goals": 0.49,
+            "defensiveContribution": 0.12,
+            "goals": 0.15,
             "goalsConceded": 0.0,
             "saves": 0.0
           },
@@ -1891,8 +1961,9 @@
               "wasHome": true
             }
           ],
-          "points": 3.68,
-          "provisional": true
+          "points": 2.6,
+          "provisional": true,
+          "rateSource": "price"
         },
         "elementType": 3,
         "id": 557,
@@ -1927,7 +1998,8 @@
                 }
               ],
               "points": 6.68,
-              "provisional": false
+              "provisional": false,
+              "rateSource": "history"
             },
             "elementType": 3,
             "id": 15,
@@ -1945,11 +2017,12 @@
             "position": "MID",
             "projectedPoints": 6.68,
             "provisional": false,
+            "rateSource": "history",
             "team": "ARS",
             "webName": "\u00d8degaard",
             "windowPoints": 32.69
           },
-          "gapPoints": 14.69,
+          "gapPoints": 19.92,
           "meaningful": true
         },
         "opponents": [
@@ -1964,12 +2037,13 @@
           }
         ],
         "position": "MID",
-        "projectedPoints": 3.68,
+        "projectedPoints": 2.6,
         "provisional": true,
-        "role": "start",
+        "rateSource": "price",
+        "role": "bench",
         "team": "ARS",
         "webName": "Tzolis",
-        "windowPoints": 18.0
+        "windowPoints": 12.77
       },
       {
         "alternatives": [
@@ -2001,7 +2075,8 @@
                 }
               ],
               "points": 5.94,
-              "provisional": false
+              "provisional": false,
+              "rateSource": "history"
             },
             "elementType": 4,
             "gapPoints": 11.43,
@@ -2020,6 +2095,7 @@
             "position": "FWD",
             "projectedPoints": 5.94,
             "provisional": false,
+            "rateSource": "history",
             "team": "NEW",
             "webName": "Wissa",
             "windowPoints": 28.63
@@ -2052,7 +2128,8 @@
                 }
               ],
               "points": 4.39,
-              "provisional": false
+              "provisional": false,
+              "rateSource": "history"
             },
             "elementType": 4,
             "gapPoints": 4.38,
@@ -2071,6 +2148,7 @@
             "position": "FWD",
             "projectedPoints": 4.39,
             "provisional": false,
+            "rateSource": "history",
             "team": "NFO",
             "webName": "Igor Jesus",
             "windowPoints": 21.58
@@ -2103,7 +2181,8 @@
                 }
               ],
               "points": 3.99,
-              "provisional": false
+              "provisional": false,
+              "rateSource": "history"
             },
             "elementType": 4,
             "gapPoints": 3.17,
@@ -2122,6 +2201,7 @@
             "position": "FWD",
             "projectedPoints": 3.99,
             "provisional": false,
+            "rateSource": "history",
             "team": "BOU",
             "webName": "Evanilson",
             "windowPoints": 20.37
@@ -2156,7 +2236,8 @@
                 }
               ],
               "points": 5.94,
-              "provisional": false
+              "provisional": false,
+              "rateSource": "history"
             },
             "elementType": 4,
             "id": 464,
@@ -2174,6 +2255,7 @@
             "position": "FWD",
             "projectedPoints": 5.94,
             "provisional": false,
+            "rateSource": "history",
             "team": "NEW",
             "webName": "Wissa",
             "windowPoints": 28.63
@@ -2208,7 +2290,8 @@
             }
           ],
           "points": 3.37,
-          "provisional": false
+          "provisional": false,
+          "rateSource": "history"
         },
         "elementType": 4,
         "id": 346,
@@ -2243,7 +2326,8 @@
                 }
               ],
               "points": 5.94,
-              "provisional": false
+              "provisional": false,
+              "rateSource": "history"
             },
             "elementType": 4,
             "id": 464,
@@ -2261,6 +2345,7 @@
             "position": "FWD",
             "projectedPoints": 5.94,
             "provisional": false,
+            "rateSource": "history",
             "team": "NEW",
             "webName": "Wissa",
             "windowPoints": 28.63
@@ -2282,7 +2367,8 @@
         "position": "FWD",
         "projectedPoints": 3.37,
         "provisional": false,
-        "role": "bench",
+        "rateSource": "history",
+        "role": "start",
         "team": "LEE",
         "webName": "Calvert-Lewin",
         "windowPoints": 17.2
@@ -2317,7 +2403,8 @@
             }
           ],
           "points": 6.13,
-          "provisional": false
+          "provisional": false,
+          "rateSource": "history"
         },
         "elementType": 4,
         "id": 411,
@@ -2338,6 +2425,7 @@
         "position": "FWD",
         "projectedPoints": 6.13,
         "provisional": false,
+        "rateSource": "history",
         "role": "start",
         "team": "MCI",
         "webName": "Haaland",
@@ -2373,7 +2461,8 @@
                 }
               ],
               "points": 4.47,
-              "provisional": false
+              "provisional": false,
+              "rateSource": "history"
             },
             "elementType": 4,
             "gapPoints": -9.03,
@@ -2392,6 +2481,7 @@
             "position": "FWD",
             "projectedPoints": 4.47,
             "provisional": false,
+            "rateSource": "history",
             "team": "ARS",
             "webName": "Havertz",
             "windowPoints": 21.78
@@ -2424,7 +2514,8 @@
                 }
               ],
               "points": 2.4,
-              "provisional": false
+              "provisional": false,
+              "rateSource": "history"
             },
             "elementType": 4,
             "gapPoints": -19.38,
@@ -2443,6 +2534,7 @@
             "position": "FWD",
             "projectedPoints": 2.4,
             "provisional": false,
+            "rateSource": "history",
             "team": "ARS",
             "webName": "Gy\u00f6keres",
             "windowPoints": 11.43
@@ -2476,7 +2568,8 @@
             }
           ],
           "points": 5.89,
-          "provisional": false
+          "provisional": false,
+          "rateSource": "history"
         },
         "elementType": 4,
         "id": 165,
@@ -2497,6 +2590,7 @@
         "position": "FWD",
         "projectedPoints": 5.89,
         "provisional": false,
+        "rateSource": "history",
         "role": "start",
         "team": "CHE",
         "webName": "Jo\u00e3o Pedro",
@@ -2504,57 +2598,6 @@
       },
       {
         "alternatives": [
-          {
-            "breakdown": {
-              "availabilityMultiplier": 1.0,
-              "components": {
-                "appearance": 2.0,
-                "assists": 0.05,
-                "bonus": 0.55,
-                "cards": -0.02,
-                "cleanSheet": 0.91,
-                "defensiveContribution": 0.0,
-                "goals": 0.14,
-                "goalsConceded": -0.35,
-                "saves": 0.55
-              },
-              "expectedMinutes": 42.6,
-              "minutesRisk": false,
-              "opponents": [
-                {
-                  "attackAdjust": 1.095,
-                  "cleanSheetProb": 0.227,
-                  "fdrRating": 3,
-                  "lambdaAgainst": 1.48,
-                  "lambdaFor": 1.59,
-                  "team": "AVL",
-                  "wasHome": true
-                }
-              ],
-              "points": 3.83,
-              "provisional": true
-            },
-            "elementType": 1,
-            "gapPoints": -0.03,
-            "id": 572,
-            "opponents": [
-              {
-                "attackAdjust": 1.095,
-                "cleanSheetProb": 0.227,
-                "fdrRating": 3,
-                "lambdaAgainst": 1.48,
-                "lambdaFor": 1.59,
-                "team": "AVL",
-                "wasHome": true
-              }
-            ],
-            "position": "GKP",
-            "projectedPoints": 3.83,
-            "provisional": true,
-            "team": "HUL",
-            "webName": "Tzolakis",
-            "windowPoints": 18.79
-          },
           {
             "breakdown": {
               "availabilityMultiplier": 1.0,
@@ -2583,7 +2626,8 @@
                 }
               ],
               "points": 3.63,
-              "provisional": false
+              "provisional": false,
+              "rateSource": "history"
             },
             "elementType": 1,
             "gapPoints": -0.31,
@@ -2602,6 +2646,7 @@
             "position": "GKP",
             "projectedPoints": 3.63,
             "provisional": false,
+            "rateSource": "history",
             "team": "AVL",
             "webName": "M.Bizot",
             "windowPoints": 18.51
@@ -2634,7 +2679,8 @@
                 }
               ],
               "points": 3.6,
-              "provisional": false
+              "provisional": false,
+              "rateSource": "history"
             },
             "elementType": 1,
             "gapPoints": -0.39,
@@ -2653,9 +2699,63 @@
             "position": "GKP",
             "projectedPoints": 3.6,
             "provisional": false,
+            "rateSource": "history",
             "team": "BOU",
             "webName": "Petrovi\u0107",
             "windowPoints": 18.43
+          },
+          {
+            "breakdown": {
+              "availabilityMultiplier": 1.0,
+              "components": {
+                "appearance": 2.0,
+                "assists": 0.07,
+                "bonus": 0.09,
+                "cards": -0.02,
+                "cleanSheet": 0.91,
+                "defensiveContribution": 0.0,
+                "goals": 0.24,
+                "goalsConceded": -0.74,
+                "saves": 1.0
+              },
+              "expectedMinutes": 90.0,
+              "minutesRisk": false,
+              "opponents": [
+                {
+                  "attackAdjust": 1.18,
+                  "cleanSheetProb": 0.228,
+                  "fdrRating": 3,
+                  "lambdaAgainst": 1.48,
+                  "lambdaFor": 1.71,
+                  "team": "CRY",
+                  "wasHome": true
+                }
+              ],
+              "points": 3.56,
+              "provisional": false,
+              "rateSource": "history"
+            },
+            "elementType": 1,
+            "gapPoints": -1.48,
+            "id": 250,
+            "opponents": [
+              {
+                "attackAdjust": 1.18,
+                "cleanSheetProb": 0.228,
+                "fdrRating": 3,
+                "lambdaAgainst": 1.48,
+                "lambdaFor": 1.71,
+                "team": "CRY",
+                "wasHome": true
+              }
+            ],
+            "position": "GKP",
+            "projectedPoints": 3.56,
+            "provisional": false,
+            "rateSource": "history",
+            "team": "FUL",
+            "webName": "Leno",
+            "windowPoints": 17.34
           }
         ],
         "baselineUpgrade": {
@@ -2687,7 +2787,8 @@
                 }
               ],
               "points": 2.92,
-              "provisional": false
+              "provisional": false,
+              "rateSource": "history"
             },
             "elementType": 1,
             "id": 109,
@@ -2705,6 +2806,7 @@
             "position": "GKP",
             "projectedPoints": 2.92,
             "provisional": false,
+            "rateSource": "history",
             "team": "BHA",
             "webName": "Verbruggen",
             "windowPoints": 13.91
@@ -2739,7 +2841,8 @@
             }
           ],
           "points": 3.66,
-          "provisional": false
+          "provisional": false,
+          "rateSource": "history"
         },
         "elementType": 1,
         "id": 496,
@@ -2760,6 +2863,7 @@
         "position": "GKP",
         "projectedPoints": 3.66,
         "provisional": false,
+        "rateSource": "history",
         "role": "start",
         "team": "TOT",
         "webName": "Kinsky",
@@ -2767,57 +2871,6 @@
       },
       {
         "alternatives": [
-          {
-            "breakdown": {
-              "availabilityMultiplier": 1.0,
-              "components": {
-                "appearance": 2.0,
-                "assists": 0.32,
-                "bonus": 0.09,
-                "cards": -0.12,
-                "cleanSheet": 0.23,
-                "defensiveContribution": 0.65,
-                "goals": 0.27,
-                "goalsConceded": 0.0,
-                "saves": 0.0
-              },
-              "expectedMinutes": 45.4,
-              "minutesRisk": false,
-              "opponents": [
-                {
-                  "attackAdjust": 1.095,
-                  "cleanSheetProb": 0.227,
-                  "fdrRating": 3,
-                  "lambdaAgainst": 1.48,
-                  "lambdaFor": 1.59,
-                  "team": "AVL",
-                  "wasHome": true
-                }
-              ],
-              "points": 3.44,
-              "provisional": true
-            },
-            "elementType": 3,
-            "gapPoints": 8.82,
-            "id": 290,
-            "opponents": [
-              {
-                "attackAdjust": 1.095,
-                "cleanSheetProb": 0.227,
-                "fdrRating": 3,
-                "lambdaAgainst": 1.48,
-                "lambdaFor": 1.59,
-                "team": "AVL",
-                "wasHome": true
-              }
-            ],
-            "position": "MID",
-            "projectedPoints": 3.44,
-            "provisional": true,
-            "team": "HUL",
-            "webName": "Slater",
-            "windowPoints": 17.0
-          },
           {
             "breakdown": {
               "availabilityMultiplier": 1.0,
@@ -2846,7 +2899,8 @@
                 }
               ],
               "points": 2.96,
-              "provisional": false
+              "provisional": false,
+              "rateSource": "history"
             },
             "elementType": 3,
             "gapPoints": 6.74,
@@ -2865,6 +2919,7 @@
             "position": "MID",
             "projectedPoints": 2.96,
             "provisional": false,
+            "rateSource": "history",
             "team": "AVL",
             "webName": "George Hemmings",
             "windowPoints": 14.92
@@ -2897,7 +2952,8 @@
                 }
               ],
               "points": 2.78,
-              "provisional": false
+              "provisional": false,
+              "rateSource": "history"
             },
             "elementType": 3,
             "gapPoints": 5.32,
@@ -2916,9 +2972,63 @@
             "position": "MID",
             "projectedPoints": 2.78,
             "provisional": false,
+            "rateSource": "history",
             "team": "MCI",
             "webName": "McAidoo",
             "windowPoints": 13.5
+          },
+          {
+            "breakdown": {
+              "availabilityMultiplier": 1.0,
+              "components": {
+                "appearance": 2.0,
+                "assists": 0.19,
+                "bonus": 0.0,
+                "cards": -0.04,
+                "cleanSheet": 0.23,
+                "defensiveContribution": 0.13,
+                "goals": 0.0,
+                "goalsConceded": 0.0,
+                "saves": 0.0
+              },
+              "expectedMinutes": 45.4,
+              "minutesRisk": false,
+              "opponents": [
+                {
+                  "attackAdjust": 1.095,
+                  "cleanSheetProb": 0.227,
+                  "fdrRating": 3,
+                  "lambdaAgainst": 1.48,
+                  "lambdaFor": 1.59,
+                  "team": "AVL",
+                  "wasHome": true
+                }
+              ],
+              "points": 2.51,
+              "provisional": true,
+              "rateSource": "price"
+            },
+            "elementType": 3,
+            "gapPoints": 4.23,
+            "id": 290,
+            "opponents": [
+              {
+                "attackAdjust": 1.095,
+                "cleanSheetProb": 0.227,
+                "fdrRating": 3,
+                "lambdaAgainst": 1.48,
+                "lambdaFor": 1.59,
+                "team": "AVL",
+                "wasHome": true
+              }
+            ],
+            "position": "MID",
+            "projectedPoints": 2.51,
+            "provisional": true,
+            "rateSource": "price",
+            "team": "HUL",
+            "webName": "Slater",
+            "windowPoints": 12.41
           }
         ],
         "baselineUpgrade": {
@@ -2950,7 +3060,8 @@
                 }
               ],
               "points": 2.78,
-              "provisional": false
+              "provisional": false,
+              "rateSource": "history"
             },
             "elementType": 3,
             "id": 621,
@@ -2968,6 +3079,7 @@
             "position": "MID",
             "projectedPoints": 2.78,
             "provisional": false,
+            "rateSource": "history",
             "team": "MCI",
             "webName": "McAidoo",
             "windowPoints": 13.5
@@ -3002,7 +3114,8 @@
             }
           ],
           "points": 1.61,
-          "provisional": false
+          "provisional": false,
+          "rateSource": "history"
         },
         "elementType": 3,
         "id": 212,
@@ -3014,52 +3127,54 @@
               "availabilityMultiplier": 1.0,
               "components": {
                 "appearance": 2.0,
-                "assists": 0.32,
-                "bonus": 0.09,
-                "cards": -0.12,
-                "cleanSheet": 0.23,
-                "defensiveContribution": 0.65,
-                "goals": 0.27,
+                "assists": 0.07,
+                "bonus": 0.05,
+                "cards": -0.04,
+                "cleanSheet": 0.2,
+                "defensiveContribution": 0.49,
+                "goals": 0.19,
                 "goalsConceded": 0.0,
                 "saves": 0.0
               },
-              "expectedMinutes": 45.4,
+              "expectedMinutes": 41.2,
               "minutesRisk": false,
               "opponents": [
                 {
-                  "attackAdjust": 1.095,
-                  "cleanSheetProb": 0.227,
-                  "fdrRating": 3,
-                  "lambdaAgainst": 1.48,
-                  "lambdaFor": 1.59,
-                  "team": "AVL",
-                  "wasHome": true
+                  "attackAdjust": 1.022,
+                  "cleanSheetProb": 0.204,
+                  "fdrRating": 2,
+                  "lambdaAgainst": 1.59,
+                  "lambdaFor": 1.48,
+                  "team": "HUL",
+                  "wasHome": false
                 }
               ],
-              "points": 3.44,
-              "provisional": true
+              "points": 2.96,
+              "provisional": false,
+              "rateSource": "history"
             },
             "elementType": 3,
-            "id": 290,
+            "id": 51,
             "opponents": [
               {
-                "attackAdjust": 1.095,
-                "cleanSheetProb": 0.227,
-                "fdrRating": 3,
-                "lambdaAgainst": 1.48,
-                "lambdaFor": 1.59,
-                "team": "AVL",
-                "wasHome": true
+                "attackAdjust": 1.022,
+                "cleanSheetProb": 0.204,
+                "fdrRating": 2,
+                "lambdaAgainst": 1.59,
+                "lambdaFor": 1.48,
+                "team": "HUL",
+                "wasHome": false
               }
             ],
             "position": "MID",
-            "projectedPoints": 3.44,
-            "provisional": true,
-            "team": "HUL",
-            "webName": "Slater",
-            "windowPoints": 17.0
+            "projectedPoints": 2.96,
+            "provisional": false,
+            "rateSource": "history",
+            "team": "AVL",
+            "webName": "George Hemmings",
+            "windowPoints": 14.92
           },
-          "gapPoints": 8.82,
+          "gapPoints": 6.74,
           "meaningful": true
         },
         "opponents": [
@@ -3076,6 +3191,7 @@
         "position": "MID",
         "projectedPoints": 1.61,
         "provisional": false,
+        "rateSource": "history",
         "role": "bench",
         "team": "CRY",
         "webName": "Hughes",
@@ -3083,108 +3199,6 @@
       },
       {
         "alternatives": [
-          {
-            "breakdown": {
-              "availabilityMultiplier": 1.0,
-              "components": {
-                "appearance": 2.0,
-                "assists": 0.08,
-                "bonus": 0.36,
-                "cards": -0.05,
-                "cleanSheet": 0.91,
-                "defensiveContribution": 0.84,
-                "goals": 0.72,
-                "goalsConceded": -0.37,
-                "saves": 0.0
-              },
-              "expectedMinutes": 44.7,
-              "minutesRisk": false,
-              "opponents": [
-                {
-                  "attackAdjust": 1.095,
-                  "cleanSheetProb": 0.227,
-                  "fdrRating": 3,
-                  "lambdaAgainst": 1.48,
-                  "lambdaFor": 1.59,
-                  "team": "AVL",
-                  "wasHome": true
-                }
-              ],
-              "points": 4.5,
-              "provisional": true
-            },
-            "elementType": 2,
-            "gapPoints": 4.73,
-            "id": 279,
-            "opponents": [
-              {
-                "attackAdjust": 1.095,
-                "cleanSheetProb": 0.227,
-                "fdrRating": 3,
-                "lambdaAgainst": 1.48,
-                "lambdaFor": 1.59,
-                "team": "AVL",
-                "wasHome": true
-              }
-            ],
-            "position": "DEF",
-            "projectedPoints": 4.5,
-            "provisional": true,
-            "team": "HUL",
-            "webName": "Ajayi",
-            "windowPoints": 21.85
-          },
-          {
-            "breakdown": {
-              "availabilityMultiplier": 1.0,
-              "components": {
-                "appearance": 2.0,
-                "assists": 0.08,
-                "bonus": 0.2,
-                "cards": -0.05,
-                "cleanSheet": 0.91,
-                "defensiveContribution": 0.99,
-                "goals": 0.48,
-                "goalsConceded": -0.37,
-                "saves": 0.0
-              },
-              "expectedMinutes": 44.7,
-              "minutesRisk": false,
-              "opponents": [
-                {
-                  "attackAdjust": 1.095,
-                  "cleanSheetProb": 0.227,
-                  "fdrRating": 3,
-                  "lambdaAgainst": 1.48,
-                  "lambdaFor": 1.59,
-                  "team": "AVL",
-                  "wasHome": true
-                }
-              ],
-              "points": 4.25,
-              "provisional": true
-            },
-            "elementType": 2,
-            "gapPoints": 3.51,
-            "id": 586,
-            "opponents": [
-              {
-                "attackAdjust": 1.095,
-                "cleanSheetProb": 0.227,
-                "fdrRating": 3,
-                "lambdaAgainst": 1.48,
-                "lambdaFor": 1.59,
-                "team": "AVL",
-                "wasHome": true
-              }
-            ],
-            "position": "DEF",
-            "projectedPoints": 4.25,
-            "provisional": true,
-            "team": "HUL",
-            "webName": "Mendy",
-            "windowPoints": 20.63
-          },
           {
             "breakdown": {
               "availabilityMultiplier": 1.0,
@@ -3213,7 +3227,8 @@
                 }
               ],
               "points": 3.78,
-              "provisional": false
+              "provisional": false,
+              "rateSource": "history"
             },
             "elementType": 2,
             "gapPoints": 3.02,
@@ -3232,9 +3247,116 @@
             "position": "DEF",
             "projectedPoints": 3.78,
             "provisional": false,
+            "rateSource": "history",
             "team": "COV",
             "webName": "Thomas",
             "windowPoints": 20.14
+          },
+          {
+            "breakdown": {
+              "availabilityMultiplier": 1.0,
+              "components": {
+                "appearance": 2.0,
+                "assists": 0.06,
+                "bonus": 0.11,
+                "cards": -0.03,
+                "cleanSheet": 0.91,
+                "defensiveContribution": 1.14,
+                "goals": 0.16,
+                "goalsConceded": -0.42,
+                "saves": 0.0
+              },
+              "expectedMinutes": 51.4,
+              "minutesRisk": false,
+              "opponents": [
+                {
+                  "attackAdjust": 1.095,
+                  "cleanSheetProb": 0.227,
+                  "fdrRating": 3,
+                  "lambdaAgainst": 1.48,
+                  "lambdaFor": 1.59,
+                  "team": "AVL",
+                  "wasHome": true
+                }
+              ],
+              "points": 3.94,
+              "provisional": false,
+              "rateSource": "history"
+            },
+            "elementType": 2,
+            "gapPoints": 2.0,
+            "id": 277,
+            "opponents": [
+              {
+                "attackAdjust": 1.095,
+                "cleanSheetProb": 0.227,
+                "fdrRating": 3,
+                "lambdaAgainst": 1.48,
+                "lambdaFor": 1.59,
+                "team": "AVL",
+                "wasHome": true
+              }
+            ],
+            "position": "DEF",
+            "projectedPoints": 3.94,
+            "provisional": false,
+            "rateSource": "history",
+            "team": "HUL",
+            "webName": "Egan",
+            "windowPoints": 19.12
+          },
+          {
+            "breakdown": {
+              "availabilityMultiplier": 1.0,
+              "components": {
+                "appearance": 2.0,
+                "assists": 0.19,
+                "bonus": 0.04,
+                "cards": -0.03,
+                "cleanSheet": 0.81,
+                "defensiveContribution": 1.14,
+                "goals": 0.16,
+                "goalsConceded": -0.46,
+                "saves": 0.0
+              },
+              "expectedMinutes": 51.4,
+              "minutesRisk": false,
+              "opponents": [
+                {
+                  "attackAdjust": 1.034,
+                  "cleanSheetProb": 0.201,
+                  "fdrRating": 4,
+                  "lambdaAgainst": 1.6,
+                  "lambdaFor": 1.5,
+                  "team": "LIV",
+                  "wasHome": true
+                }
+              ],
+              "points": 3.84,
+              "provisional": false,
+              "rateSource": "history"
+            },
+            "elementType": 2,
+            "gapPoints": 1.6,
+            "id": 304,
+            "opponents": [
+              {
+                "attackAdjust": 1.034,
+                "cleanSheetProb": 0.201,
+                "fdrRating": 4,
+                "lambdaAgainst": 1.6,
+                "lambdaFor": 1.5,
+                "team": "LIV",
+                "wasHome": true
+              }
+            ],
+            "position": "DEF",
+            "projectedPoints": 3.84,
+            "provisional": false,
+            "rateSource": "history",
+            "team": "IPS",
+            "webName": "O'Shea",
+            "windowPoints": 18.72
           }
         ],
         "baselineUpgrade": {
@@ -3266,7 +3388,8 @@
                 }
               ],
               "points": 3.94,
-              "provisional": false
+              "provisional": false,
+              "rateSource": "history"
             },
             "elementType": 2,
             "id": 277,
@@ -3284,6 +3407,7 @@
             "position": "DEF",
             "projectedPoints": 3.94,
             "provisional": false,
+            "rateSource": "history",
             "team": "HUL",
             "webName": "Egan",
             "windowPoints": 19.12
@@ -3318,7 +3442,8 @@
             }
           ],
           "points": 3.52,
-          "provisional": false
+          "provisional": false,
+          "rateSource": "history"
         },
         "elementType": 2,
         "id": 305,
@@ -3330,52 +3455,54 @@
               "availabilityMultiplier": 1.0,
               "components": {
                 "appearance": 2.0,
-                "assists": 0.08,
-                "bonus": 0.36,
-                "cards": -0.05,
-                "cleanSheet": 0.91,
-                "defensiveContribution": 0.84,
-                "goals": 0.72,
-                "goalsConceded": -0.37,
+                "assists": 0.17,
+                "bonus": 0.2,
+                "cards": -0.03,
+                "cleanSheet": 0.67,
+                "defensiveContribution": 1.08,
+                "goals": 0.21,
+                "goalsConceded": -0.51,
                 "saves": 0.0
               },
-              "expectedMinutes": 44.7,
+              "expectedMinutes": 51.4,
               "minutesRisk": false,
               "opponents": [
                 {
-                  "attackAdjust": 1.095,
-                  "cleanSheetProb": 0.227,
-                  "fdrRating": 3,
-                  "lambdaAgainst": 1.48,
-                  "lambdaFor": 1.59,
-                  "team": "AVL",
-                  "wasHome": true
+                  "attackAdjust": 0.917,
+                  "cleanSheetProb": 0.166,
+                  "fdrRating": 5,
+                  "lambdaAgainst": 1.79,
+                  "lambdaFor": 1.33,
+                  "team": "MCI",
+                  "wasHome": false
                 }
               ],
-              "points": 4.5,
-              "provisional": true
+              "points": 3.78,
+              "provisional": false,
+              "rateSource": "history"
             },
             "elementType": 2,
-            "id": 279,
+            "id": 173,
             "opponents": [
               {
-                "attackAdjust": 1.095,
-                "cleanSheetProb": 0.227,
-                "fdrRating": 3,
-                "lambdaAgainst": 1.48,
-                "lambdaFor": 1.59,
-                "team": "AVL",
-                "wasHome": true
+                "attackAdjust": 0.917,
+                "cleanSheetProb": 0.166,
+                "fdrRating": 5,
+                "lambdaAgainst": 1.79,
+                "lambdaFor": 1.33,
+                "team": "MCI",
+                "wasHome": false
               }
             ],
             "position": "DEF",
-            "projectedPoints": 4.5,
-            "provisional": true,
-            "team": "HUL",
-            "webName": "Ajayi",
-            "windowPoints": 21.85
+            "projectedPoints": 3.78,
+            "provisional": false,
+            "rateSource": "history",
+            "team": "COV",
+            "webName": "Thomas",
+            "windowPoints": 20.14
           },
-          "gapPoints": 4.73,
+          "gapPoints": 3.02,
           "meaningful": false
         },
         "opponents": [
@@ -3392,7 +3519,8 @@
         "position": "DEF",
         "projectedPoints": 3.52,
         "provisional": false,
-        "role": "bench",
+        "rateSource": "history",
+        "role": "start",
         "team": "IPS",
         "webName": "Davis",
         "windowPoints": 17.12
@@ -3427,10 +3555,11 @@
                 }
               ],
               "points": 5.98,
-              "provisional": false
+              "provisional": false,
+              "rateSource": "history"
             },
             "elementType": 2,
-            "gapPoints": 11.97,
+            "gapPoints": 15.91,
             "id": 327,
             "opponents": [
               {
@@ -3446,6 +3575,7 @@
             "position": "DEF",
             "projectedPoints": 5.98,
             "provisional": false,
+            "rateSource": "history",
             "team": "LEE",
             "webName": "Bijol",
             "windowPoints": 30.51
@@ -3478,10 +3608,11 @@
                 }
               ],
               "points": 5.52,
-              "provisional": false
+              "provisional": false,
+              "rateSource": "history"
             },
             "elementType": 2,
-            "gapPoints": 8.4,
+            "gapPoints": 12.34,
             "id": 449,
             "opponents": [
               {
@@ -3497,6 +3628,7 @@
             "position": "DEF",
             "projectedPoints": 5.52,
             "provisional": false,
+            "rateSource": "history",
             "team": "NEW",
             "webName": "Hall",
             "windowPoints": 26.94
@@ -3529,10 +3661,11 @@
                 }
               ],
               "points": 5.41,
-              "provisional": false
+              "provisional": false,
+              "rateSource": "history"
             },
             "elementType": 2,
-            "gapPoints": 7.64,
+            "gapPoints": 11.58,
             "id": 130,
             "opponents": [
               {
@@ -3548,6 +3681,7 @@
             "position": "DEF",
             "projectedPoints": 5.41,
             "provisional": false,
+            "rateSource": "history",
             "team": "BHA",
             "webName": "Wieffer",
             "windowPoints": 26.18
@@ -3558,12 +3692,12 @@
           "availabilityMultiplier": 1.0,
           "components": {
             "appearance": 2.0,
-            "assists": 0.09,
-            "bonus": 0.07,
-            "cards": -0.06,
+            "assists": 0.03,
+            "bonus": 0.0,
+            "cards": 0.0,
             "cleanSheet": 0.78,
-            "defensiveContribution": 0.9,
-            "goals": 0.3,
+            "defensiveContribution": 0.2,
+            "goals": 0.28,
             "goalsConceded": -0.47,
             "saves": 0.0
           },
@@ -3580,8 +3714,9 @@
               "wasHome": false
             }
           ],
-          "points": 3.62,
-          "provisional": true
+          "points": 2.83,
+          "provisional": true,
+          "rateSource": "understat:Serie_A"
         },
         "elementType": 2,
         "id": 334,
@@ -3616,7 +3751,8 @@
                 }
               ],
               "points": 5.98,
-              "provisional": false
+              "provisional": false,
+              "rateSource": "history"
             },
             "elementType": 2,
             "id": 327,
@@ -3634,11 +3770,12 @@
             "position": "DEF",
             "projectedPoints": 5.98,
             "provisional": false,
+            "rateSource": "history",
             "team": "LEE",
             "webName": "Bijol",
             "windowPoints": 30.51
           },
-          "gapPoints": 11.97,
+          "gapPoints": 15.91,
           "meaningful": true
         },
         "opponents": [
@@ -3653,12 +3790,13 @@
           }
         ],
         "position": "DEF",
-        "projectedPoints": 3.62,
+        "projectedPoints": 2.83,
         "provisional": true,
-        "role": "start",
+        "rateSource": "understat:Serie_A",
+        "role": "bench",
         "team": "LEE",
         "webName": "Muharemovi\u0107",
-        "windowPoints": 18.54
+        "windowPoints": 14.6
       }
     ],
     "startingXi": [
@@ -3666,15 +3804,15 @@
       11,
       418,
       504,
-      334,
+      305,
       366,
       426,
       124,
-      557,
       411,
-      165
+      165,
+      346
     ],
-    "windowPoints": 303.85
+    "windowPoints": 294.68
   },
   "targetGameweek": 3,
   "upgradeCount": {

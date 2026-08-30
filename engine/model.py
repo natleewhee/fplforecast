@@ -185,6 +185,7 @@ def project_detail(feature_row: Mapping, target_gw: int, ctx: ModelContext) -> d
     return {
         "points": round(points, 2),
         "provisional": provisional,
+        "rateSource": feature_row.get("rate_source", "history"),
         "components": {name: round(value, 2) for name, value in totals.items()},
         "availabilityMultiplier": round(availability, 3),
         "expectedMinutes": expected_minutes,

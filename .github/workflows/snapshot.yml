@@ -34,6 +34,10 @@ jobs:
         # Cheap once data/history/ is populated — existing gameweek files are skipped.
         run: python scripts/ingest_history.py
 
+      - name: Ingest cross-league xG (newcomers)
+        # ~45s: 5 leagues x 2 seasons from Understat, rate-limited. Non-fatal.
+        run: python scripts/ingest_understat.py || echo "understat ingest failed — newcomers fall back to the price prior"
+
       - name: Resolve player identities across past seasons
         run: python scripts/resolve_entities.py
 

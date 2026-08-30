@@ -60,6 +60,26 @@ PREDICTION_WINDOW_HOURS = 48
 # Early in a season one big gameweek would otherwise dominate every projection.
 FEATURE_SHRINKAGE_GAMES = 4
 
+# --- Newcomers (players with no Premier League history) ---
+# Understat leagues pulled for cross-league xG/xA of foreign signings.
+UNDERSTAT_LEAGUES = ["EPL", "La_liga", "Bundesliga", "Serie_A", "Ligue_1"]
+# Per-90 output multiplier vs the Premier League -- a goal in that league is
+# worth this fraction of a PL goal. EPL is 1.0 (a player already in the FPL
+# data that resolution simply missed). Championship / smaller leagues have no
+# Understat coverage and fall back to the price-tier prior.
+LEAGUE_DISCOUNT = {
+    "EPL": 1.0,
+    "La_liga": 0.92,
+    "Serie_A": 0.90,
+    "Bundesliga": 0.90,
+    "Ligue_1": 0.86,
+}
+# Minimum minutes in a prior league before its rates are trusted over the
+# price prior.
+UNDERSTAT_MIN_MINUTES = 600
+# Weight of FPL's own ep_next when blended into a newcomer's provisional xP.
+EP_NEXT_BLEND = 0.35
+
 # --- Team strength (scoped extension of KTD10) ---
 # How much the opponent's attack/defence strength moves a projection once
 # blended with the FDR multiplier: combined = fdr * (1 + WEIGHT * (strength - 1)).

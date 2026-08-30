@@ -66,7 +66,8 @@ export type ProjectionComponents = {
 
 export type ProjectionBreakdown = {
   points: number | null;
-  coldStart: boolean;
+  provisional?: boolean; // no PL history -> projected from a prior
+  rateSource?: string; // "history" | "price" | "understat:<league>"
   components?: ProjectionComponents;
   availabilityMultiplier?: number;
   expectedMinutes?: number | null;
@@ -82,7 +83,8 @@ export type AlternativeCard = {
   elementType?: number | null;
   projectedPoints: number | null;
   windowPoints?: number | null;
-  coldStart: boolean;
+  provisional?: boolean;
+  rateSource?: string;
   opponents: OpponentLeg[];
   breakdown: ProjectionBreakdown;
   gapPoints?: number; // present when this card is an alternative

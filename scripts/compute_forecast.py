@@ -18,7 +18,7 @@ import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
-from engine import baseline, model
+from engine import baseline, model, newcomer
 from engine.config import MEANINGFUL_UPGRADE_GAP, ROLLING_WINDOW
 from engine.features import POSITIONS, build_feature_frame
 from engine.history import ColdStart, classify, load_history
@@ -76,6 +76,14 @@ def load_team_strength_seasons() -> dict[str, list[dict]]:
     for teams_file in sorted((DATA_DIR / "history").glob("*/teams.json")):
         payload = load_json(teams_file)
         out[payload["season"]] = payload.get("teams", [])
+    return out
+
+
+def load_understat_seasons() -> dict[str, dict[str, list[dict]]]:
+    out: dict[str, dict[str, list[dict]]] = {}
+    for path in sorted((DATA_DIR / "understat").glob("*/*.json")):
+        payload = load_json(path)
+        out.setdefault(payload["league"], {})[payload["season"]] = payload.get("players", [])
     return out
 
 
@@ -203,6 +211,7 @@ def _enrich_card(
     card["projectedPoints"] = detail.get("points")
     card["windowPoints"] = round(window_pts[pid], 2) if window_pts.get(pid) is not None else None
     card["provisional"] = detail.get("provisional", False)
+    card["rateSource"] = detail.get("rateSource", "history")
     card["opponents"] = detail["opponents"]
     card["breakdown"] = detail
     return card
@@ -255,12 +264,21 @@ def main(now: datetime | None = None) -> int:
     def is_cold_start(pid: int) -> bool:
         return isinstance(classify(pid, resolved_map, archive.frame), ColdStart)
 
+    cold_start_ids = {el["id"] for el in bootstrap["elements"] if is_cold_start(el["id"])}
+    nc_rates = newcomer.newcomer_rates(
+        bootstrap["elements"],
+        cold_start_ids,
+        newcomer.understat_index(load_understat_seasons()),
+        newcomer.price_curve(bootstrap["elements"]),
+    )
+
     feature_frame = build_feature_frame(
         bootstrap["elements"],
         load_event_live_history(),
         is_cold_start,
         ROLLING_WINDOW,
         archive_rates=archive_rates(resolved_map, archive.frame),
+        newcomer_rates=nc_rates,
     )
 
     ctx = ModelContext(
@@ -327,6 +345,7 @@ def main(now: datetime | None = None) -> int:
         card["projectedPoints"] = detail.get("points")
         card["windowPoints"] = round(model_window[pid], 2) if model_window.get(pid) is not None else None
         card["provisional"] = detail.get("provisional", False)
+        card["rateSource"] = detail.get("rateSource", "history")
         card["minutesRisk"] = bool(minutes_risk_by_id.get(pid, False))
         card["opponents"] = detail["opponents"]
         card["breakdown"] = detail

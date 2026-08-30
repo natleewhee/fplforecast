@@ -50,8 +50,23 @@ function BreakdownPanel({ breakdown }: { breakdown: ProjectionBreakdown }) {
           ))}
         </span>
       )}
+      {breakdown.provisional && (
+        <span className="mt-1.5 block border-t border-line pt-1.5 text-[11px] text-amber-700">
+          Provisional — no Premier League history yet, projected from{" "}
+          {rateSourceLabel(breakdown.rateSource)}.
+        </span>
+      )}
     </span>
   );
+}
+
+function rateSourceLabel(source?: string): string {
+  if (!source || source === "history") return "a position prior";
+  if (source === "price") return "the price tier";
+  if (source.startsWith("understat:")) {
+    return `${source.slice("understat:".length).replace(/_/g, " ")} form`;
+  }
+  return source;
 }
 
 export default function ProjectionCell({
@@ -63,15 +78,19 @@ export default function ProjectionCell({
 }) {
   const [open, setOpen] = useState(false);
 
-  if (points === null || breakdown.coldStart) {
-    return <span className="text-xs italic text-ink-soft">no history</span>;
+  if (points === null) {
+    return <span className="text-xs italic text-ink-soft">—</span>;
   }
 
   return (
     <span
-      className="relative inline-block cursor-help font-semibold text-[var(--pitch-dark)] underline decoration-dotted decoration-1 underline-offset-2 tabular-nums"
+      className={`relative inline-block cursor-help font-semibold underline decoration-dotted decoration-1 underline-offset-2 tabular-nums ${
+        breakdown.provisional ? "text-amber-700" : "text-[var(--pitch-dark)]"
+      }`}
       tabIndex={0}
-      aria-label={`Projected ${points.toFixed(1)} points — tap for the breakdown`}
+      aria-label={`Projected ${points.toFixed(1)} points${
+        breakdown.provisional ? " (provisional)" : ""
+      } — tap for the breakdown`}
       onMouseEnter={() => setOpen(true)}
       onMouseLeave={() => setOpen(false)}
       onFocus={() => setOpen(true)}
@@ -79,6 +98,7 @@ export default function ProjectionCell({
       onClick={() => setOpen((v) => !v)}
     >
       {points.toFixed(1)}
+      {breakdown.provisional && <sup className="ml-0.5 text-[9px] font-normal">est</sup>}
       {open && <BreakdownPanel breakdown={breakdown} />}
     </span>
   );
