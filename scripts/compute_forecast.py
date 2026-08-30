@@ -1,48 +1,30 @@
 """Best XI + captain, from projected points per player in the squad.
 
-Phase 1 has started replacing the dumb slice one component at a time (see
-the plan doc). Projection per player, in order of preference:
-
-  1. minutes model (scripts/minutes_model.py): expected_minutes/90 x per_90_points
-  2. last-ROLLING_WINDOW-GW flat average total points (the original dumb slice,
-     used as a fallback — e.g. for a player the minutes model hasn't seen yet)
-
-Both are scaled by a hard availability multiplier (injury/suspension veto,
-or the partial chance_of_playing_next_round) applied *after* the projection,
-per the plan's "availability is a veto, not a feature" principle.
-
-Also scaled by FPL's own fixture difficulty rating (FDR) for the target
-gameweek — an interim, explicitly crude opponent-strength signal per the
-plan doc ("FDR is crude; replace with own λ"). A blank gameweek (no fixture)
-zeroes the projection; a double gameweek sums both legs' multipliers, so it
-naturally comes out around 2x a single game rather than needing special-
-casing.
+Thin CLI wrapper (U1): this module loads the latest snapshots from ``data/``,
+calls the pure ``engine/`` library for the projection math and best-XI
+selection, and writes ``data/forecast/gwNN.json``. The per-player projection
+logic (minutes model / rolling-average fallback, availability veto, FDR
+multiplier) lives in ``engine/features.py``; formation search lives in
+``engine/squad.py``.
 """
 
 from __future__ import annotations
 
-import itertools
 import json
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
+# Until U2's pyproject.toml makes `engine` a pip-installable package, put the
+# repo root on sys.path so `python scripts/compute_forecast.py` can import it.
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+
+from engine.features import project_squad
+from engine.squad import best_xi
+
 DATA_DIR = Path(__file__).resolve().parent.parent / "data"
 TEAM_ID = "1168513"
 ROLLING_WINDOW = 5
-UNAVAILABLE_STATUSES = {"i", "s", "u", "n"}  # injured, suspended, unavailable, not in squad
-
-POSITIONS = {1: "GKP", 2: "DEF", 3: "MID", 4: "FWD"}
-
-# (GKP, DEF, MID, FWD) counts for every legal starting XI shape.
-VALID_FORMATIONS = [
-    (g, d, m, f)
-    for g in (1,)
-    for d in range(3, 6)
-    for m in range(2, 6)
-    for f in range(1, 4)
-    if g + d + m + f == 11
-]
 
 
 def latest_file(subdir: str) -> Path | None:
@@ -87,25 +69,6 @@ def load_rolling_averages() -> dict[int, float]:
 def load_fixtures() -> list[dict]:
     path = latest_file("fixtures")
     return load_json(path).get("fixtures", []) if path else []
-
-
-def fdr_multiplier(difficulty: int) -> float:
-    """FDR runs 1 (easiest) to 5 (hardest). Linear, symmetric around 3 -> 1.0x.
-    Deliberately simple — this is the placeholder the plan wants replaced
-    with a real expected-goals λ model, not a tuned formula."""
-    return 1.2 - 0.1 * (difficulty - 1)
-
-
-def team_fixture_multiplier(team_id: int, target_gw: int, fixtures: list[dict]) -> float:
-    total = 0.0
-    for fx in fixtures:
-        if fx.get("event") != target_gw:
-            continue
-        if fx.get("team_h") == team_id:
-            total += fdr_multiplier(fx["team_h_difficulty"])
-        elif fx.get("team_a") == team_id:
-            total += fdr_multiplier(fx["team_a_difficulty"])
-    return total  # 0.0 for a blank gameweek, ~2x for a double gameweek
 
 
 def load_minutes_model() -> dict[str, dict]:
@@ -163,45 +126,6 @@ def apply_overrides(picks: list[dict], overrides: list[dict]) -> list[dict]:
     return [{"element": eid} for eid in element_ids]
 
 
-def availability_multiplier(el: dict) -> float:
-    if el.get("status") in UNAVAILABLE_STATUSES:
-        return 0.0
-    chance = el.get("chance_of_playing_next_round")
-    if chance is None:
-        return 1.0
-    return chance / 100.0
-
-
-def best_xi(squad: list[dict]) -> tuple[list[dict], list[dict]]:
-    """Brute-force every legal formation, return (starting XI, bench) sorted by position."""
-    by_position: dict[int, list[dict]] = {1: [], 2: [], 3: [], 4: []}
-    for p in squad:
-        by_position[p["element_type"]].append(p)
-    for pos in by_position.values():
-        pos.sort(key=lambda p: p["projected"], reverse=True)
-
-    best_total = -1.0
-    best_combo: list[dict] = []
-    for g, d, m, f in VALID_FORMATIONS:
-        counts = {1: g, 2: d, 3: m, 4: f}
-        if any(len(by_position[pos]) < n for pos, n in counts.items()):
-            continue
-        combo = [
-            p
-            for pos, n in counts.items()
-            for p in by_position[pos][:n]
-        ]
-        total = sum(p["projected"] for p in combo)
-        if total > best_total:
-            best_total = total
-            best_combo = combo
-
-    starting_ids = {p["id"] for p in best_combo}
-    bench = [p for p in squad if p["id"] not in starting_ids]
-    bench.sort(key=lambda p: p["projected"], reverse=True)
-    return best_combo, bench
-
-
 def main() -> int:
     bootstrap = load_bootstrap()
     if bootstrap is None:
@@ -226,35 +150,15 @@ def main() -> int:
         print(f"overrides: applied {len(overrides)} manual transfer(s)")
 
     target_gw = gw + 1
-    squad = []
-    for pick in picks:
-        el = elements_by_id.get(pick["element"])
-        if el is None:
-            continue
-
-        mm = minutes_model.get(str(el["id"]))
-        if mm:
-            base = (mm["expectedMinutes"] / 90) * mm["per90Points"]
-            component = "minutes-model"
-        else:
-            base = rolling.get(el["id"], 0.0)
-            component = "rolling-average"
-
-        fdr_mult = team_fixture_multiplier(el["team"], target_gw, fixtures)
-        projected = base * availability_multiplier(el) * fdr_mult
-        squad.append(
-            {
-                "id": el["id"],
-                "webName": el["web_name"],
-                "team": teams_by_id.get(el["team"], "???"),
-                "position": POSITIONS[el["element_type"]],
-                "element_type": el["element_type"],
-                "projected": round(projected, 2),
-                "component": component,
-                "expectedMinutes": mm["expectedMinutes"] if mm else None,
-                "fdrMultiplier": round(fdr_mult, 2),
-            }
-        )
+    squad = project_squad(
+        picks,
+        target_gw,
+        elements_by_id=elements_by_id,
+        teams_by_id=teams_by_id,
+        minutes_model=minutes_model,
+        rolling_averages=rolling,
+        fixtures=fixtures,
+    )
 
     starting, bench = best_xi(squad)
     captain = max(starting, key=lambda p: p["projected"]) if starting else None
