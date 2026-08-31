@@ -11,6 +11,8 @@ const POSITION_COLOR: Record<string, string> = {
 };
 const ROWS = ["GKP", "DEF", "MID", "FWD"];
 
+const fmtDelta = (n: number) => `${n >= 0 ? "+" : ""}${n.toFixed(1)}`;
+
 function Opp({ player }: { player: AlternativeCard }) {
   if (player.opponents.length === 0) return <span className="opacity-70">blank</span>;
   return (
@@ -34,6 +36,11 @@ function PitchPlayer({ player, bench = false }: { player: ForecastPlayer; bench?
         {player.isCaptain && (
           <span className="rounded bg-[var(--pitch-dark)] px-1 text-[8px] font-bold leading-tight text-white">
             C
+          </span>
+        )}
+        {player.isViceCaptain && (
+          <span className="rounded bg-ink-soft px-1 text-[8px] font-bold leading-tight text-white">
+            V
           </span>
         )}
         {player.minutesRisk && (
@@ -93,13 +100,28 @@ export default function Pitch({ forecast }: { forecast: Forecast }) {
   return (
     <div className="space-y-4 md:grid md:grid-cols-[1fr_20rem] md:gap-4 md:space-y-0">
       <div className="rounded-xl border border-line bg-card p-3 shadow-sm">
-        <div className="mb-2 flex items-baseline justify-between">
+        <div className="mb-2 flex items-start justify-between gap-3">
           <h2 className="text-sm font-bold uppercase tracking-wide text-[var(--pitch-dark)]">
             Recommended XI · GW{forecast.targetGameweek}
           </h2>
-          <span className="text-xs text-ink-soft">
-            5-GW proj <span className="font-semibold text-ink tabular-nums">{windowPoints.toFixed(0)}</span>
-          </span>
+          <div className="text-right leading-tight">
+            <div className="text-xs text-ink-soft">
+              GW{forecast.targetGameweek} proj{" "}
+              <span
+                className="text-base font-bold text-ink tabular-nums"
+                title="Starting XI projected points for the upcoming gameweek, captain doubled"
+              >
+                {forecast.nextGw.points.toFixed(0)}
+              </span>
+            </div>
+            <div className="text-[10px] text-ink-soft tabular-nums">
+              {fmtDelta(forecast.nextGw.deltaVsNoChange)} vs no change ·{" "}
+              {fmtDelta(forecast.nextGw.deltaVsBaselineXi)} vs baseline XI
+            </div>
+            <div className="text-[10px] text-ink-soft tabular-nums">
+              5-GW proj {windowPoints.toFixed(0)}
+            </div>
+          </div>
         </div>
 
         <div

@@ -2,11 +2,21 @@
   "basedOnGameweek": 1,
   "captain": {
     "id": 426,
+    "points": 6.9,
     "webName": "B.Fernandes"
+  },
+  "captainEdge": {
+    "label": "coin-flip",
+    "points": 0.33
   },
   "earlySeason": true,
   "effectiveGap": 11.2,
-  "generatedAt": "2026-08-31T12:44:43.100755+00:00",
+  "generatedAt": "2026-08-31T12:52:52.951009+00:00",
+  "nextGw": {
+    "deltaVsBaselineXi": 3.8,
+    "deltaVsNoChange": 5.6,
+    "points": 60.8
+  },
   "overridesApplied": 0,
   "rollingWindow": 5,
   "runningRecord": null,
@@ -56,6 +66,7 @@
         "elementType": 1,
         "id": 1,
         "isCaptain": false,
+        "isViceCaptain": false,
         "minutesRisk": false,
         "modelUpgrade": null,
         "opponents": [
@@ -173,6 +184,7 @@
         "elementType": 2,
         "id": 418,
         "isCaptain": false,
+        "isViceCaptain": false,
         "minutesRisk": false,
         "modelUpgrade": {
           "affordable": true,
@@ -347,6 +359,7 @@
         "elementType": 2,
         "id": 11,
         "isCaptain": false,
+        "isViceCaptain": false,
         "minutesRisk": false,
         "modelUpgrade": {
           "affordable": true,
@@ -521,6 +534,7 @@
         "elementType": 2,
         "id": 504,
         "isCaptain": false,
+        "isViceCaptain": false,
         "minutesRisk": false,
         "modelUpgrade": {
           "affordable": true,
@@ -638,6 +652,7 @@
         "elementType": 3,
         "id": 426,
         "isCaptain": true,
+        "isViceCaptain": false,
         "minutesRisk": false,
         "modelUpgrade": null,
         "opponents": [
@@ -755,6 +770,7 @@
         "elementType": 3,
         "id": 124,
         "isCaptain": false,
+        "isViceCaptain": false,
         "minutesRisk": false,
         "modelUpgrade": {
           "affordable": true,
@@ -929,6 +945,7 @@
         "elementType": 3,
         "id": 366,
         "isCaptain": false,
+        "isViceCaptain": false,
         "minutesRisk": false,
         "modelUpgrade": {
           "affordable": true,
@@ -1212,6 +1229,7 @@
         "elementType": 3,
         "id": 557,
         "isCaptain": false,
+        "isViceCaptain": false,
         "minutesRisk": false,
         "modelUpgrade": {
           "affordable": false,
@@ -1386,6 +1404,7 @@
         "elementType": 4,
         "id": 346,
         "isCaptain": false,
+        "isViceCaptain": false,
         "minutesRisk": false,
         "modelUpgrade": {
           "affordable": false,
@@ -1503,6 +1522,7 @@
         "elementType": 4,
         "id": 411,
         "isCaptain": false,
+        "isViceCaptain": true,
         "minutesRisk": false,
         "modelUpgrade": null,
         "opponents": [
@@ -1563,6 +1583,7 @@
         "elementType": 4,
         "id": 165,
         "isCaptain": false,
+        "isViceCaptain": false,
         "minutesRisk": false,
         "modelUpgrade": null,
         "opponents": [
@@ -1680,6 +1701,7 @@
         "elementType": 1,
         "id": 496,
         "isCaptain": false,
+        "isViceCaptain": false,
         "minutesRisk": false,
         "modelUpgrade": {
           "affordable": true,
@@ -1854,6 +1876,7 @@
         "elementType": 3,
         "id": 212,
         "isCaptain": false,
+        "isViceCaptain": false,
         "minutesRisk": true,
         "modelUpgrade": {
           "affordable": true,
@@ -2028,6 +2051,7 @@
         "elementType": 2,
         "id": 305,
         "isCaptain": false,
+        "isViceCaptain": false,
         "minutesRisk": false,
         "modelUpgrade": {
           "affordable": true,
@@ -2256,6 +2280,7 @@
         "elementType": 2,
         "id": 334,
         "isCaptain": false,
+        "isViceCaptain": false,
         "minutesRisk": false,
         "modelUpgrade": {
           "affordable": true,
@@ -2359,5 +2384,10 @@
     "baseline": 9,
     "meaningful": 2,
     "model": 11
+  },
+  "viceCaptain": {
+    "id": 411,
+    "points": 6.5,
+    "webName": "Haaland"
   }
 }

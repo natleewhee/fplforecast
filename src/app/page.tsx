@@ -127,7 +127,33 @@ export default function Home() {
                 <p className="text-[11px] uppercase tracking-wide text-ink-soft">
                   Captain · model · GW{forecast.targetGameweek}
                 </p>
-                <p className="text-base font-bold text-ink">{forecast.captain?.webName ?? "—"}</p>
+                <p className="text-base font-bold text-ink">
+                  {forecast.captain?.webName ?? "—"}
+                  {forecast.captain?.points != null && (
+                    <span className="ml-1.5 text-xs font-medium text-ink-soft tabular-nums">
+                      {forecast.captain.points.toFixed(1)} pts
+                    </span>
+                  )}
+                </p>
+                {forecast.viceCaptain && (
+                  <p className="mt-0.5 text-xs text-ink-soft">
+                    VC {forecast.viceCaptain.webName}
+                    {forecast.viceCaptain.points != null && (
+                      <span className="tabular-nums"> ({forecast.viceCaptain.points.toFixed(1)})</span>
+                    )}
+                    {forecast.captainEdge && (
+                      <span
+                        className={`ml-2 rounded-full px-2 py-0.5 text-[10px] font-semibold ${
+                          forecast.captainEdge.label === "clear edge"
+                            ? "bg-[var(--pitch-light)]/15 text-[var(--pitch-dark)]"
+                            : "bg-line text-ink-soft"
+                        }`}
+                      >
+                        {forecast.captainEdge.label} · +{forecast.captainEdge.points.toFixed(1)}
+                      </span>
+                    )}
+                  </p>
+                )}
               </div>
               {forecast.overridesApplied > 0 && (
                 <p className="rounded-lg bg-amber-50 px-2.5 py-1.5 text-xs font-medium text-amber-800">

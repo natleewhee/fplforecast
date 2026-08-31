@@ -360,8 +360,6 @@ def main(now: datetime | None = None) -> int:
     # always computed; a backtest artifact is never required).
     players: list[dict] = []
     squad_window_total = 0.0
-    captain = None
-    captain_score = None
     for pid in squad_ids:
         if pid not in feature_frame.index:
             continue
@@ -399,16 +397,30 @@ def main(now: datetime | None = None) -> int:
 
         if model_window.get(pid) is not None:
             squad_window_total += model_window[pid]
-        single_gw = detail.get("points")
-        if not detail.get("provisional") and single_gw is not None and (
-            captain_score is None or single_gw > captain_score
-        ):
-            captain, captain_score = card, single_gw
 
+    for card in players:
+        card["isCaptain"] = False
+        card["isViceCaptain"] = False
+
+    # Captain / vice on the single upcoming gameweek. A provisional player (no
+    # PL history, projection is a prior) is never handed the armband.
+    ranked = sorted(
+        (c for c in players if not c["provisional"] and c["projectedPoints"] is not None),
+        key=lambda c: c["projectedPoints"],
+        reverse=True,
+    )
+    captain = ranked[0] if ranked else None
+    vice = ranked[1] if len(ranked) > 1 else None
     if captain is not None:
         captain["isCaptain"] = True
-    for card in players:
-        card.setdefault("isCaptain", False)
+    if vice is not None:
+        vice["isViceCaptain"] = True
+
+    captain_edge = None
+    if captain is not None and vice is not None:
+        delta = captain["projectedPoints"] - vice["projectedPoints"]
+        label = "coin-flip" if delta < 0.5 else "slight edge" if delta < 1.5 else "clear edge"
+        captain_edge = {"points": round(delta, 2), "label": label}
 
     # Recommended XI vs bench for the upcoming gameweek (KTD8-style: a direct
     # projection of the held squad, best legal formation by projected points).
@@ -425,6 +437,46 @@ def main(now: datetime | None = None) -> int:
     bench_ids = [p["id"] for p in bench]
     for c in players:
         c["role"] = "start" if c["id"] in starting_ids else "bench"
+
+    # Headline: what this XI is projected to score next gameweek, captain
+    # doubled -- and how that compares to leaving last week's XI untouched and
+    # to the lineup the composite baseline would pick from the same fifteen.
+    card_by_id = {c["id"]: c for c in players}
+
+    def _xi_points(ids, captain_id) -> float:
+        total = sum((card_by_id[i]["projectedPoints"] or 0.0) for i in ids if i in card_by_id)
+        cap = card_by_id.get(captain_id)
+        if cap and cap["projectedPoints"]:
+            total += cap["projectedPoints"]  # the captain's points count twice
+        return total
+
+    model_xi_points = _xi_points(starting_ids, captain["id"] if captain else None)
+
+    prev_start_ids = [p["element"] for p in picks if p.get("position", 99) <= 11]
+    prev_captain_id = next((p["element"] for p in picks if p.get("is_captain")), None)
+    no_change_points = _xi_points(prev_start_ids or starting_ids, prev_captain_id)
+
+    bl_starting, _bl_bench = best_xi(
+        [
+            {
+                "id": c["id"],
+                "element_type": c["elementType"] or 4,
+                "projected": baseline_window.get(c["id"]) or -1.0,
+            }
+            for c in players
+        ]
+    )
+    bl_start_ids = [p["id"] for p in bl_starting]
+    bl_captain_id = max(
+        bl_start_ids, key=lambda i: baseline_window.get(i) or -1e9, default=None
+    )
+    baseline_xi_points = _xi_points(bl_start_ids, bl_captain_id)
+
+    next_gw = {
+        "points": round(model_xi_points, 1),
+        "deltaVsNoChange": round(model_xi_points - no_change_points, 1),
+        "deltaVsBaselineXi": round(model_xi_points - baseline_xi_points, 1),
+    }
 
     def _agree(card: dict) -> bool:
         mu, bu = card["modelUpgrade"], card["baselineUpgrade"]
@@ -458,7 +510,26 @@ def main(now: datetime | None = None) -> int:
         "upgradeCount": upgrade_count,
         "effectiveGap": round(gap_bar, 1),
         "earlySeason": gap_bar > MEANINGFUL_UPGRADE_GAP + 1e-6,
-        "captain": {"webName": captain["webName"], "id": captain["id"]} if captain else None,
+        "nextGw": next_gw,
+        "captain": (
+            {
+                "webName": captain["webName"],
+                "id": captain["id"],
+                "points": round(captain["projectedPoints"], 1),
+            }
+            if captain
+            else None
+        ),
+        "viceCaptain": (
+            {
+                "webName": vice["webName"],
+                "id": vice["id"],
+                "points": round(vice["projectedPoints"], 1),
+            }
+            if vice
+            else None
+        ),
+        "captainEdge": captain_edge,
         "runningRecord": load_running_record(),
     }
 

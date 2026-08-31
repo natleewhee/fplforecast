@@ -102,6 +102,7 @@ export type Upgrade = {
 export type ForecastPlayer = AlternativeCard & {
   minutesRisk?: boolean;
   isCaptain: boolean;
+  isViceCaptain?: boolean;
   role?: "start" | "bench";
   sellPrice?: number; // £m (assumes bought at today's price)
   modelUpgrade: Upgrade | null;
@@ -134,7 +135,14 @@ export type Forecast = {
   upgradeCount: { model: number; baseline: number; agree: number; meaningful: number };
   effectiveGap: number; // 5-GW gain a swap must clear to be recommended this week
   earlySeason: boolean; // effectiveGap raised because the season is young
-  captain: { webName: string; id: number } | null;
+  nextGw: {
+    points: number; // recommended XI's projected total for the upcoming GW, captain doubled
+    deltaVsNoChange: number; // vs keeping last week's XI + captain
+    deltaVsBaselineXi: number; // vs the composite baseline's XI pick
+  };
+  captain: { webName: string; id: number; points?: number } | null;
+  viceCaptain: { webName: string; id: number; points?: number } | null;
+  captainEdge: { points: number; label: string } | null; // captain vs vice, single GW
   runningRecord: RunningRecord | null;
 };
 
