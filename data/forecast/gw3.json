@@ -4,7 +4,7 @@
     "id": 411,
     "webName": "Haaland"
   },
-  "generatedAt": "2026-08-30T14:49:41.632121+00:00",
+  "generatedAt": "2026-08-31T09:31:27.466224+00:00",
   "overridesApplied": 0,
   "rollingWindow": 5,
   "runningRecord": null,
@@ -24,13 +24,13 @@
           "components": {
             "appearance": 2.0,
             "assists": 0.08,
-            "bonus": 0.09,
+            "bonus": 0.08,
             "cards": -0.02,
             "cleanSheet": 1.06,
             "defensiveContribution": 0.0,
             "goals": 0.23,
             "goalsConceded": -0.66,
-            "saves": 0.52
+            "saves": 0.53
           },
           "expectedMinutes": 90.0,
           "minutesRisk": false,
@@ -72,7 +72,7 @@
         "role": "bench",
         "team": "ARS",
         "webName": "Raya",
-        "windowPoints": 15.68
+        "windowPoints": 15.69
       },
       {
         "alternatives": [
@@ -82,11 +82,11 @@
               "components": {
                 "appearance": 2.0,
                 "assists": 0.17,
-                "bonus": 1.31,
+                "bonus": 1.14,
                 "cards": -0.06,
                 "cleanSheet": 0.78,
                 "defensiveContribution": 2.0,
-                "goals": 0.58,
+                "goals": 0.53,
                 "goalsConceded": -0.81,
                 "saves": 0.0
               },
@@ -103,12 +103,12 @@
                   "wasHome": false
                 }
               ],
-              "points": 5.98,
+              "points": 5.75,
               "provisional": false,
               "rateSource": "history"
             },
             "elementType": 2,
-            "gapPoints": 8.53,
+            "gapPoints": 7.99,
             "id": 327,
             "opponents": [
               {
@@ -122,12 +122,12 @@
               }
             ],
             "position": "DEF",
-            "projectedPoints": 5.98,
+            "projectedPoints": 5.75,
             "provisional": false,
             "rateSource": "history",
             "team": "LEE",
             "webName": "Bijol",
-            "windowPoints": 30.51
+            "windowPoints": 29.35
           },
           {
             "breakdown": {
@@ -136,10 +136,10 @@
                 "appearance": 2.0,
                 "assists": 0.69,
                 "bonus": 0.47,
-                "cards": -0.05,
+                "cards": -0.06,
                 "cleanSheet": 0.95,
                 "defensiveContribution": 1.89,
-                "goals": 0.29,
+                "goals": 0.28,
                 "goalsConceded": -0.72,
                 "saves": 0.0
               },
@@ -156,12 +156,12 @@
                   "wasHome": true
                 }
               ],
-              "points": 5.52,
+              "points": 5.49,
               "provisional": false,
               "rateSource": "history"
             },
             "elementType": 2,
-            "gapPoints": 4.96,
+            "gapPoints": 5.43,
             "id": 449,
             "opponents": [
               {
@@ -175,24 +175,24 @@
               }
             ],
             "position": "DEF",
-            "projectedPoints": 5.52,
+            "projectedPoints": 5.49,
             "provisional": false,
             "rateSource": "history",
             "team": "NEW",
             "webName": "Hall",
-            "windowPoints": 26.94
+            "windowPoints": 26.79
           },
           {
             "breakdown": {
               "availabilityMultiplier": 1.0,
               "components": {
                 "appearance": 2.0,
-                "assists": 0.19,
-                "bonus": 0.71,
+                "assists": 0.2,
+                "bonus": 0.57,
                 "cards": -0.05,
                 "cleanSheet": 0.95,
-                "defensiveContribution": 1.7,
-                "goals": 0.55,
+                "defensiveContribution": 1.68,
+                "goals": 0.49,
                 "goalsConceded": -0.65,
                 "saves": 0.0
               },
@@ -209,12 +209,12 @@
                   "wasHome": true
                 }
               ],
-              "points": 5.41,
+              "points": 5.21,
               "provisional": false,
               "rateSource": "history"
             },
             "elementType": 2,
-            "gapPoints": 4.2,
+            "gapPoints": 3.81,
             "id": 130,
             "opponents": [
               {
@@ -228,12 +228,12 @@
               }
             ],
             "position": "DEF",
-            "projectedPoints": 5.41,
+            "projectedPoints": 5.21,
             "provisional": false,
             "rateSource": "history",
             "team": "BHA",
             "webName": "Wieffer",
-            "windowPoints": 26.18
+            "windowPoints": 25.17
           }
         ],
         "baselineUpgrade": {
@@ -243,11 +243,11 @@
               "components": {
                 "appearance": 2.0,
                 "assists": 0.17,
-                "bonus": 1.31,
+                "bonus": 1.14,
                 "cards": -0.06,
                 "cleanSheet": 0.78,
                 "defensiveContribution": 2.0,
-                "goals": 0.58,
+                "goals": 0.53,
                 "goalsConceded": -0.81,
                 "saves": 0.0
               },
@@ -264,7 +264,7 @@
                   "wasHome": false
                 }
               ],
-              "points": 5.98,
+              "points": 5.75,
               "provisional": false,
               "rateSource": "history"
             },
@@ -282,12 +282,12 @@
               }
             ],
             "position": "DEF",
-            "projectedPoints": 5.98,
+            "projectedPoints": 5.75,
             "provisional": false,
             "rateSource": "history",
             "team": "LEE",
             "webName": "Bijol",
-            "windowPoints": 30.51
+            "windowPoints": 29.35
           },
           "gapPoints": 4.87,
           "meaningful": false
@@ -296,12 +296,12 @@
           "availabilityMultiplier": 1.0,
           "components": {
             "appearance": 2.0,
-            "assists": 0.66,
-            "bonus": 0.06,
-            "cards": -0.05,
+            "assists": 0.55,
+            "bonus": 0.05,
+            "cards": -0.06,
             "cleanSheet": 0.75,
-            "defensiveContribution": 1.26,
-            "goals": 0.4,
+            "defensiveContribution": 1.27,
+            "goals": 0.39,
             "goalsConceded": -0.81,
             "saves": 0.0
           },
@@ -318,7 +318,7 @@
               "wasHome": false
             }
           ],
-          "points": 4.26,
+          "points": 4.14,
           "provisional": false,
           "rateSource": "history"
         },
@@ -333,11 +333,11 @@
               "components": {
                 "appearance": 2.0,
                 "assists": 0.17,
-                "bonus": 1.31,
+                "bonus": 1.14,
                 "cards": -0.06,
                 "cleanSheet": 0.78,
                 "defensiveContribution": 2.0,
-                "goals": 0.58,
+                "goals": 0.53,
                 "goalsConceded": -0.81,
                 "saves": 0.0
               },
@@ -354,7 +354,7 @@
                   "wasHome": false
                 }
               ],
-              "points": 5.98,
+              "points": 5.75,
               "provisional": false,
               "rateSource": "history"
             },
@@ -372,14 +372,14 @@
               }
             ],
             "position": "DEF",
-            "projectedPoints": 5.98,
+            "projectedPoints": 5.75,
             "provisional": false,
             "rateSource": "history",
             "team": "LEE",
             "webName": "Bijol",
-            "windowPoints": 30.51
+            "windowPoints": 29.35
           },
-          "gapPoints": 8.53,
+          "gapPoints": 7.99,
           "meaningful": true
         },
         "opponents": [
@@ -394,13 +394,13 @@
           }
         ],
         "position": "DEF",
-        "projectedPoints": 4.26,
+        "projectedPoints": 4.14,
         "provisional": false,
         "rateSource": "history",
         "role": "start",
         "team": "MUN",
         "webName": "Maguire",
-        "windowPoints": 21.98
+        "windowPoints": 21.36
       },
       {
         "alternatives": [
@@ -409,12 +409,12 @@
               "availabilityMultiplier": 1.0,
               "components": {
                 "appearance": 2.0,
-                "assists": 0.47,
-                "bonus": 1.18,
-                "cards": -0.05,
+                "assists": 0.46,
+                "bonus": 1.17,
+                "cards": -0.06,
                 "cleanSheet": 1.06,
                 "defensiveContribution": 1.3,
-                "goals": 0.97,
+                "goals": 0.96,
                 "goalsConceded": -0.6,
                 "saves": 0.0
               },
@@ -431,12 +431,12 @@
                   "wasHome": true
                 }
               ],
-              "points": 6.32,
+              "points": 6.3,
               "provisional": false,
               "rateSource": "history"
             },
             "elementType": 2,
-            "gapPoints": 9.16,
+            "gapPoints": 9.18,
             "id": 10,
             "opponents": [
               {
@@ -450,24 +450,24 @@
               }
             ],
             "position": "DEF",
-            "projectedPoints": 6.32,
+            "projectedPoints": 6.3,
             "provisional": false,
             "rateSource": "history",
             "team": "ARS",
             "webName": "White",
-            "windowPoints": 30.21
+            "windowPoints": 30.08
           },
           {
             "breakdown": {
               "availabilityMultiplier": 1.0,
               "components": {
                 "appearance": 2.0,
-                "assists": 0.23,
-                "bonus": 0.56,
-                "cards": -0.05,
+                "assists": 0.22,
+                "bonus": 0.55,
+                "cards": -0.06,
                 "cleanSheet": 1.06,
                 "defensiveContribution": 1.37,
-                "goals": 0.89,
+                "goals": 0.87,
                 "goalsConceded": -0.64,
                 "saves": 0.0
               },
@@ -484,12 +484,12 @@
                   "wasHome": true
                 }
               ],
-              "points": 5.4,
+              "points": 5.38,
               "provisional": false,
               "rateSource": "history"
             },
             "elementType": 2,
-            "gapPoints": 5.07,
+            "gapPoints": 5.08,
             "id": 391,
             "opponents": [
               {
@@ -503,12 +503,12 @@
               }
             ],
             "position": "DEF",
-            "projectedPoints": 5.4,
+            "projectedPoints": 5.38,
             "provisional": false,
             "rateSource": "history",
             "team": "MCI",
             "webName": "Gvardiol",
-            "windowPoints": 26.12
+            "windowPoints": 25.98
           },
           {
             "breakdown": {
@@ -516,11 +516,11 @@
               "components": {
                 "appearance": 2.0,
                 "assists": 0.47,
-                "bonus": 0.06,
-                "cards": -0.05,
+                "bonus": 0.05,
+                "cards": -0.06,
                 "cleanSheet": 0.98,
                 "defensiveContribution": 1.92,
-                "goals": 0.39,
+                "goals": 0.38,
                 "goalsConceded": -0.67,
                 "saves": 0.0
               },
@@ -537,12 +537,12 @@
                   "wasHome": true
                 }
               ],
-              "points": 5.1,
+              "points": 5.07,
               "provisional": false,
               "rateSource": "history"
             },
             "elementType": 2,
-            "gapPoints": 3.04,
+            "gapPoints": 3.05,
             "id": 472,
             "opponents": [
               {
@@ -556,12 +556,12 @@
               }
             ],
             "position": "DEF",
-            "projectedPoints": 5.1,
+            "projectedPoints": 5.07,
             "provisional": false,
             "rateSource": "history",
             "team": "NFO",
             "webName": "Murillo",
-            "windowPoints": 24.09
+            "windowPoints": 23.95
           }
         ],
         "baselineUpgrade": {
@@ -570,12 +570,12 @@
               "availabilityMultiplier": 1.0,
               "components": {
                 "appearance": 2.0,
-                "assists": 0.47,
-                "bonus": 1.18,
-                "cards": -0.05,
+                "assists": 0.46,
+                "bonus": 1.17,
+                "cards": -0.06,
                 "cleanSheet": 1.06,
                 "defensiveContribution": 1.3,
-                "goals": 0.97,
+                "goals": 0.96,
                 "goalsConceded": -0.6,
                 "saves": 0.0
               },
@@ -592,7 +592,7 @@
                   "wasHome": true
                 }
               ],
-              "points": 6.32,
+              "points": 6.3,
               "provisional": false,
               "rateSource": "history"
             },
@@ -610,12 +610,12 @@
               }
             ],
             "position": "DEF",
-            "projectedPoints": 6.32,
+            "projectedPoints": 6.3,
             "provisional": false,
             "rateSource": "history",
             "team": "ARS",
             "webName": "White",
-            "windowPoints": 30.21
+            "windowPoints": 30.08
           },
           "gapPoints": 5.27,
           "meaningful": true
@@ -625,11 +625,11 @@
           "components": {
             "appearance": 2.0,
             "assists": 0.17,
-            "bonus": 0.06,
+            "bonus": 0.05,
             "cards": -0.06,
             "cleanSheet": 1.06,
-            "defensiveContribution": 1.47,
-            "goals": 0.41,
+            "defensiveContribution": 1.46,
+            "goals": 0.39,
             "goalsConceded": -0.66,
             "saves": 0.0
           },
@@ -646,7 +646,7 @@
               "wasHome": true
             }
           ],
-          "points": 4.44,
+          "points": 4.41,
           "provisional": false,
           "rateSource": "history"
         },
@@ -660,12 +660,12 @@
               "availabilityMultiplier": 1.0,
               "components": {
                 "appearance": 2.0,
-                "assists": 0.47,
-                "bonus": 1.18,
-                "cards": -0.05,
+                "assists": 0.46,
+                "bonus": 1.17,
+                "cards": -0.06,
                 "cleanSheet": 1.06,
                 "defensiveContribution": 1.3,
-                "goals": 0.97,
+                "goals": 0.96,
                 "goalsConceded": -0.6,
                 "saves": 0.0
               },
@@ -682,7 +682,7 @@
                   "wasHome": true
                 }
               ],
-              "points": 6.32,
+              "points": 6.3,
               "provisional": false,
               "rateSource": "history"
             },
@@ -700,14 +700,14 @@
               }
             ],
             "position": "DEF",
-            "projectedPoints": 6.32,
+            "projectedPoints": 6.3,
             "provisional": false,
             "rateSource": "history",
             "team": "ARS",
             "webName": "White",
-            "windowPoints": 30.21
+            "windowPoints": 30.08
           },
-          "gapPoints": 9.16,
+          "gapPoints": 9.18,
           "meaningful": true
         },
         "opponents": [
@@ -722,13 +722,13 @@
           }
         ],
         "position": "DEF",
-        "projectedPoints": 4.44,
+        "projectedPoints": 4.41,
         "provisional": false,
         "rateSource": "history",
         "role": "start",
         "team": "ARS",
         "webName": "Mosquera",
-        "windowPoints": 21.05
+        "windowPoints": 20.9
       },
       {
         "alternatives": [
@@ -738,11 +738,11 @@
               "components": {
                 "appearance": 2.0,
                 "assists": 0.17,
-                "bonus": 1.31,
+                "bonus": 1.14,
                 "cards": -0.06,
                 "cleanSheet": 0.78,
                 "defensiveContribution": 2.0,
-                "goals": 0.58,
+                "goals": 0.53,
                 "goalsConceded": -0.81,
                 "saves": 0.0
               },
@@ -759,12 +759,12 @@
                   "wasHome": false
                 }
               ],
-              "points": 5.98,
+              "points": 5.75,
               "provisional": false,
               "rateSource": "history"
             },
             "elementType": 2,
-            "gapPoints": 12.8,
+            "gapPoints": 11.64,
             "id": 327,
             "opponents": [
               {
@@ -778,12 +778,12 @@
               }
             ],
             "position": "DEF",
-            "projectedPoints": 5.98,
+            "projectedPoints": 5.75,
             "provisional": false,
             "rateSource": "history",
             "team": "LEE",
             "webName": "Bijol",
-            "windowPoints": 30.51
+            "windowPoints": 29.35
           },
           {
             "breakdown": {
@@ -792,10 +792,10 @@
                 "appearance": 2.0,
                 "assists": 0.69,
                 "bonus": 0.47,
-                "cards": -0.05,
+                "cards": -0.06,
                 "cleanSheet": 0.95,
                 "defensiveContribution": 1.89,
-                "goals": 0.29,
+                "goals": 0.28,
                 "goalsConceded": -0.72,
                 "saves": 0.0
               },
@@ -812,12 +812,12 @@
                   "wasHome": true
                 }
               ],
-              "points": 5.52,
+              "points": 5.49,
               "provisional": false,
               "rateSource": "history"
             },
             "elementType": 2,
-            "gapPoints": 9.23,
+            "gapPoints": 9.08,
             "id": 449,
             "opponents": [
               {
@@ -831,24 +831,24 @@
               }
             ],
             "position": "DEF",
-            "projectedPoints": 5.52,
+            "projectedPoints": 5.49,
             "provisional": false,
             "rateSource": "history",
             "team": "NEW",
             "webName": "Hall",
-            "windowPoints": 26.94
+            "windowPoints": 26.79
           },
           {
             "breakdown": {
               "availabilityMultiplier": 1.0,
               "components": {
                 "appearance": 2.0,
-                "assists": 0.19,
-                "bonus": 0.71,
+                "assists": 0.2,
+                "bonus": 0.57,
                 "cards": -0.05,
                 "cleanSheet": 0.95,
-                "defensiveContribution": 1.7,
-                "goals": 0.55,
+                "defensiveContribution": 1.68,
+                "goals": 0.49,
                 "goalsConceded": -0.65,
                 "saves": 0.0
               },
@@ -865,12 +865,12 @@
                   "wasHome": true
                 }
               ],
-              "points": 5.41,
+              "points": 5.21,
               "provisional": false,
               "rateSource": "history"
             },
             "elementType": 2,
-            "gapPoints": 8.47,
+            "gapPoints": 7.46,
             "id": 130,
             "opponents": [
               {
@@ -884,12 +884,12 @@
               }
             ],
             "position": "DEF",
-            "projectedPoints": 5.41,
+            "projectedPoints": 5.21,
             "provisional": false,
             "rateSource": "history",
             "team": "BHA",
             "webName": "Wieffer",
-            "windowPoints": 26.18
+            "windowPoints": 25.17
           }
         ],
         "baselineUpgrade": {
@@ -899,11 +899,11 @@
               "components": {
                 "appearance": 2.0,
                 "assists": 0.17,
-                "bonus": 1.31,
+                "bonus": 1.14,
                 "cards": -0.06,
                 "cleanSheet": 0.78,
                 "defensiveContribution": 2.0,
-                "goals": 0.58,
+                "goals": 0.53,
                 "goalsConceded": -0.81,
                 "saves": 0.0
               },
@@ -920,7 +920,7 @@
                   "wasHome": false
                 }
               ],
-              "points": 5.98,
+              "points": 5.75,
               "provisional": false,
               "rateSource": "history"
             },
@@ -938,12 +938,12 @@
               }
             ],
             "position": "DEF",
-            "projectedPoints": 5.98,
+            "projectedPoints": 5.75,
             "provisional": false,
             "rateSource": "history",
             "team": "LEE",
             "webName": "Bijol",
-            "windowPoints": 30.51
+            "windowPoints": 29.35
           },
           "gapPoints": 3.0,
           "meaningful": false
@@ -953,11 +953,11 @@
           "components": {
             "appearance": 2.0,
             "assists": 0.1,
-            "bonus": 0.04,
+            "bonus": 0.03,
             "cards": -0.03,
             "cleanSheet": 0.95,
-            "defensiveContribution": 0.64,
-            "goals": 0.4,
+            "defensiveContribution": 0.69,
+            "goals": 0.36,
             "goalsConceded": -0.41,
             "saves": 0.0
           },
@@ -989,11 +989,11 @@
               "components": {
                 "appearance": 2.0,
                 "assists": 0.17,
-                "bonus": 1.31,
+                "bonus": 1.14,
                 "cards": -0.06,
                 "cleanSheet": 0.78,
                 "defensiveContribution": 2.0,
-                "goals": 0.58,
+                "goals": 0.53,
                 "goalsConceded": -0.81,
                 "saves": 0.0
               },
@@ -1010,7 +1010,7 @@
                   "wasHome": false
                 }
               ],
-              "points": 5.98,
+              "points": 5.75,
               "provisional": false,
               "rateSource": "history"
             },
@@ -1028,14 +1028,14 @@
               }
             ],
             "position": "DEF",
-            "projectedPoints": 5.98,
+            "projectedPoints": 5.75,
             "provisional": false,
             "rateSource": "history",
             "team": "LEE",
             "webName": "Bijol",
-            "windowPoints": 30.51
+            "windowPoints": 29.35
           },
-          "gapPoints": 12.8,
+          "gapPoints": 11.64,
           "meaningful": true
         },
         "opponents": [
@@ -1065,12 +1065,12 @@
           "availabilityMultiplier": 1.0,
           "components": {
             "appearance": 2.0,
-            "assists": 0.58,
-            "bonus": 0.1,
-            "cards": -0.09,
+            "assists": 0.59,
+            "bonus": 0.5,
+            "cards": -0.08,
             "cleanSheet": 0.19,
-            "defensiveContribution": 1.18,
-            "goals": 0.65,
+            "defensiveContribution": 1.19,
+            "goals": 1.64,
             "goalsConceded": 0.0,
             "saves": 0.0
           },
@@ -1087,7 +1087,7 @@
               "wasHome": false
             }
           ],
-          "points": 4.61,
+          "points": 6.03,
           "provisional": false,
           "rateSource": "history"
         },
@@ -1108,13 +1108,13 @@
           }
         ],
         "position": "MID",
-        "projectedPoints": 4.61,
+        "projectedPoints": 6.03,
         "provisional": false,
         "rateSource": "history",
         "role": "start",
         "team": "MUN",
         "webName": "B.Fernandes",
-        "windowPoints": 23.24
+        "windowPoints": 30.35
       },
       {
         "alternatives": [
@@ -1124,11 +1124,11 @@
               "components": {
                 "appearance": 2.0,
                 "assists": 0.41,
-                "bonus": 1.34,
-                "cards": -0.09,
+                "bonus": 1.25,
+                "cards": -0.08,
                 "cleanSheet": 0.23,
-                "defensiveContribution": 1.47,
-                "goals": 2.51,
+                "defensiveContribution": 1.5,
+                "goals": 2.21,
                 "goalsConceded": 0.0,
                 "saves": 0.0
               },
@@ -1145,12 +1145,12 @@
                   "wasHome": true
                 }
               ],
-              "points": 7.87,
+              "points": 7.52,
               "provisional": false,
               "rateSource": "history"
             },
             "elementType": 3,
-            "gapPoints": 17.06,
+            "gapPoints": 13.23,
             "id": 86,
             "opponents": [
               {
@@ -1164,24 +1164,24 @@
               }
             ],
             "position": "MID",
-            "projectedPoints": 7.87,
+            "projectedPoints": 7.52,
             "provisional": false,
             "rateSource": "history",
             "team": "BRE",
             "webName": "Lewis-Potter",
-            "windowPoints": 37.71
+            "windowPoints": 36.13
           },
           {
             "breakdown": {
               "availabilityMultiplier": 1.0,
               "components": {
                 "appearance": 2.0,
-                "assists": 0.31,
-                "bonus": 1.35,
-                "cards": -0.09,
+                "assists": 0.38,
+                "bonus": 1.53,
+                "cards": -0.08,
                 "cleanSheet": 0.18,
-                "defensiveContribution": 1.79,
-                "goals": 0.54,
+                "defensiveContribution": 1.71,
+                "goals": 0.59,
                 "goalsConceded": 0.0,
                 "saves": 0.0
               },
@@ -1198,12 +1198,12 @@
                   "wasHome": false
                 }
               ],
-              "points": 6.08,
+              "points": 6.3,
               "provisional": false,
               "rateSource": "history"
             },
             "elementType": 3,
-            "gapPoints": 9.76,
+            "gapPoints": 8.64,
             "id": 544,
             "opponents": [
               {
@@ -1217,12 +1217,12 @@
               }
             ],
             "position": "MID",
-            "projectedPoints": 6.08,
+            "projectedPoints": 6.3,
             "provisional": false,
             "rateSource": "history",
             "team": "SUN",
             "webName": "Xhaka",
-            "windowPoints": 30.41
+            "windowPoints": 31.54
           },
           {
             "breakdown": {
@@ -1231,10 +1231,10 @@
                 "appearance": 2.0,
                 "assists": 0.52,
                 "bonus": 0.1,
-                "cards": -0.09,
+                "cards": -0.08,
                 "cleanSheet": 0.25,
-                "defensiveContribution": 1.58,
-                "goals": 0.64,
+                "defensiveContribution": 1.59,
+                "goals": 0.71,
                 "goalsConceded": 0.0,
                 "saves": 0.0
               },
@@ -1251,12 +1251,12 @@
                   "wasHome": true
                 }
               ],
-              "points": 5.01,
+              "points": 5.08,
               "provisional": false,
               "rateSource": "history"
             },
             "elementType": 3,
-            "gapPoints": 3.94,
+            "gapPoints": 2.04,
             "id": 486,
             "opponents": [
               {
@@ -1270,12 +1270,12 @@
               }
             ],
             "position": "MID",
-            "projectedPoints": 5.01,
+            "projectedPoints": 5.08,
             "provisional": false,
             "rateSource": "history",
             "team": "NFO",
             "webName": "McAtee",
-            "windowPoints": 24.59
+            "windowPoints": 24.94
           }
         ],
         "baselineUpgrade": {
@@ -1285,11 +1285,11 @@
               "components": {
                 "appearance": 2.0,
                 "assists": 0.41,
-                "bonus": 1.34,
-                "cards": -0.09,
+                "bonus": 1.25,
+                "cards": -0.08,
                 "cleanSheet": 0.23,
-                "defensiveContribution": 1.47,
-                "goals": 2.51,
+                "defensiveContribution": 1.5,
+                "goals": 2.21,
                 "goalsConceded": 0.0,
                 "saves": 0.0
               },
@@ -1306,7 +1306,7 @@
                   "wasHome": true
                 }
               ],
-              "points": 7.87,
+              "points": 7.52,
               "provisional": false,
               "rateSource": "history"
             },
@@ -1324,12 +1324,12 @@
               }
             ],
             "position": "MID",
-            "projectedPoints": 7.87,
+            "projectedPoints": 7.52,
             "provisional": false,
             "rateSource": "history",
             "team": "BRE",
             "webName": "Lewis-Potter",
-            "windowPoints": 37.71
+            "windowPoints": 36.13
           },
           "gapPoints": 5.2,
           "meaningful": true
@@ -1338,12 +1338,12 @@
           "availabilityMultiplier": 1.0,
           "components": {
             "appearance": 2.0,
-            "assists": 0.66,
-            "bonus": 0.1,
+            "assists": 0.62,
+            "bonus": 0.51,
             "cards": -0.5,
             "cleanSheet": 0.24,
-            "defensiveContribution": 1.25,
-            "goals": 0.43,
+            "defensiveContribution": 1.27,
+            "goals": 0.51,
             "goalsConceded": 0.0,
             "saves": 0.0
           },
@@ -1360,7 +1360,7 @@
               "wasHome": true
             }
           ],
-          "points": 4.19,
+          "points": 4.64,
           "provisional": false,
           "rateSource": "history"
         },
@@ -1375,11 +1375,11 @@
               "components": {
                 "appearance": 2.0,
                 "assists": 0.41,
-                "bonus": 1.34,
-                "cards": -0.09,
+                "bonus": 1.25,
+                "cards": -0.08,
                 "cleanSheet": 0.23,
-                "defensiveContribution": 1.47,
-                "goals": 2.51,
+                "defensiveContribution": 1.5,
+                "goals": 2.21,
                 "goalsConceded": 0.0,
                 "saves": 0.0
               },
@@ -1396,7 +1396,7 @@
                   "wasHome": true
                 }
               ],
-              "points": 7.87,
+              "points": 7.52,
               "provisional": false,
               "rateSource": "history"
             },
@@ -1414,14 +1414,14 @@
               }
             ],
             "position": "MID",
-            "projectedPoints": 7.87,
+            "projectedPoints": 7.52,
             "provisional": false,
             "rateSource": "history",
             "team": "BRE",
             "webName": "Lewis-Potter",
-            "windowPoints": 37.71
+            "windowPoints": 36.13
           },
-          "gapPoints": 17.06,
+          "gapPoints": 13.23,
           "meaningful": true
         },
         "opponents": [
@@ -1436,13 +1436,13 @@
           }
         ],
         "position": "MID",
-        "projectedPoints": 4.19,
+        "projectedPoints": 4.64,
         "provisional": false,
         "rateSource": "history",
         "role": "start",
         "team": "BHA",
         "webName": "Gro\u00df",
-        "windowPoints": 20.65
+        "windowPoints": 22.9
       },
       {
         "alternatives": [
@@ -1451,12 +1451,12 @@
               "availabilityMultiplier": 1.0,
               "components": {
                 "appearance": 2.0,
-                "assists": 0.29,
-                "bonus": 0.76,
-                "cards": -0.09,
+                "assists": 0.52,
+                "bonus": 0.62,
+                "cards": -0.08,
                 "cleanSheet": 0.16,
-                "defensiveContribution": 1.3,
-                "goals": 2.41,
+                "defensiveContribution": 1.26,
+                "goals": 2.11,
                 "goalsConceded": 0.0,
                 "saves": 0.0
               },
@@ -1473,12 +1473,12 @@
                   "wasHome": false
                 }
               ],
-              "points": 6.83,
+              "points": 6.59,
               "provisional": false,
               "rateSource": "history"
             },
             "elementType": 3,
-            "gapPoints": 11.45,
+            "gapPoints": 9.88,
             "id": 40,
             "opponents": [
               {
@@ -1492,24 +1492,24 @@
               }
             ],
             "position": "MID",
-            "projectedPoints": 6.83,
+            "projectedPoints": 6.59,
             "provisional": false,
             "rateSource": "history",
             "team": "CHE",
             "webName": "Rogers",
-            "windowPoints": 36.41
+            "windowPoints": 35.18
           },
           {
             "breakdown": {
               "availabilityMultiplier": 1.0,
               "components": {
                 "appearance": 1.0,
-                "assists": 2.07,
+                "assists": 2.06,
                 "bonus": 1.36,
-                "cards": -0.27,
+                "cards": -0.26,
                 "cleanSheet": 0.0,
-                "defensiveContribution": 0.76,
-                "goals": 0.73,
+                "defensiveContribution": 0.77,
+                "goals": 0.79,
                 "goalsConceded": 0.0,
                 "saves": 0.0
               },
@@ -1526,12 +1526,12 @@
                   "wasHome": true
                 }
               ],
-              "points": 5.65,
+              "points": 5.72,
               "provisional": false,
               "rateSource": "history"
             },
             "elementType": 3,
-            "gapPoints": 2.54,
+            "gapPoints": 2.56,
             "id": 399,
             "opponents": [
               {
@@ -1545,12 +1545,12 @@
               }
             ],
             "position": "MID",
-            "projectedPoints": 5.65,
+            "projectedPoints": 5.72,
             "provisional": false,
             "rateSource": "history",
             "team": "MCI",
             "webName": "Cherki",
-            "windowPoints": 27.5
+            "windowPoints": 27.86
           },
           {
             "breakdown": {
@@ -1559,10 +1559,10 @@
                 "appearance": 2.0,
                 "assists": 0.44,
                 "bonus": 0.1,
-                "cards": -0.09,
+                "cards": -0.08,
                 "cleanSheet": 0.26,
-                "defensiveContribution": 1.35,
-                "goals": 0.71,
+                "defensiveContribution": 1.36,
+                "goals": 0.78,
                 "goalsConceded": 0.0,
                 "saves": 0.0
               },
@@ -1579,12 +1579,12 @@
                   "wasHome": true
                 }
               ],
-              "points": 4.77,
+              "points": 4.85,
               "provisional": false,
               "rateSource": "history"
             },
             "elementType": 3,
-            "gapPoints": -1.63,
+            "gapPoints": -1.59,
             "id": 13,
             "opponents": [
               {
@@ -1598,12 +1598,12 @@
               }
             ],
             "position": "MID",
-            "projectedPoints": 4.77,
+            "projectedPoints": 4.85,
             "provisional": false,
             "rateSource": "history",
             "team": "ARS",
             "webName": "Rice",
-            "windowPoints": 23.33
+            "windowPoints": 23.71
           }
         ],
         "baselineUpgrade": {
@@ -1612,12 +1612,12 @@
               "availabilityMultiplier": 1.0,
               "components": {
                 "appearance": 2.0,
-                "assists": 0.29,
-                "bonus": 0.76,
-                "cards": -0.09,
+                "assists": 0.52,
+                "bonus": 0.62,
+                "cards": -0.08,
                 "cleanSheet": 0.16,
-                "defensiveContribution": 1.3,
-                "goals": 2.41,
+                "defensiveContribution": 1.26,
+                "goals": 2.11,
                 "goalsConceded": 0.0,
                 "saves": 0.0
               },
@@ -1634,7 +1634,7 @@
                   "wasHome": false
                 }
               ],
-              "points": 6.83,
+              "points": 6.59,
               "provisional": false,
               "rateSource": "history"
             },
@@ -1652,12 +1652,12 @@
               }
             ],
             "position": "MID",
-            "projectedPoints": 6.83,
+            "projectedPoints": 6.59,
             "provisional": false,
             "rateSource": "history",
             "team": "CHE",
             "webName": "Rogers",
-            "windowPoints": 36.41
+            "windowPoints": 35.18
           },
           "gapPoints": 6.47,
           "meaningful": true
@@ -1670,8 +1670,8 @@
             "bonus": 0.09,
             "cards": -0.22,
             "cleanSheet": 0.22,
-            "defensiveContribution": 1.24,
-            "goals": 1.3,
+            "defensiveContribution": 1.25,
+            "goals": 1.37,
             "goalsConceded": 0.0,
             "saves": 0.0
           },
@@ -1688,7 +1688,7 @@
               "wasHome": false
             }
           ],
-          "points": 4.96,
+          "points": 5.03,
           "provisional": false,
           "rateSource": "history"
         },
@@ -1702,12 +1702,12 @@
               "availabilityMultiplier": 1.0,
               "components": {
                 "appearance": 2.0,
-                "assists": 0.29,
-                "bonus": 0.76,
-                "cards": -0.09,
+                "assists": 0.52,
+                "bonus": 0.62,
+                "cards": -0.08,
                 "cleanSheet": 0.16,
-                "defensiveContribution": 1.3,
-                "goals": 2.41,
+                "defensiveContribution": 1.26,
+                "goals": 2.11,
                 "goalsConceded": 0.0,
                 "saves": 0.0
               },
@@ -1724,7 +1724,7 @@
                   "wasHome": false
                 }
               ],
-              "points": 6.83,
+              "points": 6.59,
               "provisional": false,
               "rateSource": "history"
             },
@@ -1742,14 +1742,14 @@
               }
             ],
             "position": "MID",
-            "projectedPoints": 6.83,
+            "projectedPoints": 6.59,
             "provisional": false,
             "rateSource": "history",
             "team": "CHE",
             "webName": "Rogers",
-            "windowPoints": 36.41
+            "windowPoints": 35.18
           },
-          "gapPoints": 11.45,
+          "gapPoints": 9.88,
           "meaningful": true
         },
         "opponents": [
@@ -1764,13 +1764,13 @@
           }
         ],
         "position": "MID",
-        "projectedPoints": 4.96,
+        "projectedPoints": 5.03,
         "provisional": false,
         "rateSource": "history",
         "role": "start",
         "team": "LIV",
         "webName": "Wirtz",
-        "windowPoints": 24.96
+        "windowPoints": 25.3
       },
       {
         "alternatives": [
@@ -1779,12 +1779,12 @@
               "availabilityMultiplier": 1.0,
               "components": {
                 "appearance": 2.0,
-                "assists": 0.48,
+                "assists": 0.47,
                 "bonus": 1.47,
                 "cards": -0.08,
                 "cleanSheet": 0.26,
-                "defensiveContribution": 1.37,
-                "goals": 1.18,
+                "defensiveContribution": 1.38,
+                "goals": 1.25,
                 "goalsConceded": 0.0,
                 "saves": 0.0
               },
@@ -1801,12 +1801,12 @@
                   "wasHome": true
                 }
               ],
-              "points": 6.68,
+              "points": 6.76,
               "provisional": false,
               "rateSource": "history"
             },
             "elementType": 3,
-            "gapPoints": 19.92,
+            "gapPoints": 20.31,
             "id": 15,
             "opponents": [
               {
@@ -1820,24 +1820,24 @@
               }
             ],
             "position": "MID",
-            "projectedPoints": 6.68,
+            "projectedPoints": 6.76,
             "provisional": false,
             "rateSource": "history",
             "team": "ARS",
             "webName": "\u00d8degaard",
-            "windowPoints": 32.69
+            "windowPoints": 33.08
           },
           {
             "breakdown": {
               "availabilityMultiplier": 1.0,
               "components": {
                 "appearance": 2.0,
-                "assists": 0.45,
+                "assists": 0.44,
                 "bonus": 1.57,
                 "cards": -0.08,
                 "cleanSheet": 0.22,
-                "defensiveContribution": 1.45,
-                "goals": 0.69,
+                "defensiveContribution": 1.46,
+                "goals": 0.75,
                 "goalsConceded": 0.0,
                 "saves": 0.0
               },
@@ -1854,12 +1854,12 @@
                   "wasHome": true
                 }
               ],
-              "points": 6.29,
+              "points": 6.37,
               "provisional": false,
               "rateSource": "history"
             },
             "elementType": 3,
-            "gapPoints": 18.33,
+            "gapPoints": 18.68,
             "id": 236,
             "opponents": [
               {
@@ -1873,24 +1873,24 @@
               }
             ],
             "position": "MID",
-            "projectedPoints": 6.29,
+            "projectedPoints": 6.37,
             "provisional": false,
             "rateSource": "history",
             "team": "EVE",
             "webName": "Dewsbury-Hall",
-            "windowPoints": 31.1
+            "windowPoints": 31.45
           },
           {
             "breakdown": {
               "availabilityMultiplier": 1.0,
               "components": {
                 "appearance": 2.0,
-                "assists": 0.78,
+                "assists": 0.76,
                 "bonus": 0.1,
-                "cards": -0.09,
+                "cards": -0.08,
                 "cleanSheet": 0.23,
-                "defensiveContribution": 1.34,
-                "goals": 0.69,
+                "defensiveContribution": 1.47,
+                "goals": 0.76,
                 "goalsConceded": 0.0,
                 "saves": 0.0
               },
@@ -1907,12 +1907,12 @@
                   "wasHome": true
                 }
               ],
-              "points": 5.05,
+              "points": 5.22,
               "provisional": false,
               "rateSource": "history"
             },
             "elementType": 3,
-            "gapPoints": 11.62,
+            "gapPoints": 12.43,
             "id": 95,
             "opponents": [
               {
@@ -1926,12 +1926,12 @@
               }
             ],
             "position": "MID",
-            "projectedPoints": 5.05,
+            "projectedPoints": 5.22,
             "provisional": false,
             "rateSource": "history",
             "team": "BRE",
             "webName": "O.Dango",
-            "windowPoints": 24.39
+            "windowPoints": 25.2
           }
         ],
         "baselineUpgrade": null,
@@ -1975,12 +1975,12 @@
               "availabilityMultiplier": 1.0,
               "components": {
                 "appearance": 2.0,
-                "assists": 0.48,
+                "assists": 0.47,
                 "bonus": 1.47,
                 "cards": -0.08,
                 "cleanSheet": 0.26,
-                "defensiveContribution": 1.37,
-                "goals": 1.18,
+                "defensiveContribution": 1.38,
+                "goals": 1.25,
                 "goalsConceded": 0.0,
                 "saves": 0.0
               },
@@ -1997,7 +1997,7 @@
                   "wasHome": true
                 }
               ],
-              "points": 6.68,
+              "points": 6.76,
               "provisional": false,
               "rateSource": "history"
             },
@@ -2015,14 +2015,14 @@
               }
             ],
             "position": "MID",
-            "projectedPoints": 6.68,
+            "projectedPoints": 6.76,
             "provisional": false,
             "rateSource": "history",
             "team": "ARS",
             "webName": "\u00d8degaard",
-            "windowPoints": 32.69
+            "windowPoints": 33.08
           },
-          "gapPoints": 19.92,
+          "gapPoints": 20.31,
           "meaningful": true
         },
         "opponents": [
@@ -2052,12 +2052,12 @@
               "availabilityMultiplier": 1.0,
               "components": {
                 "appearance": 2.0,
-                "assists": 0.22,
-                "bonus": 0.38,
+                "assists": 0.21,
+                "bonus": 0.39,
                 "cards": -0.5,
                 "cleanSheet": 0.0,
                 "defensiveContribution": 1.12,
-                "goals": 2.72,
+                "goals": 2.74,
                 "goalsConceded": 0.0,
                 "saves": 0.0
               },
@@ -2074,12 +2074,12 @@
                   "wasHome": true
                 }
               ],
-              "points": 5.94,
+              "points": 5.96,
               "provisional": false,
               "rateSource": "history"
             },
             "elementType": 4,
-            "gapPoints": 11.43,
+            "gapPoints": 8.45,
             "id": 464,
             "opponents": [
               {
@@ -2093,12 +2093,12 @@
               }
             ],
             "position": "FWD",
-            "projectedPoints": 5.94,
+            "projectedPoints": 5.96,
             "provisional": false,
             "rateSource": "history",
             "team": "NEW",
             "webName": "Wissa",
-            "windowPoints": 28.63
+            "windowPoints": 28.76
           },
           {
             "breakdown": {
@@ -2106,11 +2106,11 @@
               "components": {
                 "appearance": 2.0,
                 "assists": 0.19,
-                "bonus": 0.08,
-                "cards": -0.16,
+                "bonus": 0.09,
+                "cards": -0.15,
                 "cleanSheet": 0.0,
                 "defensiveContribution": 0.74,
-                "goals": 1.53,
+                "goals": 1.42,
                 "goalsConceded": 0.0,
                 "saves": 0.0
               },
@@ -2127,12 +2127,12 @@
                   "wasHome": true
                 }
               ],
-              "points": 4.39,
+              "points": 4.28,
               "provisional": false,
               "rateSource": "history"
             },
             "elementType": 4,
-            "gapPoints": 4.38,
+            "gapPoints": 0.76,
             "id": 491,
             "opponents": [
               {
@@ -2146,12 +2146,12 @@
               }
             ],
             "position": "FWD",
-            "projectedPoints": 4.39,
+            "projectedPoints": 4.28,
             "provisional": false,
             "rateSource": "history",
             "team": "NFO",
             "webName": "Igor Jesus",
-            "windowPoints": 21.58
+            "windowPoints": 21.07
           },
           {
             "breakdown": {
@@ -2159,11 +2159,11 @@
               "components": {
                 "appearance": 2.0,
                 "assists": 0.36,
-                "bonus": 0.08,
+                "bonus": 0.09,
                 "cards": -0.46,
                 "cleanSheet": 0.0,
                 "defensiveContribution": 1.05,
-                "goals": 0.95,
+                "goals": 0.97,
                 "goalsConceded": 0.0,
                 "saves": 0.0
               },
@@ -2180,12 +2180,12 @@
                   "wasHome": false
                 }
               ],
-              "points": 3.99,
+              "points": 4.01,
               "provisional": false,
               "rateSource": "history"
             },
             "elementType": 4,
-            "gapPoints": 3.17,
+            "gapPoints": 0.18,
             "id": 79,
             "opponents": [
               {
@@ -2199,12 +2199,12 @@
               }
             ],
             "position": "FWD",
-            "projectedPoints": 3.99,
+            "projectedPoints": 4.01,
             "provisional": false,
             "rateSource": "history",
             "team": "BOU",
             "webName": "Evanilson",
-            "windowPoints": 20.37
+            "windowPoints": 20.49
           }
         ],
         "baselineUpgrade": {
@@ -2213,12 +2213,12 @@
               "availabilityMultiplier": 1.0,
               "components": {
                 "appearance": 2.0,
-                "assists": 0.22,
-                "bonus": 0.38,
+                "assists": 0.21,
+                "bonus": 0.39,
                 "cards": -0.5,
                 "cleanSheet": 0.0,
                 "defensiveContribution": 1.12,
-                "goals": 2.72,
+                "goals": 2.74,
                 "goalsConceded": 0.0,
                 "saves": 0.0
               },
@@ -2235,7 +2235,7 @@
                   "wasHome": true
                 }
               ],
-              "points": 5.94,
+              "points": 5.96,
               "provisional": false,
               "rateSource": "history"
             },
@@ -2253,12 +2253,12 @@
               }
             ],
             "position": "FWD",
-            "projectedPoints": 5.94,
+            "projectedPoints": 5.96,
             "provisional": false,
             "rateSource": "history",
             "team": "NEW",
             "webName": "Wissa",
-            "windowPoints": 28.63
+            "windowPoints": 28.76
           },
           "gapPoints": 3.9,
           "meaningful": false
@@ -2268,11 +2268,11 @@
           "components": {
             "appearance": 2.0,
             "assists": 0.11,
-            "bonus": 0.09,
+            "bonus": 0.38,
             "cards": -0.5,
             "cleanSheet": 0.0,
-            "defensiveContribution": 0.68,
-            "goals": 0.99,
+            "defensiveContribution": 0.7,
+            "goals": 1.29,
             "goalsConceded": 0.0,
             "saves": 0.0
           },
@@ -2289,7 +2289,7 @@
               "wasHome": false
             }
           ],
-          "points": 3.37,
+          "points": 3.98,
           "provisional": false,
           "rateSource": "history"
         },
@@ -2303,12 +2303,12 @@
               "availabilityMultiplier": 1.0,
               "components": {
                 "appearance": 2.0,
-                "assists": 0.22,
-                "bonus": 0.38,
+                "assists": 0.21,
+                "bonus": 0.39,
                 "cards": -0.5,
                 "cleanSheet": 0.0,
                 "defensiveContribution": 1.12,
-                "goals": 2.72,
+                "goals": 2.74,
                 "goalsConceded": 0.0,
                 "saves": 0.0
               },
@@ -2325,7 +2325,7 @@
                   "wasHome": true
                 }
               ],
-              "points": 5.94,
+              "points": 5.96,
               "provisional": false,
               "rateSource": "history"
             },
@@ -2343,14 +2343,14 @@
               }
             ],
             "position": "FWD",
-            "projectedPoints": 5.94,
+            "projectedPoints": 5.96,
             "provisional": false,
             "rateSource": "history",
             "team": "NEW",
             "webName": "Wissa",
-            "windowPoints": 28.63
+            "windowPoints": 28.76
           },
-          "gapPoints": 11.43,
+          "gapPoints": 8.45,
           "meaningful": true
         },
         "opponents": [
@@ -2365,13 +2365,13 @@
           }
         ],
         "position": "FWD",
-        "projectedPoints": 3.37,
+        "projectedPoints": 3.98,
         "provisional": false,
         "rateSource": "history",
         "role": "start",
         "team": "LEE",
         "webName": "Calvert-Lewin",
-        "windowPoints": 17.2
+        "windowPoints": 20.31
       },
       {
         "alternatives": [],
@@ -2381,11 +2381,11 @@
           "components": {
             "appearance": 2.0,
             "assists": 0.2,
-            "bonus": 0.49,
-            "cards": -0.03,
+            "bonus": 0.5,
+            "cards": -0.02,
             "cleanSheet": 0.0,
             "defensiveContribution": 0.83,
-            "goals": 2.64,
+            "goals": 2.66,
             "goalsConceded": 0.0,
             "saves": 0.0
           },
@@ -2402,7 +2402,7 @@
               "wasHome": true
             }
           ],
-          "points": 6.13,
+          "points": 6.16,
           "provisional": false,
           "rateSource": "history"
         },
@@ -2423,13 +2423,13 @@
           }
         ],
         "position": "FWD",
-        "projectedPoints": 6.13,
+        "projectedPoints": 6.16,
         "provisional": false,
         "rateSource": "history",
         "role": "start",
         "team": "MCI",
         "webName": "Haaland",
-        "windowPoints": 29.91
+        "windowPoints": 30.06
       },
       {
         "alternatives": [
@@ -2438,12 +2438,12 @@
               "availabilityMultiplier": 1.0,
               "components": {
                 "appearance": 2.0,
-                "assists": 0.22,
-                "bonus": 0.09,
+                "assists": 0.21,
+                "bonus": 0.1,
                 "cards": -0.03,
                 "cleanSheet": 0.0,
                 "defensiveContribution": 0.68,
-                "goals": 1.51,
+                "goals": 1.53,
                 "goalsConceded": 0.0,
                 "saves": 0.0
               },
@@ -2460,12 +2460,12 @@
                   "wasHome": true
                 }
               ],
-              "points": 4.47,
+              "points": 4.5,
               "provisional": false,
               "rateSource": "history"
             },
             "elementType": 4,
-            "gapPoints": -9.03,
+            "gapPoints": -10.4,
             "id": 26,
             "opponents": [
               {
@@ -2479,12 +2479,12 @@
               }
             ],
             "position": "FWD",
-            "projectedPoints": 4.47,
+            "projectedPoints": 4.5,
             "provisional": false,
             "rateSource": "history",
             "team": "ARS",
             "webName": "Havertz",
-            "windowPoints": 21.78
+            "windowPoints": 21.94
           },
           {
             "breakdown": {
@@ -2492,11 +2492,11 @@
               "components": {
                 "appearance": 0.0,
                 "assists": 0.21,
-                "bonus": 0.17,
-                "cards": -0.06,
+                "bonus": 0.2,
+                "cards": -0.05,
                 "cleanSheet": 0.0,
                 "defensiveContribution": 0.56,
-                "goals": 1.51,
+                "goals": 1.53,
                 "goalsConceded": 0.0,
                 "saves": 0.0
               },
@@ -2513,12 +2513,12 @@
                   "wasHome": true
                 }
               ],
-              "points": 2.4,
+              "points": 2.44,
               "provisional": false,
               "rateSource": "history"
             },
             "elementType": 4,
-            "gapPoints": -19.38,
+            "gapPoints": -20.68,
             "id": 25,
             "opponents": [
               {
@@ -2532,12 +2532,12 @@
               }
             ],
             "position": "FWD",
-            "projectedPoints": 2.4,
+            "projectedPoints": 2.44,
             "provisional": false,
             "rateSource": "history",
             "team": "ARS",
             "webName": "Gy\u00f6keres",
-            "windowPoints": 11.43
+            "windowPoints": 11.66
           }
         ],
         "baselineUpgrade": null,
@@ -2545,12 +2545,12 @@
           "availabilityMultiplier": 1.0,
           "components": {
             "appearance": 2.0,
-            "assists": 0.21,
-            "bonus": 1.29,
-            "cards": -0.03,
+            "assists": 0.2,
+            "bonus": 1.34,
+            "cards": -0.02,
             "cleanSheet": 0.0,
-            "defensiveContribution": 0.8,
-            "goals": 1.62,
+            "defensiveContribution": 0.79,
+            "goals": 1.85,
             "goalsConceded": 0.0,
             "saves": 0.0
           },
@@ -2567,7 +2567,7 @@
               "wasHome": false
             }
           ],
-          "points": 5.89,
+          "points": 6.16,
           "provisional": false,
           "rateSource": "history"
         },
@@ -2588,13 +2588,13 @@
           }
         ],
         "position": "FWD",
-        "projectedPoints": 5.89,
+        "projectedPoints": 6.16,
         "provisional": false,
         "rateSource": "history",
         "role": "start",
         "team": "CHE",
         "webName": "Jo\u00e3o Pedro",
-        "windowPoints": 30.81
+        "windowPoints": 32.34
       },
       {
         "alternatives": [
@@ -2604,13 +2604,13 @@
               "components": {
                 "appearance": 2.0,
                 "assists": 0.08,
-                "bonus": 0.09,
+                "bonus": 0.08,
                 "cards": -0.02,
                 "cleanSheet": 0.82,
                 "defensiveContribution": 0.0,
                 "goals": 0.38,
                 "goalsConceded": -0.79,
-                "saves": 1.07
+                "saves": 1.08
               },
               "expectedMinutes": 95.6,
               "minutesRisk": false,
@@ -2630,7 +2630,7 @@
               "rateSource": "history"
             },
             "elementType": 1,
-            "gapPoints": -0.31,
+            "gapPoints": -0.32,
             "id": 29,
             "opponents": [
               {
@@ -2657,13 +2657,13 @@
               "components": {
                 "appearance": 2.0,
                 "assists": 0.05,
-                "bonus": 0.09,
+                "bonus": 0.08,
                 "cards": -0.02,
                 "cleanSheet": 0.74,
                 "defensiveContribution": 0.0,
                 "goals": 0.14,
                 "goalsConceded": -0.84,
-                "saves": 1.45
+                "saves": 1.46
               },
               "expectedMinutes": 90.0,
               "minutesRisk": false,
@@ -2683,7 +2683,7 @@
               "rateSource": "history"
             },
             "elementType": 1,
-            "gapPoints": -0.39,
+            "gapPoints": -0.4,
             "id": 57,
             "opponents": [
               {
@@ -2710,13 +2710,13 @@
               "components": {
                 "appearance": 2.0,
                 "assists": 0.07,
-                "bonus": 0.09,
+                "bonus": 0.08,
                 "cards": -0.02,
                 "cleanSheet": 0.91,
                 "defensiveContribution": 0.0,
                 "goals": 0.24,
                 "goalsConceded": -0.74,
-                "saves": 1.0
+                "saves": 1.01
               },
               "expectedMinutes": 90.0,
               "minutesRisk": false,
@@ -2731,12 +2731,12 @@
                   "wasHome": true
                 }
               ],
-              "points": 3.56,
+              "points": 3.54,
               "provisional": false,
               "rateSource": "history"
             },
             "elementType": 1,
-            "gapPoints": -1.48,
+            "gapPoints": -1.55,
             "id": 250,
             "opponents": [
               {
@@ -2750,12 +2750,12 @@
               }
             ],
             "position": "GKP",
-            "projectedPoints": 3.56,
+            "projectedPoints": 3.54,
             "provisional": false,
             "rateSource": "history",
             "team": "FUL",
             "webName": "Leno",
-            "windowPoints": 17.34
+            "windowPoints": 17.28
           }
         ],
         "baselineUpgrade": {
@@ -2764,14 +2764,14 @@
               "availabilityMultiplier": 1.0,
               "components": {
                 "appearance": 2.0,
-                "assists": 0.07,
-                "bonus": 0.09,
+                "assists": 0.06,
+                "bonus": 0.08,
                 "cards": -0.02,
                 "cleanSheet": 0.95,
                 "defensiveContribution": 0.0,
-                "goals": 0.19,
+                "goals": 0.18,
                 "goalsConceded": -0.72,
-                "saves": 0.35
+                "saves": 0.39
               },
               "expectedMinutes": 90.0,
               "minutesRisk": false,
@@ -2809,7 +2809,7 @@
             "rateSource": "history",
             "team": "BHA",
             "webName": "Verbruggen",
-            "windowPoints": 13.91
+            "windowPoints": 13.96
           },
           "gapPoints": 1.43,
           "meaningful": false
@@ -2819,13 +2819,13 @@
           "components": {
             "appearance": 2.0,
             "assists": 0.08,
-            "bonus": 0.09,
+            "bonus": 0.08,
             "cards": -0.02,
             "cleanSheet": 0.77,
             "defensiveContribution": 0.0,
-            "goals": 0.22,
+            "goals": 0.23,
             "goalsConceded": -0.82,
-            "saves": 1.34
+            "saves": 1.35
           },
           "expectedMinutes": 90.0,
           "minutesRisk": false,
@@ -2867,7 +2867,7 @@
         "role": "start",
         "team": "TOT",
         "webName": "Kinsky",
-        "windowPoints": 18.82
+        "windowPoints": 18.83
       },
       {
         "alternatives": [
@@ -2881,7 +2881,7 @@
                 "cards": -0.04,
                 "cleanSheet": 0.2,
                 "defensiveContribution": 0.49,
-                "goals": 0.19,
+                "goals": 0.22,
                 "goalsConceded": 0.0,
                 "saves": 0.0
               },
@@ -2898,12 +2898,12 @@
                   "wasHome": false
                 }
               ],
-              "points": 2.96,
+              "points": 2.99,
               "provisional": false,
               "rateSource": "history"
             },
             "elementType": 3,
-            "gapPoints": 6.74,
+            "gapPoints": 6.62,
             "id": 51,
             "opponents": [
               {
@@ -2917,12 +2917,12 @@
               }
             ],
             "position": "MID",
-            "projectedPoints": 2.96,
+            "projectedPoints": 2.99,
             "provisional": false,
             "rateSource": "history",
             "team": "AVL",
             "webName": "George Hemmings",
-            "windowPoints": 14.92
+            "windowPoints": 15.1
           },
           {
             "breakdown": {
@@ -2933,8 +2933,8 @@
                 "bonus": 0.06,
                 "cards": -0.05,
                 "cleanSheet": 0.09,
-                "defensiveContribution": 0.33,
-                "goals": 1.23,
+                "defensiveContribution": 0.34,
+                "goals": 1.27,
                 "goalsConceded": 0.0,
                 "saves": 0.0
               },
@@ -2951,12 +2951,12 @@
                   "wasHome": true
                 }
               ],
-              "points": 2.78,
+              "points": 2.83,
               "provisional": false,
               "rateSource": "history"
             },
             "elementType": 3,
-            "gapPoints": 5.32,
+            "gapPoints": 5.23,
             "id": 621,
             "opponents": [
               {
@@ -2970,12 +2970,12 @@
               }
             ],
             "position": "MID",
-            "projectedPoints": 2.78,
+            "projectedPoints": 2.83,
             "provisional": false,
             "rateSource": "history",
             "team": "MCI",
             "webName": "McAidoo",
-            "windowPoints": 13.5
+            "windowPoints": 13.71
           },
           {
             "breakdown": {
@@ -3009,7 +3009,7 @@
               "rateSource": "price"
             },
             "elementType": 3,
-            "gapPoints": 4.23,
+            "gapPoints": 3.93,
             "id": 290,
             "opponents": [
               {
@@ -3041,8 +3041,8 @@
                 "bonus": 0.06,
                 "cards": -0.05,
                 "cleanSheet": 0.09,
-                "defensiveContribution": 0.33,
-                "goals": 1.23,
+                "defensiveContribution": 0.34,
+                "goals": 1.27,
                 "goalsConceded": 0.0,
                 "saves": 0.0
               },
@@ -3059,7 +3059,7 @@
                   "wasHome": true
                 }
               ],
-              "points": 2.78,
+              "points": 2.83,
               "provisional": false,
               "rateSource": "history"
             },
@@ -3077,12 +3077,12 @@
               }
             ],
             "position": "MID",
-            "projectedPoints": 2.78,
+            "projectedPoints": 2.83,
             "provisional": false,
             "rateSource": "history",
             "team": "MCI",
             "webName": "McAidoo",
-            "windowPoints": 13.5
+            "windowPoints": 13.71
           },
           "gapPoints": 1.01,
           "meaningful": false
@@ -3092,11 +3092,11 @@
           "components": {
             "appearance": 0.0,
             "assists": 0.21,
-            "bonus": 0.19,
+            "bonus": 0.18,
             "cards": -0.16,
             "cleanSheet": 0.0,
-            "defensiveContribution": 1.03,
-            "goals": 0.34,
+            "defensiveContribution": 1.04,
+            "goals": 0.39,
             "goalsConceded": 0.0,
             "saves": 0.0
           },
@@ -3113,7 +3113,7 @@
               "wasHome": false
             }
           ],
-          "points": 1.61,
+          "points": 1.66,
           "provisional": false,
           "rateSource": "history"
         },
@@ -3132,7 +3132,7 @@
                 "cards": -0.04,
                 "cleanSheet": 0.2,
                 "defensiveContribution": 0.49,
-                "goals": 0.19,
+                "goals": 0.22,
                 "goalsConceded": 0.0,
                 "saves": 0.0
               },
@@ -3149,7 +3149,7 @@
                   "wasHome": false
                 }
               ],
-              "points": 2.96,
+              "points": 2.99,
               "provisional": false,
               "rateSource": "history"
             },
@@ -3167,14 +3167,14 @@
               }
             ],
             "position": "MID",
-            "projectedPoints": 2.96,
+            "projectedPoints": 2.99,
             "provisional": false,
             "rateSource": "history",
             "team": "AVL",
             "webName": "George Hemmings",
-            "windowPoints": 14.92
+            "windowPoints": 15.1
           },
-          "gapPoints": 6.74,
+          "gapPoints": 6.62,
           "meaningful": true
         },
         "opponents": [
@@ -3189,13 +3189,13 @@
           }
         ],
         "position": "MID",
-        "projectedPoints": 1.61,
+        "projectedPoints": 1.66,
         "provisional": false,
         "rateSource": "history",
         "role": "bench",
         "team": "CRY",
         "webName": "Hughes",
-        "windowPoints": 8.18
+        "windowPoints": 8.48
       },
       {
         "alternatives": [
@@ -3226,12 +3226,12 @@
                   "wasHome": false
                 }
               ],
-              "points": 3.78,
+              "points": 3.77,
               "provisional": false,
               "rateSource": "history"
             },
             "elementType": 2,
-            "gapPoints": 3.02,
+            "gapPoints": 2.32,
             "id": 173,
             "opponents": [
               {
@@ -3245,12 +3245,12 @@
               }
             ],
             "position": "DEF",
-            "projectedPoints": 3.78,
+            "projectedPoints": 3.77,
             "provisional": false,
             "rateSource": "history",
             "team": "COV",
             "webName": "Thomas",
-            "windowPoints": 20.14
+            "windowPoints": 20.05
           },
           {
             "breakdown": {
@@ -3279,12 +3279,12 @@
                   "wasHome": true
                 }
               ],
-              "points": 3.94,
+              "points": 3.92,
               "provisional": false,
               "rateSource": "history"
             },
             "elementType": 2,
-            "gapPoints": 2.0,
+            "gapPoints": 1.31,
             "id": 277,
             "opponents": [
               {
@@ -3298,24 +3298,24 @@
               }
             ],
             "position": "DEF",
-            "projectedPoints": 3.94,
+            "projectedPoints": 3.92,
             "provisional": false,
             "rateSource": "history",
             "team": "HUL",
             "webName": "Egan",
-            "windowPoints": 19.12
+            "windowPoints": 19.04
           },
           {
             "breakdown": {
               "availabilityMultiplier": 1.0,
               "components": {
                 "appearance": 2.0,
-                "assists": 0.19,
-                "bonus": 0.04,
+                "assists": 0.16,
+                "bonus": 0.03,
                 "cards": -0.03,
                 "cleanSheet": 0.81,
                 "defensiveContribution": 1.14,
-                "goals": 0.16,
+                "goals": 0.18,
                 "goalsConceded": -0.46,
                 "saves": 0.0
               },
@@ -3332,12 +3332,12 @@
                   "wasHome": true
                 }
               ],
-              "points": 3.84,
+              "points": 3.82,
               "provisional": false,
               "rateSource": "history"
             },
             "elementType": 2,
-            "gapPoints": 1.6,
+            "gapPoints": 0.9,
             "id": 304,
             "opponents": [
               {
@@ -3351,12 +3351,12 @@
               }
             ],
             "position": "DEF",
-            "projectedPoints": 3.84,
+            "projectedPoints": 3.82,
             "provisional": false,
             "rateSource": "history",
             "team": "IPS",
             "webName": "O'Shea",
-            "windowPoints": 18.72
+            "windowPoints": 18.63
           }
         ],
         "baselineUpgrade": {
@@ -3387,7 +3387,7 @@
                   "wasHome": true
                 }
               ],
-              "points": 3.94,
+              "points": 3.92,
               "provisional": false,
               "rateSource": "history"
             },
@@ -3405,12 +3405,12 @@
               }
             ],
             "position": "DEF",
-            "projectedPoints": 3.94,
+            "projectedPoints": 3.92,
             "provisional": false,
             "rateSource": "history",
             "team": "HUL",
             "webName": "Egan",
-            "windowPoints": 19.12
+            "windowPoints": 19.04
           },
           "gapPoints": 4.93,
           "meaningful": false
@@ -3419,12 +3419,12 @@
           "availabilityMultiplier": 1.0,
           "components": {
             "appearance": 2.0,
-            "assists": 0.1,
-            "bonus": 0.04,
+            "assists": 0.11,
+            "bonus": 0.03,
             "cards": -0.03,
             "cleanSheet": 0.81,
-            "defensiveContribution": 0.82,
-            "goals": 0.25,
+            "defensiveContribution": 0.78,
+            "goals": 0.4,
             "goalsConceded": -0.46,
             "saves": 0.0
           },
@@ -3441,7 +3441,7 @@
               "wasHome": true
             }
           ],
-          "points": 3.52,
+          "points": 3.65,
           "provisional": false,
           "rateSource": "history"
         },
@@ -3477,7 +3477,7 @@
                   "wasHome": false
                 }
               ],
-              "points": 3.78,
+              "points": 3.77,
               "provisional": false,
               "rateSource": "history"
             },
@@ -3495,14 +3495,14 @@
               }
             ],
             "position": "DEF",
-            "projectedPoints": 3.78,
+            "projectedPoints": 3.77,
             "provisional": false,
             "rateSource": "history",
             "team": "COV",
             "webName": "Thomas",
-            "windowPoints": 20.14
+            "windowPoints": 20.05
           },
-          "gapPoints": 3.02,
+          "gapPoints": 2.32,
           "meaningful": false
         },
         "opponents": [
@@ -3517,13 +3517,13 @@
           }
         ],
         "position": "DEF",
-        "projectedPoints": 3.52,
+        "projectedPoints": 3.65,
         "provisional": false,
         "rateSource": "history",
         "role": "start",
         "team": "IPS",
         "webName": "Davis",
-        "windowPoints": 17.12
+        "windowPoints": 17.73
       },
       {
         "alternatives": [
@@ -3533,11 +3533,11 @@
               "components": {
                 "appearance": 2.0,
                 "assists": 0.17,
-                "bonus": 1.31,
+                "bonus": 1.14,
                 "cards": -0.06,
                 "cleanSheet": 0.78,
                 "defensiveContribution": 2.0,
-                "goals": 0.58,
+                "goals": 0.53,
                 "goalsConceded": -0.81,
                 "saves": 0.0
               },
@@ -3554,12 +3554,12 @@
                   "wasHome": false
                 }
               ],
-              "points": 5.98,
+              "points": 5.75,
               "provisional": false,
               "rateSource": "history"
             },
             "elementType": 2,
-            "gapPoints": 15.91,
+            "gapPoints": 14.05,
             "id": 327,
             "opponents": [
               {
@@ -3573,12 +3573,12 @@
               }
             ],
             "position": "DEF",
-            "projectedPoints": 5.98,
+            "projectedPoints": 5.75,
             "provisional": false,
             "rateSource": "history",
             "team": "LEE",
             "webName": "Bijol",
-            "windowPoints": 30.51
+            "windowPoints": 29.35
           },
           {
             "breakdown": {
@@ -3587,10 +3587,10 @@
                 "appearance": 2.0,
                 "assists": 0.69,
                 "bonus": 0.47,
-                "cards": -0.05,
+                "cards": -0.06,
                 "cleanSheet": 0.95,
                 "defensiveContribution": 1.89,
-                "goals": 0.29,
+                "goals": 0.28,
                 "goalsConceded": -0.72,
                 "saves": 0.0
               },
@@ -3607,12 +3607,12 @@
                   "wasHome": true
                 }
               ],
-              "points": 5.52,
+              "points": 5.49,
               "provisional": false,
               "rateSource": "history"
             },
             "elementType": 2,
-            "gapPoints": 12.34,
+            "gapPoints": 11.49,
             "id": 449,
             "opponents": [
               {
@@ -3626,24 +3626,24 @@
               }
             ],
             "position": "DEF",
-            "projectedPoints": 5.52,
+            "projectedPoints": 5.49,
             "provisional": false,
             "rateSource": "history",
             "team": "NEW",
             "webName": "Hall",
-            "windowPoints": 26.94
+            "windowPoints": 26.79
           },
           {
             "breakdown": {
               "availabilityMultiplier": 1.0,
               "components": {
                 "appearance": 2.0,
-                "assists": 0.19,
-                "bonus": 0.71,
+                "assists": 0.2,
+                "bonus": 0.57,
                 "cards": -0.05,
                 "cleanSheet": 0.95,
-                "defensiveContribution": 1.7,
-                "goals": 0.55,
+                "defensiveContribution": 1.68,
+                "goals": 0.49,
                 "goalsConceded": -0.65,
                 "saves": 0.0
               },
@@ -3660,12 +3660,12 @@
                   "wasHome": true
                 }
               ],
-              "points": 5.41,
+              "points": 5.21,
               "provisional": false,
               "rateSource": "history"
             },
             "elementType": 2,
-            "gapPoints": 11.58,
+            "gapPoints": 9.87,
             "id": 130,
             "opponents": [
               {
@@ -3679,12 +3679,12 @@
               }
             ],
             "position": "DEF",
-            "projectedPoints": 5.41,
+            "projectedPoints": 5.21,
             "provisional": false,
             "rateSource": "history",
             "team": "BHA",
             "webName": "Wieffer",
-            "windowPoints": 26.18
+            "windowPoints": 25.17
           }
         ],
         "baselineUpgrade": null,
@@ -3696,8 +3696,8 @@
             "bonus": 0.0,
             "cards": 0.0,
             "cleanSheet": 0.78,
-            "defensiveContribution": 0.2,
-            "goals": 0.28,
+            "defensiveContribution": 0.36,
+            "goals": 0.26,
             "goalsConceded": -0.47,
             "saves": 0.0
           },
@@ -3714,7 +3714,7 @@
               "wasHome": false
             }
           ],
-          "points": 2.83,
+          "points": 2.97,
           "provisional": true,
           "rateSource": "understat:Serie_A"
         },
@@ -3729,11 +3729,11 @@
               "components": {
                 "appearance": 2.0,
                 "assists": 0.17,
-                "bonus": 1.31,
+                "bonus": 1.14,
                 "cards": -0.06,
                 "cleanSheet": 0.78,
                 "defensiveContribution": 2.0,
-                "goals": 0.58,
+                "goals": 0.53,
                 "goalsConceded": -0.81,
                 "saves": 0.0
               },
@@ -3750,7 +3750,7 @@
                   "wasHome": false
                 }
               ],
-              "points": 5.98,
+              "points": 5.75,
               "provisional": false,
               "rateSource": "history"
             },
@@ -3768,14 +3768,14 @@
               }
             ],
             "position": "DEF",
-            "projectedPoints": 5.98,
+            "projectedPoints": 5.75,
             "provisional": false,
             "rateSource": "history",
             "team": "LEE",
             "webName": "Bijol",
-            "windowPoints": 30.51
+            "windowPoints": 29.35
           },
-          "gapPoints": 15.91,
+          "gapPoints": 14.05,
           "meaningful": true
         },
         "opponents": [
@@ -3790,13 +3790,13 @@
           }
         ],
         "position": "DEF",
-        "projectedPoints": 2.83,
+        "projectedPoints": 2.97,
         "provisional": true,
         "rateSource": "understat:Serie_A",
         "role": "bench",
         "team": "LEE",
         "webName": "Muharemovi\u0107",
-        "windowPoints": 14.6
+        "windowPoints": 15.3
       }
     ],
     "startingXi": [
@@ -3805,14 +3805,14 @@
       418,
       504,
       305,
-      366,
       426,
+      366,
       124,
       411,
       165,
       346
     ],
-    "windowPoints": 294.68
+    "windowPoints": 310.03
   },
   "targetGameweek": 3,
   "upgradeCount": {
