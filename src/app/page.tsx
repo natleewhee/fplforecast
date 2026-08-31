@@ -5,6 +5,7 @@ import {
   loadLatestForecast,
   loadChipStatus,
   loadOverrides,
+  type GameweekReview,
   type RunningRecord,
 } from "@/lib/snapshots";
 import Pitch from "./Pitch";
@@ -70,6 +71,64 @@ function RunningRecordHeader({ record }: { record: RunningRecord | null }) {
   );
 }
 
+function GameweekReviewCard({ review }: { review: GameweekReview | null }) {
+  if (!review || review.xiPoints == null) return null;
+  const mvb = review.modelVsBaseline;
+  const scored = mvb && "model" in mvb;
+  const cap = review.captain;
+  return (
+    <Card>
+      <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+        <span className="text-[11px] uppercase tracking-wide text-ink-soft">
+          GW{review.gameweek} result
+        </span>
+        {!review.dataChecked && (
+          <span className="rounded-full bg-amber-50 px-2 py-0.5 text-[10px] font-semibold text-amber-800">
+            provisional
+          </span>
+        )}
+        <span className="text-lg font-extrabold text-ink tabular-nums">{review.xiPoints}</span>
+        <span className="text-xs text-ink-soft tabular-nums">
+          bench {review.benchPoints ?? "—"}
+          {review.transfersCost > 0 && ` · −${review.transfersCost} hit`}
+          {review.overallRank != null && ` · OR ${review.overallRank.toLocaleString()}`}
+        </span>
+      </div>
+      <div className="mt-1.5 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs">
+        {cap && (
+          <span className="tabular-nums">
+            C {cap.webName}{" "}
+            <span className="text-ink-soft">
+              {cap.actual ?? "—"}×{cap.multiplier}
+              {cap.actual != null && ` = ${cap.actual * cap.multiplier}`}
+            </span>
+          </span>
+        )}
+        {scored ? (
+          <span className="tabular-nums">
+            model XI <span className="font-semibold text-ink">{mvb.model}</span> · baseline XI{" "}
+            <span className="font-semibold text-ink">{mvb.baseline}</span>{" "}
+            <span
+              className={
+                mvb.delta >= 0 ? "text-[var(--pitch-dark)]" : "text-[var(--fwd)]"
+              }
+            >
+              ({mvb.delta >= 0 ? "+" : ""}
+              {mvb.delta})
+            </span>
+          </span>
+        ) : (
+          <span className="text-ink-soft">
+            {mvb && "status" in mvb && mvb.status === "no_prediction"
+              ? "no model prediction was logged for this gameweek"
+              : "model vs baseline pending final stats"}
+          </span>
+        )}
+      </div>
+    </Card>
+  );
+}
+
 function Header({ subtitle }: { subtitle: string }) {
   return (
     <div className="pitch-stripes rounded-b-2xl px-4 pb-5 pt-6 text-center shadow-sm">
@@ -119,6 +178,7 @@ export default function Home() {
         />
 
         <div className="space-y-4 p-4">
+          <GameweekReviewCard review={forecast.lastGameweek} />
           <RunningRecordHeader record={forecast.runningRecord} />
 
           <Card>

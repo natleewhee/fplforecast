@@ -11,7 +11,28 @@
   },
   "earlySeason": true,
   "effectiveGap": 11.2,
-  "generatedAt": "2026-08-31T13:03:24.545823+00:00",
+  "generatedAt": "2026-08-31T13:11:34.081790+00:00",
+  "lastGameweek": {
+    "benchPoints": 10,
+    "captain": {
+      "actual": 6,
+      "multiplier": 2,
+      "webName": "Tzolis"
+    },
+    "dataChecked": true,
+    "gameweek": 1,
+    "modelVsBaseline": {
+      "status": "no_prediction"
+    },
+    "overallRank": 4087187,
+    "transfersCost": 0,
+    "viceCaptain": {
+      "actual": 2,
+      "multiplier": 1,
+      "webName": "Haaland"
+    },
+    "xiPoints": 51
+  },
   "lineupAgreement": 9,
   "nextGw": {
     "deltaVsBaselineXi": 3.8,

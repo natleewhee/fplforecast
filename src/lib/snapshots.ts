@@ -152,6 +152,28 @@ export type Forecast = {
   viceCaptain: { webName: string; id: number; points?: number } | null;
   captainEdge: { points: number; label: string } | null; // captain vs vice, single GW
   runningRecord: RunningRecord | null;
+  lastGameweek: GameweekReview | null;
+};
+
+export type GameweekCaptain = {
+  webName: string;
+  actual: number | null; // raw points before the multiplier
+  multiplier: number;
+};
+
+export type GameweekReview = {
+  gameweek: number;
+  dataChecked: boolean; // false while bonus/stats are still provisional
+  xiPoints: number | null; // your GW score, net of hits, captain doubled
+  benchPoints: number | null;
+  transfersCost: number;
+  overallRank: number | null;
+  captain: GameweekCaptain | null;
+  viceCaptain: GameweekCaptain | null;
+  modelVsBaseline:
+    | { model: number; baseline: number; delta: number }
+    | { status: string }
+    | null;
 };
 
 export type ChipUsage = { name: string; event: number };

@@ -141,6 +141,73 @@ def load_running_record() -> dict | None:
     return summary if summary.get("gameweeksScored", 0) > 0 else None
 
 
+def _gw_model_vs_baseline(gw: int) -> dict | None:
+    """This gameweek's row from the out-of-sample record: model/baseline XI
+    points if it was scored, otherwise its status (``no_prediction``)."""
+    path = DATA_DIR / "record" / "running.json"
+    if not path.exists():
+        return None
+    for entry in load_json(path).get("entries", []):
+        if entry.get("gameweek") != gw:
+            continue
+        if "modelPoints" in entry:
+            return {
+                "model": entry["modelPoints"],
+                "baseline": entry["baselinePoints"],
+                "delta": entry["delta"],
+            }
+        return {"status": entry.get("status", "pending")}
+    return None
+
+
+def last_gameweek_review(bootstrap: dict, elements_by_id: dict) -> dict | None:
+    """The 'decide -> watch -> learn' card: how the held squad actually did in
+    the most recent finished gameweek, plus the model-vs-baseline row once that
+    gameweek has been scored. ``None`` until a finished gameweek's picks have
+    been snapshotted."""
+    finished = [e for e in bootstrap.get("events", []) if e.get("finished")]
+    if not finished:
+        return None
+    event = max(finished, key=lambda e: e["id"])
+    gw = event["id"]
+
+    picks_path = DATA_DIR / f"picks-{TEAM_ID}" / f"gw{gw}.json"
+    if not picks_path.exists():
+        return None
+    pdata = load_json(picks_path)
+    entry_history = pdata.get("entry_history", {})
+    picks = pdata.get("picks", [])
+
+    live_path = DATA_DIR / "event-live" / f"gw{gw}.json"
+    actual_by_id: dict[int, int | None] = {}
+    if live_path.exists():
+        for el in load_json(live_path).get("elements", []):
+            actual_by_id[el["id"]] = (el.get("stats") or {}).get("total_points")
+
+    def _cap(flag: str) -> dict | None:
+        pick = next((p for p in picks if p.get(flag)), None)
+        if pick is None:
+            return None
+        el = elements_by_id.get(pick["element"], {})
+        return {
+            "webName": el.get("web_name", "???"),
+            "actual": actual_by_id.get(pick["element"]),
+            "multiplier": pick.get("multiplier", 2 if flag == "is_captain" else 1),
+        }
+
+    return {
+        "gameweek": gw,
+        "dataChecked": bool(event.get("data_checked")),
+        "xiPoints": entry_history.get("points"),  # net of hits, captain doubled
+        "benchPoints": entry_history.get("points_on_bench"),
+        "transfersCost": entry_history.get("event_transfers_cost", 0),
+        "overallRank": entry_history.get("overall_rank"),
+        "captain": _cap("is_captain"),
+        "viceCaptain": _cap("is_vice_captain"),
+        "modelVsBaseline": _gw_model_vs_baseline(gw),
+    }
+
+
 def _player_card(pid: int, elements_by_id: dict, teams_by_id: dict) -> dict:
     el = elements_by_id.get(pid, {})
     return {
@@ -590,6 +657,7 @@ def main(now: datetime | None = None) -> int:
         ),
         "captainEdge": captain_edge,
         "runningRecord": load_running_record(),
+        "lastGameweek": last_gameweek_review(bootstrap, elements_by_id),
     }
 
     out_dir = DATA_DIR / "forecast"

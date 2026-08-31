@@ -75,6 +75,21 @@ def test_running_record_is_null_until_a_gameweek_is_scored(forecast):
     assert forecast["runningRecord"] is None
 
 
+def test_last_gameweek_review_reports_the_held_squad_result(forecast):
+    review = forecast["lastGameweek"]
+    assert review is not None
+    assert review["gameweek"] == 1  # the only finished GW in the committed snapshots
+    assert review["xiPoints"] == 51  # straight from entry_history.points
+    assert review["benchPoints"] == 10
+    # no frozen prediction exists for GW1 -> the model/baseline row says so
+    assert review["modelVsBaseline"] == {"status": "no_prediction"}
+
+
+def test_last_gameweek_review_is_null_without_snapshotted_picks(monkeypatch):
+    monkeypatch.setattr(cf, "TEAM_ID", "does-not-exist")
+    assert cf.last_gameweek_review(cf.load_bootstrap(), {}) is None
+
+
 def test_newcomers_get_a_provisional_projection(monkeypatch):
     # No entity resolution + an empty archive -> every player is cold-start.
     path = _target_path()
