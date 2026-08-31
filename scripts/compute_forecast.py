@@ -456,7 +456,7 @@ def main(now: datetime | None = None) -> int:
     prev_captain_id = next((p["element"] for p in picks if p.get("is_captain")), None)
     no_change_points = _xi_points(prev_start_ids or starting_ids, prev_captain_id)
 
-    bl_starting, _bl_bench = best_xi(
+    bl_starting, bl_bench = best_xi(
         [
             {
                 "id": c["id"],
@@ -467,16 +467,68 @@ def main(now: datetime | None = None) -> int:
         ]
     )
     bl_start_ids = [p["id"] for p in bl_starting]
+    bl_bench_ids = [p["id"] for p in bl_bench]
     bl_captain_id = max(
         bl_start_ids, key=lambda i: baseline_window.get(i) or -1e9, default=None
     )
     baseline_xi_points = _xi_points(bl_start_ids, bl_captain_id)
+
+    # "Your XI": last week's lineup, untouched -- the do-nothing baseline the
+    # toggle lets you compare the model's and the composite's picks against.
+    your_start_ids = [i for i in prev_start_ids if i in card_by_id]
+    your_bench_ids = [i for i in squad_ids if i in card_by_id and i not in your_start_ids]
+    if len(your_start_ids) != 11:  # picks missing / overridden -- fall back
+        your_start_ids, your_bench_ids = starting_ids, bench_ids
+        your_captain_id = captain["id"] if captain else None
+    else:
+        your_captain_id = prev_captain_id
 
     next_gw = {
         "points": round(model_xi_points, 1),
         "deltaVsNoChange": round(model_xi_points - no_change_points, 1),
         "deltaVsBaselineXi": round(model_xi_points - baseline_xi_points, 1),
     }
+
+    # How much the model's and the baseline's lineups actually overlap -- the
+    # trust signal KD2 wanted on screen (F4), companion to the XI toggle.
+    lineup_agreement = len(set(starting_ids) & set(bl_start_ids))
+
+    # One-line "why" on every held player, so a tight call (benching a premium
+    # keeper on 0.2) reads as a decision, not a bug (F6).
+    xi_cut = min(
+        (
+            card_by_id[i]["projectedPoints"]
+            for i in starting_ids
+            if card_by_id[i].get("projectedPoints") is not None
+        ),
+        default=None,
+    )
+
+    def _opp_str(card: dict) -> str:
+        legs = card.get("opponents") or []
+        if not legs:
+            return "blank gameweek"
+        leg = legs[0]
+        return f"{'v' if leg.get('wasHome') else '@'}{leg.get('team', '?')} (FDR {leg.get('fdrRating', '-')})"
+
+    for c in players:
+        pp = c.get("projectedPoints")
+        pps = f"{pp:.1f}" if pp is not None else "—"
+        if c["isCaptain"]:
+            if captain_edge and vice is not None:
+                c["rationale"] = (
+                    f"{pps} proj — {captain_edge['label']}, "
+                    f"+{captain_edge['points']:.1f} on {vice['webName']}"
+                )
+            else:
+                c["rationale"] = f"{pps} proj — clear top score"
+        elif c["isViceCaptain"]:
+            c["rationale"] = f"{pps} proj — next best after {captain['webName']}"
+        elif c["role"] == "start":
+            c["rationale"] = f"{pps} proj — {_opp_str(c)}"
+        else:
+            cut = f", under the {xi_cut:.1f} XI cut" if xi_cut is not None else ""
+            c["rationale"] = f"{pps} proj{cut} — {_opp_str(c)}"
 
     def _agree(card: dict) -> bool:
         mu, bu = card["modelUpgrade"], card["baselineUpgrade"]
@@ -504,10 +556,17 @@ def main(now: datetime | None = None) -> int:
             "players": players,
             "startingXi": starting_ids,
             "bench": bench_ids,
+            "baselineXi": bl_start_ids,
+            "baselineBench": bl_bench_ids,
+            "baselineCaptainId": bl_captain_id,
+            "yourXi": your_start_ids,
+            "yourBench": your_bench_ids,
+            "yourCaptainId": your_captain_id,
             "bank": bank,
             "bankNote": "sell prices assume each player was bought at today's price",
         },
         "upgradeCount": upgrade_count,
+        "lineupAgreement": lineup_agreement,
         "effectiveGap": round(gap_bar, 1),
         "earlySeason": gap_bar > MEANINGFUL_UPGRADE_GAP + 1e-6,
         "nextGw": next_gw,

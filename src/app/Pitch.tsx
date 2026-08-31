@@ -1,7 +1,16 @@
 "use client";
 
+import { useState } from "react";
 import type { AlternativeCard, Forecast, ForecastPlayer } from "@/lib/snapshots";
 import ProjectionCell from "./ProjectionCell";
+
+type ViewMode = "model" | "baseline" | "yours";
+
+const MODE_LABEL: Record<ViewMode, string> = {
+  model: "Model XI",
+  baseline: "Baseline XI",
+  yours: "Your XI",
+};
 
 const POSITION_COLOR: Record<string, string> = {
   GKP: "bg-[var(--gkp)]",
@@ -22,23 +31,34 @@ function Opp({ player }: { player: AlternativeCard }) {
   );
 }
 
-function PitchPlayer({ player, bench = false }: { player: ForecastPlayer; bench?: boolean }) {
+function PitchPlayer({
+  player,
+  bench = false,
+  isCaptain = false,
+  isViceCaptain = false,
+}: {
+  player: ForecastPlayer;
+  bench?: boolean;
+  isCaptain?: boolean;
+  isViceCaptain?: boolean;
+}) {
   return (
     <div
       className={`flex w-[4.6rem] flex-col items-center rounded-md px-1 pb-1 pt-0.5 text-center shadow-sm sm:w-20 ${
         bench ? "bg-card/90" : "bg-card"
       }`}
+      title={player.rationale}
     >
       <div className="flex w-full items-center justify-center gap-0.5">
         <span
           className={`h-1.5 w-1.5 rounded-full ${POSITION_COLOR[player.position] ?? "bg-ink-soft"}`}
         />
-        {player.isCaptain && (
+        {isCaptain && (
           <span className="rounded bg-[var(--pitch-dark)] px-1 text-[8px] font-bold leading-tight text-white">
             C
           </span>
         )}
-        {player.isViceCaptain && (
+        {isViceCaptain && (
           <span className="rounded bg-ink-soft px-1 text-[8px] font-bold leading-tight text-white">
             V
           </span>
@@ -86,12 +106,32 @@ function AlternativeChip({ alt }: { alt: AlternativeCard }) {
 }
 
 export default function Pitch({ forecast }: { forecast: Forecast }) {
-  const { players, startingXi, bench, windowPoints } = forecast.squad;
+  const { squad } = forecast;
+  const { players, windowPoints } = squad;
+  const [mode, setMode] = useState<ViewMode>("model");
   const byId = new Map(players.map((p) => [p.id, p]));
-  const xi = startingXi.map((id) => byId.get(id)).filter(Boolean) as ForecastPlayer[];
-  const benched = bench.map((id) => byId.get(id)).filter(Boolean) as ForecastPlayer[];
 
+  const LINEUPS: Record<ViewMode, { xi: number[]; bench: number[]; captainId: number | null }> = {
+    model: { xi: squad.startingXi, bench: squad.bench, captainId: forecast.captain?.id ?? null },
+    baseline: { xi: squad.baselineXi, bench: squad.baselineBench, captainId: squad.baselineCaptainId },
+    yours: { xi: squad.yourXi, bench: squad.yourBench, captainId: squad.yourCaptainId },
+  };
+  const active = LINEUPS[mode];
+  const viceId = mode === "model" ? forecast.viceCaptain?.id ?? null : null;
+
+  const xi = active.xi.map((id) => byId.get(id)).filter(Boolean) as ForecastPlayer[];
+  const benched = active.bench.map((id) => byId.get(id)).filter(Boolean) as ForecastPlayer[];
   const rows = ROWS.map((pos) => xi.filter((p) => p.position === pos)).filter((r) => r.length > 0);
+
+  // All three lineups are scored on the model's projections, so the headline
+  // moves with the toggle and the deltas stay comparable.
+  const headline =
+    mode === "model"
+      ? forecast.nextGw.points
+      : mode === "baseline"
+        ? forecast.nextGw.points - forecast.nextGw.deltaVsBaselineXi
+        : forecast.nextGw.points - forecast.nextGw.deltaVsNoChange;
+  const vsModel = headline - forecast.nextGw.points;
 
   const withAlternatives = [...players]
     .filter((p) => p.alternatives.length > 0)
@@ -102,7 +142,7 @@ export default function Pitch({ forecast }: { forecast: Forecast }) {
       <div className="rounded-xl border border-line bg-card p-3 shadow-sm">
         <div className="mb-2 flex items-start justify-between gap-3">
           <h2 className="text-sm font-bold uppercase tracking-wide text-[var(--pitch-dark)]">
-            Recommended XI · GW{forecast.targetGameweek}
+            {MODE_LABEL[mode]} · GW{forecast.targetGameweek}
           </h2>
           <div className="text-right leading-tight">
             <div className="text-xs text-ink-soft">
@@ -111,18 +151,41 @@ export default function Pitch({ forecast }: { forecast: Forecast }) {
                 className="text-base font-bold text-ink tabular-nums"
                 title="Starting XI projected points for the upcoming gameweek, captain doubled"
               >
-                {forecast.nextGw.points.toFixed(0)}
+                {headline.toFixed(0)}
               </span>
             </div>
             <div className="text-[10px] text-ink-soft tabular-nums">
-              {fmtDelta(forecast.nextGw.deltaVsNoChange)} vs no change ·{" "}
-              {fmtDelta(forecast.nextGw.deltaVsBaselineXi)} vs baseline XI
+              {mode === "model"
+                ? `${fmtDelta(forecast.nextGw.deltaVsNoChange)} vs no change · ${fmtDelta(
+                    forecast.nextGw.deltaVsBaselineXi,
+                  )} vs baseline XI`
+                : `${fmtDelta(vsModel)} vs model XI`}
             </div>
             <div className="text-[10px] text-ink-soft tabular-nums">
               5-GW proj {windowPoints.toFixed(0)}
             </div>
           </div>
         </div>
+
+        <div className="mb-2 flex gap-1">
+          {(Object.keys(MODE_LABEL) as ViewMode[]).map((m) => (
+            <button
+              key={m}
+              onClick={() => setMode(m)}
+              className={`rounded-full px-2.5 py-1 text-[11px] font-semibold transition ${
+                mode === m
+                  ? "bg-[var(--pitch-dark)] text-white"
+                  : "bg-background text-ink-soft hover:text-ink"
+              }`}
+            >
+              {MODE_LABEL[m]}
+            </button>
+          ))}
+        </div>
+        <p className="mb-2 text-[10px] text-ink-soft">
+          Model and baseline agree on {forecast.lineupAgreement} of 11 starters · every lineup scored
+          on the model&apos;s points
+        </p>
 
         <div
           className="space-y-3 rounded-lg py-4"
@@ -134,7 +197,12 @@ export default function Pitch({ forecast }: { forecast: Forecast }) {
           {rows.map((row, i) => (
             <div key={i} className="flex flex-wrap justify-center gap-1.5">
               {row.map((p) => (
-                <PitchPlayer key={p.id} player={p} />
+                <PitchPlayer
+                  key={p.id}
+                  player={p}
+                  isCaptain={p.id === active.captainId}
+                  isViceCaptain={p.id === viceId}
+                />
               ))}
             </div>
           ))}
@@ -144,10 +212,22 @@ export default function Pitch({ forecast }: { forecast: Forecast }) {
           <p className="mb-1 text-[10px] font-semibold uppercase tracking-wide text-ink-soft">Bench</p>
           <div className="flex flex-wrap gap-1.5">
             {benched.map((p) => (
-              <PitchPlayer key={p.id} player={p} bench />
+              <PitchPlayer key={p.id} player={p} bench isCaptain={p.id === active.captainId} />
             ))}
           </div>
         </div>
+
+        {mode === "model" && benched.some((p) => p.rationale) && (
+          <ul className="mt-3 space-y-0.5 text-[11px] text-ink-soft">
+            {benched
+              .filter((p) => p.rationale)
+              .map((p) => (
+                <li key={p.id}>
+                  <span className="font-medium text-ink">{p.webName}</span> benched — {p.rationale}
+                </li>
+              ))}
+          </ul>
+        )}
       </div>
 
       <div className="rounded-xl border border-line bg-card p-3 shadow-sm">

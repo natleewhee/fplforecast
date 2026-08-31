@@ -104,6 +104,7 @@ export type ForecastPlayer = AlternativeCard & {
   isCaptain: boolean;
   isViceCaptain?: boolean;
   role?: "start" | "bench";
+  rationale?: string; // one-line "why" for this player's start/bench/armband
   sellPrice?: number; // £m (assumes bought at today's price)
   modelUpgrade: Upgrade | null;
   baselineUpgrade: Upgrade | null;
@@ -129,10 +130,17 @@ export type Forecast = {
     players: ForecastPlayer[];
     startingXi: number[];
     bench: number[];
+    baselineXi: number[]; // lineup the composite baseline would pick from the same 15
+    baselineBench: number[];
+    baselineCaptainId: number | null;
+    yourXi: number[]; // last week's lineup, untouched
+    yourBench: number[];
+    yourCaptainId: number | null;
     bank: number; // £m
     bankNote?: string;
   };
   upgradeCount: { model: number; baseline: number; agree: number; meaningful: number };
+  lineupAgreement: number; // starters the model XI and baseline XI share, of 11
   effectiveGap: number; // 5-GW gain a swap must clear to be recommended this week
   earlySeason: boolean; // effectiveGap raised because the season is young
   nextGw: {
