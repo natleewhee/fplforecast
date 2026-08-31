@@ -7,12 +7,13 @@ type Props = {
   squad: ForecastPlayer[];
   allPlayers: Player[];
   basedOnGw: number;
+  bank: number; // £m in the bank
 };
 
 const fieldClass =
   "mt-1 w-full rounded-lg border border-line bg-white px-3 py-2 text-sm text-ink placeholder:text-ink-soft/60 focus:border-[var(--pitch)] focus:outline-none focus:ring-2 focus:ring-[var(--pitch-light)]/30";
 
-export default function TransferForm({ squad, allPlayers, basedOnGw }: Props) {
+export default function TransferForm({ squad, allPlayers, basedOnGw, bank }: Props) {
   const [outId, setOutId] = useState<number | "">("");
   const [inQuery, setInQuery] = useState("");
   const [inId, setInId] = useState<number | "">("");
@@ -25,6 +26,16 @@ export default function TransferForm({ squad, allPlayers, basedOnGw }: Props) {
     inQuery.length >= 2
       ? allPlayers.filter((p) => !squadIds.has(p.id) && p.webName.toLowerCase().includes(inQuery.toLowerCase())).slice(0, 8)
       : [];
+
+  const outPlayer = outId === "" ? null : squad.find((p) => p.id === outId) ?? null;
+  const inPlayer = inId === "" ? null : allPlayers.find((p) => p.id === inId) ?? null;
+  const sellPrice = outPlayer?.sellPrice ?? outPlayer?.price ?? null;
+  // Sale of the outgoing player frees up their (assumed) sell price on top of
+  // the bank; the incoming player costs their listed price.
+  const remaining =
+    sellPrice != null && inPlayer != null
+      ? bank + sellPrice - inPlayer.priceMillions
+      : null;
 
   async function submit() {
     if (outId === "" || inId === "") return;
@@ -51,7 +62,9 @@ export default function TransferForm({ squad, allPlayers, basedOnGw }: Props) {
         Make a transfer
       </h2>
       <p className="mt-1 text-xs text-ink-soft">
-        Saves to the repo and triggers a redeploy — not budget-checked, treat it as directional
+        Saves to the repo and triggers a redeploy. Bank{" "}
+        <span className="font-semibold text-ink tabular-nums">£{bank.toFixed(1)}m</span> · sell prices
+        assume each player was bought at today&apos;s price.
       </p>
 
       <label className="mt-3 block text-xs font-medium text-ink-soft">Out</label>
@@ -93,6 +106,26 @@ export default function TransferForm({ squad, allPlayers, basedOnGw }: Props) {
             </li>
           ))}
         </ul>
+      )}
+
+      {remaining != null && (
+        <p
+          className={`mt-3 rounded-lg px-3 py-2 text-xs font-medium ${
+            remaining < -1e-6
+              ? "bg-[var(--fwd)]/10 text-[var(--fwd)]"
+              : "bg-[var(--pitch-light)]/15 text-[var(--pitch-dark)]"
+          }`}
+        >
+          {remaining < -1e-6
+            ? `Over budget by £${Math.abs(remaining).toFixed(1)}m`
+            : `£${remaining.toFixed(1)}m left after this transfer`}
+          {sellPrice != null && (
+            <span className="text-ink-soft">
+              {" "}
+              (sell {outPlayer?.webName} for ~£{sellPrice.toFixed(1)}m)
+            </span>
+          )}
+        </p>
       )}
 
       <label className="mt-3 block text-xs font-medium text-ink-soft">Note (optional)</label>

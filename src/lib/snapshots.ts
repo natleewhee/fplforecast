@@ -81,25 +81,29 @@ export type AlternativeCard = {
   team: string;
   position: string;
   elementType?: number | null;
+  price?: number; // £m
   projectedPoints: number | null;
   windowPoints?: number | null;
   provisional?: boolean;
   rateSource?: string;
   opponents: OpponentLeg[];
   breakdown: ProjectionBreakdown;
-  gapPoints?: number; // present when this card is an alternative
+  gapPoints?: number | null; // present when this card is an alternative
+  affordable?: boolean | null; // fits bank + sale of the held player
 };
 
 export type Upgrade = {
   alternative: AlternativeCard;
   gapPoints: number; // 5-GW window-points gain
-  meaningful: boolean; // gain >= MEANINGFUL_UPGRADE_GAP
+  meaningful: boolean; // gain clears the (season-scaled) bar
+  affordable?: boolean | null;
 };
 
 export type ForecastPlayer = AlternativeCard & {
   minutesRisk?: boolean;
   isCaptain: boolean;
   role?: "start" | "bench";
+  sellPrice?: number; // £m (assumes bought at today's price)
   modelUpgrade: Upgrade | null;
   baselineUpgrade: Upgrade | null;
   alternatives: AlternativeCard[];
@@ -124,8 +128,12 @@ export type Forecast = {
     players: ForecastPlayer[];
     startingXi: number[];
     bench: number[];
+    bank: number; // £m
+    bankNote?: string;
   };
   upgradeCount: { model: number; baseline: number; agree: number; meaningful: number };
+  effectiveGap: number; // 5-GW gain a swap must clear to be recommended this week
+  earlySeason: boolean; // effectiveGap raised because the season is young
   captain: { webName: string; id: number } | null;
   runningRecord: RunningRecord | null;
 };

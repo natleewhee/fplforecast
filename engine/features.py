@@ -212,6 +212,11 @@ def _rate_features(
             for name, stat in _LIVE_RATE_STATS.items():
                 bucket[name] += _to_number(stats.get(stat)) or 0.0
 
+    # The recent-form slice only earns its full weight once a season is a few
+    # gameweeks old -- two gameweeks of data shouldn't drive a projection.
+    recent_progress = min(1.0, len(recent_payloads) / RATE_FORM_WINDOW)
+    recent_weight = RATE_BLEND["recent"] * recent_progress
+
     # pass 1: blend per player without the position prior, tracking how many
     # games of evidence sit behind the blend.
     blended: dict[int, dict] = {}
@@ -237,10 +242,10 @@ def _rate_features(
                     sources[name].append((RATE_BLEND["season"], value / per90))
 
         rmin = recent_min.get(pid, 0.0)
-        if rmin > 0:
+        if rmin > 0 and recent_weight > 0:
             rp90 = rmin / 90.0
             for name in _RATE_NAMES:
-                sources[name].append((RATE_BLEND["recent"], recent_sum[pid][name] / rp90))
+                sources[name].append((recent_weight, recent_sum[pid][name] / rp90))
 
         arc = archive_rates.get(pid) or {}
         for name in _ARCHIVE_RATE_NAMES:

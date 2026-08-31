@@ -55,12 +55,22 @@ function PitchPlayer({ player, bench = false }: { player: ForecastPlayer; bench?
 
 function AlternativeChip({ alt }: { alt: AlternativeCard }) {
   return (
-    <span className="inline-flex items-center gap-1 rounded-full bg-background px-2 py-0.5 text-xs">
+    <span
+      className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-xs ${
+        alt.affordable === false ? "bg-[var(--fwd)]/10" : "bg-background"
+      }`}
+    >
       <span className="font-medium text-ink">{alt.webName}</span>
       <span className="text-ink-soft">{alt.team}</span>
+      {alt.price != null && <span className="text-ink-soft tabular-nums">£{alt.price.toFixed(1)}</span>}
       {typeof alt.gapPoints === "number" && (
         <span className="font-semibold text-[var(--pitch-dark)] tabular-nums">
           +{alt.gapPoints.toFixed(1)}
+        </span>
+      )}
+      {alt.affordable === false && (
+        <span className="rounded bg-[var(--fwd)]/20 px-1 text-[10px] font-semibold text-[var(--fwd)]">
+          over budget
         </span>
       )}
       <ProjectionCell points={alt.projectedPoints} breakdown={alt.breakdown} />
@@ -119,14 +129,23 @@ export default function Pitch({ forecast }: { forecast: Forecast }) {
       </div>
 
       <div className="rounded-xl border border-line bg-card p-3 shadow-sm">
-        <h2 className="text-sm font-bold uppercase tracking-wide text-[var(--pitch-dark)]">
-          Transfer alternatives
-        </h2>
+        <div className="flex items-baseline justify-between">
+          <h2 className="text-sm font-bold uppercase tracking-wide text-[var(--pitch-dark)]">
+            Transfer alternatives
+          </h2>
+          <span className="text-xs text-ink-soft">
+            Bank <span className="font-semibold text-ink tabular-nums">£{forecast.squad.bank.toFixed(1)}m</span>
+          </span>
+        </div>
         <p className="mt-0.5 text-[11px] text-ink-soft">
-          Same position, within £{"0.3"}m · hover a number for the maths
+          {forecast.earlySeason
+            ? `Early season — only moves gaining ≥ ${forecast.effectiveGap.toFixed(0)} pts over 5 GWs are shown; sell prices assume today's price.`
+            : "Same position, within £0.3m · sell prices assume today's price · hover a number for the maths."}
         </p>
         {withAlternatives.length === 0 ? (
-          <p className="mt-3 text-sm text-ink-soft">No better option in band anywhere.</p>
+          <p className="mt-3 text-sm text-ink-soft">
+            No move clears the bar this week — hold your transfer.
+          </p>
         ) : (
           <ul className="mt-2 space-y-2.5">
             {withAlternatives.map((p) => (

@@ -52,6 +52,15 @@ DISPLAY_GAP_ROWS = 3
 # surfacing prominently in the weekly view; smaller gains are shown muted.
 MEANINGFUL_UPGRADE_GAP = 5.0
 
+# Before this gameweek the model runs on thin current-season data, so the
+# recent-form slice of a rate blend is scaled down toward it and the
+# "worth a transfer" bar is raised -- two gameweeks shouldn't recommend nine
+# swaps. Both effects fade to nothing by SETTLE_GAMEWEEK.
+SETTLE_GAMEWEEK = 8
+# Extra "worth a transfer" gap required per gameweek the season is short of
+# SETTLE_GAMEWEEK: effective_gap = MEANINGFUL_UPGRADE_GAP * (1 + RAMP * weeks_early).
+EARLY_SEASON_GAP_RAMP = 0.25
+
 # Pre-deadline write window, in hours, for the prediction log (U9, KTD7).
 PREDICTION_WINDOW_HOURS = 48
 

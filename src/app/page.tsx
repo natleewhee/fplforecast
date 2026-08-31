@@ -169,6 +169,7 @@ export default function Home() {
               squad={forecast.squad.players}
               allPlayers={bootstrap.players}
               basedOnGw={forecast.basedOnGameweek}
+              bank={forecast.squad.bank}
             />
           </Card>
 

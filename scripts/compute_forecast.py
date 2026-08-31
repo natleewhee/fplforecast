@@ -19,7 +19,12 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 from engine import baseline, model, newcomer
-from engine.config import MEANINGFUL_UPGRADE_GAP, ROLLING_WINDOW
+from engine.config import (
+    EARLY_SEASON_GAP_RAMP,
+    MEANINGFUL_UPGRADE_GAP,
+    ROLLING_WINDOW,
+    SETTLE_GAMEWEEK,
+)
 from engine.features import POSITIONS, build_feature_frame
 from engine.history import ColdStart, classify, load_history
 from engine.model import ModelContext
@@ -87,7 +92,7 @@ def load_understat_seasons() -> dict[str, dict[str, list[dict]]]:
     return out
 
 
-def load_latest_picks() -> tuple[int, list[dict]] | None:
+def load_latest_picks() -> tuple[int, list[dict], dict] | None:
     picks_dir = DATA_DIR / f"picks-{TEAM_ID}"
     if not picks_dir.exists():
         return None
@@ -95,8 +100,9 @@ def load_latest_picks() -> tuple[int, list[dict]] | None:
     if not gw_files:
         return None
     latest = gw_files[-1]
+    data = load_json(latest)
     gw = int(latest.stem.removeprefix("gw"))
-    return gw, load_json(latest).get("picks", [])
+    return gw, data.get("picks", []), data.get("entry_history", {})
 
 
 def load_overrides(gw: int) -> list[dict]:
@@ -143,7 +149,16 @@ def _player_card(pid: int, elements_by_id: dict, teams_by_id: dict) -> dict:
         "team": teams_by_id.get(el.get("team"), "???"),
         "position": POSITIONS.get(el.get("element_type"), "???"),
         "elementType": el.get("element_type"),
+        "price": round((el.get("now_cost") or 0) / 10, 1),
     }
+
+
+def effective_gap(target_gw: int) -> float:
+    """The 5-GW gain a swap must clear to be surfaced as a recommendation.
+    Raised early in the season, when two gameweeks of data can throw up a big
+    but meaningless gap; back to ``MEANINGFUL_UPGRADE_GAP`` by ``SETTLE_GAMEWEEK``."""
+    weeks_early = max(0, SETTLE_GAMEWEEK - target_gw)
+    return MEANINGFUL_UPGRADE_GAP * (1 + EARLY_SEASON_GAP_RAMP * weeks_early)
 
 
 def archive_rates(resolved_map: dict, history_frame) -> dict[int, dict]:
@@ -217,19 +232,27 @@ def _enrich_card(
     return card
 
 
-def _upgrade_for(gap_row: dict, alt_card_fn) -> dict | None:
+def _affordable(alt_price, sell_price: float, bank: float) -> bool | None:
+    """Whether the swap fits the budget: bank + what the held player sells for
+    must cover the alternative's price. ``None`` when a price is unknown."""
+    if alt_price is None:
+        return None
+    return (bank + sell_price) >= alt_price - 1e-6
+
+
+def _upgrade_for(gap_row: dict, alt_card_fn, gap_bar: float, sell_price: float, bank: float) -> dict | None:
     """One projection's suggestion for a squad player: the better same-position,
-    similar-price alternative and the 5-GW gain -- or ``None`` when nothing in
-    the pool beats the held player. ``meaningful`` marks a gain big enough to
-    surface prominently (``MEANINGFUL_UPGRADE_GAP``); smaller gains are shown
-    muted so the weekly view isn't a wall of marginal swaps."""
+    similar-price alternative, the 5-GW gain, whether it fits the budget, and
+    whether the gain clears the (season-scaled) ``gap_bar``."""
     alt_id = gap_row["bestAlternative"]
     if alt_id is None or gap_row["gapPoints"] <= 0:
         return None
+    card = alt_card_fn(alt_id)
     return {
-        "alternative": alt_card_fn(alt_id),
+        "alternative": card,
         "gapPoints": gap_row["gapPoints"],
-        "meaningful": gap_row["gapPoints"] >= MEANINGFUL_UPGRADE_GAP,
+        "meaningful": gap_row["gapPoints"] >= gap_bar,
+        "affordable": _affordable(card.get("price"), sell_price, bank),
     }
 
 
@@ -246,8 +269,10 @@ def main(now: datetime | None = None) -> int:
         print("No squad picks snapshot yet (no finished gameweek) — nothing to forecast", file=sys.stderr)
         return 0
 
-    based_on_gw, picks = picks_result
+    based_on_gw, picks, entry_history = picks_result
     target_gw = upcoming_gameweek(bootstrap, now, fallback=based_on_gw + 1)
+    bank = round((entry_history.get("bank") or 0) / 10, 1)
+    gap_bar = effective_gap(target_gw)
 
     elements_by_id = {el["id"]: el for el in bootstrap["elements"]}
     teams_by_id = {t["id"]: t["short_name"] for t in bootstrap["teams"]}
@@ -342,6 +367,8 @@ def main(now: datetime | None = None) -> int:
             continue
         detail = model.project_detail(feature_frame.loc[pid], target_gw, ctx)
         card = _player_card(pid, elements_by_id, teams_by_id)
+        sell_price = card["price"]  # public data has no purchase price; assume bought at today's
+        card["sellPrice"] = sell_price
         card["projectedPoints"] = detail.get("points")
         card["windowPoints"] = round(model_window[pid], 2) if model_window.get(pid) is not None else None
         card["provisional"] = detail.get("provisional", False)
@@ -349,13 +376,24 @@ def main(now: datetime | None = None) -> int:
         card["minutesRisk"] = bool(minutes_risk_by_id.get(pid, False))
         card["opponents"] = detail["opponents"]
         card["breakdown"] = detail
-        card["modelUpgrade"] = _upgrade_for(model_rows[pid], alt_card) if pid in model_rows else None
+        card["modelUpgrade"] = (
+            _upgrade_for(model_rows[pid], alt_card, gap_bar, sell_price, bank)
+            if pid in model_rows
+            else None
+        )
         card["baselineUpgrade"] = (
-            _upgrade_for(baseline_rows[pid], alt_card) if pid in baseline_rows else None
+            _upgrade_for(baseline_rows[pid], alt_card, gap_bar, sell_price, bank)
+            if pid in baseline_rows
+            else None
         )
         card["alternatives"] = [
-            {**alt_card(a["id"]), "gapPoints": a["gapPoints"]}
+            {
+                **alt_card(a["id"]),
+                "gapPoints": a["gapPoints"],
+                "affordable": _affordable(alt_card(a["id"]).get("price"), sell_price, bank),
+            }
             for a in top_alternatives(pid, pool_ids, model_window, price_by_id, position_by_id, limit=3)
+            if a["gapPoints"] is None or a["gapPoints"] >= gap_bar
         ]
         players.append(card)
 
@@ -414,8 +452,12 @@ def main(now: datetime | None = None) -> int:
             "players": players,
             "startingXi": starting_ids,
             "bench": bench_ids,
+            "bank": bank,
+            "bankNote": "sell prices assume each player was bought at today's price",
         },
         "upgradeCount": upgrade_count,
+        "effectiveGap": round(gap_bar, 1),
+        "earlySeason": gap_bar > MEANINGFUL_UPGRADE_GAP + 1e-6,
         "captain": {"webName": captain["webName"], "id": captain["id"]} if captain else None,
         "runningRecord": load_running_record(),
     }
