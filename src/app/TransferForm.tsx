@@ -11,7 +11,7 @@ type Props = {
 };
 
 const fieldClass =
-  "mt-1 w-full rounded-lg border border-line bg-white px-3 py-2 text-sm text-ink placeholder:text-ink-soft/60 focus:border-[var(--pitch)] focus:outline-none focus:ring-2 focus:ring-[var(--pitch-light)]/30";
+  "mt-1 w-full rounded-lg border border-line bg-[var(--bg-2)] px-3 py-2 text-sm text-ink placeholder:text-ink-faint focus:border-[var(--accent)] focus:outline-none focus:ring-2 focus:ring-[color-mix(in_srgb,var(--accent)_30%,transparent)]";
 
 export default function TransferForm({ squad, allPlayers, basedOnGw, bank }: Props) {
   const [outId, setOutId] = useState<number | "">("");
@@ -58,8 +58,8 @@ export default function TransferForm({ squad, allPlayers, basedOnGw, bank }: Pro
 
   return (
     <div>
-      <h2 className="text-sm font-bold uppercase tracking-wide text-[var(--pitch-dark)]">
-        Make a transfer
+      <h2 className="font-mono text-[13px] font-bold tracking-[0.12em] text-ink">
+        MAKE A TRANSFER
       </h2>
       <p className="mt-1 text-xs text-ink-soft">
         Saves to the repo and triggers a redeploy. Bank{" "}
@@ -92,11 +92,11 @@ export default function TransferForm({ squad, allPlayers, basedOnGw, bank }: Pro
         }}
       />
       {matches.length > 0 && inId === "" && (
-        <ul className="mt-1 max-h-40 overflow-y-auto rounded-lg border border-line bg-white text-sm shadow-sm">
+        <ul className="mt-1 max-h-40 overflow-y-auto rounded-lg border border-line bg-[var(--bg-2)] text-sm shadow-xl">
           {matches.map((p) => (
             <li
               key={p.id}
-              className="cursor-pointer px-3 py-2 text-ink hover:bg-[var(--pitch-light)]/10"
+              className="cursor-pointer px-3 py-2 text-ink hover:bg-white/[0.06]"
               onClick={() => {
                 setInId(p.id);
                 setInQuery(p.webName);
@@ -110,10 +110,10 @@ export default function TransferForm({ squad, allPlayers, basedOnGw, bank }: Pro
 
       {remaining != null && (
         <p
-          className={`mt-3 rounded-lg px-3 py-2 text-xs font-medium ${
+          className={`mt-3 rounded-lg border px-3 py-2 text-xs font-medium ${
             remaining < -1e-6
-              ? "bg-[var(--fwd)]/10 text-[var(--fwd)]"
-              : "bg-[var(--pitch-light)]/15 text-[var(--pitch-dark)]"
+              ? "border-[color-mix(in_srgb,var(--danger)_40%,transparent)] bg-[color-mix(in_srgb,var(--danger)_10%,transparent)] text-[var(--danger)]"
+              : "border-[color-mix(in_srgb,var(--accent)_40%,transparent)] bg-[color-mix(in_srgb,var(--accent)_10%,transparent)] text-[var(--accent)]"
           }`}
         >
           {remaining < -1e-6
@@ -132,7 +132,7 @@ export default function TransferForm({ squad, allPlayers, basedOnGw, bank }: Pro
       <input className={fieldClass} value={note} onChange={(e) => setNote(e.target.value)} />
 
       <button
-        className="mt-4 w-full rounded-lg bg-[var(--pitch-dark)] py-2 text-sm font-semibold text-white transition hover:bg-[var(--pitch)] disabled:cursor-not-allowed disabled:bg-line disabled:text-ink-soft"
+        className="mt-4 w-full rounded-lg bg-gradient-to-b from-[var(--accent)] to-[#23c78c] py-2 text-sm font-bold text-black shadow-[0_0_20px_var(--accent-glow)] transition hover:brightness-110 disabled:cursor-not-allowed disabled:bg-none disabled:bg-white/5 disabled:text-ink-faint disabled:shadow-none"
         disabled={outId === "" || inId === "" || status === "saving"}
         onClick={submit}
       >
@@ -140,11 +140,13 @@ export default function TransferForm({ squad, allPlayers, basedOnGw, bank }: Pro
       </button>
 
       {status === "saved" && (
-        <p className="mt-2 text-xs font-medium text-[var(--pitch-dark)]">
+        <p className="mt-2 text-xs font-medium text-[var(--accent)]">
           Saved. Redeploy takes a minute or two to pick it up.
         </p>
       )}
-      {status === "error" && <p className="mt-2 text-xs font-medium text-[var(--fwd)]">{errorMsg}</p>}
+      {status === "error" && (
+        <p className="mt-2 text-xs font-medium text-[var(--danger)]">{errorMsg}</p>
+      )}
     </div>
   );
 }

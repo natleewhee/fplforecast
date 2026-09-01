@@ -21,7 +21,7 @@ function BreakdownPanel({ breakdown }: { breakdown: ProjectionBreakdown }) {
   return (
     <span
       role="tooltip"
-      className="absolute right-0 top-full z-20 mt-1 block w-60 rounded-lg border border-line bg-card p-3 text-left text-xs font-normal text-ink shadow-lg"
+      className="absolute right-0 top-full z-30 mt-1 block w-60 rounded-xl border border-border-strong bg-[var(--bg-2)] p-3 text-left text-xs font-normal text-ink shadow-[0_20px_50px_-12px_rgba(0,0,0,0.9)] backdrop-blur-xl"
     >
       <span className="mb-1 block font-semibold text-ink">Expected points</span>
       {c && (
@@ -51,7 +51,7 @@ function BreakdownPanel({ breakdown }: { breakdown: ProjectionBreakdown }) {
         </span>
       )}
       {breakdown.provisional && (
-        <span className="mt-1.5 block border-t border-line pt-1.5 text-[11px] text-amber-700">
+        <span className="mt-1.5 block border-t border-line pt-1.5 text-[11px] text-[var(--warn)]">
           Provisional — no Premier League history yet, projected from{" "}
           {rateSourceLabel(breakdown.rateSource)}.
         </span>
@@ -84,8 +84,8 @@ export default function ProjectionCell({
 
   return (
     <span
-      className={`relative inline-block cursor-help font-semibold underline decoration-dotted decoration-1 underline-offset-2 tabular-nums ${
-        breakdown.provisional ? "text-amber-700" : "text-[var(--pitch-dark)]"
+      className={`relative inline-block cursor-help font-mono font-bold underline decoration-dotted decoration-1 underline-offset-2 tabular-nums ${
+        breakdown.provisional ? "text-[var(--warn)]" : "text-[var(--accent)]"
       }`}
       tabIndex={0}
       aria-label={`Projected ${points.toFixed(1)} points${
