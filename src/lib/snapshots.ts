@@ -153,6 +153,52 @@ export type Forecast = {
   captainEdge: { points: number; label: string } | null; // captain vs vice, single GW
   runningRecord: RunningRecord | null;
   lastGameweek: GameweekReview | null;
+  upcoming: UpcomingGameweek[]; // suggested XI for each GW in the rolling window
+  history: SeasonHistory | null;
+};
+
+export type UpcomingPlayer = {
+  id: number;
+  projectedPoints: number | null;
+  provisional: boolean;
+  minutesRisk: boolean;
+  opponents: OpponentLeg[];
+};
+
+export type UpcomingGameweek = {
+  gameweek: number;
+  points: number; // XI total, captain doubled
+  startingXi: number[];
+  bench: number[];
+  captainId: number | null;
+  viceCaptainId: number | null;
+  players: UpcomingPlayer[];
+};
+
+export type GwModelVsBaseline = { model: number; baseline: number; delta: number };
+
+export type HistoryGameweek = {
+  gameweek: number | null;
+  points: number | null;
+  benchPoints: number | null;
+  totalPoints: number | null;
+  rank: number | null; // that gameweek's rank
+  overallRank: number | null;
+  transfers: number;
+  hit: number; // points spent on transfers
+  teamValue: number; // £m
+  modelVsBaseline: GwModelVsBaseline | { status: string } | null;
+};
+
+export type HistorySeason = {
+  season: string | null;
+  totalPoints: number | null;
+  rank: number | null;
+};
+
+export type SeasonHistory = {
+  gameweeks: HistoryGameweek[];
+  seasons: HistorySeason[];
 };
 
 export type GameweekCaptain = {

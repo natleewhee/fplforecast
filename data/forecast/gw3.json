@@ -11,7 +11,49 @@
   },
   "earlySeason": true,
   "effectiveGap": 11.2,
-  "generatedAt": "2026-09-01T08:28:10.880743+00:00",
+  "generatedAt": "2026-09-01T12:51:58.561295+00:00",
+  "history": {
+    "gameweeks": [
+      {
+        "benchPoints": 10,
+        "gameweek": 1,
+        "hit": 0,
+        "modelVsBaseline": {
+          "status": "no_prediction"
+        },
+        "overallRank": 4087187,
+        "points": 51,
+        "rank": 4087192,
+        "teamValue": 100.0,
+        "totalPoints": 51,
+        "transfers": 0
+      },
+      {
+        "benchPoints": 7,
+        "gameweek": 2,
+        "hit": 0,
+        "modelVsBaseline": null,
+        "overallRank": 758025,
+        "points": 113,
+        "rank": 370475,
+        "teamValue": 100.1,
+        "totalPoints": 164,
+        "transfers": 0
+      }
+    ],
+    "seasons": [
+      {
+        "rank": 2014262,
+        "season": "2024/25",
+        "totalPoints": 2260
+      },
+      {
+        "rank": 241694,
+        "season": "2025/26",
+        "totalPoints": 2287
+      }
+    ]
+  },
   "lastGameweek": {
     "benchPoints": 10,
     "captain": {
@@ -2567,6 +2609,1118 @@
     ]
   },
   "targetGameweek": 3,
+  "upcoming": [
+    {
+      "bench": [
+        1,
+        334,
+        557,
+        212
+      ],
+      "captainId": 426,
+      "gameweek": 3,
+      "players": [
+        {
+          "id": 1,
+          "minutesRisk": false,
+          "opponents": [
+            {
+              "fdrRating": 4,
+              "team": "CHE",
+              "wasHome": true
+            }
+          ],
+          "projectedPoints": 3.2,
+          "provisional": false
+        },
+        {
+          "id": 418,
+          "minutesRisk": false,
+          "opponents": [
+            {
+              "fdrRating": 3,
+              "team": "EVE",
+              "wasHome": false
+            }
+          ],
+          "projectedPoints": 4.1,
+          "provisional": false
+        },
+        {
+          "id": 11,
+          "minutesRisk": false,
+          "opponents": [
+            {
+              "fdrRating": 4,
+              "team": "CHE",
+              "wasHome": true
+            }
+          ],
+          "projectedPoints": 4.54,
+          "provisional": false
+        },
+        {
+          "id": 504,
+          "minutesRisk": false,
+          "opponents": [
+            {
+              "fdrRating": 2,
+              "team": "LEE",
+              "wasHome": true
+            }
+          ],
+          "projectedPoints": 3.71,
+          "provisional": false
+        },
+        {
+          "id": 426,
+          "minutesRisk": false,
+          "opponents": [
+            {
+              "fdrRating": 3,
+              "team": "EVE",
+              "wasHome": false
+            }
+          ],
+          "projectedPoints": 7.03,
+          "provisional": false
+        },
+        {
+          "id": 124,
+          "minutesRisk": false,
+          "opponents": [
+            {
+              "fdrRating": 2,
+              "team": "LEE",
+              "wasHome": true
+            }
+          ],
+          "projectedPoints": 5.11,
+          "provisional": false
+        },
+        {
+          "id": 366,
+          "minutesRisk": false,
+          "opponents": [
+            {
+              "fdrRating": 2,
+              "team": "IPS",
+              "wasHome": false
+            }
+          ],
+          "projectedPoints": 4.83,
+          "provisional": false
+        },
+        {
+          "id": 557,
+          "minutesRisk": false,
+          "opponents": [
+            {
+              "fdrRating": 4,
+              "team": "CHE",
+              "wasHome": true
+            }
+          ],
+          "projectedPoints": 2.51,
+          "provisional": true
+        },
+        {
+          "id": 346,
+          "minutesRisk": false,
+          "opponents": [
+            {
+              "fdrRating": 3,
+              "team": "BHA",
+              "wasHome": false
+            }
+          ],
+          "projectedPoints": 4.64,
+          "provisional": false
+        },
+        {
+          "id": 411,
+          "minutesRisk": false,
+          "opponents": [
+            {
+              "fdrRating": 2,
+              "team": "COV",
+              "wasHome": true
+            }
+          ],
+          "projectedPoints": 6.52,
+          "provisional": false
+        },
+        {
+          "id": 165,
+          "minutesRisk": false,
+          "opponents": [
+            {
+              "fdrRating": 5,
+              "team": "ARS",
+              "wasHome": false
+            }
+          ],
+          "projectedPoints": 6.24,
+          "provisional": false
+        },
+        {
+          "id": 496,
+          "minutesRisk": false,
+          "opponents": [
+            {
+              "fdrRating": 3,
+              "team": "NFO",
+              "wasHome": false
+            }
+          ],
+          "projectedPoints": 3.46,
+          "provisional": false
+        },
+        {
+          "id": 212,
+          "minutesRisk": true,
+          "opponents": [
+            {
+              "fdrRating": 3,
+              "team": "FUL",
+              "wasHome": false
+            }
+          ],
+          "projectedPoints": 1.6,
+          "provisional": false
+        },
+        {
+          "id": 305,
+          "minutesRisk": false,
+          "opponents": [
+            {
+              "fdrRating": 4,
+              "team": "LIV",
+              "wasHome": true
+            }
+          ],
+          "projectedPoints": 3.83,
+          "provisional": false
+        },
+        {
+          "id": 334,
+          "minutesRisk": false,
+          "opponents": [
+            {
+              "fdrRating": 3,
+              "team": "BHA",
+              "wasHome": false
+            }
+          ],
+          "projectedPoints": 3.04,
+          "provisional": true
+        }
+      ],
+      "points": 61.0,
+      "startingXi": [
+        496,
+        11,
+        418,
+        305,
+        504,
+        426,
+        124,
+        366,
+        411,
+        165,
+        346
+      ],
+      "viceCaptainId": 411
+    },
+    {
+      "bench": [
+        334,
+        1,
+        557,
+        212
+      ],
+      "captainId": 426,
+      "gameweek": 4,
+      "players": [
+        {
+          "id": 1,
+          "minutesRisk": false,
+          "opponents": [
+            {
+              "fdrRating": 3,
+              "team": "SUN",
+              "wasHome": false
+            }
+          ],
+          "projectedPoints": 2.93,
+          "provisional": false
+        },
+        {
+          "id": 418,
+          "minutesRisk": false,
+          "opponents": [
+            {
+              "fdrRating": 4,
+              "team": "MCI",
+              "wasHome": true
+            }
+          ],
+          "projectedPoints": 4.26,
+          "provisional": false
+        },
+        {
+          "id": 11,
+          "minutesRisk": false,
+          "opponents": [
+            {
+              "fdrRating": 3,
+              "team": "SUN",
+              "wasHome": false
+            }
+          ],
+          "projectedPoints": 4.17,
+          "provisional": false
+        },
+        {
+          "id": 504,
+          "minutesRisk": false,
+          "opponents": [
+            {
+              "fdrRating": 2,
+              "team": "COV",
+              "wasHome": false
+            }
+          ],
+          "projectedPoints": 3.43,
+          "provisional": false
+        },
+        {
+          "id": 426,
+          "minutesRisk": false,
+          "opponents": [
+            {
+              "fdrRating": 4,
+              "team": "MCI",
+              "wasHome": true
+            }
+          ],
+          "projectedPoints": 7.08,
+          "provisional": false
+        },
+        {
+          "id": 124,
+          "minutesRisk": false,
+          "opponents": [
+            {
+              "fdrRating": 2,
+              "team": "COV",
+              "wasHome": false
+            }
+          ],
+          "projectedPoints": 4.95,
+          "provisional": false
+        },
+        {
+          "id": 366,
+          "minutesRisk": false,
+          "opponents": [
+            {
+              "fdrRating": 2,
+              "team": "FUL",
+              "wasHome": true
+            }
+          ],
+          "projectedPoints": 5.06,
+          "provisional": false
+        },
+        {
+          "id": 557,
+          "minutesRisk": false,
+          "opponents": [
+            {
+              "fdrRating": 3,
+              "team": "SUN",
+              "wasHome": false
+            }
+          ],
+          "projectedPoints": 2.44,
+          "provisional": true
+        },
+        {
+          "id": 346,
+          "minutesRisk": false,
+          "opponents": [
+            {
+              "fdrRating": 2,
+              "team": "NEW",
+              "wasHome": true
+            }
+          ],
+          "projectedPoints": 4.75,
+          "provisional": false
+        },
+        {
+          "id": 411,
+          "minutesRisk": false,
+          "opponents": [
+            {
+              "fdrRating": 4,
+              "team": "MUN",
+              "wasHome": false
+            }
+          ],
+          "projectedPoints": 6.16,
+          "provisional": false
+        },
+        {
+          "id": 165,
+          "minutesRisk": false,
+          "opponents": [
+            {
+              "fdrRating": 2,
+              "team": "HUL",
+              "wasHome": true
+            }
+          ],
+          "projectedPoints": 6.74,
+          "provisional": false
+        },
+        {
+          "id": 496,
+          "minutesRisk": false,
+          "opponents": [
+            {
+              "fdrRating": 3,
+              "team": "EVE",
+              "wasHome": true
+            }
+          ],
+          "projectedPoints": 3.71,
+          "provisional": false
+        },
+        {
+          "id": 212,
+          "minutesRisk": true,
+          "opponents": [
+            {
+              "fdrRating": 2,
+              "team": "IPS",
+              "wasHome": true
+            }
+          ],
+          "projectedPoints": 1.7,
+          "provisional": false
+        },
+        {
+          "id": 305,
+          "minutesRisk": false,
+          "opponents": [
+            {
+              "fdrRating": 3,
+              "team": "CRY",
+              "wasHome": false
+            }
+          ],
+          "projectedPoints": 3.64,
+          "provisional": false
+        },
+        {
+          "id": 334,
+          "minutesRisk": false,
+          "opponents": [
+            {
+              "fdrRating": 2,
+              "team": "NEW",
+              "wasHome": true
+            }
+          ],
+          "projectedPoints": 3.26,
+          "provisional": true
+        }
+      ],
+      "points": 61.0,
+      "startingXi": [
+        496,
+        418,
+        11,
+        305,
+        504,
+        426,
+        366,
+        124,
+        165,
+        411,
+        346
+      ],
+      "viceCaptainId": 165
+    },
+    {
+      "bench": [
+        334,
+        1,
+        557,
+        212
+      ],
+      "captainId": 426,
+      "gameweek": 5,
+      "players": [
+        {
+          "id": 1,
+          "minutesRisk": false,
+          "opponents": [
+            {
+              "fdrRating": 3,
+              "team": "BHA",
+              "wasHome": false
+            }
+          ],
+          "projectedPoints": 2.9,
+          "provisional": false
+        },
+        {
+          "id": 418,
+          "minutesRisk": false,
+          "opponents": [
+            {
+              "fdrRating": 3,
+              "team": "FUL",
+              "wasHome": false
+            }
+          ],
+          "projectedPoints": 4.15,
+          "provisional": false
+        },
+        {
+          "id": 11,
+          "minutesRisk": false,
+          "opponents": [
+            {
+              "fdrRating": 3,
+              "team": "BHA",
+              "wasHome": false
+            }
+          ],
+          "projectedPoints": 4.13,
+          "provisional": false
+        },
+        {
+          "id": 504,
+          "minutesRisk": false,
+          "opponents": [
+            {
+              "fdrRating": 4,
+              "team": "ARS",
+              "wasHome": true
+            }
+          ],
+          "projectedPoints": 3.48,
+          "provisional": false
+        },
+        {
+          "id": 426,
+          "minutesRisk": false,
+          "opponents": [
+            {
+              "fdrRating": 3,
+              "team": "FUL",
+              "wasHome": false
+            }
+          ],
+          "projectedPoints": 7.0,
+          "provisional": false
+        },
+        {
+          "id": 124,
+          "minutesRisk": false,
+          "opponents": [
+            {
+              "fdrRating": 4,
+              "team": "ARS",
+              "wasHome": true
+            }
+          ],
+          "projectedPoints": 5.02,
+          "provisional": false
+        },
+        {
+          "id": 366,
+          "minutesRisk": false,
+          "opponents": [
+            {
+              "fdrRating": 3,
+              "team": "BOU",
+              "wasHome": false
+            }
+          ],
+          "projectedPoints": 4.75,
+          "provisional": false
+        },
+        {
+          "id": 557,
+          "minutesRisk": false,
+          "opponents": [
+            {
+              "fdrRating": 3,
+              "team": "BHA",
+              "wasHome": false
+            }
+          ],
+          "projectedPoints": 2.43,
+          "provisional": true
+        },
+        {
+          "id": 346,
+          "minutesRisk": false,
+          "opponents": [
+            {
+              "fdrRating": 3,
+              "team": "CRY",
+              "wasHome": true
+            }
+          ],
+          "projectedPoints": 4.94,
+          "provisional": false
+        },
+        {
+          "id": 411,
+          "minutesRisk": false,
+          "opponents": [
+            {
+              "fdrRating": 2,
+              "team": "SUN",
+              "wasHome": true
+            }
+          ],
+          "projectedPoints": 6.6,
+          "provisional": false
+        },
+        {
+          "id": 165,
+          "minutesRisk": false,
+          "opponents": [
+            {
+              "fdrRating": 3,
+              "team": "BRE",
+              "wasHome": false
+            }
+          ],
+          "projectedPoints": 6.44,
+          "provisional": false
+        },
+        {
+          "id": 496,
+          "minutesRisk": false,
+          "opponents": [
+            {
+              "fdrRating": 3,
+              "team": "AVL",
+              "wasHome": true
+            }
+          ],
+          "projectedPoints": 3.63,
+          "provisional": false
+        },
+        {
+          "id": 212,
+          "minutesRisk": true,
+          "opponents": [
+            {
+              "fdrRating": 3,
+              "team": "LEE",
+              "wasHome": false
+            }
+          ],
+          "projectedPoints": 1.58,
+          "provisional": false
+        },
+        {
+          "id": 305,
+          "minutesRisk": false,
+          "opponents": [
+            {
+              "fdrRating": 3,
+              "team": "EVE",
+              "wasHome": false
+            }
+          ],
+          "projectedPoints": 3.64,
+          "provisional": false
+        },
+        {
+          "id": 334,
+          "minutesRisk": false,
+          "opponents": [
+            {
+              "fdrRating": 3,
+              "team": "CRY",
+              "wasHome": true
+            }
+          ],
+          "projectedPoints": 3.3,
+          "provisional": true
+        }
+      ],
+      "points": 60.8,
+      "startingXi": [
+        496,
+        418,
+        11,
+        305,
+        504,
+        426,
+        124,
+        366,
+        411,
+        165,
+        346
+      ],
+      "viceCaptainId": 411
+    },
+    {
+      "bench": [
+        1,
+        334,
+        557,
+        212
+      ],
+      "captainId": 426,
+      "gameweek": 6,
+      "players": [
+        {
+          "id": 1,
+          "minutesRisk": false,
+          "opponents": [
+            {
+              "fdrRating": 2,
+              "team": "LEE",
+              "wasHome": true
+            }
+          ],
+          "projectedPoints": 3.2,
+          "provisional": false
+        },
+        {
+          "id": 418,
+          "minutesRisk": false,
+          "opponents": [
+            {
+              "fdrRating": 3,
+              "team": "TOT",
+              "wasHome": true
+            }
+          ],
+          "projectedPoints": 4.52,
+          "provisional": false
+        },
+        {
+          "id": 11,
+          "minutesRisk": false,
+          "opponents": [
+            {
+              "fdrRating": 2,
+              "team": "LEE",
+              "wasHome": true
+            }
+          ],
+          "projectedPoints": 4.54,
+          "provisional": false
+        },
+        {
+          "id": 504,
+          "minutesRisk": false,
+          "opponents": [
+            {
+              "fdrRating": 3,
+              "team": "SUN",
+              "wasHome": false
+            }
+          ],
+          "projectedPoints": 3.47,
+          "provisional": false
+        },
+        {
+          "id": 426,
+          "minutesRisk": false,
+          "opponents": [
+            {
+              "fdrRating": 3,
+              "team": "TOT",
+              "wasHome": true
+            }
+          ],
+          "projectedPoints": 7.32,
+          "provisional": false
+        },
+        {
+          "id": 124,
+          "minutesRisk": false,
+          "opponents": [
+            {
+              "fdrRating": 3,
+              "team": "SUN",
+              "wasHome": false
+            }
+          ],
+          "projectedPoints": 5.0,
+          "provisional": false
+        },
+        {
+          "id": 366,
+          "minutesRisk": false,
+          "opponents": [
+            {
+              "fdrRating": 4,
+              "team": "MCI",
+              "wasHome": true
+            }
+          ],
+          "projectedPoints": 4.86,
+          "provisional": false
+        },
+        {
+          "id": 557,
+          "minutesRisk": false,
+          "opponents": [
+            {
+              "fdrRating": 2,
+              "team": "LEE",
+              "wasHome": true
+            }
+          ],
+          "projectedPoints": 2.51,
+          "provisional": true
+        },
+        {
+          "id": 346,
+          "minutesRisk": false,
+          "opponents": [
+            {
+              "fdrRating": 5,
+              "team": "ARS",
+              "wasHome": false
+            }
+          ],
+          "projectedPoints": 4.53,
+          "provisional": false
+        },
+        {
+          "id": 411,
+          "minutesRisk": false,
+          "opponents": [
+            {
+              "fdrRating": 4,
+              "team": "LIV",
+              "wasHome": false
+            }
+          ],
+          "projectedPoints": 5.97,
+          "provisional": false
+        },
+        {
+          "id": 165,
+          "minutesRisk": false,
+          "opponents": [
+            {
+              "fdrRating": 3,
+              "team": "BOU",
+              "wasHome": true
+            }
+          ],
+          "projectedPoints": 6.79,
+          "provisional": false
+        },
+        {
+          "id": 496,
+          "minutesRisk": false,
+          "opponents": [
+            {
+              "fdrRating": 4,
+              "team": "MUN",
+              "wasHome": false
+            }
+          ],
+          "projectedPoints": 3.46,
+          "provisional": false
+        },
+        {
+          "id": 212,
+          "minutesRisk": true,
+          "opponents": [
+            {
+              "fdrRating": 3,
+              "team": "NFO",
+              "wasHome": true
+            }
+          ],
+          "projectedPoints": 1.69,
+          "provisional": false
+        },
+        {
+          "id": 305,
+          "minutesRisk": false,
+          "opponents": [
+            {
+              "fdrRating": 2,
+              "team": "FUL",
+              "wasHome": true
+            }
+          ],
+          "projectedPoints": 4.03,
+          "provisional": false
+        },
+        {
+          "id": 334,
+          "minutesRisk": false,
+          "opponents": [
+            {
+              "fdrRating": 5,
+              "team": "ARS",
+              "wasHome": false
+            }
+          ],
+          "projectedPoints": 2.77,
+          "provisional": true
+        }
+      ],
+      "points": 61.8,
+      "startingXi": [
+        496,
+        11,
+        418,
+        305,
+        504,
+        426,
+        124,
+        366,
+        165,
+        411,
+        346
+      ],
+      "viceCaptainId": 165
+    },
+    {
+      "bench": [
+        334,
+        1,
+        557,
+        212
+      ],
+      "captainId": 426,
+      "gameweek": 7,
+      "players": [
+        {
+          "id": 1,
+          "minutesRisk": false,
+          "opponents": [
+            {
+              "fdrRating": 3,
+              "team": "NFO",
+              "wasHome": false
+            }
+          ],
+          "projectedPoints": 2.88,
+          "provisional": false
+        },
+        {
+          "id": 418,
+          "minutesRisk": false,
+          "opponents": [
+            {
+              "fdrRating": 3,
+              "team": "LEE",
+              "wasHome": false
+            }
+          ],
+          "projectedPoints": 4.15,
+          "provisional": false
+        },
+        {
+          "id": 11,
+          "minutesRisk": false,
+          "opponents": [
+            {
+              "fdrRating": 3,
+              "team": "NFO",
+              "wasHome": false
+            }
+          ],
+          "projectedPoints": 4.11,
+          "provisional": false
+        },
+        {
+          "id": 504,
+          "minutesRisk": false,
+          "opponents": [
+            {
+              "fdrRating": 3,
+              "team": "CRY",
+              "wasHome": true
+            }
+          ],
+          "projectedPoints": 3.74,
+          "provisional": false
+        },
+        {
+          "id": 426,
+          "minutesRisk": false,
+          "opponents": [
+            {
+              "fdrRating": 3,
+              "team": "LEE",
+              "wasHome": false
+            }
+          ],
+          "projectedPoints": 6.94,
+          "provisional": false
+        },
+        {
+          "id": 124,
+          "minutesRisk": false,
+          "opponents": [
+            {
+              "fdrRating": 3,
+              "team": "CRY",
+              "wasHome": true
+            }
+          ],
+          "projectedPoints": 5.17,
+          "provisional": false
+        },
+        {
+          "id": 366,
+          "minutesRisk": false,
+          "opponents": [
+            {
+              "fdrRating": 3,
+              "team": "BRE",
+              "wasHome": false
+            }
+          ],
+          "projectedPoints": 4.81,
+          "provisional": false
+        },
+        {
+          "id": 557,
+          "minutesRisk": false,
+          "opponents": [
+            {
+              "fdrRating": 3,
+              "team": "NFO",
+              "wasHome": false
+            }
+          ],
+          "projectedPoints": 2.43,
+          "provisional": true
+        },
+        {
+          "id": 346,
+          "minutesRisk": false,
+          "opponents": [
+            {
+              "fdrRating": 4,
+              "team": "MUN",
+              "wasHome": true
+            }
+          ],
+          "projectedPoints": 4.85,
+          "provisional": false
+        },
+        {
+          "id": 411,
+          "minutesRisk": false,
+          "opponents": [
+            {
+              "fdrRating": 2,
+              "team": "IPS",
+              "wasHome": true
+            }
+          ],
+          "projectedPoints": 6.64,
+          "provisional": false
+        },
+        {
+          "id": 165,
+          "minutesRisk": false,
+          "opponents": [
+            {
+              "fdrRating": 3,
+              "team": "EVE",
+              "wasHome": false
+            }
+          ],
+          "projectedPoints": 6.49,
+          "provisional": false
+        },
+        {
+          "id": 496,
+          "minutesRisk": false,
+          "opponents": [
+            {
+              "fdrRating": 2,
+              "team": "COV",
+              "wasHome": true
+            }
+          ],
+          "projectedPoints": 3.68,
+          "provisional": false
+        },
+        {
+          "id": 212,
+          "minutesRisk": true,
+          "opponents": [
+            {
+              "fdrRating": 3,
+              "team": "BHA",
+              "wasHome": false
+            }
+          ],
+          "projectedPoints": 1.57,
+          "provisional": false
+        },
+        {
+          "id": 305,
+          "minutesRisk": false,
+          "opponents": [
+            {
+              "fdrRating": 5,
+              "team": "MCI",
+              "wasHome": false
+            }
+          ],
+          "projectedPoints": 3.45,
+          "provisional": false
+        },
+        {
+          "id": 334,
+          "minutesRisk": false,
+          "opponents": [
+            {
+              "fdrRating": 4,
+              "team": "MUN",
+              "wasHome": true
+            }
+          ],
+          "projectedPoints": 3.26,
+          "provisional": true
+        }
+      ],
+      "points": 61.0,
+      "startingXi": [
+        496,
+        418,
+        11,
+        504,
+        305,
+        426,
+        124,
+        366,
+        411,
+        165,
+        346
+      ],
+      "viceCaptainId": 411
+    }
+  ],
   "upgradeCount": {
     "agree": 6,
     "baseline": 9,

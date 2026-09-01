@@ -1,105 +1,31 @@
-"use client";
+import type { ProjectionBreakdown } from "@/lib/snapshots";
 
-import { useState } from "react";
-import type { ProjectionBreakdown, ProjectionComponents } from "@/lib/snapshots";
-
-const COMPONENT_LABELS: [keyof ProjectionComponents, string][] = [
-  ["appearance", "appearance"],
-  ["goals", "goals"],
-  ["assists", "assists"],
-  ["cleanSheet", "clean sheet"],
-  ["goalsConceded", "goals conceded"],
-  ["saves", "saves"],
-  ["defensiveContribution", "def. contribution"],
-  ["bonus", "bonus"],
-  ["cards", "cards"],
-];
-
-function BreakdownPanel({ breakdown }: { breakdown: ProjectionBreakdown }) {
-  const c = breakdown.components;
-  const opp = breakdown.opponents;
-  return (
-    <span
-      role="tooltip"
-      className="absolute right-0 top-full z-30 mt-1 block w-60 rounded-xl border border-border-strong bg-[var(--bg-2)] p-3 text-left text-xs font-normal text-ink shadow-[0_20px_50px_-12px_rgba(0,0,0,0.9)] backdrop-blur-xl"
-    >
-      <span className="mb-1 block font-semibold text-ink">Expected points</span>
-      {c && (
-        <span className="grid grid-cols-[1fr_auto] gap-x-2 gap-y-0.5 tabular-nums">
-          {COMPONENT_LABELS.filter(([k]) => k === "appearance" || c[k] !== 0).map(([k, label]) => (
-            <span key={k} className="contents">
-              <span className="text-ink-soft">{label}</span>
-              <span>{c[k] > 0 ? "+" : ""}{c[k].toFixed(2)}</span>
-            </span>
-          ))}
-          <span className="mt-0.5 border-t border-line pt-0.5 font-semibold">projected</span>
-          <span className="mt-0.5 border-t border-line pt-0.5 font-semibold">
-            {breakdown.points?.toFixed(1) ?? "—"}
-          </span>
-        </span>
-      )}
-      {opp.length > 0 && (
-        <span className="mt-1.5 block border-t border-line pt-1.5 text-ink-soft">
-          {opp.map((o, i) => (
-            <span key={i} className="block">
-              {o.wasHome ? "vs" : "@"} {o.team ?? "?"}
-              {o.fdrRating != null && ` · FDR ${o.fdrRating}`}
-              {o.lambdaFor != null && ` · goals for ${o.lambdaFor.toFixed(1)} / against ${o.lambdaAgainst?.toFixed(1)}`}
-              {o.cleanSheetProb != null && ` · CS ${Math.round(o.cleanSheetProb * 100)}%`}
-            </span>
-          ))}
-        </span>
-      )}
-      {breakdown.provisional && (
-        <span className="mt-1.5 block border-t border-line pt-1.5 text-[11px] text-[var(--warn)]">
-          Provisional — no Premier League history yet, projected from{" "}
-          {rateSourceLabel(breakdown.rateSource)}.
-        </span>
-      )}
-    </span>
-  );
-}
-
-function rateSourceLabel(source?: string): string {
-  if (!source || source === "history") return "a position prior";
-  if (source === "price") return "the price tier";
-  if (source.startsWith("understat:")) {
-    return `${source.slice("understat:".length).replace(/_/g, " ")} form`;
-  }
-  return source;
-}
-
+/** Just the projected-points number. The old hover breakdown panel was removed
+ * — it overflowed small screens and the components view already explains the
+ * model. `breakdown` is kept in the props (and the JSON) but only `provisional`
+ * is read, to tint newcomers. */
 export default function ProjectionCell({
   points,
   breakdown,
 }: {
   points: number | null;
-  breakdown: ProjectionBreakdown;
+  breakdown?: ProjectionBreakdown;
 }) {
-  const [open, setOpen] = useState(false);
-
-  if (points === null) {
-    return <span className="text-xs italic text-ink-soft">—</span>;
+  if (points === null || points === undefined) {
+    return <span className="text-xs italic text-ink-faint">—</span>;
   }
-
+  const provisional = breakdown?.provisional;
   return (
     <span
-      className={`relative inline-block cursor-help font-mono font-bold underline decoration-dotted decoration-1 underline-offset-2 tabular-nums ${
-        breakdown.provisional ? "text-[var(--warn)]" : "text-[var(--accent)]"
+      className={`font-mono font-bold tabular-nums ${
+        provisional ? "text-[var(--warn)]" : "text-[var(--accent)]"
       }`}
-      tabIndex={0}
-      aria-label={`Projected ${points.toFixed(1)} points${
-        breakdown.provisional ? " (provisional)" : ""
-      } — tap for the breakdown`}
-      onMouseEnter={() => setOpen(true)}
-      onMouseLeave={() => setOpen(false)}
-      onFocus={() => setOpen(true)}
-      onBlur={() => setOpen(false)}
-      onClick={() => setOpen((v) => !v)}
+      title={
+        provisional ? "provisional — newcomer, projected from a prior" : undefined
+      }
     >
       {points.toFixed(1)}
-      {breakdown.provisional && <sup className="ml-0.5 text-[9px] font-normal">est</sup>}
-      {open && <BreakdownPanel breakdown={breakdown} />}
+      {provisional && <sup className="ml-0.5 text-[9px] font-normal">est</sup>}
     </span>
   );
 }

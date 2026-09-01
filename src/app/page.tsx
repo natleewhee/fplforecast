@@ -9,6 +9,7 @@ import {
   type RunningRecord,
 } from "@/lib/snapshots";
 import Pitch from "./Pitch";
+import History from "./History";
 import TransferForm from "./TransferForm";
 
 export const dynamic = "force-static";
@@ -285,11 +286,8 @@ export default function Home() {
         <Header subtitle={`GW${forecast.targetGameweek} · from your GW${forecast.basedOnGameweek} squad`} />
         <Shell>
           <div className="space-y-4 pt-4">
-            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              <GameweekReviewModule review={forecast.lastGameweek} />
-              <RunningRecordModule record={forecast.runningRecord} />
-              <CaptainModule forecast={forecast} />
-            </div>
+            {/* the pitch leads */}
+            <Pitch forecast={forecast} />
 
             {chips && (
               <div className="flex flex-wrap gap-1.5">
@@ -306,7 +304,13 @@ export default function Home() {
               </div>
             )}
 
-            <Pitch forecast={forecast} />
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              <GameweekReviewModule review={forecast.lastGameweek} />
+              <RunningRecordModule record={forecast.runningRecord} />
+              <CaptainModule forecast={forecast} />
+            </div>
+
+            {forecast.history && <History history={forecast.history} />}
 
             {overrides &&
               overrides.basedOnGw === forecast.basedOnGameweek &&

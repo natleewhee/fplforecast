@@ -90,6 +90,34 @@ def test_last_gameweek_review_is_null_without_snapshotted_picks(monkeypatch):
     assert cf.last_gameweek_review(cf.load_bootstrap(), {}) is None
 
 
+def test_upcoming_covers_the_rolling_window_with_a_full_xi_each(forecast):
+    from engine.config import ROLLING_WINDOW
+
+    upcoming = forecast["upcoming"]
+    assert [u["gameweek"] for u in upcoming] == [
+        forecast["targetGameweek"] + i for i in range(ROLLING_WINDOW)
+    ]
+    for u in upcoming:
+        assert len(u["startingXi"]) == 11
+        assert len(u["bench"]) == 4
+        assert len(u["players"]) == len(forecast["squad"]["players"])
+        assert u["captainId"] in u["startingXi"]
+        assert isinstance(u["points"], (int, float))
+
+
+def test_history_carries_gameweeks_and_past_seasons(forecast):
+    hist = forecast["history"]
+    assert hist is not None
+    assert hist["gameweeks"][0]["gameweek"] == 1
+    assert hist["gameweeks"][0]["points"] == 51  # straight from the entry history
+    assert all("season" in s and "totalPoints" in s for s in hist["seasons"])
+
+
+def test_build_history_is_null_when_empty():
+    assert cf.build_history({}) is None
+    assert cf.build_history({"current": [], "past": []}) is None
+
+
 def test_newcomers_get_a_provisional_projection(monkeypatch):
     # No entity resolution + an empty archive -> every player is cold-start.
     path = _target_path()

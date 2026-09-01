@@ -105,6 +105,16 @@ def load_latest_picks() -> tuple[int, list[dict], dict] | None:
     return gw, data.get("picks", []), data.get("entry_history", {})
 
 
+def load_entry_history() -> dict:
+    """The team's season history snapshot: per-gameweek points/rank/value under
+    ``current`` and finished-season summaries under ``past``."""
+    d = DATA_DIR / f"history-{TEAM_ID}"
+    if not d.exists():
+        return {}
+    files = sorted(d.glob("*.json"))
+    return load_json(files[-1]) if files else {}
+
+
 def load_overrides(gw: int) -> list[dict]:
     """Manual transfers recorded against ``gw``; ignored once picks have moved on."""
     path = DATA_DIR / "overrides" / "transfers.json"
@@ -158,6 +168,42 @@ def _gw_model_vs_baseline(gw: int) -> dict | None:
             }
         return {"status": entry.get("status", "pending")}
     return None
+
+
+def build_history(hist: dict) -> dict | None:
+    """The season-so-far record for the history view: one row per finished
+    gameweek (points, bench, rank, hits, team value + the model/baseline row
+    if scored) and a summary line per completed past season."""
+    current = hist.get("current") or []
+    past = hist.get("past") or []
+    if not current and not past:
+        return None
+    gameweeks = []
+    for e in current:
+        gw = e.get("event")
+        gameweeks.append(
+            {
+                "gameweek": gw,
+                "points": e.get("points"),
+                "benchPoints": e.get("points_on_bench"),
+                "totalPoints": e.get("total_points"),
+                "rank": e.get("rank"),
+                "overallRank": e.get("overall_rank"),
+                "transfers": e.get("event_transfers", 0),
+                "hit": e.get("event_transfers_cost", 0),
+                "teamValue": round((e.get("value") or 0) / 10, 1),
+                "modelVsBaseline": _gw_model_vs_baseline(gw) if gw else None,
+            }
+        )
+    seasons = [
+        {
+            "season": p.get("season_name"),
+            "totalPoints": p.get("total_points"),
+            "rank": p.get("rank"),
+        }
+        for p in past
+    ]
+    return {"gameweeks": gameweeks, "seasons": seasons}
 
 
 def last_gameweek_review(bootstrap: dict, elements_by_id: dict) -> dict | None:
@@ -612,6 +658,75 @@ def main(now: datetime | None = None) -> int:
         "meaningful": sum(1 for c in players if _meaningful(c)),
     }
 
+    # Suggested XI for every gameweek in the rolling window, not just the next
+    # one: same fifteen held players, best legal formation and captain for that
+    # gameweek's fixtures. Player identity (name/team/price) is carried once on
+    # ``squad.players``; these rows are keyed by id.
+    et_by_id = {c["id"]: (c["elementType"] or 4) for c in players}
+    upcoming = []
+    for gw in range(target_gw, target_gw + ROLLING_WINDOW):
+        gw_players = []
+        for pid in squad_ids:
+            if pid not in feature_frame.index:
+                continue
+            d = model.project_detail(feature_frame.loc[pid], gw, ctx)
+            gw_players.append(
+                {
+                    "id": pid,
+                    "projectedPoints": d.get("points"),
+                    "provisional": d.get("provisional", False),
+                    "minutesRisk": bool(minutes_risk_by_id.get(pid, False)),
+                    "opponents": [
+                        {
+                            "team": o.get("team"),
+                            "wasHome": o.get("wasHome"),
+                            "fdrRating": o.get("fdrRating"),
+                        }
+                        for o in d.get("opponents", [])
+                    ],
+                }
+            )
+        pts_by_id = {p["id"]: p["projectedPoints"] for p in gw_players}
+        gw_start, gw_benched = best_xi(
+            [
+                {
+                    "id": p["id"],
+                    "element_type": et_by_id.get(p["id"], 4),
+                    "projected": p["projectedPoints"] if p["projectedPoints"] is not None else -1.0,
+                }
+                for p in gw_players
+            ]
+        )
+        gw_start_ids = [p["id"] for p in gw_start]
+        gw_bench_ids = [p["id"] for p in gw_benched]
+        gw_cap_rank = sorted(
+            (
+                p
+                for p in gw_players
+                if p["id"] in gw_start_ids
+                and not p["provisional"]
+                and p["projectedPoints"] is not None
+            ),
+            key=lambda p: p["projectedPoints"],
+            reverse=True,
+        )
+        gw_cap = gw_cap_rank[0]["id"] if gw_cap_rank else None
+        gw_vice = gw_cap_rank[1]["id"] if len(gw_cap_rank) > 1 else None
+        gw_total = sum((pts_by_id.get(i) or 0.0) for i in gw_start_ids) + (
+            pts_by_id.get(gw_cap) or 0.0
+        )
+        upcoming.append(
+            {
+                "gameweek": gw,
+                "points": round(gw_total, 1),
+                "startingXi": gw_start_ids,
+                "bench": gw_bench_ids,
+                "captainId": gw_cap,
+                "viceCaptainId": gw_vice,
+                "players": gw_players,
+            }
+        )
+
     forecast = {
         "generatedAt": now.isoformat(),
         "basedOnGameweek": based_on_gw,
@@ -658,6 +773,8 @@ def main(now: datetime | None = None) -> int:
         "captainEdge": captain_edge,
         "runningRecord": load_running_record(),
         "lastGameweek": last_gameweek_review(bootstrap, elements_by_id),
+        "upcoming": upcoming,
+        "history": build_history(load_entry_history()),
     }
 
     out_dir = DATA_DIR / "forecast"
