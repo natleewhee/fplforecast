@@ -155,6 +155,34 @@ export type Forecast = {
   lastGameweek: GameweekReview | null;
   upcoming: UpcomingGameweek[]; // suggested XI for each GW in the rolling window
   history: SeasonHistory | null;
+  pool: PoolPlayer[]; // whole available pool, 5-GW projections (planning table)
+  poolUpgrades: Record<string, PoolUpgrade[]>; // squad player id -> same-slot upgrades
+  squadComponents: Record<string, Record<string, number>>; // held id -> target-GW component xP
+  parMargin: number; // points above the GW average that hold the manager's rank
+  marginProvisional: boolean; // too few completed GWs -> margin is 0, buffer widens
+  parBuffer: number;
+  parBufferProvisional: number;
+};
+
+export type PoolPlayer = {
+  id: number;
+  webName: string;
+  team: string;
+  elementType: number | null;
+  position: string;
+  price: number;
+  selectedByPercent: number;
+  form: number;
+  perGameweek: number[]; // one xP value per gameweek in the window
+  total: number;
+  opponents: OpponentLeg[][]; // one leg group per gameweek in the window
+};
+
+export type PoolUpgrade = {
+  poolPlayerId: number;
+  gap: number; // pool player's 5-GW total minus the held player's
+  priceDelta: number; // £m
+  overBudget: boolean;
 };
 
 export type UpcomingPlayer = {
