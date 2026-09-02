@@ -42,7 +42,7 @@ def forecast():
 def test_targets_the_upcoming_gameweek(forecast):
     # GW1 finished, GW2's deadline is past on NOW -> GW3.
     assert forecast["targetGameweek"] == 3
-    assert forecast["basedOnGameweek"] == 1  # squad still from the last finished GW
+    assert forecast["basedOnGameweek"] == 2  # squad still from the last finished GW
 
 
 def test_pool_block_covers_every_available_player_with_per_gw_projections(forecast):
@@ -179,10 +179,10 @@ def test_running_record_is_null_until_a_gameweek_is_scored(forecast):
 def test_last_gameweek_review_reports_the_held_squad_result(forecast):
     review = forecast["lastGameweek"]
     assert review is not None
-    assert review["gameweek"] == 1  # the only finished GW in the committed snapshots
-    assert review["xiPoints"] == 51  # straight from entry_history.points
-    assert review["benchPoints"] == 10
-    # no frozen prediction exists for GW1 -> the model/baseline row says so
+    assert review["gameweek"] == 2  # the last finished GW in the committed snapshots
+    assert review["xiPoints"] == 113  # straight from entry_history.points
+    assert review["benchPoints"] == 7
+    # no frozen prediction exists for GW2 -> the model/baseline row says so
     assert review["modelVsBaseline"] == {"status": "no_prediction"}
 
 
