@@ -3,6 +3,10 @@
     {
       "gameweek": 1,
       "status": "no_prediction"
+    },
+    {
+      "gameweek": 2,
+      "status": "no_prediction"
     }
   ],
   "summary": {
