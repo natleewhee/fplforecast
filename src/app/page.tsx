@@ -11,6 +11,7 @@ import {
 } from "@/lib/snapshots";
 import Pitch from "./Pitch";
 import History from "./History";
+import LiveTracker from "./LiveTracker";
 import PlanningTable from "./PlanningTable";
 import TransferForm from "./TransferForm";
 
@@ -289,7 +290,15 @@ export default function Home() {
         <Header subtitle={`GW${forecast.targetGameweek} · from your GW${forecast.basedOnGameweek} squad`} />
         <Shell>
           <div className="space-y-4 pt-4">
-            {/* the pitch leads */}
+            {/* KTD7: the tracker self-hides until the first kickoff, then leads;
+               before the deadline the planning table and pitch lead together. */}
+            <LiveTracker />
+
+            <section className="space-y-2">
+              <h2 className="eyebrow px-1">Planning table · whole pool</h2>
+              <PlanningTable data={poolData} />
+            </section>
+
             <Pitch forecast={forecast} />
 
             {chips && (
@@ -314,11 +323,6 @@ export default function Home() {
             </div>
 
             {forecast.history && <History history={forecast.history} />}
-
-            <section className="space-y-2">
-              <h2 className="eyebrow px-1">Planning table · whole pool</h2>
-              <PlanningTable data={poolData} />
-            </section>
 
             {overrides &&
               overrides.basedOnGw === forecast.basedOnGameweek &&
