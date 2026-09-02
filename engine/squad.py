@@ -74,6 +74,29 @@ def window_points(
     return totals
 
 
+def window_points_by_gw(
+    feature_frame,
+    project_fn: Callable[[Mapping, int], float | ColdStart],
+    start_gw: int,
+    window: int = ROLLING_WINDOW,
+) -> dict:
+    """Like ``window_points`` but keeps the per-gameweek values: ``{player_id:
+    [gw0, gw1, ...]}`` over ``start_gw .. start_gw + window - 1``. A player who
+    is cold-start in any gameweek of the window maps to ``None`` -- never a
+    partial list -- matching ``window_points`` (U1)."""
+    by_gw: dict = {}
+    for player_id, row in feature_frame.iterrows():
+        vals: list | None = []
+        for gw in range(start_gw, start_gw + window):
+            projected = project_fn(row, gw)
+            if isinstance(projected, ColdStart):
+                vals = None
+                break
+            vals.append(projected)
+        by_gw[player_id] = vals
+    return by_gw
+
+
 def rank_against_pool(
     squad_ids: list,
     pool_ids: list,

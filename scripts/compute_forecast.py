@@ -25,10 +25,16 @@ from engine.config import (
     ROLLING_WINDOW,
     SETTLE_GAMEWEEK,
 )
-from engine.features import POSITIONS, build_feature_frame
+from engine.features import POSITIONS, build_feature_frame, team_fixtures
 from engine.history import ColdStart, classify, load_history
 from engine.model import ModelContext
-from engine.squad import best_xi, rank_against_pool, top_alternatives, window_points
+from engine.squad import (
+    best_xi,
+    rank_against_pool,
+    top_alternatives,
+    window_points,
+    window_points_by_gw,
+)
 from engine.strength import team_strength_table
 
 DATA_DIR = Path(__file__).resolve().parent.parent / "data"
@@ -434,6 +440,7 @@ def main(now: datetime | None = None) -> int:
         return baseline.project(row)
 
     model_window = window_points(feature_frame, model_fn, target_gw)
+    model_window_by_gw = window_points_by_gw(feature_frame, model_fn, target_gw)
     baseline_window = window_points(feature_frame, baseline_fn, target_gw)
 
     price_by_id = feature_frame["price"].to_dict()
@@ -727,6 +734,57 @@ def main(now: datetime | None = None) -> int:
             }
         )
 
+    # Whole-pool five-gameweek projections for the pre-deadline planning table
+    # (R9, R10, R14). Opponent legs come straight from the fixture list -- no
+    # per-pool-player model evaluation (KTD3).
+    def _pool_opponents(club_team_id: int) -> list[list[dict]]:
+        legs_by_gw: list[list[dict]] = []
+        for gw in range(target_gw, target_gw + ROLLING_WINDOW):
+            legs = team_fixtures(club_team_id, gw, ctx.fixtures)
+            legs_by_gw.append(
+                [
+                    {
+                        "team": teams_by_id.get(leg["opponent"], "???"),
+                        "wasHome": leg["was_home"],
+                        "fdrRating": leg["difficulty"],
+                    }
+                    for leg in legs
+                ]
+            )
+        return legs_by_gw
+
+    pool = []
+    for pid in pool_ids:
+        el = elements_by_id.get(pid, {})
+        per_gw = model_window_by_gw.get(pid)
+        if per_gw is None:
+            continue
+        pool.append(
+            {
+                "id": pid,
+                "webName": el.get("web_name", "???"),
+                "team": teams_by_id.get(el.get("team"), "???"),
+                "elementType": el.get("element_type"),
+                "position": POSITIONS.get(el.get("element_type"), "???"),
+                "price": round((el.get("now_cost") or 0) / 10, 1),
+                "selectedByPercent": float(el.get("selected_by_percent") or 0),
+                "form": float(el.get("form") or 0),
+                "perGameweek": [round(v, 2) for v in per_gw],
+                "total": round(sum(per_gw), 2),
+                "opponents": _pool_opponents(el.get("team")),
+            }
+        )
+
+    # Per-component expected-points breakdown for the held fifteen, target
+    # gameweek only -- the live tracker decays attacking value on the clock and
+    # re-derives clean-sheet from the scoreline (KTD3, KTD6).
+    squad_components = {}
+    for pid in squad_ids:
+        if pid not in feature_frame.index:
+            continue
+        detail = model.project_detail(feature_frame.loc[pid], target_gw, ctx)
+        squad_components[str(pid)] = detail.get("components", {})
+
     forecast = {
         "generatedAt": now.isoformat(),
         "basedOnGameweek": based_on_gw,
@@ -774,6 +832,8 @@ def main(now: datetime | None = None) -> int:
         "runningRecord": load_running_record(),
         "lastGameweek": last_gameweek_review(bootstrap, elements_by_id),
         "upcoming": upcoming,
+        "pool": pool,
+        "squadComponents": squad_components,
         "history": build_history(load_entry_history()),
     }
 

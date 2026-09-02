@@ -45,6 +45,39 @@ def test_targets_the_upcoming_gameweek(forecast):
     assert forecast["basedOnGameweek"] == 1  # squad still from the last finished GW
 
 
+def test_pool_block_covers_every_available_player_with_per_gw_projections(forecast):
+    from engine.config import ROLLING_WINDOW
+
+    bootstrap = cf.load_bootstrap()
+    available = {el["id"] for el in bootstrap["elements"] if el.get("status") == "a"}
+    pool = forecast["pool"]
+    assert {p["id"] for p in pool} == available
+    for p in pool:
+        assert len(p["perGameweek"]) == ROLLING_WINDOW
+        assert p["total"] == pytest.approx(sum(p["perGameweek"]))
+        assert isinstance(p["selectedByPercent"], (int, float))
+        assert isinstance(p["form"], (int, float))
+        assert isinstance(p["price"], (int, float))
+        assert len(p["opponents"]) == ROLLING_WINDOW  # one leg group per target gameweek
+
+
+def test_unavailable_player_is_absent_from_the_pool(forecast):
+    bootstrap = cf.load_bootstrap()
+    unavailable = next(el["id"] for el in bootstrap["elements"] if el.get("status") != "a")
+    assert unavailable not in {p["id"] for p in forecast["pool"]}
+
+
+def test_squad_component_breakdown_sums_to_the_target_gameweek_projection(forecast):
+    components = forecast["squadComponents"]
+    by_id = {p["id"]: p for p in forecast["squad"]["players"]}
+    for pid_str, parts in components.items():
+        pid = int(pid_str)
+        assert pid in by_id
+        card = by_id[pid]
+        if card["projectedPoints"] is not None:
+            assert sum(parts.values()) == pytest.approx(card["projectedPoints"], abs=0.05)
+
+
 def test_recommended_xi_and_bench(forecast):
     squad = forecast["squad"]
     assert len(squad["startingXi"]) == 11

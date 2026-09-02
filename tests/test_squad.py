@@ -7,7 +7,13 @@ import pytest
 
 from engine.config import DISPLAY_GAP_ROWS, PRICE_BAND_M, ROLLING_WINDOW
 from engine.history import ColdStart
-from engine.squad import rank_against_pool, top_alternatives, top_gap_rows, window_points
+from engine.squad import (
+    rank_against_pool,
+    top_alternatives,
+    top_gap_rows,
+    window_points,
+    window_points_by_gw,
+)
 
 
 def frame(*ids: int) -> pd.DataFrame:
@@ -41,6 +47,20 @@ def test_a_cold_start_gameweek_maps_the_player_to_none():
     pts = window_points(frame(1, 2), project_fn, start_gw=1, window=5)
     assert pts[1] == 15.0
     assert pts[2] is None
+
+
+def test_window_points_by_gw_keeps_each_gameweek_value():
+    by_gw = window_points_by_gw(frame(1, 2), lambda row, gw: float(gw), start_gw=3, window=5)
+    assert by_gw == {1: [3.0, 4.0, 5.0, 6.0, 7.0], 2: [3.0, 4.0, 5.0, 6.0, 7.0]}
+
+
+def test_window_points_by_gw_maps_a_cold_start_player_to_none():
+    def project_fn(row, gw):
+        return ColdStart() if row["player_id"] == 2 else 2.0
+
+    by_gw = window_points_by_gw(frame(1, 2), project_fn, start_gw=1, window=5)
+    assert by_gw[1] == [2.0, 2.0, 2.0, 2.0, 2.0]
+    assert by_gw[2] is None
 
 
 PRICE = {sid: 7.0 for sid in range(100)}
