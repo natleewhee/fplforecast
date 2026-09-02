@@ -5,11 +5,13 @@ import {
   loadLatestForecast,
   loadChipStatus,
   loadOverrides,
+  loadPool,
   type GameweekReview,
   type RunningRecord,
 } from "@/lib/snapshots";
 import Pitch from "./Pitch";
 import History from "./History";
+import PlanningTable from "./PlanningTable";
 import TransferForm from "./TransferForm";
 
 export const dynamic = "force-static";
@@ -252,6 +254,7 @@ export default function Home() {
   const forecast = loadLatestForecast();
   const chips = loadChipStatus();
   const overrides = loadOverrides();
+  const poolData = loadPool();
 
   if (!bootstrap) {
     return (
@@ -311,6 +314,11 @@ export default function Home() {
             </div>
 
             {forecast.history && <History history={forecast.history} />}
+
+            <section className="space-y-2">
+              <h2 className="eyebrow px-1">Planning table · whole pool</h2>
+              <PlanningTable data={poolData} />
+            </section>
 
             {overrides &&
               overrides.basedOnGw === forecast.basedOnGameweek &&
