@@ -64,6 +64,16 @@ EARLY_SEASON_GAP_RAMP = 0.25
 # Pre-deadline write window, in hours, for the prediction log (U9, KTD7).
 PREDICTION_WINDOW_HOURS = 48
 
+# Live-tracker "par" score: the gameweek total that holds the manager's overall
+# rank is the live gameweek average plus their baked hold-rank margin. The
+# margin needs at least this many completed gameweeks of the manager's own
+# scoring before it is trusted; below that it is zero and the tracker shows the
+# wider provisional buffer so a top-decile manager is not told they are safe on
+# the average alone (KTD2).
+PAR_BUFFER_POINTS = 4.0
+PAR_BUFFER_PROVISIONAL_POINTS = 2 * PAR_BUFFER_POINTS
+PAR_MARGIN_MIN_GAMEWEEKS = 3
+
 # Pseudo-observations that pull a player's noisy recent scoring/form means
 # toward their position's average (empirical-Bayes, as in the minutes model).
 # Early in a season one big gameweek would otherwise dominate every projection.

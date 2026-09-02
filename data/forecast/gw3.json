@@ -11,7 +11,7 @@
   },
   "earlySeason": true,
   "effectiveGap": 11.2,
-  "generatedAt": "2026-09-02T13:43:33.824095+00:00",
+  "generatedAt": "2026-09-02T13:45:49.269998+00:00",
   "history": {
     "gameweeks": [
       {
@@ -77,13 +77,17 @@
     },
     "xiPoints": 113
   },
-  "lineupAgreement": 10,
+  "lineupAgreement": 9,
+  "marginProvisional": true,
   "nextGw": {
     "deltaVsBaselineXi": 0.2,
     "deltaVsNoChange": 2.9,
     "points": 63.6
   },
   "overridesApplied": 0,
+  "parBuffer": 4.0,
+  "parBufferProvisional": 8.0,
+  "parMargin": 0.0,
   "pool": [
     {
       "elementType": 1,

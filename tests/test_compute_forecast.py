@@ -67,6 +67,60 @@ def test_unavailable_player_is_absent_from_the_pool(forecast):
     assert unavailable not in {p["id"] for p in forecast["pool"]}
 
 
+def test_par_margin_is_the_median_delta_over_completed_gameweeks():
+    events = [
+        {"id": 1, "finished": True, "average_entry_score": 50},
+        {"id": 2, "finished": True, "average_entry_score": 45},
+        {"id": 3, "finished": True, "average_entry_score": 60},
+        {"id": 4, "finished": False, "average_entry_score": 0},
+    ]
+    current = [
+        {"event": 1, "points": 54},  # +4
+        {"event": 2, "points": 55},  # +10
+        {"event": 3, "points": 67},  # +7
+        {"event": 4, "points": 40},  # gameweek not finished -> ignored
+    ]
+    margin, provisional = cf.par_margin(current, events, min_gameweeks=3)
+    assert margin == 7.0
+    assert provisional is False
+
+
+def test_par_margin_is_zero_and_provisional_below_the_gameweek_floor():
+    events = [{"id": 1, "finished": True, "average_entry_score": 50}]
+    current = [{"event": 1, "points": 58}]
+    margin, provisional = cf.par_margin(current, events, min_gameweeks=3)
+    assert margin == 0.0
+    assert provisional is True
+
+
+def test_par_margin_skips_a_gameweek_with_no_published_average():
+    events = [
+        {"id": 1, "finished": True, "average_entry_score": None},
+        {"id": 2, "finished": True, "average_entry_score": 40},
+        {"id": 3, "finished": True, "average_entry_score": 40},
+        {"id": 4, "finished": True, "average_entry_score": 40},
+    ]
+    current = [
+        {"event": 1, "points": 99},  # no average -> not counted (not a +59 delta)
+        {"event": 2, "points": 46},  # +6
+        {"event": 3, "points": 48},  # +8
+        {"event": 4, "points": 50},  # +10
+    ]
+    margin, provisional = cf.par_margin(current, events, min_gameweeks=3)
+    assert margin == 8.0
+    assert provisional is False
+
+
+def test_forecast_carries_the_par_fields(forecast):
+    from engine.config import PAR_BUFFER_POINTS, PAR_BUFFER_PROVISIONAL_POINTS
+
+    assert isinstance(forecast["parMargin"], (int, float))
+    assert isinstance(forecast["marginProvisional"], bool)
+    assert forecast["parBuffer"] == PAR_BUFFER_POINTS
+    assert forecast["parBufferProvisional"] == PAR_BUFFER_PROVISIONAL_POINTS
+    assert forecast["parBufferProvisional"] > forecast["parBuffer"]
+
+
 def test_squad_component_breakdown_sums_to_the_target_gameweek_projection(forecast):
     components = forecast["squadComponents"]
     by_id = {p["id"]: p for p in forecast["squad"]["players"]}

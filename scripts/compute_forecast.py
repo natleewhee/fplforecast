@@ -22,6 +22,9 @@ from engine import baseline, model, newcomer
 from engine.config import (
     EARLY_SEASON_GAP_RAMP,
     MEANINGFUL_UPGRADE_GAP,
+    PAR_BUFFER_POINTS,
+    PAR_BUFFER_PROVISIONAL_POINTS,
+    PAR_MARGIN_MIN_GAMEWEEKS,
     ROLLING_WINDOW,
     SETTLE_GAMEWEEK,
 )
@@ -270,6 +273,30 @@ def _player_card(pid: int, elements_by_id: dict, teams_by_id: dict) -> dict:
         "elementType": el.get("element_type"),
         "price": round((el.get("now_cost") or 0) / 10, 1),
     }
+
+
+def par_margin(
+    current: list[dict], events: list[dict], min_gameweeks: int = PAR_MARGIN_MIN_GAMEWEEKS
+) -> tuple[float, bool]:
+    """The manager's hold-rank margin: the median of ``own points − that
+    gameweek's average`` over their completed gameweeks. Below ``min_gameweeks``
+    of evidence it is ``0.0`` and the second return is ``True`` (provisional),
+    so the live tracker shows the wider provisional buffer (KTD2)."""
+    avg_by_event = {
+        e.get("id"): e.get("average_entry_score")
+        for e in events
+        if e.get("finished") and e.get("average_entry_score") is not None
+    }
+    deltas = sorted(
+        entry["points"] - avg_by_event[entry["event"]]
+        for entry in current
+        if entry.get("event") in avg_by_event and entry.get("points") is not None
+    )
+    if len(deltas) < min_gameweeks:
+        return 0.0, True
+    mid = len(deltas) // 2
+    median = deltas[mid] if len(deltas) % 2 else (deltas[mid - 1] + deltas[mid]) / 2
+    return float(median), False
 
 
 def effective_gap(target_gw: int) -> float:
@@ -785,6 +812,12 @@ def main(now: datetime | None = None) -> int:
         detail = model.project_detail(feature_frame.loc[pid], target_gw, ctx)
         squad_components[str(pid)] = detail.get("components", {})
 
+    # Baked hold-rank margin for the live tracker's par score (KTD2).
+    entry_history = load_entry_history()
+    par_hold_margin, margin_provisional = par_margin(
+        entry_history.get("current") or [], bootstrap.get("events") or []
+    )
+
     forecast = {
         "generatedAt": now.isoformat(),
         "basedOnGameweek": based_on_gw,
@@ -834,7 +867,11 @@ def main(now: datetime | None = None) -> int:
         "upcoming": upcoming,
         "pool": pool,
         "squadComponents": squad_components,
-        "history": build_history(load_entry_history()),
+        "parMargin": round(par_hold_margin, 1),
+        "marginProvisional": margin_provisional,
+        "parBuffer": PAR_BUFFER_POINTS,
+        "parBufferProvisional": PAR_BUFFER_PROVISIONAL_POINTS,
+        "history": build_history(entry_history),
     }
 
     out_dir = DATA_DIR / "forecast"
