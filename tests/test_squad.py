@@ -8,12 +8,40 @@ import pytest
 from engine.config import DISPLAY_GAP_ROWS, PRICE_BAND_M, ROLLING_WINDOW
 from engine.history import ColdStart
 from engine.squad import (
+    pool_upgrades,
     rank_against_pool,
     top_alternatives,
     top_gap_rows,
     window_points,
     window_points_by_gw,
 )
+
+
+def test_pool_upgrades_flags_a_higher_projecting_same_position_player_over_budget():
+    squad = [{"id": 1, "position": "MID", "price": 5.5, "total": 18.0}]
+    pool = [{"id": 9, "position": "MID", "price": 6.0, "total": 24.0}]
+    out = pool_upgrades(squad, pool, bank=0.3)
+    assert out[1] == [{"poolPlayerId": 9, "gap": 6.0, "priceDelta": 0.5, "overBudget": True}]
+
+
+def test_pool_upgrades_within_bank_is_not_over_budget():
+    squad = [{"id": 1, "position": "MID", "price": 6.0, "total": 18.0}]
+    pool = [{"id": 9, "position": "MID", "price": 5.5, "total": 20.0}]  # cheaper, better
+    out = pool_upgrades(squad, pool, bank=0.0)
+    assert out[1][0]["overBudget"] is False
+    assert out[1][0]["priceDelta"] == -0.5
+
+
+def test_pool_upgrades_are_same_position_only():
+    squad = [{"id": 1, "position": "MID", "price": 6.0, "total": 10.0}]
+    pool = [{"id": 9, "position": "FWD", "price": 6.0, "total": 30.0}]
+    assert pool_upgrades(squad, pool, bank=5.0)[1] == []
+
+
+def test_pool_upgrades_empty_when_the_held_player_leads_his_position():
+    squad = [{"id": 1, "position": "GKP", "price": 5.0, "total": 20.0}]
+    pool = [{"id": 9, "position": "GKP", "price": 5.0, "total": 15.0}]
+    assert pool_upgrades(squad, pool, bank=5.0)[1] == []
 
 
 def frame(*ids: int) -> pd.DataFrame:

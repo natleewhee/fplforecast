@@ -33,6 +33,7 @@ from engine.history import ColdStart, classify, load_history
 from engine.model import ModelContext
 from engine.squad import (
     best_xi,
+    pool_upgrades,
     rank_against_pool,
     top_alternatives,
     window_points,
@@ -813,10 +814,27 @@ def main(now: datetime | None = None) -> int:
         squad_components[str(pid)] = detail.get("components", {})
 
     # Baked hold-rank margin for the live tracker's par score (KTD2).
-    entry_history = load_entry_history()
+    season_history = load_entry_history()
     par_hold_margin, margin_provisional = par_margin(
-        entry_history.get("current") or [], bootstrap.get("events") or []
+        season_history.get("current") or [], bootstrap.get("events") or []
     )
+
+    # Squad-aware upgrade marks for the planning table: any same-position pool
+    # player out-projecting a held player over the window, at any budget (R12,
+    # KTD4). Added alongside the narrow alternatives panel data -- U6 removes the
+    # old surface and its producer together (KTD8).
+    upgrade_squad = [
+        {
+            "id": c["id"],
+            "position": c["position"],
+            "price": c["price"],
+            "total": model_window.get(c["id"]),
+        }
+        for c in players
+    ]
+    pool_upgrade_map = {
+        str(sid): rows for sid, rows in pool_upgrades(upgrade_squad, pool, bank).items()
+    }
 
     forecast = {
         "generatedAt": now.isoformat(),
@@ -871,7 +889,8 @@ def main(now: datetime | None = None) -> int:
         "marginProvisional": margin_provisional,
         "parBuffer": PAR_BUFFER_POINTS,
         "parBufferProvisional": PAR_BUFFER_PROVISIONAL_POINTS,
-        "history": build_history(entry_history),
+        "poolUpgrades": pool_upgrade_map,
+        "history": build_history(season_history),
     }
 
     out_dir = DATA_DIR / "forecast"

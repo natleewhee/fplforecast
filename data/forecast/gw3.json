@@ -11,7 +11,7 @@
   },
   "earlySeason": true,
   "effectiveGap": 11.2,
-  "generatedAt": "2026-09-02T13:45:49.269998+00:00",
+  "generatedAt": "2026-09-02T13:47:58.975195+00:00",
   "history": {
     "gameweeks": [
       {
@@ -27425,6 +27425,3806 @@
       "webName": "Ahoka"
     }
   ],
+  "poolUpgrades": {
+    "1": [
+      {
+        "gap": 8.24,
+        "overBudget": false,
+        "poolPlayerId": 385,
+        "priceDelta": -1.0
+      },
+      {
+        "gap": 3.94,
+        "overBudget": false,
+        "poolPlayerId": 29,
+        "priceDelta": -1.5
+      },
+      {
+        "gap": 3.81,
+        "overBudget": false,
+        "poolPlayerId": 226,
+        "priceDelta": -0.5
+      },
+      {
+        "gap": 3.73,
+        "overBudget": false,
+        "poolPlayerId": 140,
+        "priceDelta": -1.1
+      },
+      {
+        "gap": 3.41,
+        "overBudget": false,
+        "poolPlayerId": 57,
+        "priceDelta": -1.5
+      },
+      {
+        "gap": 2.83,
+        "overBudget": false,
+        "poolPlayerId": 496,
+        "priceDelta": -1.5
+      },
+      {
+        "gap": 2.77,
+        "overBudget": false,
+        "poolPlayerId": 198,
+        "priceDelta": -1.0
+      },
+      {
+        "gap": 2.33,
+        "overBudget": false,
+        "poolPlayerId": 82,
+        "priceDelta": -1.0
+      },
+      {
+        "gap": 2.23,
+        "overBudget": false,
+        "poolPlayerId": 250,
+        "priceDelta": -1.5
+      },
+      {
+        "gap": 2.23,
+        "overBudget": false,
+        "poolPlayerId": 350,
+        "priceDelta": -0.5
+      },
+      {
+        "gap": 1.54,
+        "overBudget": false,
+        "poolPlayerId": 384,
+        "priceDelta": -0.5
+      },
+      {
+        "gap": 0.96,
+        "overBudget": false,
+        "poolPlayerId": 412,
+        "priceDelta": -1.0
+      },
+      {
+        "gap": 0.92,
+        "overBudget": false,
+        "poolPlayerId": 467,
+        "priceDelta": -1.0
+      },
+      {
+        "gap": 0.74,
+        "overBudget": false,
+        "poolPlayerId": 572,
+        "priceDelta": -1.5
+      },
+      {
+        "gap": 0.6,
+        "overBudget": false,
+        "poolPlayerId": 564,
+        "priceDelta": -1.5
+      }
+    ],
+    "11": [
+      {
+        "gap": 10.83,
+        "overBudget": false,
+        "poolPlayerId": 115,
+        "priceDelta": -0.8
+      },
+      {
+        "gap": 10.69,
+        "overBudget": true,
+        "poolPlayerId": 388,
+        "priceDelta": 0.5
+      },
+      {
+        "gap": 7.07,
+        "overBudget": false,
+        "poolPlayerId": 327,
+        "priceDelta": -0.5
+      },
+      {
+        "gap": 6.64,
+        "overBudget": false,
+        "poolPlayerId": 449,
+        "priceDelta": -0.5
+      },
+      {
+        "gap": 6.49,
+        "overBudget": false,
+        "poolPlayerId": 10,
+        "priceDelta": 0.0
+      },
+      {
+        "gap": 4.55,
+        "overBudget": false,
+        "poolPlayerId": 332,
+        "priceDelta": -1.0
+      },
+      {
+        "gap": 4.15,
+        "overBudget": false,
+        "poolPlayerId": 88,
+        "priceDelta": -0.9
+      },
+      {
+        "gap": 3.33,
+        "overBudget": true,
+        "poolPlayerId": 391,
+        "priceDelta": 0.1
+      },
+      {
+        "gap": 3.2,
+        "overBudget": false,
+        "poolPlayerId": 60,
+        "priceDelta": 0.0
+      },
+      {
+        "gap": 3.15,
+        "overBudget": true,
+        "poolPlayerId": 229,
+        "priceDelta": 0.5
+      },
+      {
+        "gap": 2.99,
+        "overBudget": false,
+        "poolPlayerId": 61,
+        "priceDelta": 0.0
+      },
+      {
+        "gap": 2.97,
+        "overBudget": false,
+        "poolPlayerId": 130,
+        "priceDelta": -0.5
+      },
+      {
+        "gap": 2.35,
+        "overBudget": true,
+        "poolPlayerId": 8,
+        "priceDelta": 0.1
+      },
+      {
+        "gap": 2.13,
+        "overBudget": true,
+        "poolPlayerId": 498,
+        "priceDelta": 0.5
+      },
+      {
+        "gap": 1.91,
+        "overBudget": false,
+        "poolPlayerId": 87,
+        "priceDelta": -1.0
+      },
+      {
+        "gap": 1.91,
+        "overBudget": false,
+        "poolPlayerId": 472,
+        "priceDelta": 0.0
+      },
+      {
+        "gap": 1.41,
+        "overBudget": true,
+        "poolPlayerId": 200,
+        "priceDelta": 0.5
+      },
+      {
+        "gap": 1.23,
+        "overBudget": false,
+        "poolPlayerId": 445,
+        "priceDelta": -0.5
+      },
+      {
+        "gap": 1.18,
+        "overBudget": true,
+        "poolPlayerId": 387,
+        "priceDelta": 1.0
+      },
+      {
+        "gap": 1.12,
+        "overBudget": true,
+        "poolPlayerId": 356,
+        "priceDelta": 1.0
+      },
+      {
+        "gap": 1.07,
+        "overBudget": false,
+        "poolPlayerId": 390,
+        "priceDelta": 0.0
+      },
+      {
+        "gap": 0.74,
+        "overBudget": false,
+        "poolPlayerId": 84,
+        "priceDelta": 0.0
+      },
+      {
+        "gap": 0.58,
+        "overBudget": false,
+        "poolPlayerId": 255,
+        "priceDelta": -1.0
+      },
+      {
+        "gap": 0.37,
+        "overBudget": false,
+        "poolPlayerId": 502,
+        "priceDelta": -1.0
+      },
+      {
+        "gap": 0.36,
+        "overBudget": false,
+        "poolPlayerId": 202,
+        "priceDelta": -0.5
+      },
+      {
+        "gap": 0.34,
+        "overBudget": false,
+        "poolPlayerId": 422,
+        "priceDelta": -1.0
+      },
+      {
+        "gap": 0.31,
+        "overBudget": false,
+        "poolPlayerId": 112,
+        "priceDelta": -0.5
+      },
+      {
+        "gap": 0.3,
+        "overBudget": false,
+        "poolPlayerId": 151,
+        "priceDelta": -1.0
+      },
+      {
+        "gap": 0.28,
+        "overBudget": false,
+        "poolPlayerId": 230,
+        "priceDelta": 0.0
+      },
+      {
+        "gap": 0.08,
+        "overBudget": false,
+        "poolPlayerId": 203,
+        "priceDelta": -0.5
+      }
+    ],
+    "124": [
+      {
+        "gap": 21.42,
+        "overBudget": false,
+        "poolPlayerId": 547,
+        "priceDelta": -0.5
+      },
+      {
+        "gap": 12.36,
+        "overBudget": true,
+        "poolPlayerId": 12,
+        "priceDelta": 4.0
+      },
+      {
+        "gap": 10.12,
+        "overBudget": true,
+        "poolPlayerId": 426,
+        "priceDelta": 6.5
+      },
+      {
+        "gap": 8.41,
+        "overBudget": true,
+        "poolPlayerId": 367,
+        "priceDelta": 1.5
+      },
+      {
+        "gap": 8.02,
+        "overBudget": true,
+        "poolPlayerId": 427,
+        "priceDelta": 2.5
+      },
+      {
+        "gap": 7.35,
+        "overBudget": false,
+        "poolPlayerId": 86,
+        "priceDelta": 0.0
+      },
+      {
+        "gap": 6.66,
+        "overBudget": false,
+        "poolPlayerId": 544,
+        "priceDelta": 0.0
+      },
+      {
+        "gap": 6.59,
+        "overBudget": true,
+        "poolPlayerId": 368,
+        "priceDelta": 1.5
+      },
+      {
+        "gap": 6.56,
+        "overBudget": true,
+        "poolPlayerId": 154,
+        "priceDelta": 4.1
+      },
+      {
+        "gap": 5.96,
+        "overBudget": true,
+        "poolPlayerId": 40,
+        "priceDelta": 2.0
+      },
+      {
+        "gap": 5.92,
+        "overBudget": true,
+        "poolPlayerId": 15,
+        "priceDelta": 1.1
+      },
+      {
+        "gap": 5.26,
+        "overBudget": true,
+        "poolPlayerId": 335,
+        "priceDelta": 0.5
+      },
+      {
+        "gap": 4.75,
+        "overBudget": true,
+        "poolPlayerId": 68,
+        "priceDelta": 0.5
+      },
+      {
+        "gap": 4.37,
+        "overBudget": true,
+        "poolPlayerId": 480,
+        "priceDelta": 2.4
+      },
+      {
+        "gap": 4.25,
+        "overBudget": true,
+        "poolPlayerId": 94,
+        "priceDelta": 0.5
+      },
+      {
+        "gap": 4.11,
+        "overBudget": true,
+        "poolPlayerId": 236,
+        "priceDelta": 1.0
+      },
+      {
+        "gap": 4.11,
+        "overBudget": true,
+        "poolPlayerId": 398,
+        "priceDelta": 1.5
+      },
+      {
+        "gap": 2.4,
+        "overBudget": true,
+        "poolPlayerId": 237,
+        "priceDelta": 0.5
+      },
+      {
+        "gap": 1.69,
+        "overBudget": false,
+        "poolPlayerId": 243,
+        "priceDelta": -0.5
+      },
+      {
+        "gap": 1.41,
+        "overBudget": true,
+        "poolPlayerId": 69,
+        "priceDelta": 0.5
+      },
+      {
+        "gap": 1.37,
+        "overBudget": false,
+        "poolPlayerId": 483,
+        "priceDelta": 0.0
+      },
+      {
+        "gap": 1.05,
+        "overBudget": true,
+        "poolPlayerId": 454,
+        "priceDelta": 0.6
+      },
+      {
+        "gap": 0.99,
+        "overBudget": true,
+        "poolPlayerId": 70,
+        "priceDelta": 0.5
+      },
+      {
+        "gap": 0.94,
+        "overBudget": false,
+        "poolPlayerId": 162,
+        "priceDelta": -0.5
+      },
+      {
+        "gap": 0.72,
+        "overBudget": false,
+        "poolPlayerId": 127,
+        "priceDelta": -0.5
+      },
+      {
+        "gap": 0.2,
+        "overBudget": true,
+        "poolPlayerId": 399,
+        "priceDelta": 2.2
+      },
+      {
+        "gap": 0.07,
+        "overBudget": false,
+        "poolPlayerId": 486,
+        "priceDelta": 0.0
+      }
+    ],
+    "165": [
+      {
+        "gap": 0.23,
+        "overBudget": false,
+        "poolPlayerId": 553,
+        "priceDelta": -2.1
+      }
+    ],
+    "212": [
+      {
+        "gap": 38.53,
+        "overBudget": true,
+        "poolPlayerId": 547,
+        "priceDelta": 0.5
+      },
+      {
+        "gap": 29.47,
+        "overBudget": true,
+        "poolPlayerId": 12,
+        "priceDelta": 5.0
+      },
+      {
+        "gap": 27.23,
+        "overBudget": true,
+        "poolPlayerId": 426,
+        "priceDelta": 7.5
+      },
+      {
+        "gap": 25.52,
+        "overBudget": true,
+        "poolPlayerId": 367,
+        "priceDelta": 2.5
+      },
+      {
+        "gap": 25.13,
+        "overBudget": true,
+        "poolPlayerId": 427,
+        "priceDelta": 3.5
+      },
+      {
+        "gap": 24.46,
+        "overBudget": true,
+        "poolPlayerId": 86,
+        "priceDelta": 1.0
+      },
+      {
+        "gap": 23.77,
+        "overBudget": true,
+        "poolPlayerId": 544,
+        "priceDelta": 1.0
+      },
+      {
+        "gap": 23.7,
+        "overBudget": true,
+        "poolPlayerId": 368,
+        "priceDelta": 2.5
+      },
+      {
+        "gap": 23.67,
+        "overBudget": true,
+        "poolPlayerId": 154,
+        "priceDelta": 5.1
+      },
+      {
+        "gap": 23.07,
+        "overBudget": true,
+        "poolPlayerId": 40,
+        "priceDelta": 3.0
+      },
+      {
+        "gap": 23.03,
+        "overBudget": true,
+        "poolPlayerId": 15,
+        "priceDelta": 2.1
+      },
+      {
+        "gap": 22.37,
+        "overBudget": true,
+        "poolPlayerId": 335,
+        "priceDelta": 1.5
+      },
+      {
+        "gap": 21.86,
+        "overBudget": true,
+        "poolPlayerId": 68,
+        "priceDelta": 1.5
+      },
+      {
+        "gap": 21.48,
+        "overBudget": true,
+        "poolPlayerId": 480,
+        "priceDelta": 3.4
+      },
+      {
+        "gap": 21.36,
+        "overBudget": true,
+        "poolPlayerId": 94,
+        "priceDelta": 1.5
+      },
+      {
+        "gap": 21.22,
+        "overBudget": true,
+        "poolPlayerId": 236,
+        "priceDelta": 2.0
+      },
+      {
+        "gap": 21.22,
+        "overBudget": true,
+        "poolPlayerId": 398,
+        "priceDelta": 2.5
+      },
+      {
+        "gap": 19.51,
+        "overBudget": true,
+        "poolPlayerId": 237,
+        "priceDelta": 1.5
+      },
+      {
+        "gap": 18.8,
+        "overBudget": true,
+        "poolPlayerId": 243,
+        "priceDelta": 0.5
+      },
+      {
+        "gap": 18.52,
+        "overBudget": true,
+        "poolPlayerId": 69,
+        "priceDelta": 1.5
+      },
+      {
+        "gap": 18.48,
+        "overBudget": true,
+        "poolPlayerId": 483,
+        "priceDelta": 1.0
+      },
+      {
+        "gap": 18.16,
+        "overBudget": true,
+        "poolPlayerId": 454,
+        "priceDelta": 1.6
+      },
+      {
+        "gap": 18.1,
+        "overBudget": true,
+        "poolPlayerId": 70,
+        "priceDelta": 1.5
+      },
+      {
+        "gap": 18.05,
+        "overBudget": true,
+        "poolPlayerId": 162,
+        "priceDelta": 0.5
+      },
+      {
+        "gap": 17.83,
+        "overBudget": true,
+        "poolPlayerId": 127,
+        "priceDelta": 0.5
+      },
+      {
+        "gap": 17.31,
+        "overBudget": true,
+        "poolPlayerId": 399,
+        "priceDelta": 3.2
+      },
+      {
+        "gap": 17.18,
+        "overBudget": true,
+        "poolPlayerId": 486,
+        "priceDelta": 1.0
+      },
+      {
+        "gap": 17.11,
+        "overBudget": true,
+        "poolPlayerId": 124,
+        "priceDelta": 1.0
+      },
+      {
+        "gap": 16.96,
+        "overBudget": true,
+        "poolPlayerId": 95,
+        "priceDelta": 2.0
+      },
+      {
+        "gap": 16.89,
+        "overBudget": true,
+        "poolPlayerId": 428,
+        "priceDelta": 3.5
+      },
+      {
+        "gap": 16.59,
+        "overBudget": true,
+        "poolPlayerId": 43,
+        "priceDelta": 1.5
+      },
+      {
+        "gap": 16.17,
+        "overBudget": true,
+        "poolPlayerId": 366,
+        "priceDelta": 3.0
+      },
+      {
+        "gap": 15.86,
+        "overBudget": true,
+        "poolPlayerId": 397,
+        "priceDelta": 4.0
+      },
+      {
+        "gap": 15.74,
+        "overBudget": true,
+        "poolPlayerId": 13,
+        "priceDelta": 3.0
+      },
+      {
+        "gap": 15.71,
+        "overBudget": true,
+        "poolPlayerId": 161,
+        "priceDelta": 0.5
+      },
+      {
+        "gap": 15.59,
+        "overBudget": true,
+        "poolPlayerId": 261,
+        "priceDelta": 1.0
+      },
+      {
+        "gap": 15.5,
+        "overBudget": true,
+        "poolPlayerId": 17,
+        "priceDelta": 1.4
+      },
+      {
+        "gap": 15.43,
+        "overBudget": true,
+        "poolPlayerId": 481,
+        "priceDelta": 1.9
+      },
+      {
+        "gap": 15.37,
+        "overBudget": true,
+        "poolPlayerId": 264,
+        "priceDelta": 1.0
+      },
+      {
+        "gap": 15.22,
+        "overBudget": true,
+        "poolPlayerId": 210,
+        "priceDelta": 1.0
+      },
+      {
+        "gap": 15.2,
+        "overBudget": true,
+        "poolPlayerId": 371,
+        "priceDelta": 1.5
+      },
+      {
+        "gap": 15.08,
+        "overBudget": true,
+        "poolPlayerId": 268,
+        "priceDelta": 1.0
+      },
+      {
+        "gap": 15.03,
+        "overBudget": true,
+        "poolPlayerId": 338,
+        "priceDelta": 1.0
+      },
+      {
+        "gap": 14.94,
+        "overBudget": true,
+        "poolPlayerId": 514,
+        "priceDelta": 1.4
+      },
+      {
+        "gap": 14.91,
+        "overBudget": true,
+        "poolPlayerId": 20,
+        "priceDelta": 0.9
+      },
+      {
+        "gap": 14.87,
+        "overBudget": true,
+        "poolPlayerId": 453,
+        "priceDelta": 1.5
+      },
+      {
+        "gap": 14.73,
+        "overBudget": true,
+        "poolPlayerId": 98,
+        "priceDelta": 0.5
+      },
+      {
+        "gap": 14.72,
+        "overBudget": true,
+        "poolPlayerId": 244,
+        "priceDelta": 0.5
+      },
+      {
+        "gap": 14.64,
+        "overBudget": true,
+        "poolPlayerId": 542,
+        "priceDelta": 1.4
+      },
+      {
+        "gap": 14.6,
+        "overBudget": true,
+        "poolPlayerId": 369,
+        "priceDelta": 1.4
+      },
+      {
+        "gap": 14.34,
+        "overBudget": true,
+        "poolPlayerId": 242,
+        "priceDelta": 1.0
+      },
+      {
+        "gap": 13.99,
+        "overBudget": true,
+        "poolPlayerId": 246,
+        "priceDelta": 0.5
+      },
+      {
+        "gap": 13.87,
+        "overBudget": true,
+        "poolPlayerId": 46,
+        "priceDelta": 0.5
+      },
+      {
+        "gap": 13.76,
+        "overBudget": true,
+        "poolPlayerId": 41,
+        "priceDelta": 1.5
+      },
+      {
+        "gap": 13.69,
+        "overBudget": true,
+        "poolPlayerId": 190,
+        "priceDelta": 1.0
+      },
+      {
+        "gap": 13.63,
+        "overBudget": true,
+        "poolPlayerId": 214,
+        "priceDelta": 0.5
+      },
+      {
+        "gap": 13.59,
+        "overBudget": true,
+        "poolPlayerId": 104,
+        "priceDelta": 0.5
+      },
+      {
+        "gap": 13.47,
+        "overBudget": true,
+        "poolPlayerId": 7,
+        "priceDelta": 1.0
+      },
+      {
+        "gap": 13.43,
+        "overBudget": true,
+        "poolPlayerId": 459,
+        "priceDelta": 1.0
+      },
+      {
+        "gap": 13.16,
+        "overBudget": true,
+        "poolPlayerId": 67,
+        "priceDelta": 2.0
+      },
+      {
+        "gap": 13.13,
+        "overBudget": true,
+        "poolPlayerId": 71,
+        "priceDelta": 0.5
+      },
+      {
+        "gap": 13.07,
+        "overBudget": true,
+        "poolPlayerId": 47,
+        "priceDelta": 0.5
+      },
+      {
+        "gap": 12.88,
+        "overBudget": true,
+        "poolPlayerId": 455,
+        "priceDelta": 0.9
+      },
+      {
+        "gap": 12.85,
+        "overBudget": true,
+        "poolPlayerId": 241,
+        "priceDelta": 1.0
+      },
+      {
+        "gap": 12.4,
+        "overBudget": true,
+        "poolPlayerId": 337,
+        "priceDelta": 1.0
+      },
+      {
+        "gap": 12.32,
+        "overBudget": true,
+        "poolPlayerId": 415,
+        "priceDelta": 1.4
+      },
+      {
+        "gap": 12.23,
+        "overBudget": true,
+        "poolPlayerId": 545,
+        "priceDelta": 0.5
+      },
+      {
+        "gap": 12.17,
+        "overBudget": true,
+        "poolPlayerId": 267,
+        "priceDelta": 0.5
+      },
+      {
+        "gap": 12.13,
+        "overBudget": true,
+        "poolPlayerId": 260,
+        "priceDelta": 2.0
+      },
+      {
+        "gap": 11.89,
+        "overBudget": true,
+        "poolPlayerId": 265,
+        "priceDelta": 0.5
+      },
+      {
+        "gap": 11.76,
+        "overBudget": true,
+        "poolPlayerId": 522,
+        "priceDelta": 0.5
+      },
+      {
+        "gap": 10.92,
+        "overBudget": true,
+        "poolPlayerId": 432,
+        "priceDelta": 1.0
+      },
+      {
+        "gap": 10.7,
+        "overBudget": true,
+        "poolPlayerId": 45,
+        "priceDelta": 1.0
+      },
+      {
+        "gap": 10.6,
+        "overBudget": true,
+        "poolPlayerId": 591,
+        "priceDelta": 1.0
+      },
+      {
+        "gap": 10.1,
+        "overBudget": true,
+        "poolPlayerId": 341,
+        "priceDelta": 0.5
+      },
+      {
+        "gap": 10.03,
+        "overBudget": true,
+        "poolPlayerId": 156,
+        "priceDelta": 2.0
+      },
+      {
+        "gap": 9.57,
+        "overBudget": true,
+        "poolPlayerId": 263,
+        "priceDelta": 1.0
+      },
+      {
+        "gap": 9.01,
+        "overBudget": true,
+        "poolPlayerId": 105,
+        "priceDelta": 1.5
+      },
+      {
+        "gap": 8.96,
+        "overBudget": true,
+        "poolPlayerId": 460,
+        "priceDelta": 0.5
+      },
+      {
+        "gap": 8.75,
+        "overBudget": true,
+        "poolPlayerId": 456,
+        "priceDelta": 0.5
+      },
+      {
+        "gap": 8.61,
+        "overBudget": true,
+        "poolPlayerId": 72,
+        "priceDelta": 0.5
+      },
+      {
+        "gap": 8.58,
+        "overBudget": true,
+        "poolPlayerId": 19,
+        "priceDelta": 0.9
+      },
+      {
+        "gap": 8.54,
+        "overBudget": true,
+        "poolPlayerId": 96,
+        "priceDelta": 1.0
+      },
+      {
+        "gap": 8.48,
+        "overBudget": true,
+        "poolPlayerId": 565,
+        "priceDelta": 1.1
+      },
+      {
+        "gap": 8.42,
+        "overBudget": true,
+        "poolPlayerId": 457,
+        "priceDelta": 1.4
+      },
+      {
+        "gap": 8.33,
+        "overBudget": true,
+        "poolPlayerId": 520,
+        "priceDelta": 1.0
+      },
+      {
+        "gap": 8.26,
+        "overBudget": true,
+        "poolPlayerId": 523,
+        "priceDelta": 0.5
+      },
+      {
+        "gap": 8.25,
+        "overBudget": true,
+        "poolPlayerId": 516,
+        "priceDelta": 1.0
+      },
+      {
+        "gap": 8.23,
+        "overBudget": true,
+        "poolPlayerId": 102,
+        "priceDelta": 0.5
+      },
+      {
+        "gap": 8.12,
+        "overBudget": true,
+        "poolPlayerId": 315,
+        "priceDelta": 1.0
+      },
+      {
+        "gap": 7.84,
+        "overBudget": true,
+        "poolPlayerId": 155,
+        "priceDelta": 2.4
+      },
+      {
+        "gap": 7.65,
+        "overBudget": true,
+        "poolPlayerId": 406,
+        "priceDelta": 1.0
+      },
+      {
+        "gap": 7.6,
+        "overBudget": true,
+        "poolPlayerId": 14,
+        "priceDelta": 1.9
+      },
+      {
+        "gap": 7.6,
+        "overBudget": true,
+        "poolPlayerId": 211,
+        "priceDelta": 1.0
+      },
+      {
+        "gap": 7.6,
+        "overBudget": true,
+        "poolPlayerId": 372,
+        "priceDelta": 1.0
+      },
+      {
+        "gap": 7.5,
+        "overBudget": true,
+        "poolPlayerId": 73,
+        "priceDelta": 0.5
+      },
+      {
+        "gap": 7.17,
+        "overBudget": true,
+        "poolPlayerId": 336,
+        "priceDelta": 1.4
+      },
+      {
+        "gap": 7.05,
+        "overBudget": false,
+        "poolPlayerId": 51,
+        "priceDelta": 0.0
+      },
+      {
+        "gap": 7.02,
+        "overBudget": true,
+        "poolPlayerId": 209,
+        "priceDelta": 1.4
+      },
+      {
+        "gap": 7.02,
+        "overBudget": true,
+        "poolPlayerId": 238,
+        "priceDelta": 2.0
+      },
+      {
+        "gap": 7.01,
+        "overBudget": true,
+        "poolPlayerId": 343,
+        "priceDelta": 0.5
+      },
+      {
+        "gap": 6.33,
+        "overBudget": true,
+        "poolPlayerId": 42,
+        "priceDelta": 1.0
+      },
+      {
+        "gap": 6.15,
+        "overBudget": true,
+        "poolPlayerId": 374,
+        "priceDelta": 0.5
+      },
+      {
+        "gap": 5.77,
+        "overBudget": true,
+        "poolPlayerId": 16,
+        "priceDelta": 1.9
+      },
+      {
+        "gap": 5.59,
+        "overBudget": true,
+        "poolPlayerId": 22,
+        "priceDelta": 0.9
+      },
+      {
+        "gap": 5.55,
+        "overBudget": true,
+        "poolPlayerId": 44,
+        "priceDelta": 1.0
+      },
+      {
+        "gap": 5.44,
+        "overBudget": true,
+        "poolPlayerId": 562,
+        "priceDelta": 1.0
+      },
+      {
+        "gap": 5.42,
+        "overBudget": false,
+        "poolPlayerId": 621,
+        "priceDelta": 0.0
+      },
+      {
+        "gap": 5.42,
+        "overBudget": true,
+        "poolPlayerId": 551,
+        "priceDelta": 0.5
+      },
+      {
+        "gap": 5.31,
+        "overBudget": true,
+        "poolPlayerId": 239,
+        "priceDelta": 1.5
+      },
+      {
+        "gap": 5.25,
+        "overBudget": true,
+        "poolPlayerId": 160,
+        "priceDelta": 1.4
+      },
+      {
+        "gap": 5.16,
+        "overBudget": true,
+        "poolPlayerId": 549,
+        "priceDelta": 0.9
+      },
+      {
+        "gap": 4.86,
+        "overBudget": true,
+        "poolPlayerId": 519,
+        "priceDelta": 0.9
+      },
+      {
+        "gap": 4.84,
+        "overBudget": true,
+        "poolPlayerId": 75,
+        "priceDelta": 0.5
+      },
+      {
+        "gap": 4.76,
+        "overBudget": true,
+        "poolPlayerId": 286,
+        "priceDelta": 0.5
+      },
+      {
+        "gap": 4.72,
+        "overBudget": true,
+        "poolPlayerId": 76,
+        "priceDelta": 0.5
+      },
+      {
+        "gap": 4.55,
+        "overBudget": true,
+        "poolPlayerId": 18,
+        "priceDelta": 1.9
+      },
+      {
+        "gap": 4.48,
+        "overBudget": true,
+        "poolPlayerId": 309,
+        "priceDelta": 0.5
+      },
+      {
+        "gap": 4.45,
+        "overBudget": true,
+        "poolPlayerId": 339,
+        "priceDelta": 0.5
+      },
+      {
+        "gap": 4.4,
+        "overBudget": true,
+        "poolPlayerId": 35,
+        "priceDelta": 0.5
+      },
+      {
+        "gap": 4.18,
+        "overBudget": true,
+        "poolPlayerId": 557,
+        "priceDelta": 2.0
+      },
+      {
+        "gap": 4.07,
+        "overBudget": true,
+        "poolPlayerId": 184,
+        "priceDelta": 0.5
+      },
+      {
+        "gap": 4.06,
+        "overBudget": false,
+        "poolPlayerId": 290,
+        "priceDelta": 0.0
+      },
+      {
+        "gap": 3.88,
+        "overBudget": true,
+        "poolPlayerId": 383,
+        "priceDelta": 0.9
+      },
+      {
+        "gap": 3.85,
+        "overBudget": true,
+        "poolPlayerId": 570,
+        "priceDelta": 1.0
+      },
+      {
+        "gap": 3.84,
+        "overBudget": true,
+        "poolPlayerId": 313,
+        "priceDelta": 1.0
+      },
+      {
+        "gap": 3.8,
+        "overBudget": true,
+        "poolPlayerId": 247,
+        "priceDelta": 1.0
+      },
+      {
+        "gap": 3.76,
+        "overBudget": true,
+        "poolPlayerId": 624,
+        "priceDelta": 0.5
+      },
+      {
+        "gap": 3.76,
+        "overBudget": true,
+        "poolPlayerId": 157,
+        "priceDelta": 1.9
+      },
+      {
+        "gap": 3.71,
+        "overBudget": false,
+        "poolPlayerId": 489,
+        "priceDelta": 0.0
+      },
+      {
+        "gap": 3.55,
+        "overBudget": true,
+        "poolPlayerId": 126,
+        "priceDelta": 1.0
+      },
+      {
+        "gap": 3.53,
+        "overBudget": true,
+        "poolPlayerId": 576,
+        "priceDelta": 0.5
+      },
+      {
+        "gap": 3.52,
+        "overBudget": true,
+        "poolPlayerId": 215,
+        "priceDelta": 0.5
+      },
+      {
+        "gap": 3.29,
+        "overBudget": true,
+        "poolPlayerId": 262,
+        "priceDelta": 1.0
+      },
+      {
+        "gap": 3.18,
+        "overBudget": true,
+        "poolPlayerId": 575,
+        "priceDelta": 0.5
+      },
+      {
+        "gap": 2.54,
+        "overBudget": true,
+        "poolPlayerId": 548,
+        "priceDelta": 0.5
+      },
+      {
+        "gap": 2.38,
+        "overBudget": true,
+        "poolPlayerId": 158,
+        "priceDelta": 1.4
+      },
+      {
+        "gap": 2.34,
+        "overBudget": true,
+        "poolPlayerId": 345,
+        "priceDelta": 0.4
+      },
+      {
+        "gap": 2.28,
+        "overBudget": true,
+        "poolPlayerId": 452,
+        "priceDelta": 2.4
+      },
+      {
+        "gap": 2.19,
+        "overBudget": true,
+        "poolPlayerId": 518,
+        "priceDelta": 0.4
+      },
+      {
+        "gap": 2.05,
+        "overBudget": true,
+        "poolPlayerId": 429,
+        "priceDelta": 2.5
+      },
+      {
+        "gap": 2.01,
+        "overBudget": false,
+        "poolPlayerId": 605,
+        "priceDelta": 0.0
+      },
+      {
+        "gap": 1.91,
+        "overBudget": true,
+        "poolPlayerId": 434,
+        "priceDelta": 0.5
+      },
+      {
+        "gap": 1.76,
+        "overBudget": true,
+        "poolPlayerId": 100,
+        "priceDelta": 0.5
+      },
+      {
+        "gap": 1.7,
+        "overBudget": true,
+        "poolPlayerId": 52,
+        "priceDelta": 0.5
+      },
+      {
+        "gap": 1.66,
+        "overBudget": true,
+        "poolPlayerId": 484,
+        "priceDelta": 0.9
+      },
+      {
+        "gap": 1.56,
+        "overBudget": true,
+        "poolPlayerId": 435,
+        "priceDelta": 0.5
+      },
+      {
+        "gap": 1.41,
+        "overBudget": true,
+        "poolPlayerId": 213,
+        "priceDelta": 0.5
+      },
+      {
+        "gap": 1.35,
+        "overBudget": true,
+        "poolPlayerId": 245,
+        "priceDelta": 0.9
+      },
+      {
+        "gap": 1.03,
+        "overBudget": true,
+        "poolPlayerId": 580,
+        "priceDelta": 0.5
+      },
+      {
+        "gap": 0.89,
+        "overBudget": true,
+        "poolPlayerId": 600,
+        "priceDelta": 0.5
+      },
+      {
+        "gap": 0.87,
+        "overBudget": false,
+        "poolPlayerId": 323,
+        "priceDelta": 0.0
+      },
+      {
+        "gap": 0.22,
+        "overBudget": true,
+        "poolPlayerId": 512,
+        "priceDelta": 2.0
+      },
+      {
+        "gap": 0.15,
+        "overBudget": true,
+        "poolPlayerId": 618,
+        "priceDelta": 1.5
+      }
+    ],
+    "305": [
+      {
+        "gap": 13.73,
+        "overBudget": true,
+        "poolPlayerId": 115,
+        "priceDelta": 0.7
+      },
+      {
+        "gap": 13.59,
+        "overBudget": true,
+        "poolPlayerId": 388,
+        "priceDelta": 2.0
+      },
+      {
+        "gap": 9.97,
+        "overBudget": true,
+        "poolPlayerId": 327,
+        "priceDelta": 1.0
+      },
+      {
+        "gap": 9.54,
+        "overBudget": true,
+        "poolPlayerId": 449,
+        "priceDelta": 1.0
+      },
+      {
+        "gap": 9.39,
+        "overBudget": true,
+        "poolPlayerId": 10,
+        "priceDelta": 1.5
+      },
+      {
+        "gap": 7.45,
+        "overBudget": true,
+        "poolPlayerId": 332,
+        "priceDelta": 0.5
+      },
+      {
+        "gap": 7.05,
+        "overBudget": true,
+        "poolPlayerId": 88,
+        "priceDelta": 0.6
+      },
+      {
+        "gap": 6.23,
+        "overBudget": true,
+        "poolPlayerId": 391,
+        "priceDelta": 1.6
+      },
+      {
+        "gap": 6.1,
+        "overBudget": true,
+        "poolPlayerId": 60,
+        "priceDelta": 1.5
+      },
+      {
+        "gap": 6.05,
+        "overBudget": true,
+        "poolPlayerId": 229,
+        "priceDelta": 2.0
+      },
+      {
+        "gap": 5.89,
+        "overBudget": true,
+        "poolPlayerId": 61,
+        "priceDelta": 1.5
+      },
+      {
+        "gap": 5.87,
+        "overBudget": true,
+        "poolPlayerId": 130,
+        "priceDelta": 1.0
+      },
+      {
+        "gap": 5.25,
+        "overBudget": true,
+        "poolPlayerId": 8,
+        "priceDelta": 1.6
+      },
+      {
+        "gap": 5.03,
+        "overBudget": true,
+        "poolPlayerId": 498,
+        "priceDelta": 2.0
+      },
+      {
+        "gap": 4.81,
+        "overBudget": true,
+        "poolPlayerId": 87,
+        "priceDelta": 0.5
+      },
+      {
+        "gap": 4.81,
+        "overBudget": true,
+        "poolPlayerId": 472,
+        "priceDelta": 1.5
+      },
+      {
+        "gap": 4.31,
+        "overBudget": true,
+        "poolPlayerId": 200,
+        "priceDelta": 2.0
+      },
+      {
+        "gap": 4.13,
+        "overBudget": true,
+        "poolPlayerId": 445,
+        "priceDelta": 1.0
+      },
+      {
+        "gap": 4.08,
+        "overBudget": true,
+        "poolPlayerId": 387,
+        "priceDelta": 2.5
+      },
+      {
+        "gap": 4.02,
+        "overBudget": true,
+        "poolPlayerId": 356,
+        "priceDelta": 2.5
+      },
+      {
+        "gap": 3.97,
+        "overBudget": true,
+        "poolPlayerId": 390,
+        "priceDelta": 1.5
+      },
+      {
+        "gap": 3.64,
+        "overBudget": true,
+        "poolPlayerId": 84,
+        "priceDelta": 1.5
+      },
+      {
+        "gap": 3.48,
+        "overBudget": true,
+        "poolPlayerId": 255,
+        "priceDelta": 0.5
+      },
+      {
+        "gap": 3.27,
+        "overBudget": true,
+        "poolPlayerId": 502,
+        "priceDelta": 0.5
+      },
+      {
+        "gap": 3.26,
+        "overBudget": true,
+        "poolPlayerId": 202,
+        "priceDelta": 1.0
+      },
+      {
+        "gap": 3.24,
+        "overBudget": true,
+        "poolPlayerId": 422,
+        "priceDelta": 0.5
+      },
+      {
+        "gap": 3.21,
+        "overBudget": true,
+        "poolPlayerId": 112,
+        "priceDelta": 1.0
+      },
+      {
+        "gap": 3.2,
+        "overBudget": true,
+        "poolPlayerId": 151,
+        "priceDelta": 0.5
+      },
+      {
+        "gap": 3.18,
+        "overBudget": true,
+        "poolPlayerId": 230,
+        "priceDelta": 1.5
+      },
+      {
+        "gap": 2.98,
+        "overBudget": true,
+        "poolPlayerId": 203,
+        "priceDelta": 1.0
+      },
+      {
+        "gap": 2.9,
+        "overBudget": true,
+        "poolPlayerId": 11,
+        "priceDelta": 1.5
+      },
+      {
+        "gap": 2.84,
+        "overBudget": true,
+        "poolPlayerId": 469,
+        "priceDelta": 1.0
+      },
+      {
+        "gap": 2.81,
+        "overBudget": false,
+        "poolPlayerId": 173,
+        "priceDelta": 0.0
+      },
+      {
+        "gap": 2.6,
+        "overBudget": true,
+        "poolPlayerId": 536,
+        "priceDelta": 0.5
+      },
+      {
+        "gap": 2.59,
+        "overBudget": true,
+        "poolPlayerId": 418,
+        "priceDelta": 1.0
+      },
+      {
+        "gap": 2.56,
+        "overBudget": true,
+        "poolPlayerId": 393,
+        "priceDelta": 1.5
+      },
+      {
+        "gap": 2.51,
+        "overBudget": true,
+        "poolPlayerId": 471,
+        "priceDelta": 1.5
+      },
+      {
+        "gap": 2.5,
+        "overBudget": true,
+        "poolPlayerId": 423,
+        "priceDelta": 0.5
+      },
+      {
+        "gap": 2.3,
+        "overBudget": true,
+        "poolPlayerId": 4,
+        "priceDelta": 4.0
+      },
+      {
+        "gap": 2.22,
+        "overBudget": true,
+        "poolPlayerId": 254,
+        "priceDelta": 0.5
+      },
+      {
+        "gap": 2.11,
+        "overBudget": true,
+        "poolPlayerId": 421,
+        "priceDelta": 0.5
+      },
+      {
+        "gap": 1.92,
+        "overBudget": true,
+        "poolPlayerId": 36,
+        "priceDelta": 0.5
+      },
+      {
+        "gap": 1.55,
+        "overBudget": true,
+        "poolPlayerId": 114,
+        "priceDelta": 0.5
+      },
+      {
+        "gap": 1.5,
+        "overBudget": true,
+        "poolPlayerId": 233,
+        "priceDelta": 0.5
+      },
+      {
+        "gap": 1.46,
+        "overBudget": true,
+        "poolPlayerId": 148,
+        "priceDelta": 0.5
+      },
+      {
+        "gap": 1.44,
+        "overBudget": true,
+        "poolPlayerId": 204,
+        "priceDelta": 0.5
+      },
+      {
+        "gap": 1.09,
+        "overBudget": true,
+        "poolPlayerId": 532,
+        "priceDelta": 1.0
+      },
+      {
+        "gap": 1.04,
+        "overBudget": true,
+        "poolPlayerId": 34,
+        "priceDelta": 0.5
+      },
+      {
+        "gap": 0.96,
+        "overBudget": true,
+        "poolPlayerId": 358,
+        "priceDelta": 1.5
+      },
+      {
+        "gap": 0.95,
+        "overBudget": false,
+        "poolPlayerId": 259,
+        "priceDelta": 0.0
+      },
+      {
+        "gap": 0.93,
+        "overBudget": false,
+        "poolPlayerId": 277,
+        "priceDelta": 0.0
+      },
+      {
+        "gap": 0.9,
+        "overBudget": true,
+        "poolPlayerId": 447,
+        "priceDelta": 1.0
+      },
+      {
+        "gap": 0.79,
+        "overBudget": true,
+        "poolPlayerId": 330,
+        "priceDelta": 0.5
+      },
+      {
+        "gap": 0.7,
+        "overBudget": true,
+        "poolPlayerId": 37,
+        "priceDelta": 0.5
+      },
+      {
+        "gap": 0.42,
+        "overBudget": true,
+        "poolPlayerId": 534,
+        "priceDelta": 0.5
+      },
+      {
+        "gap": 0.12,
+        "overBudget": true,
+        "poolPlayerId": 473,
+        "priceDelta": 0.5
+      },
+      {
+        "gap": 0.07,
+        "overBudget": true,
+        "poolPlayerId": 258,
+        "priceDelta": 0.5
+      },
+      {
+        "gap": 0.04,
+        "overBudget": false,
+        "poolPlayerId": 304,
+        "priceDelta": 0.0
+      }
+    ],
+    "334": [
+      {
+        "gap": 16.69,
+        "overBudget": false,
+        "poolPlayerId": 115,
+        "priceDelta": -0.3
+      },
+      {
+        "gap": 16.55,
+        "overBudget": true,
+        "poolPlayerId": 388,
+        "priceDelta": 1.0
+      },
+      {
+        "gap": 12.93,
+        "overBudget": false,
+        "poolPlayerId": 327,
+        "priceDelta": 0.0
+      },
+      {
+        "gap": 12.5,
+        "overBudget": false,
+        "poolPlayerId": 449,
+        "priceDelta": 0.0
+      },
+      {
+        "gap": 12.35,
+        "overBudget": true,
+        "poolPlayerId": 10,
+        "priceDelta": 0.5
+      },
+      {
+        "gap": 10.41,
+        "overBudget": false,
+        "poolPlayerId": 332,
+        "priceDelta": -0.5
+      },
+      {
+        "gap": 10.01,
+        "overBudget": false,
+        "poolPlayerId": 88,
+        "priceDelta": -0.4
+      },
+      {
+        "gap": 9.19,
+        "overBudget": true,
+        "poolPlayerId": 391,
+        "priceDelta": 0.6
+      },
+      {
+        "gap": 9.06,
+        "overBudget": true,
+        "poolPlayerId": 60,
+        "priceDelta": 0.5
+      },
+      {
+        "gap": 9.01,
+        "overBudget": true,
+        "poolPlayerId": 229,
+        "priceDelta": 1.0
+      },
+      {
+        "gap": 8.85,
+        "overBudget": true,
+        "poolPlayerId": 61,
+        "priceDelta": 0.5
+      },
+      {
+        "gap": 8.83,
+        "overBudget": false,
+        "poolPlayerId": 130,
+        "priceDelta": 0.0
+      },
+      {
+        "gap": 8.21,
+        "overBudget": true,
+        "poolPlayerId": 8,
+        "priceDelta": 0.6
+      },
+      {
+        "gap": 7.99,
+        "overBudget": true,
+        "poolPlayerId": 498,
+        "priceDelta": 1.0
+      },
+      {
+        "gap": 7.77,
+        "overBudget": false,
+        "poolPlayerId": 87,
+        "priceDelta": -0.5
+      },
+      {
+        "gap": 7.77,
+        "overBudget": true,
+        "poolPlayerId": 472,
+        "priceDelta": 0.5
+      },
+      {
+        "gap": 7.27,
+        "overBudget": true,
+        "poolPlayerId": 200,
+        "priceDelta": 1.0
+      },
+      {
+        "gap": 7.09,
+        "overBudget": false,
+        "poolPlayerId": 445,
+        "priceDelta": 0.0
+      },
+      {
+        "gap": 7.04,
+        "overBudget": true,
+        "poolPlayerId": 387,
+        "priceDelta": 1.5
+      },
+      {
+        "gap": 6.98,
+        "overBudget": true,
+        "poolPlayerId": 356,
+        "priceDelta": 1.5
+      },
+      {
+        "gap": 6.93,
+        "overBudget": true,
+        "poolPlayerId": 390,
+        "priceDelta": 0.5
+      },
+      {
+        "gap": 6.6,
+        "overBudget": true,
+        "poolPlayerId": 84,
+        "priceDelta": 0.5
+      },
+      {
+        "gap": 6.44,
+        "overBudget": false,
+        "poolPlayerId": 255,
+        "priceDelta": -0.5
+      },
+      {
+        "gap": 6.23,
+        "overBudget": false,
+        "poolPlayerId": 502,
+        "priceDelta": -0.5
+      },
+      {
+        "gap": 6.22,
+        "overBudget": false,
+        "poolPlayerId": 202,
+        "priceDelta": 0.0
+      },
+      {
+        "gap": 6.2,
+        "overBudget": false,
+        "poolPlayerId": 422,
+        "priceDelta": -0.5
+      },
+      {
+        "gap": 6.17,
+        "overBudget": false,
+        "poolPlayerId": 112,
+        "priceDelta": 0.0
+      },
+      {
+        "gap": 6.16,
+        "overBudget": false,
+        "poolPlayerId": 151,
+        "priceDelta": -0.5
+      },
+      {
+        "gap": 6.14,
+        "overBudget": true,
+        "poolPlayerId": 230,
+        "priceDelta": 0.5
+      },
+      {
+        "gap": 5.94,
+        "overBudget": false,
+        "poolPlayerId": 203,
+        "priceDelta": 0.0
+      },
+      {
+        "gap": 5.86,
+        "overBudget": true,
+        "poolPlayerId": 11,
+        "priceDelta": 0.5
+      },
+      {
+        "gap": 5.8,
+        "overBudget": false,
+        "poolPlayerId": 469,
+        "priceDelta": 0.0
+      },
+      {
+        "gap": 5.77,
+        "overBudget": false,
+        "poolPlayerId": 173,
+        "priceDelta": -1.0
+      },
+      {
+        "gap": 5.56,
+        "overBudget": false,
+        "poolPlayerId": 536,
+        "priceDelta": -0.5
+      },
+      {
+        "gap": 5.55,
+        "overBudget": false,
+        "poolPlayerId": 418,
+        "priceDelta": 0.0
+      },
+      {
+        "gap": 5.52,
+        "overBudget": true,
+        "poolPlayerId": 393,
+        "priceDelta": 0.5
+      },
+      {
+        "gap": 5.47,
+        "overBudget": true,
+        "poolPlayerId": 471,
+        "priceDelta": 0.5
+      },
+      {
+        "gap": 5.46,
+        "overBudget": false,
+        "poolPlayerId": 423,
+        "priceDelta": -0.5
+      },
+      {
+        "gap": 5.26,
+        "overBudget": true,
+        "poolPlayerId": 4,
+        "priceDelta": 3.0
+      },
+      {
+        "gap": 5.18,
+        "overBudget": false,
+        "poolPlayerId": 254,
+        "priceDelta": -0.5
+      },
+      {
+        "gap": 5.07,
+        "overBudget": false,
+        "poolPlayerId": 421,
+        "priceDelta": -0.5
+      },
+      {
+        "gap": 4.88,
+        "overBudget": false,
+        "poolPlayerId": 36,
+        "priceDelta": -0.5
+      },
+      {
+        "gap": 4.51,
+        "overBudget": false,
+        "poolPlayerId": 114,
+        "priceDelta": -0.5
+      },
+      {
+        "gap": 4.46,
+        "overBudget": false,
+        "poolPlayerId": 233,
+        "priceDelta": -0.5
+      },
+      {
+        "gap": 4.42,
+        "overBudget": false,
+        "poolPlayerId": 148,
+        "priceDelta": -0.5
+      },
+      {
+        "gap": 4.4,
+        "overBudget": false,
+        "poolPlayerId": 204,
+        "priceDelta": -0.5
+      },
+      {
+        "gap": 4.05,
+        "overBudget": false,
+        "poolPlayerId": 532,
+        "priceDelta": 0.0
+      },
+      {
+        "gap": 4.0,
+        "overBudget": false,
+        "poolPlayerId": 34,
+        "priceDelta": -0.5
+      },
+      {
+        "gap": 3.92,
+        "overBudget": true,
+        "poolPlayerId": 358,
+        "priceDelta": 0.5
+      },
+      {
+        "gap": 3.91,
+        "overBudget": false,
+        "poolPlayerId": 259,
+        "priceDelta": -1.0
+      },
+      {
+        "gap": 3.89,
+        "overBudget": false,
+        "poolPlayerId": 277,
+        "priceDelta": -1.0
+      },
+      {
+        "gap": 3.86,
+        "overBudget": false,
+        "poolPlayerId": 447,
+        "priceDelta": 0.0
+      },
+      {
+        "gap": 3.75,
+        "overBudget": false,
+        "poolPlayerId": 330,
+        "priceDelta": -0.5
+      },
+      {
+        "gap": 3.66,
+        "overBudget": false,
+        "poolPlayerId": 37,
+        "priceDelta": -0.5
+      },
+      {
+        "gap": 3.38,
+        "overBudget": false,
+        "poolPlayerId": 534,
+        "priceDelta": -0.5
+      },
+      {
+        "gap": 3.08,
+        "overBudget": false,
+        "poolPlayerId": 473,
+        "priceDelta": -0.5
+      },
+      {
+        "gap": 3.03,
+        "overBudget": false,
+        "poolPlayerId": 258,
+        "priceDelta": -0.5
+      },
+      {
+        "gap": 3.0,
+        "overBudget": false,
+        "poolPlayerId": 304,
+        "priceDelta": -1.0
+      },
+      {
+        "gap": 2.96,
+        "overBudget": false,
+        "poolPlayerId": 305,
+        "priceDelta": -1.0
+      },
+      {
+        "gap": 2.76,
+        "overBudget": true,
+        "poolPlayerId": 142,
+        "priceDelta": 0.5
+      },
+      {
+        "gap": 2.62,
+        "overBudget": false,
+        "poolPlayerId": 116,
+        "priceDelta": -0.5
+      },
+      {
+        "gap": 2.46,
+        "overBudget": false,
+        "poolPlayerId": 144,
+        "priceDelta": 0.0
+      },
+      {
+        "gap": 2.41,
+        "overBudget": false,
+        "poolPlayerId": 539,
+        "priceDelta": -1.0
+      },
+      {
+        "gap": 2.39,
+        "overBudget": false,
+        "poolPlayerId": 32,
+        "priceDelta": -0.5
+      },
+      {
+        "gap": 2.39,
+        "overBudget": false,
+        "poolPlayerId": 474,
+        "priceDelta": -0.5
+      },
+      {
+        "gap": 2.34,
+        "overBudget": false,
+        "poolPlayerId": 149,
+        "priceDelta": 0.0
+      },
+      {
+        "gap": 2.24,
+        "overBudget": false,
+        "poolPlayerId": 64,
+        "priceDelta": -0.5
+      },
+      {
+        "gap": 2.2,
+        "overBudget": false,
+        "poolPlayerId": 504,
+        "priceDelta": 0.0
+      },
+      {
+        "gap": 2.06,
+        "overBudget": false,
+        "poolPlayerId": 257,
+        "priceDelta": -0.5
+      },
+      {
+        "gap": 1.78,
+        "overBudget": true,
+        "poolPlayerId": 357,
+        "priceDelta": 0.5
+      },
+      {
+        "gap": 1.49,
+        "overBudget": false,
+        "poolPlayerId": 586,
+        "priceDelta": -1.0
+      },
+      {
+        "gap": 1.37,
+        "overBudget": false,
+        "poolPlayerId": 282,
+        "priceDelta": -1.0
+      },
+      {
+        "gap": 1.09,
+        "overBudget": false,
+        "poolPlayerId": 306,
+        "priceDelta": -1.0
+      },
+      {
+        "gap": 0.58,
+        "overBudget": false,
+        "poolPlayerId": 279,
+        "priceDelta": -0.9
+      }
+    ],
+    "346": [
+      {
+        "gap": 9.22,
+        "overBudget": false,
+        "poolPlayerId": 553,
+        "priceDelta": -0.5
+      },
+      {
+        "gap": 8.99,
+        "overBudget": true,
+        "poolPlayerId": 165,
+        "priceDelta": 1.6
+      },
+      {
+        "gap": 8.18,
+        "overBudget": true,
+        "poolPlayerId": 411,
+        "priceDelta": 9.5
+      },
+      {
+        "gap": 7.36,
+        "overBudget": false,
+        "poolPlayerId": 249,
+        "priceDelta": -0.5
+      },
+      {
+        "gap": 6.43,
+        "overBudget": true,
+        "poolPlayerId": 379,
+        "priceDelta": 3.0
+      },
+      {
+        "gap": 4.77,
+        "overBudget": true,
+        "poolPlayerId": 464,
+        "priceDelta": 0.1
+      },
+      {
+        "gap": 3.81,
+        "overBudget": true,
+        "poolPlayerId": 106,
+        "priceDelta": 2.0
+      },
+      {
+        "gap": 1.08,
+        "overBudget": false,
+        "poolPlayerId": 224,
+        "priceDelta": -0.5
+      }
+    ],
+    "366": [
+      {
+        "gap": 22.36,
+        "overBudget": false,
+        "poolPlayerId": 547,
+        "priceDelta": -2.5
+      },
+      {
+        "gap": 13.3,
+        "overBudget": true,
+        "poolPlayerId": 12,
+        "priceDelta": 2.0
+      },
+      {
+        "gap": 11.06,
+        "overBudget": true,
+        "poolPlayerId": 426,
+        "priceDelta": 4.5
+      },
+      {
+        "gap": 9.35,
+        "overBudget": false,
+        "poolPlayerId": 367,
+        "priceDelta": -0.5
+      },
+      {
+        "gap": 8.96,
+        "overBudget": true,
+        "poolPlayerId": 427,
+        "priceDelta": 0.5
+      },
+      {
+        "gap": 8.29,
+        "overBudget": false,
+        "poolPlayerId": 86,
+        "priceDelta": -2.0
+      },
+      {
+        "gap": 7.6,
+        "overBudget": false,
+        "poolPlayerId": 544,
+        "priceDelta": -2.0
+      },
+      {
+        "gap": 7.53,
+        "overBudget": false,
+        "poolPlayerId": 368,
+        "priceDelta": -0.5
+      },
+      {
+        "gap": 7.5,
+        "overBudget": true,
+        "poolPlayerId": 154,
+        "priceDelta": 2.1
+      },
+      {
+        "gap": 6.9,
+        "overBudget": false,
+        "poolPlayerId": 40,
+        "priceDelta": 0.0
+      },
+      {
+        "gap": 6.86,
+        "overBudget": false,
+        "poolPlayerId": 15,
+        "priceDelta": -0.9
+      },
+      {
+        "gap": 6.2,
+        "overBudget": false,
+        "poolPlayerId": 335,
+        "priceDelta": -1.5
+      },
+      {
+        "gap": 5.69,
+        "overBudget": false,
+        "poolPlayerId": 68,
+        "priceDelta": -1.5
+      },
+      {
+        "gap": 5.31,
+        "overBudget": true,
+        "poolPlayerId": 480,
+        "priceDelta": 0.4
+      },
+      {
+        "gap": 5.19,
+        "overBudget": false,
+        "poolPlayerId": 94,
+        "priceDelta": -1.5
+      },
+      {
+        "gap": 5.05,
+        "overBudget": false,
+        "poolPlayerId": 236,
+        "priceDelta": -1.0
+      },
+      {
+        "gap": 5.05,
+        "overBudget": false,
+        "poolPlayerId": 398,
+        "priceDelta": -0.5
+      },
+      {
+        "gap": 3.34,
+        "overBudget": false,
+        "poolPlayerId": 237,
+        "priceDelta": -1.5
+      },
+      {
+        "gap": 2.63,
+        "overBudget": false,
+        "poolPlayerId": 243,
+        "priceDelta": -2.5
+      },
+      {
+        "gap": 2.35,
+        "overBudget": false,
+        "poolPlayerId": 69,
+        "priceDelta": -1.5
+      },
+      {
+        "gap": 2.31,
+        "overBudget": false,
+        "poolPlayerId": 483,
+        "priceDelta": -2.0
+      },
+      {
+        "gap": 1.99,
+        "overBudget": false,
+        "poolPlayerId": 454,
+        "priceDelta": -1.4
+      },
+      {
+        "gap": 1.93,
+        "overBudget": false,
+        "poolPlayerId": 70,
+        "priceDelta": -1.5
+      },
+      {
+        "gap": 1.88,
+        "overBudget": false,
+        "poolPlayerId": 162,
+        "priceDelta": -2.5
+      },
+      {
+        "gap": 1.66,
+        "overBudget": false,
+        "poolPlayerId": 127,
+        "priceDelta": -2.5
+      },
+      {
+        "gap": 1.14,
+        "overBudget": true,
+        "poolPlayerId": 399,
+        "priceDelta": 0.2
+      },
+      {
+        "gap": 1.01,
+        "overBudget": false,
+        "poolPlayerId": 486,
+        "priceDelta": -2.0
+      },
+      {
+        "gap": 0.94,
+        "overBudget": false,
+        "poolPlayerId": 124,
+        "priceDelta": -2.0
+      },
+      {
+        "gap": 0.79,
+        "overBudget": false,
+        "poolPlayerId": 95,
+        "priceDelta": -1.0
+      },
+      {
+        "gap": 0.72,
+        "overBudget": true,
+        "poolPlayerId": 428,
+        "priceDelta": 0.5
+      },
+      {
+        "gap": 0.42,
+        "overBudget": false,
+        "poolPlayerId": 43,
+        "priceDelta": -1.5
+      }
+    ],
+    "411": [
+      {
+        "gap": 1.04,
+        "overBudget": false,
+        "poolPlayerId": 553,
+        "priceDelta": -10.0
+      },
+      {
+        "gap": 0.81,
+        "overBudget": false,
+        "poolPlayerId": 165,
+        "priceDelta": -7.9
+      }
+    ],
+    "418": [
+      {
+        "gap": 11.14,
+        "overBudget": false,
+        "poolPlayerId": 115,
+        "priceDelta": -0.3
+      },
+      {
+        "gap": 11.0,
+        "overBudget": true,
+        "poolPlayerId": 388,
+        "priceDelta": 1.0
+      },
+      {
+        "gap": 7.38,
+        "overBudget": false,
+        "poolPlayerId": 327,
+        "priceDelta": 0.0
+      },
+      {
+        "gap": 6.95,
+        "overBudget": false,
+        "poolPlayerId": 449,
+        "priceDelta": 0.0
+      },
+      {
+        "gap": 6.8,
+        "overBudget": true,
+        "poolPlayerId": 10,
+        "priceDelta": 0.5
+      },
+      {
+        "gap": 4.86,
+        "overBudget": false,
+        "poolPlayerId": 332,
+        "priceDelta": -0.5
+      },
+      {
+        "gap": 4.46,
+        "overBudget": false,
+        "poolPlayerId": 88,
+        "priceDelta": -0.4
+      },
+      {
+        "gap": 3.64,
+        "overBudget": true,
+        "poolPlayerId": 391,
+        "priceDelta": 0.6
+      },
+      {
+        "gap": 3.51,
+        "overBudget": true,
+        "poolPlayerId": 60,
+        "priceDelta": 0.5
+      },
+      {
+        "gap": 3.46,
+        "overBudget": true,
+        "poolPlayerId": 229,
+        "priceDelta": 1.0
+      },
+      {
+        "gap": 3.3,
+        "overBudget": true,
+        "poolPlayerId": 61,
+        "priceDelta": 0.5
+      },
+      {
+        "gap": 3.28,
+        "overBudget": false,
+        "poolPlayerId": 130,
+        "priceDelta": 0.0
+      },
+      {
+        "gap": 2.66,
+        "overBudget": true,
+        "poolPlayerId": 8,
+        "priceDelta": 0.6
+      },
+      {
+        "gap": 2.44,
+        "overBudget": true,
+        "poolPlayerId": 498,
+        "priceDelta": 1.0
+      },
+      {
+        "gap": 2.22,
+        "overBudget": false,
+        "poolPlayerId": 87,
+        "priceDelta": -0.5
+      },
+      {
+        "gap": 2.22,
+        "overBudget": true,
+        "poolPlayerId": 472,
+        "priceDelta": 0.5
+      },
+      {
+        "gap": 1.72,
+        "overBudget": true,
+        "poolPlayerId": 200,
+        "priceDelta": 1.0
+      },
+      {
+        "gap": 1.54,
+        "overBudget": false,
+        "poolPlayerId": 445,
+        "priceDelta": 0.0
+      },
+      {
+        "gap": 1.49,
+        "overBudget": true,
+        "poolPlayerId": 387,
+        "priceDelta": 1.5
+      },
+      {
+        "gap": 1.43,
+        "overBudget": true,
+        "poolPlayerId": 356,
+        "priceDelta": 1.5
+      },
+      {
+        "gap": 1.38,
+        "overBudget": true,
+        "poolPlayerId": 390,
+        "priceDelta": 0.5
+      },
+      {
+        "gap": 1.05,
+        "overBudget": true,
+        "poolPlayerId": 84,
+        "priceDelta": 0.5
+      },
+      {
+        "gap": 0.89,
+        "overBudget": false,
+        "poolPlayerId": 255,
+        "priceDelta": -0.5
+      },
+      {
+        "gap": 0.68,
+        "overBudget": false,
+        "poolPlayerId": 502,
+        "priceDelta": -0.5
+      },
+      {
+        "gap": 0.67,
+        "overBudget": false,
+        "poolPlayerId": 202,
+        "priceDelta": 0.0
+      },
+      {
+        "gap": 0.65,
+        "overBudget": false,
+        "poolPlayerId": 422,
+        "priceDelta": -0.5
+      },
+      {
+        "gap": 0.62,
+        "overBudget": false,
+        "poolPlayerId": 112,
+        "priceDelta": 0.0
+      },
+      {
+        "gap": 0.61,
+        "overBudget": false,
+        "poolPlayerId": 151,
+        "priceDelta": -0.5
+      },
+      {
+        "gap": 0.59,
+        "overBudget": true,
+        "poolPlayerId": 230,
+        "priceDelta": 0.5
+      },
+      {
+        "gap": 0.39,
+        "overBudget": false,
+        "poolPlayerId": 203,
+        "priceDelta": 0.0
+      },
+      {
+        "gap": 0.31,
+        "overBudget": true,
+        "poolPlayerId": 11,
+        "priceDelta": 0.5
+      },
+      {
+        "gap": 0.25,
+        "overBudget": false,
+        "poolPlayerId": 469,
+        "priceDelta": 0.0
+      },
+      {
+        "gap": 0.22,
+        "overBudget": false,
+        "poolPlayerId": 173,
+        "priceDelta": -1.0
+      },
+      {
+        "gap": 0.01,
+        "overBudget": false,
+        "poolPlayerId": 536,
+        "priceDelta": -0.5
+      }
+    ],
+    "426": [
+      {
+        "gap": 11.3,
+        "overBudget": false,
+        "poolPlayerId": 547,
+        "priceDelta": -7.0
+      },
+      {
+        "gap": 2.24,
+        "overBudget": false,
+        "poolPlayerId": 12,
+        "priceDelta": -2.5
+      }
+    ],
+    "496": [
+      {
+        "gap": 5.41,
+        "overBudget": true,
+        "poolPlayerId": 385,
+        "priceDelta": 0.5
+      },
+      {
+        "gap": 1.11,
+        "overBudget": false,
+        "poolPlayerId": 29,
+        "priceDelta": 0.0
+      },
+      {
+        "gap": 0.98,
+        "overBudget": true,
+        "poolPlayerId": 226,
+        "priceDelta": 1.0
+      },
+      {
+        "gap": 0.9,
+        "overBudget": true,
+        "poolPlayerId": 140,
+        "priceDelta": 0.4
+      },
+      {
+        "gap": 0.58,
+        "overBudget": false,
+        "poolPlayerId": 57,
+        "priceDelta": 0.0
+      }
+    ],
+    "504": [
+      {
+        "gap": 14.49,
+        "overBudget": false,
+        "poolPlayerId": 115,
+        "priceDelta": -0.3
+      },
+      {
+        "gap": 14.35,
+        "overBudget": true,
+        "poolPlayerId": 388,
+        "priceDelta": 1.0
+      },
+      {
+        "gap": 10.73,
+        "overBudget": false,
+        "poolPlayerId": 327,
+        "priceDelta": 0.0
+      },
+      {
+        "gap": 10.3,
+        "overBudget": false,
+        "poolPlayerId": 449,
+        "priceDelta": 0.0
+      },
+      {
+        "gap": 10.15,
+        "overBudget": true,
+        "poolPlayerId": 10,
+        "priceDelta": 0.5
+      },
+      {
+        "gap": 8.21,
+        "overBudget": false,
+        "poolPlayerId": 332,
+        "priceDelta": -0.5
+      },
+      {
+        "gap": 7.81,
+        "overBudget": false,
+        "poolPlayerId": 88,
+        "priceDelta": -0.4
+      },
+      {
+        "gap": 6.99,
+        "overBudget": true,
+        "poolPlayerId": 391,
+        "priceDelta": 0.6
+      },
+      {
+        "gap": 6.86,
+        "overBudget": true,
+        "poolPlayerId": 60,
+        "priceDelta": 0.5
+      },
+      {
+        "gap": 6.81,
+        "overBudget": true,
+        "poolPlayerId": 229,
+        "priceDelta": 1.0
+      },
+      {
+        "gap": 6.65,
+        "overBudget": true,
+        "poolPlayerId": 61,
+        "priceDelta": 0.5
+      },
+      {
+        "gap": 6.63,
+        "overBudget": false,
+        "poolPlayerId": 130,
+        "priceDelta": 0.0
+      },
+      {
+        "gap": 6.01,
+        "overBudget": true,
+        "poolPlayerId": 8,
+        "priceDelta": 0.6
+      },
+      {
+        "gap": 5.79,
+        "overBudget": true,
+        "poolPlayerId": 498,
+        "priceDelta": 1.0
+      },
+      {
+        "gap": 5.57,
+        "overBudget": false,
+        "poolPlayerId": 87,
+        "priceDelta": -0.5
+      },
+      {
+        "gap": 5.57,
+        "overBudget": true,
+        "poolPlayerId": 472,
+        "priceDelta": 0.5
+      },
+      {
+        "gap": 5.07,
+        "overBudget": true,
+        "poolPlayerId": 200,
+        "priceDelta": 1.0
+      },
+      {
+        "gap": 4.89,
+        "overBudget": false,
+        "poolPlayerId": 445,
+        "priceDelta": 0.0
+      },
+      {
+        "gap": 4.84,
+        "overBudget": true,
+        "poolPlayerId": 387,
+        "priceDelta": 1.5
+      },
+      {
+        "gap": 4.78,
+        "overBudget": true,
+        "poolPlayerId": 356,
+        "priceDelta": 1.5
+      },
+      {
+        "gap": 4.73,
+        "overBudget": true,
+        "poolPlayerId": 390,
+        "priceDelta": 0.5
+      },
+      {
+        "gap": 4.4,
+        "overBudget": true,
+        "poolPlayerId": 84,
+        "priceDelta": 0.5
+      },
+      {
+        "gap": 4.24,
+        "overBudget": false,
+        "poolPlayerId": 255,
+        "priceDelta": -0.5
+      },
+      {
+        "gap": 4.03,
+        "overBudget": false,
+        "poolPlayerId": 502,
+        "priceDelta": -0.5
+      },
+      {
+        "gap": 4.02,
+        "overBudget": false,
+        "poolPlayerId": 202,
+        "priceDelta": 0.0
+      },
+      {
+        "gap": 4.0,
+        "overBudget": false,
+        "poolPlayerId": 422,
+        "priceDelta": -0.5
+      },
+      {
+        "gap": 3.97,
+        "overBudget": false,
+        "poolPlayerId": 112,
+        "priceDelta": 0.0
+      },
+      {
+        "gap": 3.96,
+        "overBudget": false,
+        "poolPlayerId": 151,
+        "priceDelta": -0.5
+      },
+      {
+        "gap": 3.94,
+        "overBudget": true,
+        "poolPlayerId": 230,
+        "priceDelta": 0.5
+      },
+      {
+        "gap": 3.74,
+        "overBudget": false,
+        "poolPlayerId": 203,
+        "priceDelta": 0.0
+      },
+      {
+        "gap": 3.66,
+        "overBudget": true,
+        "poolPlayerId": 11,
+        "priceDelta": 0.5
+      },
+      {
+        "gap": 3.6,
+        "overBudget": false,
+        "poolPlayerId": 469,
+        "priceDelta": 0.0
+      },
+      {
+        "gap": 3.57,
+        "overBudget": false,
+        "poolPlayerId": 173,
+        "priceDelta": -1.0
+      },
+      {
+        "gap": 3.36,
+        "overBudget": false,
+        "poolPlayerId": 536,
+        "priceDelta": -0.5
+      },
+      {
+        "gap": 3.35,
+        "overBudget": false,
+        "poolPlayerId": 418,
+        "priceDelta": 0.0
+      },
+      {
+        "gap": 3.32,
+        "overBudget": true,
+        "poolPlayerId": 393,
+        "priceDelta": 0.5
+      },
+      {
+        "gap": 3.27,
+        "overBudget": true,
+        "poolPlayerId": 471,
+        "priceDelta": 0.5
+      },
+      {
+        "gap": 3.26,
+        "overBudget": false,
+        "poolPlayerId": 423,
+        "priceDelta": -0.5
+      },
+      {
+        "gap": 3.06,
+        "overBudget": true,
+        "poolPlayerId": 4,
+        "priceDelta": 3.0
+      },
+      {
+        "gap": 2.98,
+        "overBudget": false,
+        "poolPlayerId": 254,
+        "priceDelta": -0.5
+      },
+      {
+        "gap": 2.87,
+        "overBudget": false,
+        "poolPlayerId": 421,
+        "priceDelta": -0.5
+      },
+      {
+        "gap": 2.68,
+        "overBudget": false,
+        "poolPlayerId": 36,
+        "priceDelta": -0.5
+      },
+      {
+        "gap": 2.31,
+        "overBudget": false,
+        "poolPlayerId": 114,
+        "priceDelta": -0.5
+      },
+      {
+        "gap": 2.26,
+        "overBudget": false,
+        "poolPlayerId": 233,
+        "priceDelta": -0.5
+      },
+      {
+        "gap": 2.22,
+        "overBudget": false,
+        "poolPlayerId": 148,
+        "priceDelta": -0.5
+      },
+      {
+        "gap": 2.2,
+        "overBudget": false,
+        "poolPlayerId": 204,
+        "priceDelta": -0.5
+      },
+      {
+        "gap": 1.85,
+        "overBudget": false,
+        "poolPlayerId": 532,
+        "priceDelta": 0.0
+      },
+      {
+        "gap": 1.8,
+        "overBudget": false,
+        "poolPlayerId": 34,
+        "priceDelta": -0.5
+      },
+      {
+        "gap": 1.72,
+        "overBudget": true,
+        "poolPlayerId": 358,
+        "priceDelta": 0.5
+      },
+      {
+        "gap": 1.71,
+        "overBudget": false,
+        "poolPlayerId": 259,
+        "priceDelta": -1.0
+      },
+      {
+        "gap": 1.69,
+        "overBudget": false,
+        "poolPlayerId": 277,
+        "priceDelta": -1.0
+      },
+      {
+        "gap": 1.66,
+        "overBudget": false,
+        "poolPlayerId": 447,
+        "priceDelta": 0.0
+      },
+      {
+        "gap": 1.55,
+        "overBudget": false,
+        "poolPlayerId": 330,
+        "priceDelta": -0.5
+      },
+      {
+        "gap": 1.46,
+        "overBudget": false,
+        "poolPlayerId": 37,
+        "priceDelta": -0.5
+      },
+      {
+        "gap": 1.18,
+        "overBudget": false,
+        "poolPlayerId": 534,
+        "priceDelta": -0.5
+      },
+      {
+        "gap": 0.88,
+        "overBudget": false,
+        "poolPlayerId": 473,
+        "priceDelta": -0.5
+      },
+      {
+        "gap": 0.83,
+        "overBudget": false,
+        "poolPlayerId": 258,
+        "priceDelta": -0.5
+      },
+      {
+        "gap": 0.8,
+        "overBudget": false,
+        "poolPlayerId": 304,
+        "priceDelta": -1.0
+      },
+      {
+        "gap": 0.76,
+        "overBudget": false,
+        "poolPlayerId": 305,
+        "priceDelta": -1.0
+      },
+      {
+        "gap": 0.56,
+        "overBudget": true,
+        "poolPlayerId": 142,
+        "priceDelta": 0.5
+      },
+      {
+        "gap": 0.42,
+        "overBudget": false,
+        "poolPlayerId": 116,
+        "priceDelta": -0.5
+      },
+      {
+        "gap": 0.26,
+        "overBudget": false,
+        "poolPlayerId": 144,
+        "priceDelta": 0.0
+      },
+      {
+        "gap": 0.21,
+        "overBudget": false,
+        "poolPlayerId": 539,
+        "priceDelta": -1.0
+      },
+      {
+        "gap": 0.19,
+        "overBudget": false,
+        "poolPlayerId": 32,
+        "priceDelta": -0.5
+      },
+      {
+        "gap": 0.19,
+        "overBudget": false,
+        "poolPlayerId": 474,
+        "priceDelta": -0.5
+      },
+      {
+        "gap": 0.14,
+        "overBudget": false,
+        "poolPlayerId": 149,
+        "priceDelta": 0.0
+      },
+      {
+        "gap": 0.04,
+        "overBudget": false,
+        "poolPlayerId": 64,
+        "priceDelta": -0.5
+      }
+    ],
+    "557": [
+      {
+        "gap": 34.35,
+        "overBudget": false,
+        "poolPlayerId": 547,
+        "priceDelta": -1.5
+      },
+      {
+        "gap": 25.29,
+        "overBudget": true,
+        "poolPlayerId": 12,
+        "priceDelta": 3.0
+      },
+      {
+        "gap": 23.05,
+        "overBudget": true,
+        "poolPlayerId": 426,
+        "priceDelta": 5.5
+      },
+      {
+        "gap": 21.34,
+        "overBudget": true,
+        "poolPlayerId": 367,
+        "priceDelta": 0.5
+      },
+      {
+        "gap": 20.95,
+        "overBudget": true,
+        "poolPlayerId": 427,
+        "priceDelta": 1.5
+      },
+      {
+        "gap": 20.28,
+        "overBudget": false,
+        "poolPlayerId": 86,
+        "priceDelta": -1.0
+      },
+      {
+        "gap": 19.59,
+        "overBudget": false,
+        "poolPlayerId": 544,
+        "priceDelta": -1.0
+      },
+      {
+        "gap": 19.52,
+        "overBudget": true,
+        "poolPlayerId": 368,
+        "priceDelta": 0.5
+      },
+      {
+        "gap": 19.49,
+        "overBudget": true,
+        "poolPlayerId": 154,
+        "priceDelta": 3.1
+      },
+      {
+        "gap": 18.89,
+        "overBudget": true,
+        "poolPlayerId": 40,
+        "priceDelta": 1.0
+      },
+      {
+        "gap": 18.85,
+        "overBudget": true,
+        "poolPlayerId": 15,
+        "priceDelta": 0.1
+      },
+      {
+        "gap": 18.19,
+        "overBudget": false,
+        "poolPlayerId": 335,
+        "priceDelta": -0.5
+      },
+      {
+        "gap": 17.68,
+        "overBudget": false,
+        "poolPlayerId": 68,
+        "priceDelta": -0.5
+      },
+      {
+        "gap": 17.3,
+        "overBudget": true,
+        "poolPlayerId": 480,
+        "priceDelta": 1.4
+      },
+      {
+        "gap": 17.18,
+        "overBudget": false,
+        "poolPlayerId": 94,
+        "priceDelta": -0.5
+      },
+      {
+        "gap": 17.04,
+        "overBudget": false,
+        "poolPlayerId": 236,
+        "priceDelta": 0.0
+      },
+      {
+        "gap": 17.04,
+        "overBudget": true,
+        "poolPlayerId": 398,
+        "priceDelta": 0.5
+      },
+      {
+        "gap": 15.33,
+        "overBudget": false,
+        "poolPlayerId": 237,
+        "priceDelta": -0.5
+      },
+      {
+        "gap": 14.62,
+        "overBudget": false,
+        "poolPlayerId": 243,
+        "priceDelta": -1.5
+      },
+      {
+        "gap": 14.34,
+        "overBudget": false,
+        "poolPlayerId": 69,
+        "priceDelta": -0.5
+      },
+      {
+        "gap": 14.3,
+        "overBudget": false,
+        "poolPlayerId": 483,
+        "priceDelta": -1.0
+      },
+      {
+        "gap": 13.98,
+        "overBudget": false,
+        "poolPlayerId": 454,
+        "priceDelta": -0.4
+      },
+      {
+        "gap": 13.92,
+        "overBudget": false,
+        "poolPlayerId": 70,
+        "priceDelta": -0.5
+      },
+      {
+        "gap": 13.87,
+        "overBudget": false,
+        "poolPlayerId": 162,
+        "priceDelta": -1.5
+      },
+      {
+        "gap": 13.65,
+        "overBudget": false,
+        "poolPlayerId": 127,
+        "priceDelta": -1.5
+      },
+      {
+        "gap": 13.13,
+        "overBudget": true,
+        "poolPlayerId": 399,
+        "priceDelta": 1.2
+      },
+      {
+        "gap": 13.0,
+        "overBudget": false,
+        "poolPlayerId": 486,
+        "priceDelta": -1.0
+      },
+      {
+        "gap": 12.93,
+        "overBudget": false,
+        "poolPlayerId": 124,
+        "priceDelta": -1.0
+      },
+      {
+        "gap": 12.78,
+        "overBudget": false,
+        "poolPlayerId": 95,
+        "priceDelta": 0.0
+      },
+      {
+        "gap": 12.71,
+        "overBudget": true,
+        "poolPlayerId": 428,
+        "priceDelta": 1.5
+      },
+      {
+        "gap": 12.41,
+        "overBudget": false,
+        "poolPlayerId": 43,
+        "priceDelta": -0.5
+      },
+      {
+        "gap": 11.99,
+        "overBudget": true,
+        "poolPlayerId": 366,
+        "priceDelta": 1.0
+      },
+      {
+        "gap": 11.68,
+        "overBudget": true,
+        "poolPlayerId": 397,
+        "priceDelta": 2.0
+      },
+      {
+        "gap": 11.56,
+        "overBudget": true,
+        "poolPlayerId": 13,
+        "priceDelta": 1.0
+      },
+      {
+        "gap": 11.53,
+        "overBudget": false,
+        "poolPlayerId": 161,
+        "priceDelta": -1.5
+      },
+      {
+        "gap": 11.41,
+        "overBudget": false,
+        "poolPlayerId": 261,
+        "priceDelta": -1.0
+      },
+      {
+        "gap": 11.32,
+        "overBudget": false,
+        "poolPlayerId": 17,
+        "priceDelta": -0.6
+      },
+      {
+        "gap": 11.25,
+        "overBudget": false,
+        "poolPlayerId": 481,
+        "priceDelta": -0.1
+      },
+      {
+        "gap": 11.19,
+        "overBudget": false,
+        "poolPlayerId": 264,
+        "priceDelta": -1.0
+      },
+      {
+        "gap": 11.04,
+        "overBudget": false,
+        "poolPlayerId": 210,
+        "priceDelta": -1.0
+      },
+      {
+        "gap": 11.02,
+        "overBudget": false,
+        "poolPlayerId": 371,
+        "priceDelta": -0.5
+      },
+      {
+        "gap": 10.9,
+        "overBudget": false,
+        "poolPlayerId": 268,
+        "priceDelta": -1.0
+      },
+      {
+        "gap": 10.85,
+        "overBudget": false,
+        "poolPlayerId": 338,
+        "priceDelta": -1.0
+      },
+      {
+        "gap": 10.76,
+        "overBudget": false,
+        "poolPlayerId": 514,
+        "priceDelta": -0.6
+      },
+      {
+        "gap": 10.73,
+        "overBudget": false,
+        "poolPlayerId": 20,
+        "priceDelta": -1.1
+      },
+      {
+        "gap": 10.69,
+        "overBudget": false,
+        "poolPlayerId": 453,
+        "priceDelta": -0.5
+      },
+      {
+        "gap": 10.55,
+        "overBudget": false,
+        "poolPlayerId": 98,
+        "priceDelta": -1.5
+      },
+      {
+        "gap": 10.54,
+        "overBudget": false,
+        "poolPlayerId": 244,
+        "priceDelta": -1.5
+      },
+      {
+        "gap": 10.46,
+        "overBudget": false,
+        "poolPlayerId": 542,
+        "priceDelta": -0.6
+      },
+      {
+        "gap": 10.42,
+        "overBudget": false,
+        "poolPlayerId": 369,
+        "priceDelta": -0.6
+      },
+      {
+        "gap": 10.16,
+        "overBudget": false,
+        "poolPlayerId": 242,
+        "priceDelta": -1.0
+      },
+      {
+        "gap": 9.81,
+        "overBudget": false,
+        "poolPlayerId": 246,
+        "priceDelta": -1.5
+      },
+      {
+        "gap": 9.69,
+        "overBudget": false,
+        "poolPlayerId": 46,
+        "priceDelta": -1.5
+      },
+      {
+        "gap": 9.58,
+        "overBudget": false,
+        "poolPlayerId": 41,
+        "priceDelta": -0.5
+      },
+      {
+        "gap": 9.51,
+        "overBudget": false,
+        "poolPlayerId": 190,
+        "priceDelta": -1.0
+      },
+      {
+        "gap": 9.45,
+        "overBudget": false,
+        "poolPlayerId": 214,
+        "priceDelta": -1.5
+      },
+      {
+        "gap": 9.41,
+        "overBudget": false,
+        "poolPlayerId": 104,
+        "priceDelta": -1.5
+      },
+      {
+        "gap": 9.29,
+        "overBudget": false,
+        "poolPlayerId": 7,
+        "priceDelta": -1.0
+      },
+      {
+        "gap": 9.25,
+        "overBudget": false,
+        "poolPlayerId": 459,
+        "priceDelta": -1.0
+      },
+      {
+        "gap": 8.98,
+        "overBudget": false,
+        "poolPlayerId": 67,
+        "priceDelta": 0.0
+      },
+      {
+        "gap": 8.95,
+        "overBudget": false,
+        "poolPlayerId": 71,
+        "priceDelta": -1.5
+      },
+      {
+        "gap": 8.89,
+        "overBudget": false,
+        "poolPlayerId": 47,
+        "priceDelta": -1.5
+      },
+      {
+        "gap": 8.7,
+        "overBudget": false,
+        "poolPlayerId": 455,
+        "priceDelta": -1.1
+      },
+      {
+        "gap": 8.67,
+        "overBudget": false,
+        "poolPlayerId": 241,
+        "priceDelta": -1.0
+      },
+      {
+        "gap": 8.22,
+        "overBudget": false,
+        "poolPlayerId": 337,
+        "priceDelta": -1.0
+      },
+      {
+        "gap": 8.14,
+        "overBudget": false,
+        "poolPlayerId": 415,
+        "priceDelta": -0.6
+      },
+      {
+        "gap": 8.05,
+        "overBudget": false,
+        "poolPlayerId": 545,
+        "priceDelta": -1.5
+      },
+      {
+        "gap": 7.99,
+        "overBudget": false,
+        "poolPlayerId": 267,
+        "priceDelta": -1.5
+      },
+      {
+        "gap": 7.95,
+        "overBudget": false,
+        "poolPlayerId": 260,
+        "priceDelta": 0.0
+      },
+      {
+        "gap": 7.71,
+        "overBudget": false,
+        "poolPlayerId": 265,
+        "priceDelta": -1.5
+      },
+      {
+        "gap": 7.58,
+        "overBudget": false,
+        "poolPlayerId": 522,
+        "priceDelta": -1.5
+      },
+      {
+        "gap": 6.74,
+        "overBudget": false,
+        "poolPlayerId": 432,
+        "priceDelta": -1.0
+      },
+      {
+        "gap": 6.52,
+        "overBudget": false,
+        "poolPlayerId": 45,
+        "priceDelta": -1.0
+      },
+      {
+        "gap": 6.42,
+        "overBudget": false,
+        "poolPlayerId": 591,
+        "priceDelta": -1.0
+      },
+      {
+        "gap": 5.92,
+        "overBudget": false,
+        "poolPlayerId": 341,
+        "priceDelta": -1.5
+      },
+      {
+        "gap": 5.85,
+        "overBudget": false,
+        "poolPlayerId": 156,
+        "priceDelta": 0.0
+      },
+      {
+        "gap": 5.39,
+        "overBudget": false,
+        "poolPlayerId": 263,
+        "priceDelta": -1.0
+      },
+      {
+        "gap": 4.83,
+        "overBudget": false,
+        "poolPlayerId": 105,
+        "priceDelta": -0.5
+      },
+      {
+        "gap": 4.78,
+        "overBudget": false,
+        "poolPlayerId": 460,
+        "priceDelta": -1.5
+      },
+      {
+        "gap": 4.57,
+        "overBudget": false,
+        "poolPlayerId": 456,
+        "priceDelta": -1.5
+      },
+      {
+        "gap": 4.43,
+        "overBudget": false,
+        "poolPlayerId": 72,
+        "priceDelta": -1.5
+      },
+      {
+        "gap": 4.4,
+        "overBudget": false,
+        "poolPlayerId": 19,
+        "priceDelta": -1.1
+      },
+      {
+        "gap": 4.36,
+        "overBudget": false,
+        "poolPlayerId": 96,
+        "priceDelta": -1.0
+      },
+      {
+        "gap": 4.3,
+        "overBudget": false,
+        "poolPlayerId": 565,
+        "priceDelta": -0.9
+      },
+      {
+        "gap": 4.24,
+        "overBudget": false,
+        "poolPlayerId": 457,
+        "priceDelta": -0.6
+      },
+      {
+        "gap": 4.15,
+        "overBudget": false,
+        "poolPlayerId": 520,
+        "priceDelta": -1.0
+      },
+      {
+        "gap": 4.08,
+        "overBudget": false,
+        "poolPlayerId": 523,
+        "priceDelta": -1.5
+      },
+      {
+        "gap": 4.07,
+        "overBudget": false,
+        "poolPlayerId": 516,
+        "priceDelta": -1.0
+      },
+      {
+        "gap": 4.05,
+        "overBudget": false,
+        "poolPlayerId": 102,
+        "priceDelta": -1.5
+      },
+      {
+        "gap": 3.94,
+        "overBudget": false,
+        "poolPlayerId": 315,
+        "priceDelta": -1.0
+      },
+      {
+        "gap": 3.66,
+        "overBudget": true,
+        "poolPlayerId": 155,
+        "priceDelta": 0.4
+      },
+      {
+        "gap": 3.47,
+        "overBudget": false,
+        "poolPlayerId": 406,
+        "priceDelta": -1.0
+      },
+      {
+        "gap": 3.42,
+        "overBudget": false,
+        "poolPlayerId": 14,
+        "priceDelta": -0.1
+      },
+      {
+        "gap": 3.42,
+        "overBudget": false,
+        "poolPlayerId": 211,
+        "priceDelta": -1.0
+      },
+      {
+        "gap": 3.42,
+        "overBudget": false,
+        "poolPlayerId": 372,
+        "priceDelta": -1.0
+      },
+      {
+        "gap": 3.32,
+        "overBudget": false,
+        "poolPlayerId": 73,
+        "priceDelta": -1.5
+      },
+      {
+        "gap": 2.99,
+        "overBudget": false,
+        "poolPlayerId": 336,
+        "priceDelta": -0.6
+      },
+      {
+        "gap": 2.87,
+        "overBudget": false,
+        "poolPlayerId": 51,
+        "priceDelta": -2.0
+      },
+      {
+        "gap": 2.84,
+        "overBudget": false,
+        "poolPlayerId": 209,
+        "priceDelta": -0.6
+      },
+      {
+        "gap": 2.84,
+        "overBudget": false,
+        "poolPlayerId": 238,
+        "priceDelta": 0.0
+      },
+      {
+        "gap": 2.83,
+        "overBudget": false,
+        "poolPlayerId": 343,
+        "priceDelta": -1.5
+      },
+      {
+        "gap": 2.15,
+        "overBudget": false,
+        "poolPlayerId": 42,
+        "priceDelta": -1.0
+      },
+      {
+        "gap": 1.97,
+        "overBudget": false,
+        "poolPlayerId": 374,
+        "priceDelta": -1.5
+      },
+      {
+        "gap": 1.59,
+        "overBudget": false,
+        "poolPlayerId": 16,
+        "priceDelta": -0.1
+      },
+      {
+        "gap": 1.41,
+        "overBudget": false,
+        "poolPlayerId": 22,
+        "priceDelta": -1.1
+      },
+      {
+        "gap": 1.37,
+        "overBudget": false,
+        "poolPlayerId": 44,
+        "priceDelta": -1.0
+      },
+      {
+        "gap": 1.26,
+        "overBudget": false,
+        "poolPlayerId": 562,
+        "priceDelta": -1.0
+      },
+      {
+        "gap": 1.24,
+        "overBudget": false,
+        "poolPlayerId": 621,
+        "priceDelta": -2.0
+      },
+      {
+        "gap": 1.24,
+        "overBudget": false,
+        "poolPlayerId": 551,
+        "priceDelta": -1.5
+      },
+      {
+        "gap": 1.13,
+        "overBudget": false,
+        "poolPlayerId": 239,
+        "priceDelta": -0.5
+      },
+      {
+        "gap": 1.07,
+        "overBudget": false,
+        "poolPlayerId": 160,
+        "priceDelta": -0.6
+      },
+      {
+        "gap": 0.98,
+        "overBudget": false,
+        "poolPlayerId": 549,
+        "priceDelta": -1.1
+      },
+      {
+        "gap": 0.68,
+        "overBudget": false,
+        "poolPlayerId": 519,
+        "priceDelta": -1.1
+      },
+      {
+        "gap": 0.66,
+        "overBudget": false,
+        "poolPlayerId": 75,
+        "priceDelta": -1.5
+      },
+      {
+        "gap": 0.58,
+        "overBudget": false,
+        "poolPlayerId": 286,
+        "priceDelta": -1.5
+      },
+      {
+        "gap": 0.54,
+        "overBudget": false,
+        "poolPlayerId": 76,
+        "priceDelta": -1.5
+      },
+      {
+        "gap": 0.37,
+        "overBudget": false,
+        "poolPlayerId": 18,
+        "priceDelta": -0.1
+      },
+      {
+        "gap": 0.3,
+        "overBudget": false,
+        "poolPlayerId": 309,
+        "priceDelta": -1.5
+      },
+      {
+        "gap": 0.27,
+        "overBudget": false,
+        "poolPlayerId": 339,
+        "priceDelta": -1.5
+      },
+      {
+        "gap": 0.22,
+        "overBudget": false,
+        "poolPlayerId": 35,
+        "priceDelta": -1.5
+      }
+    ]
+  },
   "rollingWindow": 5,
   "runningRecord": null,
   "squad": {

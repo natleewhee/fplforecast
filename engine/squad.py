@@ -157,6 +157,39 @@ def top_gap_rows(rows: list[dict], limit: int = DISPLAY_GAP_ROWS) -> list[dict]:
     return [row for row in rows if row["gapPoints"] > 0][:limit]
 
 
+def pool_upgrades(squad: list[dict], pool: list[dict], bank: float) -> dict:
+    """For each held player, every same-position pool player with a higher
+    five-gameweek total -- no price band. Returns ``{squad_id: [rows]}`` with
+    each row ``{poolPlayerId, gap, priceDelta, overBudget}``, largest gap first.
+    ``overBudget`` is true when the price rise exceeds ``bank`` (the sale of the
+    held player is assumed to free its own price) (R12, KTD4)."""
+    out: dict = {}
+    for held in squad:
+        held_total = held.get("total")
+        if held_total is None:
+            out[held["id"]] = []
+            continue
+        rows = []
+        for cand in pool:
+            if cand["id"] == held["id"] or cand.get("position") != held.get("position"):
+                continue
+            cand_total = cand.get("total")
+            if cand_total is None or cand_total <= held_total:
+                continue
+            price_delta = round(cand["price"] - held["price"], 1)
+            rows.append(
+                {
+                    "poolPlayerId": cand["id"],
+                    "gap": round(cand_total - held_total, 2),
+                    "priceDelta": price_delta,
+                    "overBudget": price_delta > bank + 1e-6,
+                }
+            )
+        rows.sort(key=lambda r: r["gap"], reverse=True)
+        out[held["id"]] = rows
+    return out
+
+
 def top_alternatives(
     squad_id,
     pool_ids: list,

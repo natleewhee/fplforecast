@@ -132,6 +132,20 @@ def test_squad_component_breakdown_sums_to_the_target_gameweek_projection(foreca
             assert sum(parts.values()) == pytest.approx(card["projectedPoints"], abs=0.05)
 
 
+def test_forecast_carries_pool_upgrades_keyed_by_squad_player(forecast):
+    upgrades = forecast["poolUpgrades"]
+    squad_ids = {str(p["id"]) for p in forecast["squad"]["players"]}
+    assert set(upgrades) == squad_ids
+    pool_by_id = {p["id"]: p for p in forecast["pool"]}
+    for sid, rows in upgrades.items():
+        held = next(p for p in forecast["squad"]["players"] if str(p["id"]) == sid)
+        for r in rows:
+            cand = pool_by_id[r["poolPlayerId"]]
+            assert cand["position"] == held["position"]  # same slot, any budget
+            assert r["gap"] > 0
+            assert r["priceDelta"] == pytest.approx(round(cand["price"] - held["price"], 1))
+
+
 def test_recommended_xi_and_bench(forecast):
     squad = forecast["squad"]
     assert len(squad["startingXi"]) == 11
