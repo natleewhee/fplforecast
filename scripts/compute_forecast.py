@@ -28,7 +28,14 @@ from engine.config import (
 from engine.features import POSITIONS, build_feature_frame, team_fixtures
 from engine.history import ColdStart, classify, load_history
 from engine.model import ModelContext
-from engine.squad import best_xi, pool_upgrades, window_points, window_points_by_gw
+from engine.squad import (
+    best_xi,
+    floor_ceiling,
+    pool_upgrades,
+    window_points,
+    window_points_by_gw,
+    xi_floor_ceiling,
+)
 from engine.strength import team_strength_table
 
 DATA_DIR = Path(__file__).resolve().parent.parent / "data"
@@ -149,6 +156,17 @@ def load_running_record() -> dict | None:
         return None
     summary = load_json(path).get("summary") or {}
     return summary if summary.get("gameweeksScored", 0) > 0 else None
+
+
+def load_residuals_by_position() -> dict:
+    """Realised per-position projection error for the safety-score band
+    (UA3, Part A). Missing file or a position with too little history is not
+    an error -- ``engine.squad.floor_ceiling`` falls back to the provisional
+    band on an empty or short list, never a crash."""
+    path = DATA_DIR / "record" / "residuals.json"
+    if not path.exists():
+        return {}
+    return load_json(path).get("byPosition") or {}
 
 
 def _gw_model_vs_baseline(gw: int) -> dict | None:
@@ -426,6 +444,7 @@ def main(now: datetime | None = None) -> int:
     # Your squad is the anchor: the fifteen held players, each with the model's
     # projection; the planning table (poolUpgrades below) is the sole upgrade
     # surface (KD4/KTD8).
+    residuals_by_position = load_residuals_by_position()
     players: list[dict] = []
     squad_window_total = 0.0
     for pid in squad_ids:
@@ -442,6 +461,9 @@ def main(now: datetime | None = None) -> int:
         card["minutesRisk"] = bool(minutes_risk_by_id.get(pid, False))
         card["opponents"] = detail["opponents"]
         card["breakdown"] = detail
+        card["floorCeiling"] = floor_ceiling(
+            card["projectedPoints"], card["elementType"], residuals_by_position
+        )
         players.append(card)
 
         if model_window.get(pid) is not None:
@@ -486,6 +508,21 @@ def main(now: datetime | None = None) -> int:
     bench_ids = [p["id"] for p in bench]
     for c in players:
         c["role"] = "start" if c["id"] in starting_ids else "bench"
+
+    # XI-level safety band (UA3): the starting XI's projections, captain
+    # doubled, aggregated via sqrt(sum of variance) (KDA3) rather than a naive
+    # sum of each player's range.
+    card_by_id_for_band = {c["id"]: c for c in players}
+    xi_band_input = [
+        {
+            "projected": card_by_id_for_band[i]["projectedPoints"] or 0.0,
+            "elementType": card_by_id_for_band[i]["elementType"] or 4,
+            "multiplier": 2 if captain is not None and i == captain["id"] else 1,
+        }
+        for i in starting_ids
+        if i in card_by_id_for_band
+    ]
+    xi_floor_ceiling_band = xi_floor_ceiling(xi_band_input, residuals_by_position)
 
     # Headline: what this XI is projected to score next gameweek, captain
     # doubled -- and how that compares to leaving last week's XI untouched and
@@ -746,6 +783,7 @@ def main(now: datetime | None = None) -> int:
         "effectiveGap": round(gap_bar, 1),
         "earlySeason": gap_bar > MEANINGFUL_UPGRADE_GAP + 1e-6,
         "nextGw": next_gw,
+        "xiFloorCeiling": xi_floor_ceiling_band,
         "captain": (
             {
                 "webName": captain["webName"],

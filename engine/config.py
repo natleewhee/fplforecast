@@ -151,3 +151,17 @@ RATE_CLAMP = {
 
 if sum(BASELINE_WEIGHTS.values()) <= 0:
     raise ValueError("BASELINE_WEIGHTS must sum to a positive number")
+
+
+# Safety-score floor/ceiling band (Part A of the 2026-09-03 safety-score and
+# calibration plan). Width is one standard deviation of realised per-position
+# projection error either side of the point estimate (~68% band), from
+# data/record/residuals.json (scripts/score_predictions.py, UA1).
+SAFETY_BAND_Z = 1.0
+# A position needs this many scored residuals before its own realised stdev
+# is trusted; below it the band falls back to SAFETY_BAND_PROVISIONAL_STDEV
+# and is flagged provisional -- the same shape as PAR_MARGIN_MIN_GAMEWEEKS.
+SAFETY_MIN_SAMPLE_PER_POSITION = 20
+# Placeholder width (points) used before a position has enough scored history;
+# execution tunes this against real residuals once the season has enough data.
+SAFETY_BAND_PROVISIONAL_STDEV = 4.0

@@ -185,3 +185,42 @@ def test_scoring_pass_is_idempotent(score_wired, monkeypatch):
     first = (score_wired / "record" / "running.json").read_bytes()
     assert sp.main(fetch=lambda gw: live) == 0
     assert (score_wired / "record" / "running.json").read_bytes() == first
+
+
+# --- UA1: per-player residuals for the safety-score band -----------------------
+
+
+def test_scoring_a_gameweek_appends_residuals_by_position(score_wired, monkeypatch):
+    monkeypatch.setattr(sp.cf, "load_bootstrap", lambda: _score_bootstrap({5}))
+    _prediction_file(score_wired / "predictions" / "gw5.json", 5)  # model[id] = 30 - id
+    # element 1 is a GKP (element_type 1), element 5 is a DEF (element_type 2).
+    live = _live({1: 12, 5: 20})
+
+    assert sp.main(fetch=lambda gw: live) == 0
+    residuals = json.loads((score_wired / "record" / "residuals.json").read_text())
+    assert residuals["gameweeksIncluded"] == [5]
+    assert residuals["byPosition"]["1"] == [pytest.approx(12 - 29.0)]  # actual - projected
+    assert residuals["byPosition"]["2"] == [pytest.approx(20 - 25.0)]
+    assert residuals["byPosition"]["3"] == []
+    assert residuals["byPosition"]["4"] == []
+
+
+def test_rescoring_an_already_included_gameweek_does_not_duplicate_residuals(score_wired, monkeypatch):
+    monkeypatch.setattr(sp.cf, "load_bootstrap", lambda: _score_bootstrap({5}))
+    _prediction_file(score_wired / "predictions" / "gw5.json", 5)
+    live = _live({1: 12})
+
+    assert sp.main(fetch=lambda gw: live) == 0
+    first = (score_wired / "record" / "residuals.json").read_bytes()
+    assert sp.main(fetch=lambda gw: live) == 0
+    assert (score_wired / "record" / "residuals.json").read_bytes() == first
+
+
+def test_a_player_absent_from_live_actuals_is_skipped(score_wired, monkeypatch):
+    monkeypatch.setattr(sp.cf, "load_bootstrap", lambda: _score_bootstrap({5}))
+    _prediction_file(score_wired / "predictions" / "gw5.json", 5)
+    live = _live({})  # no elements at all -- a blank gameweek
+
+    assert sp.main(fetch=lambda gw: live) == 0
+    residuals = json.loads((score_wired / "record" / "residuals.json").read_text())
+    assert residuals["byPosition"] == {"1": [], "2": [], "3": [], "4": []}

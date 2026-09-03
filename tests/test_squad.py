@@ -5,9 +5,14 @@ from __future__ import annotations
 import pandas as pd
 import pytest
 
-from engine.config import ROLLING_WINDOW
+from engine.config import (
+    ROLLING_WINDOW,
+    SAFETY_BAND_PROVISIONAL_STDEV,
+    SAFETY_BAND_Z,
+    SAFETY_MIN_SAMPLE_PER_POSITION,
+)
 from engine.history import ColdStart
-from engine.squad import pool_upgrades, window_points, window_points_by_gw
+from engine.squad import floor_ceiling, pool_upgrades, window_points, window_points_by_gw, xi_floor_ceiling
 
 
 def test_pool_upgrades_flags_a_higher_projecting_same_position_player_over_budget():
@@ -82,5 +87,87 @@ def test_window_points_by_gw_maps_a_cold_start_player_to_none():
     by_gw = window_points_by_gw(frame(1, 2), project_fn, start_gw=1, window=5)
     assert by_gw[1] == [2.0, 2.0, 2.0, 2.0, 2.0]
     assert by_gw[2] is None
+
+
+# --- UA2: safety-score floor/ceiling (Part A) -----------------------------------
+
+
+def test_floor_ceiling_uses_realised_stdev_once_the_sample_clears_the_minimum():
+    residuals = [2.0, -2.0, 4.0, -4.0] * (SAFETY_MIN_SAMPLE_PER_POSITION // 4 + 1)
+    by_position = {"3": residuals}
+    import statistics as _stats
+
+    stdev = _stats.pstdev(residuals)
+
+    band = floor_ceiling(10.0, 3, by_position)
+
+    assert band["bandProvisional"] is False
+    assert band["floor"] == pytest.approx(10.0 - SAFETY_BAND_Z * stdev, abs=0.01)
+    assert band["ceiling"] == pytest.approx(10.0 + SAFETY_BAND_Z * stdev, abs=0.01)
+
+
+def test_floor_ceiling_falls_back_to_the_provisional_band_below_the_minimum_sample():
+    by_position = {"1": [1.0, -1.0]}  # far fewer than SAFETY_MIN_SAMPLE_PER_POSITION
+
+    band = floor_ceiling(5.0, 1, by_position)
+
+    assert band["bandProvisional"] is True
+    assert band["floor"] == pytest.approx(5.0 - SAFETY_BAND_Z * SAFETY_BAND_PROVISIONAL_STDEV)
+    assert band["ceiling"] == pytest.approx(5.0 + SAFETY_BAND_Z * SAFETY_BAND_PROVISIONAL_STDEV)
+
+
+def test_floor_ceiling_with_no_residual_history_is_provisional():
+    band = floor_ceiling(5.0, 2, {})
+    assert band["bandProvisional"] is True
+
+
+def test_floor_never_goes_negative():
+    band = floor_ceiling(1.0, 1, {"1": [1.0, -1.0]})  # provisional stdev far exceeds the projection
+    assert band["floor"] == 0.0
+
+
+def test_floor_ceiling_is_none_without_a_projection():
+    assert floor_ceiling(None, 3, {}) is None
+
+
+def test_xi_floor_ceiling_aggregates_via_sqrt_of_summed_variance_not_summed_range():
+    # Two positions, each with enough history that its band is not provisional.
+    by_position = {
+        "1": [1.0, -1.0] * (SAFETY_MIN_SAMPLE_PER_POSITION // 2 + 1),  # stdev 1.0
+        "2": [2.0, -2.0] * (SAFETY_MIN_SAMPLE_PER_POSITION // 2 + 1),  # stdev 2.0
+    }
+    xi = [
+        {"projected": 5.0, "elementType": 1},
+        {"projected": 6.0, "elementType": 2},
+    ]
+
+    band = xi_floor_ceiling(xi, by_position)
+
+    expected_band = SAFETY_BAND_Z * (1.0**2 + 2.0**2) ** 0.5  # sqrt(sum of variance)
+    naive_sum_of_ranges = SAFETY_BAND_Z * (1.0 + 2.0)
+    assert expected_band < naive_sum_of_ranges  # the whole point of KDA3
+    assert band["floor"] == pytest.approx(11.0 - expected_band, abs=0.01)
+    assert band["ceiling"] == pytest.approx(11.0 + expected_band, abs=0.01)
+    assert band["bandProvisional"] is False
+
+
+def test_xi_floor_ceiling_doubles_the_captains_contribution_and_variance():
+    by_position = {"1": [1.0, -1.0] * (SAFETY_MIN_SAMPLE_PER_POSITION // 2 + 1)}  # stdev 1.0
+    xi = [{"projected": 5.0, "elementType": 1, "multiplier": 2}]
+
+    band = xi_floor_ceiling(xi, by_position)
+
+    assert band["floor"] == pytest.approx(10.0 - SAFETY_BAND_Z * 2.0, abs=0.01)  # 2x stdev, not 1x
+    assert band["ceiling"] == pytest.approx(10.0 + SAFETY_BAND_Z * 2.0, abs=0.01)
+
+
+def test_xi_floor_ceiling_is_provisional_if_any_player_is():
+    by_position = {"1": [1.0, -1.0] * (SAFETY_MIN_SAMPLE_PER_POSITION // 2 + 1)}  # not provisional
+    xi = [
+        {"projected": 5.0, "elementType": 1},  # position 1 has enough history
+        {"projected": 5.0, "elementType": 4},  # position 4 has none -> provisional
+    ]
+
+    assert xi_floor_ceiling(xi, by_position)["bandProvisional"] is True
 
 

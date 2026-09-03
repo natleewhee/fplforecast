@@ -146,6 +146,35 @@ def test_forecast_carries_pool_upgrades_keyed_by_squad_player(forecast):
             assert r["priceDelta"] == pytest.approx(round(cand["price"] - held["price"], 1))
 
 
+def test_forecast_carries_a_floor_ceiling_band_per_squad_player(forecast):
+    for p in forecast["squad"]["players"]:
+        band = p["floorCeiling"]
+        if p["projectedPoints"] is None:
+            assert band is None
+            continue
+        assert band["floor"] <= p["projectedPoints"] <= band["ceiling"]
+        assert band["floor"] >= 0.0
+        assert isinstance(band["bandProvisional"], bool)
+
+
+def test_forecast_carries_an_xi_level_floor_ceiling_band(forecast):
+    band = forecast["xiFloorCeiling"]
+    assert band["floor"] <= forecast["nextGw"]["points"] <= band["ceiling"]
+    assert band["floor"] >= 0.0
+
+
+def test_load_residuals_by_position_reads_the_committed_file(monkeypatch, tmp_path):
+    monkeypatch.setattr(cf, "DATA_DIR", tmp_path)
+    assert cf.load_residuals_by_position() == {}  # no file yet -- never a crash
+
+    record_dir = tmp_path / "record"
+    record_dir.mkdir()
+    (record_dir / "residuals.json").write_text(
+        json.dumps({"byPosition": {"1": [1.0, -2.0]}, "gameweeksIncluded": [1]})
+    )
+    assert cf.load_residuals_by_position() == {"1": [1.0, -2.0]}
+
+
 def test_recommended_xi_and_bench(forecast):
     squad = forecast["squad"]
     assert len(squad["startingXi"]) == 11

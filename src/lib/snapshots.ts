@@ -75,6 +75,12 @@ export type ProjectionBreakdown = {
   opponents: OpponentLeg[];
 };
 
+export type FloorCeiling = {
+  floor: number;
+  ceiling: number;
+  bandProvisional: boolean; // too little realised history for this position -> band widened
+};
+
 export type PlayerCard = {
   id: number;
   webName: string;
@@ -88,6 +94,7 @@ export type PlayerCard = {
   rateSource?: string;
   opponents: OpponentLeg[];
   breakdown: ProjectionBreakdown;
+  floorCeiling?: FloorCeiling | null;
 };
 
 export type ForecastPlayer = PlayerCard & {
@@ -135,6 +142,7 @@ export type Forecast = {
     deltaVsNoChange: number; // vs keeping last week's XI + captain
     deltaVsBaselineXi: number; // vs the composite baseline's XI pick
   };
+  xiFloorCeiling: FloorCeiling; // safety-score band for nextGw.points (Part A)
   captain: { webName: string; id: number; points?: number } | null;
   viceCaptain: { webName: string; id: number; points?: number } | null;
   captainEdge: { points: number; label: string } | null; // captain vs vice, single GW

@@ -4,6 +4,12 @@ import { useState, type ReactNode } from "react";
 import type { Forecast, ForecastPlayer, OpponentLeg } from "@/lib/snapshots";
 import { fdrColor, kitFor } from "@/lib/teamColors";
 
+function bandLabel(band: { floor: number; ceiling: number; bandProvisional: boolean } | null | undefined) {
+  if (!band) return "";
+  const range = `${band.floor.toFixed(1)}–${band.ceiling.toFixed(1)}`;
+  return band.bandProvisional ? `${range} (provisional range)` : range;
+}
+
 type ViewMode = "model" | "baseline" | "yours";
 const MODE_LABEL: Record<ViewMode, string> = {
   model: "Model",
@@ -118,6 +124,7 @@ type Tok = {
   minutesRisk?: boolean;
   opponents: OpponentLeg[];
   breakdown?: ForecastPlayer["breakdown"];
+  floorCeiling?: ForecastPlayer["floorCeiling"];
 };
 
 function PlayerToken({
@@ -135,10 +142,11 @@ function PlayerToken({
   const size = bench ? 40 : 52;
   const frac = t.xp != null ? t.xp / RING_FULL : 0;
   const ringColor = t.provisional ? "var(--warn)" : "var(--accent)";
+  const bandTitle = bandLabel(t.floorCeiling);
   return (
     <div
       className={`flex w-[4.4rem] flex-col items-center gap-0.5 ${bench ? "sm:w-[4.2rem]" : "sm:w-20"}`}
-      title={t.webName}
+      title={bandTitle ? `${t.webName} — typical range ${bandTitle}` : t.webName}
     >
       <div className="relative">
         <Ring frac={frac} color={ringColor} size={size}>
@@ -238,6 +246,7 @@ export default function Pitch({ forecast }: { forecast: Forecast }) {
       minutesRisk: base.minutesRisk,
       opponents: useSquad ? base.opponents : gp?.opponents ?? [],
       breakdown: base.breakdown,
+      floorCeiling: base.floorCeiling,
     };
   };
 
@@ -304,6 +313,15 @@ export default function Pitch({ forecast }: { forecast: Forecast }) {
               {headline.toFixed(0)}
             </div>
             <div className="eyebrow mt-1">proj pts</div>
+            {isTargetGw && effMode === "model" && (
+              <div
+                className="mt-0.5 font-mono text-[10px] text-ink-faint"
+                title="Safety-score band: one realised-residual stdev either side, aggregated over the XI assuming independence"
+              >
+                {forecast.xiFloorCeiling.floor.toFixed(0)}–{forecast.xiFloorCeiling.ceiling.toFixed(0)}
+                {forecast.xiFloorCeiling.bandProvisional && " (provisional)"}
+              </div>
+            )}
           </div>
         </div>
 

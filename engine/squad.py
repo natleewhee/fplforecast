@@ -2,13 +2,21 @@
 detection. Pure -- no I/O. ``best_xi`` / ``VALID_FORMATIONS`` are lifted
 verbatim from ``scripts/compute_forecast.py`` (U1); ``window_points`` is U7
 (R12, R13, KD8, KTD5, KTD11); ``pool_upgrades`` is U3/U6 (R12, R13, KTD4,
-KTD8) -- the sole squad-vs-pool upgrade surface, at any price."""
+KTD8) -- the sole squad-vs-pool upgrade surface, at any price. ``floor_ceiling``
+/ ``xi_floor_ceiling`` are UA2 of the 2026-09-03 safety-score plan (Part A)."""
 
 from __future__ import annotations
 
+import math
+import statistics
 from collections.abc import Callable, Mapping
 
-from engine.config import ROLLING_WINDOW
+from engine.config import (
+    ROLLING_WINDOW,
+    SAFETY_BAND_PROVISIONAL_STDEV,
+    SAFETY_BAND_Z,
+    SAFETY_MIN_SAMPLE_PER_POSITION,
+)
 from engine.history import ColdStart
 
 # (GKP, DEF, MID, FWD) counts for every legal starting XI shape.
@@ -129,3 +137,58 @@ def pool_upgrades(squad: list[dict], pool: list[dict], bank: float) -> dict:
         rows.sort(key=lambda r: r["gap"], reverse=True)
         out[held["id"]] = rows
     return out
+
+
+def _stdev_for_position(element_type, residuals_by_position: Mapping | None) -> tuple[float, bool]:
+    """The realised spread for one position -- ``(stdev, provisional)``. Below
+    ``SAFETY_MIN_SAMPLE_PER_POSITION`` scored residuals the position falls back
+    to ``SAFETY_BAND_PROVISIONAL_STDEV`` and is flagged provisional, the same
+    shape ``engine.config.PAR_MARGIN_MIN_GAMEWEEKS`` uses for the par margin."""
+    residuals = (residuals_by_position or {}).get(str(element_type)) or []
+    if len(residuals) < SAFETY_MIN_SAMPLE_PER_POSITION:
+        return SAFETY_BAND_PROVISIONAL_STDEV, True
+    return statistics.pstdev(residuals), False
+
+
+def floor_ceiling(
+    projected_points: float | None,
+    element_type,
+    residuals_by_position: Mapping | None,
+) -> dict | None:
+    """A projection's floor/ceiling band: the point estimate plus or minus
+    ``SAFETY_BAND_Z`` standard deviations of realised ``actual - projected``
+    error for that position (KDA1 -- realised residuals, not the model's own
+    minutes-risk terms, which already feed the point estimate). ``None`` for a
+    player with no projection to band."""
+    if projected_points is None:
+        return None
+    stdev, provisional = _stdev_for_position(element_type, residuals_by_position)
+    band = SAFETY_BAND_Z * stdev
+    return {
+        "floor": round(max(0.0, projected_points - band), 2),
+        "ceiling": round(projected_points + band, 2),
+        "bandProvisional": provisional,
+    }
+
+
+def xi_floor_ceiling(xi: list[dict], residuals_by_position: Mapping | None) -> dict:
+    """The XI-level band: each row is ``{"projected", "elementType"}`` plus an
+    optional ``multiplier`` (2 for the captain, whose points and variance both
+    double). Aggregates via ``sqrt(sum of variance)`` -- the independence
+    approximation (KDA3): fifteen players don't all bust at once, so summing
+    each player's range directly would overstate the band."""
+    total = 0.0
+    variance_sum = 0.0
+    any_provisional = False
+    for p in xi:
+        multiplier = p.get("multiplier", 1)
+        total += multiplier * p["projected"]
+        stdev, provisional = _stdev_for_position(p["elementType"], residuals_by_position)
+        variance_sum += (multiplier * stdev) ** 2
+        any_provisional = any_provisional or provisional
+    band = SAFETY_BAND_Z * math.sqrt(variance_sum)
+    return {
+        "floor": round(max(0.0, total - band), 2),
+        "ceiling": round(total + band, 2),
+        "bandProvisional": any_provisional,
+    }
