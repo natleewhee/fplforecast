@@ -158,6 +158,16 @@ def load_running_record() -> dict | None:
     return summary if summary.get("gameweeksScored", 0) > 0 else None
 
 
+def load_par_calibration_record() -> dict | None:
+    """The par calibration summary (UB2, Part B), or ``None`` until at least
+    one gameweek has been scored -- same shape as ``load_running_record``."""
+    path = DATA_DIR / "record" / "par-calibration.json"
+    if not path.exists():
+        return None
+    summary = load_json(path).get("summary") or {}
+    return summary if summary.get("gameweeksScored", 0) > 0 else None
+
+
 def load_residuals_by_position() -> dict:
     """Realised per-position projection error for the safety-score band
     (UA3, Part A). Missing file or a position with too little history is not
@@ -804,6 +814,7 @@ def main(now: datetime | None = None) -> int:
         ),
         "captainEdge": captain_edge,
         "runningRecord": load_running_record(),
+        "parCalibration": load_par_calibration_record(),
         "lastGameweek": last_gameweek_review(bootstrap, elements_by_id),
         "upcoming": upcoming,
         "pool": pool,

@@ -194,6 +194,31 @@ def test_running_record_is_null_until_a_gameweek_is_scored(forecast):
     assert forecast["runningRecord"] is None
 
 
+def test_par_calibration_reflects_the_committed_calibration_record(forecast):
+    # Unlike runningRecord (needs a frozen pre-deadline prediction), the par
+    # calibration check only needs history + the bootstrap average -- GW2 is
+    # already scorable from the committed snapshots, so this is not null.
+    calibration = forecast["parCalibration"]
+    assert calibration is None or calibration["gameweeksScored"] > 0
+
+
+def test_load_par_calibration_record_reads_the_committed_file(monkeypatch, tmp_path):
+    monkeypatch.setattr(cf, "DATA_DIR", tmp_path)
+    assert cf.load_par_calibration_record() is None  # no file yet
+
+    record_dir = tmp_path / "record"
+    record_dir.mkdir()
+    (record_dir / "par-calibration.json").write_text(
+        json.dumps({"summary": {"gameweeksScored": 0}})
+    )
+    assert cf.load_par_calibration_record() is None  # zero scored still reads as no record
+
+    (record_dir / "par-calibration.json").write_text(
+        json.dumps({"summary": {"gameweeksScored": 3, "hitRate": 0.667}})
+    )
+    assert cf.load_par_calibration_record() == {"gameweeksScored": 3, "hitRate": 0.667}
+
+
 def test_last_gameweek_review_reports_the_held_squad_result(forecast):
     review = forecast["lastGameweek"]
     assert review is not None

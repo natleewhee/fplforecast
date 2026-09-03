@@ -114,6 +114,12 @@ export type RunningRecord = {
   meaningful: boolean;
 };
 
+export type ParCalibration = {
+  gameweeksScored: number;
+  hitRate: number | null;
+  hitRateByVerdict: { green: number | null; amber: number | null; red: number | null };
+};
+
 export type Forecast = {
   generatedAt: string;
   basedOnGameweek: number;
@@ -147,6 +153,7 @@ export type Forecast = {
   viceCaptain: { webName: string; id: number; points?: number } | null;
   captainEdge: { points: number; label: string } | null; // captain vs vice, single GW
   runningRecord: RunningRecord | null;
+  parCalibration: ParCalibration | null;
   lastGameweek: GameweekReview | null;
   upcoming: UpcomingGameweek[]; // suggested XI for each GW in the rolling window
   history: SeasonHistory | null;

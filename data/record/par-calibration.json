@@ -1,0 +1,23 @@
+{
+  "entries": [
+    {
+      "gameweek": 2,
+      "hit": true,
+      "marginProvisional": true,
+      "rankMovement": "held",
+      "verdict": "green"
+    }
+  ],
+  "gameweeksIncluded": [
+    2
+  ],
+  "summary": {
+    "gameweeksScored": 1,
+    "hitRate": 1.0,
+    "hitRateByVerdict": {
+      "amber": null,
+      "green": 1.0,
+      "red": null
+    }
+  }
+}
