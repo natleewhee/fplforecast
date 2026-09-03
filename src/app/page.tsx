@@ -8,6 +8,7 @@ import {
   loadPool,
   type GameweekReview,
   type RunningRecord,
+  type ParCalibration,
 } from "@/lib/snapshots";
 import Pitch from "./Pitch";
 import History from "./History";
@@ -96,6 +97,45 @@ function RunningRecordModule({ record }: { record: RunningRecord | null }) {
           <span className="stat">
             {record.baselineTotal}
             <span className="ml-1 font-sans font-normal text-ink-faint">base</span>
+          </span>
+        </div>
+      </div>
+    </Module>
+  );
+}
+
+function ParCalibrationModule({ calibration }: { calibration: ParCalibration | null }) {
+  if (!calibration || calibration.gameweeksScored === 0) {
+    return (
+      <Module label="Par calibration">
+        <p className="text-xs text-ink-soft">
+          Fills in as gameweeks are scored — how often the live tracker&apos;s par verdict
+          correctly called whether your overall rank held.
+        </p>
+      </Module>
+    );
+  }
+  const { hitRate, hitRateByVerdict } = calibration;
+  const pct = (r: number | null) => (r == null ? "—" : `${Math.round(r * 100)}%`);
+  return (
+    <Module label={`Par calibration · ${calibration.gameweeksScored} GW`}>
+      <div className="flex items-end gap-4">
+        <div>
+          <div className="stat stat-glow text-2xl leading-none">{pct(hitRate)}</div>
+          <div className="eyebrow mt-1">hit rate</div>
+        </div>
+        <div className="flex gap-3 text-xs text-ink-soft">
+          <span className="stat text-[var(--accent)]">
+            {pct(hitRateByVerdict.green)}
+            <span className="ml-1 font-sans font-normal text-ink-faint">green</span>
+          </span>
+          <span className="stat text-[var(--warn)]">
+            {pct(hitRateByVerdict.amber)}
+            <span className="ml-1 font-sans font-normal text-ink-faint">amber</span>
+          </span>
+          <span className="stat text-[var(--danger)]">
+            {pct(hitRateByVerdict.red)}
+            <span className="ml-1 font-sans font-normal text-ink-faint">red</span>
           </span>
         </div>
       </div>
@@ -323,6 +363,10 @@ export default function Home() {
             </div>
 
             {forecast.history && <History history={forecast.history} />}
+
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              <ParCalibrationModule calibration={forecast.parCalibration} />
+            </div>
 
             {overrides &&
               overrides.basedOnGw === forecast.basedOnGameweek &&

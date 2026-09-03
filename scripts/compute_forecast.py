@@ -1,13 +1,10 @@
 """Squad-anchored weekly view: your fifteen held players, each carrying the
-model's and the composite baseline's suggested swap (better same-position,
-similar-price alternative + 5-GW gain), or nothing when the held player is
-already the best option.
+model's projection and, on the planning table, any same-position pool player
+that out-projects them at any price (R12, KTD4).
 
 Thin CLI wrapper. It loads the latest snapshots from ``data/``, builds the
 shared feature frame once, calls the pure ``engine/`` library for the pool
 ranking and the per-player projections, and writes ``data/forecast/gwNN.json``.
-Both projections are always computed -- a backtest artifact is never required
-(KD4, KTD8, AE3).
 """
 
 from __future__ import annotations
@@ -33,11 +30,11 @@ from engine.history import ColdStart, classify, load_history
 from engine.model import ModelContext
 from engine.squad import (
     best_xi,
+    floor_ceiling,
     pool_upgrades,
-    rank_against_pool,
-    top_alternatives,
     window_points,
     window_points_by_gw,
+    xi_floor_ceiling,
 )
 from engine.strength import team_strength_table
 
@@ -159,6 +156,27 @@ def load_running_record() -> dict | None:
         return None
     summary = load_json(path).get("summary") or {}
     return summary if summary.get("gameweeksScored", 0) > 0 else None
+
+
+def load_par_calibration_record() -> dict | None:
+    """The par calibration summary (UB2, Part B), or ``None`` until at least
+    one gameweek has been scored -- same shape as ``load_running_record``."""
+    path = DATA_DIR / "record" / "par-calibration.json"
+    if not path.exists():
+        return None
+    summary = load_json(path).get("summary") or {}
+    return summary if summary.get("gameweeksScored", 0) > 0 else None
+
+
+def load_residuals_by_position() -> dict:
+    """Realised per-position projection error for the safety-score band
+    (UA3, Part A). Missing file or a position with too little history is not
+    an error -- ``engine.squad.floor_ceiling`` falls back to the provisional
+    band on an empty or short list, never a crash."""
+    path = DATA_DIR / "record" / "residuals.json"
+    if not path.exists():
+        return {}
+    return load_json(path).get("byPosition") or {}
 
 
 def _gw_model_vs_baseline(gw: int) -> dict | None:
@@ -356,53 +374,6 @@ def upcoming_gameweek(bootstrap: dict, now: datetime, fallback: int) -> int:
     return fallback
 
 
-def _enrich_card(
-    pid: int,
-    feature_frame,
-    target_gw: int,
-    ctx: ModelContext,
-    window_pts: dict,
-    elements_by_id: dict,
-    teams_by_id: dict,
-) -> dict:
-    """A render-ready player card: identity, next-GW projected points, the
-    5-GW window total the ranking used, cold-start flag, per-leg opponents,
-    and the full calculation breakdown for the hover."""
-    detail = model.project_detail(feature_frame.loc[pid], target_gw, ctx)
-    card = _player_card(pid, elements_by_id, teams_by_id)
-    card["projectedPoints"] = detail.get("points")
-    card["windowPoints"] = round(window_pts[pid], 2) if window_pts.get(pid) is not None else None
-    card["provisional"] = detail.get("provisional", False)
-    card["rateSource"] = detail.get("rateSource", "history")
-    card["opponents"] = detail["opponents"]
-    card["breakdown"] = detail
-    return card
-
-
-def _affordable(alt_price, sell_price: float, bank: float) -> bool | None:
-    """Whether the swap fits the budget: bank + what the held player sells for
-    must cover the alternative's price. ``None`` when a price is unknown."""
-    if alt_price is None:
-        return None
-    return (bank + sell_price) >= alt_price - 1e-6
-
-
-def _upgrade_for(gap_row: dict, alt_card_fn, gap_bar: float, sell_price: float, bank: float) -> dict | None:
-    """One projection's suggestion for a squad player: the better same-position,
-    similar-price alternative, the 5-GW gain, whether it fits the budget, and
-    whether the gain clears the (season-scaled) ``gap_bar``."""
-    alt_id = gap_row["bestAlternative"]
-    if alt_id is None or gap_row["gapPoints"] <= 0:
-        return None
-    card = alt_card_fn(alt_id)
-    return {
-        "alternative": card,
-        "gapPoints": gap_row["gapPoints"],
-        "meaningful": gap_row["gapPoints"] >= gap_bar,
-        "affordable": _affordable(card.get("price"), sell_price, bank),
-    }
-
-
 def main(now: datetime | None = None) -> int:
     now = now or datetime.now(timezone.utc)
 
@@ -471,11 +442,6 @@ def main(now: datetime | None = None) -> int:
     model_window_by_gw = window_points_by_gw(feature_frame, model_fn, target_gw)
     baseline_window = window_points(feature_frame, baseline_fn, target_gw)
 
-    price_by_id = feature_frame["price"].to_dict()
-    position_by_id = {
-        pid: POSITIONS.get(int(row["element_type"]), "???")
-        for pid, row in feature_frame.iterrows()
-    }
     minutes_risk_by_id = {
         pid: model.minutes_risk_flag(row, ctx) for pid, row in feature_frame.iterrows()
     }
@@ -485,27 +451,10 @@ def main(now: datetime | None = None) -> int:
         pid for pid in feature_frame.index if elements_by_id.get(pid, {}).get("status") == "a"
     ]
 
-    model_rows = {
-        r["squadPlayer"]: r
-        for r in rank_against_pool(
-            squad_ids, pool_ids, model_window, price_by_id, position_by_id, minutes_risk_by_id
-        )
-    }
-    baseline_rows = {
-        r["squadPlayer"]: r
-        for r in rank_against_pool(
-            squad_ids, pool_ids, baseline_window, price_by_id, position_by_id, minutes_risk_by_id
-        )
-    }
-
-    def alt_card(pid: int) -> dict:
-        return _enrich_card(
-            pid, feature_frame, target_gw, ctx, model_window, elements_by_id, teams_by_id
-        )
-
     # Your squad is the anchor: the fifteen held players, each with the model's
-    # and the baseline's suggested swap hanging off it (KD4/KTD8 -- both are
-    # always computed; a backtest artifact is never required).
+    # projection; the planning table (poolUpgrades below) is the sole upgrade
+    # surface (KD4/KTD8).
+    residuals_by_position = load_residuals_by_position()
     players: list[dict] = []
     squad_window_total = 0.0
     for pid in squad_ids:
@@ -522,25 +471,9 @@ def main(now: datetime | None = None) -> int:
         card["minutesRisk"] = bool(minutes_risk_by_id.get(pid, False))
         card["opponents"] = detail["opponents"]
         card["breakdown"] = detail
-        card["modelUpgrade"] = (
-            _upgrade_for(model_rows[pid], alt_card, gap_bar, sell_price, bank)
-            if pid in model_rows
-            else None
+        card["floorCeiling"] = floor_ceiling(
+            card["projectedPoints"], card["elementType"], residuals_by_position
         )
-        card["baselineUpgrade"] = (
-            _upgrade_for(baseline_rows[pid], alt_card, gap_bar, sell_price, bank)
-            if pid in baseline_rows
-            else None
-        )
-        card["alternatives"] = [
-            {
-                **alt_card(a["id"]),
-                "gapPoints": a["gapPoints"],
-                "affordable": _affordable(alt_card(a["id"]).get("price"), sell_price, bank),
-            }
-            for a in top_alternatives(pid, pool_ids, model_window, price_by_id, position_by_id, limit=3)
-            if a["gapPoints"] is None or a["gapPoints"] >= gap_bar
-        ]
         players.append(card)
 
         if model_window.get(pid) is not None:
@@ -585,6 +518,21 @@ def main(now: datetime | None = None) -> int:
     bench_ids = [p["id"] for p in bench]
     for c in players:
         c["role"] = "start" if c["id"] in starting_ids else "bench"
+
+    # XI-level safety band (UA3): the starting XI's projections, captain
+    # doubled, aggregated via sqrt(sum of variance) (KDA3) rather than a naive
+    # sum of each player's range.
+    card_by_id_for_band = {c["id"]: c for c in players}
+    xi_band_input = [
+        {
+            "projected": card_by_id_for_band[i]["projectedPoints"] or 0.0,
+            "elementType": card_by_id_for_band[i]["elementType"] or 4,
+            "multiplier": 2 if captain is not None and i == captain["id"] else 1,
+        }
+        for i in starting_ids
+        if i in card_by_id_for_band
+    ]
+    xi_floor_ceiling_band = xi_floor_ceiling(xi_band_input, residuals_by_position)
 
     # Headline: what this XI is projected to score next gameweek, captain
     # doubled -- and how that compares to leaving last week's XI untouched and
@@ -677,21 +625,6 @@ def main(now: datetime | None = None) -> int:
         else:
             cut = f", under the {xi_cut:.1f} XI cut" if xi_cut is not None else ""
             c["rationale"] = f"{pps} proj{cut} — {_opp_str(c)}"
-
-    def _agree(card: dict) -> bool:
-        mu, bu = card["modelUpgrade"], card["baselineUpgrade"]
-        return bool(mu and bu and mu["alternative"]["id"] == bu["alternative"]["id"])
-
-    def _meaningful(card: dict) -> bool:
-        mu, bu = card["modelUpgrade"], card["baselineUpgrade"]
-        return bool((mu and mu["meaningful"]) or (bu and bu["meaningful"]))
-
-    upgrade_count = {
-        "model": sum(1 for c in players if c["modelUpgrade"]),
-        "baseline": sum(1 for c in players if c["baselineUpgrade"]),
-        "agree": sum(1 for c in players if _agree(c)),
-        "meaningful": sum(1 for c in players if _meaningful(c)),
-    }
 
     # Suggested XI for every gameweek in the rolling window, not just the next
     # one: same fifteen held players, best legal formation and captain for that
@@ -856,11 +789,11 @@ def main(now: datetime | None = None) -> int:
             "bank": bank,
             "bankNote": "sell prices assume each player was bought at today's price",
         },
-        "upgradeCount": upgrade_count,
         "lineupAgreement": lineup_agreement,
         "effectiveGap": round(gap_bar, 1),
         "earlySeason": gap_bar > MEANINGFUL_UPGRADE_GAP + 1e-6,
         "nextGw": next_gw,
+        "xiFloorCeiling": xi_floor_ceiling_band,
         "captain": (
             {
                 "webName": captain["webName"],
@@ -881,6 +814,7 @@ def main(now: datetime | None = None) -> int:
         ),
         "captainEdge": captain_edge,
         "runningRecord": load_running_record(),
+        "parCalibration": load_par_calibration_record(),
         "lastGameweek": last_gameweek_review(bootstrap, elements_by_id),
         "upcoming": upcoming,
         "pool": pool,
@@ -899,8 +833,8 @@ def main(now: datetime | None = None) -> int:
     out_path.write_text(json.dumps(forecast, indent=2, sort_keys=True))
     print(f"forecast for GW{target_gw} (based on GW{based_on_gw} squad): -> {out_path}")
     print(
-        f"upgrades — meaningful: {upgrade_count['meaningful']}, model: {upgrade_count['model']}, "
-        f"baseline: {upgrade_count['baseline']}, agree: {upgrade_count['agree']}; captain: "
+        f"pool upgrades: {sum(1 for rows in pool_upgrade_map.values() if rows)} squad player(s) "
+        f"have a same-position upgrade in the pool; captain: "
         f"{forecast['captain']['webName'] if forecast['captain'] else None}"
     )
     return 0

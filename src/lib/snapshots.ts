@@ -75,7 +75,13 @@ export type ProjectionBreakdown = {
   opponents: OpponentLeg[];
 };
 
-export type AlternativeCard = {
+export type FloorCeiling = {
+  floor: number;
+  ceiling: number;
+  bandProvisional: boolean; // too little realised history for this position -> band widened
+};
+
+export type PlayerCard = {
   id: number;
   webName: string;
   team: string;
@@ -88,27 +94,16 @@ export type AlternativeCard = {
   rateSource?: string;
   opponents: OpponentLeg[];
   breakdown: ProjectionBreakdown;
-  gapPoints?: number | null; // present when this card is an alternative
-  affordable?: boolean | null; // fits bank + sale of the held player
+  floorCeiling?: FloorCeiling | null;
 };
 
-export type Upgrade = {
-  alternative: AlternativeCard;
-  gapPoints: number; // 5-GW window-points gain
-  meaningful: boolean; // gain clears the (season-scaled) bar
-  affordable?: boolean | null;
-};
-
-export type ForecastPlayer = AlternativeCard & {
+export type ForecastPlayer = PlayerCard & {
   minutesRisk?: boolean;
   isCaptain: boolean;
   isViceCaptain?: boolean;
   role?: "start" | "bench";
   rationale?: string; // one-line "why" for this player's start/bench/armband
   sellPrice?: number; // £m (assumes bought at today's price)
-  modelUpgrade: Upgrade | null;
-  baselineUpgrade: Upgrade | null;
-  alternatives: AlternativeCard[];
 };
 
 export type RunningRecord = {
@@ -117,6 +112,12 @@ export type RunningRecord = {
   baselineTotal: number;
   pooledDeltaPerGw: number;
   meaningful: boolean;
+};
+
+export type ParCalibration = {
+  gameweeksScored: number;
+  hitRate: number | null;
+  hitRateByVerdict: { green: number | null; amber: number | null; red: number | null };
 };
 
 export type Forecast = {
@@ -139,7 +140,6 @@ export type Forecast = {
     bank: number; // £m
     bankNote?: string;
   };
-  upgradeCount: { model: number; baseline: number; agree: number; meaningful: number };
   lineupAgreement: number; // starters the model XI and baseline XI share, of 11
   effectiveGap: number; // 5-GW gain a swap must clear to be recommended this week
   earlySeason: boolean; // effectiveGap raised because the season is young
@@ -148,10 +148,12 @@ export type Forecast = {
     deltaVsNoChange: number; // vs keeping last week's XI + captain
     deltaVsBaselineXi: number; // vs the composite baseline's XI pick
   };
+  xiFloorCeiling: FloorCeiling; // safety-score band for nextGw.points (Part A)
   captain: { webName: string; id: number; points?: number } | null;
   viceCaptain: { webName: string; id: number; points?: number } | null;
   captainEdge: { points: number; label: string } | null; // captain vs vice, single GW
   runningRecord: RunningRecord | null;
+  parCalibration: ParCalibration | null;
   lastGameweek: GameweekReview | null;
   upcoming: UpcomingGameweek[]; // suggested XI for each GW in the rolling window
   history: SeasonHistory | null;

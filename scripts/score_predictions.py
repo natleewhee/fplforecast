@@ -8,7 +8,11 @@ points are fetched fresh from ``event/{gw}/live`` -- not the committed
 snapshot, which ``snapshot.py`` freezes pre-bonus. A gameweek with no stored
 prediction is recorded as ``no_prediction`` and never scored after the fact
 (KTD7, AE4). The pass is idempotent.
-"""
+
+Also UA1 of the 2026-09-03 safety-score plan: the same scored gameweek
+updates ``data/record/residuals.json`` with each player's ``actual -
+projected`` error, bucketed by position -- the realised spread the safety
+score's floor/ceiling band is built from (engine.squad.floor_ceiling)."""
 
 from __future__ import annotations
 
@@ -37,6 +41,45 @@ def fetch_event_live(gw: int) -> dict:
 def load_running() -> dict:
     path = DATA_DIR / "record" / "running.json"
     return json.loads(path.read_text()) if path.exists() else {"entries": [], "summary": {}}
+
+
+POSITIONS = ("1", "2", "3", "4")  # GKP, DEF, MID, FWD -- engine.features.POSITIONS keys
+
+
+def load_residuals() -> dict:
+    path = DATA_DIR / "record" / "residuals.json"
+    data = json.loads(path.read_text()) if path.exists() else {}
+    by_position = data.get("byPosition") or {}
+    data["byPosition"] = {pos: list(by_position.get(pos, [])) for pos in POSITIONS}
+    data.setdefault("gameweeksIncluded", [])
+    return data
+
+
+def residuals_for_gameweek(predictions: dict, elements_by_id: dict, live: dict) -> dict[str, list[float]]:
+    """``actual - projected`` per player this gameweek, bucketed by position,
+    from the model's own frozen projections only -- the safety band (Part A)
+    only needs the model's out-of-sample error. A player with no live actual
+    (blank gameweek, unused sub) is skipped, not recorded as a large miss."""
+    actuals = {
+        el["id"]: (el.get("stats", {}) or {}).get("total_points")
+        for el in live.get("elements", [])
+    }
+    out: dict[str, list[float]] = {pos: [] for pos in POSITIONS}
+    for pid_str, projected in (predictions.get("model") or {}).items():
+        if projected is None:
+            continue
+        pid = int(pid_str)
+        actual = actuals.get(pid)
+        if actual is None:
+            continue
+        el = elements_by_id.get(pid)
+        if el is None:
+            continue
+        pos = str(el["element_type"])
+        if pos not in out:
+            continue
+        out[pos].append(round(actual - projected, 2))
+    return out
 
 
 def _projection_list(pred_map: dict, elements_by_id: dict) -> list[dict]:
@@ -98,6 +141,8 @@ def main(fetch=fetch_event_live) -> int:
     elements_by_id = {el["id"]: el for el in bootstrap["elements"]}
     running = load_running()
     already = {e["gameweek"] for e in running["entries"]}
+    residuals = load_residuals()
+    residuals_already = set(residuals["gameweeksIncluded"])
 
     for event in bootstrap.get("events", []):
         gw = event["id"]
@@ -116,12 +161,20 @@ def main(fetch=fetch_event_live) -> int:
             print(f"GW{gw}: live fetch failed ({exc!r}) — skipping", file=sys.stderr)
             continue
 
-        entry = score_gameweek(gw, json.loads(pred_path.read_text()), elements_by_id, live)
+        predictions = json.loads(pred_path.read_text())
+        entry = score_gameweek(gw, predictions, elements_by_id, live)
         running["entries"].append(entry)
         print(
             f"GW{gw}: model {entry['modelPoints']}  baseline {entry['baselinePoints']}  "
             f"delta {entry['delta']}"
         )
+
+        if gw not in residuals_already:
+            gw_residuals = residuals_for_gameweek(predictions, elements_by_id, live)
+            for pos, vals in gw_residuals.items():
+                residuals["byPosition"][pos].extend(vals)
+            residuals["gameweeksIncluded"].append(gw)
+            residuals_already.add(gw)
 
     running["entries"].sort(key=lambda e: e["gameweek"])
     running["summary"] = summarise(running["entries"])
@@ -130,6 +183,12 @@ def main(fetch=fetch_event_live) -> int:
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(running, indent=2, sort_keys=True))
     print(f"running record -> {out_path}: {running['summary']}")
+
+    residuals["gameweeksIncluded"].sort()
+    residuals_path = DATA_DIR / "record" / "residuals.json"
+    residuals_path.parent.mkdir(parents=True, exist_ok=True)
+    residuals_path.write_text(json.dumps(residuals, indent=2, sort_keys=True))
+    print(f"residuals -> {residuals_path}: {len(residuals['gameweeksIncluded'])} gameweek(s)")
     return 0
 
 

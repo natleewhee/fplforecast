@@ -5,16 +5,14 @@ from __future__ import annotations
 import pandas as pd
 import pytest
 
-from engine.config import DISPLAY_GAP_ROWS, PRICE_BAND_M, ROLLING_WINDOW
-from engine.history import ColdStart
-from engine.squad import (
-    pool_upgrades,
-    rank_against_pool,
-    top_alternatives,
-    top_gap_rows,
-    window_points,
-    window_points_by_gw,
+from engine.config import (
+    ROLLING_WINDOW,
+    SAFETY_BAND_PROVISIONAL_STDEV,
+    SAFETY_BAND_Z,
+    SAFETY_MIN_SAMPLE_PER_POSITION,
 )
+from engine.history import ColdStart
+from engine.squad import floor_ceiling, pool_upgrades, window_points, window_points_by_gw, xi_floor_ceiling
 
 
 def test_pool_upgrades_flags_a_higher_projecting_same_position_player_over_budget():
@@ -91,99 +89,85 @@ def test_window_points_by_gw_maps_a_cold_start_player_to_none():
     assert by_gw[2] is None
 
 
-PRICE = {sid: 7.0 for sid in range(100)}
-POS = {}
+# --- UA2: safety-score floor/ceiling (Part A) -----------------------------------
 
 
-def _pos(ids, position):
-    for i in ids:
-        POS[i] = position
+def test_floor_ceiling_uses_realised_stdev_once_the_sample_clears_the_minimum():
+    residuals = [2.0, -2.0, 4.0, -4.0] * (SAFETY_MIN_SAMPLE_PER_POSITION // 4 + 1)
+    by_position = {"3": residuals}
+    import statistics as _stats
+
+    stdev = _stats.pstdev(residuals)
+
+    band = floor_ceiling(10.0, 3, by_position)
+
+    assert band["bandProvisional"] is False
+    assert band["floor"] == pytest.approx(10.0 - SAFETY_BAND_Z * stdev, abs=0.01)
+    assert band["ceiling"] == pytest.approx(10.0 + SAFETY_BAND_Z * stdev, abs=0.01)
 
 
-def test_gap_is_alternative_minus_squad_and_bigger_gaps_rank_first():
-    _pos([1, 11], "FWD")
-    _pos([2, 22], "DEF")
-    window_pts = {1: 4.0, 11: 7.0, 2: 5.0, 22: 6.0}
-    price = {1: 7.0, 11: 7.0, 2: 5.0, 22: 5.0}
-    pos = {1: "FWD", 11: "FWD", 2: "DEF", 22: "DEF"}
+def test_floor_ceiling_falls_back_to_the_provisional_band_below_the_minimum_sample():
+    by_position = {"1": [1.0, -1.0]}  # far fewer than SAFETY_MIN_SAMPLE_PER_POSITION
 
-    rows = rank_against_pool([1, 2], [11, 22], window_pts, price, pos)
+    band = floor_ceiling(5.0, 1, by_position)
 
-    assert rows[0] == {"squadPlayer": 1, "bestAlternative": 11, "gapPoints": 3.0, "minutesRisk": False}
-    assert rows[1]["squadPlayer"] == 2 and rows[1]["gapPoints"] == 1.0
+    assert band["bandProvisional"] is True
+    assert band["floor"] == pytest.approx(5.0 - SAFETY_BAND_Z * SAFETY_BAND_PROVISIONAL_STDEV)
+    assert band["ceiling"] == pytest.approx(5.0 + SAFETY_BAND_Z * SAFETY_BAND_PROVISIONAL_STDEV)
 
 
-def test_full_ranking_is_one_row_per_squad_player_display_slice_is_top_n_positive():
-    squad = list(range(1, 16))
-    pool = list(range(101, 116))
-    pos = {i: "MID" for i in [*squad, *pool]}
-    price = {i: 7.0 for i in [*squad, *pool]}
-    # squad players project i/10; their pool twins project a growing amount more.
-    window_pts = {i: i / 10 for i in squad}
-    window_pts.update({101 + k: (k + 1) / 10 + k for k in range(15)})
-
-    rows = rank_against_pool(squad, pool, window_pts, price, pos)
-    display = top_gap_rows(rows)
-
-    assert len(rows) == 15
-    assert len(display) == DISPLAY_GAP_ROWS
-    assert [r["gapPoints"] for r in display] == sorted((r["gapPoints"] for r in display), reverse=True)
+def test_floor_ceiling_with_no_residual_history_is_provisional():
+    band = floor_ceiling(5.0, 2, {})
+    assert band["bandProvisional"] is True
 
 
-def test_no_positive_gap_anywhere_returns_no_display_rows():
-    pos = {1: "GKP", 2: "GKP"}
-    price = {1: 5.0, 2: 5.0}
-    rows = rank_against_pool([1], [2], {1: 6.0, 2: 4.0}, price, pos)
-
-    assert rows[0]["gapPoints"] == -2.0  # an in-band alternative exists but is worse
-    assert top_gap_rows(rows) == []  # nothing with a positive gap to show
+def test_floor_never_goes_negative():
+    band = floor_ceiling(1.0, 1, {"1": [1.0, -1.0]})  # provisional stdev far exceeds the projection
+    assert band["floor"] == 0.0
 
 
-def test_pool_player_outside_the_price_band_is_not_considered():
-    pos = {1: "MID", 2: "MID", 3: "MID"}
-    price = {1: 6.0, 2: 6.0 + PRICE_BAND_M, 3: 6.0 + PRICE_BAND_M + 0.01}
-    window_pts = {1: 4.0, 2: 6.0, 3: 99.0}  # 3 is far better but out of band
-
-    rows = rank_against_pool([1], [2, 3], window_pts, price, pos)
-
-    assert rows[0]["bestAlternative"] == 2
-    assert rows[0]["gapPoints"] == 2.0
+def test_floor_ceiling_is_none_without_a_projection():
+    assert floor_ceiling(None, 3, {}) is None
 
 
-def test_cold_start_pool_player_is_never_the_best_alternative():
-    pos = {1: "FWD", 2: "FWD", 3: "FWD"}
-    price = {1: 7.0, 2: 7.0, 3: 7.0}
-    window_pts = {1: 4.0, 2: 5.0, 3: None}  # 3 is cold-start (None), would rank highest
+def test_xi_floor_ceiling_aggregates_via_sqrt_of_summed_variance_not_summed_range():
+    # Two positions, each with enough history that its band is not provisional.
+    by_position = {
+        "1": [1.0, -1.0] * (SAFETY_MIN_SAMPLE_PER_POSITION // 2 + 1),  # stdev 1.0
+        "2": [2.0, -2.0] * (SAFETY_MIN_SAMPLE_PER_POSITION // 2 + 1),  # stdev 2.0
+    }
+    xi = [
+        {"projected": 5.0, "elementType": 1},
+        {"projected": 6.0, "elementType": 2},
+    ]
 
-    rows = rank_against_pool([1], [2, 3], window_pts, price, pos)
+    band = xi_floor_ceiling(xi, by_position)
 
-    assert rows[0]["bestAlternative"] == 2
-
-
-def test_minutes_risk_is_attached_to_the_recommended_alternative():
-    pos = {1: "DEF", 2: "DEF"}
-    price = {1: 5.0, 2: 5.0}
-    rows = rank_against_pool([1], [2], {1: 3.0, 2: 6.0}, price, pos, minutes_risk_by_id={2: True})
-
-    assert rows[0]["minutesRisk"] is True
-
-
-def test_top_alternatives_returns_ranked_slice_within_band():
-    pos = {i: "MID" for i in (1, 10, 11, 12, 13)}
-    price = {i: 7.0 for i in (1, 10, 11, 12)}
-    price[13] = 7.0 + PRICE_BAND_M + 0.1  # out of band
-    window_pts = {1: 4.0, 10: 9.0, 11: 7.0, 12: 6.0, 13: 99.0}
-
-    alts = top_alternatives(1, [10, 11, 12, 13], window_pts, price, pos, limit=2)
-
-    assert [a["id"] for a in alts] == [10, 11]  # best two in band, 13 excluded
-    assert alts[0]["gapPoints"] == 5.0  # 9.0 - 4.0
+    expected_band = SAFETY_BAND_Z * (1.0**2 + 2.0**2) ** 0.5  # sqrt(sum of variance)
+    naive_sum_of_ranges = SAFETY_BAND_Z * (1.0 + 2.0)
+    assert expected_band < naive_sum_of_ranges  # the whole point of KDA3
+    assert band["floor"] == pytest.approx(11.0 - expected_band, abs=0.01)
+    assert band["ceiling"] == pytest.approx(11.0 + expected_band, abs=0.01)
+    assert band["bandProvisional"] is False
 
 
-def test_top_alternatives_gap_is_none_when_the_held_player_is_cold_start():
-    pos = {1: "FWD", 2: "FWD"}
-    price = {1: 8.0, 2: 8.0}
-    alts = top_alternatives(1, [2], {1: None, 2: 30.0}, price, pos)
+def test_xi_floor_ceiling_doubles_the_captains_contribution_and_variance():
+    by_position = {"1": [1.0, -1.0] * (SAFETY_MIN_SAMPLE_PER_POSITION // 2 + 1)}  # stdev 1.0
+    xi = [{"projected": 5.0, "elementType": 1, "multiplier": 2}]
 
-    assert alts[0]["id"] == 2
-    assert alts[0]["gapPoints"] is None  # no baseline to measure a gain against
+    band = xi_floor_ceiling(xi, by_position)
+
+    assert band["floor"] == pytest.approx(10.0 - SAFETY_BAND_Z * 2.0, abs=0.01)  # 2x stdev, not 1x
+    assert band["ceiling"] == pytest.approx(10.0 + SAFETY_BAND_Z * 2.0, abs=0.01)
+
+
+def test_xi_floor_ceiling_is_provisional_if_any_player_is():
+    by_position = {"1": [1.0, -1.0] * (SAFETY_MIN_SAMPLE_PER_POSITION // 2 + 1)}  # not provisional
+    xi = [
+        {"projected": 5.0, "elementType": 1},  # position 1 has enough history
+        {"projected": 5.0, "elementType": 4},  # position 4 has none -> provisional
+    ]
+
+    assert xi_floor_ceiling(xi, by_position)["bandProvisional"] is True
+
+

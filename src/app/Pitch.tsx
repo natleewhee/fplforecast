@@ -1,14 +1,14 @@
 "use client";
 
 import { useState, type ReactNode } from "react";
-import type {
-  AlternativeCard,
-  Forecast,
-  ForecastPlayer,
-  OpponentLeg,
-} from "@/lib/snapshots";
+import type { Forecast, ForecastPlayer, OpponentLeg } from "@/lib/snapshots";
 import { fdrColor, kitFor } from "@/lib/teamColors";
-import ProjectionCell from "./ProjectionCell";
+
+function bandLabel(band: { floor: number; ceiling: number; bandProvisional: boolean } | null | undefined) {
+  if (!band) return "";
+  const range = `${band.floor.toFixed(1)}–${band.ceiling.toFixed(1)}`;
+  return band.bandProvisional ? `${range} (provisional range)` : range;
+}
 
 type ViewMode = "model" | "baseline" | "yours";
 const MODE_LABEL: Record<ViewMode, string> = {
@@ -124,6 +124,7 @@ type Tok = {
   minutesRisk?: boolean;
   opponents: OpponentLeg[];
   breakdown?: ForecastPlayer["breakdown"];
+  floorCeiling?: ForecastPlayer["floorCeiling"];
 };
 
 function PlayerToken({
@@ -141,10 +142,11 @@ function PlayerToken({
   const size = bench ? 40 : 52;
   const frac = t.xp != null ? t.xp / RING_FULL : 0;
   const ringColor = t.provisional ? "var(--warn)" : "var(--accent)";
+  const bandTitle = bandLabel(t.floorCeiling);
   return (
     <div
       className={`flex w-[4.4rem] flex-col items-center gap-0.5 ${bench ? "sm:w-[4.2rem]" : "sm:w-20"}`}
-      title={t.webName}
+      title={bandTitle ? `${t.webName} — typical range ${bandTitle}` : t.webName}
     >
       <div className="relative">
         <Ring frac={frac} color={ringColor} size={size}>
@@ -188,38 +190,6 @@ function PlayerToken({
       </span>
       <OppChip opponents={t.opponents} />
     </div>
-  );
-}
-
-/* ---------- transfer alternatives (kept, restyled) ---------- */
-
-function AlternativeChip({ alt }: { alt: AlternativeCard }) {
-  const over = alt.affordable === false;
-  return (
-    <span
-      className={`inline-flex items-center gap-1.5 rounded-lg border px-2 py-1 text-[11px] ${
-        over
-          ? "border-[color-mix(in_srgb,var(--danger)_40%,transparent)] bg-[color-mix(in_srgb,var(--danger)_10%,transparent)]"
-          : "border-line bg-white/[0.04]"
-      }`}
-    >
-      <span className="font-semibold text-ink">{alt.webName}</span>
-      <span className="text-ink-faint">{alt.team}</span>
-      {alt.price != null && (
-        <span className="font-mono tabular-nums text-ink-soft">£{alt.price.toFixed(1)}</span>
-      )}
-      {typeof alt.gapPoints === "number" && (
-        <span className="font-mono font-bold tabular-nums text-[var(--accent)]">
-          +{alt.gapPoints.toFixed(1)}
-        </span>
-      )}
-      {over && (
-        <span className="rounded bg-[color-mix(in_srgb,var(--danger)_22%,transparent)] px-1 text-[9px] font-bold uppercase text-[var(--danger)]">
-          over
-        </span>
-      )}
-      <ProjectionCell points={alt.projectedPoints} breakdown={alt.breakdown} />
-    </span>
   );
 }
 
@@ -276,6 +246,7 @@ export default function Pitch({ forecast }: { forecast: Forecast }) {
       minutesRisk: base.minutesRisk,
       opponents: useSquad ? base.opponents : gp?.opponents ?? [],
       breakdown: base.breakdown,
+      floorCeiling: base.floorCeiling,
     };
   };
 
@@ -291,12 +262,8 @@ export default function Pitch({ forecast }: { forecast: Forecast }) {
     headline = forecast.nextGw.points - forecast.nextGw.deltaVsNoChange;
   const vsModel = headline - forecast.nextGw.points;
 
-  const withAlternatives = [...squad.players]
-    .filter((p) => p.alternatives.length > 0)
-    .sort((a, b) => (b.alternatives[0]?.gapPoints ?? 0) - (a.alternatives[0]?.gapPoints ?? 0));
-
   return (
-    <div className="space-y-4 lg:grid lg:grid-cols-[1fr_19rem] lg:gap-4 lg:space-y-0">
+    <div className="space-y-4">
       {/* ===== the pitch ===== */}
       <div className="panel rise overflow-hidden p-3 sm:p-4">
         {/* GW rail */}
@@ -346,6 +313,15 @@ export default function Pitch({ forecast }: { forecast: Forecast }) {
               {headline.toFixed(0)}
             </div>
             <div className="eyebrow mt-1">proj pts</div>
+            {isTargetGw && effMode === "model" && (
+              <div
+                className="mt-0.5 font-mono text-[10px] text-ink-faint"
+                title="Safety-score band: one realised-residual stdev either side, aggregated over the XI assuming independence"
+              >
+                {forecast.xiFloorCeiling.floor.toFixed(0)}–{forecast.xiFloorCeiling.ceiling.toFixed(0)}
+                {forecast.xiFloorCeiling.bandProvisional && " (provisional)"}
+              </div>
+            )}
           </div>
         </div>
 
@@ -413,54 +389,6 @@ export default function Pitch({ forecast }: { forecast: Forecast }) {
                   <span className="text-ink-soft">{p.webName}</span> benched — {p.rationale}
                 </li>
               ))}
-          </ul>
-        )}
-      </div>
-
-      {/* ===== transfers rail ===== */}
-      <div className="panel rise p-4">
-        <div className="flex items-start justify-between gap-2">
-          <div>
-            <h2 className="font-mono text-[13px] font-bold tracking-[0.12em] text-ink">TRANSFERS</h2>
-            <p className="eyebrow mt-0.5">same slot · in band</p>
-          </div>
-          <div className="text-right">
-            <div className="stat text-lg leading-none text-ink">
-              £{forecast.squad.bank.toFixed(1)}
-            </div>
-            <div className="eyebrow mt-0.5">bank</div>
-          </div>
-        </div>
-        <p className="mt-2 text-[11px] leading-relaxed text-ink-soft">
-          {forecast.earlySeason
-            ? `Early season — only moves gaining ≥ ${forecast.effectiveGap.toFixed(
-                0,
-              )} pts / 5 GWs shown.`
-            : "Within £0.3m, same position. Sell prices assume today's price."}
-        </p>
-        {withAlternatives.length === 0 ? (
-          <p className="mt-4 rounded-lg border border-line bg-white/[0.03] p-3 text-center text-xs text-ink-soft">
-            No move clears the bar this week — hold your transfer.
-          </p>
-        ) : (
-          <ul className="mt-3 space-y-3">
-            {withAlternatives.map((p) => (
-              <li key={p.id} className="border-b border-line pb-3 last:border-0 last:pb-0">
-                <div className="flex items-center gap-1.5 text-xs">
-                  <span
-                    className="h-1.5 w-1.5 rounded-full"
-                    style={{ background: POSITION_DOT[p.position] ?? "var(--ink-soft)" }}
-                  />
-                  <span className="font-semibold text-ink">{p.webName}</span>
-                  <span className="text-ink-faint">→</span>
-                </div>
-                <div className="mt-1.5 flex flex-wrap gap-1.5">
-                  {p.alternatives.map((a) => (
-                    <AlternativeChip key={a.id} alt={a} />
-                  ))}
-                </div>
-              </li>
-            ))}
           </ul>
         )}
       </div>

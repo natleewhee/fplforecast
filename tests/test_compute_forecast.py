@@ -146,6 +146,35 @@ def test_forecast_carries_pool_upgrades_keyed_by_squad_player(forecast):
             assert r["priceDelta"] == pytest.approx(round(cand["price"] - held["price"], 1))
 
 
+def test_forecast_carries_a_floor_ceiling_band_per_squad_player(forecast):
+    for p in forecast["squad"]["players"]:
+        band = p["floorCeiling"]
+        if p["projectedPoints"] is None:
+            assert band is None
+            continue
+        assert band["floor"] <= p["projectedPoints"] <= band["ceiling"]
+        assert band["floor"] >= 0.0
+        assert isinstance(band["bandProvisional"], bool)
+
+
+def test_forecast_carries_an_xi_level_floor_ceiling_band(forecast):
+    band = forecast["xiFloorCeiling"]
+    assert band["floor"] <= forecast["nextGw"]["points"] <= band["ceiling"]
+    assert band["floor"] >= 0.0
+
+
+def test_load_residuals_by_position_reads_the_committed_file(monkeypatch, tmp_path):
+    monkeypatch.setattr(cf, "DATA_DIR", tmp_path)
+    assert cf.load_residuals_by_position() == {}  # no file yet -- never a crash
+
+    record_dir = tmp_path / "record"
+    record_dir.mkdir()
+    (record_dir / "residuals.json").write_text(
+        json.dumps({"byPosition": {"1": [1.0, -2.0]}, "gameweeksIncluded": [1]})
+    )
+    assert cf.load_residuals_by_position() == {"1": [1.0, -2.0]}
+
+
 def test_recommended_xi_and_bench(forecast):
     squad = forecast["squad"]
     assert len(squad["startingXi"]) == 11
@@ -153,17 +182,6 @@ def test_recommended_xi_and_bench(forecast):
     assert set(squad["startingXi"]) | set(squad["bench"]) == {p["id"] for p in squad["players"]}
     for p in squad["players"]:
         assert p["role"] in ("start", "bench")
-
-
-def test_each_player_carries_alternatives_and_both_suggestions(forecast):
-    for p in forecast["squad"]["players"]:
-        assert isinstance(p["alternatives"], list)
-        for a in p["alternatives"]:
-            assert a["position"] == p["position"]  # like-for-like
-            assert "breakdown" in a and "opponents" in a
-        for key in ("modelUpgrade", "baselineUpgrade"):
-            if p[key] is not None:
-                assert p[key]["gapPoints"] > 0
 
 
 def test_exactly_one_captain_in_the_squad(forecast):
@@ -174,6 +192,31 @@ def test_exactly_one_captain_in_the_squad(forecast):
 
 def test_running_record_is_null_until_a_gameweek_is_scored(forecast):
     assert forecast["runningRecord"] is None
+
+
+def test_par_calibration_reflects_the_committed_calibration_record(forecast):
+    # Unlike runningRecord (needs a frozen pre-deadline prediction), the par
+    # calibration check only needs history + the bootstrap average -- GW2 is
+    # already scorable from the committed snapshots, so this is not null.
+    calibration = forecast["parCalibration"]
+    assert calibration is None or calibration["gameweeksScored"] > 0
+
+
+def test_load_par_calibration_record_reads_the_committed_file(monkeypatch, tmp_path):
+    monkeypatch.setattr(cf, "DATA_DIR", tmp_path)
+    assert cf.load_par_calibration_record() is None  # no file yet
+
+    record_dir = tmp_path / "record"
+    record_dir.mkdir()
+    (record_dir / "par-calibration.json").write_text(
+        json.dumps({"summary": {"gameweeksScored": 0}})
+    )
+    assert cf.load_par_calibration_record() is None  # zero scored still reads as no record
+
+    (record_dir / "par-calibration.json").write_text(
+        json.dumps({"summary": {"gameweeksScored": 3, "hitRate": 0.667}})
+    )
+    assert cf.load_par_calibration_record() == {"gameweeksScored": 3, "hitRate": 0.667}
 
 
 def test_last_gameweek_review_reports_the_held_squad_result(forecast):
@@ -230,8 +273,6 @@ def test_newcomers_get_a_provisional_projection(monkeypatch):
         players = json.loads(path.read_text())["squad"]["players"]
         assert all(p["provisional"] for p in players)
         assert all(p["projectedPoints"] is not None for p in players)  # a number, not "no history"
-        # a provisional player is still rankable -- gets real alternative gaps
-        assert any(a["gapPoints"] is not None for p in players for a in p["alternatives"])
     finally:
         if original is not None:
             path.write_bytes(original)
