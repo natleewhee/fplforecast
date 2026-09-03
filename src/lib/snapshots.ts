@@ -75,7 +75,7 @@ export type ProjectionBreakdown = {
   opponents: OpponentLeg[];
 };
 
-export type AlternativeCard = {
+export type PlayerCard = {
   id: number;
   webName: string;
   team: string;
@@ -88,27 +88,15 @@ export type AlternativeCard = {
   rateSource?: string;
   opponents: OpponentLeg[];
   breakdown: ProjectionBreakdown;
-  gapPoints?: number | null; // present when this card is an alternative
-  affordable?: boolean | null; // fits bank + sale of the held player
 };
 
-export type Upgrade = {
-  alternative: AlternativeCard;
-  gapPoints: number; // 5-GW window-points gain
-  meaningful: boolean; // gain clears the (season-scaled) bar
-  affordable?: boolean | null;
-};
-
-export type ForecastPlayer = AlternativeCard & {
+export type ForecastPlayer = PlayerCard & {
   minutesRisk?: boolean;
   isCaptain: boolean;
   isViceCaptain?: boolean;
   role?: "start" | "bench";
   rationale?: string; // one-line "why" for this player's start/bench/armband
   sellPrice?: number; // £m (assumes bought at today's price)
-  modelUpgrade: Upgrade | null;
-  baselineUpgrade: Upgrade | null;
-  alternatives: AlternativeCard[];
 };
 
 export type RunningRecord = {
@@ -139,7 +127,6 @@ export type Forecast = {
     bank: number; // £m
     bankNote?: string;
   };
-  upgradeCount: { model: number; baseline: number; agree: number; meaningful: number };
   lineupAgreement: number; // starters the model XI and baseline XI share, of 11
   effectiveGap: number; // 5-GW gain a swap must clear to be recommended this week
   earlySeason: boolean; // effectiveGap raised because the season is young

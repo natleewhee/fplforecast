@@ -1,13 +1,14 @@
-"""Best-XI selection over projected points, and squad-vs-pool gap ranking.
-Pure -- no I/O. ``best_xi`` / ``VALID_FORMATIONS`` are lifted verbatim from
-``scripts/compute_forecast.py`` (U1); ``window_points`` / ``rank_against_pool``
-are U7 (R12, R13, KD8, KTD5, KTD11)."""
+"""Best-XI selection over projected points, and squad-vs-pool upgrade
+detection. Pure -- no I/O. ``best_xi`` / ``VALID_FORMATIONS`` are lifted
+verbatim from ``scripts/compute_forecast.py`` (U1); ``window_points`` is U7
+(R12, R13, KD8, KTD5, KTD11); ``pool_upgrades`` is U3/U6 (R12, R13, KTD4,
+KTD8) -- the sole squad-vs-pool upgrade surface, at any price."""
 
 from __future__ import annotations
 
 from collections.abc import Callable, Mapping
 
-from engine.config import DISPLAY_GAP_ROWS, PRICE_BAND_M, ROLLING_WINDOW
+from engine.config import ROLLING_WINDOW
 from engine.history import ColdStart
 
 # (GKP, DEF, MID, FWD) counts for every legal starting XI shape.
@@ -97,66 +98,6 @@ def window_points_by_gw(
     return by_gw
 
 
-def rank_against_pool(
-    squad_ids: list,
-    pool_ids: list,
-    window_pts: dict,
-    price_by_id: dict,
-    position_by_id: dict,
-    minutes_risk_by_id: dict | None = None,
-) -> list[dict]:
-    """One row per squad player: the best same-position pool alternative within
-    ``engine.config.PRICE_BAND_M`` of their price, and the window-points gap to
-    it. Cold-start pool players (``window_pts`` is ``None``) are never offered
-    as an alternative (KTD11). Rows are sorted by gap, largest first; the caller
-    slices the top ``DISPLAY_GAP_ROWS`` with a positive gap."""
-    minutes_risk_by_id = minutes_risk_by_id or {}
-    rows: list[dict] = []
-
-    for squad_id in squad_ids:
-        squad_pts = window_pts.get(squad_id)
-        squad_price = price_by_id.get(squad_id)
-        squad_pos = position_by_id.get(squad_id)
-
-        best_id = None
-        best_pts = None
-        for cand_id in pool_ids:
-            if cand_id == squad_id or position_by_id.get(cand_id) != squad_pos:
-                continue
-            cand_pts = window_pts.get(cand_id)
-            if cand_pts is None:  # cold-start pool player
-                continue
-            cand_price = price_by_id.get(cand_id)
-            if cand_price is None or squad_price is None:
-                continue
-            if abs(cand_price - squad_price) > PRICE_BAND_M:
-                continue
-            if best_pts is None or cand_pts > best_pts:
-                best_id, best_pts = cand_id, cand_pts
-
-        if best_id is None or squad_pts is None:
-            gap = 0.0
-        else:
-            gap = best_pts - squad_pts
-
-        rows.append(
-            {
-                "squadPlayer": squad_id,
-                "bestAlternative": best_id,
-                "gapPoints": round(gap, 2),
-                "minutesRisk": bool(minutes_risk_by_id.get(best_id, False)),
-            }
-        )
-
-    rows.sort(key=lambda r: r["gapPoints"], reverse=True)
-    return rows
-
-
-def top_gap_rows(rows: list[dict], limit: int = DISPLAY_GAP_ROWS) -> list[dict]:
-    """The display slice: the ``limit`` largest positive-gap rows (R12)."""
-    return [row for row in rows if row["gapPoints"] > 0][:limit]
-
-
 def pool_upgrades(squad: list[dict], pool: list[dict], bank: float) -> dict:
     """For each held player, every same-position pool player with a higher
     five-gameweek total -- no price band. Returns ``{squad_id: [rows]}`` with
@@ -188,44 +129,3 @@ def pool_upgrades(squad: list[dict], pool: list[dict], bank: float) -> dict:
         rows.sort(key=lambda r: r["gap"], reverse=True)
         out[held["id"]] = rows
     return out
-
-
-def top_alternatives(
-    squad_id,
-    pool_ids: list,
-    window_pts: dict,
-    price_by_id: dict,
-    position_by_id: dict,
-    limit: int = 3,
-) -> list[dict]:
-    """The ``limit`` best same-position, in-price-band alternatives to one squad
-    player, ordered by window points (largest gain first). Cold-start pool
-    players are excluded (KTD11). Each row: ``id``, ``gapPoints`` (``None`` when
-    the held player is himself cold-start -- no baseline to measure a gain
-    against)."""
-    squad_pts = window_pts.get(squad_id)  # None when the held player is cold-start
-    squad_price = price_by_id.get(squad_id)
-    squad_pos = position_by_id.get(squad_id)
-    if squad_price is None:
-        return []
-
-    candidates = []
-    for cand_id in pool_ids:
-        if cand_id == squad_id or position_by_id.get(cand_id) != squad_pos:
-            continue
-        cand_pts = window_pts.get(cand_id)
-        cand_price = price_by_id.get(cand_id)
-        if cand_pts is None or cand_price is None:
-            continue
-        if abs(cand_price - squad_price) > PRICE_BAND_M:
-            continue
-        candidates.append((cand_id, cand_pts))
-
-    candidates.sort(key=lambda c: c[1], reverse=True)
-    return [
-        {
-            "id": cand_id,
-            "gapPoints": None if squad_pts is None else round(cand_pts - squad_pts, 2),
-        }
-        for cand_id, cand_pts in candidates[:limit]
-    ]

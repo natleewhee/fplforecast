@@ -42,12 +42,6 @@ BASELINE_WEIGHTS = {
 # Deferred to Follow-Up Work (KTD10).
 FDR_MULTIPLIER = {"intercept": 1.2, "slope": -0.1}
 
-# Comparable-price window, in £m, for squad-vs-pool gap ranking (U7).
-PRICE_BAND_M = 0.3
-
-# Gap rows shown per column in the weekly three-column view (U8/U13).
-DISPLAY_GAP_ROWS = 3
-
 # 5-GW window-points gain at or above which a suggested swap is worth
 # surfacing prominently in the weekly view; smaller gains are shown muted.
 MEANINGFUL_UPGRADE_GAP = 5.0

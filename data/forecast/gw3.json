@@ -11,7 +11,7 @@
   },
   "earlySeason": true,
   "effectiveGap": 11.2,
-  "generatedAt": "2026-09-03T07:55:11.443965+00:00",
+  "generatedAt": "2026-09-03T21:37:45.620986+00:00",
   "history": {
     "gameweeks": [
       {
@@ -30448,8 +30448,6 @@
     ],
     "players": [
       {
-        "alternatives": [],
-        "baselineUpgrade": null,
         "breakdown": {
           "availabilityMultiplier": 1.0,
           "components": {
@@ -30485,7 +30483,6 @@
         "isCaptain": false,
         "isViceCaptain": false,
         "minutesRisk": false,
-        "modelUpgrade": null,
         "opponents": [
           {
             "attackAdjust": 1.286,
@@ -30510,65 +30507,6 @@
         "windowPoints": 14.79
       },
       {
-        "alternatives": [],
-        "baselineUpgrade": {
-          "affordable": true,
-          "alternative": {
-            "breakdown": {
-              "availabilityMultiplier": 1.0,
-              "components": {
-                "appearance": 2.0,
-                "assists": 0.33,
-                "bonus": 0.7,
-                "cards": -0.06,
-                "cleanSheet": 0.95,
-                "defensiveContribution": 0.95,
-                "goals": 2.2,
-                "goalsConceded": -0.66,
-                "saves": 0.0
-              },
-              "expectedMinutes": 83.0,
-              "minutesRisk": false,
-              "opponents": [
-                {
-                  "attackAdjust": 1.123,
-                  "cleanSheetProb": 0.238,
-                  "fdrRating": 2,
-                  "lambdaAgainst": 1.43,
-                  "lambdaFor": 1.63,
-                  "team": "LEE",
-                  "wasHome": true
-                }
-              ],
-              "points": 6.42,
-              "provisional": false,
-              "rateSource": "history"
-            },
-            "elementType": 2,
-            "id": 115,
-            "opponents": [
-              {
-                "attackAdjust": 1.123,
-                "cleanSheetProb": 0.238,
-                "fdrRating": 2,
-                "lambdaAgainst": 1.43,
-                "lambdaFor": 1.63,
-                "team": "LEE",
-                "wasHome": true
-              }
-            ],
-            "position": "DEF",
-            "price": 4.7,
-            "projectedPoints": 6.42,
-            "provisional": false,
-            "rateSource": "history",
-            "team": "BHA",
-            "webName": "De Cuyper",
-            "windowPoints": 30.92
-          },
-          "gapPoints": 8.86,
-          "meaningful": false
-        },
         "breakdown": {
           "availabilityMultiplier": 1.0,
           "components": {
@@ -30604,64 +30542,6 @@
         "isCaptain": false,
         "isViceCaptain": false,
         "minutesRisk": false,
-        "modelUpgrade": {
-          "affordable": true,
-          "alternative": {
-            "breakdown": {
-              "availabilityMultiplier": 1.0,
-              "components": {
-                "appearance": 2.0,
-                "assists": 0.33,
-                "bonus": 0.7,
-                "cards": -0.06,
-                "cleanSheet": 0.95,
-                "defensiveContribution": 0.95,
-                "goals": 2.2,
-                "goalsConceded": -0.66,
-                "saves": 0.0
-              },
-              "expectedMinutes": 83.0,
-              "minutesRisk": false,
-              "opponents": [
-                {
-                  "attackAdjust": 1.123,
-                  "cleanSheetProb": 0.238,
-                  "fdrRating": 2,
-                  "lambdaAgainst": 1.43,
-                  "lambdaFor": 1.63,
-                  "team": "LEE",
-                  "wasHome": true
-                }
-              ],
-              "points": 6.42,
-              "provisional": false,
-              "rateSource": "history"
-            },
-            "elementType": 2,
-            "id": 115,
-            "opponents": [
-              {
-                "attackAdjust": 1.123,
-                "cleanSheetProb": 0.238,
-                "fdrRating": 2,
-                "lambdaAgainst": 1.43,
-                "lambdaFor": 1.63,
-                "team": "LEE",
-                "wasHome": true
-              }
-            ],
-            "position": "DEF",
-            "price": 4.7,
-            "projectedPoints": 6.42,
-            "provisional": false,
-            "rateSource": "history",
-            "team": "BHA",
-            "webName": "De Cuyper",
-            "windowPoints": 30.92
-          },
-          "gapPoints": 10.06,
-          "meaningful": false
-        },
         "opponents": [
           {
             "attackAdjust": 1.045,
@@ -30686,65 +30566,6 @@
         "windowPoints": 20.86
       },
       {
-        "alternatives": [],
-        "baselineUpgrade": {
-          "affordable": false,
-          "alternative": {
-            "breakdown": {
-              "availabilityMultiplier": 1.0,
-              "components": {
-                "appearance": 2.0,
-                "assists": 0.53,
-                "bonus": 0.67,
-                "cards": -0.06,
-                "cleanSheet": 1.06,
-                "defensiveContribution": 1.05,
-                "goals": 0.59,
-                "goalsConceded": -0.59,
-                "saves": 0.0
-              },
-              "expectedMinutes": 80.3,
-              "minutesRisk": false,
-              "opponents": [
-                {
-                  "attackAdjust": 1.286,
-                  "cleanSheetProb": 0.265,
-                  "fdrRating": 4,
-                  "lambdaAgainst": 1.33,
-                  "lambdaFor": 1.86,
-                  "team": "CHE",
-                  "wasHome": true
-                }
-              ],
-              "points": 5.25,
-              "provisional": false,
-              "rateSource": "history"
-            },
-            "elementType": 2,
-            "id": 8,
-            "opponents": [
-              {
-                "attackAdjust": 1.286,
-                "cleanSheetProb": 0.265,
-                "fdrRating": 4,
-                "lambdaAgainst": 1.33,
-                "lambdaFor": 1.86,
-                "team": "CHE",
-                "wasHome": true
-              }
-            ],
-            "position": "DEF",
-            "price": 5.6,
-            "projectedPoints": 5.25,
-            "provisional": false,
-            "rateSource": "history",
-            "team": "ARS",
-            "webName": "Calafiori",
-            "windowPoints": 24.93
-          },
-          "gapPoints": 6.03,
-          "meaningful": false
-        },
         "breakdown": {
           "availabilityMultiplier": 1.0,
           "components": {
@@ -30780,64 +30601,6 @@
         "isCaptain": false,
         "isViceCaptain": false,
         "minutesRisk": false,
-        "modelUpgrade": {
-          "affordable": true,
-          "alternative": {
-            "breakdown": {
-              "availabilityMultiplier": 1.0,
-              "components": {
-                "appearance": 2.0,
-                "assists": 0.35,
-                "bonus": 0.96,
-                "cards": -0.06,
-                "cleanSheet": 1.06,
-                "defensiveContribution": 1.36,
-                "goals": 0.73,
-                "goalsConceded": -0.61,
-                "saves": 0.0
-              },
-              "expectedMinutes": 82.6,
-              "minutesRisk": false,
-              "opponents": [
-                {
-                  "attackAdjust": 1.286,
-                  "cleanSheetProb": 0.265,
-                  "fdrRating": 4,
-                  "lambdaAgainst": 1.33,
-                  "lambdaFor": 1.86,
-                  "team": "CHE",
-                  "wasHome": true
-                }
-              ],
-              "points": 5.78,
-              "provisional": false,
-              "rateSource": "history"
-            },
-            "elementType": 2,
-            "id": 10,
-            "opponents": [
-              {
-                "attackAdjust": 1.286,
-                "cleanSheetProb": 0.265,
-                "fdrRating": 4,
-                "lambdaAgainst": 1.33,
-                "lambdaFor": 1.86,
-                "team": "CHE",
-                "wasHome": true
-              }
-            ],
-            "position": "DEF",
-            "price": 5.5,
-            "projectedPoints": 5.78,
-            "provisional": false,
-            "rateSource": "history",
-            "team": "ARS",
-            "webName": "White",
-            "windowPoints": 27.6
-          },
-          "gapPoints": 6.53,
-          "meaningful": false
-        },
         "opponents": [
           {
             "attackAdjust": 1.286,
@@ -30862,119 +30625,6 @@
         "windowPoints": 21.07
       },
       {
-        "alternatives": [
-          {
-            "affordable": true,
-            "breakdown": {
-              "availabilityMultiplier": 1.0,
-              "components": {
-                "appearance": 2.0,
-                "assists": 0.33,
-                "bonus": 0.7,
-                "cards": -0.06,
-                "cleanSheet": 0.95,
-                "defensiveContribution": 0.95,
-                "goals": 2.2,
-                "goalsConceded": -0.66,
-                "saves": 0.0
-              },
-              "expectedMinutes": 83.0,
-              "minutesRisk": false,
-              "opponents": [
-                {
-                  "attackAdjust": 1.123,
-                  "cleanSheetProb": 0.238,
-                  "fdrRating": 2,
-                  "lambdaAgainst": 1.43,
-                  "lambdaFor": 1.63,
-                  "team": "LEE",
-                  "wasHome": true
-                }
-              ],
-              "points": 6.42,
-              "provisional": false,
-              "rateSource": "history"
-            },
-            "elementType": 2,
-            "gapPoints": 14.39,
-            "id": 115,
-            "opponents": [
-              {
-                "attackAdjust": 1.123,
-                "cleanSheetProb": 0.238,
-                "fdrRating": 2,
-                "lambdaAgainst": 1.43,
-                "lambdaFor": 1.63,
-                "team": "LEE",
-                "wasHome": true
-              }
-            ],
-            "position": "DEF",
-            "price": 4.7,
-            "projectedPoints": 6.42,
-            "provisional": false,
-            "rateSource": "history",
-            "team": "BHA",
-            "webName": "De Cuyper",
-            "windowPoints": 30.92
-          },
-          {
-            "affordable": false,
-            "breakdown": {
-              "availabilityMultiplier": 1.0,
-              "components": {
-                "appearance": 2.0,
-                "assists": 0.62,
-                "bonus": 1.05,
-                "cards": -0.06,
-                "cleanSheet": 0.95,
-                "defensiveContribution": 1.88,
-                "goals": 0.29,
-                "goalsConceded": -0.72,
-                "saves": 0.0
-              },
-              "expectedMinutes": 90.4,
-              "minutesRisk": false,
-              "opponents": [
-                {
-                  "attackAdjust": 1.165,
-                  "cleanSheetProb": 0.237,
-                  "fdrRating": 3,
-                  "lambdaAgainst": 1.44,
-                  "lambdaFor": 1.69,
-                  "team": "BOU",
-                  "wasHome": true
-                }
-              ],
-              "points": 6.01,
-              "provisional": false,
-              "rateSource": "history"
-            },
-            "elementType": 2,
-            "gapPoints": 12.9,
-            "id": 449,
-            "opponents": [
-              {
-                "attackAdjust": 1.165,
-                "cleanSheetProb": 0.237,
-                "fdrRating": 3,
-                "lambdaAgainst": 1.44,
-                "lambdaFor": 1.69,
-                "team": "BOU",
-                "wasHome": true
-              }
-            ],
-            "position": "DEF",
-            "price": 5.1,
-            "projectedPoints": 6.01,
-            "provisional": false,
-            "rateSource": "history",
-            "team": "NEW",
-            "webName": "Hall",
-            "windowPoints": 29.43
-          }
-        ],
-        "baselineUpgrade": null,
         "breakdown": {
           "availabilityMultiplier": 1.0,
           "components": {
@@ -31010,64 +30660,6 @@
         "isCaptain": false,
         "isViceCaptain": false,
         "minutesRisk": false,
-        "modelUpgrade": {
-          "affordable": true,
-          "alternative": {
-            "breakdown": {
-              "availabilityMultiplier": 1.0,
-              "components": {
-                "appearance": 2.0,
-                "assists": 0.33,
-                "bonus": 0.7,
-                "cards": -0.06,
-                "cleanSheet": 0.95,
-                "defensiveContribution": 0.95,
-                "goals": 2.2,
-                "goalsConceded": -0.66,
-                "saves": 0.0
-              },
-              "expectedMinutes": 83.0,
-              "minutesRisk": false,
-              "opponents": [
-                {
-                  "attackAdjust": 1.123,
-                  "cleanSheetProb": 0.238,
-                  "fdrRating": 2,
-                  "lambdaAgainst": 1.43,
-                  "lambdaFor": 1.63,
-                  "team": "LEE",
-                  "wasHome": true
-                }
-              ],
-              "points": 6.42,
-              "provisional": false,
-              "rateSource": "history"
-            },
-            "elementType": 2,
-            "id": 115,
-            "opponents": [
-              {
-                "attackAdjust": 1.123,
-                "cleanSheetProb": 0.238,
-                "fdrRating": 2,
-                "lambdaAgainst": 1.43,
-                "lambdaFor": 1.63,
-                "team": "LEE",
-                "wasHome": true
-              }
-            ],
-            "position": "DEF",
-            "price": 4.7,
-            "projectedPoints": 6.42,
-            "provisional": false,
-            "rateSource": "history",
-            "team": "BHA",
-            "webName": "De Cuyper",
-            "windowPoints": 30.92
-          },
-          "gapPoints": 14.39,
-          "meaningful": true
-        },
         "opponents": [
           {
             "attackAdjust": 0.989,
@@ -31092,8 +30684,6 @@
         "windowPoints": 16.53
       },
       {
-        "alternatives": [],
-        "baselineUpgrade": null,
         "breakdown": {
           "availabilityMultiplier": 1.0,
           "components": {
@@ -31129,7 +30719,6 @@
         "isCaptain": true,
         "isViceCaptain": false,
         "minutesRisk": false,
-        "modelUpgrade": null,
         "opponents": [
           {
             "attackAdjust": 1.045,
@@ -31154,8 +30743,6 @@
         "windowPoints": 39.23
       },
       {
-        "alternatives": [],
-        "baselineUpgrade": null,
         "breakdown": {
           "availabilityMultiplier": 1.0,
           "components": {
@@ -31191,64 +30778,6 @@
         "isCaptain": false,
         "isViceCaptain": false,
         "minutesRisk": false,
-        "modelUpgrade": {
-          "affordable": true,
-          "alternative": {
-            "breakdown": {
-              "availabilityMultiplier": 1.0,
-              "components": {
-                "appearance": 2.0,
-                "assists": 0.41,
-                "bonus": 1.09,
-                "cards": -0.1,
-                "cleanSheet": 0.23,
-                "defensiveContribution": 1.44,
-                "goals": 1.6,
-                "goalsConceded": 0.0,
-                "saves": 0.0
-              },
-              "expectedMinutes": 88.9,
-              "minutesRisk": false,
-              "opponents": [
-                {
-                  "attackAdjust": 1.176,
-                  "cleanSheetProb": 0.229,
-                  "fdrRating": 2,
-                  "lambdaAgainst": 1.47,
-                  "lambdaFor": 1.71,
-                  "team": "SUN",
-                  "wasHome": true
-                }
-              ],
-              "points": 6.66,
-              "provisional": false,
-              "rateSource": "history"
-            },
-            "elementType": 3,
-            "id": 86,
-            "opponents": [
-              {
-                "attackAdjust": 1.176,
-                "cleanSheetProb": 0.229,
-                "fdrRating": 2,
-                "lambdaAgainst": 1.47,
-                "lambdaFor": 1.71,
-                "team": "SUN",
-                "wasHome": true
-              }
-            ],
-            "position": "MID",
-            "price": 5.5,
-            "projectedPoints": 6.66,
-            "provisional": false,
-            "rateSource": "history",
-            "team": "BRE",
-            "webName": "Lewis-Potter",
-            "windowPoints": 32.14
-          },
-          "gapPoints": 5.84,
-          "meaningful": false
-        },
         "opponents": [
           {
             "attackAdjust": 1.123,
@@ -31273,65 +30802,6 @@
         "windowPoints": 26.3
       },
       {
-        "alternatives": [],
-        "baselineUpgrade": {
-          "affordable": false,
-          "alternative": {
-            "breakdown": {
-              "availabilityMultiplier": 1.0,
-              "components": {
-                "appearance": 1.5,
-                "assists": 1.36,
-                "bonus": 1.38,
-                "cards": -0.43,
-                "cleanSheet": 0.13,
-                "defensiveContribution": 0.87,
-                "goals": 1.15,
-                "goalsConceded": 0.0,
-                "saves": 0.0
-              },
-              "expectedMinutes": 77.6,
-              "minutesRisk": true,
-              "opponents": [
-                {
-                  "attackAdjust": 1.237,
-                  "cleanSheetProb": 0.265,
-                  "fdrRating": 2,
-                  "lambdaAgainst": 1.33,
-                  "lambdaFor": 1.79,
-                  "team": "COV",
-                  "wasHome": true
-                }
-              ],
-              "points": 5.95,
-              "provisional": false,
-              "rateSource": "history"
-            },
-            "elementType": 3,
-            "id": 399,
-            "opponents": [
-              {
-                "attackAdjust": 1.237,
-                "cleanSheetProb": 0.265,
-                "fdrRating": 2,
-                "lambdaAgainst": 1.33,
-                "lambdaFor": 1.79,
-                "team": "COV",
-                "wasHome": true
-              }
-            ],
-            "position": "MID",
-            "price": 7.7,
-            "projectedPoints": 5.95,
-            "provisional": false,
-            "rateSource": "history",
-            "team": "MCI",
-            "webName": "Cherki",
-            "windowPoints": 29.04
-          },
-          "gapPoints": 12.58,
-          "meaningful": true
-        },
         "breakdown": {
           "availabilityMultiplier": 1.0,
           "components": {
@@ -31367,64 +30837,6 @@
         "isCaptain": false,
         "isViceCaptain": false,
         "minutesRisk": false,
-        "modelUpgrade": {
-          "affordable": true,
-          "alternative": {
-            "breakdown": {
-              "availabilityMultiplier": 1.0,
-              "components": {
-                "appearance": 2.0,
-                "assists": 0.77,
-                "bonus": 0.42,
-                "cards": -0.1,
-                "cleanSheet": 0.16,
-                "defensiveContribution": 1.17,
-                "goals": 1.46,
-                "goalsConceded": 0.0,
-                "saves": 0.0
-              },
-              "expectedMinutes": 87.4,
-              "minutesRisk": false,
-              "opponents": [
-                {
-                  "attackAdjust": 0.917,
-                  "cleanSheetProb": 0.155,
-                  "fdrRating": 5,
-                  "lambdaAgainst": 1.86,
-                  "lambdaFor": 1.33,
-                  "team": "ARS",
-                  "wasHome": false
-                }
-              ],
-              "points": 5.88,
-              "provisional": false,
-              "rateSource": "history"
-            },
-            "elementType": 3,
-            "id": 40,
-            "opponents": [
-              {
-                "attackAdjust": 0.917,
-                "cleanSheetProb": 0.155,
-                "fdrRating": 5,
-                "lambdaAgainst": 1.86,
-                "lambdaFor": 1.33,
-                "team": "ARS",
-                "wasHome": false
-              }
-            ],
-            "position": "MID",
-            "price": 7.5,
-            "projectedPoints": 5.88,
-            "provisional": false,
-            "rateSource": "history",
-            "team": "CHE",
-            "webName": "Rogers",
-            "windowPoints": 31.33
-          },
-          "gapPoints": 6.96,
-          "meaningful": false
-        },
         "opponents": [
           {
             "attackAdjust": 1.106,
@@ -31449,174 +30861,6 @@
         "windowPoints": 24.37
       },
       {
-        "alternatives": [
-          {
-            "affordable": false,
-            "breakdown": {
-              "availabilityMultiplier": 1.0,
-              "components": {
-                "appearance": 2.0,
-                "assists": 0.47,
-                "bonus": 1.16,
-                "cards": -0.1,
-                "cleanSheet": 0.26,
-                "defensiveContribution": 1.19,
-                "goals": 1.06,
-                "goalsConceded": 0.0,
-                "saves": 0.0
-              },
-              "expectedMinutes": 80.1,
-              "minutesRisk": false,
-              "opponents": [
-                {
-                  "attackAdjust": 1.286,
-                  "cleanSheetProb": 0.265,
-                  "fdrRating": 4,
-                  "lambdaAgainst": 1.33,
-                  "lambdaFor": 1.86,
-                  "team": "CHE",
-                  "wasHome": true
-                }
-              ],
-              "points": 6.05,
-              "provisional": false,
-              "rateSource": "history"
-            },
-            "elementType": 3,
-            "gapPoints": 20.33,
-            "id": 15,
-            "opponents": [
-              {
-                "attackAdjust": 1.286,
-                "cleanSheetProb": 0.265,
-                "fdrRating": 4,
-                "lambdaAgainst": 1.33,
-                "lambdaFor": 1.86,
-                "team": "CHE",
-                "wasHome": true
-              }
-            ],
-            "position": "MID",
-            "price": 6.6,
-            "projectedPoints": 6.05,
-            "provisional": false,
-            "rateSource": "history",
-            "team": "ARS",
-            "webName": "\u00d8degaard",
-            "windowPoints": 29.59
-          },
-          {
-            "affordable": true,
-            "breakdown": {
-              "availabilityMultiplier": 1.0,
-              "components": {
-                "appearance": 2.0,
-                "assists": 0.42,
-                "bonus": 1.07,
-                "cards": -0.1,
-                "cleanSheet": 0.22,
-                "defensiveContribution": 1.49,
-                "goals": 0.72,
-                "goalsConceded": 0.0,
-                "saves": 0.0
-              },
-              "expectedMinutes": 88.6,
-              "minutesRisk": false,
-              "opponents": [
-                {
-                  "attackAdjust": 1.154,
-                  "cleanSheetProb": 0.22,
-                  "fdrRating": 4,
-                  "lambdaAgainst": 1.52,
-                  "lambdaFor": 1.67,
-                  "team": "MUN",
-                  "wasHome": true
-                }
-              ],
-              "points": 5.82,
-              "provisional": false,
-              "rateSource": "history"
-            },
-            "elementType": 3,
-            "gapPoints": 19.45,
-            "id": 236,
-            "opponents": [
-              {
-                "attackAdjust": 1.154,
-                "cleanSheetProb": 0.22,
-                "fdrRating": 4,
-                "lambdaAgainst": 1.52,
-                "lambdaFor": 1.67,
-                "team": "MUN",
-                "wasHome": true
-              }
-            ],
-            "position": "MID",
-            "price": 6.5,
-            "projectedPoints": 5.82,
-            "provisional": false,
-            "rateSource": "history",
-            "team": "EVE",
-            "webName": "Dewsbury-Hall",
-            "windowPoints": 28.71
-          },
-          {
-            "affordable": true,
-            "breakdown": {
-              "availabilityMultiplier": 1.0,
-              "components": {
-                "appearance": 2.0,
-                "assists": 0.63,
-                "bonus": 0.08,
-                "cards": -0.46,
-                "cleanSheet": 0.26,
-                "defensiveContribution": 1.67,
-                "goals": 0.6,
-                "goalsConceded": 0.0,
-                "saves": 0.0
-              },
-              "expectedMinutes": 82.6,
-              "minutesRisk": false,
-              "opponents": [
-                {
-                  "attackAdjust": 1.237,
-                  "cleanSheetProb": 0.265,
-                  "fdrRating": 2,
-                  "lambdaAgainst": 1.33,
-                  "lambdaFor": 1.79,
-                  "team": "COV",
-                  "wasHome": true
-                }
-              ],
-              "points": 4.79,
-              "provisional": false,
-              "rateSource": "history"
-            },
-            "elementType": 3,
-            "gapPoints": 14.25,
-            "id": 481,
-            "opponents": [
-              {
-                "attackAdjust": 1.237,
-                "cleanSheetProb": 0.265,
-                "fdrRating": 2,
-                "lambdaAgainst": 1.33,
-                "lambdaFor": 1.79,
-                "team": "COV",
-                "wasHome": true
-              }
-            ],
-            "position": "MID",
-            "price": 6.4,
-            "projectedPoints": 4.79,
-            "provisional": false,
-            "rateSource": "history",
-            "team": "MCI",
-            "webName": "Anderson",
-            "windowPoints": 23.51
-          }
-        ],
-        "baselineUpgrade": null,
         "breakdown": {
           "availabilityMultiplier": 1.0,
           "components": {
@@ -31652,64 +30896,6 @@
         "isCaptain": false,
         "isViceCaptain": false,
         "minutesRisk": true,
-        "modelUpgrade": {
-          "affordable": false,
-          "alternative": {
-            "breakdown": {
-              "availabilityMultiplier": 1.0,
-              "components": {
-                "appearance": 2.0,
-                "assists": 0.47,
-                "bonus": 1.16,
-                "cards": -0.1,
-                "cleanSheet": 0.26,
-                "defensiveContribution": 1.19,
-                "goals": 1.06,
-                "goalsConceded": 0.0,
-                "saves": 0.0
-              },
-              "expectedMinutes": 80.1,
-              "minutesRisk": false,
-              "opponents": [
-                {
-                  "attackAdjust": 1.286,
-                  "cleanSheetProb": 0.265,
-                  "fdrRating": 4,
-                  "lambdaAgainst": 1.33,
-                  "lambdaFor": 1.86,
-                  "team": "CHE",
-                  "wasHome": true
-                }
-              ],
-              "points": 6.05,
-              "provisional": false,
-              "rateSource": "history"
-            },
-            "elementType": 3,
-            "id": 15,
-            "opponents": [
-              {
-                "attackAdjust": 1.286,
-                "cleanSheetProb": 0.265,
-                "fdrRating": 4,
-                "lambdaAgainst": 1.33,
-                "lambdaFor": 1.86,
-                "team": "CHE",
-                "wasHome": true
-              }
-            ],
-            "position": "MID",
-            "price": 6.6,
-            "projectedPoints": 6.05,
-            "provisional": false,
-            "rateSource": "history",
-            "team": "ARS",
-            "webName": "\u00d8degaard",
-            "windowPoints": 29.59
-          },
-          "gapPoints": 20.33,
-          "meaningful": true
-        },
         "opponents": [
           {
             "attackAdjust": 1.286,
@@ -31734,65 +30920,6 @@
         "windowPoints": 9.26
       },
       {
-        "alternatives": [],
-        "baselineUpgrade": {
-          "affordable": false,
-          "alternative": {
-            "breakdown": {
-              "availabilityMultiplier": 1.0,
-              "components": {
-                "appearance": 2.0,
-                "assists": 0.23,
-                "bonus": 0.82,
-                "cards": -0.37,
-                "cleanSheet": 0.0,
-                "defensiveContribution": 1.06,
-                "goals": 2.31,
-                "goalsConceded": 0.0,
-                "saves": 0.0
-              },
-              "expectedMinutes": 111.8,
-              "minutesRisk": false,
-              "opponents": [
-                {
-                  "attackAdjust": 1.165,
-                  "cleanSheetProb": 0.237,
-                  "fdrRating": 3,
-                  "lambdaAgainst": 1.44,
-                  "lambdaFor": 1.69,
-                  "team": "BOU",
-                  "wasHome": true
-                }
-              ],
-              "points": 6.05,
-              "provisional": false,
-              "rateSource": "history"
-            },
-            "elementType": 4,
-            "id": 464,
-            "opponents": [
-              {
-                "attackAdjust": 1.165,
-                "cleanSheetProb": 0.237,
-                "fdrRating": 3,
-                "lambdaAgainst": 1.44,
-                "lambdaFor": 1.69,
-                "team": "BOU",
-                "wasHome": true
-              }
-            ],
-            "position": "FWD",
-            "price": 6.1,
-            "projectedPoints": 6.05,
-            "provisional": false,
-            "rateSource": "history",
-            "team": "NEW",
-            "webName": "Wissa",
-            "windowPoints": 29.34
-          },
-          "gapPoints": 3.67,
-          "meaningful": false
-        },
         "breakdown": {
           "availabilityMultiplier": 1.0,
           "components": {
@@ -31828,64 +30955,6 @@
         "isCaptain": false,
         "isViceCaptain": false,
         "minutesRisk": false,
-        "modelUpgrade": {
-          "affordable": false,
-          "alternative": {
-            "breakdown": {
-              "availabilityMultiplier": 1.0,
-              "components": {
-                "appearance": 2.0,
-                "assists": 0.23,
-                "bonus": 0.82,
-                "cards": -0.37,
-                "cleanSheet": 0.0,
-                "defensiveContribution": 1.06,
-                "goals": 2.31,
-                "goalsConceded": 0.0,
-                "saves": 0.0
-              },
-              "expectedMinutes": 111.8,
-              "minutesRisk": false,
-              "opponents": [
-                {
-                  "attackAdjust": 1.165,
-                  "cleanSheetProb": 0.237,
-                  "fdrRating": 3,
-                  "lambdaAgainst": 1.44,
-                  "lambdaFor": 1.69,
-                  "team": "BOU",
-                  "wasHome": true
-                }
-              ],
-              "points": 6.05,
-              "provisional": false,
-              "rateSource": "history"
-            },
-            "elementType": 4,
-            "id": 464,
-            "opponents": [
-              {
-                "attackAdjust": 1.165,
-                "cleanSheetProb": 0.237,
-                "fdrRating": 3,
-                "lambdaAgainst": 1.44,
-                "lambdaFor": 1.69,
-                "team": "BOU",
-                "wasHome": true
-              }
-            ],
-            "position": "FWD",
-            "price": 6.1,
-            "projectedPoints": 6.05,
-            "provisional": false,
-            "rateSource": "history",
-            "team": "NEW",
-            "webName": "Wissa",
-            "windowPoints": 29.34
-          },
-          "gapPoints": 3.99,
-          "meaningful": false
-        },
         "opponents": [
           {
             "attackAdjust": 0.989,
@@ -31910,8 +30979,6 @@
         "windowPoints": 25.35
       },
       {
-        "alternatives": [],
-        "baselineUpgrade": null,
         "breakdown": {
           "availabilityMultiplier": 1.0,
           "components": {
@@ -31947,7 +31014,6 @@
         "isCaptain": false,
         "isViceCaptain": true,
         "minutesRisk": false,
-        "modelUpgrade": null,
         "opponents": [
           {
             "attackAdjust": 1.237,
@@ -31972,8 +31038,6 @@
         "windowPoints": 33.19
       },
       {
-        "alternatives": [],
-        "baselineUpgrade": null,
         "breakdown": {
           "availabilityMultiplier": 1.0,
           "components": {
@@ -32009,7 +31073,6 @@
         "isCaptain": false,
         "isViceCaptain": false,
         "minutesRisk": false,
-        "modelUpgrade": null,
         "opponents": [
           {
             "attackAdjust": 0.917,
@@ -32034,65 +31097,6 @@
         "windowPoints": 33.85
       },
       {
-        "alternatives": [],
-        "baselineUpgrade": {
-          "affordable": true,
-          "alternative": {
-            "breakdown": {
-              "availabilityMultiplier": 1.0,
-              "components": {
-                "appearance": 2.0,
-                "assists": 0.05,
-                "bonus": 0.06,
-                "cards": -0.02,
-                "cleanSheet": 0.74,
-                "defensiveContribution": 0.0,
-                "goals": 0.13,
-                "goalsConceded": -0.84,
-                "saves": 1.52
-              },
-              "expectedMinutes": 90.0,
-              "minutesRisk": false,
-              "opponents": [
-                {
-                  "attackAdjust": 0.993,
-                  "cleanSheetProb": 0.185,
-                  "fdrRating": 3,
-                  "lambdaAgainst": 1.69,
-                  "lambdaFor": 1.44,
-                  "team": "NEW",
-                  "wasHome": false
-                }
-              ],
-              "points": 3.63,
-              "provisional": false,
-              "rateSource": "history"
-            },
-            "elementType": 1,
-            "id": 57,
-            "opponents": [
-              {
-                "attackAdjust": 0.993,
-                "cleanSheetProb": 0.185,
-                "fdrRating": 3,
-                "lambdaAgainst": 1.69,
-                "lambdaFor": 1.44,
-                "team": "NEW",
-                "wasHome": false
-              }
-            ],
-            "position": "GKP",
-            "price": 4.5,
-            "projectedPoints": 3.63,
-            "provisional": false,
-            "rateSource": "history",
-            "team": "BOU",
-            "webName": "Petrovi\u0107",
-            "windowPoints": 18.57
-          },
-          "gapPoints": 1.75,
-          "meaningful": false
-        },
         "breakdown": {
           "availabilityMultiplier": 1.0,
           "components": {
@@ -32128,64 +31132,6 @@
         "isCaptain": false,
         "isViceCaptain": false,
         "minutesRisk": false,
-        "modelUpgrade": {
-          "affordable": true,
-          "alternative": {
-            "breakdown": {
-              "availabilityMultiplier": 1.0,
-              "components": {
-                "appearance": 2.0,
-                "assists": 0.05,
-                "bonus": 0.06,
-                "cards": -0.02,
-                "cleanSheet": 0.74,
-                "defensiveContribution": 0.0,
-                "goals": 0.13,
-                "goalsConceded": -0.84,
-                "saves": 1.52
-              },
-              "expectedMinutes": 90.0,
-              "minutesRisk": false,
-              "opponents": [
-                {
-                  "attackAdjust": 0.993,
-                  "cleanSheetProb": 0.185,
-                  "fdrRating": 3,
-                  "lambdaAgainst": 1.69,
-                  "lambdaFor": 1.44,
-                  "team": "NEW",
-                  "wasHome": false
-                }
-              ],
-              "points": 3.63,
-              "provisional": false,
-              "rateSource": "history"
-            },
-            "elementType": 1,
-            "id": 57,
-            "opponents": [
-              {
-                "attackAdjust": 0.993,
-                "cleanSheetProb": 0.185,
-                "fdrRating": 3,
-                "lambdaAgainst": 1.69,
-                "lambdaFor": 1.44,
-                "team": "NEW",
-                "wasHome": false
-              }
-            ],
-            "position": "GKP",
-            "price": 4.5,
-            "projectedPoints": 3.63,
-            "provisional": false,
-            "rateSource": "history",
-            "team": "BOU",
-            "webName": "Petrovi\u0107",
-            "windowPoints": 18.57
-          },
-          "gapPoints": 1.33,
-          "meaningful": false
-        },
         "opponents": [
           {
             "attackAdjust": 0.97,
@@ -32210,65 +31156,6 @@
         "windowPoints": 17.24
       },
       {
-        "alternatives": [],
-        "baselineUpgrade": {
-          "affordable": true,
-          "alternative": {
-            "breakdown": {
-              "availabilityMultiplier": 1.0,
-              "components": {
-                "appearance": 2.0,
-                "assists": 0.07,
-                "bonus": 0.25,
-                "cards": -0.04,
-                "cleanSheet": 0.91,
-                "defensiveContribution": 1.31,
-                "goals": 0.19,
-                "goalsConceded": -0.48,
-                "saves": 0.0
-              },
-              "expectedMinutes": 58.8,
-              "minutesRisk": false,
-              "opponents": [
-                {
-                  "attackAdjust": 1.095,
-                  "cleanSheetProb": 0.227,
-                  "fdrRating": 3,
-                  "lambdaAgainst": 1.48,
-                  "lambdaFor": 1.59,
-                  "team": "AVL",
-                  "wasHome": true
-                }
-              ],
-              "points": 4.2,
-              "provisional": false,
-              "rateSource": "history"
-            },
-            "elementType": 2,
-            "id": 277,
-            "opponents": [
-              {
-                "attackAdjust": 1.095,
-                "cleanSheetProb": 0.227,
-                "fdrRating": 3,
-                "lambdaAgainst": 1.48,
-                "lambdaFor": 1.59,
-                "team": "AVL",
-                "wasHome": true
-              }
-            ],
-            "position": "DEF",
-            "price": 4.0,
-            "projectedPoints": 4.2,
-            "provisional": false,
-            "rateSource": "history",
-            "team": "HUL",
-            "webName": "Egan",
-            "windowPoints": 20.41
-          },
-          "gapPoints": 3.33,
-          "meaningful": false
-        },
         "breakdown": {
           "availabilityMultiplier": 1.0,
           "components": {
@@ -32304,64 +31191,6 @@
         "isCaptain": false,
         "isViceCaptain": false,
         "minutesRisk": false,
-        "modelUpgrade": {
-          "affordable": true,
-          "alternative": {
-            "breakdown": {
-              "availabilityMultiplier": 1.0,
-              "components": {
-                "appearance": 2.0,
-                "assists": 0.24,
-                "bonus": 0.47,
-                "cards": -0.04,
-                "cleanSheet": 0.67,
-                "defensiveContribution": 1.19,
-                "goals": 0.24,
-                "goalsConceded": -0.56,
-                "saves": 0.0
-              },
-              "expectedMinutes": 56.2,
-              "minutesRisk": false,
-              "opponents": [
-                {
-                  "attackAdjust": 0.917,
-                  "cleanSheetProb": 0.166,
-                  "fdrRating": 5,
-                  "lambdaAgainst": 1.79,
-                  "lambdaFor": 1.33,
-                  "team": "MCI",
-                  "wasHome": false
-                }
-              ],
-              "points": 4.21,
-              "provisional": false,
-              "rateSource": "history"
-            },
-            "elementType": 2,
-            "id": 173,
-            "opponents": [
-              {
-                "attackAdjust": 0.917,
-                "cleanSheetProb": 0.166,
-                "fdrRating": 5,
-                "lambdaAgainst": 1.79,
-                "lambdaFor": 1.33,
-                "team": "MCI",
-                "wasHome": false
-              }
-            ],
-            "position": "DEF",
-            "price": 4.0,
-            "projectedPoints": 4.21,
-            "provisional": false,
-            "rateSource": "history",
-            "team": "COV",
-            "webName": "Thomas",
-            "windowPoints": 22.37
-          },
-          "gapPoints": 2.77,
-          "meaningful": false
-        },
         "opponents": [
           {
             "attackAdjust": 1.034,
@@ -32386,65 +31215,6 @@
         "windowPoints": 19.6
       },
       {
-        "alternatives": [],
-        "baselineUpgrade": {
-          "affordable": true,
-          "alternative": {
-            "breakdown": {
-              "availabilityMultiplier": 1.0,
-              "components": {
-                "appearance": 1.5,
-                "assists": 0.16,
-                "bonus": 0.31,
-                "cards": -0.04,
-                "cleanSheet": 0.12,
-                "defensiveContribution": 0.53,
-                "goals": 0.8,
-                "goalsConceded": 0.0,
-                "saves": 0.0
-              },
-              "expectedMinutes": 33.6,
-              "minutesRisk": true,
-              "opponents": [
-                {
-                  "attackAdjust": 1.123,
-                  "cleanSheetProb": 0.238,
-                  "fdrRating": 2,
-                  "lambdaAgainst": 1.43,
-                  "lambdaFor": 1.63,
-                  "team": "LEE",
-                  "wasHome": true
-                }
-              ],
-              "points": 3.37,
-              "provisional": false,
-              "rateSource": "history"
-            },
-            "elementType": 3,
-            "id": 605,
-            "opponents": [
-              {
-                "attackAdjust": 1.123,
-                "cleanSheetProb": 0.238,
-                "fdrRating": 2,
-                "lambdaAgainst": 1.43,
-                "lambdaFor": 1.63,
-                "team": "LEE",
-                "wasHome": true
-              }
-            ],
-            "position": "MID",
-            "price": 4.5,
-            "projectedPoints": 3.37,
-            "provisional": false,
-            "rateSource": "history",
-            "team": "BHA",
-            "webName": "Yalcouy\u00e9",
-            "windowPoints": 16.63
-          },
-          "gapPoints": 4.52,
-          "meaningful": false
-        },
         "breakdown": {
           "availabilityMultiplier": 1.0,
           "components": {
@@ -32480,64 +31250,6 @@
         "isCaptain": false,
         "isViceCaptain": false,
         "minutesRisk": true,
-        "modelUpgrade": {
-          "affordable": true,
-          "alternative": {
-            "breakdown": {
-              "availabilityMultiplier": 1.0,
-              "components": {
-                "appearance": 1.5,
-                "assists": 0.16,
-                "bonus": 0.31,
-                "cards": -0.04,
-                "cleanSheet": 0.12,
-                "defensiveContribution": 0.53,
-                "goals": 0.8,
-                "goalsConceded": 0.0,
-                "saves": 0.0
-              },
-              "expectedMinutes": 33.6,
-              "minutesRisk": true,
-              "opponents": [
-                {
-                  "attackAdjust": 1.123,
-                  "cleanSheetProb": 0.238,
-                  "fdrRating": 2,
-                  "lambdaAgainst": 1.43,
-                  "lambdaFor": 1.63,
-                  "team": "LEE",
-                  "wasHome": true
-                }
-              ],
-              "points": 3.37,
-              "provisional": false,
-              "rateSource": "history"
-            },
-            "elementType": 3,
-            "id": 605,
-            "opponents": [
-              {
-                "attackAdjust": 1.123,
-                "cleanSheetProb": 0.238,
-                "fdrRating": 2,
-                "lambdaAgainst": 1.43,
-                "lambdaFor": 1.63,
-                "team": "LEE",
-                "wasHome": true
-              }
-            ],
-            "position": "MID",
-            "price": 4.5,
-            "projectedPoints": 3.37,
-            "provisional": false,
-            "rateSource": "history",
-            "team": "BHA",
-            "webName": "Yalcouy\u00e9",
-            "windowPoints": 16.63
-          },
-          "gapPoints": 10.14,
-          "meaningful": false
-        },
         "opponents": [
           {
             "attackAdjust": 1.02,
@@ -32562,121 +31274,6 @@
         "windowPoints": 6.49
       },
       {
-        "alternatives": [
-          {
-            "affordable": true,
-            "breakdown": {
-              "availabilityMultiplier": 1.0,
-              "components": {
-                "appearance": 2.0,
-                "assists": 0.33,
-                "bonus": 0.7,
-                "cards": -0.06,
-                "cleanSheet": 0.95,
-                "defensiveContribution": 0.95,
-                "goals": 2.2,
-                "goalsConceded": -0.66,
-                "saves": 0.0
-              },
-              "expectedMinutes": 83.0,
-              "minutesRisk": false,
-              "opponents": [
-                {
-                  "attackAdjust": 1.123,
-                  "cleanSheetProb": 0.238,
-                  "fdrRating": 2,
-                  "lambdaAgainst": 1.43,
-                  "lambdaFor": 1.63,
-                  "team": "LEE",
-                  "wasHome": true
-                }
-              ],
-              "points": 6.42,
-              "provisional": false,
-              "rateSource": "history"
-            },
-            "elementType": 2,
-            "gapPoints": 12.59,
-            "id": 115,
-            "opponents": [
-              {
-                "attackAdjust": 1.123,
-                "cleanSheetProb": 0.238,
-                "fdrRating": 2,
-                "lambdaAgainst": 1.43,
-                "lambdaFor": 1.63,
-                "team": "LEE",
-                "wasHome": true
-              }
-            ],
-            "position": "DEF",
-            "price": 4.7,
-            "projectedPoints": 6.42,
-            "provisional": false,
-            "rateSource": "history",
-            "team": "BHA",
-            "webName": "De Cuyper",
-            "windowPoints": 30.92
-          }
-        ],
-        "baselineUpgrade": {
-          "affordable": true,
-          "alternative": {
-            "breakdown": {
-              "availabilityMultiplier": 1.0,
-              "components": {
-                "appearance": 2.0,
-                "assists": 0.33,
-                "bonus": 0.7,
-                "cards": -0.06,
-                "cleanSheet": 0.95,
-                "defensiveContribution": 0.95,
-                "goals": 2.2,
-                "goalsConceded": -0.66,
-                "saves": 0.0
-              },
-              "expectedMinutes": 83.0,
-              "minutesRisk": false,
-              "opponents": [
-                {
-                  "attackAdjust": 1.123,
-                  "cleanSheetProb": 0.238,
-                  "fdrRating": 2,
-                  "lambdaAgainst": 1.43,
-                  "lambdaFor": 1.63,
-                  "team": "LEE",
-                  "wasHome": true
-                }
-              ],
-              "points": 6.42,
-              "provisional": false,
-              "rateSource": "history"
-            },
-            "elementType": 2,
-            "id": 115,
-            "opponents": [
-              {
-                "attackAdjust": 1.123,
-                "cleanSheetProb": 0.238,
-                "fdrRating": 2,
-                "lambdaAgainst": 1.43,
-                "lambdaFor": 1.63,
-                "team": "LEE",
-                "wasHome": true
-              }
-            ],
-            "position": "DEF",
-            "price": 4.7,
-            "projectedPoints": 6.42,
-            "provisional": false,
-            "rateSource": "history",
-            "team": "BHA",
-            "webName": "De Cuyper",
-            "windowPoints": 30.92
-          },
-          "gapPoints": 8.94,
-          "meaningful": false
-        },
         "breakdown": {
           "availabilityMultiplier": 1.0,
           "components": {
@@ -32712,64 +31309,6 @@
         "isCaptain": false,
         "isViceCaptain": false,
         "minutesRisk": false,
-        "modelUpgrade": {
-          "affordable": true,
-          "alternative": {
-            "breakdown": {
-              "availabilityMultiplier": 1.0,
-              "components": {
-                "appearance": 2.0,
-                "assists": 0.33,
-                "bonus": 0.7,
-                "cards": -0.06,
-                "cleanSheet": 0.95,
-                "defensiveContribution": 0.95,
-                "goals": 2.2,
-                "goalsConceded": -0.66,
-                "saves": 0.0
-              },
-              "expectedMinutes": 83.0,
-              "minutesRisk": false,
-              "opponents": [
-                {
-                  "attackAdjust": 1.123,
-                  "cleanSheetProb": 0.238,
-                  "fdrRating": 2,
-                  "lambdaAgainst": 1.43,
-                  "lambdaFor": 1.63,
-                  "team": "LEE",
-                  "wasHome": true
-                }
-              ],
-              "points": 6.42,
-              "provisional": false,
-              "rateSource": "history"
-            },
-            "elementType": 2,
-            "id": 115,
-            "opponents": [
-              {
-                "attackAdjust": 1.123,
-                "cleanSheetProb": 0.238,
-                "fdrRating": 2,
-                "lambdaAgainst": 1.43,
-                "lambdaFor": 1.63,
-                "team": "LEE",
-                "wasHome": true
-              }
-            ],
-            "position": "DEF",
-            "price": 4.7,
-            "projectedPoints": 6.42,
-            "provisional": false,
-            "rateSource": "history",
-            "team": "BHA",
-            "webName": "De Cuyper",
-            "windowPoints": 30.92
-          },
-          "gapPoints": 12.59,
-          "meaningful": true
-        },
         "opponents": [
           {
             "attackAdjust": 1.123,
@@ -34109,12 +32648,6 @@
       "viceCaptainId": 411
     }
   ],
-  "upgradeCount": {
-    "agree": 5,
-    "baseline": 8,
-    "meaningful": 4,
-    "model": 11
-  },
   "viceCaptain": {
     "id": 411,
     "points": 6.8,

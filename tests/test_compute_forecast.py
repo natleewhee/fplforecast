@@ -155,17 +155,6 @@ def test_recommended_xi_and_bench(forecast):
         assert p["role"] in ("start", "bench")
 
 
-def test_each_player_carries_alternatives_and_both_suggestions(forecast):
-    for p in forecast["squad"]["players"]:
-        assert isinstance(p["alternatives"], list)
-        for a in p["alternatives"]:
-            assert a["position"] == p["position"]  # like-for-like
-            assert "breakdown" in a and "opponents" in a
-        for key in ("modelUpgrade", "baselineUpgrade"):
-            if p[key] is not None:
-                assert p[key]["gapPoints"] > 0
-
-
 def test_exactly_one_captain_in_the_squad(forecast):
     captains = [p for p in forecast["squad"]["players"] if p["isCaptain"]]
     assert len(captains) == 1
@@ -230,8 +219,6 @@ def test_newcomers_get_a_provisional_projection(monkeypatch):
         players = json.loads(path.read_text())["squad"]["players"]
         assert all(p["provisional"] for p in players)
         assert all(p["projectedPoints"] is not None for p in players)  # a number, not "no history"
-        # a provisional player is still rankable -- gets real alternative gaps
-        assert any(a["gapPoints"] is not None for p in players for a in p["alternatives"])
     finally:
         if original is not None:
             path.write_bytes(original)
