@@ -77,11 +77,13 @@ _INT_FIELDS = {
     "team_a",
     "team_h_difficulty",
     "team_a_difficulty",
+    "team_h_score",
+    "team_a_score",
     "id",
     *TEAM_STRENGTH_FIELDS,
 }
 _FLOAT_FIELDS = {"ict_index", "expected_goals", "expected_assists", "defensive_contribution"}
-_BOOL_FIELDS = {"was_home"}
+_BOOL_FIELDS = {"was_home", "finished"}
 
 
 def fetch_text(url: str) -> str:
@@ -147,7 +149,10 @@ def normalise_gw_rows(csv_text: str, season: str) -> tuple[dict[int, list[dict]]
 
 def normalise_fixtures(csv_text: str) -> list[dict]:
     """Per-fixture ``gw``, both team ids, both difficulty ratings, kickoff_time
-    -- the historical FDR the backtest's model consumes (KTD6)."""
+    -- the historical FDR the backtest's model consumes (KTD6) -- plus
+    ``finished``/``team_h_score``/``team_a_score``, the real match result
+    ``engine.team_goals`` aggregates into per-team goals-for/against (Phase 2
+    of the 2026-09-04 team-strength plan)."""
     reader = csv.DictReader(StringIO(csv_text))
     fixtures: list[dict] = []
     for raw in reader:
@@ -159,6 +164,9 @@ def normalise_fixtures(csv_text: str) -> list[dict]:
                 "team_h_difficulty": _coerce("team_h_difficulty", raw.get("team_h_difficulty")),
                 "team_a_difficulty": _coerce("team_a_difficulty", raw.get("team_a_difficulty")),
                 "kickoff_time": _coerce("kickoff_time", raw.get("kickoff_time")),
+                "finished": _coerce("finished", raw.get("finished")),
+                "team_h_score": _coerce("team_h_score", raw.get("team_h_score")),
+                "team_a_score": _coerce("team_a_score", raw.get("team_a_score")),
             }
         )
     return fixtures

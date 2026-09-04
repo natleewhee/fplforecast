@@ -39,6 +39,7 @@ def wired(monkeypatch, tmp_path):
     monkeypatch.setattr(lp.cf, "load_fixtures", lambda: [])
     monkeypatch.setattr(lp.cf, "load_minutes_model", lambda: {})
     monkeypatch.setattr(lp.cf, "load_team_strength_seasons", lambda: {})
+    monkeypatch.setattr(lp.cf, "load_history_fixtures_seasons", lambda: {})
     monkeypatch.setattr(lp, "load_history", lambda _d: type("A", (), {"frame": None})())
     monkeypatch.setattr(
         lp,

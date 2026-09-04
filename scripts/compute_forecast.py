@@ -36,7 +36,7 @@ from engine.squad import (
     window_points_by_gw,
     xi_floor_ceiling,
 )
-from engine.strength import team_strength_table
+from engine.team_goals import team_goal_rate_table
 
 DATA_DIR = Path(__file__).resolve().parent.parent / "data"
 TEAM_ID = os.environ.get("FPL_TEAM_ID", "1168513")  # config, not a login (R10)
@@ -88,6 +88,17 @@ def load_team_strength_seasons() -> dict[str, list[dict]]:
     for teams_file in sorted((DATA_DIR / "history").glob("*/teams.json")):
         payload = load_json(teams_file)
         out[payload["season"]] = payload.get("teams", [])
+    return out
+
+
+def load_history_fixtures_seasons() -> dict[str, list[dict]]:
+    """Every archived season's finished (and unfinished) fixtures, including
+    the in-progress season -- the real-goals input to
+    ``engine.team_goals.team_goal_rate_table`` (Phase 2, 2026-09-04 plan)."""
+    out: dict[str, list[dict]] = {}
+    for fixtures_file in sorted((DATA_DIR / "history").glob("*/fixtures.json")):
+        payload = load_json(fixtures_file)
+        out[payload["season"]] = payload.get("fixtures", [])
     return out
 
 
@@ -429,7 +440,7 @@ def main(now: datetime | None = None) -> int:
         minutes_model=load_minutes_model(),
         elements_by_id=elements_by_id,
         teams_by_id=teams_by_id,
-        team_strength=team_strength_table(load_team_strength_seasons()),
+        team_strength=team_goal_rate_table(load_history_fixtures_seasons(), load_team_strength_seasons()),
     )
 
     def model_fn(row, gw):

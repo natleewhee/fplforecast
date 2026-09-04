@@ -104,6 +104,14 @@ TEAM_STRENGTH_CLAMP = (0.75, 1.35)
 # seasons (mirrors the minutes model's shrinkage).
 TEAM_STRENGTH_SHRINKAGE_SEASONS = 1.5
 
+# --- Real-goals team strength (Phase 2 of the 2026-09-04 team-strength plan,
+# engine/team_goals.py) --- shrinkage is in MATCHES, not seasons: a single
+# match's goal count is far noisier than a season-aggregated admin rating
+# (engine.strength.team_strength_table's signal), so this needs a much larger
+# prior-equivalent before trusting the raw sample. Execution-tunable -- not
+# yet calibrated against a real backtest.
+TEAM_GOALS_SHRINKAGE_MATCHES = 20
+
 # --- Component expected-points model (the deferred KTD10 rebuild) ---
 # FPL scoring by element_type (1 GKP, 2 DEF, 3 MID, 4 FWD).
 GOAL_POINTS = {1: 6, 2: 6, 3: 5, 4: 4}

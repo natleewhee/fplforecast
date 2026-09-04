@@ -101,11 +101,15 @@ def test_normalise_fixtures_carries_difficulty_and_kickoff():
         "team_h_difficulty": 3,
         "team_a_difficulty": 4,
         "kickoff_time": "2024-08-16T19:00:00Z",
+        "finished": True,
+        "team_h_score": 1,
+        "team_a_score": 2,
     }
-    # an unscheduled fixture: no event, no kickoff
+    # an unscheduled fixture: no event, no kickoff, not finished
     assert fixtures[1]["gw"] is None
     assert fixtures[1]["kickoff_time"] is None
     assert fixtures[1]["team_h_difficulty"] == 2
+    assert fixtures[1]["finished"] is False
 
 
 def test_write_season_writes_one_file_per_gameweek(tmp_path):
