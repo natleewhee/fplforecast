@@ -8,12 +8,15 @@ import type { Forecast } from "@/lib/snapshots";
 
 /* ---------- /api/live payload ---------- */
 
+export type BreakdownItem = { identifier: string; points: number; value: number };
+
 export type LiveElement = {
   points: number;
   minutes: number;
   goalsConceded: number; // live goals against the player's team, for the CS carve-out (KTD6)
   fixtureStarted: boolean;
   fixtureFinished: boolean;
+  breakdown: BreakdownItem[]; // FPL's own scoring categories, summed across legs (double GW)
 };
 
 export type FixtureLite = {
@@ -77,9 +80,14 @@ export type FplBootstrap = {
   elements: { id: number; team: number; element_type: number; web_name: string }[];
   teams: { id: number; short_name: string }[];
 };
+type FplExplainStat = { identifier: string; points: number; value: number };
 type FplLiveElement = {
   id: number;
   stats?: { total_points?: number; minutes?: number; goals_conceded?: number };
+  // one entry per fixture (two for a double gameweek); FPL's own scoring
+  // breakdown, already split into named categories with the points each
+  // contributed -- the source for the tracker's score breakdown.
+  explain?: { stats: FplExplainStat[] }[];
 };
 export type FplLive = { elements: FplLiveElement[] };
 export type FplFixture = {
@@ -95,6 +103,25 @@ type FplPick = { element: number; position: number; multiplier: number; is_capta
 export type FplPicks = { picks: FplPick[] };
 
 const POSITION_BY_ELEMENT_TYPE: Record<number, Position> = { 1: "GKP", 2: "DEF", 3: "MID", 4: "FWD" };
+
+/** FPL's `explain` array is one entry per fixture (two for a double
+ * gameweek); sum points/value per scoring category across legs so a DGW
+ * player's breakdown reads as one list, not two. */
+function explainBreakdown(explain: { stats: FplExplainStat[] }[] | undefined): BreakdownItem[] {
+  const byIdentifier = new Map<string, BreakdownItem>();
+  for (const leg of explain ?? []) {
+    for (const stat of leg.stats) {
+      const existing = byIdentifier.get(stat.identifier);
+      if (existing) {
+        existing.points += stat.points;
+        existing.value += stat.value;
+      } else {
+        byIdentifier.set(stat.identifier, { ...stat });
+      }
+    }
+  }
+  return [...byIdentifier.values()];
+}
 
 /** The gameweek the live view tracks: the current event, else the next. */
 export function liveGameweek(bootstrap: FplBootstrap): number {
@@ -136,6 +163,7 @@ export function buildLivePayload(args: {
       goalsConceded: el.stats?.goals_conceded ?? 0,
       fixtureStarted: Boolean(f?.started),
       fixtureFinished: Boolean(f?.finished ?? f?.finished_provisional),
+      breakdown: explainBreakdown(el.explain),
     };
   }
 
@@ -223,6 +251,7 @@ export type TrackerRow = {
   subbedIn: boolean;
   subbedOut: boolean;
   noBakedXp: boolean;
+  breakdown: BreakdownItem[];
 };
 
 export type TrackerView = {
@@ -449,6 +478,7 @@ export function buildTracker(payload: LivePayload, prev: LivePayload | null): Tr
       subbedIn: subbedIn.has(sp.id),
       subbedOut: subbedOut.has(sp.id),
       noBakedXp: !sp.hasComponents,
+      breakdown: payload.liveByElement[sp.id]?.breakdown ?? [],
     };
   });
 
