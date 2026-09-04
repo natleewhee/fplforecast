@@ -183,12 +183,12 @@ function PlanningTableInner({ data }: { data: PoolData }) {
         </div>
       </div>
 
-      <div className="overflow-x-auto">
+      <div className="max-h-[28rem] overflow-auto">
         <table className="w-full border-collapse text-sm">
           <thead>
             <tr className="border-b border-line text-left eyebrow">
               <th
-                className="sticky left-0 z-10 bg-bg-2 px-3 py-2.5 font-bold"
+                className="sticky left-0 top-0 z-20 bg-bg-2 px-3 py-2.5 font-bold"
                 aria-sort={sortKey === "webName" ? (dir === "asc" ? "ascending" : "descending") : "none"}
               >
                 <button type="button" onClick={() => sortBy("webName")} className="font-bold">
@@ -196,12 +196,12 @@ function PlanningTableInner({ data }: { data: PoolData }) {
                 </button>
               </th>
               {gwColumns.map((gw) => (
-                <th key={gw} className="px-2 py-2.5 text-center font-bold">
+                <th key={gw} className="sticky top-0 z-10 bg-bg-2 px-2 py-2.5 text-center font-bold">
                   GW{gw}
                 </th>
               ))}
               <th
-                className="px-3 py-2.5 text-right font-bold"
+                className="sticky top-0 z-10 bg-bg-2 px-3 py-2.5 text-right font-bold"
                 aria-sort={sortKey === "total" ? (dir === "asc" ? "ascending" : "descending") : "none"}
               >
                 <button type="button" onClick={() => sortBy("total")} className="font-bold">
@@ -209,19 +209,19 @@ function PlanningTableInner({ data }: { data: PoolData }) {
                 </button>
               </th>
               <th
-                className="px-3 py-2.5 text-right font-bold"
+                className="sticky top-0 z-10 bg-bg-2 px-3 py-2.5 text-right font-bold"
                 aria-sort={sortKey === "price" ? (dir === "asc" ? "ascending" : "descending") : "none"}
               >
                 <button type="button" onClick={() => sortBy("price")} className="font-bold">
                   £m {sortKey === "price" ? arrow : ""}
                 </button>
               </th>
-              <th className="px-3 py-2.5 text-right font-bold">
+              <th className="sticky top-0 z-10 bg-bg-2 px-3 py-2.5 text-right font-bold">
                 <button type="button" onClick={() => sortBy("selectedByPercent")} className="font-bold">
                   Sel% {sortKey === "selectedByPercent" ? arrow : ""}
                 </button>
               </th>
-              <th className="px-3 py-2.5 text-right font-bold">
+              <th className="sticky top-0 z-10 bg-bg-2 px-3 py-2.5 text-right font-bold">
                 <button type="button" onClick={() => sortBy("form")} className="font-bold">
                   Form {sortKey === "form" ? arrow : ""}
                 </button>

@@ -103,8 +103,12 @@ export default function LiveTracker() {
 
   const anyStarted = polls.cur.fixtures.some((f) => f.started);
   // Before any match kicks off there is nothing to track and par is meaningless
-  // (KD6) — stay hidden so the planning table and pitch lead (KTD7).
-  if (!active && !anyStarted) return null;
+  // (KD6) — stay hidden so the planning table and pitch lead. Once the
+  // gameweek is data_checked (bonus applied, stats final) the tracker's job
+  // is done too — hand the lead back to the planning table for the next
+  // gameweek's decisions (KTD7), rather than sitting on top showing a frozen
+  // final score for the days until the next deadline.
+  if (!active && (!anyStarted || polls.cur.dataChecked)) return null;
 
   return (
     <TrackerPanel view={view} payload={polls.cur} active={active} error={error} lastOk={lastOk} />

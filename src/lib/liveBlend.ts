@@ -50,6 +50,7 @@ export type LivePayload = {
   gameweek: number;
   generatedAt: string;
   matchesLive: boolean;
+  dataChecked: boolean;
   liveAverage: number;
   liveByElement: Record<number, LiveElement>;
   picks: LivePicks;
@@ -63,7 +64,14 @@ export type LivePayload = {
 };
 
 // Minimal shapes of the FPL responses this module reads.
-type FplEvent = { id: number; is_current?: boolean; is_next?: boolean; finished?: boolean; average_entry_score?: number | null };
+type FplEvent = {
+  id: number;
+  is_current?: boolean;
+  is_next?: boolean;
+  finished?: boolean;
+  data_checked?: boolean;
+  average_entry_score?: number | null;
+};
 export type FplBootstrap = {
   events: FplEvent[];
   elements: { id: number; team: number; element_type: number; web_name: string }[];
@@ -168,6 +176,7 @@ export function buildLivePayload(args: {
     gameweek,
     generatedAt: now,
     matchesLive,
+    dataChecked: Boolean(event?.data_checked),
     liveAverage: event?.average_entry_score ?? 0,
     liveByElement,
     picks: {
