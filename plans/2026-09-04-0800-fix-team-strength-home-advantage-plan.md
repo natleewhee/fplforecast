@@ -104,14 +104,18 @@ headline case it was found from.
 
 ---
 
-## Phase 2 — Real goals-data team strength (sketch, own follow-up plan)
+## Phase 2 — Real goals-data team strength — DONE 2026-09-04
 
-Not implementing this now — sketching the shape so it's not lost, per your "both issues" scope.
+Implemented. Decisions made where the sketch above left them open:
 
-- **Data source:** `data/history/<season>/gwNN.json` rows already carry `goals_conceded` (and presumably `goals_scored`) per player per fixture; a defender/GK's `goals_conceded` for a given match equals that team's goals conceded in that fixture. Aggregating by `(team, gw)` across the archive gives real per-match team goals for/against — the actual signal FPL's compressed `strength_*` fields are only a proxy for.
-- **In-season blending:** once this season's own `event-live` snapshots accumulate a few gameweeks, blend the archive-derived rate with this season's own actual goals for/against, using games-played shrinkage — the same pattern as `RATE_PRIOR_GAMES` (player rates) and `PAR_MARGIN_MIN_GAMEWEEKS` (par margin): thin in-season evidence stays close to the archive prior, and the team's rating moves as real results accumulate, rather than staying frozen at a preseason value all year (today's actual gap, alongside Phase 1's).
-- **Promoted teams:** with no archive at all (a team's first-ever PL season, if one exists), the modest signal available is what Phase 1 already provides — league-average until real minutes accumulate. Same shape as the player-level newcomer path (`engine/newcomer.py`) — this would essentially be that same pattern, one level up, applied to teams instead of players.
-- **Why this is its own plan, not a Phase 2 here:** it needs a new team-level goals aggregation module, a decision on how many games of in-season evidence should out-weigh the archive, and a decision on whether to keep FPL's `strength_*` fields as a blend component (a market-consensus-adjacent signal) or drop them entirely in favor of pure goals data. Those are real design calls, not mechanical fixes — worth their own planning pass once Phase 1 and the Mundle rate-blending fix have landed and settled.
+- **Data source, corrected from the sketch:** the sketch assumed per-player `goals_conceded` already sat in the archive — it didn't (`GW_FIELD_COLUMNS` in `scripts/ingest_history.py` never captured it). Used `data/history/<season>/fixtures.json` instead: vaastav's fixtures CSV already carries `finished`/`team_h_score`/`team_a_score` per fixture, a cleaner source than aggregating per-player rows (one row per match, no risk of picking the wrong defender). `normalise_fixtures()` now captures those three fields; `write_fixtures()` already unconditionally overwrites on every ingest run (matching `write_teams()`), so re-running `scripts/ingest_history.py` backfills every archived season and refreshes the in-progress season's fixtures daily as real results come in.
+- **In-season blending, resolved by construction:** `engine/team_goals.py`'s `team_goal_rate_table()` aggregates every *finished* fixture across every season in `fixtures_by_season` — including the current one — with no separate archive/in-season split needed. A team's rating moves automatically as this season's own fixtures.json gets more finished matches each day. Shrinkage is by match count (`TEAM_GOALS_SHRINKAGE_MATCHES = 20`, execution-tunable, not yet calibrated against a backtest), the same empirical-Bayes pattern as `RATE_PRIOR_GAMES` and `PAR_MARGIN_MIN_GAMEWEEKS`.
+- **FPL's `strength_*` fields:** dropped for this signal, per the sketch's alternative. `engine.strength.team_strength_table` (Phase 1's admin-rating table) is left in place, untouched, and still covers the `opponent_multiplier`/`blend_with_fdr` fallback path — `team_goal_rate_table` is a separate, parallel table with the same `TeamStrength` output shape, swapped in at the two `expected_goals` call sites (`scripts/compute_forecast.py`, `scripts/log_predictions.py`).
+- **Promoted teams / zero data:** a team with no finished fixtures anywhere in `fixtures_by_season` never appears in the output table at all (`expected_goals` already treats a missing team as neutral, `attack`/`defence` ratio 1.0) — same effective behavior as the sketch described, no special-cased newcomer path needed.
+
+**Verified against real data** (`scripts/ingest_history.py` re-run, `scripts/compute_forecast.py` regenerated): Arsenal's defence rating moved from 1.065–1.074 (Phase 1, FPL's admin proxy) to **1.759** (real goals-against data) — now genuinely reading as an elite defence instead of "6.5% above average". Sunderland's attack moved from ~0.98 (near-exactly-average) to **0.83** (a real newly-promoted-side discount). Combined: Arsenal's `lambdaAgainst` away at Sunderland dropped from 1.54 to **0.79**, and the clean-sheet probability that started this whole investigation rose from **21.4% to 45.5%**. Raya's own projected points for that fixture rose from 2.86 to **3.99** (checked directly in the regenerated `data/forecast/gw4.json`).
+
+**Mundle is unaffected, as expected** — his number is still wrong (down somewhat, from Arsenal's improved defence rating suppressing attacking projections against them generally, but still far too high for a 1-minute-all-season player). That's the separate, already-diagnosed small-sample rate-blending bug in `engine/features.py::_rate_features`, never in this plan's scope, still open.
 
 ---
 
@@ -119,16 +123,23 @@ Not implementing this now — sketching the shape so it's not lost, per your "bo
 
 | Gate | Command | Applies to |
 |---|---|---|
-| Python unit tests | `python -m pytest -q` | Phase 1 |
-| Manual sanity check | regenerate `data/forecast/gw3.json`; compare `lambdaAgainst`/`lambdaFor` for Arsenal, Man City, and a promoted side before/after Phase 1 | Phase 1 |
+| Python unit tests | `python -m pytest -q` | Phase 1, Phase 2 |
+| Manual sanity check | regenerate `data/forecast/gwNN.json`; compare `lambdaAgainst`/`lambdaFor` for Arsenal, Man City, and a promoted side before/after each phase | Phase 1, Phase 2 |
 
-## Definition of Done (Phase 1 only)
+## Definition of Done
 
+Phase 1:
 - `TeamStrength` carries one `attack`/`defence` rating per team, not a home/away split.
 - `HOME_GOALS_FACTOR` is the only home-advantage mechanism in `expected_goals()`.
 - `opponent_multiplier()` updated to match, even though it's off the live model's hot path.
-- Arsenal's clean-sheet probability away at Sunderland (GW4) reads higher than today's 21%, and the change is explainable by "the home/away noise is gone," not by an unrelated side effect.
 - `python -m pytest -q` green.
+
+Phase 2:
+- `scripts/ingest_history.py` captures `finished`/`team_h_score`/`team_a_score` per fixture.
+- `engine/team_goals.py::team_goal_rate_table` derives real per-match attack/defence ratings, shrunk by matches played, from every finished fixture across every archived season including the in-progress one.
+- `scripts/compute_forecast.py` and `scripts/log_predictions.py` both use the real-goals table for `ModelContext.team_strength` (the live model path); `engine.strength.team_strength_table` (Phase 1's FPL-admin-rating table) stays as the `opponent_multiplier`/`blend_with_fdr` fallback's source, unchanged.
+- Arsenal's clean-sheet probability away at Sunderland reads as a real elite-defence-vs-weak-attack fixture (45.5%, up from Phase 1's 21.4%), not "6.5% above average".
+- `python -m pytest -q` green (151 tests, 8 new in `tests/test_team_goals.py`).
 
 ## Open Questions
 
