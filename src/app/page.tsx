@@ -330,16 +330,16 @@ export default function Home() {
         <Header subtitle={`GW${forecast.targetGameweek} · from your GW${forecast.basedOnGameweek} squad`} />
         <Shell>
           <div className="space-y-4 pt-4">
-            {/* KTD7: the tracker self-hides until the first kickoff, then leads;
-               before the deadline the planning table and pitch lead together. */}
+            {/* KTD7: the tracker self-hides until the first kickoff, then leads.
+               Otherwise the projected lineup leads, ahead of the planning table. */}
             <LiveTracker />
+
+            <Pitch forecast={forecast} />
 
             <section className="space-y-2">
               <h2 className="eyebrow px-1">Planning table · whole pool</h2>
               <PlanningTable data={poolData} />
             </section>
-
-            <Pitch forecast={forecast} />
 
             {chips && (
               <div className="flex flex-wrap gap-1.5">
