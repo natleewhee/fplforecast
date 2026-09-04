@@ -8,6 +8,15 @@ across the archived seasons (``data/history/<season>/teams.json``, U3) by team
 *short name* (``ARS``, ``LIV`` -- stable across seasons) and normalised to the
 league average.
 
+One rating per team per side (attack / defence), not split by venue: the
+2026-09-04 home-advantage fix found the home/away split in FPL's own ratings
+carries no reliable directional signal (checked across all 25 archived
+teams, the split is mostly under 3% and inconsistently signed -- several
+teams' away rating reads higher than their home rating). ``HOME_GOALS_FACTOR``
+is the sole home-advantage mechanism; folding a noisy second one on top of it
+only added unexplained variance to fixtures like an elite defence away at a
+promoted side.
+
 Pure: every function takes already-loaded dicts and returns plain data. The
 full expected-goals λ model stays Deferred to Follow-Up Work; this is the
 interim upgrade the user asked for.
@@ -26,12 +35,10 @@ from engine.config import (
     TEAM_STRENGTH_WEIGHT,
 )
 
-_RATINGS = (
-    "strength_attack_home",
-    "strength_attack_away",
-    "strength_defence_home",
-    "strength_defence_away",
-)
+# Each side blends both the home- and away-context ratings FPL publishes into
+# one number -- see the module docstring for why the venue split isn't kept.
+_ATTACK_FIELDS = ("strength_attack_home", "strength_attack_away")
+_DEFENCE_FIELDS = ("strength_defence_home", "strength_defence_away")
 
 # element_type -> which side of the opponent matters
 _ATTACKING_TYPES = {3, 4}  # MID, FWD gain against a weak opponent defence
@@ -40,14 +47,13 @@ _DEFENSIVE_TYPES = {1, 2}  # GKP, DEF gain against a weak opponent attack
 
 @dataclass(frozen=True)
 class TeamStrength:
-    """Per-team multipliers around 1.0. ``attack_* > 1`` = scores more than the
-    league average; ``defence_* > 1`` = concedes less than average (a stronger
-    defence). Split home / away."""
+    """Per-team multipliers around 1.0. ``attack > 1`` = scores more than the
+    league average; ``defence > 1`` = concedes less than average (a stronger
+    defence). One rating per side -- home advantage lives solely in
+    ``HOME_GOALS_FACTOR``, not here."""
 
-    attack_home: float
-    attack_away: float
-    defence_home: float
-    defence_away: float
+    attack: float
+    defence: float
     seasons: int
 
 
@@ -62,9 +68,12 @@ def team_strength_table(
     shrinkage: float = TEAM_STRENGTH_SHRINKAGE_SEASONS,
 ) -> dict[str, TeamStrength]:
     """Aggregate ``teams.json`` payloads across seasons into one table keyed by
-    team name. Each rating is that team's mean over its seasons divided by the
-    league mean, then shrunk toward 1.0 for teams with few seasons of data."""
-    league_totals: dict[str, list[float]] = {r: [] for r in _RATINGS}
+    team name. Each side's rating is that team's mean over its home- and
+    away-context readings across all archived seasons, divided by the league
+    mean, then shrunk toward 1.0 for teams with little data (few seasons, or
+    seasons with early-season all-zero ratings -- see ``_RATINGS`` filtering
+    below)."""
+    league_totals = {"attack": [], "defence": []}
     per_team: dict[str, dict[str, list[float]]] = {}
 
     for teams in teams_by_season.values():
@@ -74,37 +83,36 @@ def team_strength_table(
             name = team.get("short_name") or team.get("name")
             if not name:
                 continue
-            bucket = per_team.setdefault(name, {r: [] for r in _RATINGS})
-            for rating in _RATINGS:
-                value = team.get(rating)
-                if isinstance(value, (int, float)) and value > 0:
-                    bucket[rating].append(float(value))
-                    league_totals[rating].append(float(value))
+            bucket = per_team.setdefault(name, {"attack": [], "defence": []})
+            for side, fields in (("attack", _ATTACK_FIELDS), ("defence", _DEFENCE_FIELDS)):
+                for field in fields:
+                    value = team.get(field)
+                    if isinstance(value, (int, float)) and value > 0:
+                        bucket[side].append(float(value))
+                        league_totals[side].append(float(value))
 
     league_mean = {
-        rating: (sum(vals) / len(vals) if vals else 1.0)
-        for rating, vals in league_totals.items()
+        side: (sum(vals) / len(vals) if vals else 1.0) for side, vals in league_totals.items()
     }
 
     table: dict[str, TeamStrength] = {}
     for name, bucket in per_team.items():
-        seasons = max((len(v) for v in bucket.values()), default=0)
+        # a season contributes up to 2 readings per side (home + away context).
+        seasons = max((len(v) for v in bucket.values()), default=0) // 2
         ratios = {}
-        for rating in _RATINGS:
-            vals = bucket[rating]
+        for side in ("attack", "defence"):
+            vals = bucket[side]
             if not vals:
-                ratios[rating] = 1.0
+                ratios[side] = 1.0
                 continue
-            raw_ratio = (sum(vals) / len(vals)) / league_mean[rating]
-            n = len(vals)
-            ratios[rating] = (n * raw_ratio + shrinkage * 1.0) / (n + shrinkage)
-        table[name] = TeamStrength(
-            attack_home=ratios["strength_attack_home"],
-            attack_away=ratios["strength_attack_away"],
-            defence_home=ratios["strength_defence_home"],
-            defence_away=ratios["strength_defence_away"],
-            seasons=seasons,
-        )
+            raw_ratio = (sum(vals) / len(vals)) / league_mean[side]
+            # season-equivalents, not raw reading count (each season con-
+            # tributes up to 2 readings/side) -- keeps TEAM_STRENGTH_SHRINKAGE_
+            # SEASONS' units meaning what its name says, same as before this
+            # side collapsed the home/away split into one bucket per side.
+            n = len(vals) / 2
+            ratios[side] = (n * raw_ratio + shrinkage * 1.0) / (n + shrinkage)
+        table[name] = TeamStrength(attack=ratios["attack"], defence=ratios["defence"], seasons=seasons)
     return table
 
 
@@ -113,7 +121,6 @@ def opponent_multiplier(
     opponent_name: str | None,
     *,
     player_element_type: int,
-    player_is_home: bool,
 ) -> float:
     """Projection multiplier (around 1.0, clamped) from the opponent's strength.
 
@@ -126,9 +133,9 @@ def opponent_multiplier(
         return 1.0
 
     if player_element_type in _ATTACKING_TYPES:
-        opp = strength.defence_away if player_is_home else strength.defence_home
+        opp = strength.defence
     elif player_element_type in _DEFENSIVE_TYPES:
-        opp = strength.attack_away if player_is_home else strength.attack_home
+        opp = strength.attack
     else:
         return 1.0
 
@@ -161,12 +168,14 @@ def expected_goals(
     """Expected goals the ``attacking_team`` scores against ``defending_team``
     in one fixture: ``base * attack_ratio / opponent_defence_ratio``, times the
     home factor when the attacker is at home. An unknown team contributes a
-    neutral ratio of 1.0. Clamped to a sane band."""
+    neutral ratio of 1.0. Clamped to a sane band.
+
+    ``attacker_home`` only gates ``home_factor`` now -- it no longer selects
+    between a home- and away-context rating (see the module docstring)."""
     atk = table.get(attacking_team) if attacking_team else None
     dfn = table.get(defending_team) if defending_team else None
-    atk_ratio = (atk.attack_home if attacker_home else atk.attack_away) if atk else 1.0
-    # the defender plays the opposite venue to the attacker
-    def_ratio = (dfn.defence_away if attacker_home else dfn.defence_home) if dfn else 1.0
+    atk_ratio = atk.attack if atk else 1.0
+    def_ratio = dfn.defence if dfn else 1.0
 
     lam = base * atk_ratio / (def_ratio or 1.0)
     if attacker_home:
