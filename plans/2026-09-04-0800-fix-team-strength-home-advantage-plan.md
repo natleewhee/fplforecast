@@ -70,7 +70,22 @@ Two consequences, both visible in the Raya case:
 
 ---
 
-## Phase 1 — Collapse the home/away split (small, mechanical)
+## Phase 1 — Collapse the home/away split (small, mechanical) — DONE 2026-09-04
+
+Implemented as designed. Verified against real committed archive data:
+Arsenal's own home/away split was already thin (2.0%/1.7%), so this specific
+trigger case barely moved (`lambdaAgainst` 1.5416 vs 1.5399 before — clean-
+sheet probability still ~21.4%). The fix's real effect is systemic: every
+fixture's home/away gap is now *exactly* `HOME_GOALS_FACTOR` (1.15×, checked
+directly), with the previously noisy, inconsistently-signed venue-specific
+rating swing gone entirely — confirmed on Bournemouth, whose defence used to
+read *worse* at home than away, a wrong-direction artifact this removes.
+
+**Raya's number is still low after Phase 1** — the actual driver was always
+Issue 2 (Arsenal's defensive edge reading as only ~7% above average; no
+in-season update for a team like Sunderland), which is Phase 2, not yet
+built. Flagging this plainly rather than claiming Phase 1 fixed the
+headline case it was found from.
 
 ### Implementation
 

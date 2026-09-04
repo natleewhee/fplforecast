@@ -33,10 +33,10 @@ def test_strong_and_weak_teams_land_either_side_of_one():
     ]
     table = team_strength_table({"2024-25": season, "2023-24": season})
 
-    assert table["Titans"].attack_home > 1.05
-    assert table["Titans"].defence_home > 1.05
-    assert table["Minnows"].attack_home < 0.95
-    assert table["Minnows"].defence_home < 0.95
+    assert table["Titans"].attack > 1.05
+    assert table["Titans"].defence > 1.05
+    assert table["Minnows"].attack < 0.95
+    assert table["Minnows"].defence < 0.95
 
 
 def test_fewer_seasons_shrink_harder_toward_one():
@@ -48,7 +48,44 @@ def test_fewer_seasons_shrink_harder_toward_one():
         {"2024-25": [strong(), *filler], "2023-24": [strong(), *filler], "2022-23": [strong(), *filler]}
     )
 
-    assert 1.0 < one_season["Strong"].attack_home < three_seasons["Strong"].attack_home
+    assert 1.0 < one_season["Strong"].attack < three_seasons["Strong"].attack
+
+
+def test_seasons_count_is_season_equivalents_not_raw_reading_count():
+    # Each season contributes 2 raw readings/side (home + away context); the
+    # reported `seasons` should still read in seasons, not doubled.
+    one_season = team_strength_table({"2024-25": [team("Solo", 1200, 1200, 1200, 1200)]})
+    three_seasons = team_strength_table(
+        {
+            "2024-25": [team("Solo", 1200, 1200, 1200, 1200)],
+            "2023-24": [team("Solo", 1200, 1200, 1200, 1200)],
+            "2022-23": [team("Solo", 1200, 1200, 1200, 1200)],
+        }
+    )
+    assert one_season["Solo"].seasons == 1
+    assert three_seasons["Solo"].seasons == 3
+
+
+def test_home_and_away_ratings_are_blended_into_one_side_rating():
+    # A team whose away rating differs from its home rating (as most real
+    # teams do, per the 2026-09-04 home-advantage fix) reads as their mean,
+    # not a home-specific figure -- there is no venue-specific rating anymore.
+    season = [
+        team("Split", 1300, 1100, 1100, 1100),  # attack: 1300 home, 1100 away
+        team("Mid1", 1100, 1100, 1100, 1100),
+        team("Mid2", 1100, 1100, 1100, 1100),
+    ]
+    table = team_strength_table({"2024-25": season, "2023-24": season})
+
+    # Split's attack should sit strictly between what an all-1300 team and an
+    # all-1100 team would produce -- the blended mean, not either extreme.
+    all_high = team_strength_table(
+        {"2024-25": [team("H", 1300, 1300, 1100, 1100), team("Mid1", 1100, 1100, 1100, 1100), team("Mid2", 1100, 1100, 1100, 1100)]}
+    )
+    all_low = team_strength_table(
+        {"2024-25": [team("L", 1100, 1100, 1100, 1100), team("Mid1", 1100, 1100, 1100, 1100), team("Mid2", 1100, 1100, 1100, 1100)]}
+    )
+    assert all_low["L"].attack < table["Split"].attack < all_high["H"].attack
 
 
 def test_attacker_gains_against_a_weak_defence_loses_against_a_strong_one():
@@ -59,9 +96,8 @@ def test_attacker_gains_against_a_weak_defence_loses_against_a_strong_one():
     ]
     table = team_strength_table({"2024-25": season, "2023-24": season})
 
-    # A home forward (element_type 4) faces the opponent's AWAY defence.
-    vs_leaky = opponent_multiplier(table, "LeakyD", player_element_type=4, player_is_home=True)
-    vs_wall = opponent_multiplier(table, "WallD", player_element_type=4, player_is_home=True)
+    vs_leaky = opponent_multiplier(table, "LeakyD", player_element_type=4)
+    vs_wall = opponent_multiplier(table, "WallD", player_element_type=4)
 
     assert vs_leaky > 1.0
     assert vs_wall < 1.0
@@ -75,33 +111,17 @@ def test_defender_gains_against_a_weak_attack():
     ]
     table = team_strength_table({"2024-25": season, "2023-24": season})
 
-    vs_blunt = opponent_multiplier(table, "Blunt", player_element_type=2, player_is_home=False)
-    vs_sharp = opponent_multiplier(table, "Sharp", player_element_type=2, player_is_home=False)
+    vs_blunt = opponent_multiplier(table, "Blunt", player_element_type=2)
+    vs_sharp = opponent_multiplier(table, "Sharp", player_element_type=2)
 
     assert vs_blunt > 1.0 > vs_sharp
-
-
-def test_home_away_uses_the_right_side_of_the_opponent():
-    season = [
-        team("Split", 1100, 1100, 700, 1500),  # very weak home defence, very strong away defence
-        team("Mid1", 1100, 1100, 1100, 1100),
-        team("Mid2", 1100, 1100, 1100, 1100),
-    ]
-    table = team_strength_table({"2024-25": season, "2023-24": season})
-
-    # Away forward faces the opponent's HOME defence (weak) -> boost.
-    away_fwd = opponent_multiplier(table, "Split", player_element_type=4, player_is_home=False)
-    # Home forward faces the opponent's AWAY defence (strong) -> suppress.
-    home_fwd = opponent_multiplier(table, "Split", player_element_type=4, player_is_home=True)
-
-    assert away_fwd > 1.0 > home_fwd
 
 
 def test_unknown_opponent_is_neutral():
     table = team_strength_table({"2024-25": [team("Known", 1100, 1100, 1100, 1100)]})
 
-    assert opponent_multiplier(table, "Promoted", player_element_type=4, player_is_home=True) == 1.0
-    assert opponent_multiplier(table, None, player_element_type=2, player_is_home=False) == 1.0
+    assert opponent_multiplier(table, "Promoted", player_element_type=4) == 1.0
+    assert opponent_multiplier(table, None, player_element_type=2) == 1.0
 
 
 def test_multiplier_is_clamped():
@@ -111,7 +131,7 @@ def test_multiplier_is_clamped():
         team("Mid2", 1100, 1100, 1100, 1100),
     ]
     table = team_strength_table({"2024-25": season, "2023-24": season})
-    mult = opponent_multiplier(table, "Absurd", player_element_type=4, player_is_home=True)
+    mult = opponent_multiplier(table, "Absurd", player_element_type=4)
 
     assert mult == pytest.approx(TEAM_STRENGTH_CLAMP[1])
 
@@ -140,6 +160,24 @@ def test_expected_goals_uses_attack_over_opponent_defence_and_home_boost():
     assert vs_leaky == pytest.approx(away * 1.15, rel=0.01)
 
 
+def test_expected_goals_home_boost_is_the_sole_home_advantage_mechanism():
+    # Home and away context ratings differ for both teams, as most real teams'
+    # do -- expected_goals should still only apply HOME_GOALS_FACTOR once,
+    # not also swing on the (now-collapsed, no longer venue-specific) rating.
+    season = [
+        team("A", 1300, 1100, 1100, 1000),
+        team("B", 1000, 1200, 1300, 1100),
+        team("Mid", 1100, 1100, 1100, 1100),
+    ]
+    table = team_strength_table({"2024-25": season, "2023-24": season})
+
+    home = expected_goals(table, "A", "B", attacker_home=True)
+    away = expected_goals(table, "A", "B", attacker_home=False)
+    # the entire home/away gap is HOME_GOALS_FACTOR (1.15), not some other
+    # multiple that a venue-specific rating swing would additionally produce.
+    assert home == pytest.approx(away * 1.15, rel=0.01)
+
+
 def test_expected_goals_neutral_for_unknown_teams_and_clamped():
     table = team_strength_table({"2024-25": [team("Known", 1100, 1100, 1100, 1100)]})
 
@@ -165,5 +203,5 @@ def test_zero_ratings_are_ignored_not_treated_as_data():
     ]
     table = team_strength_table({"2024-25": season})
 
-    assert table["EarlySeason"].attack_home == 1.0
+    assert table["EarlySeason"].attack == 1.0
     assert table["EarlySeason"].seasons == 0
