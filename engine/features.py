@@ -20,6 +20,7 @@ from engine.config import (
     RATE_CLAMP,
     RATE_FORM_WINDOW,
     RATE_PRIOR_GAMES,
+    RATE_SEASON_FULL_GAMES,
 )
 
 UNAVAILABLE_STATUSES = {"i", "s", "u", "n"}  # injured, suspended, unavailable, not in squad
@@ -230,22 +231,32 @@ def _rate_features(
         has_archive = bool(archive_rates.get(pid))
         evidence[pid] = season_min / 90.0 + recent_games + (RATE_ARCHIVE_GAMES if has_archive else 0.0)
 
+        # A per-90 rate is total / (minutes / 90) -- for a tiny minutes sample
+        # (a one-minute cameo) that extrapolation can be wildly extreme (a
+        # single involvement reads as 15+ xG/90). Scale each source's blend
+        # weight down by how much of its own minutes-sample it actually has,
+        # so a fluke small sample can't carry full weight in the blend; a
+        # full season (or a full recent window) of minutes is unaffected.
         if season_min > 0:
             per90 = season_min / 90.0
-            for name, field in _SEASON_RATE_FIELDS.items():
-                value = _to_number(player.get(field))
-                if value is not None:
-                    sources[name].append((RATE_BLEND["season"], value))
-            for name, total_field in _SEASON_TOTAL_RATES.items():
-                value = _to_number(player.get(total_field))
-                if value is not None:
-                    sources[name].append((RATE_BLEND["season"], value / per90))
+            season_weight = RATE_BLEND["season"] * min(1.0, per90 / RATE_SEASON_FULL_GAMES)
+            if season_weight > 0:
+                for name, field in _SEASON_RATE_FIELDS.items():
+                    value = _to_number(player.get(field))
+                    if value is not None:
+                        sources[name].append((season_weight, value))
+                for name, total_field in _SEASON_TOTAL_RATES.items():
+                    value = _to_number(player.get(total_field))
+                    if value is not None:
+                        sources[name].append((season_weight, value / per90))
 
         rmin = recent_min.get(pid, 0.0)
         if rmin > 0 and recent_weight > 0:
             rp90 = rmin / 90.0
-            for name in _RATE_NAMES:
-                sources[name].append((recent_weight, recent_sum[pid][name] / rp90))
+            player_recent_weight = recent_weight * min(1.0, rp90 / RATE_FORM_WINDOW)
+            if player_recent_weight > 0:
+                for name in _RATE_NAMES:
+                    sources[name].append((player_recent_weight, recent_sum[pid][name] / rp90))
 
         arc = archive_rates.get(pid) or {}
         for name in _ARCHIVE_RATE_NAMES:
