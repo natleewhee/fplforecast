@@ -310,27 +310,41 @@ function PlayerRow({ row }: { row: TrackerRow }) {
   const finished = row.status === "finished";
   const hasBreakdown = row.breakdown.length > 0;
 
+  // Two lines per player instead of one long packed row: name/chips/score on
+  // top, opponent+FDR+status below. A single wide row (badge, name, opponent,
+  // status, points, remaining all side by side) doesn't fit a phone screen —
+  // this stacks vertically instead of overflowing horizontally.
   const rowContent = (
-    <>
-      <span
-        className={`inline-block w-8 shrink-0 rounded py-0.5 text-center text-[9px] font-bold tracking-wide text-black/85 ${
-          POSITION_COLOR[row.position] ?? "bg-ink-soft"
-        }`}
-      >
-        {row.position}
-      </span>
-      <span className={`font-medium text-ink ${row.subbedOut ? "line-through opacity-60" : ""}`}>
-        {row.webName}
-      </span>
-      {row.isArmband && <span className="chip chip-accent !py-0 text-[10px]">C</span>}
-      {row.subbedIn && <span className="chip chip-accent !py-0 text-[10px]">sub ▲</span>}
-      {row.subbedOut && <span className="chip chip-danger !py-0 text-[10px]">sub ▼</span>}
-      {row.noBakedXp && (
-        <span className="chip !py-0 text-[10px]" title="no baked xP in the latest snapshot">
-          no xP
+    <div className="flex min-w-0 flex-1 flex-col gap-0.5">
+      <div className="flex items-center gap-2">
+        <span
+          className={`inline-block w-8 shrink-0 rounded py-0.5 text-center text-[9px] font-bold tracking-wide text-black/85 ${
+            POSITION_COLOR[row.position] ?? "bg-ink-soft"
+          }`}
+        >
+          {row.position}
         </span>
-      )}
-      <span className="ml-auto flex w-20 shrink-0 items-center justify-end gap-1 whitespace-nowrap text-[11px] text-ink-faint">
+        <span
+          className={`min-w-0 truncate font-medium text-ink ${row.subbedOut ? "line-through opacity-60" : ""}`}
+        >
+          {row.webName}
+        </span>
+        {row.isArmband && <span className="chip chip-accent !py-0 text-[10px]">C</span>}
+        {row.subbedIn && <span className="chip chip-accent !py-0 text-[10px]">sub ▲</span>}
+        {row.subbedOut && <span className="chip chip-danger !py-0 text-[10px]">sub ▼</span>}
+        {row.noBakedXp && (
+          <span className="chip !py-0 shrink-0 text-[10px]" title="no baked xP in the latest snapshot">
+            no xP
+          </span>
+        )}
+        <span className="ml-auto shrink-0 font-mono font-bold tabular-nums text-ink">
+          {row.pointsSoFar.toFixed(0)}
+        </span>
+        <span className="w-12 shrink-0 text-right font-mono text-[11px] tabular-nums text-[var(--accent)]">
+          {showRemaining ? `+${row.remainingXp.toFixed(1)}` : ""}
+        </span>
+      </div>
+      <div className="flex items-center gap-1 pl-10 text-[11px]">
         {row.status === "notStarted" && row.fdrRating != null && (
           <span
             className="inline-block h-2 w-2 shrink-0 rounded-full"
@@ -338,23 +352,17 @@ function PlayerRow({ row }: { row: TrackerRow }) {
             title={`FDR ${row.fdrRating}`}
           />
         )}
-        {row.opponent ?? "—"}
-      </span>
-      <span
-        className={`w-28 shrink-0 text-right text-[11px] ${
-          finished ? "font-semibold text-[var(--accent)]" : "text-ink-soft"
-        }`}
-      >
-        {finished ? "✓ " : ""}
-        {statusLabel(row)}
-      </span>
-      <span className="w-10 shrink-0 text-right font-mono font-bold tabular-nums text-ink">
-        {row.pointsSoFar.toFixed(0)}
-      </span>
-      <span className="w-12 shrink-0 text-right font-mono text-[11px] tabular-nums text-[var(--accent)]">
-        {showRemaining ? `+${row.remainingXp.toFixed(1)}` : ""}
-      </span>
-    </>
+        <span className="truncate text-ink-faint">{row.opponent ?? "—"}</span>
+        <span
+          className={`shrink-0 whitespace-nowrap ${
+            finished ? "font-semibold text-[var(--accent)]" : "text-ink-soft"
+          }`}
+        >
+          · {finished ? "✓ " : ""}
+          {statusLabel(row)}
+        </span>
+      </div>
+    </div>
   );
 
   const rowClass = `flex items-center gap-2 rounded-md px-1 py-1.5 text-sm ${dim ? "opacity-50" : ""} ${
