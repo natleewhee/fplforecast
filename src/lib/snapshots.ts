@@ -157,8 +157,8 @@ export type Forecast = {
   lastGameweek: GameweekReview | null;
   upcoming: UpcomingGameweek[]; // suggested XI for each GW in the rolling window
   history: SeasonHistory | null;
-  pool: PoolPlayer[]; // whole available pool, 5-GW projections (planning table)
-  poolUpgrades: Record<string, PoolUpgrade[]>; // squad player id -> same-slot upgrades
+  pool: PoolPlayer[]; // whole available pool, 5-GW projections (optimiser input)
+  scenarios: Scenarios;
   squadComponents: Record<string, Record<string, number>>; // held id -> target-GW component xP
   parMargin: number; // points above the GW average that hold the manager's rank
   marginProvisional: boolean; // too few completed GWs -> margin is 0, buffer widens
@@ -173,6 +173,7 @@ export type PoolPlayer = {
   elementType: number | null;
   position: string;
   price: number;
+  sellPrice: number;
   selectedByPercent: number;
   form: number;
   perGameweek: number[]; // one xP value per gameweek in the window
@@ -180,28 +181,33 @@ export type PoolPlayer = {
   opponents: OpponentLeg[][]; // one leg group per gameweek in the window
 };
 
-export type PoolUpgrade = {
-  poolPlayerId: number;
-  gap: number; // pool player's 5-GW total minus the held player's
-  priceDelta: number; // £m
-  overBudget: boolean;
+// A scenario's transfer-in/out player, as it should be shown in the UI.
+export type ScenarioPlayerRef = {
+  id: number;
+  webName: string | null;
+  position: string | null;
+  team: string | null;
+  price: number | null;
 };
 
-// A pool row's upgrade mark, reversed from `poolUpgrades` (keyed by held id)
-// so the planning table can ask "is this pool player an upgrade for anyone?".
-export type PoolUpgradeMark = {
-  heldId: number;
-  gap: number;
-  priceDelta: number; // £m, candidate minus held
-  overBudget: boolean;
+export type Scenario = {
+  squad: number[];
+  xiByGw: number[][];
+  captainByGw: (number | null)[];
+  horizonGws: number;
+  points: number;
+  hitCost: number;
+  netPoints: number;
+  transfersIn: ScenarioPlayerRef[];
+  transfersOut: ScenarioPlayerRef[];
 };
 
-export type PoolData = {
-  pool: PoolPlayer[];
-  upgradesByPoolPlayer: Record<number, PoolUpgradeMark[]>;
-  bank: number; // £m
-  startGameweek: number; // first gameweek in the projection window
-  window: number; // number of gameweeks projected
+export type Scenarios = {
+  freeTransfers: { value: number; derivation: string };
+  chipsAvailable: { freeHit: boolean; wildcard: boolean };
+  byHorizon: Record<string, Scenario[]>; // "1" | "3" | "5" -> top-3 by net points
+  freeHit: Scenario | null;
+  wildcard: Scenario | null;
 };
 
 export type UpcomingPlayer = {
@@ -336,36 +342,6 @@ export function loadLatestForecast(): Forecast | null {
   if (files.length === 0) return null;
   const latest = files[files.length - 1];
   return JSON.parse(fs.readFileSync(path.join(dir, latest), "utf-8"));
-}
-
-/** The whole available pool with its five-gameweek projections, plus the
- * squad-vs-pool upgrade marks reversed onto the pool player they favour.
- * Returns null when the latest forecast carries no `pool` block. */
-export function loadPool(): PoolData | null {
-  const forecast = loadLatestForecast();
-  if (!forecast || !Array.isArray(forecast.pool) || forecast.pool.length === 0) {
-    return null;
-  }
-  const upgradesByPoolPlayer: Record<number, PoolUpgradeMark[]> = {};
-  for (const [heldId, marks] of Object.entries(forecast.poolUpgrades ?? {})) {
-    for (const mark of marks) {
-      const list = upgradesByPoolPlayer[mark.poolPlayerId] ?? [];
-      list.push({
-        heldId: Number(heldId),
-        gap: mark.gap,
-        priceDelta: mark.priceDelta,
-        overBudget: mark.overBudget,
-      });
-      upgradesByPoolPlayer[mark.poolPlayerId] = list;
-    }
-  }
-  return {
-    pool: forecast.pool,
-    upgradesByPoolPlayer,
-    bank: forecast.squad?.bank ?? 0,
-    startGameweek: forecast.targetGameweek,
-    window: forecast.rollingWindow,
-  };
 }
 
 export function loadBootstrapSnapshot(): BootstrapSnapshot | null {
