@@ -902,6 +902,15 @@ def main(now: datetime | None = None) -> int:
         per_gw = model_window_by_gw.get(pid)
         if per_gw is None:
             continue
+        # Target-gameweek-only component breakdown for every pool player, not
+        # just the held squad -- lets the live tracker project a league
+        # entry's arbitrary picks with the same decay math as your own squad
+        # (KTD: "league view", 2026-09-05 follow-up).
+        components = None
+        if pid in feature_frame.index:
+            components = model.project_detail(feature_frame.loc[pid], target_gw, ctx).get(
+                "components"
+            )
         pool.append(
             {
                 "id": pid,
@@ -920,6 +929,7 @@ def main(now: datetime | None = None) -> int:
                 "total": round(sum(per_gw), 2),
                 "opponents": _pool_opponents(el.get("team")),
                 "availability": _availability_info(el),
+                "components": components,
             }
         )
 

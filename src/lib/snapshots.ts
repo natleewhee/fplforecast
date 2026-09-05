@@ -192,6 +192,7 @@ export type PoolPlayer = {
   total: number;
   opponents: OpponentLeg[][]; // one leg group per gameweek in the window
   availability: Availability;
+  components: ProjectionComponents | null; // target-GW-only breakdown, for the live tracker's decay math
 };
 
 // A scenario's transfer-in/out player, as it should be shown in the UI.
