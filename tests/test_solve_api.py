@@ -44,6 +44,31 @@ def test_force_in_pins_a_specific_player():
     assert candidate["id"] in payload["squad"]
 
 
+def test_force_in_a_doubtful_held_player_actually_keeps_them():
+    """Regression: a "d" (doubtful) held player used to be excluded from the
+    pool entirely (bug fixed alongside this test), so force-keeping them was
+    silently a no-op -- they'd still show up sold in the result."""
+    gw = _forecast_gw()
+    data = json.loads((DATA_DIR / "forecast" / "gw4.json").read_text())
+    doubtful_held = next(
+        (
+            p["id"]
+            for p in data["squad"]["players"]
+            if (p.get("availability") or {}).get("status") == "d"
+        ),
+        None,
+    )
+    if doubtful_held is None:
+        pytest.skip("no doubtful held player in this snapshot")
+
+    status, payload = solve(
+        {"forecastGw": gw, "type": "transfer", "horizon": 1, "forceIn": [doubtful_held]}
+    )
+    assert status == 200
+    assert doubtful_held in payload["squad"]
+    assert doubtful_held not in {p["id"] for p in payload["transfersOut"]}
+
+
 def test_force_out_drops_a_specific_held_player():
     gw = _forecast_gw()
     data = json.loads((DATA_DIR / "forecast" / "gw4.json").read_text())
