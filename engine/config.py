@@ -138,6 +138,13 @@ TEAM_LAMBDA_CLAMP = (0.3, 3.5)
 RATE_BLEND = {"archive": 0.3, "season": 0.3, "recent": 0.4}
 # Recent-form window, in gameweeks, for the "recent" slice of a rate blend.
 RATE_FORM_WINDOW = 6
+# Games of a player's own minutes needed before their season-to-date per-90
+# rate earns its full RATE_BLEND["season"] weight; below this it's scaled down
+# linearly. Without it, a single-minute cameo's FPL-extrapolated per-90 (total
+# / actual-minutes-played, blown up to a per-90 rate) enters the blend at full
+# weight -- see the "recent" slice, scaled the same way by the player's own
+# minutes within RATE_FORM_WINDOW.
+RATE_SEASON_FULL_GAMES = 10
 # Pseudo-games of the position-mean prior mixed into a blended per-90 rate.
 # A player with few games of data is pulled hard toward their position's
 # average; the pull fades as real minutes accumulate (empirical Bayes).
