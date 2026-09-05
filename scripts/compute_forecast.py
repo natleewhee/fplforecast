@@ -410,12 +410,27 @@ def _scenario_to_dict(result: ScenarioResult, pool_by_id: dict) -> dict:
     }
 
 
-def build_scenarios(pool: list[dict], squad_ids: list[int], bank: float, season_history: dict, target_gw: int) -> dict:
+def build_scenarios(
+    pool: list[dict],
+    squad_ids: list[int],
+    bank: float,
+    season_history: dict,
+    target_gw: int,
+    squad_cards: list[dict] | None = None,
+) -> dict:
     """The transfer-scenario / chip-optimiser block (2026-09-05 plan): 3
     horizons x 4 pinned transfer counts (k=0..3, KD7/"Solve count"), plus
     Free Hit (1 GW) and Wildcard (5 GW) full rebuilds, each solved once via
-    ``engine.optimise.solve_squad`` over the full pool."""
+    ``engine.optimise.solve_squad`` over the full pool.
+
+    ``pool`` excludes unavailable players (status != "a"), but a held squad
+    player can still be unavailable -- the optimiser correctly sells them
+    (they can't be in ``pool`` so can't be re-selected), and they show up in
+    ``transfers_out``. ``squad_cards`` (built from the full squad regardless
+    of availability) backs the display lookup for exactly that case."""
     pool_by_id = {p["id"]: p for p in pool}
+    for card in squad_cards or []:
+        pool_by_id.setdefault(card["id"], card)
     current = season_history.get("current") or []
     chips = season_history.get("chips") or []
     ft_value, ft_derivation = derive_free_transfers(current, chips, target_gw)
@@ -854,7 +869,7 @@ def main(now: datetime | None = None) -> int:
         season_history.get("current") or [], bootstrap.get("events") or []
     )
 
-    scenarios = build_scenarios(pool, squad_ids, bank, season_history, target_gw)
+    scenarios = build_scenarios(pool, squad_ids, bank, season_history, target_gw, squad_cards=players)
 
     forecast = {
         "generatedAt": now.isoformat(),

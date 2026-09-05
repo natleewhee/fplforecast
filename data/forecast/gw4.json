@@ -11,7 +11,7 @@
   },
   "earlySeason": true,
   "effectiveGap": 10.0,
-  "generatedAt": "2026-09-05T08:52:28.747051+00:00",
+  "generatedAt": "2026-09-05T09:57:59.096874+00:00",
   "history": {
     "gameweeks": [
       {
@@ -27054,10 +27054,10 @@
           "transfersOut": [
             {
               "id": 11,
-              "position": null,
-              "price": null,
-              "team": null,
-              "webName": null
+              "position": "DEF",
+              "price": 5.5,
+              "team": "ARS",
+              "webName": "Mosquera"
             },
             {
               "id": 334,
@@ -27148,10 +27148,10 @@
           "transfersOut": [
             {
               "id": 11,
-              "position": null,
-              "price": null,
-              "team": null,
-              "webName": null
+              "position": "DEF",
+              "price": 5.5,
+              "team": "ARS",
+              "webName": "Mosquera"
             },
             {
               "id": 411,
@@ -27228,10 +27228,10 @@
           "transfersOut": [
             {
               "id": 11,
-              "position": null,
-              "price": null,
-              "team": null,
-              "webName": null
+              "position": "DEF",
+              "price": 5.5,
+              "team": "ARS",
+              "webName": "Mosquera"
             },
             {
               "id": 411,
@@ -27319,10 +27319,10 @@
           "transfersOut": [
             {
               "id": 11,
-              "position": null,
-              "price": null,
-              "team": null,
-              "webName": null
+              "position": "DEF",
+              "price": 5.5,
+              "team": "ARS",
+              "webName": "Mosquera"
             },
             {
               "id": 411,
@@ -27441,10 +27441,10 @@
           "transfersOut": [
             {
               "id": 11,
-              "position": null,
-              "price": null,
-              "team": null,
-              "webName": null
+              "position": "DEF",
+              "price": 5.5,
+              "team": "ARS",
+              "webName": "Mosquera"
             },
             {
               "id": 411,
@@ -27549,10 +27549,10 @@
           "transfersOut": [
             {
               "id": 11,
-              "position": null,
-              "price": null,
-              "team": null,
-              "webName": null
+              "position": "DEF",
+              "price": 5.5,
+              "team": "ARS",
+              "webName": "Mosquera"
             },
             {
               "id": 426,
@@ -27668,10 +27668,10 @@
           "transfersOut": [
             {
               "id": 11,
-              "position": null,
-              "price": null,
-              "team": null,
-              "webName": null
+              "position": "DEF",
+              "price": 5.5,
+              "team": "ARS",
+              "webName": "Mosquera"
             },
             {
               "id": 426,
@@ -27818,10 +27818,10 @@
           "transfersOut": [
             {
               "id": 11,
-              "position": null,
-              "price": null,
-              "team": null,
-              "webName": null
+              "position": "DEF",
+              "price": 5.5,
+              "team": "ARS",
+              "webName": "Mosquera"
             },
             {
               "id": 426,
@@ -27954,10 +27954,10 @@
           "transfersOut": [
             {
               "id": 11,
-              "position": null,
-              "price": null,
-              "team": null,
-              "webName": null
+              "position": "DEF",
+              "price": 5.5,
+              "team": "ARS",
+              "webName": "Mosquera"
             },
             {
               "id": 426,
@@ -28047,24 +28047,24 @@
       ],
       "hitCost": 0,
       "horizonGws": 1,
-      "netPoints": 77.72,
-      "points": 77.72,
+      "netPoints": 78.2,
+      "points": 78.2,
       "squad": [
         8,
         10,
         12,
+        50,
         86,
-        154,
         165,
         173,
+        302,
         367,
         368,
         379,
         385,
         388,
-        510,
-        623,
-        651
+        411,
+        556
       ],
       "transfersIn": [
         {
@@ -28089,18 +28089,18 @@
           "webName": "Saka"
         },
         {
+          "id": 50,
+          "position": "MID",
+          "price": 4.5,
+          "team": "AVL",
+          "webName": "Burrowes"
+        },
+        {
           "id": 86,
           "position": "MID",
           "price": 5.5,
           "team": "BRE",
           "webName": "Lewis-Potter"
-        },
-        {
-          "id": 154,
-          "position": "MID",
-          "price": 9.6,
-          "team": "CHE",
-          "webName": "Palmer"
         },
         {
           "id": 165,
@@ -28115,6 +28115,13 @@
           "price": 4.0,
           "team": "COV",
           "webName": "Thomas"
+        },
+        {
+          "id": 302,
+          "position": "GKP",
+          "price": 4.0,
+          "team": "IPS",
+          "webName": "Button"
         },
         {
           "id": 367,
@@ -28152,25 +28159,18 @@
           "webName": "Gu\u00e9hi"
         },
         {
-          "id": 510,
+          "id": 411,
+          "position": "FWD",
+          "price": 15.5,
+          "team": "MCI",
+          "webName": "Haaland"
+        },
+        {
+          "id": 556,
           "position": "DEF",
           "price": 4.0,
-          "team": "TOT",
-          "webName": "Rowswell"
-        },
-        {
-          "id": 623,
-          "position": "GKP",
-          "price": 4.0,
-          "team": "COV",
-          "webName": "Bentley"
-        },
-        {
-          "id": 651,
-          "position": "FWD",
-          "price": 4.5,
-          "team": "SUN",
-          "webName": "J.Angulo"
+          "team": "HUL",
+          "webName": "Targett"
         }
       ],
       "transfersOut": [],
@@ -28180,13 +28180,13 @@
           10,
           12,
           86,
-          154,
           165,
           385,
           367,
           368,
           379,
-          388
+          388,
+          411
         ]
       ]
     },
@@ -28199,29 +28199,29 @@
         12,
         12,
         12,
-        388,
+        411,
         12
       ],
       "hitCost": 0,
       "horizonGws": 5,
-      "netPoints": 390.59,
-      "points": 390.59,
+      "netPoints": 394.79,
+      "points": 394.79,
       "squad": [
         8,
         10,
         12,
-        107,
+        86,
         165,
         178,
         367,
+        378,
         379,
         385,
         388,
         391,
-        398,
-        427,
-        544,
-        572
+        411,
+        495,
+        544
       ],
       "transfersIn": [
         {
@@ -28246,11 +28246,11 @@
           "webName": "Saka"
         },
         {
-          "id": 107,
-          "position": "FWD",
-          "price": 4.5,
+          "id": 86,
+          "position": "MID",
+          "price": 5.5,
           "team": "BRE",
-          "webName": "Furo"
+          "webName": "Lewis-Potter"
         },
         {
           "id": 165,
@@ -28272,6 +28272,13 @@
           "price": 7.1,
           "team": "LIV",
           "webName": "Gakpo"
+        },
+        {
+          "id": 378,
+          "position": "MID",
+          "price": 4.5,
+          "team": "LIV",
+          "webName": "McConnell"
         },
         {
           "id": 379,
@@ -28302,18 +28309,18 @@
           "webName": "Gvardiol"
         },
         {
-          "id": 398,
-          "position": "MID",
-          "price": 7.0,
+          "id": 411,
+          "position": "FWD",
+          "price": 15.5,
           "team": "MCI",
-          "webName": "Foden"
+          "webName": "Haaland"
         },
         {
-          "id": 427,
-          "position": "MID",
-          "price": 7.9,
-          "team": "MUN",
-          "webName": "Mbeumo"
+          "id": 495,
+          "position": "GKP",
+          "price": 4.0,
+          "team": "TOT",
+          "webName": "Austin"
         },
         {
           "id": 544,
@@ -28321,13 +28328,6 @@
           "price": 5.5,
           "team": "SUN",
           "webName": "Xhaka"
-        },
-        {
-          "id": 572,
-          "position": "GKP",
-          "price": 4.6,
-          "team": "HUL",
-          "webName": "Tzolakis"
         }
       ],
       "transfersOut": [],
@@ -28336,13 +28336,39 @@
           8,
           10,
           12,
+          86,
           165,
           385,
           367,
           379,
           388,
-          398,
-          427,
+          411,
+          544
+        ],
+        [
+          8,
+          10,
+          12,
+          86,
+          165,
+          385,
+          367,
+          379,
+          388,
+          391,
+          411
+        ],
+        [
+          8,
+          10,
+          12,
+          86,
+          165,
+          385,
+          367,
+          379,
+          388,
+          411,
           544
         ],
         [
@@ -28355,46 +28381,20 @@
           379,
           388,
           391,
-          398,
-          427
-        ],
-        [
-          8,
-          10,
-          12,
-          165,
-          572,
-          367,
-          379,
-          388,
-          398,
-          427,
-          544
-        ],
-        [
-          10,
-          12,
-          165,
-          385,
-          367,
-          379,
-          388,
-          391,
-          398,
-          427,
+          411,
           544
         ],
         [
           8,
           10,
           12,
+          86,
           165,
           385,
           367,
           379,
           388,
-          398,
-          427,
+          411,
           544
         ]
       ]
