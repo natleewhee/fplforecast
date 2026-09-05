@@ -11,7 +11,7 @@
   },
   "earlySeason": true,
   "effectiveGap": 10.0,
-  "generatedAt": "2026-09-05T07:32:10.463024+00:00",
+  "generatedAt": "2026-09-05T08:52:28.747051+00:00",
   "history": {
     "gameweeks": [
       {
@@ -161,6 +161,7 @@
       "position": "GKP",
       "price": 6.0,
       "selectedByPercent": 38.5,
+      "sellPrice": 6.0,
       "team": "ARS",
       "total": 20.48,
       "webName": "Raya"
@@ -216,6 +217,7 @@
       "position": "GKP",
       "price": 4.9,
       "selectedByPercent": 0.1,
+      "sellPrice": 4.9,
       "team": "ARS",
       "total": 7.12,
       "webName": "Arrizabalaga"
@@ -271,6 +273,7 @@
       "position": "GKP",
       "price": 4.9,
       "selectedByPercent": 0.0,
+      "sellPrice": 4.9,
       "team": "ARS",
       "total": 0.81,
       "webName": "Meslier"
@@ -326,6 +329,7 @@
       "position": "DEF",
       "price": 8.0,
       "selectedByPercent": 25.7,
+      "sellPrice": 8.0,
       "team": "ARS",
       "total": 28.56,
       "webName": "Gabriel"
@@ -381,6 +385,7 @@
       "position": "MID",
       "price": 5.5,
       "selectedByPercent": 0.7,
+      "sellPrice": 5.5,
       "team": "ARS",
       "total": 21.78,
       "webName": "Lewis-Skelly"
@@ -436,6 +441,7 @@
       "position": "DEF",
       "price": 5.7,
       "selectedByPercent": 45.7,
+      "sellPrice": 5.7,
       "team": "ARS",
       "total": 30.91,
       "webName": "Calafiori"
@@ -491,6 +497,7 @@
       "position": "DEF",
       "price": 5.3,
       "selectedByPercent": 1.2,
+      "sellPrice": 5.3,
       "team": "ARS",
       "total": 9.7,
       "webName": "Hincapie"
@@ -546,6 +553,7 @@
       "position": "DEF",
       "price": 5.5,
       "selectedByPercent": 7.6,
+      "sellPrice": 5.5,
       "team": "ARS",
       "total": 35.65,
       "webName": "White"
@@ -601,6 +609,7 @@
       "position": "MID",
       "price": 9.5,
       "selectedByPercent": 11.0,
+      "sellPrice": 9.5,
       "team": "ARS",
       "total": 37.33,
       "webName": "Saka"
@@ -656,6 +665,7 @@
       "position": "MID",
       "price": 7.5,
       "selectedByPercent": 14.2,
+      "sellPrice": 7.5,
       "team": "ARS",
       "total": 25.36,
       "webName": "Rice"
@@ -711,6 +721,7 @@
       "position": "MID",
       "price": 6.4,
       "selectedByPercent": 1.4,
+      "sellPrice": 6.4,
       "team": "ARS",
       "total": 15.81,
       "webName": "Eze"
@@ -766,6 +777,7 @@
       "position": "MID",
       "price": 6.6,
       "selectedByPercent": 11.1,
+      "sellPrice": 6.6,
       "team": "ARS",
       "total": 30.88,
       "webName": "\u00d8degaard"
@@ -821,6 +833,7 @@
       "position": "MID",
       "price": 6.3,
       "selectedByPercent": 0.2,
+      "sellPrice": 6.3,
       "team": "ARS",
       "total": 10.23,
       "webName": "Madueke"
@@ -876,6 +889,7 @@
       "position": "MID",
       "price": 5.9,
       "selectedByPercent": 0.5,
+      "sellPrice": 5.9,
       "team": "ARS",
       "total": 19.17,
       "webName": "Merino"
@@ -931,6 +945,7 @@
       "position": "MID",
       "price": 5.4,
       "selectedByPercent": 0.8,
+      "sellPrice": 5.4,
       "team": "ARS",
       "total": 14.49,
       "webName": "Zubimendi"
@@ -986,6 +1001,7 @@
       "position": "MID",
       "price": 5.4,
       "selectedByPercent": 0.1,
+      "sellPrice": 5.4,
       "team": "ARS",
       "total": 23.33,
       "webName": "Dowman"
@@ -1041,6 +1057,7 @@
       "position": "FWD",
       "price": 7.3,
       "selectedByPercent": 4.5,
+      "sellPrice": 7.3,
       "team": "ARS",
       "total": 9.96,
       "webName": "Gy\u00f6keres"
@@ -1096,6 +1113,7 @@
       "position": "FWD",
       "price": 7.5,
       "selectedByPercent": 6.8,
+      "sellPrice": 7.5,
       "team": "ARS",
       "total": 24.27,
       "webName": "Havertz"
@@ -1151,6 +1169,7 @@
       "position": "DEF",
       "price": 4.4,
       "selectedByPercent": 11.3,
+      "sellPrice": 4.4,
       "team": "ARS",
       "total": 8.89,
       "webName": "Konsa"
@@ -1206,6 +1225,7 @@
       "position": "MID",
       "price": 6.5,
       "selectedByPercent": 19.1,
+      "sellPrice": 6.5,
       "team": "ARS",
       "total": 18.21,
       "webName": "Tzolis"
@@ -1261,6 +1281,7 @@
       "position": "GKP",
       "price": 4.5,
       "selectedByPercent": 0.1,
+      "sellPrice": 4.5,
       "team": "AVL",
       "total": 12.89,
       "webName": "M.Bizot"
@@ -1316,6 +1337,7 @@
       "position": "DEF",
       "price": 4.5,
       "selectedByPercent": 7.0,
+      "sellPrice": 4.5,
       "team": "AVL",
       "total": 17.37,
       "webName": "Cash"
@@ -1371,6 +1393,7 @@
       "position": "DEF",
       "price": 4.5,
       "selectedByPercent": 0.4,
+      "sellPrice": 4.5,
       "team": "AVL",
       "total": 7.08,
       "webName": "Mings"
@@ -1426,6 +1449,7 @@
       "position": "DEF",
       "price": 4.5,
       "selectedByPercent": 0.4,
+      "sellPrice": 4.5,
       "team": "AVL",
       "total": 20.23,
       "webName": "Pau"
@@ -1481,6 +1505,7 @@
       "position": "MID",
       "price": 5.0,
       "selectedByPercent": 0.1,
+      "sellPrice": 5.0,
       "team": "AVL",
       "total": 8.53,
       "webName": "Bogarde"
@@ -1536,6 +1561,7 @@
       "position": "DEF",
       "price": 4.5,
       "selectedByPercent": 0.7,
+      "sellPrice": 4.5,
       "team": "AVL",
       "total": 20.0,
       "webName": "Maatsen"
@@ -1591,6 +1617,7 @@
       "position": "DEF",
       "price": 4.5,
       "selectedByPercent": 0.3,
+      "sellPrice": 4.5,
       "team": "AVL",
       "total": 19.87,
       "webName": "Lindel\u00f6f"
@@ -1646,6 +1673,7 @@
       "position": "DEF",
       "price": 4.0,
       "selectedByPercent": 1.7,
+      "sellPrice": 4.0,
       "team": "AVL",
       "total": 4.78,
       "webName": "A.Garc\u00eda"
@@ -1701,6 +1729,7 @@
       "position": "MID",
       "price": 6.0,
       "selectedByPercent": 1.1,
+      "sellPrice": 6.0,
       "team": "AVL",
       "total": 21.95,
       "webName": "Buend\u00eda"
@@ -1756,6 +1785,7 @@
       "position": "MID",
       "price": 5.4,
       "selectedByPercent": 2.4,
+      "sellPrice": 5.4,
       "team": "AVL",
       "total": 19.75,
       "webName": "McGinn"
@@ -1811,6 +1841,7 @@
       "position": "MID",
       "price": 5.0,
       "selectedByPercent": 0.3,
+      "sellPrice": 5.0,
       "team": "AVL",
       "total": 22.37,
       "webName": "Barkley"
@@ -1866,6 +1897,7 @@
       "position": "MID",
       "price": 5.0,
       "selectedByPercent": 0.3,
+      "sellPrice": 5.0,
       "team": "AVL",
       "total": 21.86,
       "webName": "Kamara"
@@ -1921,6 +1953,7 @@
       "position": "MID",
       "price": 4.5,
       "selectedByPercent": 0.7,
+      "sellPrice": 4.5,
       "team": "AVL",
       "total": 0.84,
       "webName": "Burrowes"
@@ -1976,6 +2009,7 @@
       "position": "MID",
       "price": 4.5,
       "selectedByPercent": 1.0,
+      "sellPrice": 4.5,
       "team": "AVL",
       "total": 15.67,
       "webName": "George Hemmings"
@@ -2031,6 +2065,7 @@
       "position": "MID",
       "price": 5.0,
       "selectedByPercent": 0.0,
+      "sellPrice": 5.0,
       "team": "AVL",
       "total": 8.45,
       "webName": "Alysson"
@@ -2086,6 +2121,7 @@
       "position": "FWD",
       "price": 5.5,
       "selectedByPercent": 0.1,
+      "sellPrice": 5.5,
       "team": "AVL",
       "total": 12.27,
       "webName": "Abraham"
@@ -2141,6 +2177,7 @@
       "position": "MID",
       "price": 5.9,
       "selectedByPercent": 0.4,
+      "sellPrice": 5.9,
       "team": "AVL",
       "total": 12.21,
       "webName": "Garnacho"
@@ -2196,6 +2233,7 @@
       "position": "FWD",
       "price": 6.5,
       "selectedByPercent": 1.0,
+      "sellPrice": 6.5,
       "team": "AVL",
       "total": 10.62,
       "webName": "N.Jackson"
@@ -2251,6 +2289,7 @@
       "position": "DEF",
       "price": 4.5,
       "selectedByPercent": 0.1,
+      "sellPrice": 4.5,
       "team": "AVL",
       "total": 4.53,
       "webName": "Ruggeri"
@@ -2306,6 +2345,7 @@
       "position": "GKP",
       "price": 5.0,
       "selectedByPercent": 1.1,
+      "sellPrice": 5.0,
       "team": "AVL",
       "total": 7.24,
       "webName": "Suzuki"
@@ -2361,6 +2401,7 @@
       "position": "DEF",
       "price": 4.0,
       "selectedByPercent": 0.1,
+      "sellPrice": 4.0,
       "team": "AVL",
       "total": 2.02,
       "webName": "Rowe"
@@ -2416,6 +2457,7 @@
       "position": "DEF",
       "price": 4.5,
       "selectedByPercent": 0.1,
+      "sellPrice": 4.5,
       "team": "AVL",
       "total": 13.12,
       "webName": "Wan-Bissaka"
@@ -2471,6 +2513,7 @@
       "position": "MID",
       "price": 6.0,
       "selectedByPercent": 0.0,
+      "sellPrice": 6.0,
       "team": "AVL",
       "total": 4.25,
       "webName": "Goretzka"
@@ -2526,6 +2569,7 @@
       "position": "DEF",
       "price": 4.5,
       "selectedByPercent": 0.0,
+      "sellPrice": 4.5,
       "team": "AVL",
       "total": 9.55,
       "webName": "Harwood-Bellis"
@@ -2581,6 +2625,7 @@
       "position": "MID",
       "price": 6.0,
       "selectedByPercent": 0.0,
+      "sellPrice": 6.0,
       "team": "AVL",
       "total": 15.14,
       "webName": "Mbaye"
@@ -2636,6 +2681,7 @@
       "position": "GKP",
       "price": 4.5,
       "selectedByPercent": 3.4,
+      "sellPrice": 4.5,
       "team": "BOU",
       "total": 18.63,
       "webName": "Petrovi\u0107"
@@ -2691,6 +2737,7 @@
       "position": "GKP",
       "price": 4.0,
       "selectedByPercent": 3.3,
+      "sellPrice": 4.0,
       "team": "BOU",
       "total": 0.87,
       "webName": "Forster"
@@ -2746,6 +2793,7 @@
       "position": "DEF",
       "price": 5.5,
       "selectedByPercent": 0.9,
+      "sellPrice": 5.5,
       "team": "BOU",
       "total": 25.55,
       "webName": "Hill"
@@ -2801,6 +2849,7 @@
       "position": "DEF",
       "price": 5.5,
       "selectedByPercent": 3.8,
+      "sellPrice": 5.5,
       "team": "BOU",
       "total": 26.03,
       "webName": "Truffert"
@@ -2856,6 +2905,7 @@
       "position": "DEF",
       "price": 5.0,
       "selectedByPercent": 0.2,
+      "sellPrice": 5.0,
       "team": "BOU",
       "total": 3.33,
       "webName": "Diakit\u00e9"
@@ -2911,6 +2961,7 @@
       "position": "DEF",
       "price": 4.5,
       "selectedByPercent": 0.1,
+      "sellPrice": 4.5,
       "team": "BOU",
       "total": 18.1,
       "webName": "Smith"
@@ -2966,6 +3017,7 @@
       "position": "DEF",
       "price": 4.0,
       "selectedByPercent": 0.2,
+      "sellPrice": 4.0,
       "team": "BOU",
       "total": 3.0,
       "webName": "Soler"
@@ -3021,6 +3073,7 @@
       "position": "MID",
       "price": 6.5,
       "selectedByPercent": 2.2,
+      "sellPrice": 6.5,
       "team": "BOU",
       "total": 21.16,
       "webName": "Rayan"
@@ -3076,6 +3129,7 @@
       "position": "MID",
       "price": 6.0,
       "selectedByPercent": 2.3,
+      "sellPrice": 6.0,
       "team": "BOU",
       "total": 27.38,
       "webName": "Tavernier"
@@ -3131,6 +3185,7 @@
       "position": "MID",
       "price": 6.0,
       "selectedByPercent": 2.0,
+      "sellPrice": 6.0,
       "team": "BOU",
       "total": 26.07,
       "webName": "Scott"
@@ -3186,6 +3241,7 @@
       "position": "MID",
       "price": 6.0,
       "selectedByPercent": 1.1,
+      "sellPrice": 6.0,
       "team": "BOU",
       "total": 24.53,
       "webName": "Kluivert"
@@ -3241,6 +3297,7 @@
       "position": "MID",
       "price": 5.0,
       "selectedByPercent": 0.2,
+      "sellPrice": 5.0,
       "team": "BOU",
       "total": 21.63,
       "webName": "Cook"
@@ -3296,6 +3353,7 @@
       "position": "MID",
       "price": 5.0,
       "selectedByPercent": 0.1,
+      "sellPrice": 5.0,
       "team": "BOU",
       "total": 10.88,
       "webName": "Gannon-Doak"
@@ -3351,6 +3409,7 @@
       "position": "MID",
       "price": 5.0,
       "selectedByPercent": 0.2,
+      "sellPrice": 5.0,
       "team": "BOU",
       "total": 14.21,
       "webName": "Adams"
@@ -3406,6 +3465,7 @@
       "position": "MID",
       "price": 5.0,
       "selectedByPercent": 0.1,
+      "sellPrice": 5.0,
       "team": "BOU",
       "total": 10.58,
       "webName": "Brooks"
@@ -3461,6 +3521,7 @@
       "position": "MID",
       "price": 5.0,
       "selectedByPercent": 0.0,
+      "sellPrice": 5.0,
       "team": "BOU",
       "total": 12.53,
       "webName": "Christie"
@@ -3516,6 +3577,7 @@
       "position": "MID",
       "price": 5.0,
       "selectedByPercent": 0.0,
+      "sellPrice": 5.0,
       "team": "BOU",
       "total": 9.07,
       "webName": "T\u00f3th.A"
@@ -3571,6 +3633,7 @@
       "position": "FWD",
       "price": 6.0,
       "selectedByPercent": 3.3,
+      "sellPrice": 6.0,
       "team": "BOU",
       "total": 20.37,
       "webName": "Evanilson"
@@ -3626,6 +3689,7 @@
       "position": "FWD",
       "price": 6.0,
       "selectedByPercent": 0.1,
+      "sellPrice": 6.0,
       "team": "BOU",
       "total": 4.65,
       "webName": "Rodr\u00edguez"
@@ -3681,6 +3745,7 @@
       "position": "DEF",
       "price": 5.0,
       "selectedByPercent": 0.4,
+      "sellPrice": 5.0,
       "team": "BOU",
       "total": 18.93,
       "webName": "Silva"
@@ -3736,6 +3801,7 @@
       "position": "DEF",
       "price": 4.5,
       "selectedByPercent": 0.2,
+      "sellPrice": 4.5,
       "team": "BOU",
       "total": 1.5,
       "webName": "Sanchez"
@@ -3791,6 +3857,7 @@
       "position": "FWD",
       "price": 5.0,
       "selectedByPercent": 0.1,
+      "sellPrice": 5.0,
       "team": "BOU",
       "total": 5.08,
       "webName": "Jebbison"
@@ -3846,6 +3913,7 @@
       "position": "GKP",
       "price": 4.5,
       "selectedByPercent": 0.0,
+      "sellPrice": 4.5,
       "team": "BOU",
       "total": 0.87,
       "webName": "Di Gregorio"
@@ -3901,6 +3969,7 @@
       "position": "GKP",
       "price": 5.0,
       "selectedByPercent": 7.0,
+      "sellPrice": 5.0,
       "team": "BRE",
       "total": 16.98,
       "webName": "Kelleher"
@@ -3956,6 +4025,7 @@
       "position": "GKP",
       "price": 4.5,
       "selectedByPercent": 0.1,
+      "sellPrice": 4.5,
       "team": "BRE",
       "total": 3.02,
       "webName": "Valdimarsson"
@@ -4011,6 +4081,7 @@
       "position": "DEF",
       "price": 5.5,
       "selectedByPercent": 2.2,
+      "sellPrice": 5.5,
       "team": "BRE",
       "total": 19.78,
       "webName": "Collins"
@@ -4066,6 +4137,7 @@
       "position": "MID",
       "price": 5.5,
       "selectedByPercent": 2.2,
+      "sellPrice": 5.5,
       "team": "BRE",
       "total": 29.0,
       "webName": "Lewis-Potter"
@@ -4121,6 +4193,7 @@
       "position": "DEF",
       "price": 4.5,
       "selectedByPercent": 5.2,
+      "sellPrice": 4.5,
       "team": "BRE",
       "total": 22.57,
       "webName": "Ajer"
@@ -4176,6 +4249,7 @@
       "position": "DEF",
       "price": 4.6,
       "selectedByPercent": 9.6,
+      "sellPrice": 4.6,
       "team": "BRE",
       "total": 23.07,
       "webName": "Kayode"
@@ -4231,6 +4305,7 @@
       "position": "DEF",
       "price": 4.5,
       "selectedByPercent": 0.2,
+      "sellPrice": 4.5,
       "team": "BRE",
       "total": 6.49,
       "webName": "Henry"
@@ -4286,6 +4361,7 @@
       "position": "DEF",
       "price": 4.5,
       "selectedByPercent": 0.1,
+      "sellPrice": 4.5,
       "team": "BRE",
       "total": 9.64,
       "webName": "Hickey"
@@ -4341,6 +4417,7 @@
       "position": "DEF",
       "price": 4.5,
       "selectedByPercent": 0.0,
+      "sellPrice": 4.5,
       "team": "BRE",
       "total": 1.1,
       "webName": "Ji-soo"
@@ -4396,6 +4473,7 @@
       "position": "DEF",
       "price": 4.5,
       "selectedByPercent": 0.1,
+      "sellPrice": 4.5,
       "team": "BRE",
       "total": 1.49,
       "webName": "Schuster"
@@ -4451,6 +4529,7 @@
       "position": "MID",
       "price": 6.0,
       "selectedByPercent": 4.3,
+      "sellPrice": 6.0,
       "team": "BRE",
       "total": 28.29,
       "webName": "Schade"
@@ -4506,6 +4585,7 @@
       "position": "MID",
       "price": 6.4,
       "selectedByPercent": 0.8,
+      "sellPrice": 6.4,
       "team": "BRE",
       "total": 18.83,
       "webName": "O.Dango"
@@ -4561,6 +4641,7 @@
       "position": "MID",
       "price": 5.5,
       "selectedByPercent": 0.5,
+      "sellPrice": 5.5,
       "team": "BRE",
       "total": 17.67,
       "webName": "Damsgaard"
@@ -4616,6 +4697,7 @@
       "position": "MID",
       "price": 5.0,
       "selectedByPercent": 0.7,
+      "sellPrice": 5.0,
       "team": "BRE",
       "total": 19.72,
       "webName": "Janelt"
@@ -4671,6 +4753,7 @@
       "position": "MID",
       "price": 5.0,
       "selectedByPercent": 0.0,
+      "sellPrice": 5.0,
       "team": "BRE",
       "total": 7.26,
       "webName": "Carvalho"
@@ -4726,6 +4809,7 @@
       "position": "MID",
       "price": 4.9,
       "selectedByPercent": 0.9,
+      "sellPrice": 4.9,
       "team": "BRE",
       "total": 14.02,
       "webName": "Yarmoliuk"
@@ -4781,6 +4865,7 @@
       "position": "MID",
       "price": 6.0,
       "selectedByPercent": 0.2,
+      "sellPrice": 6.0,
       "team": "BRE",
       "total": 16.92,
       "webName": "Anthony"
@@ -4836,6 +4921,7 @@
       "position": "FWD",
       "price": 8.0,
       "selectedByPercent": 13.5,
+      "sellPrice": 8.0,
       "team": "BRE",
       "total": 24.82,
       "webName": "Thiago"
@@ -4891,6 +4977,7 @@
       "position": "FWD",
       "price": 4.5,
       "selectedByPercent": 1.1,
+      "sellPrice": 4.5,
       "team": "BRE",
       "total": 0.05,
       "webName": "Furo"
@@ -4946,6 +5033,7 @@
       "position": "FWD",
       "price": 5.5,
       "selectedByPercent": 0.4,
+      "sellPrice": 5.5,
       "team": "BRE",
       "total": 16.64,
       "webName": "Wilson"
@@ -5001,6 +5089,7 @@
       "position": "MID",
       "price": 5.7,
       "selectedByPercent": 15.4,
+      "sellPrice": 5.7,
       "team": "BRE",
       "total": 21.62,
       "webName": "M.Sangar\u00e9"
@@ -5056,6 +5145,7 @@
       "position": "DEF",
       "price": 4.5,
       "selectedByPercent": 0.1,
+      "sellPrice": 4.5,
       "team": "BRE",
       "total": 5.72,
       "webName": "Diouf"
@@ -5111,6 +5201,7 @@
       "position": "GKP",
       "price": 4.5,
       "selectedByPercent": 22.1,
+      "sellPrice": 4.5,
       "team": "BHA",
       "total": 13.71,
       "webName": "Verbruggen"
@@ -5166,6 +5257,7 @@
       "position": "GKP",
       "price": 4.0,
       "selectedByPercent": 4.2,
+      "sellPrice": 4.0,
       "team": "BHA",
       "total": 0.98,
       "webName": "Steele"
@@ -5221,6 +5313,7 @@
       "position": "DEF",
       "price": 4.4,
       "selectedByPercent": 2.0,
+      "sellPrice": 4.4,
       "team": "BHA",
       "total": 11.52,
       "webName": "F.Kad\u0131o\u011flu"
@@ -5276,6 +5369,7 @@
       "position": "DEF",
       "price": 4.5,
       "selectedByPercent": 0.3,
+      "sellPrice": 4.5,
       "team": "BHA",
       "total": 20.35,
       "webName": "Boscagli"
@@ -5331,6 +5425,7 @@
       "position": "DEF",
       "price": 4.7,
       "selectedByPercent": 17.3,
+      "sellPrice": 4.7,
       "team": "BHA",
       "total": 24.22,
       "webName": "De Cuyper"
@@ -5386,6 +5481,7 @@
       "position": "DEF",
       "price": 4.5,
       "selectedByPercent": 1.3,
+      "sellPrice": 4.5,
       "team": "BHA",
       "total": 18.87,
       "webName": "Dunk"
@@ -5441,6 +5537,7 @@
       "position": "DEF",
       "price": 4.5,
       "selectedByPercent": 0.0,
+      "sellPrice": 4.5,
       "team": "BHA",
       "total": 4.31,
       "webName": "Coppola"
@@ -5496,6 +5593,7 @@
       "position": "DEF",
       "price": 4.5,
       "selectedByPercent": 0.0,
+      "sellPrice": 4.5,
       "team": "BHA",
       "total": 6.79,
       "webName": "Costinha"
@@ -5551,6 +5649,7 @@
       "position": "DEF",
       "price": 5.0,
       "selectedByPercent": 0.1,
+      "sellPrice": 5.0,
       "team": "BHA",
       "total": 1.48,
       "webName": "Svoboda"
@@ -5606,6 +5705,7 @@
       "position": "MID",
       "price": 5.5,
       "selectedByPercent": 16.0,
+      "sellPrice": 5.5,
       "team": "BHA",
       "total": 26.06,
       "webName": "Gro\u00df"
@@ -5661,6 +5761,7 @@
       "position": "MID",
       "price": 5.5,
       "selectedByPercent": 0.1,
+      "sellPrice": 5.5,
       "team": "BHA",
       "total": 7.73,
       "webName": "O'Riley"
@@ -5716,6 +5817,7 @@
       "position": "MID",
       "price": 5.0,
       "selectedByPercent": 4.9,
+      "sellPrice": 5.0,
       "team": "BHA",
       "total": 24.15,
       "webName": "Gomez"
@@ -5771,6 +5873,7 @@
       "position": "MID",
       "price": 4.5,
       "selectedByPercent": 0.3,
+      "sellPrice": 4.5,
       "team": "BHA",
       "total": 0.05,
       "webName": "Oriola"
@@ -5826,6 +5929,7 @@
       "position": "MID",
       "price": 4.9,
       "selectedByPercent": 0.1,
+      "sellPrice": 4.9,
       "team": "BHA",
       "total": 7.1,
       "webName": "Yohanna"
@@ -5881,6 +5985,7 @@
       "position": "FWD",
       "price": 5.5,
       "selectedByPercent": 0.5,
+      "sellPrice": 5.5,
       "team": "BHA",
       "total": 24.18,
       "webName": "Kostoulas"
@@ -5936,6 +6041,7 @@
       "position": "DEF",
       "price": 5.0,
       "selectedByPercent": 0.2,
+      "sellPrice": 5.0,
       "team": "BHA",
       "total": 6.43,
       "webName": "Struijk"
@@ -5991,6 +6097,7 @@
       "position": "DEF",
       "price": 5.0,
       "selectedByPercent": 2.4,
+      "sellPrice": 5.0,
       "team": "BHA",
       "total": 17.73,
       "webName": "Vuskovic"
@@ -6046,6 +6153,7 @@
       "position": "FWD",
       "price": 6.0,
       "selectedByPercent": 0.2,
+      "sellPrice": 6.0,
       "team": "BHA",
       "total": 2.5,
       "webName": "David"
@@ -6101,6 +6209,7 @@
       "position": "MID",
       "price": 5.0,
       "selectedByPercent": 0.0,
+      "sellPrice": 5.0,
       "team": "BHA",
       "total": 7.98,
       "webName": "Osman"
@@ -6156,6 +6265,7 @@
       "position": "MID",
       "price": 4.5,
       "selectedByPercent": 2.1,
+      "sellPrice": 4.5,
       "team": "BHA",
       "total": 13.47,
       "webName": "Yalcouy\u00e9"
@@ -6211,6 +6321,7 @@
       "position": "DEF",
       "price": 4.5,
       "selectedByPercent": 0.0,
+      "sellPrice": 4.5,
       "team": "BHA",
       "total": 1.85,
       "webName": "Hadjam"
@@ -6266,6 +6377,7 @@
       "position": "MID",
       "price": 5.5,
       "selectedByPercent": 0.0,
+      "sellPrice": 5.5,
       "team": "BHA",
       "total": 15.27,
       "webName": "Andr\u00e9s"
@@ -6321,6 +6433,7 @@
       "position": "GKP",
       "price": 5.0,
       "selectedByPercent": 4.5,
+      "sellPrice": 5.0,
       "team": "CHE",
       "total": 11.55,
       "webName": "Martinez"
@@ -6376,6 +6489,7 @@
       "position": "MID",
       "price": 7.5,
       "selectedByPercent": 24.9,
+      "sellPrice": 7.5,
       "team": "CHE",
       "total": 28.11,
       "webName": "Rogers"
@@ -6431,6 +6545,7 @@
       "position": "FWD",
       "price": 5.9,
       "selectedByPercent": 0.8,
+      "sellPrice": 5.9,
       "team": "CHE",
       "total": 8.07,
       "webName": "Welbeck"
@@ -6486,6 +6601,7 @@
       "position": "DEF",
       "price": 5.5,
       "selectedByPercent": 8.0,
+      "sellPrice": 5.5,
       "team": "CHE",
       "total": 15.43,
       "webName": "James"
@@ -6541,6 +6657,7 @@
       "position": "DEF",
       "price": 5.0,
       "selectedByPercent": 1.1,
+      "sellPrice": 5.0,
       "team": "CHE",
       "total": 20.66,
       "webName": "Gusto"
@@ -6596,6 +6713,7 @@
       "position": "DEF",
       "price": 5.0,
       "selectedByPercent": 0.1,
+      "sellPrice": 5.0,
       "team": "CHE",
       "total": 12.38,
       "webName": "Fofana"
@@ -6651,6 +6769,7 @@
       "position": "DEF",
       "price": 4.5,
       "selectedByPercent": 0.6,
+      "sellPrice": 4.5,
       "team": "CHE",
       "total": 23.52,
       "webName": "Hato"
@@ -6706,6 +6825,7 @@
       "position": "DEF",
       "price": 4.9,
       "selectedByPercent": 1.2,
+      "sellPrice": 4.9,
       "team": "CHE",
       "total": 20.65,
       "webName": "Colwill"
@@ -6761,6 +6881,7 @@
       "position": "DEF",
       "price": 4.5,
       "selectedByPercent": 0.4,
+      "sellPrice": 4.5,
       "team": "CHE",
       "total": 17.08,
       "webName": "Acheampong"
@@ -6816,6 +6937,7 @@
       "position": "MID",
       "price": 9.6,
       "selectedByPercent": 19.4,
+      "sellPrice": 9.6,
       "team": "CHE",
       "total": 31.25,
       "webName": "Palmer"
@@ -6871,6 +6993,7 @@
       "position": "MID",
       "price": 6.5,
       "selectedByPercent": 1.3,
+      "sellPrice": 6.5,
       "team": "CHE",
       "total": 17.65,
       "webName": "Neto"
@@ -6926,6 +7049,7 @@
       "position": "MID",
       "price": 6.4,
       "selectedByPercent": 0.8,
+      "sellPrice": 6.4,
       "team": "CHE",
       "total": 7.68,
       "webName": "Est\u00eav\u00e3o"
@@ -6981,6 +7105,7 @@
       "position": "MID",
       "price": 5.9,
       "selectedByPercent": 0.0,
+      "sellPrice": 5.9,
       "team": "CHE",
       "total": 8.64,
       "webName": "Gittens"
@@ -7036,6 +7161,7 @@
       "position": "MID",
       "price": 5.0,
       "selectedByPercent": 0.2,
+      "sellPrice": 5.0,
       "team": "CHE",
       "total": 20.94,
       "webName": "Lavia"
@@ -7091,6 +7217,7 @@
       "position": "MID",
       "price": 5.4,
       "selectedByPercent": 0.0,
+      "sellPrice": 5.4,
       "team": "CHE",
       "total": 7.88,
       "webName": "Quenda"
@@ -7146,6 +7273,7 @@
       "position": "FWD",
       "price": 7.7,
       "selectedByPercent": 71.2,
+      "sellPrice": 7.7,
       "team": "CHE",
       "total": 33.26,
       "webName": "Jo\u00e3o Pedro"
@@ -7201,6 +7329,7 @@
       "position": "FWD",
       "price": 4.5,
       "selectedByPercent": 0.4,
+      "sellPrice": 4.5,
       "team": "CHE",
       "total": 0.31,
       "webName": "Mheuka"
@@ -7256,6 +7385,7 @@
       "position": "FWD",
       "price": 5.0,
       "selectedByPercent": 0.2,
+      "sellPrice": 5.0,
       "team": "CHE",
       "total": 0.0,
       "webName": "Emegha"
@@ -7311,6 +7441,7 @@
       "position": "DEF",
       "price": 6.0,
       "selectedByPercent": 8.3,
+      "sellPrice": 6.0,
       "team": "CHE",
       "total": 24.97,
       "webName": "Lacroix"
@@ -7366,6 +7497,7 @@
       "position": "GKP",
       "price": 4.5,
       "selectedByPercent": 0.1,
+      "sellPrice": 4.5,
       "team": "CHE",
       "total": 0.77,
       "webName": "Penders"
@@ -7421,6 +7553,7 @@
       "position": "DEF",
       "price": 4.5,
       "selectedByPercent": 0.0,
+      "sellPrice": 4.5,
       "team": "CHE",
       "total": 1.88,
       "webName": "Anselmino"
@@ -7476,6 +7609,7 @@
       "position": "MID",
       "price": 5.5,
       "selectedByPercent": 0.1,
+      "sellPrice": 5.5,
       "team": "CHE",
       "total": 4.76,
       "webName": "Barco"
@@ -7531,6 +7665,7 @@
       "position": "DEF",
       "price": 4.9,
       "selectedByPercent": 0.2,
+      "sellPrice": 4.9,
       "team": "CHE",
       "total": 7.43,
       "webName": "Chavarria"
@@ -7586,6 +7721,7 @@
       "position": "DEF",
       "price": 4.5,
       "selectedByPercent": 0.1,
+      "sellPrice": 4.5,
       "team": "COV",
       "total": 7.66,
       "webName": "Pinnock"
@@ -7641,6 +7777,7 @@
       "position": "MID",
       "price": 5.0,
       "selectedByPercent": 0.1,
+      "sellPrice": 5.0,
       "team": "COV",
       "total": 14.44,
       "webName": "Onyeka"
@@ -7696,6 +7833,7 @@
       "position": "GKP",
       "price": 4.5,
       "selectedByPercent": 1.0,
+      "sellPrice": 4.5,
       "team": "COV",
       "total": 15.9,
       "webName": "Rushworth"
@@ -7751,6 +7889,7 @@
       "position": "GKP",
       "price": 4.5,
       "selectedByPercent": 0.4,
+      "sellPrice": 4.5,
       "team": "COV",
       "total": 0.69,
       "webName": "Wilson"
@@ -7806,6 +7945,7 @@
       "position": "DEF",
       "price": 4.0,
       "selectedByPercent": 8.5,
+      "sellPrice": 4.0,
       "team": "COV",
       "total": 24.42,
       "webName": "Thomas"
@@ -7861,6 +8001,7 @@
       "position": "DEF",
       "price": 4.0,
       "selectedByPercent": 11.8,
+      "sellPrice": 4.0,
       "team": "COV",
       "total": 17.33,
       "webName": "van Ewijk"
@@ -7916,6 +8057,7 @@
       "position": "DEF",
       "price": 4.0,
       "selectedByPercent": 0.8,
+      "sellPrice": 4.0,
       "team": "COV",
       "total": 17.84,
       "webName": "Dasilva"
@@ -7971,6 +8113,7 @@
       "position": "DEF",
       "price": 4.0,
       "selectedByPercent": 0.1,
+      "sellPrice": 4.0,
       "team": "COV",
       "total": 1.66,
       "webName": "Bidwell"
@@ -8026,6 +8169,7 @@
       "position": "DEF",
       "price": 4.0,
       "selectedByPercent": 0.0,
+      "sellPrice": 4.0,
       "team": "COV",
       "total": 1.66,
       "webName": "Latibeaudiere"
@@ -8081,6 +8225,7 @@
       "position": "DEF",
       "price": 4.0,
       "selectedByPercent": 0.8,
+      "sellPrice": 4.0,
       "team": "COV",
       "total": 16.66,
       "webName": "Amenda"
@@ -8136,6 +8281,7 @@
       "position": "MID",
       "price": 5.0,
       "selectedByPercent": 0.1,
+      "sellPrice": 5.0,
       "team": "COV",
       "total": 16.62,
       "webName": "Rudoni"
@@ -8191,6 +8337,7 @@
       "position": "MID",
       "price": 5.0,
       "selectedByPercent": 0.2,
+      "sellPrice": 5.0,
       "team": "COV",
       "total": 21.18,
       "webName": "Grimes"
@@ -8246,6 +8393,7 @@
       "position": "MID",
       "price": 4.9,
       "selectedByPercent": 0.1,
+      "sellPrice": 4.9,
       "team": "COV",
       "total": 8.45,
       "webName": "Sakamoto"
@@ -8301,6 +8449,7 @@
       "position": "MID",
       "price": 5.4,
       "selectedByPercent": 0.1,
+      "sellPrice": 5.4,
       "team": "COV",
       "total": 9.14,
       "webName": "Mason-Clark"
@@ -8356,6 +8505,7 @@
       "position": "MID",
       "price": 4.9,
       "selectedByPercent": 0.0,
+      "sellPrice": 4.9,
       "team": "COV",
       "total": 4.66,
       "webName": "Eccles"
@@ -8411,6 +8561,7 @@
       "position": "MID",
       "price": 5.4,
       "selectedByPercent": 0.1,
+      "sellPrice": 5.4,
       "team": "COV",
       "total": 11.39,
       "webName": "Torp"
@@ -8466,6 +8617,7 @@
       "position": "MID",
       "price": 4.5,
       "selectedByPercent": 0.3,
+      "sellPrice": 4.5,
       "team": "COV",
       "total": 4.66,
       "webName": "Shepherd"
@@ -8521,6 +8673,7 @@
       "position": "MID",
       "price": 5.5,
       "selectedByPercent": 0.1,
+      "sellPrice": 5.5,
       "team": "COV",
       "total": 17.49,
       "webName": "Tchaouna"
@@ -8576,6 +8729,7 @@
       "position": "FWD",
       "price": 5.0,
       "selectedByPercent": 0.8,
+      "sellPrice": 5.0,
       "team": "COV",
       "total": 8.15,
       "webName": "Thomas-Asante"
@@ -8631,6 +8785,7 @@
       "position": "FWD",
       "price": 5.0,
       "selectedByPercent": 0.9,
+      "sellPrice": 5.0,
       "team": "COV",
       "total": 8.09,
       "webName": "Simms"
@@ -8686,6 +8841,7 @@
       "position": "FWD",
       "price": 5.5,
       "selectedByPercent": 0.7,
+      "sellPrice": 5.5,
       "team": "COV",
       "total": 20.83,
       "webName": "Awoniyi"
@@ -8741,6 +8897,7 @@
       "position": "MID",
       "price": 5.0,
       "selectedByPercent": 0.2,
+      "sellPrice": 5.0,
       "team": "COV",
       "total": 19.39,
       "webName": "Yirenkyi"
@@ -8796,6 +8953,7 @@
       "position": "MID",
       "price": 5.5,
       "selectedByPercent": 0.1,
+      "sellPrice": 5.5,
       "team": "COV",
       "total": 8.42,
       "webName": "Hamer"
@@ -8851,6 +9009,7 @@
       "position": "FWD",
       "price": 5.0,
       "selectedByPercent": 0.1,
+      "sellPrice": 5.0,
       "team": "COV",
       "total": 0.79,
       "webName": "Cherif"
@@ -8906,6 +9065,7 @@
       "position": "GKP",
       "price": 4.0,
       "selectedByPercent": 0.2,
+      "sellPrice": 4.0,
       "team": "COV",
       "total": 0.87,
       "webName": "Bentley"
@@ -8961,6 +9121,7 @@
       "position": "MID",
       "price": 5.5,
       "selectedByPercent": 0.0,
+      "sellPrice": 5.5,
       "team": "CRY",
       "total": 13.64,
       "webName": "Guessand"
@@ -9016,6 +9177,7 @@
       "position": "DEF",
       "price": 4.5,
       "selectedByPercent": 0.1,
+      "sellPrice": 4.5,
       "team": "CRY",
       "total": 7.78,
       "webName": "Disasi"
@@ -9071,6 +9233,7 @@
       "position": "GKP",
       "price": 5.0,
       "selectedByPercent": 1.8,
+      "sellPrice": 5.0,
       "team": "CRY",
       "total": 19.18,
       "webName": "Henderson"
@@ -9126,6 +9289,7 @@
       "position": "GKP",
       "price": 4.5,
       "selectedByPercent": 0.1,
+      "sellPrice": 4.5,
       "team": "CRY",
       "total": 2.66,
       "webName": "Benitez"
@@ -9181,6 +9345,7 @@
       "position": "DEF",
       "price": 5.0,
       "selectedByPercent": 0.7,
+      "sellPrice": 5.0,
       "team": "CRY",
       "total": 22.98,
       "webName": "Richards"
@@ -9236,6 +9401,7 @@
       "position": "DEF",
       "price": 4.9,
       "selectedByPercent": 0.3,
+      "sellPrice": 4.9,
       "team": "CRY",
       "total": 24.32,
       "webName": "Canvot"
@@ -9291,6 +9457,7 @@
       "position": "DEF",
       "price": 4.5,
       "selectedByPercent": 4.6,
+      "sellPrice": 4.5,
       "team": "CRY",
       "total": 22.09,
       "webName": "Mitchell"
@@ -9346,6 +9513,7 @@
       "position": "DEF",
       "price": 4.4,
       "selectedByPercent": 0.1,
+      "sellPrice": 4.4,
       "team": "CRY",
       "total": 4.61,
       "webName": "Mingueza"
@@ -9401,6 +9569,7 @@
       "position": "MID",
       "price": 5.5,
       "selectedByPercent": 0.9,
+      "sellPrice": 5.5,
       "team": "CRY",
       "total": 22.44,
       "webName": "Wharton"
@@ -9456,6 +9625,7 @@
       "position": "MID",
       "price": 5.5,
       "selectedByPercent": 0.2,
+      "sellPrice": 5.5,
       "team": "CRY",
       "total": 17.64,
       "webName": "Yeremy"
@@ -9511,6 +9681,7 @@
       "position": "MID",
       "price": 4.5,
       "selectedByPercent": 9.4,
+      "sellPrice": 4.5,
       "team": "CRY",
       "total": 5.92,
       "webName": "Hughes"
@@ -9566,6 +9737,7 @@
       "position": "MID",
       "price": 4.9,
       "selectedByPercent": 0.1,
+      "sellPrice": 4.9,
       "team": "CRY",
       "total": 6.89,
       "webName": "Lerma"
@@ -9621,6 +9793,7 @@
       "position": "MID",
       "price": 5.0,
       "selectedByPercent": 0.3,
+      "sellPrice": 5.0,
       "team": "CRY",
       "total": 21.14,
       "webName": "Kamada"
@@ -9676,6 +9849,7 @@
       "position": "MID",
       "price": 4.9,
       "selectedByPercent": 0.0,
+      "sellPrice": 4.9,
       "team": "CRY",
       "total": 2.86,
       "webName": "M.Fran\u00e7a"
@@ -9731,6 +9905,7 @@
       "position": "MID",
       "price": 4.9,
       "selectedByPercent": 0.1,
+      "sellPrice": 4.9,
       "team": "CRY",
       "total": 2.26,
       "webName": "Doucour\u00e9"
@@ -9786,6 +9961,7 @@
       "position": "MID",
       "price": 5.0,
       "selectedByPercent": 0.0,
+      "sellPrice": 5.0,
       "team": "CRY",
       "total": 1.36,
       "webName": "J.Rak-Sakyi"
@@ -9841,6 +10017,7 @@
       "position": "MID",
       "price": 4.5,
       "selectedByPercent": 0.1,
+      "sellPrice": 4.5,
       "team": "CRY",
       "total": 0.96,
       "webName": "Drakes-Thomas"
@@ -9896,6 +10073,7 @@
       "position": "FWD",
       "price": 6.0,
       "selectedByPercent": 0.5,
+      "sellPrice": 6.0,
       "team": "CRY",
       "total": 16.3,
       "webName": "Strand Larsen"
@@ -9951,6 +10129,7 @@
       "position": "FWD",
       "price": 5.5,
       "selectedByPercent": 0.5,
+      "sellPrice": 5.5,
       "team": "CRY",
       "total": 22.47,
       "webName": "Nketiah"
@@ -10006,6 +10185,7 @@
       "position": "MID",
       "price": 5.5,
       "selectedByPercent": 0.1,
+      "sellPrice": 5.5,
       "team": "CRY",
       "total": 16.81,
       "webName": "McNeil"
@@ -10061,6 +10241,7 @@
       "position": "GKP",
       "price": 4.0,
       "selectedByPercent": 1.8,
+      "sellPrice": 4.0,
       "team": "CRY",
       "total": 0.8,
       "webName": "Matthews"
@@ -10116,6 +10297,7 @@
       "position": "DEF",
       "price": 4.5,
       "selectedByPercent": 0.3,
+      "sellPrice": 4.5,
       "team": "CRY",
       "total": 13.78,
       "webName": "Tomiyasu"
@@ -10171,6 +10353,7 @@
       "position": "DEF",
       "price": 5.0,
       "selectedByPercent": 0.1,
+      "sellPrice": 5.0,
       "team": "CRY",
       "total": 13.75,
       "webName": "Khalaili"
@@ -10226,6 +10409,7 @@
       "position": "MID",
       "price": 5.0,
       "selectedByPercent": 0.0,
+      "sellPrice": 5.0,
       "team": "CRY",
       "total": 7.7,
       "webName": "Gozo"
@@ -10281,6 +10465,7 @@
       "position": "DEF",
       "price": 4.5,
       "selectedByPercent": 0.0,
+      "sellPrice": 4.5,
       "team": "CRY",
       "total": 10.64,
       "webName": "Ahanor"
@@ -10336,6 +10521,7 @@
       "position": "DEF",
       "price": 4.5,
       "selectedByPercent": 0.0,
+      "sellPrice": 4.5,
       "team": "CRY",
       "total": 10.24,
       "webName": "Chilwell"
@@ -10391,6 +10577,7 @@
       "position": "MID",
       "price": 5.0,
       "selectedByPercent": 0.0,
+      "sellPrice": 5.0,
       "team": "CRY",
       "total": 11.02,
       "webName": "Timber"
@@ -10446,6 +10633,7 @@
       "position": "MID",
       "price": 5.5,
       "selectedByPercent": 0.0,
+      "sellPrice": 5.5,
       "team": "CRY",
       "total": 16.0,
       "webName": "Osorio"
@@ -10501,6 +10689,7 @@
       "position": "MID",
       "price": 5.9,
       "selectedByPercent": 0.1,
+      "sellPrice": 5.9,
       "team": "EVE",
       "total": 12.7,
       "webName": "Johnson"
@@ -10556,6 +10745,7 @@
       "position": "GKP",
       "price": 5.5,
       "selectedByPercent": 8.7,
+      "sellPrice": 5.5,
       "team": "EVE",
       "total": 19.43,
       "webName": "Pickford"
@@ -10611,6 +10801,7 @@
       "position": "GKP",
       "price": 5.0,
       "selectedByPercent": 0.0,
+      "sellPrice": 5.0,
       "team": "EVE",
       "total": 0.83,
       "webName": "Travers"
@@ -10666,6 +10857,7 @@
       "position": "GKP",
       "price": 4.5,
       "selectedByPercent": 0.0,
+      "sellPrice": 4.5,
       "team": "EVE",
       "total": 0.59,
       "webName": "King"
@@ -10721,6 +10913,7 @@
       "position": "DEF",
       "price": 6.0,
       "selectedByPercent": 10.8,
+      "sellPrice": 6.0,
       "team": "EVE",
       "total": 25.49,
       "webName": "Tarkowski"
@@ -10776,6 +10969,7 @@
       "position": "DEF",
       "price": 5.5,
       "selectedByPercent": 1.8,
+      "sellPrice": 5.5,
       "team": "EVE",
       "total": 22.47,
       "webName": "Branthwaite"
@@ -10831,6 +11025,7 @@
       "position": "DEF",
       "price": 4.9,
       "selectedByPercent": 1.0,
+      "sellPrice": 4.9,
       "team": "EVE",
       "total": 4.44,
       "webName": "Keane"
@@ -10886,6 +11081,7 @@
       "position": "DEF",
       "price": 4.9,
       "selectedByPercent": 0.3,
+      "sellPrice": 4.9,
       "team": "EVE",
       "total": 4.54,
       "webName": "O'Brien"
@@ -10941,6 +11137,7 @@
       "position": "DEF",
       "price": 4.5,
       "selectedByPercent": 1.8,
+      "sellPrice": 4.5,
       "team": "EVE",
       "total": 21.07,
       "webName": "Mykolenko"
@@ -10996,6 +11193,7 @@
       "position": "MID",
       "price": 6.5,
       "selectedByPercent": 4.4,
+      "sellPrice": 6.5,
       "team": "EVE",
       "total": 26.96,
       "webName": "Dewsbury-Hall"
@@ -11051,6 +11249,7 @@
       "position": "MID",
       "price": 6.5,
       "selectedByPercent": 0.3,
+      "sellPrice": 6.5,
       "team": "EVE",
       "total": 10.02,
       "webName": "Grealish"
@@ -11106,6 +11305,7 @@
       "position": "MID",
       "price": 6.0,
       "selectedByPercent": 0.1,
+      "sellPrice": 6.0,
       "team": "EVE",
       "total": 14.84,
       "webName": "Garner"
@@ -11161,6 +11361,7 @@
       "position": "MID",
       "price": 5.5,
       "selectedByPercent": 0.2,
+      "sellPrice": 5.5,
       "team": "EVE",
       "total": 20.54,
       "webName": "George"
@@ -11216,6 +11417,7 @@
       "position": "MID",
       "price": 5.0,
       "selectedByPercent": 0.1,
+      "sellPrice": 5.0,
       "team": "EVE",
       "total": 12.54,
       "webName": "Alcaraz"
@@ -11271,6 +11473,7 @@
       "position": "MID",
       "price": 5.0,
       "selectedByPercent": 0.4,
+      "sellPrice": 5.0,
       "team": "EVE",
       "total": 21.01,
       "webName": "Armstrong"
@@ -11326,6 +11529,7 @@
       "position": "MID",
       "price": 5.4,
       "selectedByPercent": 0.0,
+      "sellPrice": 5.4,
       "team": "EVE",
       "total": 6.42,
       "webName": "Dibling"
@@ -11381,6 +11585,7 @@
       "position": "MID",
       "price": 5.0,
       "selectedByPercent": 0.1,
+      "sellPrice": 5.0,
       "team": "EVE",
       "total": 21.18,
       "webName": "R\u00f6hl"
@@ -11436,6 +11641,7 @@
       "position": "MID",
       "price": 5.5,
       "selectedByPercent": 0.2,
+      "sellPrice": 5.5,
       "team": "EVE",
       "total": 15.26,
       "webName": "Hackney"
@@ -11491,6 +11697,7 @@
       "position": "FWD",
       "price": 5.5,
       "selectedByPercent": 4.9,
+      "sellPrice": 5.5,
       "team": "EVE",
       "total": 23.86,
       "webName": "Barry"
@@ -11546,6 +11753,7 @@
       "position": "DEF",
       "price": 4.5,
       "selectedByPercent": 0.0,
+      "sellPrice": 4.5,
       "team": "EVE",
       "total": 9.93,
       "webName": "Maitland-Niles"
@@ -11601,6 +11809,7 @@
       "position": "GKP",
       "price": 4.5,
       "selectedByPercent": 3.1,
+      "sellPrice": 4.5,
       "team": "FUL",
       "total": 17.77,
       "webName": "Leno"
@@ -11656,6 +11865,7 @@
       "position": "GKP",
       "price": 4.0,
       "selectedByPercent": 1.2,
+      "sellPrice": 4.0,
       "team": "FUL",
       "total": 1.37,
       "webName": "Lecomte"
@@ -11711,6 +11921,7 @@
       "position": "DEF",
       "price": 5.0,
       "selectedByPercent": 0.1,
+      "sellPrice": 5.0,
       "team": "FUL",
       "total": 10.99,
       "webName": "Andersen"
@@ -11766,6 +11977,7 @@
       "position": "DEF",
       "price": 4.5,
       "selectedByPercent": 1.6,
+      "sellPrice": 4.5,
       "team": "FUL",
       "total": 21.31,
       "webName": "Robinson"
@@ -11821,6 +12033,7 @@
       "position": "DEF",
       "price": 4.5,
       "selectedByPercent": 0.0,
+      "sellPrice": 4.5,
       "team": "FUL",
       "total": 14.22,
       "webName": "J.Cuenca"
@@ -11876,6 +12089,7 @@
       "position": "DEF",
       "price": 4.5,
       "selectedByPercent": 0.2,
+      "sellPrice": 4.5,
       "team": "FUL",
       "total": 4.94,
       "webName": "Tete"
@@ -11931,6 +12145,7 @@
       "position": "DEF",
       "price": 4.5,
       "selectedByPercent": 0.8,
+      "sellPrice": 4.5,
       "team": "FUL",
       "total": 19.0,
       "webName": "Bassey"
@@ -11986,6 +12201,7 @@
       "position": "DEF",
       "price": 4.5,
       "selectedByPercent": 0.9,
+      "sellPrice": 4.5,
       "team": "FUL",
       "total": 19.21,
       "webName": "Castagne"
@@ -12041,6 +12257,7 @@
       "position": "MID",
       "price": 5.5,
       "selectedByPercent": 0.9,
+      "sellPrice": 5.5,
       "team": "FUL",
       "total": 24.5,
       "webName": "Iwobi"
@@ -12096,6 +12313,7 @@
       "position": "MID",
       "price": 5.4,
       "selectedByPercent": 0.3,
+      "sellPrice": 5.4,
       "team": "FUL",
       "total": 10.99,
       "webName": "Smith Rowe"
@@ -12151,6 +12369,7 @@
       "position": "MID",
       "price": 5.4,
       "selectedByPercent": 0.0,
+      "sellPrice": 5.4,
       "team": "FUL",
       "total": 13.94,
       "webName": "Kevin"
@@ -12206,6 +12425,7 @@
       "position": "MID",
       "price": 5.5,
       "selectedByPercent": 0.3,
+      "sellPrice": 5.5,
       "team": "FUL",
       "total": 23.01,
       "webName": "Bobb"
@@ -12261,6 +12481,7 @@
       "position": "MID",
       "price": 5.0,
       "selectedByPercent": 0.3,
+      "sellPrice": 5.0,
       "team": "FUL",
       "total": 19.95,
       "webName": "Berge"
@@ -12316,6 +12537,7 @@
       "position": "MID",
       "price": 5.5,
       "selectedByPercent": 0.7,
+      "sellPrice": 5.5,
       "team": "FUL",
       "total": 21.56,
       "webName": "King"
@@ -12371,6 +12593,7 @@
       "position": "DEF",
       "price": 4.5,
       "selectedByPercent": 0.4,
+      "sellPrice": 4.5,
       "team": "FUL",
       "total": 14.58,
       "webName": "Sessegnon"
@@ -12426,6 +12649,7 @@
       "position": "MID",
       "price": 4.5,
       "selectedByPercent": 1.3,
+      "sellPrice": 4.5,
       "team": "FUL",
       "total": 5.2,
       "webName": "Reed"
@@ -12481,6 +12705,7 @@
       "position": "FWD",
       "price": 5.5,
       "selectedByPercent": 0.5,
+      "sellPrice": 5.5,
       "team": "FUL",
       "total": 11.47,
       "webName": "Muniz"
@@ -12536,6 +12761,7 @@
       "position": "FWD",
       "price": 4.5,
       "selectedByPercent": 6.6,
+      "sellPrice": 4.5,
       "team": "FUL",
       "total": 4.11,
       "webName": "Kusi-Asare"
@@ -12591,6 +12817,7 @@
       "position": "FWD",
       "price": 6.0,
       "selectedByPercent": 4.6,
+      "sellPrice": 6.0,
       "team": "FUL",
       "total": 16.81,
       "webName": "Gonzalo"
@@ -12646,6 +12873,7 @@
       "position": "MID",
       "price": 5.5,
       "selectedByPercent": 0.2,
+      "sellPrice": 5.5,
       "team": "FUL",
       "total": 19.78,
       "webName": "Palacios"
@@ -12701,6 +12929,7 @@
       "position": "MID",
       "price": 5.0,
       "selectedByPercent": 0.1,
+      "sellPrice": 5.0,
       "team": "FUL",
       "total": 8.44,
       "webName": "Charles"
@@ -12756,6 +12985,7 @@
       "position": "MID",
       "price": 4.5,
       "selectedByPercent": 0.3,
+      "sellPrice": 4.5,
       "team": "FUL",
       "total": 5.52,
       "webName": "Zepa"
@@ -12811,6 +13041,7 @@
       "position": "MID",
       "price": 5.0,
       "selectedByPercent": 0.0,
+      "sellPrice": 5.0,
       "team": "FUL",
       "total": 10.91,
       "webName": "Larsson"
@@ -12866,6 +13097,7 @@
       "position": "MID",
       "price": 5.0,
       "selectedByPercent": 0.0,
+      "sellPrice": 5.0,
       "team": "FUL",
       "total": 15.82,
       "webName": "\u00c1ngel"
@@ -12921,6 +13153,7 @@
       "position": "DEF",
       "price": 4.5,
       "selectedByPercent": 0.0,
+      "sellPrice": 4.5,
       "team": "FUL",
       "total": 8.83,
       "webName": "Affengruber"
@@ -12976,6 +13209,7 @@
       "position": "MID",
       "price": 5.0,
       "selectedByPercent": 0.0,
+      "sellPrice": 5.0,
       "team": "HUL",
       "total": 9.37,
       "webName": "Iroegbunam"
@@ -13031,6 +13265,7 @@
       "position": "GKP",
       "price": 4.0,
       "selectedByPercent": 1.5,
+      "sellPrice": 4.0,
       "team": "HUL",
       "total": 0.7,
       "webName": "Phillips"
@@ -13086,6 +13321,7 @@
       "position": "DEF",
       "price": 4.0,
       "selectedByPercent": 5.2,
+      "sellPrice": 4.0,
       "team": "HUL",
       "total": 20.78,
       "webName": "Egan"
@@ -13141,6 +13377,7 @@
       "position": "DEF",
       "price": 4.1,
       "selectedByPercent": 9.4,
+      "sellPrice": 4.1,
       "team": "HUL",
       "total": 20.71,
       "webName": "Ajayi"
@@ -13196,6 +13433,7 @@
       "position": "DEF",
       "price": 4.0,
       "selectedByPercent": 1.1,
+      "sellPrice": 4.0,
       "team": "HUL",
       "total": 17.72,
       "webName": "Giles"
@@ -13251,6 +13489,7 @@
       "position": "DEF",
       "price": 4.0,
       "selectedByPercent": 0.1,
+      "sellPrice": 4.0,
       "team": "HUL",
       "total": 1.58,
       "webName": "McCarthy"
@@ -13306,6 +13545,7 @@
       "position": "DEF",
       "price": 4.0,
       "selectedByPercent": 0.1,
+      "sellPrice": 4.0,
       "team": "HUL",
       "total": 4.36,
       "webName": "McNair"
@@ -13361,6 +13601,7 @@
       "position": "MID",
       "price": 5.0,
       "selectedByPercent": 0.8,
+      "sellPrice": 5.0,
       "team": "HUL",
       "total": 21.56,
       "webName": "Belloumi"
@@ -13416,6 +13657,7 @@
       "position": "MID",
       "price": 4.5,
       "selectedByPercent": 0.4,
+      "sellPrice": 4.5,
       "team": "HUL",
       "total": 4.49,
       "webName": "Dowell"
@@ -13471,6 +13713,7 @@
       "position": "MID",
       "price": 4.5,
       "selectedByPercent": 4.8,
+      "sellPrice": 4.5,
       "team": "HUL",
       "total": 20.57,
       "webName": "Slater"
@@ -13526,6 +13769,7 @@
       "position": "MID",
       "price": 4.9,
       "selectedByPercent": 0.0,
+      "sellPrice": 4.9,
       "team": "HUL",
       "total": 4.49,
       "webName": "\u00d6m\u00fcr"
@@ -13581,6 +13825,7 @@
       "position": "FWD",
       "price": 5.5,
       "selectedByPercent": 2.1,
+      "sellPrice": 5.5,
       "team": "HUL",
       "total": 10.69,
       "webName": "McBurnie"
@@ -13636,6 +13881,7 @@
       "position": "MID",
       "price": 5.0,
       "selectedByPercent": 0.0,
+      "sellPrice": 5.0,
       "team": "HUL",
       "total": 4.49,
       "webName": "Akintola"
@@ -13691,6 +13937,7 @@
       "position": "MID",
       "price": 5.0,
       "selectedByPercent": 0.0,
+      "sellPrice": 5.0,
       "team": "HUL",
       "total": 2.4,
       "webName": "Gelhardt"
@@ -13746,6 +13993,7 @@
       "position": "DEF",
       "price": 4.0,
       "selectedByPercent": 2.1,
+      "sellPrice": 4.0,
       "team": "HUL",
       "total": 4.39,
       "webName": "Targett"
@@ -13801,6 +14049,7 @@
       "position": "MID",
       "price": 5.0,
       "selectedByPercent": 0.0,
+      "sellPrice": 5.0,
       "team": "HUL",
       "total": 8.45,
       "webName": "Morita"
@@ -13856,6 +14105,7 @@
       "position": "GKP",
       "price": 4.6,
       "selectedByPercent": 7.8,
+      "sellPrice": 4.6,
       "team": "HUL",
       "total": 19.79,
       "webName": "Tzolakis"
@@ -13911,6 +14161,7 @@
       "position": "MID",
       "price": 4.9,
       "selectedByPercent": 0.1,
+      "sellPrice": 4.9,
       "team": "HUL",
       "total": 4.49,
       "webName": "Hjert\u00f8-Dahl"
@@ -13966,6 +14217,7 @@
       "position": "MID",
       "price": 5.0,
       "selectedByPercent": 0.1,
+      "sellPrice": 5.0,
       "team": "HUL",
       "total": 16.09,
       "webName": "Stroud"
@@ -14021,6 +14273,7 @@
       "position": "DEF",
       "price": 4.0,
       "selectedByPercent": 0.6,
+      "sellPrice": 4.0,
       "team": "HUL",
       "total": 7.22,
       "webName": "Herrington"
@@ -14076,6 +14329,7 @@
       "position": "DEF",
       "price": 4.0,
       "selectedByPercent": 5.5,
+      "sellPrice": 4.0,
       "team": "HUL",
       "total": 15.39,
       "webName": "Mendy"
@@ -14131,6 +14385,7 @@
       "position": "MID",
       "price": 5.0,
       "selectedByPercent": 0.0,
+      "sellPrice": 5.0,
       "team": "HUL",
       "total": 8.69,
       "webName": "Gourna-Douath"
@@ -14186,6 +14441,7 @@
       "position": "MID",
       "price": 5.0,
       "selectedByPercent": 0.0,
+      "sellPrice": 5.0,
       "team": "HUL",
       "total": 10.88,
       "webName": "Cho"
@@ -14241,6 +14497,7 @@
       "position": "FWD",
       "price": 5.0,
       "selectedByPercent": 0.0,
+      "sellPrice": 5.0,
       "team": "HUL",
       "total": 6.58,
       "webName": "Ansah"
@@ -14296,6 +14553,7 @@
       "position": "FWD",
       "price": 5.0,
       "selectedByPercent": 0.0,
+      "sellPrice": 5.0,
       "team": "HUL",
       "total": 4.5,
       "webName": "Vaz"
@@ -14351,6 +14609,7 @@
       "position": "DEF",
       "price": 4.0,
       "selectedByPercent": 0.1,
+      "sellPrice": 4.0,
       "team": "HUL",
       "total": 9.49,
       "webName": "Norton-Cuffy"
@@ -14406,6 +14665,7 @@
       "position": "MID",
       "price": 5.5,
       "selectedByPercent": 0.0,
+      "sellPrice": 5.5,
       "team": "HUL",
       "total": 15.94,
       "webName": "Thomas"
@@ -14461,6 +14721,7 @@
       "position": "MID",
       "price": 5.0,
       "selectedByPercent": 0.0,
+      "sellPrice": 5.0,
       "team": "HUL",
       "total": 15.94,
       "webName": "Mouzakitis"
@@ -14516,6 +14777,7 @@
       "position": "DEF",
       "price": 4.0,
       "selectedByPercent": 15.5,
+      "sellPrice": 4.0,
       "team": "IPS",
       "total": 18.41,
       "webName": "Diop"
@@ -14571,6 +14833,7 @@
       "position": "MID",
       "price": 5.0,
       "selectedByPercent": 0.1,
+      "sellPrice": 5.0,
       "team": "IPS",
       "total": 18.63,
       "webName": "Luki\u0107"
@@ -14626,6 +14889,7 @@
       "position": "GKP",
       "price": 4.5,
       "selectedByPercent": 0.4,
+      "sellPrice": 4.5,
       "team": "IPS",
       "total": 1.1,
       "webName": "Walton"
@@ -14681,6 +14945,7 @@
       "position": "GKP",
       "price": 4.0,
       "selectedByPercent": 4.3,
+      "sellPrice": 4.0,
       "team": "IPS",
       "total": 0.51,
       "webName": "Palmer"
@@ -14736,6 +15001,7 @@
       "position": "GKP",
       "price": 4.0,
       "selectedByPercent": 0.5,
+      "sellPrice": 4.0,
       "team": "IPS",
       "total": 0.85,
       "webName": "Button"
@@ -14791,6 +15057,7 @@
       "position": "DEF",
       "price": 4.0,
       "selectedByPercent": 0.5,
+      "sellPrice": 4.0,
       "team": "IPS",
       "total": 1.2,
       "webName": "Kipr\u00e9"
@@ -14846,6 +15113,7 @@
       "position": "DEF",
       "price": 4.0,
       "selectedByPercent": 3.2,
+      "sellPrice": 4.0,
       "team": "IPS",
       "total": 17.76,
       "webName": "O'Shea"
@@ -14901,6 +15169,7 @@
       "position": "DEF",
       "price": 4.0,
       "selectedByPercent": 5.2,
+      "sellPrice": 4.0,
       "team": "IPS",
       "total": 17.31,
       "webName": "Davis"
@@ -14956,6 +15225,7 @@
       "position": "DEF",
       "price": 4.0,
       "selectedByPercent": 1.3,
+      "sellPrice": 4.0,
       "team": "IPS",
       "total": 16.09,
       "webName": "Greaves"
@@ -15011,6 +15281,7 @@
       "position": "DEF",
       "price": 4.0,
       "selectedByPercent": 0.5,
+      "sellPrice": 4.0,
       "team": "IPS",
       "total": 3.98,
       "webName": "Furlong"
@@ -15066,6 +15337,7 @@
       "position": "MID",
       "price": 5.0,
       "selectedByPercent": 0.1,
+      "sellPrice": 5.0,
       "team": "IPS",
       "total": 19.17,
       "webName": "N\u00fa\u00f1ez"
@@ -15121,6 +15393,7 @@
       "position": "MID",
       "price": 5.5,
       "selectedByPercent": 0.2,
+      "sellPrice": 5.5,
       "team": "IPS",
       "total": 7.04,
       "webName": "Clarke"
@@ -15176,6 +15449,7 @@
       "position": "MID",
       "price": 5.5,
       "selectedByPercent": 0.2,
+      "sellPrice": 5.5,
       "team": "IPS",
       "total": 16.32,
       "webName": "Fatawu"
@@ -15231,6 +15505,7 @@
       "position": "FWD",
       "price": 5.5,
       "selectedByPercent": 1.7,
+      "sellPrice": 5.5,
       "team": "IPS",
       "total": 12.16,
       "webName": "Emersonn"
@@ -15286,6 +15561,7 @@
       "position": "FWD",
       "price": 5.0,
       "selectedByPercent": 1.0,
+      "sellPrice": 5.0,
       "team": "IPS",
       "total": 6.42,
       "webName": "Akpom"
@@ -15341,6 +15617,7 @@
       "position": "FWD",
       "price": 4.5,
       "selectedByPercent": 3.3,
+      "sellPrice": 4.5,
       "team": "IPS",
       "total": 2.5,
       "webName": "Walle Egeli"
@@ -15396,6 +15673,7 @@
       "position": "MID",
       "price": 4.5,
       "selectedByPercent": 1.3,
+      "sellPrice": 4.5,
       "team": "IPS",
       "total": 8.12,
       "webName": "McAteer"
@@ -15451,6 +15729,7 @@
       "position": "MID",
       "price": 4.9,
       "selectedByPercent": 0.0,
+      "sellPrice": 4.9,
       "team": "IPS",
       "total": 3.76,
       "webName": "Mehmeti"
@@ -15506,6 +15785,7 @@
       "position": "MID",
       "price": 5.4,
       "selectedByPercent": 0.3,
+      "sellPrice": 5.4,
       "team": "IPS",
       "total": 19.52,
       "webName": "Maeda"
@@ -15561,6 +15841,7 @@
       "position": "GKP",
       "price": 4.5,
       "selectedByPercent": 0.6,
+      "sellPrice": 4.5,
       "team": "IPS",
       "total": 16.18,
       "webName": "Scherpen"
@@ -15616,6 +15897,7 @@
       "position": "MID",
       "price": 4.9,
       "selectedByPercent": 0.1,
+      "sellPrice": 4.9,
       "team": "IPS",
       "total": 6.2,
       "webName": "Florentino"
@@ -15671,6 +15953,7 @@
       "position": "MID",
       "price": 5.5,
       "selectedByPercent": 0.8,
+      "sellPrice": 5.5,
       "team": "IPS",
       "total": 17.89,
       "webName": "Enciso"
@@ -15726,6 +16009,7 @@
       "position": "DEF",
       "price": 4.0,
       "selectedByPercent": 0.9,
+      "sellPrice": 4.0,
       "team": "IPS",
       "total": 6.35,
       "webName": "Ouattara"
@@ -15781,6 +16065,7 @@
       "position": "MID",
       "price": 5.0,
       "selectedByPercent": 0.0,
+      "sellPrice": 5.0,
       "team": "IPS",
       "total": 9.18,
       "webName": "Palacios"
@@ -15836,6 +16121,7 @@
       "position": "FWD",
       "price": 5.5,
       "selectedByPercent": 0.0,
+      "sellPrice": 5.5,
       "team": "IPS",
       "total": 10.0,
       "webName": "Flemming"
@@ -15891,6 +16177,7 @@
       "position": "MID",
       "price": 6.4,
       "selectedByPercent": 4.0,
+      "sellPrice": 6.4,
       "team": "LEE",
       "total": 16.4,
       "webName": "Wilson"
@@ -15946,6 +16233,7 @@
       "position": "DEF",
       "price": 5.0,
       "selectedByPercent": 0.9,
+      "sellPrice": 5.0,
       "team": "LEE",
       "total": 22.14,
       "webName": "Bijol"
@@ -16001,6 +16289,7 @@
       "position": "DEF",
       "price": 4.5,
       "selectedByPercent": 0.5,
+      "sellPrice": 4.5,
       "team": "LEE",
       "total": 19.96,
       "webName": "Bogle"
@@ -16056,6 +16345,7 @@
       "position": "DEF",
       "price": 4.5,
       "selectedByPercent": 0.0,
+      "sellPrice": 4.5,
       "team": "LEE",
       "total": 2.91,
       "webName": "Gudmundsson"
@@ -16111,6 +16401,7 @@
       "position": "DEF",
       "price": 4.5,
       "selectedByPercent": 1.5,
+      "sellPrice": 4.5,
       "team": "LEE",
       "total": 25.62,
       "webName": "Justin"
@@ -16166,6 +16457,7 @@
       "position": "DEF",
       "price": 5.0,
       "selectedByPercent": 3.3,
+      "sellPrice": 5.0,
       "team": "LEE",
       "total": 19.31,
       "webName": "Muharemovi\u0107"
@@ -16221,6 +16513,7 @@
       "position": "MID",
       "price": 6.0,
       "selectedByPercent": 3.0,
+      "sellPrice": 6.0,
       "team": "LEE",
       "total": 28.22,
       "webName": "Stach"
@@ -16276,6 +16569,7 @@
       "position": "MID",
       "price": 5.9,
       "selectedByPercent": 0.3,
+      "sellPrice": 5.9,
       "team": "LEE",
       "total": 17.0,
       "webName": "Okafor"
@@ -16331,6 +16625,7 @@
       "position": "MID",
       "price": 5.4,
       "selectedByPercent": 0.7,
+      "sellPrice": 5.4,
       "team": "LEE",
       "total": 16.35,
       "webName": "Aaronson"
@@ -16386,6 +16681,7 @@
       "position": "MID",
       "price": 5.5,
       "selectedByPercent": 1.1,
+      "sellPrice": 5.5,
       "team": "LEE",
       "total": 22.34,
       "webName": "Ampadu"
@@ -16441,6 +16737,7 @@
       "position": "MID",
       "price": 4.9,
       "selectedByPercent": 0.1,
+      "sellPrice": 4.9,
       "team": "LEE",
       "total": 9.98,
       "webName": "Longstaff"
@@ -16496,6 +16793,7 @@
       "position": "MID",
       "price": 5.0,
       "selectedByPercent": 0.1,
+      "sellPrice": 5.0,
       "team": "LEE",
       "total": 11.07,
       "webName": "James"
@@ -16551,6 +16849,7 @@
       "position": "MID",
       "price": 4.9,
       "selectedByPercent": 0.2,
+      "sellPrice": 4.9,
       "team": "LEE",
       "total": 10.63,
       "webName": "Tanaka"
@@ -16606,6 +16905,7 @@
       "position": "FWD",
       "price": 6.0,
       "selectedByPercent": 25.9,
+      "sellPrice": 6.0,
       "team": "LEE",
       "total": 23.23,
       "webName": "Calvert-Lewin"
@@ -16661,6 +16961,7 @@
       "position": "FWD",
       "price": 5.5,
       "selectedByPercent": 0.5,
+      "sellPrice": 5.5,
       "team": "LEE",
       "total": 11.57,
       "webName": "Nmecha"
@@ -16716,6 +17017,7 @@
       "position": "GKP",
       "price": 5.0,
       "selectedByPercent": 5.1,
+      "sellPrice": 5.0,
       "team": "LEE",
       "total": 23.88,
       "webName": "Trafford"
@@ -16771,6 +17073,7 @@
       "position": "DEF",
       "price": 4.5,
       "selectedByPercent": 0.0,
+      "sellPrice": 4.5,
       "team": "LEE",
       "total": 4.32,
       "webName": "Elvedi"
@@ -16826,6 +17129,7 @@
       "position": "DEF",
       "price": 4.0,
       "selectedByPercent": 0.1,
+      "sellPrice": 4.0,
       "team": "LEE",
       "total": 1.92,
       "webName": "Lienou"
@@ -16881,6 +17185,7 @@
       "position": "MID",
       "price": 4.5,
       "selectedByPercent": 0.1,
+      "sellPrice": 4.5,
       "team": "LEE",
       "total": 2.26,
       "webName": "Cresswell"
@@ -16936,6 +17241,7 @@
       "position": "GKP",
       "price": 4.0,
       "selectedByPercent": 0.1,
+      "sellPrice": 4.0,
       "team": "LEE",
       "total": 1.12,
       "webName": "Cairns"
@@ -16991,6 +17297,7 @@
       "position": "GKP",
       "price": 4.0,
       "selectedByPercent": 0.2,
+      "sellPrice": 4.0,
       "team": "LEE",
       "total": 7.97,
       "webName": "Zetterer"
@@ -17046,6 +17353,7 @@
       "position": "DEF",
       "price": 4.5,
       "selectedByPercent": 0.0,
+      "sellPrice": 4.5,
       "team": "LEE",
       "total": 8.63,
       "webName": "Bard"
@@ -17101,6 +17409,7 @@
       "position": "MID",
       "price": 5.0,
       "selectedByPercent": 0.0,
+      "sellPrice": 5.0,
       "team": "LEE",
       "total": 15.07,
       "webName": "Bahoya"
@@ -17156,6 +17465,7 @@
       "position": "GKP",
       "price": 5.5,
       "selectedByPercent": 3.7,
+      "sellPrice": 5.5,
       "team": "LIV",
       "total": 21.59,
       "webName": "A.Becker"
@@ -17211,6 +17521,7 @@
       "position": "GKP",
       "price": 4.9,
       "selectedByPercent": 0.1,
+      "sellPrice": 4.9,
       "team": "LIV",
       "total": 1.95,
       "webName": "Mamardashvili"
@@ -17266,6 +17577,7 @@
       "position": "GKP",
       "price": 4.0,
       "selectedByPercent": 1.1,
+      "sellPrice": 4.0,
       "team": "LIV",
       "total": 3.67,
       "webName": "Woodman"
@@ -17321,6 +17633,7 @@
       "position": "GKP",
       "price": 4.0,
       "selectedByPercent": 0.2,
+      "sellPrice": 4.0,
       "team": "LIV",
       "total": 1.15,
       "webName": "Davies"
@@ -17376,6 +17689,7 @@
       "position": "DEF",
       "price": 6.5,
       "selectedByPercent": 17.4,
+      "sellPrice": 6.5,
       "team": "LIV",
       "total": 24.74,
       "webName": "Virgil"
@@ -17431,6 +17745,7 @@
       "position": "DEF",
       "price": 5.5,
       "selectedByPercent": 2.9,
+      "sellPrice": 5.5,
       "team": "LIV",
       "total": 19.92,
       "webName": "Frimpong"
@@ -17486,6 +17801,7 @@
       "position": "DEF",
       "price": 5.5,
       "selectedByPercent": 2.9,
+      "sellPrice": 5.5,
       "team": "LIV",
       "total": 21.18,
       "webName": "Kerkez"
@@ -17541,6 +17857,7 @@
       "position": "DEF",
       "price": 4.0,
       "selectedByPercent": 0.1,
+      "sellPrice": 4.0,
       "team": "LIV",
       "total": 2.5,
       "webName": "Lucky"
@@ -17596,6 +17913,7 @@
       "position": "DEF",
       "price": 5.0,
       "selectedByPercent": 2.6,
+      "sellPrice": 5.0,
       "team": "LIV",
       "total": 18.68,
       "webName": "Jacquet"
@@ -17651,6 +17969,7 @@
       "position": "DEF",
       "price": 5.0,
       "selectedByPercent": 0.1,
+      "sellPrice": 5.0,
       "team": "LIV",
       "total": 4.74,
       "webName": "Tsimikas"
@@ -17706,6 +18025,7 @@
       "position": "MID",
       "price": 7.4,
       "selectedByPercent": 9.5,
+      "sellPrice": 7.4,
       "team": "LIV",
       "total": 25.34,
       "webName": "Wirtz"
@@ -17761,6 +18081,7 @@
       "position": "MID",
       "price": 7.1,
       "selectedByPercent": 9.1,
+      "sellPrice": 7.1,
       "team": "LIV",
       "total": 33.6,
       "webName": "Gakpo"
@@ -17816,6 +18137,7 @@
       "position": "MID",
       "price": 7.0,
       "selectedByPercent": 41.0,
+      "sellPrice": 7.0,
       "team": "LIV",
       "total": 29.64,
       "webName": "Szoboszlai"
@@ -17871,6 +18193,7 @@
       "position": "MID",
       "price": 5.9,
       "selectedByPercent": 0.7,
+      "sellPrice": 5.9,
       "team": "LIV",
       "total": 22.11,
       "webName": "Ngumoha"
@@ -17926,6 +18249,7 @@
       "position": "MID",
       "price": 6.0,
       "selectedByPercent": 1.6,
+      "sellPrice": 6.0,
       "team": "LIV",
       "total": 18.29,
       "webName": "Gravenberch"
@@ -17981,6 +18305,7 @@
       "position": "MID",
       "price": 5.5,
       "selectedByPercent": 1.4,
+      "sellPrice": 5.5,
       "team": "LIV",
       "total": 18.12,
       "webName": "Mac Allister"
@@ -18036,6 +18361,7 @@
       "position": "MID",
       "price": 5.0,
       "selectedByPercent": 0.1,
+      "sellPrice": 5.0,
       "team": "LIV",
       "total": 14.62,
       "webName": "Endo"
@@ -18091,6 +18417,7 @@
       "position": "MID",
       "price": 4.9,
       "selectedByPercent": 0.0,
+      "sellPrice": 4.9,
       "team": "LIV",
       "total": 5.49,
       "webName": "Nyoni"
@@ -18146,6 +18473,7 @@
       "position": "MID",
       "price": 6.5,
       "selectedByPercent": 1.3,
+      "sellPrice": 6.5,
       "team": "LIV",
       "total": 15.75,
       "webName": "Munoz"
@@ -18201,6 +18529,7 @@
       "position": "MID",
       "price": 4.5,
       "selectedByPercent": 0.2,
+      "sellPrice": 4.5,
       "team": "LIV",
       "total": 2.31,
       "webName": "McConnell"
@@ -18256,6 +18585,7 @@
       "position": "FWD",
       "price": 9.0,
       "selectedByPercent": 16.5,
+      "sellPrice": 9.0,
       "team": "LIV",
       "total": 32.51,
       "webName": "Isak"
@@ -18311,6 +18641,7 @@
       "position": "MID",
       "price": 5.0,
       "selectedByPercent": 0.0,
+      "sellPrice": 5.0,
       "team": "LIV",
       "total": 3.86,
       "webName": "Koumas"
@@ -18366,6 +18697,7 @@
       "position": "FWD",
       "price": 4.5,
       "selectedByPercent": 0.1,
+      "sellPrice": 4.5,
       "team": "LIV",
       "total": 2.49,
       "webName": "Danns"
@@ -18421,6 +18753,7 @@
       "position": "DEF",
       "price": 5.4,
       "selectedByPercent": 2.1,
+      "sellPrice": 5.4,
       "team": "LIV",
       "total": 8.22,
       "webName": "Araujo"
@@ -18476,6 +18809,7 @@
       "position": "MID",
       "price": 8.0,
       "selectedByPercent": 1.4,
+      "sellPrice": 8.0,
       "team": "LIV",
       "total": 19.81,
       "webName": "Barcola"
@@ -18531,6 +18865,7 @@
       "position": "MID",
       "price": 6.9,
       "selectedByPercent": 3.3,
+      "sellPrice": 6.9,
       "team": "MCI",
       "total": 13.94,
       "webName": "Enzo"
@@ -18586,6 +18921,7 @@
       "position": "MID",
       "price": 5.9,
       "selectedByPercent": 11.5,
+      "sellPrice": 5.9,
       "team": "MCI",
       "total": 28.31,
       "webName": "Ndiaye"
@@ -18641,6 +18977,7 @@
       "position": "GKP",
       "price": 5.5,
       "selectedByPercent": 7.9,
+      "sellPrice": 5.5,
       "team": "MCI",
       "total": 18.62,
       "webName": "Donnarumma"
@@ -18696,6 +19033,7 @@
       "position": "GKP",
       "price": 4.5,
       "selectedByPercent": 0.0,
+      "sellPrice": 4.5,
       "team": "MCI",
       "total": 1.88,
       "webName": "Bettinelli"
@@ -18751,6 +19089,7 @@
       "position": "DEF",
       "price": 6.5,
       "selectedByPercent": 18.5,
+      "sellPrice": 6.5,
       "team": "MCI",
       "total": 27.44,
       "webName": "O'Reilly"
@@ -18806,6 +19145,7 @@
       "position": "DEF",
       "price": 6.0,
       "selectedByPercent": 18.8,
+      "sellPrice": 6.0,
       "team": "MCI",
       "total": 32.72,
       "webName": "Gu\u00e9hi"
@@ -18861,6 +19201,7 @@
       "position": "DEF",
       "price": 5.9,
       "selectedByPercent": 1.0,
+      "sellPrice": 5.9,
       "team": "MCI",
       "total": 8.11,
       "webName": "Matheus N."
@@ -18916,6 +19257,7 @@
       "position": "DEF",
       "price": 5.5,
       "selectedByPercent": 1.8,
+      "sellPrice": 5.5,
       "team": "MCI",
       "total": 25.41,
       "webName": "R\u00faben"
@@ -18971,6 +19313,7 @@
       "position": "DEF",
       "price": 5.6,
       "selectedByPercent": 18.6,
+      "sellPrice": 5.6,
       "team": "MCI",
       "total": 28.55,
       "webName": "Gvardiol"
@@ -19026,6 +19369,7 @@
       "position": "DEF",
       "price": 5.4,
       "selectedByPercent": 0.6,
+      "sellPrice": 5.4,
       "team": "MCI",
       "total": 5.43,
       "webName": "A\u00eft-Nouri"
@@ -19081,6 +19425,7 @@
       "position": "DEF",
       "price": 5.5,
       "selectedByPercent": 1.6,
+      "sellPrice": 5.5,
       "team": "MCI",
       "total": 25.99,
       "webName": "Khusanov"
@@ -19136,6 +19481,7 @@
       "position": "DEF",
       "price": 4.5,
       "selectedByPercent": 0.2,
+      "sellPrice": 4.5,
       "team": "MCI",
       "total": 13.77,
       "webName": "Lewis"
@@ -19191,6 +19537,7 @@
       "position": "DEF",
       "price": 4.5,
       "selectedByPercent": 0.0,
+      "sellPrice": 4.5,
       "team": "MCI",
       "total": 4.5,
       "webName": "Vitor Reis"
@@ -19246,6 +19593,7 @@
       "position": "MID",
       "price": 8.5,
       "selectedByPercent": 19.4,
+      "sellPrice": 8.5,
       "team": "MCI",
       "total": 26.97,
       "webName": "Semenyo"
@@ -19301,6 +19649,7 @@
       "position": "MID",
       "price": 7.0,
       "selectedByPercent": 5.8,
+      "sellPrice": 7.0,
       "team": "MCI",
       "total": 30.46,
       "webName": "Foden"
@@ -19356,6 +19705,7 @@
       "position": "MID",
       "price": 7.8,
       "selectedByPercent": 30.5,
+      "sellPrice": 7.8,
       "team": "MCI",
       "total": 27.64,
       "webName": "Cherki"
@@ -19411,6 +19761,7 @@
       "position": "MID",
       "price": 5.4,
       "selectedByPercent": 0.1,
+      "sellPrice": 5.4,
       "team": "MCI",
       "total": 17.25,
       "webName": "Kova\u010di\u0107"
@@ -19466,6 +19817,7 @@
       "position": "FWD",
       "price": 15.5,
       "selectedByPercent": 71.2,
+      "sellPrice": 15.5,
       "team": "MCI",
       "total": 35.56,
       "webName": "Haaland"
@@ -19521,6 +19873,7 @@
       "position": "MID",
       "price": 6.4,
       "selectedByPercent": 5.0,
+      "sellPrice": 6.4,
       "team": "MCI",
       "total": 23.82,
       "webName": "Anderson"
@@ -19576,6 +19929,7 @@
       "position": "GKP",
       "price": 5.0,
       "selectedByPercent": 0.0,
+      "sellPrice": 5.0,
       "team": "MCI",
       "total": 0.2,
       "webName": "Rulli"
@@ -19631,6 +19985,7 @@
       "position": "MID",
       "price": 5.5,
       "selectedByPercent": 0.1,
+      "sellPrice": 5.5,
       "team": "MCI",
       "total": 8.61,
       "webName": "Bouaddi"
@@ -19686,6 +20041,7 @@
       "position": "MID",
       "price": 4.5,
       "selectedByPercent": 0.1,
+      "sellPrice": 4.5,
       "team": "MCI",
       "total": 7.82,
       "webName": "McAidoo"
@@ -19741,6 +20097,7 @@
       "position": "DEF",
       "price": 4.0,
       "selectedByPercent": 0.1,
+      "sellPrice": 4.0,
       "team": "MCI",
       "total": 7.71,
       "webName": "Braithwaite"
@@ -19796,6 +20153,7 @@
       "position": "MID",
       "price": 6.0,
       "selectedByPercent": 0.0,
+      "sellPrice": 6.0,
       "team": "MCI",
       "total": 18.74,
       "webName": "Allan"
@@ -19851,6 +20209,7 @@
       "position": "MID",
       "price": 5.9,
       "selectedByPercent": 2.0,
+      "sellPrice": 5.9,
       "team": "MUN",
       "total": 23.97,
       "webName": "Tielemans"
@@ -19906,6 +20265,7 @@
       "position": "MID",
       "price": 4.9,
       "selectedByPercent": 0.8,
+      "sellPrice": 4.9,
       "team": "MUN",
       "total": 19.34,
       "webName": "Andrey Santos"
@@ -19961,6 +20321,7 @@
       "position": "GKP",
       "price": 4.5,
       "selectedByPercent": 0.0,
+      "sellPrice": 4.5,
       "team": "MUN",
       "total": 2.33,
       "webName": "Darlow"
@@ -20016,6 +20377,7 @@
       "position": "GKP",
       "price": 5.0,
       "selectedByPercent": 13.6,
+      "sellPrice": 5.0,
       "team": "MUN",
       "total": 16.33,
       "webName": "Lammens"
@@ -20071,6 +20433,7 @@
       "position": "MID",
       "price": 5.9,
       "selectedByPercent": 0.7,
+      "sellPrice": 5.9,
       "team": "MUN",
       "total": 12.38,
       "webName": "Dorgu"
@@ -20126,6 +20489,7 @@
       "position": "DEF",
       "price": 5.0,
       "selectedByPercent": 2.1,
+      "sellPrice": 5.0,
       "team": "MUN",
       "total": 13.7,
       "webName": "Dalot"
@@ -20181,6 +20545,7 @@
       "position": "DEF",
       "price": 5.0,
       "selectedByPercent": 14.1,
+      "sellPrice": 5.0,
       "team": "MUN",
       "total": 22.02,
       "webName": "Maguire"
@@ -20236,6 +20601,7 @@
       "position": "DEF",
       "price": 5.0,
       "selectedByPercent": 1.2,
+      "sellPrice": 5.0,
       "team": "MUN",
       "total": 13.65,
       "webName": "Martinez"
@@ -20291,6 +20657,7 @@
       "position": "DEF",
       "price": 4.9,
       "selectedByPercent": 0.5,
+      "sellPrice": 4.9,
       "team": "MUN",
       "total": 8.29,
       "webName": "Yoro"
@@ -20346,6 +20713,7 @@
       "position": "DEF",
       "price": 4.4,
       "selectedByPercent": 0.3,
+      "sellPrice": 4.4,
       "team": "MUN",
       "total": 14.14,
       "webName": "Heaven"
@@ -20401,6 +20769,7 @@
       "position": "DEF",
       "price": 4.5,
       "selectedByPercent": 0.6,
+      "sellPrice": 4.5,
       "team": "MUN",
       "total": 15.99,
       "webName": "Mazraoui"
@@ -20456,6 +20825,7 @@
       "position": "DEF",
       "price": 4.5,
       "selectedByPercent": 15.7,
+      "sellPrice": 4.5,
       "team": "MUN",
       "total": 21.94,
       "webName": "Shaw"
@@ -20511,6 +20881,7 @@
       "position": "DEF",
       "price": 4.0,
       "selectedByPercent": 0.2,
+      "sellPrice": 4.0,
       "team": "MUN",
       "total": 0.39,
       "webName": "Amass"
@@ -20566,6 +20937,7 @@
       "position": "MID",
       "price": 12.0,
       "selectedByPercent": 48.6,
+      "sellPrice": 12.0,
       "team": "MUN",
       "total": 32.59,
       "webName": "B.Fernandes"
@@ -20621,6 +20993,7 @@
       "position": "MID",
       "price": 7.9,
       "selectedByPercent": 26.9,
+      "sellPrice": 7.9,
       "team": "MUN",
       "total": 30.54,
       "webName": "Mbeumo"
@@ -20676,6 +21049,7 @@
       "position": "MID",
       "price": 7.9,
       "selectedByPercent": 7.8,
+      "sellPrice": 7.9,
       "team": "MUN",
       "total": 25.16,
       "webName": "Cunha"
@@ -20731,6 +21105,7 @@
       "position": "MID",
       "price": 7.0,
       "selectedByPercent": 1.6,
+      "sellPrice": 7.0,
       "team": "MUN",
       "total": 15.14,
       "webName": "Rashford"
@@ -20786,6 +21161,7 @@
       "position": "MID",
       "price": 5.5,
       "selectedByPercent": 1.1,
+      "sellPrice": 5.5,
       "team": "MUN",
       "total": 19.98,
       "webName": "Mainoo"
@@ -20841,6 +21217,7 @@
       "position": "MID",
       "price": 5.0,
       "selectedByPercent": 0.0,
+      "sellPrice": 5.0,
       "team": "MUN",
       "total": 7.36,
       "webName": "J.Fletcher"
@@ -20896,6 +21273,7 @@
       "position": "MID",
       "price": 5.0,
       "selectedByPercent": 0.1,
+      "sellPrice": 5.0,
       "team": "MUN",
       "total": 6.93,
       "webName": "Lacey"
@@ -20951,6 +21329,7 @@
       "position": "MID",
       "price": 4.5,
       "selectedByPercent": 0.2,
+      "sellPrice": 4.5,
       "team": "MUN",
       "total": 0.51,
       "webName": "Bendito Mantato"
@@ -21006,6 +21385,7 @@
       "position": "MID",
       "price": 4.5,
       "selectedByPercent": 0.3,
+      "sellPrice": 4.5,
       "team": "MUN",
       "total": 1.17,
       "webName": "Fletcher"
@@ -21061,6 +21441,7 @@
       "position": "FWD",
       "price": 7.0,
       "selectedByPercent": 1.6,
+      "sellPrice": 7.0,
       "team": "MUN",
       "total": 14.96,
       "webName": "\u0160e\u0161ko"
@@ -21116,6 +21497,7 @@
       "position": "FWD",
       "price": 5.4,
       "selectedByPercent": 0.5,
+      "sellPrice": 5.4,
       "team": "MUN",
       "total": 11.15,
       "webName": "Zirkzee"
@@ -21171,6 +21553,7 @@
       "position": "FWD",
       "price": 4.5,
       "selectedByPercent": 1.2,
+      "sellPrice": 4.5,
       "team": "MUN",
       "total": 2.04,
       "webName": "Obi"
@@ -21226,6 +21609,7 @@
       "position": "MID",
       "price": 5.5,
       "selectedByPercent": 0.2,
+      "sellPrice": 5.5,
       "team": "NEW",
       "total": 14.59,
       "webName": "N.Gonzalez"
@@ -21281,6 +21665,7 @@
       "position": "GKP",
       "price": 5.0,
       "selectedByPercent": 1.1,
+      "sellPrice": 5.0,
       "team": "NEW",
       "total": 3.03,
       "webName": "Pope"
@@ -21336,6 +21721,7 @@
       "position": "GKP",
       "price": 4.5,
       "selectedByPercent": 0.0,
+      "sellPrice": 4.5,
       "team": "NEW",
       "total": 1.25,
       "webName": "Gillespie"
@@ -21391,6 +21777,7 @@
       "position": "GKP",
       "price": 4.5,
       "selectedByPercent": 0.0,
+      "sellPrice": 4.5,
       "team": "NEW",
       "total": 0.65,
       "webName": "Jaouen"
@@ -21446,6 +21833,7 @@
       "position": "DEF",
       "price": 5.0,
       "selectedByPercent": 2.2,
+      "sellPrice": 5.0,
       "team": "NEW",
       "total": 23.88,
       "webName": "Thiaw"
@@ -21501,6 +21889,7 @@
       "position": "DEF",
       "price": 5.0,
       "selectedByPercent": 0.2,
+      "sellPrice": 5.0,
       "team": "NEW",
       "total": 9.65,
       "webName": "Sch\u00e4r"
@@ -21556,6 +21945,7 @@
       "position": "DEF",
       "price": 5.0,
       "selectedByPercent": 0.7,
+      "sellPrice": 5.0,
       "team": "NEW",
       "total": 19.95,
       "webName": "Botman"
@@ -21611,6 +22001,7 @@
       "position": "DEF",
       "price": 5.1,
       "selectedByPercent": 9.8,
+      "sellPrice": 5.1,
       "team": "NEW",
       "total": 28.23,
       "webName": "Hall"
@@ -21666,6 +22057,7 @@
       "position": "MID",
       "price": 6.0,
       "selectedByPercent": 1.2,
+      "sellPrice": 6.0,
       "team": "NEW",
       "total": 24.55,
       "webName": "Barnes"
@@ -21721,6 +22113,7 @@
       "position": "MID",
       "price": 6.1,
       "selectedByPercent": 10.5,
+      "sellPrice": 6.1,
       "team": "NEW",
       "total": 25.3,
       "webName": "Elanga"
@@ -21776,6 +22169,7 @@
       "position": "MID",
       "price": 4.9,
       "selectedByPercent": 0.3,
+      "sellPrice": 4.9,
       "team": "NEW",
       "total": 12.79,
       "webName": "J.Ramsey"
@@ -21831,6 +22225,7 @@
       "position": "MID",
       "price": 5.9,
       "selectedByPercent": 0.1,
+      "sellPrice": 5.9,
       "team": "NEW",
       "total": 11.8,
       "webName": "J.Murphy"
@@ -21886,6 +22281,7 @@
       "position": "MID",
       "price": 5.5,
       "selectedByPercent": 0.1,
+      "sellPrice": 5.5,
       "team": "NEW",
       "total": 21.43,
       "webName": "L.Miley"
@@ -21941,6 +22337,7 @@
       "position": "MID",
       "price": 5.0,
       "selectedByPercent": 0.4,
+      "sellPrice": 5.0,
       "team": "NEW",
       "total": 20.34,
       "webName": "Willock"
@@ -21996,6 +22393,7 @@
       "position": "MID",
       "price": 5.9,
       "selectedByPercent": 0.2,
+      "sellPrice": 5.9,
       "team": "NEW",
       "total": 6.48,
       "webName": "Tour\u00e9"
@@ -22051,6 +22449,7 @@
       "position": "MID",
       "price": 5.0,
       "selectedByPercent": 0.1,
+      "sellPrice": 5.0,
       "team": "NEW",
       "total": 12.52,
       "webName": "Steur"
@@ -22106,6 +22505,7 @@
       "position": "FWD",
       "price": 6.1,
       "selectedByPercent": 15.5,
+      "sellPrice": 6.1,
       "team": "NEW",
       "total": 28.65,
       "webName": "Wissa"
@@ -22161,6 +22561,7 @@
       "position": "MID",
       "price": 5.0,
       "selectedByPercent": 0.1,
+      "sellPrice": 5.0,
       "team": "NEW",
       "total": 5.51,
       "webName": "Bamba"
@@ -22216,6 +22617,7 @@
       "position": "GKP",
       "price": 5.0,
       "selectedByPercent": 1.2,
+      "sellPrice": 5.0,
       "team": "NEW",
       "total": 15.33,
       "webName": "Horn\u00ed\u010dek"
@@ -22271,6 +22673,7 @@
       "position": "DEF",
       "price": 4.5,
       "selectedByPercent": 3.3,
+      "sellPrice": 4.5,
       "team": "NEW",
       "total": 20.12,
       "webName": "Dedi\u0107"
@@ -22326,6 +22729,7 @@
       "position": "DEF",
       "price": 4.0,
       "selectedByPercent": 0.2,
+      "sellPrice": 4.0,
       "team": "NEW",
       "total": 2.08,
       "webName": "Shahar"
@@ -22381,6 +22785,7 @@
       "position": "FWD",
       "price": 6.0,
       "selectedByPercent": 0.1,
+      "sellPrice": 6.0,
       "team": "NEW",
       "total": 10.3,
       "webName": "Fernandez-Pardo"
@@ -22436,6 +22841,7 @@
       "position": "FWD",
       "price": 5.5,
       "selectedByPercent": 0.8,
+      "sellPrice": 5.5,
       "team": "NFO",
       "total": 9.26,
       "webName": "Delap"
@@ -22491,6 +22897,7 @@
       "position": "DEF",
       "price": 5.4,
       "selectedByPercent": 6.5,
+      "sellPrice": 5.4,
       "team": "NFO",
       "total": 8.65,
       "webName": "Mu\u00f1oz"
@@ -22546,6 +22953,7 @@
       "position": "GKP",
       "price": 5.0,
       "selectedByPercent": 1.4,
+      "sellPrice": 5.0,
       "team": "NFO",
       "total": 16.37,
       "webName": "Sels"
@@ -22601,6 +23009,7 @@
       "position": "GKP",
       "price": 4.5,
       "selectedByPercent": 0.1,
+      "sellPrice": 4.5,
       "team": "NFO",
       "total": 2.64,
       "webName": "John"
@@ -22656,6 +23065,7 @@
       "position": "DEF",
       "price": 5.0,
       "selectedByPercent": 8.2,
+      "sellPrice": 5.0,
       "team": "NFO",
       "total": 21.62,
       "webName": "N.Williams"
@@ -22711,6 +23121,7 @@
       "position": "DEF",
       "price": 5.5,
       "selectedByPercent": 1.6,
+      "sellPrice": 5.5,
       "team": "NFO",
       "total": 20.66,
       "webName": "Milenkovi\u0107"
@@ -22766,6 +23177,7 @@
       "position": "DEF",
       "price": 5.5,
       "selectedByPercent": 1.5,
+      "sellPrice": 5.5,
       "team": "NFO",
       "total": 22.87,
       "webName": "Murillo"
@@ -22821,6 +23233,7 @@
       "position": "DEF",
       "price": 4.5,
       "selectedByPercent": 3.1,
+      "sellPrice": 4.5,
       "team": "NFO",
       "total": 19.44,
       "webName": "Aina"
@@ -22876,6 +23289,7 @@
       "position": "DEF",
       "price": 4.5,
       "selectedByPercent": 0.2,
+      "sellPrice": 4.5,
       "team": "NFO",
       "total": 18.84,
       "webName": "Jair Cunha"
@@ -22931,6 +23345,7 @@
       "position": "DEF",
       "price": 4.0,
       "selectedByPercent": 0.2,
+      "sellPrice": 4.0,
       "team": "NFO",
       "total": 2.03,
       "webName": "O.Richards"
@@ -22986,6 +23401,7 @@
       "position": "DEF",
       "price": 4.5,
       "selectedByPercent": 0.0,
+      "sellPrice": 4.5,
       "team": "NFO",
       "total": 9.79,
       "webName": "Netz"
@@ -23041,6 +23457,7 @@
       "position": "MID",
       "price": 7.9,
       "selectedByPercent": 9.4,
+      "sellPrice": 7.9,
       "team": "NFO",
       "total": 29.29,
       "webName": "Gibbs-White"
@@ -23096,6 +23513,7 @@
       "position": "MID",
       "price": 5.9,
       "selectedByPercent": 0.2,
+      "sellPrice": 5.9,
       "team": "NFO",
       "total": 9.16,
       "webName": "Hudson-Odoi"
@@ -23151,6 +23569,7 @@
       "position": "MID",
       "price": 5.5,
       "selectedByPercent": 0.7,
+      "sellPrice": 5.5,
       "team": "NFO",
       "total": 24.51,
       "webName": "Ndoye"
@@ -23206,6 +23625,7 @@
       "position": "MID",
       "price": 5.5,
       "selectedByPercent": 0.1,
+      "sellPrice": 5.5,
       "team": "NFO",
       "total": 25.31,
       "webName": "McAtee"
@@ -23261,6 +23681,7 @@
       "position": "MID",
       "price": 5.0,
       "selectedByPercent": 0.1,
+      "sellPrice": 5.0,
       "team": "NFO",
       "total": 7.08,
       "webName": "Dominguez"
@@ -23316,6 +23737,7 @@
       "position": "MID",
       "price": 4.9,
       "selectedByPercent": 0.6,
+      "sellPrice": 4.9,
       "team": "NFO",
       "total": 12.75,
       "webName": "I.Sangar\u00e9"
@@ -23371,6 +23793,7 @@
       "position": "MID",
       "price": 4.5,
       "selectedByPercent": 1.5,
+      "sellPrice": 4.5,
       "team": "NFO",
       "total": 10.14,
       "webName": "Yates"
@@ -23426,6 +23849,7 @@
       "position": "FWD",
       "price": 5.9,
       "selectedByPercent": 1.2,
+      "sellPrice": 5.9,
       "team": "NFO",
       "total": 10.6,
       "webName": "Wood"
@@ -23481,6 +23905,7 @@
       "position": "FWD",
       "price": 5.9,
       "selectedByPercent": 3.0,
+      "sellPrice": 5.9,
       "team": "NFO",
       "total": 20.12,
       "webName": "Igor Jesus"
@@ -23536,6 +23961,7 @@
       "position": "FWD",
       "price": 5.4,
       "selectedByPercent": 0.1,
+      "sellPrice": 5.4,
       "team": "NFO",
       "total": 8.39,
       "webName": "Kalimuendo"
@@ -23591,6 +24017,7 @@
       "position": "MID",
       "price": 5.0,
       "selectedByPercent": 0.1,
+      "sellPrice": 5.0,
       "team": "NFO",
       "total": 13.72,
       "webName": "Schlager"
@@ -23646,6 +24073,7 @@
       "position": "DEF",
       "price": 5.4,
       "selectedByPercent": 0.6,
+      "sellPrice": 5.4,
       "team": "NFO",
       "total": 1.34,
       "webName": "Diomande"
@@ -23701,6 +24129,7 @@
       "position": "GKP",
       "price": 4.5,
       "selectedByPercent": 0.1,
+      "sellPrice": 4.5,
       "team": "NFO",
       "total": 0.82,
       "webName": "Benda"
@@ -23756,6 +24185,7 @@
       "position": "DEF",
       "price": 4.9,
       "selectedByPercent": 7.3,
+      "sellPrice": 4.9,
       "team": "TOT",
       "total": 21.4,
       "webName": "Van Hecke"
@@ -23811,6 +24241,7 @@
       "position": "DEF",
       "price": 4.5,
       "selectedByPercent": 0.2,
+      "sellPrice": 4.5,
       "team": "TOT",
       "total": 5.59,
       "webName": "Tosin"
@@ -23866,6 +24297,7 @@
       "position": "FWD",
       "price": 7.0,
       "selectedByPercent": 2.2,
+      "sellPrice": 7.0,
       "team": "TOT",
       "total": 14.89,
       "webName": "Marmoush"
@@ -23921,6 +24353,7 @@
       "position": "MID",
       "price": 6.5,
       "selectedByPercent": 0.7,
+      "sellPrice": 6.5,
       "team": "TOT",
       "total": 11.91,
       "webName": "S\u00e1vio"
@@ -23976,6 +24409,7 @@
       "position": "MID",
       "price": 5.4,
       "selectedByPercent": 2.8,
+      "sellPrice": 5.4,
       "team": "TOT",
       "total": 21.59,
       "webName": "Tonali"
@@ -24031,6 +24465,7 @@
       "position": "GKP",
       "price": 4.0,
       "selectedByPercent": 0.9,
+      "sellPrice": 4.0,
       "team": "TOT",
       "total": 1.25,
       "webName": "Austin"
@@ -24086,6 +24521,7 @@
       "position": "GKP",
       "price": 4.5,
       "selectedByPercent": 19.4,
+      "sellPrice": 4.5,
       "team": "TOT",
       "total": 17.86,
       "webName": "Kinsky"
@@ -24141,6 +24577,7 @@
       "position": "GKP",
       "price": 4.0,
       "selectedByPercent": 18.0,
+      "sellPrice": 4.0,
       "team": "TOT",
       "total": 3.42,
       "webName": "Dubravka"
@@ -24196,6 +24633,7 @@
       "position": "DEF",
       "price": 5.9,
       "selectedByPercent": 5.5,
+      "sellPrice": 5.9,
       "team": "TOT",
       "total": 15.37,
       "webName": "Senesi"
@@ -24251,6 +24689,7 @@
       "position": "DEF",
       "price": 5.5,
       "selectedByPercent": 11.5,
+      "sellPrice": 5.5,
       "team": "TOT",
       "total": 12.43,
       "webName": "Pedro Porro"
@@ -24306,6 +24745,7 @@
       "position": "DEF",
       "price": 4.5,
       "selectedByPercent": 3.2,
+      "sellPrice": 4.5,
       "team": "TOT",
       "total": 21.67,
       "webName": "Robertson"
@@ -24361,6 +24801,7 @@
       "position": "DEF",
       "price": 5.0,
       "selectedByPercent": 3.7,
+      "sellPrice": 5.0,
       "team": "TOT",
       "total": 10.62,
       "webName": "Van de Ven"
@@ -24416,6 +24857,7 @@
       "position": "DEF",
       "price": 4.5,
       "selectedByPercent": 0.4,
+      "sellPrice": 4.5,
       "team": "TOT",
       "total": 10.01,
       "webName": "Udogie"
@@ -24471,6 +24913,7 @@
       "position": "DEF",
       "price": 4.0,
       "selectedByPercent": 0.9,
+      "sellPrice": 4.0,
       "team": "TOT",
       "total": 4.69,
       "webName": "Davies"
@@ -24526,6 +24969,7 @@
       "position": "DEF",
       "price": 4.0,
       "selectedByPercent": 0.1,
+      "sellPrice": 4.0,
       "team": "TOT",
       "total": 0.0,
       "webName": "Byfield"
@@ -24581,6 +25025,7 @@
       "position": "DEF",
       "price": 4.0,
       "selectedByPercent": 0.1,
+      "sellPrice": 4.0,
       "team": "TOT",
       "total": 0.02,
       "webName": "Rowswell"
@@ -24636,6 +25081,7 @@
       "position": "MID",
       "price": 6.5,
       "selectedByPercent": 0.1,
+      "sellPrice": 6.5,
       "team": "TOT",
       "total": 9.36,
       "webName": "Kudus"
@@ -24691,6 +25137,7 @@
       "position": "MID",
       "price": 5.9,
       "selectedByPercent": 0.3,
+      "sellPrice": 5.9,
       "team": "TOT",
       "total": 23.43,
       "webName": "Tel"
@@ -24746,6 +25193,7 @@
       "position": "MID",
       "price": 5.5,
       "selectedByPercent": 0.2,
+      "sellPrice": 5.5,
       "team": "TOT",
       "total": 20.69,
       "webName": "Bentancur"
@@ -24801,6 +25249,7 @@
       "position": "MID",
       "price": 5.4,
       "selectedByPercent": 0.2,
+      "sellPrice": 5.4,
       "team": "TOT",
       "total": 9.43,
       "webName": "Gallagher"
@@ -24856,6 +25305,7 @@
       "position": "MID",
       "price": 5.4,
       "selectedByPercent": 0.2,
+      "sellPrice": 5.4,
       "team": "TOT",
       "total": 12.01,
       "webName": "Bergvall"
@@ -24911,6 +25361,7 @@
       "position": "MID",
       "price": 5.0,
       "selectedByPercent": 0.2,
+      "sellPrice": 5.0,
       "team": "TOT",
       "total": 19.7,
       "webName": "Gray"
@@ -24966,6 +25417,7 @@
       "position": "MID",
       "price": 4.5,
       "selectedByPercent": 0.7,
+      "sellPrice": 4.5,
       "team": "TOT",
       "total": 1.16,
       "webName": "Olusesi"
@@ -25021,6 +25473,7 @@
       "position": "MID",
       "price": 5.9,
       "selectedByPercent": 1.2,
+      "sellPrice": 5.9,
       "team": "TOT",
       "total": 13.69,
       "webName": "Fernandes"
@@ -25076,6 +25529,7 @@
       "position": "FWD",
       "price": 5.9,
       "selectedByPercent": 1.0,
+      "sellPrice": 5.9,
       "team": "TOT",
       "total": 13.98,
       "webName": "Solanke"
@@ -25131,6 +25585,7 @@
       "position": "MID",
       "price": 5.4,
       "selectedByPercent": 0.1,
+      "sellPrice": 5.4,
       "team": "TOT",
       "total": 2.19,
       "webName": "Mudryk"
@@ -25186,6 +25641,7 @@
       "position": "MID",
       "price": 4.5,
       "selectedByPercent": 0.1,
+      "sellPrice": 4.5,
       "team": "TOT",
       "total": 2.26,
       "webName": "Williams-Barnett"
@@ -25241,6 +25697,7 @@
       "position": "DEF",
       "price": 5.0,
       "selectedByPercent": 0.2,
+      "sellPrice": 5.0,
       "team": "SUN",
       "total": 5.27,
       "webName": "Danso"
@@ -25296,6 +25753,7 @@
       "position": "GKP",
       "price": 5.0,
       "selectedByPercent": 3.4,
+      "sellPrice": 5.0,
       "team": "SUN",
       "total": 13.9,
       "webName": "Roefs"
@@ -25351,6 +25809,7 @@
       "position": "GKP",
       "price": 4.5,
       "selectedByPercent": 0.1,
+      "sellPrice": 4.5,
       "team": "SUN",
       "total": 1.69,
       "webName": "Ellborg"
@@ -25406,6 +25865,7 @@
       "position": "DEF",
       "price": 5.0,
       "selectedByPercent": 4.0,
+      "sellPrice": 5.0,
       "team": "SUN",
       "total": 21.45,
       "webName": "Ballard"
@@ -25461,6 +25921,7 @@
       "position": "DEF",
       "price": 5.5,
       "selectedByPercent": 2.4,
+      "sellPrice": 5.5,
       "team": "SUN",
       "total": 15.87,
       "webName": "Mukiele"
@@ -25516,6 +25977,7 @@
       "position": "DEF",
       "price": 4.5,
       "selectedByPercent": 5.4,
+      "sellPrice": 4.5,
       "team": "SUN",
       "total": 19.46,
       "webName": "Hume"
@@ -25571,6 +26033,7 @@
       "position": "DEF",
       "price": 4.9,
       "selectedByPercent": 0.3,
+      "sellPrice": 4.9,
       "team": "SUN",
       "total": 7.16,
       "webName": "Alderete"
@@ -25626,6 +26089,7 @@
       "position": "DEF",
       "price": 4.5,
       "selectedByPercent": 0.4,
+      "sellPrice": 4.5,
       "team": "SUN",
       "total": 22.02,
       "webName": "Reinildo"
@@ -25681,6 +26145,7 @@
       "position": "DEF",
       "price": 4.0,
       "selectedByPercent": 3.0,
+      "sellPrice": 4.0,
       "team": "SUN",
       "total": 11.97,
       "webName": "O'Nien"
@@ -25736,6 +26201,7 @@
       "position": "DEF",
       "price": 4.5,
       "selectedByPercent": 0.3,
+      "sellPrice": 4.5,
       "team": "SUN",
       "total": 18.08,
       "webName": "Meunier"
@@ -25791,6 +26257,7 @@
       "position": "MID",
       "price": 5.9,
       "selectedByPercent": 5.7,
+      "sellPrice": 5.9,
       "team": "SUN",
       "total": 22.37,
       "webName": "E.Le F\u00e9e"
@@ -25846,6 +26313,7 @@
       "position": "MID",
       "price": 5.5,
       "selectedByPercent": 4.6,
+      "sellPrice": 5.5,
       "team": "SUN",
       "total": 30.61,
       "webName": "Xhaka"
@@ -25901,6 +26369,7 @@
       "position": "MID",
       "price": 5.0,
       "selectedByPercent": 0.3,
+      "sellPrice": 5.0,
       "team": "SUN",
       "total": 19.74,
       "webName": "Sadiki"
@@ -25956,6 +26425,7 @@
       "position": "MID",
       "price": 5.0,
       "selectedByPercent": 0.0,
+      "sellPrice": 5.0,
       "team": "SUN",
       "total": 13.64,
       "webName": "Mundle"
@@ -26011,6 +26481,7 @@
       "position": "MID",
       "price": 5.0,
       "selectedByPercent": 0.1,
+      "sellPrice": 5.0,
       "team": "SUN",
       "total": 9.34,
       "webName": "Rigg"
@@ -26066,6 +26537,7 @@
       "position": "MID",
       "price": 5.4,
       "selectedByPercent": 0.2,
+      "sellPrice": 5.4,
       "team": "SUN",
       "total": 8.55,
       "webName": "Talbi"
@@ -26121,6 +26593,7 @@
       "position": "MID",
       "price": 5.0,
       "selectedByPercent": 0.0,
+      "sellPrice": 5.0,
       "team": "SUN",
       "total": 2.12,
       "webName": "Jocelin.T"
@@ -26176,6 +26649,7 @@
       "position": "MID",
       "price": 5.0,
       "selectedByPercent": 0.2,
+      "sellPrice": 5.0,
       "team": "SUN",
       "total": 14.79,
       "webName": "N.Angulo"
@@ -26231,6 +26705,7 @@
       "position": "FWD",
       "price": 5.9,
       "selectedByPercent": 9.1,
+      "sellPrice": 5.9,
       "team": "SUN",
       "total": 18.07,
       "webName": "Brobbey"
@@ -26286,6 +26761,7 @@
       "position": "FWD",
       "price": 5.5,
       "selectedByPercent": 1.1,
+      "sellPrice": 5.5,
       "team": "SUN",
       "total": 20.22,
       "webName": "Isidor"
@@ -26341,6 +26817,7 @@
       "position": "DEF",
       "price": 4.5,
       "selectedByPercent": 0.0,
+      "sellPrice": 4.5,
       "team": "SUN",
       "total": 1.96,
       "webName": "Methalie"
@@ -26396,6 +26873,7 @@
       "position": "MID",
       "price": 4.5,
       "selectedByPercent": 0.2,
+      "sellPrice": 4.5,
       "team": "SUN",
       "total": 4.83,
       "webName": "Ahoka"
@@ -26451,6 +26929,7 @@
       "position": "MID",
       "price": 5.5,
       "selectedByPercent": 0.0,
+      "sellPrice": 5.5,
       "team": "SUN",
       "total": 13.67,
       "webName": "Fofana"
@@ -26506,3398 +26985,1421 @@
       "position": "FWD",
       "price": 4.5,
       "selectedByPercent": 0.2,
+      "sellPrice": 4.5,
       "team": "SUN",
       "total": 4.5,
       "webName": "J.Angulo"
     }
   ],
-  "poolUpgrades": {
-    "1": [
-      {
-        "gap": 3.4,
-        "overBudget": false,
-        "poolPlayerId": 385,
-        "priceDelta": -1.0
-      },
-      {
-        "gap": 1.11,
-        "overBudget": false,
-        "poolPlayerId": 350,
-        "priceDelta": -0.5
-      }
-    ],
-    "11": [
-      {
-        "gap": 13.4,
-        "overBudget": false,
-        "poolPlayerId": 10,
-        "priceDelta": 0.0
-      },
-      {
-        "gap": 10.47,
-        "overBudget": true,
-        "poolPlayerId": 388,
-        "priceDelta": 0.5
-      },
-      {
-        "gap": 8.66,
-        "overBudget": true,
-        "poolPlayerId": 8,
-        "priceDelta": 0.2
-      },
-      {
-        "gap": 6.31,
-        "overBudget": true,
-        "poolPlayerId": 4,
-        "priceDelta": 2.5
-      },
-      {
-        "gap": 6.3,
-        "overBudget": true,
-        "poolPlayerId": 391,
-        "priceDelta": 0.1
-      },
-      {
-        "gap": 5.98,
-        "overBudget": false,
-        "poolPlayerId": 449,
-        "priceDelta": -0.4
-      },
-      {
-        "gap": 5.19,
-        "overBudget": true,
-        "poolPlayerId": 387,
-        "priceDelta": 1.0
-      },
-      {
-        "gap": 3.78,
-        "overBudget": false,
-        "poolPlayerId": 61,
-        "priceDelta": 0.0
-      },
-      {
-        "gap": 3.74,
-        "overBudget": false,
-        "poolPlayerId": 393,
-        "priceDelta": 0.0
-      },
-      {
-        "gap": 3.37,
-        "overBudget": false,
-        "poolPlayerId": 332,
-        "priceDelta": -1.0
-      },
-      {
-        "gap": 3.3,
-        "overBudget": false,
-        "poolPlayerId": 60,
-        "priceDelta": 0.0
-      },
-      {
-        "gap": 3.24,
-        "overBudget": true,
-        "poolPlayerId": 229,
-        "priceDelta": 0.5
-      },
-      {
-        "gap": 3.16,
-        "overBudget": false,
-        "poolPlayerId": 390,
-        "priceDelta": 0.0
-      },
-      {
-        "gap": 2.72,
-        "overBudget": true,
-        "poolPlayerId": 200,
-        "priceDelta": 0.5
-      },
-      {
-        "gap": 2.49,
-        "overBudget": true,
-        "poolPlayerId": 356,
-        "priceDelta": 1.0
-      },
-      {
-        "gap": 2.17,
-        "overBudget": false,
-        "poolPlayerId": 173,
-        "priceDelta": -1.5
-      },
-      {
-        "gap": 2.07,
-        "overBudget": false,
-        "poolPlayerId": 203,
-        "priceDelta": -0.6
-      },
-      {
-        "gap": 1.97,
-        "overBudget": false,
-        "poolPlayerId": 115,
-        "priceDelta": -0.8
-      },
-      {
-        "gap": 1.63,
-        "overBudget": false,
-        "poolPlayerId": 445,
-        "priceDelta": -0.5
-      },
-      {
-        "gap": 1.27,
-        "overBudget": false,
-        "poolPlayerId": 148,
-        "priceDelta": -1.0
-      },
-      {
-        "gap": 0.82,
-        "overBudget": false,
-        "poolPlayerId": 88,
-        "priceDelta": -0.9
-      },
-      {
-        "gap": 0.73,
-        "overBudget": false,
-        "poolPlayerId": 202,
-        "priceDelta": -0.5
-      },
-      {
-        "gap": 0.62,
-        "overBudget": false,
-        "poolPlayerId": 472,
-        "priceDelta": 0.0
-      },
-      {
-        "gap": 0.32,
-        "overBudget": false,
-        "poolPlayerId": 87,
-        "priceDelta": -1.0
-      },
-      {
-        "gap": 0.22,
-        "overBudget": false,
-        "poolPlayerId": 230,
-        "priceDelta": 0.0
-      }
-    ],
-    "124": [
-      {
-        "gap": 11.27,
-        "overBudget": true,
-        "poolPlayerId": 12,
-        "priceDelta": 4.0
-      },
-      {
-        "gap": 7.54,
-        "overBudget": true,
-        "poolPlayerId": 367,
-        "priceDelta": 1.6
-      },
-      {
-        "gap": 6.53,
-        "overBudget": true,
-        "poolPlayerId": 426,
-        "priceDelta": 6.5
-      },
-      {
-        "gap": 5.19,
-        "overBudget": true,
-        "poolPlayerId": 154,
-        "priceDelta": 4.1
-      },
-      {
-        "gap": 4.82,
-        "overBudget": true,
-        "poolPlayerId": 15,
-        "priceDelta": 1.1
-      },
-      {
-        "gap": 4.55,
-        "overBudget": false,
-        "poolPlayerId": 544,
-        "priceDelta": 0.0
-      },
-      {
-        "gap": 4.48,
-        "overBudget": true,
-        "poolPlayerId": 427,
-        "priceDelta": 2.4
-      },
-      {
-        "gap": 4.4,
-        "overBudget": true,
-        "poolPlayerId": 398,
-        "priceDelta": 1.5
-      },
-      {
-        "gap": 3.58,
-        "overBudget": true,
-        "poolPlayerId": 368,
-        "priceDelta": 1.5
-      },
-      {
-        "gap": 3.23,
-        "overBudget": true,
-        "poolPlayerId": 480,
-        "priceDelta": 2.4
-      },
-      {
-        "gap": 2.94,
-        "overBudget": false,
-        "poolPlayerId": 86,
-        "priceDelta": 0.0
-      },
-      {
-        "gap": 2.25,
-        "overBudget": true,
-        "poolPlayerId": 237,
-        "priceDelta": 0.4
-      },
-      {
-        "gap": 2.23,
-        "overBudget": true,
-        "poolPlayerId": 94,
-        "priceDelta": 0.5
-      },
-      {
-        "gap": 2.16,
-        "overBudget": true,
-        "poolPlayerId": 335,
-        "priceDelta": 0.5
-      },
-      {
-        "gap": 2.05,
-        "overBudget": true,
-        "poolPlayerId": 40,
-        "priceDelta": 2.0
-      },
-      {
-        "gap": 1.58,
-        "overBudget": true,
-        "poolPlayerId": 399,
-        "priceDelta": 2.3
-      },
-      {
-        "gap": 1.32,
-        "overBudget": true,
-        "poolPlayerId": 68,
-        "priceDelta": 0.5
-      },
-      {
-        "gap": 0.91,
-        "overBudget": true,
-        "poolPlayerId": 397,
-        "priceDelta": 3.0
-      },
-      {
-        "gap": 0.9,
-        "overBudget": true,
-        "poolPlayerId": 236,
-        "priceDelta": 1.0
-      },
-      {
-        "gap": 0.01,
-        "overBudget": true,
-        "poolPlayerId": 69,
-        "priceDelta": 0.5
-      }
-    ],
-    "165": [
-      {
-        "gap": 2.3,
-        "overBudget": true,
-        "poolPlayerId": 411,
-        "priceDelta": 7.8
-      }
-    ],
-    "212": [
-      {
-        "gap": 31.41,
-        "overBudget": true,
-        "poolPlayerId": 12,
-        "priceDelta": 5.0
-      },
-      {
-        "gap": 27.68,
-        "overBudget": true,
-        "poolPlayerId": 367,
-        "priceDelta": 2.6
-      },
-      {
-        "gap": 26.67,
-        "overBudget": true,
-        "poolPlayerId": 426,
-        "priceDelta": 7.5
-      },
-      {
-        "gap": 25.33,
-        "overBudget": true,
-        "poolPlayerId": 154,
-        "priceDelta": 5.1
-      },
-      {
-        "gap": 24.96,
-        "overBudget": true,
-        "poolPlayerId": 15,
-        "priceDelta": 2.1
-      },
-      {
-        "gap": 24.69,
-        "overBudget": true,
-        "poolPlayerId": 544,
-        "priceDelta": 1.0
-      },
-      {
-        "gap": 24.62,
-        "overBudget": true,
-        "poolPlayerId": 427,
-        "priceDelta": 3.4
-      },
-      {
-        "gap": 24.54,
-        "overBudget": true,
-        "poolPlayerId": 398,
-        "priceDelta": 2.5
-      },
-      {
-        "gap": 23.72,
-        "overBudget": true,
-        "poolPlayerId": 368,
-        "priceDelta": 2.5
-      },
-      {
-        "gap": 23.37,
-        "overBudget": true,
-        "poolPlayerId": 480,
-        "priceDelta": 3.4
-      },
-      {
-        "gap": 23.08,
-        "overBudget": true,
-        "poolPlayerId": 86,
-        "priceDelta": 1.0
-      },
-      {
-        "gap": 22.39,
-        "overBudget": true,
-        "poolPlayerId": 237,
-        "priceDelta": 1.4
-      },
-      {
-        "gap": 22.37,
-        "overBudget": true,
-        "poolPlayerId": 94,
-        "priceDelta": 1.5
-      },
-      {
-        "gap": 22.3,
-        "overBudget": true,
-        "poolPlayerId": 335,
-        "priceDelta": 1.5
-      },
-      {
-        "gap": 22.19,
-        "overBudget": true,
-        "poolPlayerId": 40,
-        "priceDelta": 3.0
-      },
-      {
-        "gap": 21.72,
-        "overBudget": true,
-        "poolPlayerId": 399,
-        "priceDelta": 3.3
-      },
-      {
-        "gap": 21.46,
-        "overBudget": true,
-        "poolPlayerId": 68,
-        "priceDelta": 1.5
-      },
-      {
-        "gap": 21.05,
-        "overBudget": true,
-        "poolPlayerId": 397,
-        "priceDelta": 4.0
-      },
-      {
-        "gap": 21.04,
-        "overBudget": true,
-        "poolPlayerId": 236,
-        "priceDelta": 2.0
-      },
-      {
-        "gap": 20.15,
-        "overBudget": true,
-        "poolPlayerId": 69,
-        "priceDelta": 1.5
-      },
-      {
-        "gap": 20.14,
-        "overBudget": true,
-        "poolPlayerId": 124,
-        "priceDelta": 1.0
-      },
-      {
-        "gap": 19.44,
-        "overBudget": true,
-        "poolPlayerId": 13,
-        "priceDelta": 3.0
-      },
-      {
-        "gap": 19.42,
-        "overBudget": true,
-        "poolPlayerId": 366,
-        "priceDelta": 2.9
-      },
-      {
-        "gap": 19.39,
-        "overBudget": true,
-        "poolPlayerId": 486,
-        "priceDelta": 1.0
-      },
-      {
-        "gap": 19.38,
-        "overBudget": true,
-        "poolPlayerId": 454,
-        "priceDelta": 1.6
-      },
-      {
-        "gap": 19.24,
-        "overBudget": true,
-        "poolPlayerId": 428,
-        "priceDelta": 3.4
-      },
-      {
-        "gap": 18.63,
-        "overBudget": true,
-        "poolPlayerId": 453,
-        "priceDelta": 1.5
-      },
-      {
-        "gap": 18.61,
-        "overBudget": true,
-        "poolPlayerId": 70,
-        "priceDelta": 1.5
-      },
-      {
-        "gap": 18.59,
-        "overBudget": true,
-        "poolPlayerId": 483,
-        "priceDelta": 1.0
-      },
-      {
-        "gap": 18.58,
-        "overBudget": true,
-        "poolPlayerId": 261,
-        "priceDelta": 1.0
-      },
-      {
-        "gap": 18.23,
-        "overBudget": true,
-        "poolPlayerId": 127,
-        "priceDelta": 0.5
-      },
-      {
-        "gap": 18.05,
-        "overBudget": true,
-        "poolPlayerId": 43,
-        "priceDelta": 1.4
-      },
-      {
-        "gap": 17.9,
-        "overBudget": true,
-        "poolPlayerId": 481,
-        "priceDelta": 1.9
-      },
-      {
-        "gap": 17.51,
-        "overBudget": true,
-        "poolPlayerId": 514,
-        "priceDelta": 1.4
-      },
-      {
-        "gap": 17.41,
-        "overBudget": true,
-        "poolPlayerId": 20,
-        "priceDelta": 0.9
-      },
-      {
-        "gap": 17.09,
-        "overBudget": true,
-        "poolPlayerId": 264,
-        "priceDelta": 1.0
-      },
-      {
-        "gap": 16.52,
-        "overBudget": true,
-        "poolPlayerId": 210,
-        "priceDelta": 1.0
-      },
-      {
-        "gap": 16.45,
-        "overBudget": true,
-        "poolPlayerId": 46,
-        "priceDelta": 0.5
-      },
-      {
-        "gap": 16.45,
-        "overBudget": true,
-        "poolPlayerId": 542,
-        "priceDelta": 1.4
-      },
-      {
-        "gap": 16.42,
-        "overBudget": true,
-        "poolPlayerId": 338,
-        "priceDelta": 1.0
-      },
-      {
-        "gap": 16.19,
-        "overBudget": true,
-        "poolPlayerId": 369,
-        "priceDelta": 1.4
-      },
-      {
-        "gap": 16.03,
-        "overBudget": true,
-        "poolPlayerId": 41,
-        "priceDelta": 1.5
-      },
-      {
-        "gap": 15.94,
-        "overBudget": true,
-        "poolPlayerId": 47,
-        "priceDelta": 0.5
-      },
-      {
-        "gap": 15.86,
-        "overBudget": true,
-        "poolPlayerId": 7,
-        "priceDelta": 1.0
-      },
-      {
-        "gap": 15.71,
-        "overBudget": true,
-        "poolPlayerId": 71,
-        "priceDelta": 0.5
-      },
-      {
-        "gap": 15.7,
-        "overBudget": true,
-        "poolPlayerId": 565,
-        "priceDelta": 1.2
-      },
-      {
-        "gap": 15.67,
-        "overBudget": true,
-        "poolPlayerId": 455,
-        "priceDelta": 0.9
-      },
-      {
-        "gap": 15.64,
-        "overBudget": true,
-        "poolPlayerId": 268,
-        "priceDelta": 1.0
-      },
-      {
-        "gap": 15.64,
-        "overBudget": true,
-        "poolPlayerId": 286,
-        "priceDelta": 0.5
-      },
-      {
-        "gap": 15.51,
-        "overBudget": true,
-        "poolPlayerId": 459,
-        "priceDelta": 1.0
-      },
-      {
-        "gap": 15.26,
-        "overBudget": true,
-        "poolPlayerId": 184,
-        "priceDelta": 0.5
-      },
-      {
-        "gap": 15.26,
-        "overBudget": true,
-        "poolPlayerId": 246,
-        "priceDelta": 0.5
-      },
-      {
-        "gap": 15.24,
-        "overBudget": true,
-        "poolPlayerId": 67,
-        "priceDelta": 2.0
-      },
-      {
-        "gap": 15.22,
-        "overBudget": true,
-        "poolPlayerId": 214,
-        "priceDelta": 0.5
-      },
-      {
-        "gap": 15.09,
-        "overBudget": true,
-        "poolPlayerId": 244,
-        "priceDelta": 0.5
-      },
-      {
-        "gap": 15.02,
-        "overBudget": true,
-        "poolPlayerId": 161,
-        "priceDelta": 0.5
-      },
-      {
-        "gap": 14.77,
-        "overBudget": true,
-        "poolPlayerId": 516,
-        "priceDelta": 1.0
-      },
-      {
-        "gap": 14.65,
-        "overBudget": false,
-        "poolPlayerId": 290,
-        "priceDelta": 0.0
-      },
-      {
-        "gap": 14.62,
-        "overBudget": true,
-        "poolPlayerId": 242,
-        "priceDelta": 1.0
-      },
-      {
-        "gap": 14.42,
-        "overBudget": true,
-        "poolPlayerId": 460,
-        "priceDelta": 0.5
-      },
-      {
-        "gap": 14.06,
-        "overBudget": true,
-        "poolPlayerId": 432,
-        "priceDelta": 1.0
-      },
-      {
-        "gap": 14.03,
-        "overBudget": true,
-        "poolPlayerId": 265,
-        "priceDelta": 0.5
-      },
-      {
-        "gap": 13.89,
-        "overBudget": true,
-        "poolPlayerId": 627,
-        "priceDelta": 3.5
-      },
-      {
-        "gap": 13.86,
-        "overBudget": true,
-        "poolPlayerId": 570,
-        "priceDelta": 1.0
-      },
-      {
-        "gap": 13.83,
-        "overBudget": true,
-        "poolPlayerId": 45,
-        "priceDelta": 0.9
-      },
-      {
-        "gap": 13.82,
-        "overBudget": true,
-        "poolPlayerId": 545,
-        "priceDelta": 0.5
-      },
-      {
-        "gap": 13.8,
-        "overBudget": true,
-        "poolPlayerId": 98,
-        "priceDelta": 0.5
-      },
-      {
-        "gap": 13.78,
-        "overBudget": true,
-        "poolPlayerId": 522,
-        "priceDelta": 0.5
-      },
-      {
-        "gap": 13.6,
-        "overBudget": true,
-        "poolPlayerId": 562,
-        "priceDelta": 0.9
-      },
-      {
-        "gap": 13.47,
-        "overBudget": true,
-        "poolPlayerId": 575,
-        "priceDelta": 0.5
-      },
-      {
-        "gap": 13.42,
-        "overBudget": true,
-        "poolPlayerId": 162,
-        "priceDelta": 0.4
-      },
-      {
-        "gap": 13.25,
-        "overBudget": true,
-        "poolPlayerId": 17,
-        "priceDelta": 1.4
-      },
-      {
-        "gap": 13.25,
-        "overBudget": true,
-        "poolPlayerId": 309,
-        "priceDelta": 0.5
-      },
-      {
-        "gap": 12.91,
-        "overBudget": true,
-        "poolPlayerId": 95,
-        "priceDelta": 1.9
-      },
-      {
-        "gap": 12.82,
-        "overBudget": true,
-        "poolPlayerId": 628,
-        "priceDelta": 1.5
-      },
-      {
-        "gap": 12.71,
-        "overBudget": true,
-        "poolPlayerId": 267,
-        "priceDelta": 0.5
-      },
-      {
-        "gap": 12.37,
-        "overBudget": true,
-        "poolPlayerId": 371,
-        "priceDelta": 1.5
-      },
-      {
-        "gap": 12.29,
-        "overBudget": true,
-        "poolPlayerId": 557,
-        "priceDelta": 2.0
-      },
-      {
-        "gap": 12.2,
-        "overBudget": true,
-        "poolPlayerId": 372,
-        "priceDelta": 1.0
-      },
-      {
-        "gap": 11.97,
-        "overBudget": true,
-        "poolPlayerId": 591,
-        "priceDelta": 1.0
-      },
-      {
-        "gap": 11.75,
-        "overBudget": true,
-        "poolPlayerId": 96,
-        "priceDelta": 1.0
-      },
-      {
-        "gap": 11.73,
-        "overBudget": true,
-        "poolPlayerId": 156,
-        "priceDelta": 2.0
-      },
-      {
-        "gap": 11.72,
-        "overBudget": true,
-        "poolPlayerId": 211,
-        "priceDelta": 1.0
-      },
-      {
-        "gap": 11.57,
-        "overBudget": true,
-        "poolPlayerId": 190,
-        "priceDelta": 1.0
-      },
-      {
-        "gap": 11.33,
-        "overBudget": true,
-        "poolPlayerId": 406,
-        "priceDelta": 0.9
-      },
-      {
-        "gap": 11.08,
-        "overBudget": true,
-        "poolPlayerId": 336,
-        "priceDelta": 1.4
-      },
-      {
-        "gap": 11.0,
-        "overBudget": true,
-        "poolPlayerId": 105,
-        "priceDelta": 1.5
-      },
-      {
-        "gap": 10.89,
-        "overBudget": true,
-        "poolPlayerId": 241,
-        "priceDelta": 1.0
-      },
-      {
-        "gap": 10.7,
-        "overBudget": true,
-        "poolPlayerId": 183,
-        "priceDelta": 0.5
-      },
-      {
-        "gap": 10.48,
-        "overBudget": true,
-        "poolPlayerId": 260,
-        "priceDelta": 1.9
-      },
-      {
-        "gap": 10.43,
-        "overBudget": true,
-        "poolPlayerId": 337,
-        "priceDelta": 0.9
-      },
-      {
-        "gap": 10.4,
-        "overBudget": true,
-        "poolPlayerId": 315,
-        "priceDelta": 1.0
-      },
-      {
-        "gap": 10.17,
-        "overBudget": true,
-        "poolPlayerId": 576,
-        "priceDelta": 0.5
-      },
-      {
-        "gap": 10.08,
-        "overBudget": true,
-        "poolPlayerId": 647,
-        "priceDelta": 1.0
-      },
-      {
-        "gap": 10.02,
-        "overBudget": true,
-        "poolPlayerId": 642,
-        "priceDelta": 1.0
-      },
-      {
-        "gap": 10.02,
-        "overBudget": true,
-        "poolPlayerId": 645,
-        "priceDelta": 0.5
-      },
-      {
-        "gap": 9.9,
-        "overBudget": true,
-        "poolPlayerId": 636,
-        "priceDelta": 0.5
-      },
-      {
-        "gap": 9.89,
-        "overBudget": true,
-        "poolPlayerId": 14,
-        "priceDelta": 1.9
-      },
-      {
-        "gap": 9.83,
-        "overBudget": true,
-        "poolPlayerId": 377,
-        "priceDelta": 2.0
-      },
-      {
-        "gap": 9.75,
-        "overBudget": false,
-        "poolPlayerId": 51,
-        "priceDelta": 0.0
-      },
-      {
-        "gap": 9.35,
-        "overBudget": true,
-        "poolPlayerId": 639,
-        "priceDelta": 1.0
-      },
-      {
-        "gap": 9.34,
-        "overBudget": true,
-        "poolPlayerId": 247,
-        "priceDelta": 1.0
-      },
-      {
-        "gap": 9.22,
-        "overBudget": true,
-        "poolPlayerId": 631,
-        "priceDelta": 1.5
-      },
-      {
-        "gap": 9.22,
-        "overBudget": true,
-        "poolPlayerId": 429,
-        "priceDelta": 2.5
-      },
-      {
-        "gap": 9.15,
-        "overBudget": true,
-        "poolPlayerId": 648,
-        "priceDelta": 0.5
-      },
-      {
-        "gap": 8.92,
-        "overBudget": true,
-        "poolPlayerId": 239,
-        "priceDelta": 1.5
-      },
-      {
-        "gap": 8.87,
-        "overBudget": true,
-        "poolPlayerId": 551,
-        "priceDelta": 0.5
-      },
-      {
-        "gap": 8.7,
-        "overBudget": true,
-        "poolPlayerId": 374,
-        "priceDelta": 0.5
-      },
-      {
-        "gap": 8.67,
-        "overBudget": true,
-        "poolPlayerId": 405,
-        "priceDelta": 1.0
-      },
-      {
-        "gap": 8.57,
-        "overBudget": true,
-        "poolPlayerId": 19,
-        "priceDelta": 0.9
-      },
-      {
-        "gap": 8.52,
-        "overBudget": true,
-        "poolPlayerId": 104,
-        "priceDelta": 0.5
-      },
-      {
-        "gap": 8.29,
-        "overBudget": true,
-        "poolPlayerId": 73,
-        "priceDelta": 0.5
-      },
-      {
-        "gap": 8.1,
-        "overBudget": true,
-        "poolPlayerId": 102,
-        "priceDelta": 0.4
-      },
-      {
-        "gap": 8.02,
-        "overBudget": true,
-        "poolPlayerId": 263,
-        "priceDelta": 0.9
-      },
-      {
-        "gap": 8.02,
-        "overBudget": true,
-        "poolPlayerId": 155,
-        "priceDelta": 2.4
-      },
-      {
-        "gap": 7.8,
-        "overBudget": true,
-        "poolPlayerId": 558,
-        "priceDelta": 0.5
-      },
-      {
-        "gap": 7.77,
-        "overBudget": true,
-        "poolPlayerId": 525,
-        "priceDelta": 1.4
-      },
-      {
-        "gap": 7.75,
-        "overBudget": true,
-        "poolPlayerId": 646,
-        "priceDelta": 1.0
-      },
-      {
-        "gap": 7.72,
-        "overBudget": true,
-        "poolPlayerId": 42,
-        "priceDelta": 1.0
-      },
-      {
-        "gap": 7.72,
-        "overBudget": true,
-        "poolPlayerId": 547,
-        "priceDelta": 0.5
-      },
-      {
-        "gap": 7.55,
-        "overBudget": false,
-        "poolPlayerId": 605,
-        "priceDelta": 0.0
-      },
-      {
-        "gap": 6.87,
-        "overBudget": true,
-        "poolPlayerId": 456,
-        "priceDelta": 0.4
-      },
-      {
-        "gap": 6.83,
-        "overBudget": true,
-        "poolPlayerId": 488,
-        "priceDelta": 0.4
-      },
-      {
-        "gap": 6.78,
-        "overBudget": true,
-        "poolPlayerId": 209,
-        "priceDelta": 1.4
-      },
-      {
-        "gap": 6.62,
-        "overBudget": true,
-        "poolPlayerId": 243,
-        "priceDelta": 0.5
-      },
-      {
-        "gap": 6.61,
-        "overBudget": true,
-        "poolPlayerId": 75,
-        "priceDelta": 0.5
-      },
-      {
-        "gap": 6.6,
-        "overBudget": true,
-        "poolPlayerId": 462,
-        "priceDelta": 0.5
-      },
-      {
-        "gap": 6.46,
-        "overBudget": true,
-        "poolPlayerId": 415,
-        "priceDelta": 1.4
-      },
-      {
-        "gap": 6.29,
-        "overBudget": true,
-        "poolPlayerId": 160,
-        "priceDelta": 1.4
-      },
-      {
-        "gap": 6.09,
-        "overBudget": true,
-        "poolPlayerId": 520,
-        "priceDelta": 0.9
-      },
-      {
-        "gap": 5.99,
-        "overBudget": true,
-        "poolPlayerId": 403,
-        "priceDelta": 2.0
-      },
-      {
-        "gap": 5.88,
-        "overBudget": true,
-        "poolPlayerId": 457,
-        "priceDelta": 1.4
-      },
-      {
-        "gap": 5.47,
-        "overBudget": true,
-        "poolPlayerId": 188,
-        "priceDelta": 0.9
-      },
-      {
-        "gap": 5.15,
-        "overBudget": true,
-        "poolPlayerId": 343,
-        "priceDelta": 0.5
-      },
-      {
-        "gap": 5.1,
-        "overBudget": true,
-        "poolPlayerId": 644,
-        "priceDelta": 0.5
-      },
-      {
-        "gap": 5.07,
-        "overBudget": true,
-        "poolPlayerId": 262,
-        "priceDelta": 0.9
-      },
-      {
-        "gap": 4.99,
-        "overBudget": true,
-        "poolPlayerId": 635,
-        "priceDelta": 0.5
-      },
-      {
-        "gap": 4.96,
-        "overBudget": true,
-        "poolPlayerId": 72,
-        "priceDelta": 0.5
-      },
-      {
-        "gap": 4.96,
-        "overBudget": true,
-        "poolPlayerId": 617,
-        "priceDelta": 0.5
-      },
-      {
-        "gap": 4.71,
-        "overBudget": true,
-        "poolPlayerId": 345,
-        "priceDelta": 0.4
-      },
-      {
-        "gap": 4.66,
-        "overBudget": true,
-        "poolPlayerId": 74,
-        "priceDelta": 0.5
-      },
-      {
-        "gap": 4.31,
-        "overBudget": true,
-        "poolPlayerId": 16,
-        "priceDelta": 1.8
-      },
-      {
-        "gap": 4.22,
-        "overBudget": false,
-        "poolPlayerId": 489,
-        "priceDelta": 0.0
-      },
-      {
-        "gap": 4.1,
-        "overBudget": true,
-        "poolPlayerId": 238,
-        "priceDelta": 2.0
-      },
-      {
-        "gap": 4.06,
-        "overBudget": true,
-        "poolPlayerId": 339,
-        "priceDelta": 0.4
-      },
-      {
-        "gap": 3.51,
-        "overBudget": true,
-        "poolPlayerId": 519,
-        "priceDelta": 0.9
-      },
-      {
-        "gap": 3.45,
-        "overBudget": true,
-        "poolPlayerId": 240,
-        "priceDelta": 0.5
-      },
-      {
-        "gap": 3.44,
-        "overBudget": true,
-        "poolPlayerId": 512,
-        "priceDelta": 2.0
-      },
-      {
-        "gap": 3.42,
-        "overBudget": true,
-        "poolPlayerId": 548,
-        "priceDelta": 0.5
-      },
-      {
-        "gap": 3.26,
-        "overBudget": true,
-        "poolPlayerId": 619,
-        "priceDelta": 0.5
-      },
-      {
-        "gap": 3.24,
-        "overBudget": true,
-        "poolPlayerId": 482,
-        "priceDelta": 1.4
-      },
-      {
-        "gap": 3.22,
-        "overBudget": true,
-        "poolPlayerId": 186,
-        "priceDelta": 0.9
-      },
-      {
-        "gap": 3.15,
-        "overBudget": true,
-        "poolPlayerId": 76,
-        "priceDelta": 0.5
-      },
-      {
-        "gap": 2.77,
-        "overBudget": true,
-        "poolPlayerId": 589,
-        "priceDelta": 0.5
-      },
-      {
-        "gap": 2.72,
-        "overBudget": true,
-        "poolPlayerId": 158,
-        "priceDelta": 1.4
-      },
-      {
-        "gap": 2.69,
-        "overBudget": true,
-        "poolPlayerId": 616,
-        "priceDelta": 1.0
-      },
-      {
-        "gap": 2.63,
-        "overBudget": true,
-        "poolPlayerId": 549,
-        "priceDelta": 0.9
-      },
-      {
-        "gap": 2.61,
-        "overBudget": true,
-        "poolPlayerId": 35,
-        "priceDelta": 0.5
-      },
-      {
-        "gap": 2.53,
-        "overBudget": true,
-        "poolPlayerId": 52,
-        "priceDelta": 0.5
-      },
-      {
-        "gap": 2.53,
-        "overBudget": true,
-        "poolPlayerId": 185,
-        "priceDelta": 0.4
-      },
-      {
-        "gap": 2.53,
-        "overBudget": true,
-        "poolPlayerId": 563,
-        "priceDelta": 0.5
-      },
-      {
-        "gap": 2.52,
-        "overBudget": true,
-        "poolPlayerId": 580,
-        "priceDelta": 0.5
-      },
-      {
-        "gap": 2.5,
-        "overBudget": true,
-        "poolPlayerId": 584,
-        "priceDelta": 1.0
-      },
-      {
-        "gap": 2.2,
-        "overBudget": false,
-        "poolPlayerId": 323,
-        "priceDelta": 0.0
-      },
-      {
-        "gap": 2.06,
-        "overBudget": true,
-        "poolPlayerId": 600,
-        "priceDelta": 0.5
-      },
-      {
-        "gap": 1.96,
-        "overBudget": true,
-        "poolPlayerId": 164,
-        "priceDelta": 0.9
-      },
-      {
-        "gap": 1.9,
-        "overBudget": false,
-        "poolPlayerId": 621,
-        "priceDelta": 0.0
-      },
-      {
-        "gap": 1.81,
-        "overBudget": true,
-        "poolPlayerId": 126,
-        "priceDelta": 1.0
-      },
-      {
-        "gap": 1.78,
-        "overBudget": true,
-        "poolPlayerId": 595,
-        "priceDelta": 0.5
-      },
-      {
-        "gap": 1.76,
-        "overBudget": true,
-        "poolPlayerId": 157,
-        "priceDelta": 1.9
-      },
-      {
-        "gap": 1.44,
-        "overBudget": true,
-        "poolPlayerId": 434,
-        "priceDelta": 0.5
-      },
-      {
-        "gap": 1.34,
-        "overBudget": true,
-        "poolPlayerId": 100,
-        "priceDelta": 0.5
-      },
-      {
-        "gap": 1.18,
-        "overBudget": true,
-        "poolPlayerId": 135,
-        "priceDelta": 0.4
-      },
-      {
-        "gap": 1.16,
-        "overBudget": true,
-        "poolPlayerId": 487,
-        "priceDelta": 0.5
-      },
-      {
-        "gap": 1.12,
-        "overBudget": true,
-        "poolPlayerId": 313,
-        "priceDelta": 1.0
-      },
-      {
-        "gap": 1.01,
-        "overBudget": true,
-        "poolPlayerId": 435,
-        "priceDelta": 0.5
-      },
-      {
-        "gap": 0.97,
-        "overBudget": true,
-        "poolPlayerId": 213,
-        "priceDelta": 0.4
-      },
-      {
-        "gap": 0.56,
-        "overBudget": true,
-        "poolPlayerId": 461,
-        "priceDelta": 1.4
-      },
-      {
-        "gap": 0.5,
-        "overBudget": true,
-        "poolPlayerId": 245,
-        "priceDelta": 0.9
-      },
-      {
-        "gap": 0.28,
-        "overBudget": true,
-        "poolPlayerId": 571,
-        "priceDelta": 0.4
-      }
-    ],
-    "305": [
-      {
-        "gap": 18.34,
-        "overBudget": true,
-        "poolPlayerId": 10,
-        "priceDelta": 1.5
-      },
-      {
-        "gap": 15.41,
-        "overBudget": true,
-        "poolPlayerId": 388,
-        "priceDelta": 2.0
-      },
-      {
-        "gap": 13.6,
-        "overBudget": true,
-        "poolPlayerId": 8,
-        "priceDelta": 1.7
-      },
-      {
-        "gap": 11.25,
-        "overBudget": true,
-        "poolPlayerId": 4,
-        "priceDelta": 4.0
-      },
-      {
-        "gap": 11.24,
-        "overBudget": true,
-        "poolPlayerId": 391,
-        "priceDelta": 1.6
-      },
-      {
-        "gap": 10.92,
-        "overBudget": true,
-        "poolPlayerId": 449,
-        "priceDelta": 1.1
-      },
-      {
-        "gap": 10.13,
-        "overBudget": true,
-        "poolPlayerId": 387,
-        "priceDelta": 2.5
-      },
-      {
-        "gap": 8.72,
-        "overBudget": true,
-        "poolPlayerId": 61,
-        "priceDelta": 1.5
-      },
-      {
-        "gap": 8.68,
-        "overBudget": true,
-        "poolPlayerId": 393,
-        "priceDelta": 1.5
-      },
-      {
-        "gap": 8.31,
-        "overBudget": true,
-        "poolPlayerId": 332,
-        "priceDelta": 0.5
-      },
-      {
-        "gap": 8.24,
-        "overBudget": true,
-        "poolPlayerId": 60,
-        "priceDelta": 1.5
-      },
-      {
-        "gap": 8.18,
-        "overBudget": true,
-        "poolPlayerId": 229,
-        "priceDelta": 2.0
-      },
-      {
-        "gap": 8.1,
-        "overBudget": true,
-        "poolPlayerId": 390,
-        "priceDelta": 1.5
-      },
-      {
-        "gap": 7.66,
-        "overBudget": true,
-        "poolPlayerId": 200,
-        "priceDelta": 2.0
-      },
-      {
-        "gap": 7.43,
-        "overBudget": true,
-        "poolPlayerId": 356,
-        "priceDelta": 2.5
-      },
-      {
-        "gap": 7.11,
-        "overBudget": false,
-        "poolPlayerId": 173,
-        "priceDelta": 0.0
-      },
-      {
-        "gap": 7.01,
-        "overBudget": true,
-        "poolPlayerId": 203,
-        "priceDelta": 0.9
-      },
-      {
-        "gap": 6.91,
-        "overBudget": true,
-        "poolPlayerId": 115,
-        "priceDelta": 0.7
-      },
-      {
-        "gap": 6.57,
-        "overBudget": true,
-        "poolPlayerId": 445,
-        "priceDelta": 1.0
-      },
-      {
-        "gap": 6.21,
-        "overBudget": true,
-        "poolPlayerId": 148,
-        "priceDelta": 0.5
-      },
-      {
-        "gap": 5.76,
-        "overBudget": true,
-        "poolPlayerId": 88,
-        "priceDelta": 0.6
-      },
-      {
-        "gap": 5.67,
-        "overBudget": true,
-        "poolPlayerId": 202,
-        "priceDelta": 1.0
-      },
-      {
-        "gap": 5.56,
-        "overBudget": true,
-        "poolPlayerId": 472,
-        "priceDelta": 1.5
-      },
-      {
-        "gap": 5.26,
-        "overBudget": true,
-        "poolPlayerId": 87,
-        "priceDelta": 0.5
-      },
-      {
-        "gap": 5.16,
-        "overBudget": true,
-        "poolPlayerId": 230,
-        "priceDelta": 1.5
-      },
-      {
-        "gap": 4.83,
-        "overBudget": true,
-        "poolPlayerId": 327,
-        "priceDelta": 1.0
-      },
-      {
-        "gap": 4.78,
-        "overBudget": true,
-        "poolPlayerId": 204,
-        "priceDelta": 0.5
-      },
-      {
-        "gap": 4.71,
-        "overBudget": true,
-        "poolPlayerId": 418,
-        "priceDelta": 1.0
-      },
-      {
-        "gap": 4.71,
-        "overBudget": true,
-        "poolPlayerId": 536,
-        "priceDelta": 0.5
-      },
-      {
-        "gap": 4.63,
-        "overBudget": true,
-        "poolPlayerId": 423,
-        "priceDelta": 0.5
-      },
-      {
-        "gap": 4.36,
-        "overBudget": true,
-        "poolPlayerId": 502,
-        "priceDelta": 0.5
-      },
-      {
-        "gap": 4.31,
-        "overBudget": true,
-        "poolPlayerId": 469,
-        "priceDelta": 1.0
-      },
-      {
-        "gap": 4.14,
-        "overBudget": true,
-        "poolPlayerId": 532,
-        "priceDelta": 1.0
-      },
-      {
-        "gap": 4.09,
-        "overBudget": true,
-        "poolPlayerId": 112,
-        "priceDelta": 0.9
-      },
-      {
-        "gap": 4.0,
-        "overBudget": true,
-        "poolPlayerId": 254,
-        "priceDelta": 0.5
-      },
-      {
-        "gap": 3.87,
-        "overBudget": true,
-        "poolPlayerId": 358,
-        "priceDelta": 1.5
-      },
-      {
-        "gap": 3.76,
-        "overBudget": true,
-        "poolPlayerId": 233,
-        "priceDelta": 0.5
-      },
-      {
-        "gap": 3.47,
-        "overBudget": false,
-        "poolPlayerId": 277,
-        "priceDelta": 0.0
-      },
-      {
-        "gap": 3.4,
-        "overBudget": true,
-        "poolPlayerId": 279,
-        "priceDelta": 0.1
-      },
-      {
-        "gap": 3.35,
-        "overBudget": true,
-        "poolPlayerId": 144,
-        "priceDelta": 1.0
-      },
-      {
-        "gap": 3.35,
-        "overBudget": true,
-        "poolPlayerId": 471,
-        "priceDelta": 1.5
-      },
-      {
-        "gap": 3.34,
-        "overBudget": true,
-        "poolPlayerId": 149,
-        "priceDelta": 0.9
-      },
-      {
-        "gap": 3.04,
-        "overBudget": true,
-        "poolPlayerId": 114,
-        "priceDelta": 0.5
-      },
-      {
-        "gap": 2.92,
-        "overBudget": true,
-        "poolPlayerId": 34,
-        "priceDelta": 0.5
-      },
-      {
-        "gap": 2.81,
-        "overBudget": true,
-        "poolPlayerId": 593,
-        "priceDelta": 0.5
-      },
-      {
-        "gap": 2.69,
-        "overBudget": true,
-        "poolPlayerId": 36,
-        "priceDelta": 0.5
-      },
-      {
-        "gap": 2.65,
-        "overBudget": true,
-        "poolPlayerId": 330,
-        "priceDelta": 0.5
-      },
-      {
-        "gap": 2.64,
-        "overBudget": true,
-        "poolPlayerId": 447,
-        "priceDelta": 1.0
-      },
-      {
-        "gap": 2.61,
-        "overBudget": true,
-        "poolPlayerId": 357,
-        "priceDelta": 1.5
-      },
-      {
-        "gap": 2.56,
-        "overBudget": true,
-        "poolPlayerId": 37,
-        "priceDelta": 0.5
-      },
-      {
-        "gap": 2.47,
-        "overBudget": true,
-        "poolPlayerId": 84,
-        "priceDelta": 1.5
-      },
-      {
-        "gap": 2.15,
-        "overBudget": true,
-        "poolPlayerId": 534,
-        "priceDelta": 0.5
-      },
-      {
-        "gap": 2.13,
-        "overBudget": true,
-        "poolPlayerId": 473,
-        "priceDelta": 0.5
-      },
-      {
-        "gap": 2.0,
-        "overBudget": true,
-        "poolPlayerId": 334,
-        "priceDelta": 1.0
-      },
-      {
-        "gap": 1.9,
-        "overBudget": true,
-        "poolPlayerId": 258,
-        "priceDelta": 0.5
-      },
-      {
-        "gap": 1.69,
-        "overBudget": true,
-        "poolPlayerId": 257,
-        "priceDelta": 0.5
-      },
-      {
-        "gap": 1.62,
-        "overBudget": true,
-        "poolPlayerId": 566,
-        "priceDelta": 1.0
-      },
-      {
-        "gap": 1.56,
-        "overBudget": true,
-        "poolPlayerId": 116,
-        "priceDelta": 0.5
-      },
-      {
-        "gap": 1.53,
-        "overBudget": true,
-        "poolPlayerId": 474,
-        "priceDelta": 0.5
-      },
-      {
-        "gap": 1.37,
-        "overBudget": true,
-        "poolPlayerId": 362,
-        "priceDelta": 1.0
-      },
-      {
-        "gap": 1.1,
-        "overBudget": false,
-        "poolPlayerId": 259,
-        "priceDelta": 0.0
-      },
-      {
-        "gap": 0.79,
-        "overBudget": true,
-        "poolPlayerId": 64,
-        "priceDelta": 0.5
-      },
-      {
-        "gap": 0.77,
-        "overBudget": true,
-        "poolPlayerId": 541,
-        "priceDelta": 0.5
-      },
-      {
-        "gap": 0.53,
-        "overBudget": false,
-        "poolPlayerId": 176,
-        "priceDelta": 0.0
-      },
-      {
-        "gap": 0.45,
-        "overBudget": false,
-        "poolPlayerId": 304,
-        "priceDelta": 0.0
-      },
-      {
-        "gap": 0.42,
-        "overBudget": true,
-        "poolPlayerId": 504,
-        "priceDelta": 1.0
-      },
-      {
-        "gap": 0.41,
-        "overBudget": false,
-        "poolPlayerId": 282,
-        "priceDelta": 0.0
-      },
-      {
-        "gap": 0.06,
-        "overBudget": true,
-        "poolPlayerId": 32,
-        "priceDelta": 0.5
-      },
-      {
-        "gap": 0.02,
-        "overBudget": false,
-        "poolPlayerId": 175,
-        "priceDelta": 0.0
-      }
-    ],
-    "334": [
-      {
-        "gap": 16.34,
-        "overBudget": true,
-        "poolPlayerId": 10,
-        "priceDelta": 0.5
-      },
-      {
-        "gap": 13.41,
-        "overBudget": true,
-        "poolPlayerId": 388,
-        "priceDelta": 1.0
-      },
-      {
-        "gap": 11.6,
-        "overBudget": true,
-        "poolPlayerId": 8,
-        "priceDelta": 0.7
-      },
-      {
-        "gap": 9.25,
-        "overBudget": true,
-        "poolPlayerId": 4,
-        "priceDelta": 3.0
-      },
-      {
-        "gap": 9.24,
-        "overBudget": true,
-        "poolPlayerId": 391,
-        "priceDelta": 0.6
-      },
-      {
-        "gap": 8.92,
-        "overBudget": true,
-        "poolPlayerId": 449,
-        "priceDelta": 0.1
-      },
-      {
-        "gap": 8.13,
-        "overBudget": true,
-        "poolPlayerId": 387,
-        "priceDelta": 1.5
-      },
-      {
-        "gap": 6.72,
-        "overBudget": true,
-        "poolPlayerId": 61,
-        "priceDelta": 0.5
-      },
-      {
-        "gap": 6.68,
-        "overBudget": true,
-        "poolPlayerId": 393,
-        "priceDelta": 0.5
-      },
-      {
-        "gap": 6.31,
-        "overBudget": false,
-        "poolPlayerId": 332,
-        "priceDelta": -0.5
-      },
-      {
-        "gap": 6.24,
-        "overBudget": true,
-        "poolPlayerId": 60,
-        "priceDelta": 0.5
-      },
-      {
-        "gap": 6.18,
-        "overBudget": true,
-        "poolPlayerId": 229,
-        "priceDelta": 1.0
-      },
-      {
-        "gap": 6.1,
-        "overBudget": true,
-        "poolPlayerId": 390,
-        "priceDelta": 0.5
-      },
-      {
-        "gap": 5.66,
-        "overBudget": true,
-        "poolPlayerId": 200,
-        "priceDelta": 1.0
-      },
-      {
-        "gap": 5.43,
-        "overBudget": true,
-        "poolPlayerId": 356,
-        "priceDelta": 1.5
-      },
-      {
-        "gap": 5.11,
-        "overBudget": false,
-        "poolPlayerId": 173,
-        "priceDelta": -1.0
-      },
-      {
-        "gap": 5.01,
-        "overBudget": false,
-        "poolPlayerId": 203,
-        "priceDelta": -0.1
-      },
-      {
-        "gap": 4.91,
-        "overBudget": false,
-        "poolPlayerId": 115,
-        "priceDelta": -0.3
-      },
-      {
-        "gap": 4.57,
-        "overBudget": false,
-        "poolPlayerId": 445,
-        "priceDelta": 0.0
-      },
-      {
-        "gap": 4.21,
-        "overBudget": false,
-        "poolPlayerId": 148,
-        "priceDelta": -0.5
-      },
-      {
-        "gap": 3.76,
-        "overBudget": false,
-        "poolPlayerId": 88,
-        "priceDelta": -0.4
-      },
-      {
-        "gap": 3.67,
-        "overBudget": false,
-        "poolPlayerId": 202,
-        "priceDelta": 0.0
-      },
-      {
-        "gap": 3.56,
-        "overBudget": true,
-        "poolPlayerId": 472,
-        "priceDelta": 0.5
-      },
-      {
-        "gap": 3.26,
-        "overBudget": false,
-        "poolPlayerId": 87,
-        "priceDelta": -0.5
-      },
-      {
-        "gap": 3.16,
-        "overBudget": true,
-        "poolPlayerId": 230,
-        "priceDelta": 0.5
-      },
-      {
-        "gap": 2.83,
-        "overBudget": false,
-        "poolPlayerId": 327,
-        "priceDelta": 0.0
-      },
-      {
-        "gap": 2.78,
-        "overBudget": false,
-        "poolPlayerId": 204,
-        "priceDelta": -0.5
-      },
-      {
-        "gap": 2.71,
-        "overBudget": false,
-        "poolPlayerId": 418,
-        "priceDelta": 0.0
-      },
-      {
-        "gap": 2.71,
-        "overBudget": false,
-        "poolPlayerId": 536,
-        "priceDelta": -0.5
-      },
-      {
-        "gap": 2.63,
-        "overBudget": false,
-        "poolPlayerId": 423,
-        "priceDelta": -0.5
-      },
-      {
-        "gap": 2.36,
-        "overBudget": false,
-        "poolPlayerId": 502,
-        "priceDelta": -0.5
-      },
-      {
-        "gap": 2.31,
-        "overBudget": false,
-        "poolPlayerId": 469,
-        "priceDelta": 0.0
-      },
-      {
-        "gap": 2.14,
-        "overBudget": false,
-        "poolPlayerId": 532,
-        "priceDelta": 0.0
-      },
-      {
-        "gap": 2.09,
-        "overBudget": false,
-        "poolPlayerId": 112,
-        "priceDelta": -0.1
-      },
-      {
-        "gap": 2.0,
-        "overBudget": false,
-        "poolPlayerId": 254,
-        "priceDelta": -0.5
-      },
-      {
-        "gap": 1.87,
-        "overBudget": true,
-        "poolPlayerId": 358,
-        "priceDelta": 0.5
-      },
-      {
-        "gap": 1.76,
-        "overBudget": false,
-        "poolPlayerId": 233,
-        "priceDelta": -0.5
-      },
-      {
-        "gap": 1.47,
-        "overBudget": false,
-        "poolPlayerId": 277,
-        "priceDelta": -1.0
-      },
-      {
-        "gap": 1.4,
-        "overBudget": false,
-        "poolPlayerId": 279,
-        "priceDelta": -0.9
-      },
-      {
-        "gap": 1.35,
-        "overBudget": false,
-        "poolPlayerId": 144,
-        "priceDelta": 0.0
-      },
-      {
-        "gap": 1.35,
-        "overBudget": true,
-        "poolPlayerId": 471,
-        "priceDelta": 0.5
-      },
-      {
-        "gap": 1.34,
-        "overBudget": false,
-        "poolPlayerId": 149,
-        "priceDelta": -0.1
-      },
-      {
-        "gap": 1.04,
-        "overBudget": false,
-        "poolPlayerId": 114,
-        "priceDelta": -0.5
-      },
-      {
-        "gap": 0.92,
-        "overBudget": false,
-        "poolPlayerId": 34,
-        "priceDelta": -0.5
-      },
-      {
-        "gap": 0.81,
-        "overBudget": false,
-        "poolPlayerId": 593,
-        "priceDelta": -0.5
-      },
-      {
-        "gap": 0.69,
-        "overBudget": false,
-        "poolPlayerId": 36,
-        "priceDelta": -0.5
-      },
-      {
-        "gap": 0.65,
-        "overBudget": false,
-        "poolPlayerId": 330,
-        "priceDelta": -0.5
-      },
-      {
-        "gap": 0.64,
-        "overBudget": false,
-        "poolPlayerId": 447,
-        "priceDelta": 0.0
-      },
-      {
-        "gap": 0.61,
-        "overBudget": true,
-        "poolPlayerId": 357,
-        "priceDelta": 0.5
-      },
-      {
-        "gap": 0.56,
-        "overBudget": false,
-        "poolPlayerId": 37,
-        "priceDelta": -0.5
-      },
-      {
-        "gap": 0.47,
-        "overBudget": true,
-        "poolPlayerId": 84,
-        "priceDelta": 0.5
-      },
-      {
-        "gap": 0.15,
-        "overBudget": false,
-        "poolPlayerId": 534,
-        "priceDelta": -0.5
-      },
-      {
-        "gap": 0.13,
-        "overBudget": false,
-        "poolPlayerId": 473,
-        "priceDelta": -0.5
-      }
-    ],
-    "346": [
-      {
-        "gap": 12.33,
-        "overBudget": true,
-        "poolPlayerId": 411,
-        "priceDelta": 9.5
-      },
-      {
-        "gap": 10.03,
-        "overBudget": true,
-        "poolPlayerId": 165,
-        "priceDelta": 1.7
-      },
-      {
-        "gap": 9.28,
-        "overBudget": true,
-        "poolPlayerId": 379,
-        "priceDelta": 3.0
-      },
-      {
-        "gap": 5.42,
-        "overBudget": true,
-        "poolPlayerId": 464,
-        "priceDelta": 0.1
-      },
-      {
-        "gap": 1.59,
-        "overBudget": true,
-        "poolPlayerId": 106,
-        "priceDelta": 2.0
-      },
-      {
-        "gap": 1.04,
-        "overBudget": true,
-        "poolPlayerId": 26,
-        "priceDelta": 1.5
-      },
-      {
-        "gap": 0.95,
-        "overBudget": false,
-        "poolPlayerId": 138,
-        "priceDelta": -0.5
-      },
-      {
-        "gap": 0.63,
-        "overBudget": false,
-        "poolPlayerId": 249,
-        "priceDelta": -0.5
-      }
-    ],
-    "366": [
-      {
-        "gap": 11.99,
-        "overBudget": true,
-        "poolPlayerId": 12,
-        "priceDelta": 2.1
-      },
-      {
-        "gap": 8.26,
-        "overBudget": false,
-        "poolPlayerId": 367,
-        "priceDelta": -0.3
-      },
-      {
-        "gap": 7.25,
-        "overBudget": true,
-        "poolPlayerId": 426,
-        "priceDelta": 4.6
-      },
-      {
-        "gap": 5.91,
-        "overBudget": true,
-        "poolPlayerId": 154,
-        "priceDelta": 2.2
-      },
-      {
-        "gap": 5.54,
-        "overBudget": false,
-        "poolPlayerId": 15,
-        "priceDelta": -0.8
-      },
-      {
-        "gap": 5.27,
-        "overBudget": false,
-        "poolPlayerId": 544,
-        "priceDelta": -1.9
-      },
-      {
-        "gap": 5.2,
-        "overBudget": true,
-        "poolPlayerId": 427,
-        "priceDelta": 0.5
-      },
-      {
-        "gap": 5.12,
-        "overBudget": false,
-        "poolPlayerId": 398,
-        "priceDelta": -0.4
-      },
-      {
-        "gap": 4.3,
-        "overBudget": false,
-        "poolPlayerId": 368,
-        "priceDelta": -0.4
-      },
-      {
-        "gap": 3.95,
-        "overBudget": true,
-        "poolPlayerId": 480,
-        "priceDelta": 0.5
-      },
-      {
-        "gap": 3.66,
-        "overBudget": false,
-        "poolPlayerId": 86,
-        "priceDelta": -1.9
-      },
-      {
-        "gap": 2.97,
-        "overBudget": false,
-        "poolPlayerId": 237,
-        "priceDelta": -1.5
-      },
-      {
-        "gap": 2.95,
-        "overBudget": false,
-        "poolPlayerId": 94,
-        "priceDelta": -1.4
-      },
-      {
-        "gap": 2.88,
-        "overBudget": false,
-        "poolPlayerId": 335,
-        "priceDelta": -1.4
-      },
-      {
-        "gap": 2.77,
-        "overBudget": true,
-        "poolPlayerId": 40,
-        "priceDelta": 0.1
-      },
-      {
-        "gap": 2.3,
-        "overBudget": true,
-        "poolPlayerId": 399,
-        "priceDelta": 0.4
-      },
-      {
-        "gap": 2.04,
-        "overBudget": false,
-        "poolPlayerId": 68,
-        "priceDelta": -1.4
-      },
-      {
-        "gap": 1.63,
-        "overBudget": true,
-        "poolPlayerId": 397,
-        "priceDelta": 1.1
-      },
-      {
-        "gap": 1.62,
-        "overBudget": false,
-        "poolPlayerId": 236,
-        "priceDelta": -0.9
-      },
-      {
-        "gap": 0.73,
-        "overBudget": false,
-        "poolPlayerId": 69,
-        "priceDelta": -1.4
-      },
-      {
-        "gap": 0.72,
-        "overBudget": false,
-        "poolPlayerId": 124,
-        "priceDelta": -1.9
-      },
-      {
-        "gap": 0.02,
-        "overBudget": true,
-        "poolPlayerId": 13,
-        "priceDelta": 0.1
-      }
-    ],
-    "411": [],
-    "418": [
-      {
-        "gap": 13.63,
-        "overBudget": true,
-        "poolPlayerId": 10,
-        "priceDelta": 0.5
-      },
-      {
-        "gap": 10.7,
-        "overBudget": true,
-        "poolPlayerId": 388,
-        "priceDelta": 1.0
-      },
-      {
-        "gap": 8.89,
-        "overBudget": true,
-        "poolPlayerId": 8,
-        "priceDelta": 0.7
-      },
-      {
-        "gap": 6.54,
-        "overBudget": true,
-        "poolPlayerId": 4,
-        "priceDelta": 3.0
-      },
-      {
-        "gap": 6.53,
-        "overBudget": true,
-        "poolPlayerId": 391,
-        "priceDelta": 0.6
-      },
-      {
-        "gap": 6.21,
-        "overBudget": true,
-        "poolPlayerId": 449,
-        "priceDelta": 0.1
-      },
-      {
-        "gap": 5.42,
-        "overBudget": true,
-        "poolPlayerId": 387,
-        "priceDelta": 1.5
-      },
-      {
-        "gap": 4.01,
-        "overBudget": true,
-        "poolPlayerId": 61,
-        "priceDelta": 0.5
-      },
-      {
-        "gap": 3.97,
-        "overBudget": true,
-        "poolPlayerId": 393,
-        "priceDelta": 0.5
-      },
-      {
-        "gap": 3.6,
-        "overBudget": false,
-        "poolPlayerId": 332,
-        "priceDelta": -0.5
-      },
-      {
-        "gap": 3.53,
-        "overBudget": true,
-        "poolPlayerId": 60,
-        "priceDelta": 0.5
-      },
-      {
-        "gap": 3.47,
-        "overBudget": true,
-        "poolPlayerId": 229,
-        "priceDelta": 1.0
-      },
-      {
-        "gap": 3.39,
-        "overBudget": true,
-        "poolPlayerId": 390,
-        "priceDelta": 0.5
-      },
-      {
-        "gap": 2.95,
-        "overBudget": true,
-        "poolPlayerId": 200,
-        "priceDelta": 1.0
-      },
-      {
-        "gap": 2.72,
-        "overBudget": true,
-        "poolPlayerId": 356,
-        "priceDelta": 1.5
-      },
-      {
-        "gap": 2.4,
-        "overBudget": false,
-        "poolPlayerId": 173,
-        "priceDelta": -1.0
-      },
-      {
-        "gap": 2.3,
-        "overBudget": false,
-        "poolPlayerId": 203,
-        "priceDelta": -0.1
-      },
-      {
-        "gap": 2.2,
-        "overBudget": false,
-        "poolPlayerId": 115,
-        "priceDelta": -0.3
-      },
-      {
-        "gap": 1.86,
-        "overBudget": false,
-        "poolPlayerId": 445,
-        "priceDelta": 0.0
-      },
-      {
-        "gap": 1.5,
-        "overBudget": false,
-        "poolPlayerId": 148,
-        "priceDelta": -0.5
-      },
-      {
-        "gap": 1.05,
-        "overBudget": false,
-        "poolPlayerId": 88,
-        "priceDelta": -0.4
-      },
-      {
-        "gap": 0.96,
-        "overBudget": false,
-        "poolPlayerId": 202,
-        "priceDelta": 0.0
-      },
-      {
-        "gap": 0.85,
-        "overBudget": true,
-        "poolPlayerId": 472,
-        "priceDelta": 0.5
-      },
-      {
-        "gap": 0.55,
-        "overBudget": false,
-        "poolPlayerId": 87,
-        "priceDelta": -0.5
-      },
-      {
-        "gap": 0.45,
-        "overBudget": true,
-        "poolPlayerId": 230,
-        "priceDelta": 0.5
-      },
-      {
-        "gap": 0.12,
-        "overBudget": false,
-        "poolPlayerId": 327,
-        "priceDelta": 0.0
-      },
-      {
-        "gap": 0.07,
-        "overBudget": false,
-        "poolPlayerId": 204,
-        "priceDelta": -0.5
-      }
-    ],
-    "426": [
-      {
-        "gap": 4.74,
-        "overBudget": false,
-        "poolPlayerId": 12,
-        "priceDelta": -2.5
-      },
-      {
-        "gap": 1.01,
-        "overBudget": false,
-        "poolPlayerId": 367,
-        "priceDelta": -4.9
-      }
-    ],
-    "496": [
-      {
-        "gap": 6.02,
-        "overBudget": true,
-        "poolPlayerId": 385,
-        "priceDelta": 0.5
-      },
-      {
-        "gap": 3.73,
-        "overBudget": true,
-        "poolPlayerId": 350,
-        "priceDelta": 1.0
-      },
-      {
-        "gap": 2.62,
-        "overBudget": true,
-        "poolPlayerId": 1,
-        "priceDelta": 1.5
-      },
-      {
-        "gap": 1.93,
-        "overBudget": true,
-        "poolPlayerId": 572,
-        "priceDelta": 0.1
-      },
-      {
-        "gap": 1.57,
-        "overBudget": true,
-        "poolPlayerId": 226,
-        "priceDelta": 1.0
-      },
-      {
-        "gap": 1.32,
-        "overBudget": true,
-        "poolPlayerId": 198,
-        "priceDelta": 0.5
-      },
-      {
-        "gap": 0.77,
-        "overBudget": false,
-        "poolPlayerId": 57,
-        "priceDelta": 0.0
-      },
-      {
-        "gap": 0.76,
-        "overBudget": true,
-        "poolPlayerId": 384,
-        "priceDelta": 1.0
-      }
-    ],
-    "504": [
-      {
-        "gap": 17.92,
-        "overBudget": true,
-        "poolPlayerId": 10,
-        "priceDelta": 0.5
-      },
-      {
-        "gap": 14.99,
-        "overBudget": true,
-        "poolPlayerId": 388,
-        "priceDelta": 1.0
-      },
-      {
-        "gap": 13.18,
-        "overBudget": true,
-        "poolPlayerId": 8,
-        "priceDelta": 0.7
-      },
-      {
-        "gap": 10.83,
-        "overBudget": true,
-        "poolPlayerId": 4,
-        "priceDelta": 3.0
-      },
-      {
-        "gap": 10.82,
-        "overBudget": true,
-        "poolPlayerId": 391,
-        "priceDelta": 0.6
-      },
-      {
-        "gap": 10.5,
-        "overBudget": true,
-        "poolPlayerId": 449,
-        "priceDelta": 0.1
-      },
-      {
-        "gap": 9.71,
-        "overBudget": true,
-        "poolPlayerId": 387,
-        "priceDelta": 1.5
-      },
-      {
-        "gap": 8.3,
-        "overBudget": true,
-        "poolPlayerId": 61,
-        "priceDelta": 0.5
-      },
-      {
-        "gap": 8.26,
-        "overBudget": true,
-        "poolPlayerId": 393,
-        "priceDelta": 0.5
-      },
-      {
-        "gap": 7.89,
-        "overBudget": false,
-        "poolPlayerId": 332,
-        "priceDelta": -0.5
-      },
-      {
-        "gap": 7.82,
-        "overBudget": true,
-        "poolPlayerId": 60,
-        "priceDelta": 0.5
-      },
-      {
-        "gap": 7.76,
-        "overBudget": true,
-        "poolPlayerId": 229,
-        "priceDelta": 1.0
-      },
-      {
-        "gap": 7.68,
-        "overBudget": true,
-        "poolPlayerId": 390,
-        "priceDelta": 0.5
-      },
-      {
-        "gap": 7.24,
-        "overBudget": true,
-        "poolPlayerId": 200,
-        "priceDelta": 1.0
-      },
-      {
-        "gap": 7.01,
-        "overBudget": true,
-        "poolPlayerId": 356,
-        "priceDelta": 1.5
-      },
-      {
-        "gap": 6.69,
-        "overBudget": false,
-        "poolPlayerId": 173,
-        "priceDelta": -1.0
-      },
-      {
-        "gap": 6.59,
-        "overBudget": false,
-        "poolPlayerId": 203,
-        "priceDelta": -0.1
-      },
-      {
-        "gap": 6.49,
-        "overBudget": false,
-        "poolPlayerId": 115,
-        "priceDelta": -0.3
-      },
-      {
-        "gap": 6.15,
-        "overBudget": false,
-        "poolPlayerId": 445,
-        "priceDelta": 0.0
-      },
-      {
-        "gap": 5.79,
-        "overBudget": false,
-        "poolPlayerId": 148,
-        "priceDelta": -0.5
-      },
-      {
-        "gap": 5.34,
-        "overBudget": false,
-        "poolPlayerId": 88,
-        "priceDelta": -0.4
-      },
-      {
-        "gap": 5.25,
-        "overBudget": false,
-        "poolPlayerId": 202,
-        "priceDelta": 0.0
-      },
-      {
-        "gap": 5.14,
-        "overBudget": true,
-        "poolPlayerId": 472,
-        "priceDelta": 0.5
-      },
-      {
-        "gap": 4.84,
-        "overBudget": false,
-        "poolPlayerId": 87,
-        "priceDelta": -0.5
-      },
-      {
-        "gap": 4.74,
-        "overBudget": true,
-        "poolPlayerId": 230,
-        "priceDelta": 0.5
-      },
-      {
-        "gap": 4.41,
-        "overBudget": false,
-        "poolPlayerId": 327,
-        "priceDelta": 0.0
-      },
-      {
-        "gap": 4.36,
-        "overBudget": false,
-        "poolPlayerId": 204,
-        "priceDelta": -0.5
-      },
-      {
-        "gap": 4.29,
-        "overBudget": false,
-        "poolPlayerId": 418,
-        "priceDelta": 0.0
-      },
-      {
-        "gap": 4.29,
-        "overBudget": false,
-        "poolPlayerId": 536,
-        "priceDelta": -0.5
-      },
-      {
-        "gap": 4.21,
-        "overBudget": false,
-        "poolPlayerId": 423,
-        "priceDelta": -0.5
-      },
-      {
-        "gap": 3.94,
-        "overBudget": false,
-        "poolPlayerId": 502,
-        "priceDelta": -0.5
-      },
-      {
-        "gap": 3.89,
-        "overBudget": false,
-        "poolPlayerId": 469,
-        "priceDelta": 0.0
-      },
-      {
-        "gap": 3.72,
-        "overBudget": false,
-        "poolPlayerId": 532,
-        "priceDelta": 0.0
-      },
-      {
-        "gap": 3.67,
-        "overBudget": false,
-        "poolPlayerId": 112,
-        "priceDelta": -0.1
-      },
-      {
-        "gap": 3.58,
-        "overBudget": false,
-        "poolPlayerId": 254,
-        "priceDelta": -0.5
-      },
-      {
-        "gap": 3.45,
-        "overBudget": true,
-        "poolPlayerId": 358,
-        "priceDelta": 0.5
-      },
-      {
-        "gap": 3.34,
-        "overBudget": false,
-        "poolPlayerId": 233,
-        "priceDelta": -0.5
-      },
-      {
-        "gap": 3.05,
-        "overBudget": false,
-        "poolPlayerId": 277,
-        "priceDelta": -1.0
-      },
-      {
-        "gap": 2.98,
-        "overBudget": false,
-        "poolPlayerId": 279,
-        "priceDelta": -0.9
-      },
-      {
-        "gap": 2.93,
-        "overBudget": false,
-        "poolPlayerId": 144,
-        "priceDelta": 0.0
-      },
-      {
-        "gap": 2.93,
-        "overBudget": true,
-        "poolPlayerId": 471,
-        "priceDelta": 0.5
-      },
-      {
-        "gap": 2.92,
-        "overBudget": false,
-        "poolPlayerId": 149,
-        "priceDelta": -0.1
-      },
-      {
-        "gap": 2.62,
-        "overBudget": false,
-        "poolPlayerId": 114,
-        "priceDelta": -0.5
-      },
-      {
-        "gap": 2.5,
-        "overBudget": false,
-        "poolPlayerId": 34,
-        "priceDelta": -0.5
-      },
-      {
-        "gap": 2.39,
-        "overBudget": false,
-        "poolPlayerId": 593,
-        "priceDelta": -0.5
-      },
-      {
-        "gap": 2.27,
-        "overBudget": false,
-        "poolPlayerId": 36,
-        "priceDelta": -0.5
-      },
-      {
-        "gap": 2.23,
-        "overBudget": false,
-        "poolPlayerId": 330,
-        "priceDelta": -0.5
-      },
-      {
-        "gap": 2.22,
-        "overBudget": false,
-        "poolPlayerId": 447,
-        "priceDelta": 0.0
-      },
-      {
-        "gap": 2.19,
-        "overBudget": true,
-        "poolPlayerId": 357,
-        "priceDelta": 0.5
-      },
-      {
-        "gap": 2.14,
-        "overBudget": false,
-        "poolPlayerId": 37,
-        "priceDelta": -0.5
-      },
-      {
-        "gap": 2.05,
-        "overBudget": true,
-        "poolPlayerId": 84,
-        "priceDelta": 0.5
-      },
-      {
-        "gap": 1.73,
-        "overBudget": false,
-        "poolPlayerId": 534,
-        "priceDelta": -0.5
-      },
-      {
-        "gap": 1.71,
-        "overBudget": false,
-        "poolPlayerId": 473,
-        "priceDelta": -0.5
-      },
-      {
-        "gap": 1.58,
-        "overBudget": false,
-        "poolPlayerId": 334,
-        "priceDelta": 0.0
-      },
-      {
-        "gap": 1.48,
-        "overBudget": false,
-        "poolPlayerId": 258,
-        "priceDelta": -0.5
-      },
-      {
-        "gap": 1.27,
-        "overBudget": false,
-        "poolPlayerId": 257,
-        "priceDelta": -0.5
-      },
-      {
-        "gap": 1.2,
-        "overBudget": false,
-        "poolPlayerId": 566,
-        "priceDelta": 0.0
-      },
-      {
-        "gap": 1.14,
-        "overBudget": false,
-        "poolPlayerId": 116,
-        "priceDelta": -0.5
-      },
-      {
-        "gap": 1.11,
-        "overBudget": false,
-        "poolPlayerId": 474,
-        "priceDelta": -0.5
-      },
-      {
-        "gap": 0.95,
-        "overBudget": false,
-        "poolPlayerId": 362,
-        "priceDelta": 0.0
-      },
-      {
-        "gap": 0.68,
-        "overBudget": false,
-        "poolPlayerId": 259,
-        "priceDelta": -1.0
-      },
-      {
-        "gap": 0.37,
-        "overBudget": false,
-        "poolPlayerId": 64,
-        "priceDelta": -0.5
-      },
-      {
-        "gap": 0.35,
-        "overBudget": false,
-        "poolPlayerId": 541,
-        "priceDelta": -0.5
-      },
-      {
-        "gap": 0.11,
-        "overBudget": false,
-        "poolPlayerId": 176,
-        "priceDelta": -1.0
-      },
-      {
-        "gap": 0.03,
-        "overBudget": false,
-        "poolPlayerId": 304,
-        "priceDelta": -1.0
-      }
-    ],
-    "557": [
-      {
-        "gap": 19.12,
-        "overBudget": true,
-        "poolPlayerId": 12,
-        "priceDelta": 3.0
-      },
-      {
-        "gap": 15.39,
-        "overBudget": true,
-        "poolPlayerId": 367,
-        "priceDelta": 0.6
-      },
-      {
-        "gap": 14.38,
-        "overBudget": true,
-        "poolPlayerId": 426,
-        "priceDelta": 5.5
-      },
-      {
-        "gap": 13.04,
-        "overBudget": true,
-        "poolPlayerId": 154,
-        "priceDelta": 3.1
-      },
-      {
-        "gap": 12.67,
-        "overBudget": true,
-        "poolPlayerId": 15,
-        "priceDelta": 0.1
-      },
-      {
-        "gap": 12.4,
-        "overBudget": false,
-        "poolPlayerId": 544,
-        "priceDelta": -1.0
-      },
-      {
-        "gap": 12.33,
-        "overBudget": true,
-        "poolPlayerId": 427,
-        "priceDelta": 1.4
-      },
-      {
-        "gap": 12.25,
-        "overBudget": true,
-        "poolPlayerId": 398,
-        "priceDelta": 0.5
-      },
-      {
-        "gap": 11.43,
-        "overBudget": true,
-        "poolPlayerId": 368,
-        "priceDelta": 0.5
-      },
-      {
-        "gap": 11.08,
-        "overBudget": true,
-        "poolPlayerId": 480,
-        "priceDelta": 1.4
-      },
-      {
-        "gap": 10.79,
-        "overBudget": false,
-        "poolPlayerId": 86,
-        "priceDelta": -1.0
-      },
-      {
-        "gap": 10.1,
-        "overBudget": false,
-        "poolPlayerId": 237,
-        "priceDelta": -0.6
-      },
-      {
-        "gap": 10.08,
-        "overBudget": false,
-        "poolPlayerId": 94,
-        "priceDelta": -0.5
-      },
-      {
-        "gap": 10.01,
-        "overBudget": false,
-        "poolPlayerId": 335,
-        "priceDelta": -0.5
-      },
-      {
-        "gap": 9.9,
-        "overBudget": true,
-        "poolPlayerId": 40,
-        "priceDelta": 1.0
-      },
-      {
-        "gap": 9.43,
-        "overBudget": true,
-        "poolPlayerId": 399,
-        "priceDelta": 1.3
-      },
-      {
-        "gap": 9.17,
-        "overBudget": false,
-        "poolPlayerId": 68,
-        "priceDelta": -0.5
-      },
-      {
-        "gap": 8.76,
-        "overBudget": true,
-        "poolPlayerId": 397,
-        "priceDelta": 2.0
-      },
-      {
-        "gap": 8.75,
-        "overBudget": false,
-        "poolPlayerId": 236,
-        "priceDelta": 0.0
-      },
-      {
-        "gap": 7.86,
-        "overBudget": false,
-        "poolPlayerId": 69,
-        "priceDelta": -0.5
-      },
-      {
-        "gap": 7.85,
-        "overBudget": false,
-        "poolPlayerId": 124,
-        "priceDelta": -1.0
-      },
-      {
-        "gap": 7.15,
-        "overBudget": true,
-        "poolPlayerId": 13,
-        "priceDelta": 1.0
-      },
-      {
-        "gap": 7.13,
-        "overBudget": true,
-        "poolPlayerId": 366,
-        "priceDelta": 0.9
-      },
-      {
-        "gap": 7.1,
-        "overBudget": false,
-        "poolPlayerId": 486,
-        "priceDelta": -1.0
-      },
-      {
-        "gap": 7.09,
-        "overBudget": false,
-        "poolPlayerId": 454,
-        "priceDelta": -0.4
-      },
-      {
-        "gap": 6.95,
-        "overBudget": true,
-        "poolPlayerId": 428,
-        "priceDelta": 1.4
-      },
-      {
-        "gap": 6.34,
-        "overBudget": false,
-        "poolPlayerId": 453,
-        "priceDelta": -0.5
-      },
-      {
-        "gap": 6.32,
-        "overBudget": false,
-        "poolPlayerId": 70,
-        "priceDelta": -0.5
-      },
-      {
-        "gap": 6.3,
-        "overBudget": false,
-        "poolPlayerId": 483,
-        "priceDelta": -1.0
-      },
-      {
-        "gap": 6.29,
-        "overBudget": false,
-        "poolPlayerId": 261,
-        "priceDelta": -1.0
-      },
-      {
-        "gap": 5.94,
-        "overBudget": false,
-        "poolPlayerId": 127,
-        "priceDelta": -1.5
-      },
-      {
-        "gap": 5.76,
-        "overBudget": false,
-        "poolPlayerId": 43,
-        "priceDelta": -0.6
-      },
-      {
-        "gap": 5.61,
-        "overBudget": false,
-        "poolPlayerId": 481,
-        "priceDelta": -0.1
-      },
-      {
-        "gap": 5.22,
-        "overBudget": false,
-        "poolPlayerId": 514,
-        "priceDelta": -0.6
-      },
-      {
-        "gap": 5.12,
-        "overBudget": false,
-        "poolPlayerId": 20,
-        "priceDelta": -1.1
-      },
-      {
-        "gap": 4.8,
-        "overBudget": false,
-        "poolPlayerId": 264,
-        "priceDelta": -1.0
-      },
-      {
-        "gap": 4.23,
-        "overBudget": false,
-        "poolPlayerId": 210,
-        "priceDelta": -1.0
-      },
-      {
-        "gap": 4.16,
-        "overBudget": false,
-        "poolPlayerId": 46,
-        "priceDelta": -1.5
-      },
-      {
-        "gap": 4.16,
-        "overBudget": false,
-        "poolPlayerId": 542,
-        "priceDelta": -0.6
-      },
-      {
-        "gap": 4.13,
-        "overBudget": false,
-        "poolPlayerId": 338,
-        "priceDelta": -1.0
-      },
-      {
-        "gap": 3.9,
-        "overBudget": false,
-        "poolPlayerId": 369,
-        "priceDelta": -0.6
-      },
-      {
-        "gap": 3.74,
-        "overBudget": false,
-        "poolPlayerId": 41,
-        "priceDelta": -0.5
-      },
-      {
-        "gap": 3.65,
-        "overBudget": false,
-        "poolPlayerId": 47,
-        "priceDelta": -1.5
-      },
-      {
-        "gap": 3.57,
-        "overBudget": false,
-        "poolPlayerId": 7,
-        "priceDelta": -1.0
-      },
-      {
-        "gap": 3.42,
-        "overBudget": false,
-        "poolPlayerId": 71,
-        "priceDelta": -1.5
-      },
-      {
-        "gap": 3.41,
-        "overBudget": false,
-        "poolPlayerId": 565,
-        "priceDelta": -0.8
-      },
-      {
-        "gap": 3.38,
-        "overBudget": false,
-        "poolPlayerId": 455,
-        "priceDelta": -1.1
-      },
-      {
-        "gap": 3.35,
-        "overBudget": false,
-        "poolPlayerId": 268,
-        "priceDelta": -1.0
-      },
-      {
-        "gap": 3.35,
-        "overBudget": false,
-        "poolPlayerId": 286,
-        "priceDelta": -1.5
-      },
-      {
-        "gap": 3.22,
-        "overBudget": false,
-        "poolPlayerId": 459,
-        "priceDelta": -1.0
-      },
-      {
-        "gap": 2.97,
-        "overBudget": false,
-        "poolPlayerId": 184,
-        "priceDelta": -1.5
-      },
-      {
-        "gap": 2.97,
-        "overBudget": false,
-        "poolPlayerId": 246,
-        "priceDelta": -1.5
-      },
-      {
-        "gap": 2.95,
-        "overBudget": false,
-        "poolPlayerId": 67,
-        "priceDelta": 0.0
-      },
-      {
-        "gap": 2.93,
-        "overBudget": false,
-        "poolPlayerId": 214,
-        "priceDelta": -1.5
-      },
-      {
-        "gap": 2.8,
-        "overBudget": false,
-        "poolPlayerId": 244,
-        "priceDelta": -1.5
-      },
-      {
-        "gap": 2.73,
-        "overBudget": false,
-        "poolPlayerId": 161,
-        "priceDelta": -1.5
-      },
-      {
-        "gap": 2.48,
-        "overBudget": false,
-        "poolPlayerId": 516,
-        "priceDelta": -1.0
-      },
-      {
-        "gap": 2.36,
-        "overBudget": false,
-        "poolPlayerId": 290,
-        "priceDelta": -2.0
-      },
-      {
-        "gap": 2.33,
-        "overBudget": false,
-        "poolPlayerId": 242,
-        "priceDelta": -1.0
-      },
-      {
-        "gap": 2.13,
-        "overBudget": false,
-        "poolPlayerId": 460,
-        "priceDelta": -1.5
-      },
-      {
-        "gap": 1.77,
-        "overBudget": false,
-        "poolPlayerId": 432,
-        "priceDelta": -1.0
-      },
-      {
-        "gap": 1.74,
-        "overBudget": false,
-        "poolPlayerId": 265,
-        "priceDelta": -1.5
-      },
-      {
-        "gap": 1.6,
-        "overBudget": true,
-        "poolPlayerId": 627,
-        "priceDelta": 1.5
-      },
-      {
-        "gap": 1.57,
-        "overBudget": false,
-        "poolPlayerId": 570,
-        "priceDelta": -1.0
-      },
-      {
-        "gap": 1.54,
-        "overBudget": false,
-        "poolPlayerId": 45,
-        "priceDelta": -1.1
-      },
-      {
-        "gap": 1.53,
-        "overBudget": false,
-        "poolPlayerId": 545,
-        "priceDelta": -1.5
-      },
-      {
-        "gap": 1.51,
-        "overBudget": false,
-        "poolPlayerId": 98,
-        "priceDelta": -1.5
-      },
-      {
-        "gap": 1.49,
-        "overBudget": false,
-        "poolPlayerId": 522,
-        "priceDelta": -1.5
-      },
-      {
-        "gap": 1.31,
-        "overBudget": false,
-        "poolPlayerId": 562,
-        "priceDelta": -1.1
-      },
-      {
-        "gap": 1.18,
-        "overBudget": false,
-        "poolPlayerId": 575,
-        "priceDelta": -1.5
-      },
-      {
-        "gap": 1.13,
-        "overBudget": false,
-        "poolPlayerId": 162,
-        "priceDelta": -1.6
-      },
-      {
-        "gap": 0.96,
-        "overBudget": false,
-        "poolPlayerId": 17,
-        "priceDelta": -0.6
-      },
-      {
-        "gap": 0.96,
-        "overBudget": false,
-        "poolPlayerId": 309,
-        "priceDelta": -1.5
-      },
-      {
-        "gap": 0.62,
-        "overBudget": false,
-        "poolPlayerId": 95,
-        "priceDelta": -0.1
-      },
-      {
-        "gap": 0.53,
-        "overBudget": false,
-        "poolPlayerId": 628,
-        "priceDelta": -0.5
-      },
-      {
-        "gap": 0.42,
-        "overBudget": false,
-        "poolPlayerId": 267,
-        "priceDelta": -1.5
-      },
-      {
-        "gap": 0.08,
-        "overBudget": false,
-        "poolPlayerId": 371,
-        "priceDelta": -0.5
-      }
-    ]
-  },
   "rollingWindow": 5,
   "runningRecord": null,
+  "scenarios": {
+    "byHorizon": {
+      "1": [
+        {
+          "captainByGw": [
+            10
+          ],
+          "hitCost": 0,
+          "horizonGws": 1,
+          "netPoints": 69.73,
+          "points": 69.73,
+          "squad": [
+            1,
+            10,
+            124,
+            165,
+            212,
+            305,
+            346,
+            366,
+            367,
+            379,
+            418,
+            426,
+            449,
+            496,
+            504
+          ],
+          "transfersIn": [
+            {
+              "id": 10,
+              "position": "DEF",
+              "price": 5.5,
+              "team": "ARS",
+              "webName": "White"
+            },
+            {
+              "id": 367,
+              "position": "MID",
+              "price": 7.1,
+              "team": "LIV",
+              "webName": "Gakpo"
+            },
+            {
+              "id": 379,
+              "position": "FWD",
+              "price": 9.0,
+              "team": "LIV",
+              "webName": "Isak"
+            },
+            {
+              "id": 449,
+              "position": "DEF",
+              "price": 5.1,
+              "team": "NEW",
+              "webName": "Hall"
+            }
+          ],
+          "transfersOut": [
+            {
+              "id": 11,
+              "position": null,
+              "price": null,
+              "team": null,
+              "webName": null
+            },
+            {
+              "id": 334,
+              "position": "DEF",
+              "price": 5.0,
+              "team": "LEE",
+              "webName": "Muharemovi\u0107"
+            },
+            {
+              "id": 411,
+              "position": "FWD",
+              "price": 15.5,
+              "team": "MCI",
+              "webName": "Haaland"
+            },
+            {
+              "id": 557,
+              "position": "MID",
+              "price": 6.5,
+              "team": "ARS",
+              "webName": "Tzolis"
+            }
+          ],
+          "xiByGw": [
+            [
+              1,
+              10,
+              124,
+              165,
+              346,
+              366,
+              367,
+              379,
+              418,
+              426,
+              449
+            ]
+          ]
+        },
+        {
+          "captainByGw": [
+            10
+          ],
+          "hitCost": 0,
+          "horizonGws": 1,
+          "netPoints": 67.84,
+          "points": 67.84,
+          "squad": [
+            1,
+            10,
+            124,
+            165,
+            212,
+            305,
+            334,
+            346,
+            366,
+            367,
+            379,
+            418,
+            426,
+            496,
+            504
+          ],
+          "transfersIn": [
+            {
+              "id": 10,
+              "position": "DEF",
+              "price": 5.5,
+              "team": "ARS",
+              "webName": "White"
+            },
+            {
+              "id": 367,
+              "position": "MID",
+              "price": 7.1,
+              "team": "LIV",
+              "webName": "Gakpo"
+            },
+            {
+              "id": 379,
+              "position": "FWD",
+              "price": 9.0,
+              "team": "LIV",
+              "webName": "Isak"
+            }
+          ],
+          "transfersOut": [
+            {
+              "id": 11,
+              "position": null,
+              "price": null,
+              "team": null,
+              "webName": null
+            },
+            {
+              "id": 411,
+              "position": "FWD",
+              "price": 15.5,
+              "team": "MCI",
+              "webName": "Haaland"
+            },
+            {
+              "id": 557,
+              "position": "MID",
+              "price": 6.5,
+              "team": "ARS",
+              "webName": "Tzolis"
+            }
+          ],
+          "xiByGw": [
+            [
+              1,
+              10,
+              124,
+              165,
+              334,
+              346,
+              366,
+              367,
+              379,
+              418,
+              426
+            ]
+          ]
+        },
+        {
+          "captainByGw": [
+            10
+          ],
+          "hitCost": 0,
+          "horizonGws": 1,
+          "netPoints": 64.4,
+          "points": 64.4,
+          "squad": [
+            1,
+            10,
+            124,
+            165,
+            212,
+            305,
+            334,
+            346,
+            366,
+            379,
+            418,
+            426,
+            496,
+            504,
+            557
+          ],
+          "transfersIn": [
+            {
+              "id": 10,
+              "position": "DEF",
+              "price": 5.5,
+              "team": "ARS",
+              "webName": "White"
+            },
+            {
+              "id": 379,
+              "position": "FWD",
+              "price": 9.0,
+              "team": "LIV",
+              "webName": "Isak"
+            }
+          ],
+          "transfersOut": [
+            {
+              "id": 11,
+              "position": null,
+              "price": null,
+              "team": null,
+              "webName": null
+            },
+            {
+              "id": 411,
+              "position": "FWD",
+              "price": 15.5,
+              "team": "MCI",
+              "webName": "Haaland"
+            }
+          ],
+          "xiByGw": [
+            [
+              1,
+              10,
+              124,
+              504,
+              165,
+              334,
+              346,
+              366,
+              379,
+              418,
+              426
+            ]
+          ]
+        }
+      ],
+      "3": [
+        {
+          "captainByGw": [
+            12,
+            12,
+            12
+          ],
+          "hitCost": 0,
+          "horizonGws": 3,
+          "netPoints": 208.96,
+          "points": 208.96,
+          "squad": [
+            1,
+            10,
+            12,
+            124,
+            165,
+            212,
+            305,
+            334,
+            346,
+            366,
+            418,
+            426,
+            449,
+            464,
+            496
+          ],
+          "transfersIn": [
+            {
+              "id": 10,
+              "position": "DEF",
+              "price": 5.5,
+              "team": "ARS",
+              "webName": "White"
+            },
+            {
+              "id": 12,
+              "position": "MID",
+              "price": 9.5,
+              "team": "ARS",
+              "webName": "Saka"
+            },
+            {
+              "id": 449,
+              "position": "DEF",
+              "price": 5.1,
+              "team": "NEW",
+              "webName": "Hall"
+            },
+            {
+              "id": 464,
+              "position": "FWD",
+              "price": 6.1,
+              "team": "NEW",
+              "webName": "Wissa"
+            }
+          ],
+          "transfersOut": [
+            {
+              "id": 11,
+              "position": null,
+              "price": null,
+              "team": null,
+              "webName": null
+            },
+            {
+              "id": 411,
+              "position": "FWD",
+              "price": 15.5,
+              "team": "MCI",
+              "webName": "Haaland"
+            },
+            {
+              "id": 504,
+              "position": "DEF",
+              "price": 5.0,
+              "team": "BHA",
+              "webName": "Vuskovic"
+            },
+            {
+              "id": 557,
+              "position": "MID",
+              "price": 6.5,
+              "team": "ARS",
+              "webName": "Tzolis"
+            }
+          ],
+          "xiByGw": [
+            [
+              1,
+              10,
+              12,
+              124,
+              165,
+              346,
+              366,
+              418,
+              426,
+              449,
+              464
+            ],
+            [
+              1,
+              10,
+              12,
+              124,
+              165,
+              346,
+              366,
+              418,
+              426,
+              449,
+              464
+            ],
+            [
+              1,
+              10,
+              12,
+              124,
+              165,
+              346,
+              366,
+              418,
+              426,
+              449,
+              464
+            ]
+          ]
+        },
+        {
+          "captainByGw": [
+            12,
+            12,
+            12
+          ],
+          "hitCost": 0,
+          "horizonGws": 3,
+          "netPoints": 203.88,
+          "points": 203.88,
+          "squad": [
+            1,
+            10,
+            12,
+            124,
+            165,
+            212,
+            305,
+            334,
+            346,
+            366,
+            418,
+            426,
+            464,
+            496,
+            504
+          ],
+          "transfersIn": [
+            {
+              "id": 10,
+              "position": "DEF",
+              "price": 5.5,
+              "team": "ARS",
+              "webName": "White"
+            },
+            {
+              "id": 12,
+              "position": "MID",
+              "price": 9.5,
+              "team": "ARS",
+              "webName": "Saka"
+            },
+            {
+              "id": 464,
+              "position": "FWD",
+              "price": 6.1,
+              "team": "NEW",
+              "webName": "Wissa"
+            }
+          ],
+          "transfersOut": [
+            {
+              "id": 11,
+              "position": null,
+              "price": null,
+              "team": null,
+              "webName": null
+            },
+            {
+              "id": 411,
+              "position": "FWD",
+              "price": 15.5,
+              "team": "MCI",
+              "webName": "Haaland"
+            },
+            {
+              "id": 557,
+              "position": "MID",
+              "price": 6.5,
+              "team": "ARS",
+              "webName": "Tzolis"
+            }
+          ],
+          "xiByGw": [
+            [
+              1,
+              10,
+              12,
+              124,
+              165,
+              334,
+              346,
+              366,
+              418,
+              426,
+              464
+            ],
+            [
+              1,
+              10,
+              12,
+              124,
+              165,
+              334,
+              346,
+              366,
+              418,
+              426,
+              464
+            ],
+            [
+              1,
+              10,
+              12,
+              124,
+              504,
+              165,
+              346,
+              366,
+              418,
+              426,
+              464
+            ]
+          ]
+        },
+        {
+          "captainByGw": [
+            10,
+            411,
+            10
+          ],
+          "hitCost": 0,
+          "horizonGws": 3,
+          "netPoints": 193.43,
+          "points": 193.43,
+          "squad": [
+            1,
+            10,
+            124,
+            165,
+            212,
+            305,
+            334,
+            346,
+            366,
+            411,
+            418,
+            496,
+            504,
+            544,
+            557
+          ],
+          "transfersIn": [
+            {
+              "id": 10,
+              "position": "DEF",
+              "price": 5.5,
+              "team": "ARS",
+              "webName": "White"
+            },
+            {
+              "id": 544,
+              "position": "MID",
+              "price": 5.5,
+              "team": "SUN",
+              "webName": "Xhaka"
+            }
+          ],
+          "transfersOut": [
+            {
+              "id": 11,
+              "position": null,
+              "price": null,
+              "team": null,
+              "webName": null
+            },
+            {
+              "id": 426,
+              "position": "MID",
+              "price": 12.0,
+              "team": "MUN",
+              "webName": "B.Fernandes"
+            }
+          ],
+          "xiByGw": [
+            [
+              1,
+              10,
+              124,
+              504,
+              165,
+              334,
+              346,
+              366,
+              411,
+              418,
+              544
+            ],
+            [
+              1,
+              10,
+              124,
+              165,
+              305,
+              334,
+              346,
+              366,
+              411,
+              418,
+              544
+            ],
+            [
+              1,
+              10,
+              557,
+              124,
+              504,
+              165,
+              346,
+              366,
+              411,
+              418,
+              544
+            ]
+          ]
+        }
+      ],
+      "5": [
+        {
+          "captainByGw": [
+            10,
+            411,
+            10,
+            411,
+            10
+          ],
+          "hitCost": 0,
+          "horizonGws": 5,
+          "netPoints": 351.33,
+          "points": 351.33,
+          "squad": [
+            1,
+            10,
+            124,
+            165,
+            212,
+            305,
+            334,
+            346,
+            366,
+            367,
+            411,
+            418,
+            449,
+            496,
+            544
+          ],
+          "transfersIn": [
+            {
+              "id": 10,
+              "position": "DEF",
+              "price": 5.5,
+              "team": "ARS",
+              "webName": "White"
+            },
+            {
+              "id": 367,
+              "position": "MID",
+              "price": 7.1,
+              "team": "LIV",
+              "webName": "Gakpo"
+            },
+            {
+              "id": 449,
+              "position": "DEF",
+              "price": 5.1,
+              "team": "NEW",
+              "webName": "Hall"
+            },
+            {
+              "id": 544,
+              "position": "MID",
+              "price": 5.5,
+              "team": "SUN",
+              "webName": "Xhaka"
+            }
+          ],
+          "transfersOut": [
+            {
+              "id": 11,
+              "position": null,
+              "price": null,
+              "team": null,
+              "webName": null
+            },
+            {
+              "id": 426,
+              "position": "MID",
+              "price": 12.0,
+              "team": "MUN",
+              "webName": "B.Fernandes"
+            },
+            {
+              "id": 504,
+              "position": "DEF",
+              "price": 5.0,
+              "team": "BHA",
+              "webName": "Vuskovic"
+            },
+            {
+              "id": 557,
+              "position": "MID",
+              "price": 6.5,
+              "team": "ARS",
+              "webName": "Tzolis"
+            }
+          ],
+          "xiByGw": [
+            [
+              1,
+              10,
+              124,
+              165,
+              346,
+              366,
+              367,
+              411,
+              418,
+              449,
+              544
+            ],
+            [
+              1,
+              10,
+              124,
+              165,
+              346,
+              366,
+              367,
+              411,
+              418,
+              449,
+              544
+            ],
+            [
+              1,
+              10,
+              124,
+              165,
+              346,
+              366,
+              367,
+              411,
+              418,
+              449,
+              544
+            ],
+            [
+              1,
+              10,
+              124,
+              165,
+              346,
+              366,
+              367,
+              411,
+              418,
+              449,
+              544
+            ],
+            [
+              1,
+              10,
+              124,
+              165,
+              346,
+              366,
+              367,
+              411,
+              418,
+              449,
+              544
+            ]
+          ]
+        },
+        {
+          "captainByGw": [
+            10,
+            411,
+            10,
+            411,
+            10
+          ],
+          "hitCost": 0,
+          "horizonGws": 5,
+          "netPoints": 343.13,
+          "points": 343.13,
+          "squad": [
+            1,
+            10,
+            124,
+            165,
+            212,
+            305,
+            334,
+            346,
+            366,
+            367,
+            411,
+            418,
+            496,
+            504,
+            544
+          ],
+          "transfersIn": [
+            {
+              "id": 10,
+              "position": "DEF",
+              "price": 5.5,
+              "team": "ARS",
+              "webName": "White"
+            },
+            {
+              "id": 367,
+              "position": "MID",
+              "price": 7.1,
+              "team": "LIV",
+              "webName": "Gakpo"
+            },
+            {
+              "id": 544,
+              "position": "MID",
+              "price": 5.5,
+              "team": "SUN",
+              "webName": "Xhaka"
+            }
+          ],
+          "transfersOut": [
+            {
+              "id": 11,
+              "position": null,
+              "price": null,
+              "team": null,
+              "webName": null
+            },
+            {
+              "id": 426,
+              "position": "MID",
+              "price": 12.0,
+              "team": "MUN",
+              "webName": "B.Fernandes"
+            },
+            {
+              "id": 557,
+              "position": "MID",
+              "price": 6.5,
+              "team": "ARS",
+              "webName": "Tzolis"
+            }
+          ],
+          "xiByGw": [
+            [
+              1,
+              10,
+              124,
+              165,
+              334,
+              346,
+              366,
+              367,
+              411,
+              418,
+              544
+            ],
+            [
+              1,
+              10,
+              124,
+              165,
+              334,
+              346,
+              366,
+              367,
+              411,
+              418,
+              544
+            ],
+            [
+              1,
+              10,
+              124,
+              504,
+              165,
+              346,
+              366,
+              367,
+              411,
+              418,
+              544
+            ],
+            [
+              1,
+              10,
+              124,
+              504,
+              165,
+              346,
+              366,
+              367,
+              411,
+              418,
+              544
+            ],
+            [
+              1,
+              10,
+              124,
+              165,
+              334,
+              346,
+              366,
+              367,
+              411,
+              418,
+              544
+            ]
+          ]
+        },
+        {
+          "captainByGw": [
+            10,
+            411,
+            10,
+            411,
+            10
+          ],
+          "hitCost": 0,
+          "horizonGws": 5,
+          "netPoints": 328.43,
+          "points": 328.43,
+          "squad": [
+            1,
+            10,
+            124,
+            165,
+            212,
+            305,
+            334,
+            346,
+            366,
+            411,
+            418,
+            496,
+            504,
+            544,
+            557
+          ],
+          "transfersIn": [
+            {
+              "id": 10,
+              "position": "DEF",
+              "price": 5.5,
+              "team": "ARS",
+              "webName": "White"
+            },
+            {
+              "id": 544,
+              "position": "MID",
+              "price": 5.5,
+              "team": "SUN",
+              "webName": "Xhaka"
+            }
+          ],
+          "transfersOut": [
+            {
+              "id": 11,
+              "position": null,
+              "price": null,
+              "team": null,
+              "webName": null
+            },
+            {
+              "id": 426,
+              "position": "MID",
+              "price": 12.0,
+              "team": "MUN",
+              "webName": "B.Fernandes"
+            }
+          ],
+          "xiByGw": [
+            [
+              1,
+              10,
+              124,
+              504,
+              165,
+              334,
+              346,
+              366,
+              411,
+              418,
+              544
+            ],
+            [
+              1,
+              10,
+              124,
+              165,
+              305,
+              334,
+              346,
+              366,
+              411,
+              418,
+              544
+            ],
+            [
+              1,
+              10,
+              557,
+              124,
+              504,
+              165,
+              346,
+              366,
+              411,
+              418,
+              544
+            ],
+            [
+              1,
+              10,
+              124,
+              504,
+              165,
+              334,
+              346,
+              366,
+              411,
+              418,
+              544
+            ],
+            [
+              1,
+              10,
+              124,
+              165,
+              305,
+              334,
+              346,
+              366,
+              411,
+              418,
+              544
+            ]
+          ]
+        }
+      ]
+    },
+    "chipsAvailable": {
+      "freeHit": true,
+      "wildcard": true
+    },
+    "freeHit": {
+      "captainByGw": [
+        12
+      ],
+      "hitCost": 0,
+      "horizonGws": 1,
+      "netPoints": 77.72,
+      "points": 77.72,
+      "squad": [
+        8,
+        10,
+        12,
+        86,
+        154,
+        165,
+        173,
+        367,
+        368,
+        379,
+        385,
+        388,
+        510,
+        623,
+        651
+      ],
+      "transfersIn": [
+        {
+          "id": 8,
+          "position": "DEF",
+          "price": 5.7,
+          "team": "ARS",
+          "webName": "Calafiori"
+        },
+        {
+          "id": 10,
+          "position": "DEF",
+          "price": 5.5,
+          "team": "ARS",
+          "webName": "White"
+        },
+        {
+          "id": 12,
+          "position": "MID",
+          "price": 9.5,
+          "team": "ARS",
+          "webName": "Saka"
+        },
+        {
+          "id": 86,
+          "position": "MID",
+          "price": 5.5,
+          "team": "BRE",
+          "webName": "Lewis-Potter"
+        },
+        {
+          "id": 154,
+          "position": "MID",
+          "price": 9.6,
+          "team": "CHE",
+          "webName": "Palmer"
+        },
+        {
+          "id": 165,
+          "position": "FWD",
+          "price": 7.7,
+          "team": "CHE",
+          "webName": "Jo\u00e3o Pedro"
+        },
+        {
+          "id": 173,
+          "position": "DEF",
+          "price": 4.0,
+          "team": "COV",
+          "webName": "Thomas"
+        },
+        {
+          "id": 367,
+          "position": "MID",
+          "price": 7.1,
+          "team": "LIV",
+          "webName": "Gakpo"
+        },
+        {
+          "id": 368,
+          "position": "MID",
+          "price": 7.0,
+          "team": "LIV",
+          "webName": "Szoboszlai"
+        },
+        {
+          "id": 379,
+          "position": "FWD",
+          "price": 9.0,
+          "team": "LIV",
+          "webName": "Isak"
+        },
+        {
+          "id": 385,
+          "position": "GKP",
+          "price": 5.0,
+          "team": "LEE",
+          "webName": "Trafford"
+        },
+        {
+          "id": 388,
+          "position": "DEF",
+          "price": 6.0,
+          "team": "MCI",
+          "webName": "Gu\u00e9hi"
+        },
+        {
+          "id": 510,
+          "position": "DEF",
+          "price": 4.0,
+          "team": "TOT",
+          "webName": "Rowswell"
+        },
+        {
+          "id": 623,
+          "position": "GKP",
+          "price": 4.0,
+          "team": "COV",
+          "webName": "Bentley"
+        },
+        {
+          "id": 651,
+          "position": "FWD",
+          "price": 4.5,
+          "team": "SUN",
+          "webName": "J.Angulo"
+        }
+      ],
+      "transfersOut": [],
+      "xiByGw": [
+        [
+          8,
+          10,
+          12,
+          86,
+          154,
+          165,
+          385,
+          367,
+          368,
+          379,
+          388
+        ]
+      ]
+    },
+    "freeTransfers": {
+      "derivation": "3 FT accrued since GW1 (1/GW), capped at 5, minus 0 used",
+      "value": 3
+    },
+    "wildcard": {
+      "captainByGw": [
+        12,
+        12,
+        12,
+        388,
+        12
+      ],
+      "hitCost": 0,
+      "horizonGws": 5,
+      "netPoints": 390.59,
+      "points": 390.59,
+      "squad": [
+        8,
+        10,
+        12,
+        107,
+        165,
+        178,
+        367,
+        379,
+        385,
+        388,
+        391,
+        398,
+        427,
+        544,
+        572
+      ],
+      "transfersIn": [
+        {
+          "id": 8,
+          "position": "DEF",
+          "price": 5.7,
+          "team": "ARS",
+          "webName": "Calafiori"
+        },
+        {
+          "id": 10,
+          "position": "DEF",
+          "price": 5.5,
+          "team": "ARS",
+          "webName": "White"
+        },
+        {
+          "id": 12,
+          "position": "MID",
+          "price": 9.5,
+          "team": "ARS",
+          "webName": "Saka"
+        },
+        {
+          "id": 107,
+          "position": "FWD",
+          "price": 4.5,
+          "team": "BRE",
+          "webName": "Furo"
+        },
+        {
+          "id": 165,
+          "position": "FWD",
+          "price": 7.7,
+          "team": "CHE",
+          "webName": "Jo\u00e3o Pedro"
+        },
+        {
+          "id": 178,
+          "position": "DEF",
+          "price": 4.0,
+          "team": "COV",
+          "webName": "Bidwell"
+        },
+        {
+          "id": 367,
+          "position": "MID",
+          "price": 7.1,
+          "team": "LIV",
+          "webName": "Gakpo"
+        },
+        {
+          "id": 379,
+          "position": "FWD",
+          "price": 9.0,
+          "team": "LIV",
+          "webName": "Isak"
+        },
+        {
+          "id": 385,
+          "position": "GKP",
+          "price": 5.0,
+          "team": "LEE",
+          "webName": "Trafford"
+        },
+        {
+          "id": 388,
+          "position": "DEF",
+          "price": 6.0,
+          "team": "MCI",
+          "webName": "Gu\u00e9hi"
+        },
+        {
+          "id": 391,
+          "position": "DEF",
+          "price": 5.6,
+          "team": "MCI",
+          "webName": "Gvardiol"
+        },
+        {
+          "id": 398,
+          "position": "MID",
+          "price": 7.0,
+          "team": "MCI",
+          "webName": "Foden"
+        },
+        {
+          "id": 427,
+          "position": "MID",
+          "price": 7.9,
+          "team": "MUN",
+          "webName": "Mbeumo"
+        },
+        {
+          "id": 544,
+          "position": "MID",
+          "price": 5.5,
+          "team": "SUN",
+          "webName": "Xhaka"
+        },
+        {
+          "id": 572,
+          "position": "GKP",
+          "price": 4.6,
+          "team": "HUL",
+          "webName": "Tzolakis"
+        }
+      ],
+      "transfersOut": [],
+      "xiByGw": [
+        [
+          8,
+          10,
+          12,
+          165,
+          385,
+          367,
+          379,
+          388,
+          398,
+          427,
+          544
+        ],
+        [
+          8,
+          10,
+          12,
+          165,
+          385,
+          367,
+          379,
+          388,
+          391,
+          398,
+          427
+        ],
+        [
+          8,
+          10,
+          12,
+          165,
+          572,
+          367,
+          379,
+          388,
+          398,
+          427,
+          544
+        ],
+        [
+          10,
+          12,
+          165,
+          385,
+          367,
+          379,
+          388,
+          391,
+          398,
+          427,
+          544
+        ],
+        [
+          8,
+          10,
+          12,
+          165,
+          385,
+          367,
+          379,
+          388,
+          398,
+          427,
+          544
+        ]
+      ]
+    }
+  },
   "squad": {
     "bank": 0.0,
     "bankNote": "sell prices assume each player was bought at today's price",
@@ -30060,14 +28562,14 @@
         "breakdown": {
           "availabilityMultiplier": 0.75,
           "components": {
-            "appearance": 2.0,
-            "assists": 0.26,
-            "bonus": 0.05,
-            "cards": -0.06,
-            "cleanSheet": 1.82,
-            "defensiveContribution": 1.62,
-            "goals": 0.58,
-            "goalsConceded": -0.39,
+            "appearance": 1.5,
+            "assists": 0.2,
+            "bonus": 0.04,
+            "cards": -0.04,
+            "cleanSheet": 1.37,
+            "defensiveContribution": 1.21,
+            "goals": 0.43,
+            "goalsConceded": -0.29,
             "saves": 0.0
           },
           "expectedMinutes": 99.3,
@@ -30937,14 +29439,14 @@
       "saves": 0.23
     },
     "11": {
-      "appearance": 2.0,
-      "assists": 0.26,
-      "bonus": 0.05,
-      "cards": -0.06,
-      "cleanSheet": 1.82,
-      "defensiveContribution": 1.62,
-      "goals": 0.58,
-      "goalsConceded": -0.39,
+      "appearance": 1.5,
+      "assists": 0.2,
+      "bonus": 0.04,
+      "cards": -0.04,
+      "cleanSheet": 1.37,
+      "defensiveContribution": 1.21,
+      "goals": 0.43,
+      "goalsConceded": -0.29,
       "saves": 0.0
     },
     "124": {

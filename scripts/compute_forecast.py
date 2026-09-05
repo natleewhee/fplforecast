@@ -28,10 +28,10 @@ from engine.config import (
 from engine.features import POSITIONS, build_feature_frame, team_fixtures
 from engine.history import ColdStart, classify, load_history
 from engine.model import ModelContext
+from engine.optimise import ScenarioResult, derive_free_transfers, solve_squad
 from engine.squad import (
     best_xi,
     floor_ceiling,
-    pool_upgrades,
     window_points,
     window_points_by_gw,
     xi_floor_ceiling,
@@ -383,6 +383,93 @@ def upcoming_gameweek(bootstrap: dict, now: datetime, fallback: int) -> int:
         if deadline > now:
             return event["id"]
     return fallback
+
+
+def _player_ref(pid: int, pool_by_id: dict) -> dict:
+    p = pool_by_id.get(pid, {})
+    return {
+        "id": pid,
+        "webName": p.get("webName"),
+        "position": p.get("position"),
+        "team": p.get("team"),
+        "price": p.get("price"),
+    }
+
+
+def _scenario_to_dict(result: ScenarioResult, pool_by_id: dict) -> dict:
+    return {
+        "squad": result.squad_ids,
+        "xiByGw": result.xi_by_gw,
+        "captainByGw": result.captain_by_gw,
+        "horizonGws": result.horizon_gws,
+        "points": result.points,
+        "hitCost": result.hit_cost,
+        "netPoints": result.net_points,
+        "transfersIn": [_player_ref(pid, pool_by_id) for pid in result.transfers_in],
+        "transfersOut": [_player_ref(pid, pool_by_id) for pid in result.transfers_out],
+    }
+
+
+def build_scenarios(pool: list[dict], squad_ids: list[int], bank: float, season_history: dict, target_gw: int) -> dict:
+    """The transfer-scenario / chip-optimiser block (2026-09-05 plan): 3
+    horizons x 4 pinned transfer counts (k=0..3, KD7/"Solve count"), plus
+    Free Hit (1 GW) and Wildcard (5 GW) full rebuilds, each solved once via
+    ``engine.optimise.solve_squad`` over the full pool."""
+    pool_by_id = {p["id"]: p for p in pool}
+    current = season_history.get("current") or []
+    chips = season_history.get("chips") or []
+    ft_value, ft_derivation = derive_free_transfers(current, chips, target_gw)
+
+    used_chip_names = {(c.get("name") or "").lower() for c in chips}
+    chips_available = {
+        "freeHit": "freehit" not in used_chip_names,
+        "wildcard": "wildcard" not in used_chip_names,
+    }
+
+    total_budget = bank + sum(
+        pool_by_id[pid]["sellPrice"] for pid in squad_ids if pid in pool_by_id
+    )
+
+    by_horizon: dict[str, list[dict]] = {}
+    for horizon in (1, 3, 5):
+        scenarios_for_horizon = []
+        for k in range(4):
+            result = solve_squad(
+                pool,
+                held=squad_ids,
+                bank=bank,
+                free_transfers=ft_value,
+                horizon_gws=horizon,
+                max_transfers=k,
+            )
+            if result.feasible:
+                scenarios_for_horizon.append(_scenario_to_dict(result, pool_by_id))
+        scenarios_for_horizon.sort(key=lambda s: s["netPoints"], reverse=True)
+        by_horizon[str(horizon)] = scenarios_for_horizon[:3]
+
+    free_hit = None
+    if chips_available["freeHit"]:
+        result = solve_squad(
+            pool, held=[], bank=total_budget, free_transfers=0, horizon_gws=1, unlimited=True
+        )
+        if result.feasible:
+            free_hit = _scenario_to_dict(result, pool_by_id)
+
+    wildcard = None
+    if chips_available["wildcard"]:
+        result = solve_squad(
+            pool, held=[], bank=total_budget, free_transfers=0, horizon_gws=5, unlimited=True
+        )
+        if result.feasible:
+            wildcard = _scenario_to_dict(result, pool_by_id)
+
+    return {
+        "freeTransfers": {"value": ft_value, "derivation": ft_derivation},
+        "chipsAvailable": chips_available,
+        "byHorizon": by_horizon,
+        "freeHit": free_hit,
+        "wildcard": wildcard,
+    }
 
 
 def main(now: datetime | None = None) -> int:
@@ -739,6 +826,10 @@ def main(now: datetime | None = None) -> int:
                 "elementType": el.get("element_type"),
                 "position": POSITIONS.get(el.get("element_type"), "???"),
                 "price": round((el.get("now_cost") or 0) / 10, 1),
+                # No purchase-price data is public; sellPrice assumes bought at
+                # today's price, same as the squad cards' sellPrice (KD in the
+                # 2026-09-05 transfer-scenarios plan's "Open Questions").
+                "sellPrice": round((el.get("now_cost") or 0) / 10, 1),
                 "selectedByPercent": float(el.get("selected_by_percent") or 0),
                 "form": float(el.get("form") or 0),
                 "perGameweek": [round(v, 2) for v in per_gw],
@@ -763,22 +854,7 @@ def main(now: datetime | None = None) -> int:
         season_history.get("current") or [], bootstrap.get("events") or []
     )
 
-    # Squad-aware upgrade marks for the planning table: any same-position pool
-    # player out-projecting a held player over the window, at any budget (R12,
-    # KTD4). Added alongside the narrow alternatives panel data -- U6 removes the
-    # old surface and its producer together (KTD8).
-    upgrade_squad = [
-        {
-            "id": c["id"],
-            "position": c["position"],
-            "price": c["price"],
-            "total": model_window.get(c["id"]),
-        }
-        for c in players
-    ]
-    pool_upgrade_map = {
-        str(sid): rows for sid, rows in pool_upgrades(upgrade_squad, pool, bank).items()
-    }
+    scenarios = build_scenarios(pool, squad_ids, bank, season_history, target_gw)
 
     forecast = {
         "generatedAt": now.isoformat(),
@@ -834,7 +910,7 @@ def main(now: datetime | None = None) -> int:
         "marginProvisional": margin_provisional,
         "parBuffer": PAR_BUFFER_POINTS,
         "parBufferProvisional": PAR_BUFFER_PROVISIONAL_POINTS,
-        "poolUpgrades": pool_upgrade_map,
+        "scenarios": scenarios,
         "history": build_history(season_history),
     }
 
@@ -843,10 +919,12 @@ def main(now: datetime | None = None) -> int:
     out_path = out_dir / f"gw{target_gw}.json"
     out_path.write_text(json.dumps(forecast, indent=2, sort_keys=True))
     print(f"forecast for GW{target_gw} (based on GW{based_on_gw} squad): -> {out_path}")
+    top_scenario = (scenarios["byHorizon"].get("1") or [None])[0]
     print(
-        f"pool upgrades: {sum(1 for rows in pool_upgrade_map.values() if rows)} squad player(s) "
-        f"have a same-position upgrade in the pool; captain: "
-        f"{forecast['captain']['webName'] if forecast['captain'] else None}"
+        f"free transfers: {scenarios['freeTransfers']['value']} "
+        f"({scenarios['freeTransfers']['derivation']}); "
+        f"top 1-GW scenario net points: {top_scenario['netPoints'] if top_scenario else None}; "
+        f"captain: {forecast['captain']['webName'] if forecast['captain'] else None}"
     )
     return 0
 

@@ -164,6 +164,26 @@ RATE_CLAMP = {
 }
 
 
+# --- Transfer scenarios / chip optimiser (2026-09-05 plan) ---
+# Cap on banked free transfers. Confirmed for the 2025-26 season (2026-09-05);
+# this has changed before (it was 2 pre-2024/25) so re-confirm each season.
+FT_MAX_BANKED = 5
+# Points cost of a transfer beyond the free allowance.
+HIT_COST = 4
+# Squad composition by element_type (1 GKP, 2 DEF, 3 MID, 4 FWD).
+SQUAD_COMPOSITION = {1: 2, 2: 5, 3: 5, 4: 3}
+SQUAD_SIZE = sum(SQUAD_COMPOSITION.values())
+# Legal starting-XI formation bounds by element_type, (min, max); GKP is fixed at 1.
+XI_FORMATION_BOUNDS = {1: (1, 1), 2: (3, 5), 3: (2, 5), 4: (1, 3)}
+XI_SIZE = 11
+# Max squad members from a single club.
+CLUB_LIMIT = 3
+# Tiny bias against taking a hit when it is exactly net-neutral (a swap worth
+# precisely HIT_COST points over the horizon): without it CBC can land on
+# either side of a tie, and KD1 wants hits taken only when strictly
+# net-positive. Negligible next to real point deltas (~0.01 precision).
+HIT_TIEBREAK_EPSILON = 1e-6
+
 if sum(BASELINE_WEIGHTS.values()) <= 0:
     raise ValueError("BASELINE_WEIGHTS must sum to a positive number")
 

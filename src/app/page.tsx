@@ -5,7 +5,6 @@ import {
   loadLatestForecast,
   loadChipStatus,
   loadOverrides,
-  loadPool,
   type GameweekReview,
   type RunningRecord,
   type ParCalibration,
@@ -13,7 +12,7 @@ import {
 import Pitch from "./Pitch";
 import History from "./History";
 import LiveTracker from "./LiveTracker";
-import PlanningTable from "./PlanningTable";
+import Scenarios from "./Scenarios";
 import TransferForm from "./TransferForm";
 
 export const dynamic = "force-static";
@@ -295,7 +294,6 @@ export default function Home() {
   const forecast = loadLatestForecast();
   const chips = loadChipStatus();
   const overrides = loadOverrides();
-  const poolData = loadPool();
 
   if (!bootstrap) {
     return (
@@ -336,10 +334,9 @@ export default function Home() {
 
             <Pitch forecast={forecast} />
 
-            <section className="space-y-2">
-              <h2 className="eyebrow px-1">Planning table · whole pool</h2>
-              <PlanningTable data={poolData} />
-            </section>
+            {forecast.scenarios && (
+              <Scenarios scenarios={forecast.scenarios} pool={forecast.pool ?? []} />
+            )}
 
             {chips && (
               <div className="flex flex-wrap gap-1.5">

@@ -1,9 +1,10 @@
-"""Best-XI selection over projected points, and squad-vs-pool upgrade
-detection. Pure -- no I/O. ``best_xi`` / ``VALID_FORMATIONS`` are lifted
-verbatim from ``scripts/compute_forecast.py`` (U1); ``window_points`` is U7
-(R12, R13, KD8, KTD5, KTD11); ``pool_upgrades`` is U3/U6 (R12, R13, KTD4,
-KTD8) -- the sole squad-vs-pool upgrade surface, at any price. ``floor_ceiling``
-/ ``xi_floor_ceiling`` are UA2 of the 2026-09-03 safety-score plan (Part A)."""
+"""Best-XI selection over projected points. Pure -- no I/O. ``best_xi`` /
+``VALID_FORMATIONS`` are lifted verbatim from ``scripts/compute_forecast.py``
+(U1) and remain the verification oracle for ``engine/optimise.py``'s ILP;
+``window_points`` is U7 (R12, R13, KD8, KTD5, KTD11). ``floor_ceiling`` /
+``xi_floor_ceiling`` are UA2 of the 2026-09-03 safety-score plan (Part A).
+``pool_upgrades`` (U3/U6) was removed by the 2026-09-05 transfer-scenarios
+plan -- superseded by ``engine/optimise.py``'s squad-aware scenarios."""
 
 from __future__ import annotations
 
@@ -104,39 +105,6 @@ def window_points_by_gw(
             vals.append(projected)
         by_gw[player_id] = vals
     return by_gw
-
-
-def pool_upgrades(squad: list[dict], pool: list[dict], bank: float) -> dict:
-    """For each held player, every same-position pool player with a higher
-    five-gameweek total -- no price band. Returns ``{squad_id: [rows]}`` with
-    each row ``{poolPlayerId, gap, priceDelta, overBudget}``, largest gap first.
-    ``overBudget`` is true when the price rise exceeds ``bank`` (the sale of the
-    held player is assumed to free its own price) (R12, KTD4)."""
-    out: dict = {}
-    for held in squad:
-        held_total = held.get("total")
-        if held_total is None:
-            out[held["id"]] = []
-            continue
-        rows = []
-        for cand in pool:
-            if cand["id"] == held["id"] or cand.get("position") != held.get("position"):
-                continue
-            cand_total = cand.get("total")
-            if cand_total is None or cand_total <= held_total:
-                continue
-            price_delta = round(cand["price"] - held["price"], 1)
-            rows.append(
-                {
-                    "poolPlayerId": cand["id"],
-                    "gap": round(cand_total - held_total, 2),
-                    "priceDelta": price_delta,
-                    "overBudget": price_delta > bank + 1e-6,
-                }
-            )
-        rows.sort(key=lambda r: r["gap"], reverse=True)
-        out[held["id"]] = rows
-    return out
 
 
 def _stdev_for_position(element_type, residuals_by_position: Mapping | None) -> tuple[float, bool]:
