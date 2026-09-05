@@ -318,17 +318,21 @@ export function playerStatus(
   if (!el || !el.fixtureStarted) return "notStarted";
   if (el.fixtureFinished) return el.minutes > 0 ? "finished" : "didNotPlay";
   if (el.minutes === 0) return "playing";
-  const frozen =
+  // FPL's `finished`/`finished_provisional` flags can lag the final whistle by
+  // a poll or two while stats are checked. Minutes cannot legitimately sit at
+  // or past 90' for two separate polls without the match being over -- unlike
+  // the mid-game plateau below, this needs no minimum poll gap, since the
+  // routine ~60s tick cadence would otherwise never clear the (higher) gap
+  // threshold used to rule out a false off-pitch read.
+  if (prevEl && prevEl.minutes === el.minutes && el.minutes >= MATCH_MINUTES) return "finished";
+  if (
     prevEl &&
     prevIso &&
     prevEl.minutes === el.minutes &&
-    Date.parse(nowIso) - Date.parse(prevIso) >= OFF_PITCH_MIN_POLL_GAP_MS;
-  // FPL's `finished`/`finished_provisional` flags can lag the final whistle by
-  // a poll or two while stats are checked. Once the minute count has been
-  // stuck at or past 90' across a poll gap, treat the player as finished
-  // rather than leaving them stuck on "playing" with a stale +0.0 forecast.
-  if (frozen && el.minutes >= MATCH_MINUTES) return "finished";
-  if (frozen && el.minutes < MATCH_MINUTES && !(el.minutes >= 44 && el.minutes <= 46)) {
+    el.minutes < MATCH_MINUTES &&
+    !(el.minutes >= 44 && el.minutes <= 46) &&
+    Date.parse(nowIso) - Date.parse(prevIso) >= OFF_PITCH_MIN_POLL_GAP_MS
+  ) {
     return "offPitch";
   }
   return "playing";
