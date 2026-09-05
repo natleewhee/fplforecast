@@ -411,7 +411,48 @@ def _player_ref(pid: int, pool_by_id: dict) -> dict:
     }
 
 
-def _scenario_to_dict(result: ScenarioResult, pool_by_id: dict) -> dict:
+def _scenario_weeks(result: ScenarioResult, pool_by_id: dict, target_gw: int) -> list[dict]:
+    """Per-gameweek detail for a solved scenario -- the XI that week, each
+    player's opponent(s)/FDR and that week's xP, and the week's total (captain
+    doubled). Lets the UI offer a "pick a GW within this horizon" view rather
+    than only the horizon-wide net total."""
+    weeks = []
+    for offset in range(result.horizon_gws):
+        xi_ids = result.xi_by_gw[offset] if offset < len(result.xi_by_gw) else []
+        captain_id = result.captain_by_gw[offset] if offset < len(result.captain_by_gw) else None
+        players = []
+        total = 0.0
+        for pid in xi_ids:
+            p = pool_by_id.get(pid, {})
+            per_gw = p.get("perGameweek") or []
+            xp = per_gw[offset] if offset < len(per_gw) else None
+            opponents_by_gw = p.get("opponents") or []
+            opponents = opponents_by_gw[offset] if offset < len(opponents_by_gw) else []
+            is_captain = pid == captain_id
+            players.append(
+                {
+                    "id": pid,
+                    "webName": p.get("webName"),
+                    "position": p.get("position"),
+                    "team": p.get("team"),
+                    "xp": xp,
+                    "opponents": opponents,
+                    "isCaptain": is_captain,
+                }
+            )
+            if xp is not None:
+                total += xp * (2 if is_captain else 1)
+        weeks.append(
+            {
+                "targetGw": target_gw + offset,
+                "players": players,
+                "totalXp": round(total, 2),
+            }
+        )
+    return weeks
+
+
+def _scenario_to_dict(result: ScenarioResult, pool_by_id: dict, target_gw: int) -> dict:
     return {
         "squad": result.squad_ids,
         "xiByGw": result.xi_by_gw,
@@ -422,6 +463,7 @@ def _scenario_to_dict(result: ScenarioResult, pool_by_id: dict) -> dict:
         "netPoints": result.net_points,
         "transfersIn": [_player_ref(pid, pool_by_id) for pid in result.transfers_in],
         "transfersOut": [_player_ref(pid, pool_by_id) for pid in result.transfers_out],
+        "weeks": _scenario_weeks(result, pool_by_id, target_gw),
     }
 
 
@@ -473,7 +515,7 @@ def build_scenarios(
                 max_transfers=k,
             )
             if result.feasible:
-                scenarios_for_horizon.append(_scenario_to_dict(result, pool_by_id))
+                scenarios_for_horizon.append(_scenario_to_dict(result, pool_by_id, target_gw))
         scenarios_for_horizon.sort(key=lambda s: s["netPoints"], reverse=True)
         by_horizon[str(horizon)] = scenarios_for_horizon[:3]
 
@@ -483,22 +525,27 @@ def build_scenarios(
             pool, held=[], bank=total_budget, free_transfers=0, horizon_gws=1, unlimited=True
         )
         if result.feasible:
-            free_hit = _scenario_to_dict(result, pool_by_id)
+            free_hit = _scenario_to_dict(result, pool_by_id, target_gw)
 
-    wildcard = None
+    # Wildcard, unlike Free Hit, is a permanent squad -- solved at each of the
+    # same 1/3/5 horizons (rather than once at 5 GW) so the horizon toggle
+    # picks an actually-different, horizon-optimal squad, not just a slice of
+    # the 5-GW one.
+    wildcard_by_horizon: dict[str, dict] = {}
     if chips_available["wildcard"]:
-        result = solve_squad(
-            pool, held=[], bank=total_budget, free_transfers=0, horizon_gws=5, unlimited=True
-        )
-        if result.feasible:
-            wildcard = _scenario_to_dict(result, pool_by_id)
+        for horizon in (1, 3, 5):
+            result = solve_squad(
+                pool, held=[], bank=total_budget, free_transfers=0, horizon_gws=horizon, unlimited=True
+            )
+            if result.feasible:
+                wildcard_by_horizon[str(horizon)] = _scenario_to_dict(result, pool_by_id, target_gw)
 
     return {
         "freeTransfers": {"value": ft_value, "derivation": ft_derivation},
         "chipsAvailable": chips_available,
         "byHorizon": by_horizon,
         "freeHit": free_hit,
-        "wildcard": wildcard,
+        "wildcard": wildcard_by_horizon if wildcard_by_horizon else None,
     }
 
 

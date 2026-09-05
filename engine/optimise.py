@@ -68,6 +68,8 @@ def solve_squad(
     *,
     max_transfers: int | None = None,
     unlimited: bool = False,
+    force_in: list[int] | set[int] | None = None,
+    force_out: list[int] | set[int] | None = None,
 ) -> ScenarioResult:
     """Solve for the 15-man squad (plus per-gameweek XI and captain) that
     maximises projected points over ``horizon_gws`` gameweeks (the first
@@ -81,12 +83,24 @@ def solve_squad(
     out of ``held`` (used for the k=0..FT+1 pinned-count scenario family).
     ``unlimited=True`` drops the held-squad budget carry-over and the hit
     penalty entirely (Free Hit / Wildcard: full budget, no transfer cost).
+
+    ``force_in``/``force_out`` pin a player permanently in/out of the 15
+    (a manual "always keep" / "never keep" override) -- solved as a hard
+    constraint, not a preference, so an infeasible combination (e.g.
+    force_in exceeding budget or a club/position limit) returns
+    ``feasible=False`` rather than silently ignoring the pin.
     """
     held_ids = set(held)
     by_id = {p["id"]: p for p in players}
     prob = pulp.LpProblem("squad", pulp.LpMaximize)
 
     x = {p["id"]: pulp.LpVariable(f"x_{p['id']}", cat="Binary") for p in players}
+    for pid in force_in or []:
+        if pid in x:
+            prob += x[pid] == 1
+    for pid in force_out or []:
+        if pid in x:
+            prob += x[pid] == 0
     start = {
         p["id"]: [
             pulp.LpVariable(f"start_{p['id']}_{gw}", cat="Binary") for gw in range(horizon_gws)

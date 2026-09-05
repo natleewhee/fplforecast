@@ -225,6 +225,56 @@ def test_derive_free_transfers_subtracts_transfers_used():
     assert value == 1
 
 
+def test_force_in_pins_a_player_the_optimum_would_otherwise_drop():
+    players, known_optimal = _pool_with_known_optimal()
+    total_price = sum(p["price"] for p in players if p["id"] in known_optimal)
+    # Decoy DEF id 9 (team I, weak xP) isn't in the known optimum -- force it in.
+    result = solve_squad(
+        players,
+        held=[],
+        bank=total_price + 10,
+        free_transfers=0,
+        horizon_gws=1,
+        unlimited=True,
+        force_in=[9],
+    )
+    assert result.feasible
+    assert 9 in result.squad_ids
+
+
+def test_force_out_drops_a_player_the_optimum_would_otherwise_keep():
+    players, known_optimal = _pool_with_known_optimal()
+    total_price = sum(p["price"] for p in players if p["id"] in known_optimal)
+    # id 18 is the standout forward (captain in the unconstrained optimum).
+    result = solve_squad(
+        players,
+        held=[],
+        bank=total_price + 10,
+        free_transfers=0,
+        horizon_gws=1,
+        unlimited=True,
+        force_out=[18],
+    )
+    assert result.feasible
+    assert 18 not in result.squad_ids
+
+
+def test_force_in_and_force_out_can_make_a_solve_infeasible():
+    players, _ = _pool_with_known_optimal()
+    # Forcing the same player both in and out is a direct contradiction.
+    result = solve_squad(
+        players,
+        held=[],
+        bank=1000,
+        free_transfers=0,
+        horizon_gws=1,
+        unlimited=True,
+        force_in=[9],
+        force_out=[9],
+    )
+    assert not result.feasible
+
+
 @pytest.mark.slow
 def test_real_pool_fourteen_solve_set_completes_within_budget():
     forecast_path = DATA_DIR / "forecast" / "gw4.json"
