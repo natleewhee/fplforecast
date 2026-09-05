@@ -335,7 +335,12 @@ export default function Home() {
             <Pitch forecast={forecast} />
 
             {forecast.scenarios && (
-              <Scenarios scenarios={forecast.scenarios} pool={forecast.pool ?? []} />
+              <Scenarios
+                scenarios={forecast.scenarios}
+                pool={forecast.pool ?? []}
+                squad={forecast.squad.players}
+                forecastGw={forecast.targetGameweek}
+              />
             )}
 
             {chips && (

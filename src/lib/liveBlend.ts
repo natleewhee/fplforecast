@@ -457,11 +457,11 @@ export function buildTracker(payload: LivePayload, prev: LivePayload | null): Tr
   const inLineup = new Set(lineup);
   const benchSet = new Set(payload.picks.bench);
 
-  let projectedTotal = 0;
-  for (const id of lineup) projectedTotal += projById[id]?.contribution ?? 0;
-
   // The armband stays with the captain unless their own match is done and they
-  // did not play, in which case it passes to the vice (FPL rule).
+  // did not play, in which case it passes to the vice (FPL rule). Computed
+  // before the total so the doubling below and each row's own numbers agree
+  // on the same multiplier, rather than the total secretly double-counting
+  // a captain whose row still shows their un-doubled points.
   const { captainId, viceCaptainId } = payload.picks;
   let armbandId: number | null = null;
   if (captainId != null && inLineup.has(captainId) && statusById[captainId] !== "didNotPlay") {
@@ -473,7 +473,12 @@ export function buildTracker(payload: LivePayload, prev: LivePayload | null): Tr
   ) {
     armbandId = viceCaptainId;
   }
-  if (armbandId != null) projectedTotal += projById[armbandId]?.contribution ?? 0;
+
+  let projectedTotal = 0;
+  for (const id of lineup) {
+    const contribution = projById[id]?.contribution ?? 0;
+    projectedTotal += id === armbandId ? contribution * 2 : contribution;
+  }
 
   const par = payload.liveAverage + payload.parMargin;
   const buffer = payload.marginProvisional ? payload.parBufferProvisional : payload.parBuffer;
@@ -486,6 +491,7 @@ export function buildTracker(payload: LivePayload, prev: LivePayload | null): Tr
 
   const rows: TrackerRow[] = payload.squad.map((sp) => {
     const proj = projById[sp.id];
+    const multiplier = sp.id === armbandId ? 2 : 1;
     return {
       id: sp.id,
       webName: sp.webName,
@@ -493,9 +499,9 @@ export function buildTracker(payload: LivePayload, prev: LivePayload | null): Tr
       opponent: sp.opponent,
       status: statusById[sp.id],
       minutes: payload.liveByElement[sp.id]?.minutes ?? 0,
-      pointsSoFar: proj.pointsSoFar,
-      remainingXp: proj.remainingXp,
-      contribution: proj.contribution,
+      pointsSoFar: proj.pointsSoFar * multiplier,
+      remainingXp: proj.remainingXp * multiplier,
+      contribution: proj.contribution * multiplier,
       isBench: benchSet.has(sp.id),
       isArmband: sp.id === armbandId,
       subbedIn: subbedIn.has(sp.id),
