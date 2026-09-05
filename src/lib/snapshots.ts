@@ -81,6 +81,17 @@ export type FloorCeiling = {
   bandProvisional: boolean; // too little realised history for this position -> band widened
 };
 
+// FPL's own doubt signal: status letter (a/d/i/s/u/n), the % chance it
+// publishes of playing the next round for doubtful/returning players, and
+// its news blurb. Distinct from breakdown.availabilityMultiplier, which
+// already folds this into projected points -- this is for "is there an
+// immediate risk this player doesn't play at all", independent of xP.
+export type Availability = {
+  status: "a" | "d" | "i" | "s" | "u" | "n";
+  chance: number | null;
+  news: string | null;
+};
+
 export type PlayerCard = {
   id: number;
   webName: string;
@@ -95,6 +106,7 @@ export type PlayerCard = {
   opponents: OpponentLeg[];
   breakdown: ProjectionBreakdown;
   floorCeiling?: FloorCeiling | null;
+  availability?: Availability;
 };
 
 export type ForecastPlayer = PlayerCard & {
@@ -179,6 +191,7 @@ export type PoolPlayer = {
   perGameweek: number[]; // one xP value per gameweek in the window
   total: number;
   opponents: OpponentLeg[][]; // one leg group per gameweek in the window
+  availability: Availability;
 };
 
 // A scenario's transfer-in/out player, as it should be shown in the UI.
@@ -187,6 +200,7 @@ export type ScenarioPlayerRef = {
   webName: string | null;
   position: string | null;
   team: string | null;
+  availability: Availability | null;
   price: number | null;
 };
 

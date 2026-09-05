@@ -2,6 +2,7 @@
 
 import { useState, type ReactNode } from "react";
 import type { Forecast, ForecastPlayer, OpponentLeg } from "@/lib/snapshots";
+import { availabilityFlag } from "@/lib/availability";
 import { fdrColor, kitFor } from "@/lib/teamColors";
 
 function bandLabel(band: { floor: number; ceiling: number; bandProvisional: boolean } | null | undefined) {
@@ -125,6 +126,7 @@ type Tok = {
   opponents: OpponentLeg[];
   breakdown?: ForecastPlayer["breakdown"];
   floorCeiling?: ForecastPlayer["floorCeiling"];
+  availability?: ForecastPlayer["availability"];
 };
 
 function PlayerToken({
@@ -143,10 +145,13 @@ function PlayerToken({
   const frac = t.xp != null ? t.xp / RING_FULL : 0;
   const ringColor = t.provisional ? "var(--warn)" : "var(--accent)";
   const bandTitle = bandLabel(t.floorCeiling);
+  const doubt = availabilityFlag(t.availability);
   return (
     <div
       className={`flex w-[4.4rem] flex-col items-center gap-0.5 ${bench ? "sm:w-[4.2rem]" : "sm:w-20"}`}
-      title={bandTitle ? `${t.webName} — typical range ${bandTitle}` : t.webName}
+      title={[t.webName, bandTitle && `typical range ${bandTitle}`, doubt?.label]
+        .filter(Boolean)
+        .join(" — ")}
     >
       <div className="relative">
         <Ring frac={frac} color={ringColor} size={size}>
@@ -176,6 +181,13 @@ function PlayerToken({
           <span
             className="absolute -bottom-0.5 -left-0.5 h-2 w-2 rounded-full border border-[var(--bg-0)] bg-[var(--warn)]"
             title="minutes risk"
+          />
+        )}
+        {doubt && (
+          <span
+            className="absolute -bottom-0.5 -right-0.5 h-2.5 w-2.5 rounded-full border border-[var(--bg-0)]"
+            style={{ background: doubt.color }}
+            title={doubt.label}
           />
         )}
       </div>
@@ -247,6 +259,7 @@ export default function Pitch({ forecast }: { forecast: Forecast }) {
       opponents: useSquad ? base.opponents : gp?.opponents ?? [],
       breakdown: base.breakdown,
       floorCeiling: base.floorCeiling,
+      availability: base.availability,
     };
   };
 
