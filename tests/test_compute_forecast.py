@@ -14,6 +14,7 @@ import pandas as pd
 import pytest
 
 import scripts.compute_forecast as cf
+from engine.features import UNAVAILABLE_STATUSES
 from engine.history import HistoryArchive
 from engine.optimise import ScenarioResult
 
@@ -50,7 +51,14 @@ def test_pool_block_covers_every_available_player_with_per_gw_projections(foreca
     from engine.config import ROLLING_WINDOW
 
     bootstrap = cf.load_bootstrap()
-    available = {el["id"] for el in bootstrap["elements"] if el.get("status") == "a"}
+    # "Available" here means eligible for the optimiser to select or
+    # force-keep, not just fully fit -- a "d" (doubtful) player stays in the
+    # pool (their xP is already discounted by chance_of_playing_next_round);
+    # only genuinely unavailable statuses (injured/suspended/left/not in
+    # this season's squad) are excluded.
+    available = {
+        el["id"] for el in bootstrap["elements"] if el.get("status") not in UNAVAILABLE_STATUSES
+    }
     pool = forecast["pool"]
     assert {p["id"] for p in pool} == available
     for p in pool:
@@ -62,9 +70,21 @@ def test_pool_block_covers_every_available_player_with_per_gw_projections(foreca
         assert len(p["opponents"]) == ROLLING_WINDOW  # one leg group per target gameweek
 
 
+def test_doubtful_player_stays_in_the_pool(forecast):
+    bootstrap = cf.load_bootstrap()
+    doubtful = next(
+        (el["id"] for el in bootstrap["elements"] if el.get("status") == "d"), None
+    )
+    if doubtful is None:
+        pytest.skip("no doubtful player in this snapshot")
+    assert doubtful in {p["id"] for p in forecast["pool"]}
+
+
 def test_unavailable_player_is_absent_from_the_pool(forecast):
     bootstrap = cf.load_bootstrap()
-    unavailable = next(el["id"] for el in bootstrap["elements"] if el.get("status") != "a")
+    unavailable = next(
+        el["id"] for el in bootstrap["elements"] if el.get("status") in UNAVAILABLE_STATUSES
+    )
     assert unavailable not in {p["id"] for p in forecast["pool"]}
 
 

@@ -25,7 +25,7 @@ from engine.config import (
     ROLLING_WINDOW,
     SETTLE_GAMEWEEK,
 )
-from engine.features import POSITIONS, build_feature_frame, team_fixtures
+from engine.features import UNAVAILABLE_STATUSES, POSITIONS, build_feature_frame, team_fixtures
 from engine.history import ColdStart, classify, load_history
 from engine.model import ModelContext
 from engine.optimise import ScenarioResult, derive_free_transfers, solve_squad
@@ -621,9 +621,16 @@ def main(now: datetime | None = None) -> int:
         pid: model.minutes_risk_flag(row, ctx) for pid, row in feature_frame.iterrows()
     }
     # "the best *available* alternative" (R12): only players FPL lists as
-    # available (not injured / suspended / loaned / out of the game).
+    # available (not injured / suspended / loaned / out of the game). A
+    # "d" (doubtful) player stays eligible -- the model already discounts
+    # their xP by chance_of_playing_next_round (availability_multiplier), so
+    # excluding them here on top of that would double-penalise a doubt and,
+    # worse, make the optimiser (engine/optimise.py) unable to ever select or
+    # force-keep them at all, since they'd never be a candidate variable.
     pool_ids = [
-        pid for pid in feature_frame.index if elements_by_id.get(pid, {}).get("status") == "a"
+        pid
+        for pid in feature_frame.index
+        if elements_by_id.get(pid, {}).get("status") not in UNAVAILABLE_STATUSES
     ]
 
     # Your squad is the anchor: the fifteen held players, each with the model's
