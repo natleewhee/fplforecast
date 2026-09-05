@@ -739,6 +739,10 @@ def main(now: datetime | None = None) -> int:
                 "elementType": el.get("element_type"),
                 "position": POSITIONS.get(el.get("element_type"), "???"),
                 "price": round((el.get("now_cost") or 0) / 10, 1),
+                # No purchase-price data is public; sellPrice assumes bought at
+                # today's price, same as the squad cards' sellPrice (KD in the
+                # 2026-09-05 transfer-scenarios plan's "Open Questions").
+                "sellPrice": round((el.get("now_cost") or 0) / 10, 1),
                 "selectedByPercent": float(el.get("selected_by_percent") or 0),
                 "form": float(el.get("form") or 0),
                 "perGameweek": [round(v, 2) for v in per_gw],
