@@ -15,6 +15,7 @@ import pytest
 
 import scripts.compute_forecast as cf
 from engine.history import HistoryArchive
+from engine.optimise import ScenarioResult
 
 ROOT = Path(__file__).resolve().parent.parent
 NOW = datetime(2026, 9, 1, 12, 0, tzinfo=timezone.utc)  # between GW2 and GW3 deadlines
@@ -309,6 +310,44 @@ def test_player_ref_resolves_a_held_player_absent_from_the_available_pool():
     ref = cf._player_ref(11, pool_by_id)
     assert ref["webName"] == "Mosquera"
     assert ref["price"] == 5.0
+
+
+def test_scenario_weeks_carries_per_gw_opponent_and_xp_with_captain_doubled():
+    pool_by_id = {
+        1: {
+            "webName": "A",
+            "position": "MID",
+            "team": "ARS",
+            "perGameweek": [5.0, 6.0],
+            "opponents": [[{"team": "CHE", "fdrRating": 3}], [{"team": "LIV", "fdrRating": 5}]],
+        },
+        2: {
+            "webName": "B",
+            "position": "FWD",
+            "team": "ARS",
+            "perGameweek": [4.0, 3.0],
+            "opponents": [[{"team": "CHE", "fdrRating": 3}], [{"team": "LIV", "fdrRating": 5}]],
+        },
+    }
+    result = ScenarioResult(
+        squad_ids=[1, 2],
+        xi_by_gw=[[1, 2], [1, 2]],
+        captain_by_gw=[1, 2],
+        points=18.0,
+        transfers_in=[],
+        transfers_out=[],
+        hit_cost=0,
+        net_points=18.0,
+        horizon_gws=2,
+    )
+    weeks = cf._scenario_weeks(result, pool_by_id, target_gw=4)
+    assert [w["targetGw"] for w in weeks] == [4, 5]
+    # GW1: A captain -> 5*2 + 4 = 14. GW2: B captain -> 6 + 3*2 = 12.
+    assert weeks[0]["totalXp"] == 14.0
+    assert weeks[1]["totalXp"] == 12.0
+    assert weeks[0]["players"][0]["opponents"] == [{"team": "CHE", "fdrRating": 3}]
+    assert weeks[0]["players"][0]["isCaptain"] is True
+    assert weeks[1]["players"][0]["isCaptain"] is False
 
 
 def test_availability_info_surfaces_fpls_doubt_signal():

@@ -204,6 +204,25 @@ export type ScenarioPlayerRef = {
   price: number | null;
 };
 
+// One gameweek's detail within a scenario's horizon: the XI that week, each
+// player's opponent(s)/FDR and that week's xP, and the week's total (captain
+// doubled).
+export type ScenarioWeekPlayer = {
+  id: number;
+  webName: string | null;
+  position: string | null;
+  team: string | null;
+  xp: number | null;
+  opponents: OpponentLeg[];
+  isCaptain: boolean;
+};
+
+export type ScenarioWeek = {
+  targetGw: number;
+  players: ScenarioWeekPlayer[];
+  totalXp: number;
+};
+
 export type Scenario = {
   squad: number[];
   xiByGw: number[][];
@@ -214,6 +233,7 @@ export type Scenario = {
   netPoints: number;
   transfersIn: ScenarioPlayerRef[];
   transfersOut: ScenarioPlayerRef[];
+  weeks: ScenarioWeek[];
 };
 
 export type Scenarios = {
@@ -221,7 +241,7 @@ export type Scenarios = {
   chipsAvailable: { freeHit: boolean; wildcard: boolean };
   byHorizon: Record<string, Scenario[]>; // "1" | "3" | "5" -> top-3 by net points
   freeHit: Scenario | null;
-  wildcard: Scenario | null;
+  wildcard: Record<string, Scenario> | null; // "1" | "3" | "5" -> that horizon's rebuild
 };
 
 export type UpcomingPlayer = {

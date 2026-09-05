@@ -97,7 +97,7 @@ function ShirtGlyph({ fill }: { fill: string }) {
   );
 }
 
-function OppChip({ opponents }: { opponents: OpponentLeg[] }) {
+export function OppChip({ opponents }: { opponents: OpponentLeg[] }) {
   if (!opponents.length) return <span className="text-[9px] text-ink-faint">— blank —</span>;
   return (
     <span className="flex items-center justify-center gap-1">

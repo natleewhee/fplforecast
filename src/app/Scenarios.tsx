@@ -3,6 +3,7 @@
 import { useState } from "react";
 import type { PoolPlayer, Scenario, ScenarioPlayerRef, Scenarios as ScenariosData } from "@/lib/snapshots";
 import { availabilityFlag } from "@/lib/availability";
+import { OppChip } from "./Pitch";
 import { kitFor } from "@/lib/teamColors";
 
 const HORIZONS = ["1", "3", "5"] as const;
@@ -15,11 +16,25 @@ function fmtNet(n: number) {
 
 /** Compact shirt token for a pitch-style XI/bench display -- a lighter
  * cousin of Pitch.tsx's PlayerToken, since scenario players don't carry the
- * full per-GW breakdown/floor-ceiling data that component expects. */
-function ShirtToken({ player, isCaptain }: { player: PoolPlayer | undefined; isCaptain: boolean }) {
+ * full per-GW breakdown/floor-ceiling data that component expects.
+ * `weekIndex` picks which entry of the player's perGameweek/opponents arrays
+ * (both aligned to the scenario's horizon, offset 0 = its first gameweek) to
+ * show -- lets a multi-week scenario (Wildcard) show any week's number and
+ * fixture, not just the first. */
+function ShirtToken({
+  player,
+  isCaptain,
+  weekIndex,
+}: {
+  player: PoolPlayer | undefined;
+  isCaptain: boolean;
+  weekIndex: number;
+}) {
   if (!player) return null;
   const kit = kitFor(player.team);
   const doubt = availabilityFlag(player.availability);
+  const xp = player.perGameweek[weekIndex];
+  const opponents = player.opponents[weekIndex] ?? [];
   return (
     <div
       className="flex w-16 flex-col items-center gap-0.5 sm:w-[4.5rem]"
@@ -31,7 +46,7 @@ function ShirtToken({ player, isCaptain }: { player: PoolPlayer | undefined; isC
           style={{ background: kit.primary }}
         >
           <span className="font-mono text-[10px] font-bold" style={{ color: kit.ink }}>
-            {player.perGameweek[0]?.toFixed(1) ?? "—"}
+            {xp != null ? xp.toFixed(1) : "—"}
           </span>
         </div>
         {isCaptain && (
@@ -50,6 +65,7 @@ function ShirtToken({ player, isCaptain }: { player: PoolPlayer | undefined; isC
       <span className="max-w-[4rem] truncate text-[11px] font-semibold text-ink">
         {player.webName}
       </span>
+      <OppChip opponents={opponents} />
     </div>
   );
 }
@@ -119,9 +135,17 @@ function TransferPairs({ scenario }: { scenario: Scenario }) {
   );
 }
 
-function ChipXi({ scenario, poolById }: { scenario: Scenario; poolById: Map<number, PoolPlayer> }) {
-  const xi = scenario.xiByGw[0] ?? [];
-  const captainId = scenario.captainByGw[0] ?? null;
+function ChipXi({
+  scenario,
+  poolById,
+  weekIndex,
+}: {
+  scenario: Scenario;
+  poolById: Map<number, PoolPlayer>;
+  weekIndex: number;
+}) {
+  const xi = scenario.xiByGw[weekIndex] ?? [];
+  const captainId = scenario.captainByGw[weekIndex] ?? null;
   const bench = scenario.squad.filter((id) => !xi.includes(id));
   const rows = ROWS.map((pos) =>
     xi.map((id) => poolById.get(id)).filter((p): p is PoolPlayer => !!p && p.position === pos)
@@ -137,7 +161,7 @@ function ChipXi({ scenario, poolById }: { scenario: Scenario; poolById: Map<numb
           {rows.map((row, i) => (
             <div key={i} className="flex flex-wrap justify-center gap-x-1.5 gap-y-2">
               {row.map((p) => (
-                <ShirtToken key={p.id} player={p} isCaptain={p.id === captainId} />
+                <ShirtToken key={p.id} player={p} isCaptain={p.id === captainId} weekIndex={weekIndex} />
               ))}
             </div>
           ))}
@@ -147,7 +171,7 @@ function ChipXi({ scenario, poolById }: { scenario: Scenario; poolById: Map<numb
         <p className="eyebrow mb-1.5">Bench</p>
         <div className="flex flex-wrap gap-x-1.5 gap-y-2 overflow-x-auto">
           {bench.map((id) => (
-            <ShirtToken key={id} player={poolById.get(id)} isCaptain={false} />
+            <ShirtToken key={id} player={poolById.get(id)} isCaptain={false} weekIndex={weekIndex} />
           ))}
         </div>
       </div>
@@ -206,13 +230,20 @@ function ChipCard({
   baselineNetPoints: number | null;
   poolById: Map<number, PoolPlayer>;
 }) {
+  const [weekIndex, setWeekIndex] = useState(0);
   const gain = baselineNetPoints != null ? scenario.netPoints - baselineNetPoints : null;
+  const weeks = scenario.weeks;
+  const activeWeek = weeks[Math.min(weekIndex, weeks.length - 1)];
+
   return (
     <div className="panel rise space-y-3 p-3">
       <div className="flex items-center justify-between gap-2">
         <h3 className="font-mono text-[12px] font-bold tracking-wide text-ink">{title}</h3>
         <div className="text-right">
           <div className="stat text-lg leading-none">{scenario.netPoints.toFixed(1)}</div>
+          <div className="text-[11px] text-ink-faint">
+            total over {scenario.horizonGws} GW{scenario.horizonGws > 1 ? "s" : ""}
+          </div>
           {gain != null && (
             <div className={`text-[11px] ${gain >= 0 ? "text-[var(--accent)]" : "text-[var(--danger)]"}`}>
               {fmtNet(gain)} vs current squad
@@ -220,7 +251,23 @@ function ChipCard({
           )}
         </div>
       </div>
-      <ChipXi scenario={scenario} poolById={poolById} />
+
+      {weeks.length > 1 && (
+        <div className="flex items-center justify-between gap-2">
+          <div className="segment">
+            {weeks.map((w, i) => (
+              <button key={w.targetGw} data-active={i === weekIndex} onClick={() => setWeekIndex(i)}>
+                GW{w.targetGw}
+              </button>
+            ))}
+          </div>
+          {activeWeek && (
+            <span className="font-mono text-xs text-ink-faint">{activeWeek.totalXp.toFixed(1)} this GW</span>
+          )}
+        </div>
+      )}
+
+      <ChipXi scenario={scenario} poolById={poolById} weekIndex={weekIndex} />
     </div>
   );
 }
@@ -232,6 +279,8 @@ export default function Scenarios({ scenarios, pool }: { scenarios: ScenariosDat
   const scenariosForHorizon = scenarios.byHorizon[horizon] ?? [];
   const roll = scenariosForHorizon.find((s) => s.transfersOut.length === 0) ?? null;
   const baselineFor1Gw = (scenarios.byHorizon["1"] ?? []).find((s) => s.transfersOut.length === 0);
+  const wildcardForHorizon = scenarios.wildcard?.[horizon] ?? null;
+  const rollForHorizon = roll ? roll.netPoints : null;
 
   return (
     <section className="space-y-4">
@@ -267,7 +316,7 @@ export default function Scenarios({ scenarios, pool }: { scenarios: ScenariosDat
         </div>
       )}
 
-      {(scenarios.freeHit || scenarios.wildcard) && (
+      {(scenarios.freeHit || wildcardForHorizon) && (
         <div className="grid gap-3 sm:grid-cols-2">
           {scenarios.freeHit && (
             <ChipCard
@@ -277,13 +326,12 @@ export default function Scenarios({ scenarios, pool }: { scenarios: ScenariosDat
               poolById={poolById}
             />
           )}
-          {scenarios.wildcard && (
+          {wildcardForHorizon && (
             <ChipCard
-              title="WILDCARD"
-              scenario={scenarios.wildcard}
-              baselineNetPoints={(scenarios.byHorizon["5"] ?? []).find(
-                (s) => s.transfersOut.length === 0
-              )?.netPoints ?? null}
+              key={horizon}
+              title={`WILDCARD — ${horizon} GW`}
+              scenario={wildcardForHorizon}
+              baselineNetPoints={rollForHorizon}
               poolById={poolById}
             />
           )}
