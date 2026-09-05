@@ -77,10 +77,10 @@ Decisions I am making in the drafting, flagged for your review:
   scenario panel derives a default, *shows its working* ("2 FT — 1/GW since GW1, capped at 5,
   minus 0 used"), and gives you a 1–5 toggle to correct it, which instantly re-ranks the
   scenarios. Cheap to build, and removes an entire class of silent-wrongness.
-- **KD6. The banked-FT cap is a config constant, not a hardcoded 5.** Current FPL rules bank up
-  to 5, but this is a 2026-27 season and the cap has changed before (it was 2 pre-2024/25).
-  `FT_MAX_BANKED = 5` in `engine/config.py` with a comment saying it needs confirming each
-  season. **Please confirm the cap is still 5.**
+- **KD6. The banked-FT cap is a config constant, not a hardcoded 5.** **Confirmed with Nat
+  2026-09-05: the cap is still 5 this season.** Still lands as `FT_MAX_BANKED = 5` in
+  `engine/config.py` rather than a literal, with a comment saying it needs re-confirming each
+  season — the cap has changed before (it was 2 pre-2024/25).
 - **KD7. The three transfer scenarios are structurally different, not three variants of one
   move.** Rather than returning the top 3 solutions of a single search (which tend to be
   near-identical — swap the same player for three similar alternatives), solve the *best possible
@@ -265,15 +265,16 @@ and switches between horizons. PuLP in the browser is not an option, and the pag
 - The full pool table and `poolUpgrades` are gone.
 - Every gate in the Verification Contract passes.
 
+## Resolved before implementation (2026-09-05)
+
+1. **Banked-FT cap is 5.** Confirmed — see KD6.
+2. **Wildcard is a full rebuild.** Confirmed. It ignores the existing squad entirely and picks
+   the best legal 15 for the money, even if that means replacing most of the squad. No
+   "keep at least N of your current players" constraint is to be added.
+
 ## Open Questions
 
-1. **KD6 — is the banked-FT cap still 5 this season?** I've made it a config constant, but I'd
-   rather set it right than default it.
-2. **Sell-price accuracy.** The forecast already notes `bankNote: "sell prices assume each player
+1. **Sell-price accuracy.** The forecast already notes `bankNote: "sell prices assume each player
    was bought at today's price"`. If you've held risers, real sell prices differ and the budget
    line will be slightly off — always in the conservative direction. Worth a manual
    purchase-price override later if it bites; not in this plan.
-3. **Should Wildcard scenarios respect your current squad at all?** As specced, Wildcard ignores
-   the existing squad entirely (it's a free rebuild, which is correct). But that means it may
-   propose replacing 13 players. If you'd rather see the *best rebuild that keeps your core*,
-   that's a different constraint (e.g. "change at most N") and easy to add — say the word.
