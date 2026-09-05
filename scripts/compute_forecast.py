@@ -293,6 +293,19 @@ def last_gameweek_review(bootstrap: dict, elements_by_id: dict) -> dict | None:
     }
 
 
+def _availability_info(el: dict) -> dict:
+    """FPL's own doubt signal -- status letter, the % chance of playing the
+    next round it publishes for doubtful/returning players, and its news
+    blurb. Separate from the model's `availabilityMultiplier` (which already
+    folds this into projected points): this is for "is there an immediate
+    risk this player doesn't play at all" at a glance, independent of xP."""
+    return {
+        "status": el.get("status", "a"),
+        "chance": el.get("chance_of_playing_next_round"),
+        "news": el.get("news") or None,
+    }
+
+
 def _player_card(pid: int, elements_by_id: dict, teams_by_id: dict) -> dict:
     el = elements_by_id.get(pid, {})
     return {
@@ -302,6 +315,7 @@ def _player_card(pid: int, elements_by_id: dict, teams_by_id: dict) -> dict:
         "position": POSITIONS.get(el.get("element_type"), "???"),
         "elementType": el.get("element_type"),
         "price": round((el.get("now_cost") or 0) / 10, 1),
+        "availability": _availability_info(el),
     }
 
 
@@ -393,6 +407,7 @@ def _player_ref(pid: int, pool_by_id: dict) -> dict:
         "position": p.get("position"),
         "team": p.get("team"),
         "price": p.get("price"),
+        "availability": p.get("availability"),
     }
 
 
@@ -850,6 +865,7 @@ def main(now: datetime | None = None) -> int:
                 "perGameweek": [round(v, 2) for v in per_gw],
                 "total": round(sum(per_gw), 2),
                 "opponents": _pool_opponents(el.get("team")),
+                "availability": _availability_info(el),
             }
         )
 

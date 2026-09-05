@@ -11,7 +11,7 @@
   },
   "earlySeason": true,
   "effectiveGap": 10.0,
-  "generatedAt": "2026-09-05T09:57:59.096874+00:00",
+  "generatedAt": "2026-09-05T12:15:48.242051+00:00",
   "history": {
     "gameweeks": [
       {
@@ -111,6 +111,11 @@
   "parMargin": 0.0,
   "pool": [
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 1,
       "form": 4.0,
       "id": 1,
@@ -167,6 +172,11 @@
       "webName": "Raya"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 1,
       "form": 0.0,
       "id": 2,
@@ -223,6 +233,11 @@
       "webName": "Arrizabalaga"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 1,
       "form": 0.0,
       "id": 3,
@@ -279,6 +294,11 @@
       "webName": "Meslier"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 4.3,
       "id": 4,
@@ -335,6 +355,11 @@
       "webName": "Gabriel"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 2.0,
       "id": 7,
@@ -391,6 +416,11 @@
       "webName": "Lewis-Skelly"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 6.7,
       "id": 8,
@@ -447,6 +477,11 @@
       "webName": "Calafiori"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 0.3,
       "id": 9,
@@ -503,6 +538,11 @@
       "webName": "Hincapie"
     },
     {
+      "availability": {
+        "chance": 100,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 6.0,
       "id": 10,
@@ -559,6 +599,11 @@
       "webName": "White"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 6.7,
       "id": 12,
@@ -615,6 +660,11 @@
       "webName": "Saka"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 2.7,
       "id": 13,
@@ -671,6 +721,11 @@
       "webName": "Rice"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 0.7,
       "id": 14,
@@ -727,6 +782,11 @@
       "webName": "Eze"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 4.7,
       "id": 15,
@@ -783,6 +843,11 @@
       "webName": "\u00d8degaard"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 0.3,
       "id": 16,
@@ -839,6 +904,11 @@
       "webName": "Madueke"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 0.7,
       "id": 17,
@@ -895,6 +965,11 @@
       "webName": "Merino"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 0.7,
       "id": 19,
@@ -951,6 +1026,11 @@
       "webName": "Zubimendi"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 0.0,
       "id": 20,
@@ -1007,6 +1087,11 @@
       "webName": "Dowman"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 4,
       "form": 0.0,
       "id": 25,
@@ -1063,6 +1148,11 @@
       "webName": "Gy\u00f6keres"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 4,
       "form": 2.7,
       "id": 26,
@@ -1119,6 +1209,11 @@
       "webName": "Havertz"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 0.3,
       "id": 31,
@@ -1175,6 +1270,11 @@
       "webName": "Konsa"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 2.0,
       "id": 557,
@@ -1231,6 +1331,11 @@
       "webName": "Tzolis"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 1,
       "form": 0.3,
       "id": 29,
@@ -1287,6 +1392,11 @@
       "webName": "M.Bizot"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 0.3,
       "id": 32,
@@ -1343,6 +1453,11 @@
       "webName": "Cash"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 0.3,
       "id": 33,
@@ -1399,6 +1514,11 @@
       "webName": "Mings"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 0.7,
       "id": 34,
@@ -1455,6 +1575,11 @@
       "webName": "Pau"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 0.3,
       "id": 35,
@@ -1511,6 +1636,11 @@
       "webName": "Bogarde"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 0.3,
       "id": 36,
@@ -1567,6 +1697,11 @@
       "webName": "Maatsen"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 0.0,
       "id": 37,
@@ -1623,6 +1758,11 @@
       "webName": "Lindel\u00f6f"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 0.0,
       "id": 38,
@@ -1679,6 +1819,11 @@
       "webName": "A.Garc\u00eda"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 1.3,
       "id": 41,
@@ -1735,6 +1880,11 @@
       "webName": "Buend\u00eda"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 0.7,
       "id": 45,
@@ -1791,6 +1941,11 @@
       "webName": "McGinn"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 1.3,
       "id": 46,
@@ -1847,6 +2002,11 @@
       "webName": "Barkley"
     },
     {
+      "availability": {
+        "chance": 100,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 1.3,
       "id": 47,
@@ -1903,6 +2063,11 @@
       "webName": "Kamara"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 0.0,
       "id": 50,
@@ -1959,6 +2124,11 @@
       "webName": "Burrowes"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 1.3,
       "id": 51,
@@ -2015,6 +2185,11 @@
       "webName": "George Hemmings"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 0.3,
       "id": 52,
@@ -2071,6 +2246,11 @@
       "webName": "Alysson"
     },
     {
+      "availability": {
+        "chance": 100,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 4,
       "form": 0.3,
       "id": 56,
@@ -2127,6 +2307,11 @@
       "webName": "Abraham"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 0.7,
       "id": 160,
@@ -2183,6 +2368,11 @@
       "webName": "Garnacho"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 4,
       "form": 0.7,
       "id": 166,
@@ -2239,6 +2429,11 @@
       "webName": "N.Jackson"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 0.3,
       "id": 596,
@@ -2295,6 +2490,11 @@
       "webName": "Ruggeri"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 1,
       "form": 0.7,
       "id": 597,
@@ -2351,6 +2551,11 @@
       "webName": "Suzuki"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 0.0,
       "id": 606,
@@ -2407,6 +2612,11 @@
       "webName": "Rowe"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 0.5,
       "id": 611,
@@ -2463,6 +2673,11 @@
       "webName": "Wan-Bissaka"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 0.0,
       "id": 618,
@@ -2519,6 +2734,11 @@
       "webName": "Goretzka"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 0.0,
       "id": 630,
@@ -2575,6 +2795,11 @@
       "webName": "Harwood-Bellis"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 0.0,
       "id": 631,
@@ -2631,6 +2856,11 @@
       "webName": "Mbaye"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 1,
       "form": 1.7,
       "id": 57,
@@ -2687,6 +2917,11 @@
       "webName": "Petrovi\u0107"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 1,
       "form": 0.0,
       "id": 58,
@@ -2743,6 +2978,11 @@
       "webName": "Forster"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 1.7,
       "id": 60,
@@ -2799,6 +3039,11 @@
       "webName": "Hill"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 1.7,
       "id": 61,
@@ -2855,6 +3100,11 @@
       "webName": "Truffert"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 0.0,
       "id": 62,
@@ -2911,6 +3161,11 @@
       "webName": "Diakit\u00e9"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 0.7,
       "id": 64,
@@ -2967,6 +3222,11 @@
       "webName": "Smith"
     },
     {
+      "availability": {
+        "chance": 100,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 0.0,
       "id": 66,
@@ -3023,6 +3283,11 @@
       "webName": "Soler"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 1.3,
       "id": 67,
@@ -3079,6 +3344,11 @@
       "webName": "Rayan"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 3.7,
       "id": 68,
@@ -3135,6 +3405,11 @@
       "webName": "Tavernier"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 4.7,
       "id": 69,
@@ -3191,6 +3466,11 @@
       "webName": "Scott"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 2.0,
       "id": 70,
@@ -3247,6 +3527,11 @@
       "webName": "Kluivert"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 2.0,
       "id": 71,
@@ -3303,6 +3588,11 @@
       "webName": "Cook"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 0.3,
       "id": 72,
@@ -3359,6 +3649,11 @@
       "webName": "Gannon-Doak"
     },
     {
+      "availability": {
+        "chance": 100,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 0.7,
       "id": 73,
@@ -3415,6 +3710,11 @@
       "webName": "Adams"
     },
     {
+      "availability": {
+        "chance": 100,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 0.3,
       "id": 74,
@@ -3471,6 +3771,11 @@
       "webName": "Brooks"
     },
     {
+      "availability": {
+        "chance": 100,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 0.3,
       "id": 75,
@@ -3527,6 +3832,11 @@
       "webName": "Christie"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 0.3,
       "id": 76,
@@ -3583,6 +3893,11 @@
       "webName": "T\u00f3th.A"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 4,
       "form": 3.0,
       "id": 79,
@@ -3639,6 +3954,11 @@
       "webName": "Evanilson"
     },
     {
+      "availability": {
+        "chance": 100,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 4,
       "form": 0.3,
       "id": 81,
@@ -3695,6 +4015,11 @@
       "webName": "Rodr\u00edguez"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 2.0,
       "id": 566,
@@ -3751,6 +4076,11 @@
       "webName": "Silva"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 0.0,
       "id": 573,
@@ -3807,6 +4137,11 @@
       "webName": "Sanchez"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 4,
       "form": 0.3,
       "id": 608,
@@ -3863,6 +4198,11 @@
       "webName": "Jebbison"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 1,
       "form": 0.0,
       "id": 615,
@@ -3919,6 +4259,11 @@
       "webName": "Di Gregorio"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 1,
       "form": 3.0,
       "id": 82,
@@ -3975,6 +4320,11 @@
       "webName": "Kelleher"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 1,
       "form": 0.0,
       "id": 83,
@@ -4031,6 +4381,11 @@
       "webName": "Valdimarsson"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 3.0,
       "id": 84,
@@ -4087,6 +4442,11 @@
       "webName": "Collins"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 5.3,
       "id": 86,
@@ -4143,6 +4503,11 @@
       "webName": "Lewis-Potter"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 3.7,
       "id": 87,
@@ -4199,6 +4564,11 @@
       "webName": "Ajer"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 5.0,
       "id": 88,
@@ -4255,6 +4625,11 @@
       "webName": "Kayode"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 0.3,
       "id": 89,
@@ -4311,6 +4686,11 @@
       "webName": "Henry"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 0.7,
       "id": 90,
@@ -4367,6 +4747,11 @@
       "webName": "Hickey"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 0.0,
       "id": 92,
@@ -4423,6 +4808,11 @@
       "webName": "Ji-soo"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 0.0,
       "id": 93,
@@ -4479,6 +4869,11 @@
       "webName": "Schuster"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 4.3,
       "id": 94,
@@ -4535,6 +4930,11 @@
       "webName": "Schade"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 1.3,
       "id": 95,
@@ -4591,6 +4991,11 @@
       "webName": "O.Dango"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 1.3,
       "id": 96,
@@ -4647,6 +5052,11 @@
       "webName": "Damsgaard"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 3.3,
       "id": 98,
@@ -4703,6 +5113,11 @@
       "webName": "Janelt"
     },
     {
+      "availability": {
+        "chance": 100,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 0.0,
       "id": 100,
@@ -4759,6 +5174,11 @@
       "webName": "Carvalho"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 0.7,
       "id": 102,
@@ -4815,6 +5235,11 @@
       "webName": "Yarmoliuk"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 1.0,
       "id": 105,
@@ -4871,6 +5296,11 @@
       "webName": "Anthony"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 4,
       "form": 0.7,
       "id": 106,
@@ -4927,6 +5357,11 @@
       "webName": "Thiago"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 4,
       "form": 0.0,
       "id": 107,
@@ -4983,6 +5418,11 @@
       "webName": "Furo"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 4,
       "form": 0.7,
       "id": 108,
@@ -5039,6 +5479,11 @@
       "webName": "Wilson"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 6.0,
       "id": 565,
@@ -5095,6 +5540,11 @@
       "webName": "M.Sangar\u00e9"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 0.0,
       "id": 620,
@@ -5151,6 +5601,11 @@
       "webName": "Diouf"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 1,
       "form": 2.0,
       "id": 109,
@@ -5207,6 +5662,11 @@
       "webName": "Verbruggen"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 1,
       "form": 0.0,
       "id": 111,
@@ -5263,6 +5723,11 @@
       "webName": "Steele"
     },
     {
+      "availability": {
+        "chance": 100,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 0.0,
       "id": 113,
@@ -5319,6 +5784,11 @@
       "webName": "F.Kad\u0131o\u011flu"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 1.7,
       "id": 114,
@@ -5375,6 +5845,11 @@
       "webName": "Boscagli"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 5.7,
       "id": 115,
@@ -5431,6 +5906,11 @@
       "webName": "De Cuyper"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 1.7,
       "id": 116,
@@ -5487,6 +5967,11 @@
       "webName": "Dunk"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 0.0,
       "id": 117,
@@ -5543,6 +6028,11 @@
       "webName": "Coppola"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 0.3,
       "id": 119,
@@ -5599,6 +6089,11 @@
       "webName": "Costinha"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 0.0,
       "id": 120,
@@ -5655,6 +6150,11 @@
       "webName": "Svoboda"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 5.0,
       "id": 124,
@@ -5711,6 +6211,11 @@
       "webName": "Gro\u00df"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 0.0,
       "id": 126,
@@ -5767,6 +6272,11 @@
       "webName": "O'Riley"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 3.7,
       "id": 127,
@@ -5823,6 +6333,11 @@
       "webName": "Gomez"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 0.0,
       "id": 134,
@@ -5879,6 +6394,11 @@
       "webName": "Oriola"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 0.3,
       "id": 135,
@@ -5935,6 +6455,11 @@
       "webName": "Yohanna"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 4,
       "form": 2.0,
       "id": 138,
@@ -5991,6 +6516,11 @@
       "webName": "Kostoulas"
     },
     {
+      "availability": {
+        "chance": 100,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 0.0,
       "id": 328,
@@ -6047,6 +6577,11 @@
       "webName": "Struijk"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 2.0,
       "id": 504,
@@ -6103,6 +6638,11 @@
       "webName": "Vuskovic"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 4,
       "form": 0.3,
       "id": 594,
@@ -6159,6 +6699,11 @@
       "webName": "David"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 0.7,
       "id": 600,
@@ -6215,6 +6760,11 @@
       "webName": "Osman"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 3.0,
       "id": 605,
@@ -6271,6 +6821,11 @@
       "webName": "Yalcouy\u00e9"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 0.0,
       "id": 614,
@@ -6327,6 +6882,11 @@
       "webName": "Hadjam"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 0.0,
       "id": 639,
@@ -6383,6 +6943,11 @@
       "webName": "Andr\u00e9s"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 1,
       "form": 0.7,
       "id": 28,
@@ -6439,6 +7004,11 @@
       "webName": "Martinez"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 4.3,
       "id": 40,
@@ -6495,6 +7065,11 @@
       "webName": "Rogers"
     },
     {
+      "availability": {
+        "chance": 100,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 4,
       "form": 0.0,
       "id": 136,
@@ -6551,6 +7126,11 @@
       "webName": "Welbeck"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 0.3,
       "id": 142,
@@ -6607,6 +7187,11 @@
       "webName": "James"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 0.7,
       "id": 144,
@@ -6663,6 +7248,11 @@
       "webName": "Gusto"
     },
     {
+      "availability": {
+        "chance": 100,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 0.0,
       "id": 145,
@@ -6719,6 +7309,11 @@
       "webName": "Fofana"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 1.7,
       "id": 148,
@@ -6775,6 +7370,11 @@
       "webName": "Hato"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 0.3,
       "id": 149,
@@ -6831,6 +7431,11 @@
       "webName": "Colwill"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 1.3,
       "id": 151,
@@ -6887,6 +7492,11 @@
       "webName": "Acheampong"
     },
     {
+      "availability": {
+        "chance": 100,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 6.7,
       "id": 154,
@@ -6943,6 +7553,11 @@
       "webName": "Palmer"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 2.7,
       "id": 156,
@@ -6999,6 +7614,11 @@
       "webName": "Neto"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 0.3,
       "id": 157,
@@ -7055,6 +7675,11 @@
       "webName": "Est\u00eav\u00e3o"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 0.0,
       "id": 158,
@@ -7111,6 +7736,11 @@
       "webName": "Gittens"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 2.7,
       "id": 161,
@@ -7167,6 +7797,11 @@
       "webName": "Lavia"
     },
     {
+      "availability": {
+        "chance": 100,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 0.3,
       "id": 164,
@@ -7223,6 +7858,11 @@
       "webName": "Quenda"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 4,
       "form": 6.7,
       "id": 165,
@@ -7279,6 +7919,11 @@
       "webName": "Jo\u00e3o Pedro"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 4,
       "form": 0.0,
       "id": 169,
@@ -7335,6 +7980,11 @@
       "webName": "Mheuka"
     },
     {
+      "availability": {
+        "chance": 100,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 4,
       "form": 0.0,
       "id": 170,
@@ -7391,6 +8041,11 @@
       "webName": "Emegha"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 2.3,
       "id": 200,
@@ -7447,6 +8102,11 @@
       "webName": "Lacroix"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 1,
       "form": 0.0,
       "id": 560,
@@ -7503,6 +8163,11 @@
       "webName": "Penders"
     },
     {
+      "availability": {
+        "chance": 100,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 0.0,
       "id": 561,
@@ -7559,6 +8224,11 @@
       "webName": "Anselmino"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 0.3,
       "id": 568,
@@ -7615,6 +8285,11 @@
       "webName": "Barco"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 0.7,
       "id": 583,
@@ -7671,6 +8346,11 @@
       "webName": "Chavarria"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 0.3,
       "id": 91,
@@ -7727,6 +8407,11 @@
       "webName": "Pinnock"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 0.7,
       "id": 104,
@@ -7783,6 +8468,11 @@
       "webName": "Onyeka"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 1,
       "form": 1.0,
       "id": 110,
@@ -7839,6 +8529,11 @@
       "webName": "Rushworth"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 1,
       "form": 0.0,
       "id": 172,
@@ -7895,6 +8590,11 @@
       "webName": "Wilson"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 3.7,
       "id": 173,
@@ -7951,6 +8651,11 @@
       "webName": "Thomas"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 1.0,
       "id": 175,
@@ -8007,6 +8712,11 @@
       "webName": "van Ewijk"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 1.0,
       "id": 176,
@@ -8063,6 +8773,11 @@
       "webName": "Dasilva"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 0.0,
       "id": 178,
@@ -8119,6 +8834,11 @@
       "webName": "Bidwell"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 0.0,
       "id": 179,
@@ -8175,6 +8895,11 @@
       "webName": "Latibeaudiere"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 0.7,
       "id": 182,
@@ -8231,6 +8956,11 @@
       "webName": "Amenda"
     },
     {
+      "availability": {
+        "chance": 100,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 1.3,
       "id": 183,
@@ -8287,6 +9017,11 @@
       "webName": "Rudoni"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 1.3,
       "id": 184,
@@ -8343,6 +9078,11 @@
       "webName": "Grimes"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 0.3,
       "id": 185,
@@ -8399,6 +9139,11 @@
       "webName": "Sakamoto"
     },
     {
+      "availability": {
+        "chance": 100,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 0.3,
       "id": 186,
@@ -8455,6 +9200,11 @@
       "webName": "Mason-Clark"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 0.0,
       "id": 187,
@@ -8511,6 +9261,11 @@
       "webName": "Eccles"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 0.7,
       "id": 188,
@@ -8567,6 +9322,11 @@
       "webName": "Torp"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 0.0,
       "id": 189,
@@ -8623,6 +9383,11 @@
       "webName": "Shepherd"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 1.0,
       "id": 190,
@@ -8679,6 +9444,11 @@
       "webName": "Tchaouna"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 4,
       "form": 1.0,
       "id": 194,
@@ -8735,6 +9505,11 @@
       "webName": "Thomas-Asante"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 4,
       "form": 0.7,
       "id": 195,
@@ -8791,6 +9566,11 @@
       "webName": "Simms"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 4,
       "form": 1.0,
       "id": 492,
@@ -8847,6 +9627,11 @@
       "webName": "Awoniyi"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 1.3,
       "id": 575,
@@ -8903,6 +9688,11 @@
       "webName": "Yirenkyi"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 0.7,
       "id": 584,
@@ -8959,6 +9749,11 @@
       "webName": "Hamer"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 4,
       "form": 0.0,
       "id": 599,
@@ -9015,6 +9810,11 @@
       "webName": "Cherif"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 1,
       "form": 0.0,
       "id": 623,
@@ -9071,6 +9871,11 @@
       "webName": "Bentley"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 0.7,
       "id": 42,
@@ -9127,6 +9932,11 @@
       "webName": "Guessand"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 0.3,
       "id": 153,
@@ -9183,6 +9993,11 @@
       "webName": "Disasi"
     },
     {
+      "availability": {
+        "chance": 100,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 1,
       "form": 1.0,
       "id": 198,
@@ -9239,6 +10054,11 @@
       "webName": "Henderson"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 1,
       "form": 0.0,
       "id": 199,
@@ -9295,6 +10115,11 @@
       "webName": "Benitez"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 1.0,
       "id": 202,
@@ -9351,6 +10176,11 @@
       "webName": "Richards"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 0.3,
       "id": 203,
@@ -9407,6 +10237,11 @@
       "webName": "Canvot"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 0.3,
       "id": 204,
@@ -9463,6 +10298,11 @@
       "webName": "Mitchell"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 0.3,
       "id": 207,
@@ -9519,6 +10359,11 @@
       "webName": "Mingueza"
     },
     {
+      "availability": {
+        "chance": 100,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 2.0,
       "id": 210,
@@ -9575,6 +10420,11 @@
       "webName": "Wharton"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 2.0,
       "id": 211,
@@ -9631,6 +10481,11 @@
       "webName": "Yeremy"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 0.0,
       "id": 212,
@@ -9687,6 +10542,11 @@
       "webName": "Hughes"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 0.0,
       "id": 213,
@@ -9743,6 +10603,11 @@
       "webName": "Lerma"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 1.7,
       "id": 214,
@@ -9799,6 +10664,11 @@
       "webName": "Kamada"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 0.0,
       "id": 217,
@@ -9855,6 +10725,11 @@
       "webName": "M.Fran\u00e7a"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 0.0,
       "id": 218,
@@ -9911,6 +10786,11 @@
       "webName": "Doucour\u00e9"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 0.0,
       "id": 219,
@@ -9967,6 +10847,11 @@
       "webName": "J.Rak-Sakyi"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 0.0,
       "id": 221,
@@ -10023,6 +10908,11 @@
       "webName": "Drakes-Thomas"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 4,
       "form": 1.0,
       "id": 222,
@@ -10079,6 +10969,11 @@
       "webName": "Strand Larsen"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 4,
       "form": 1.0,
       "id": 224,
@@ -10135,6 +11030,11 @@
       "webName": "Nketiah"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 1.0,
       "id": 241,
@@ -10191,6 +11091,11 @@
       "webName": "McNeil"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 1,
       "form": 0.0,
       "id": 555,
@@ -10247,6 +11152,11 @@
       "webName": "Matthews"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 0.7,
       "id": 577,
@@ -10303,6 +11213,11 @@
       "webName": "Tomiyasu"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 1.0,
       "id": 588,
@@ -10359,6 +11274,11 @@
       "webName": "Khalaili"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 0.3,
       "id": 595,
@@ -10415,6 +11335,11 @@
       "webName": "Gozo"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 0.0,
       "id": 633,
@@ -10471,6 +11396,11 @@
       "webName": "Ahanor"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 0.0,
       "id": 643,
@@ -10527,6 +11457,11 @@
       "webName": "Chilwell"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 0.0,
       "id": 644,
@@ -10583,6 +11518,11 @@
       "webName": "Timber"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 0.0,
       "id": 647,
@@ -10639,6 +11579,11 @@
       "webName": "Osorio"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 0.7,
       "id": 209,
@@ -10695,6 +11640,11 @@
       "webName": "Johnson"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 1,
       "form": 3.3,
       "id": 226,
@@ -10751,6 +11701,11 @@
       "webName": "Pickford"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 1,
       "form": 0.0,
       "id": 227,
@@ -10807,6 +11762,11 @@
       "webName": "Travers"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 1,
       "form": 0.0,
       "id": 228,
@@ -10863,6 +11823,11 @@
       "webName": "King"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 6.0,
       "id": 229,
@@ -10919,6 +11884,11 @@
       "webName": "Tarkowski"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 3.3,
       "id": 230,
@@ -10975,6 +11945,11 @@
       "webName": "Branthwaite"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 0.0,
       "id": 231,
@@ -11031,6 +12006,11 @@
       "webName": "Keane"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 0.0,
       "id": 232,
@@ -11087,6 +12067,11 @@
       "webName": "O'Brien"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 3.3,
       "id": 233,
@@ -11143,6 +12128,11 @@
       "webName": "Mykolenko"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 4.3,
       "id": 236,
@@ -11199,6 +12189,11 @@
       "webName": "Dewsbury-Hall"
     },
     {
+      "availability": {
+        "chance": 100,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 0.3,
       "id": 238,
@@ -11255,6 +12250,11 @@
       "webName": "Grealish"
     },
     {
+      "availability": {
+        "chance": 100,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 0.7,
       "id": 239,
@@ -11311,6 +12311,11 @@
       "webName": "Garner"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 1.7,
       "id": 242,
@@ -11367,6 +12372,11 @@
       "webName": "George"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 0.3,
       "id": 243,
@@ -11423,6 +12433,11 @@
       "webName": "Alcaraz"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 3.3,
       "id": 244,
@@ -11479,6 +12494,11 @@
       "webName": "Armstrong"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 0.0,
       "id": 245,
@@ -11535,6 +12555,11 @@
       "webName": "Dibling"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 1.7,
       "id": 246,
@@ -11591,6 +12616,11 @@
       "webName": "R\u00f6hl"
     },
     {
+      "availability": {
+        "chance": 100,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 1.3,
       "id": 247,
@@ -11647,6 +12677,11 @@
       "webName": "Hackney"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 4,
       "form": 3.3,
       "id": 249,
@@ -11703,6 +12738,11 @@
       "webName": "Barry"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 0.0,
       "id": 649,
@@ -11759,6 +12799,11 @@
       "webName": "Maitland-Niles"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 1,
       "form": 1.7,
       "id": 250,
@@ -11815,6 +12860,11 @@
       "webName": "Leno"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 1,
       "form": 0.0,
       "id": 251,
@@ -11871,6 +12921,11 @@
       "webName": "Lecomte"
     },
     {
+      "availability": {
+        "chance": 100,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 0.3,
       "id": 253,
@@ -11927,6 +12982,11 @@
       "webName": "Andersen"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 1.0,
       "id": 254,
@@ -11983,6 +13043,11 @@
       "webName": "Robinson"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 1.0,
       "id": 255,
@@ -12039,6 +13104,11 @@
       "webName": "J.Cuenca"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 0.0,
       "id": 256,
@@ -12095,6 +13165,11 @@
       "webName": "Tete"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 0.7,
       "id": 257,
@@ -12151,6 +13226,11 @@
       "webName": "Bassey"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 4.0,
       "id": 258,
@@ -12207,6 +13287,11 @@
       "webName": "Castagne"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 1.3,
       "id": 261,
@@ -12263,6 +13348,11 @@
       "webName": "Iwobi"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 0.3,
       "id": 262,
@@ -12319,6 +13409,11 @@
       "webName": "Smith Rowe"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 0.7,
       "id": 263,
@@ -12375,6 +13470,11 @@
       "webName": "Kevin"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 1.7,
       "id": 264,
@@ -12431,6 +13531,11 @@
       "webName": "Bobb"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 1.3,
       "id": 265,
@@ -12487,6 +13592,11 @@
       "webName": "Berge"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 3.0,
       "id": 268,
@@ -12543,6 +13653,11 @@
       "webName": "King"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 0.7,
       "id": 269,
@@ -12599,6 +13714,11 @@
       "webName": "Sessegnon"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 0.0,
       "id": 270,
@@ -12655,6 +13775,11 @@
       "webName": "Reed"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 4,
       "form": 0.3,
       "id": 271,
@@ -12711,6 +13836,11 @@
       "webName": "Muniz"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 4,
       "form": 0.0,
       "id": 272,
@@ -12767,6 +13897,11 @@
       "webName": "Kusi-Asare"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 4,
       "form": 2.7,
       "id": 569,
@@ -12823,6 +13958,11 @@
       "webName": "Gonzalo"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 1.0,
       "id": 570,
@@ -12879,6 +14019,11 @@
       "webName": "Palacios"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 0.7,
       "id": 580,
@@ -12935,6 +14080,11 @@
       "webName": "Charles"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 0.0,
       "id": 626,
@@ -12991,6 +14141,11 @@
       "webName": "Zepa"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 0.0,
       "id": 635,
@@ -13047,6 +14202,11 @@
       "webName": "Larsson"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 0.0,
       "id": 636,
@@ -13103,6 +14263,11 @@
       "webName": "\u00c1ngel"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 0.0,
       "id": 650,
@@ -13159,6 +14324,11 @@
       "webName": "Affengruber"
     },
     {
+      "availability": {
+        "chance": 100,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 0.3,
       "id": 240,
@@ -13215,6 +14385,11 @@
       "webName": "Iroegbunam"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 1,
       "form": 0.0,
       "id": 273,
@@ -13271,6 +14446,11 @@
       "webName": "Phillips"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 5.7,
       "id": 277,
@@ -13327,6 +14507,11 @@
       "webName": "Egan"
     },
     {
+      "availability": {
+        "chance": 100,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 6.7,
       "id": 279,
@@ -13383,6 +14568,11 @@
       "webName": "Ajayi"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 4.0,
       "id": 282,
@@ -13439,6 +14629,11 @@
       "webName": "Giles"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 0.0,
       "id": 284,
@@ -13495,6 +14690,11 @@
       "webName": "McCarthy"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 0.3,
       "id": 285,
@@ -13551,6 +14751,11 @@
       "webName": "McNair"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 3.0,
       "id": 286,
@@ -13607,6 +14812,11 @@
       "webName": "Belloumi"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 0.0,
       "id": 288,
@@ -13663,6 +14873,11 @@
       "webName": "Dowell"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 2.7,
       "id": 290,
@@ -13719,6 +14934,11 @@
       "webName": "Slater"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 0.0,
       "id": 292,
@@ -13775,6 +14995,11 @@
       "webName": "\u00d6m\u00fcr"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 4,
       "form": 2.0,
       "id": 295,
@@ -13831,6 +15056,11 @@
       "webName": "McBurnie"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 0.0,
       "id": 296,
@@ -13887,6 +15117,11 @@
       "webName": "Akintola"
     },
     {
+      "availability": {
+        "chance": 100,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 0.0,
       "id": 340,
@@ -13943,6 +15178,11 @@
       "webName": "Gelhardt"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 0.3,
       "id": 556,
@@ -13999,6 +15239,11 @@
       "webName": "Targett"
     },
     {
+      "availability": {
+        "chance": 100,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 0.3,
       "id": 563,
@@ -14055,6 +15300,11 @@
       "webName": "Morita"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 1,
       "form": 6.7,
       "id": 572,
@@ -14111,6 +15361,11 @@
       "webName": "Tzolakis"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 0.0,
       "id": 574,
@@ -14167,6 +15422,11 @@
       "webName": "Hjert\u00f8-Dahl"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 1.0,
       "id": 576,
@@ -14223,6 +15483,11 @@
       "webName": "Stroud"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 0.7,
       "id": 585,
@@ -14279,6 +15544,11 @@
       "webName": "Herrington"
     },
     {
+      "availability": {
+        "chance": 100,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 5.3,
       "id": 586,
@@ -14335,6 +15605,11 @@
       "webName": "Mendy"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 0.3,
       "id": 589,
@@ -14391,6 +15666,11 @@
       "webName": "Gourna-Douath"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 0.5,
       "id": 617,
@@ -14447,6 +15727,11 @@
       "webName": "Cho"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 4,
       "form": 0.0,
       "id": 632,
@@ -14503,6 +15788,11 @@
       "webName": "Ansah"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 4,
       "form": 0.0,
       "id": 637,
@@ -14559,6 +15849,11 @@
       "webName": "Vaz"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 0.0,
       "id": 638,
@@ -14615,6 +15910,11 @@
       "webName": "Norton-Cuffy"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 0.0,
       "id": 642,
@@ -14671,6 +15971,11 @@
       "webName": "Thomas"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 0.0,
       "id": 645,
@@ -14727,6 +16032,11 @@
       "webName": "Mouzakitis"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 2.3,
       "id": 259,
@@ -14783,6 +16093,11 @@
       "webName": "Diop"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 2.7,
       "id": 267,
@@ -14839,6 +16154,11 @@
       "webName": "Luki\u0107"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 1,
       "form": 0.0,
       "id": 300,
@@ -14895,6 +16215,11 @@
       "webName": "Walton"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 1,
       "form": 0.0,
       "id": 301,
@@ -14951,6 +16276,11 @@
       "webName": "Palmer"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 1,
       "form": 0.0,
       "id": 302,
@@ -15007,6 +16337,11 @@
       "webName": "Button"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 0.0,
       "id": 303,
@@ -15063,6 +16398,11 @@
       "webName": "Kipr\u00e9"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 2.3,
       "id": 304,
@@ -15119,6 +16459,11 @@
       "webName": "O'Shea"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 3.0,
       "id": 305,
@@ -15175,6 +16520,11 @@
       "webName": "Davis"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 0.7,
       "id": 306,
@@ -15231,6 +16581,11 @@
       "webName": "Greaves"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 0.3,
       "id": 308,
@@ -15287,6 +16642,11 @@
       "webName": "Furlong"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 2.0,
       "id": 309,
@@ -15343,6 +16703,11 @@
       "webName": "N\u00fa\u00f1ez"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 2.7,
       "id": 313,
@@ -15399,6 +16764,11 @@
       "webName": "Clarke"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 2.7,
       "id": 315,
@@ -15455,6 +16825,11 @@
       "webName": "Fatawu"
     },
     {
+      "availability": {
+        "chance": 100,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 4,
       "form": 4.0,
       "id": 316,
@@ -15511,6 +16886,11 @@
       "webName": "Emersonn"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 4,
       "form": 2.0,
       "id": 320,
@@ -15567,6 +16947,11 @@
       "webName": "Akpom"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 4,
       "form": 0.3,
       "id": 321,
@@ -15623,6 +17008,11 @@
       "webName": "Walle Egeli"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 1.0,
       "id": 323,
@@ -15679,6 +17069,11 @@
       "webName": "McAteer"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 0.0,
       "id": 324,
@@ -15735,6 +17130,11 @@
       "webName": "Mehmeti"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 2.0,
       "id": 562,
@@ -15791,6 +17191,11 @@
       "webName": "Maeda"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 1,
       "form": 2.0,
       "id": 564,
@@ -15847,6 +17252,11 @@
       "webName": "Scherpen"
     },
     {
+      "availability": {
+        "chance": 100,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 0.0,
       "id": 571,
@@ -15903,6 +17313,11 @@
       "webName": "Florentino"
     },
     {
+      "availability": {
+        "chance": 100,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 3.7,
       "id": 591,
@@ -15959,6 +17374,11 @@
       "webName": "Enciso"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 1.0,
       "id": 592,
@@ -16015,6 +17435,11 @@
       "webName": "Ouattara"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 2.5,
       "id": 619,
@@ -16071,6 +17496,11 @@
       "webName": "Palacios"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 4,
       "form": 1.0,
       "id": 640,
@@ -16127,6 +17557,11 @@
       "webName": "Flemming"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 1.3,
       "id": 260,
@@ -16183,6 +17618,11 @@
       "webName": "Wilson"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 3.7,
       "id": 327,
@@ -16239,6 +17679,11 @@
       "webName": "Bijol"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 2.7,
       "id": 330,
@@ -16295,6 +17740,11 @@
       "webName": "Bogle"
     },
     {
+      "availability": {
+        "chance": 100,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 0.0,
       "id": 331,
@@ -16351,6 +17801,11 @@
       "webName": "Gudmundsson"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 4.0,
       "id": 332,
@@ -16407,6 +17862,11 @@
       "webName": "Justin"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 3.3,
       "id": 334,
@@ -16463,6 +17923,11 @@
       "webName": "Muharemovi\u0107"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 5.7,
       "id": 335,
@@ -16519,6 +17984,11 @@
       "webName": "Stach"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 1.0,
       "id": 336,
@@ -16575,6 +18045,11 @@
       "webName": "Okafor"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 1.3,
       "id": 337,
@@ -16631,6 +18106,11 @@
       "webName": "Aaronson"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 2.3,
       "id": 338,
@@ -16687,6 +18167,11 @@
       "webName": "Ampadu"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 0.3,
       "id": 339,
@@ -16743,6 +18228,11 @@
       "webName": "Longstaff"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 0.3,
       "id": 343,
@@ -16799,6 +18289,11 @@
       "webName": "James"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 0.3,
       "id": 345,
@@ -16855,6 +18350,11 @@
       "webName": "Tanaka"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 4,
       "form": 3.0,
       "id": 346,
@@ -16911,6 +18411,11 @@
       "webName": "Calvert-Lewin"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 4,
       "form": 1.3,
       "id": 347,
@@ -16967,6 +18472,11 @@
       "webName": "Nmecha"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 1,
       "form": 4.0,
       "id": 385,
@@ -17023,6 +18533,11 @@
       "webName": "Trafford"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 0.3,
       "id": 598,
@@ -17079,6 +18594,11 @@
       "webName": "Elvedi"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 0.0,
       "id": 603,
@@ -17135,6 +18655,11 @@
       "webName": "Lienou"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 0.0,
       "id": 604,
@@ -17191,6 +18716,11 @@
       "webName": "Cresswell"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 1,
       "form": 0.0,
       "id": 625,
@@ -17247,6 +18777,11 @@
       "webName": "Cairns"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 1,
       "form": 0.0,
       "id": 629,
@@ -17303,6 +18838,11 @@
       "webName": "Zetterer"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 0.0,
       "id": 641,
@@ -17359,6 +18899,11 @@
       "webName": "Bard"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 0.0,
       "id": 648,
@@ -17415,6 +18960,11 @@
       "webName": "Bahoya"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 1,
       "form": 3.3,
       "id": 350,
@@ -17471,6 +19021,11 @@
       "webName": "A.Becker"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 1,
       "form": 0.0,
       "id": 351,
@@ -17527,6 +19082,11 @@
       "webName": "Mamardashvili"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 1,
       "form": 0.0,
       "id": 352,
@@ -17583,6 +19143,11 @@
       "webName": "Woodman"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 1,
       "form": 0.0,
       "id": 355,
@@ -17639,6 +19204,11 @@
       "webName": "Davies"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 3.0,
       "id": 356,
@@ -17695,6 +19265,11 @@
       "webName": "Virgil"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 0.3,
       "id": 357,
@@ -17751,6 +19326,11 @@
       "webName": "Frimpong"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 2.0,
       "id": 358,
@@ -17807,6 +19387,11 @@
       "webName": "Kerkez"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 0.0,
       "id": 361,
@@ -17863,6 +19448,11 @@
       "webName": "Lucky"
     },
     {
+      "availability": {
+        "chance": 100,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 3.0,
       "id": 362,
@@ -17919,6 +19509,11 @@
       "webName": "Jacquet"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 0.3,
       "id": 364,
@@ -17975,6 +19570,11 @@
       "webName": "Tsimikas"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 3.0,
       "id": 366,
@@ -18031,6 +19631,11 @@
       "webName": "Wirtz"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 9.3,
       "id": 367,
@@ -18087,6 +19692,11 @@
       "webName": "Gakpo"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 5.0,
       "id": 368,
@@ -18143,6 +19753,11 @@
       "webName": "Szoboszlai"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 1.0,
       "id": 369,
@@ -18199,6 +19814,11 @@
       "webName": "Ngumoha"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 2.3,
       "id": 371,
@@ -18255,6 +19875,11 @@
       "webName": "Gravenberch"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 1.7,
       "id": 372,
@@ -18311,6 +19936,11 @@
       "webName": "Mac Allister"
     },
     {
+      "availability": {
+        "chance": 100,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 0.0,
       "id": 374,
@@ -18367,6 +19997,11 @@
       "webName": "Endo"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 0.7,
       "id": 375,
@@ -18423,6 +20058,11 @@
       "webName": "Nyoni"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 4.3,
       "id": 377,
@@ -18479,6 +20119,11 @@
       "webName": "Munoz"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 0.0,
       "id": 378,
@@ -18535,6 +20180,11 @@
       "webName": "McConnell"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 4,
       "form": 7.7,
       "id": 379,
@@ -18591,6 +20241,11 @@
       "webName": "Isak"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 0.7,
       "id": 381,
@@ -18647,6 +20302,11 @@
       "webName": "Koumas"
     },
     {
+      "availability": {
+        "chance": 100,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 4,
       "form": 0.0,
       "id": 382,
@@ -18703,6 +20363,11 @@
       "webName": "Danns"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 3.0,
       "id": 579,
@@ -18759,6 +20424,11 @@
       "webName": "Araujo"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 1.0,
       "id": 627,
@@ -18815,6 +20485,11 @@
       "webName": "Barcola"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 0.3,
       "id": 155,
@@ -18871,6 +20546,11 @@
       "webName": "Enzo"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 4.3,
       "id": 237,
@@ -18927,6 +20607,11 @@
       "webName": "Ndiaye"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 1,
       "form": 1.0,
       "id": 384,
@@ -18983,6 +20668,11 @@
       "webName": "Donnarumma"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 1,
       "form": 0.0,
       "id": 386,
@@ -19039,6 +20729,11 @@
       "webName": "Bettinelli"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 1.3,
       "id": 387,
@@ -19095,6 +20790,11 @@
       "webName": "O'Reilly"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 4.0,
       "id": 388,
@@ -19151,6 +20851,11 @@
       "webName": "Gu\u00e9hi"
     },
     {
+      "availability": {
+        "chance": 100,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 0.3,
       "id": 389,
@@ -19207,6 +20912,11 @@
       "webName": "Matheus N."
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 1.3,
       "id": 390,
@@ -19263,6 +20973,11 @@
       "webName": "R\u00faben"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 4.7,
       "id": 391,
@@ -19319,6 +21034,11 @@
       "webName": "Gvardiol"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 0.0,
       "id": 392,
@@ -19375,6 +21095,11 @@
       "webName": "A\u00eft-Nouri"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 1.3,
       "id": 393,
@@ -19431,6 +21156,11 @@
       "webName": "Khusanov"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 0.3,
       "id": 395,
@@ -19487,6 +21217,11 @@
       "webName": "Lewis"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 0.3,
       "id": 396,
@@ -19543,6 +21278,11 @@
       "webName": "Vitor Reis"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 2.3,
       "id": 397,
@@ -19599,6 +21339,11 @@
       "webName": "Semenyo"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 3.3,
       "id": 398,
@@ -19655,6 +21400,11 @@
       "webName": "Foden"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 7.3,
       "id": 399,
@@ -19711,6 +21461,11 @@
       "webName": "Cherki"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 0.7,
       "id": 406,
@@ -19767,6 +21522,11 @@
       "webName": "Kova\u010di\u0107"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 4,
       "form": 5.0,
       "id": 411,
@@ -19823,6 +21583,11 @@
       "webName": "Haaland"
     },
     {
+      "availability": {
+        "chance": 100,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 1.7,
       "id": 481,
@@ -19879,6 +21644,11 @@
       "webName": "Anderson"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 1,
       "form": 0.0,
       "id": 587,
@@ -19935,6 +21705,11 @@
       "webName": "Rulli"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 0.5,
       "id": 616,
@@ -19991,6 +21766,11 @@
       "webName": "Bouaddi"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 0.5,
       "id": 621,
@@ -20047,6 +21827,11 @@
       "webName": "McAidoo"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 0.5,
       "id": 622,
@@ -20103,6 +21888,11 @@
       "webName": "Braithwaite"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 0.0,
       "id": 628,
@@ -20159,6 +21949,11 @@
       "webName": "Allan"
     },
     {
+      "availability": {
+        "chance": 100,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 2.0,
       "id": 43,
@@ -20215,6 +22010,11 @@
       "webName": "Tielemans"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 1.0,
       "id": 162,
@@ -20271,6 +22071,11 @@
       "webName": "Andrey Santos"
     },
     {
+      "availability": {
+        "chance": 100,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 1,
       "form": 0.0,
       "id": 325,
@@ -20327,6 +22132,11 @@
       "webName": "Darlow"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 1,
       "form": 1.0,
       "id": 412,
@@ -20383,6 +22193,11 @@
       "webName": "Lammens"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 0.3,
       "id": 415,
@@ -20439,6 +22254,11 @@
       "webName": "Dorgu"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 1.0,
       "id": 417,
@@ -20495,6 +22315,11 @@
       "webName": "Dalot"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 1.7,
       "id": 418,
@@ -20551,6 +22376,11 @@
       "webName": "Maguire"
     },
     {
+      "availability": {
+        "chance": 100,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 0.3,
       "id": 419,
@@ -20607,6 +22437,11 @@
       "webName": "Martinez"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 0.3,
       "id": 420,
@@ -20663,6 +22498,11 @@
       "webName": "Yoro"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 0.3,
       "id": 421,
@@ -20719,6 +22559,11 @@
       "webName": "Heaven"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 0.7,
       "id": 422,
@@ -20775,6 +22620,11 @@
       "webName": "Mazraoui"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 1.0,
       "id": 423,
@@ -20831,6 +22681,11 @@
       "webName": "Shaw"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 0.0,
       "id": 424,
@@ -20887,6 +22742,11 @@
       "webName": "Amass"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 8.3,
       "id": 426,
@@ -20943,6 +22803,11 @@
       "webName": "B.Fernandes"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 4.3,
       "id": 427,
@@ -20999,6 +22864,11 @@
       "webName": "Mbeumo"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 3.7,
       "id": 428,
@@ -21055,6 +22925,11 @@
       "webName": "Cunha"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 1.0,
       "id": 429,
@@ -21111,6 +22986,11 @@
       "webName": "Rashford"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 1.7,
       "id": 432,
@@ -21167,6 +23047,11 @@
       "webName": "Mainoo"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 0.0,
       "id": 434,
@@ -21223,6 +23108,11 @@
       "webName": "J.Fletcher"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 0.3,
       "id": 435,
@@ -21279,6 +23169,11 @@
       "webName": "Lacey"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 0.0,
       "id": 437,
@@ -21335,6 +23230,11 @@
       "webName": "Bendito Mantato"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 0.0,
       "id": 438,
@@ -21391,6 +23291,11 @@
       "webName": "Fletcher"
     },
     {
+      "availability": {
+        "chance": 100,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 4,
       "form": 0.7,
       "id": 439,
@@ -21447,6 +23352,11 @@
       "webName": "\u0160e\u0161ko"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 4,
       "form": 0.0,
       "id": 440,
@@ -21503,6 +23413,11 @@
       "webName": "Zirkzee"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 4,
       "form": 0.0,
       "id": 441,
@@ -21559,6 +23474,11 @@
       "webName": "Obi"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 0.7,
       "id": 405,
@@ -21615,6 +23535,11 @@
       "webName": "N.Gonzalez"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 1,
       "form": 0.0,
       "id": 442,
@@ -21671,6 +23596,11 @@
       "webName": "Pope"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 1,
       "form": 0.0,
       "id": 443,
@@ -21727,6 +23657,11 @@
       "webName": "Gillespie"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 1,
       "form": 0.0,
       "id": 444,
@@ -21783,6 +23718,11 @@
       "webName": "Jaouen"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 3.0,
       "id": 445,
@@ -21839,6 +23779,11 @@
       "webName": "Thiaw"
     },
     {
+      "availability": {
+        "chance": 100,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 0.3,
       "id": 446,
@@ -21895,6 +23840,11 @@
       "webName": "Sch\u00e4r"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 2.7,
       "id": 447,
@@ -21951,6 +23901,11 @@
       "webName": "Botman"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 4.7,
       "id": 449,
@@ -22007,6 +23962,11 @@
       "webName": "Hall"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 1.7,
       "id": 453,
@@ -22063,6 +24023,11 @@
       "webName": "Barnes"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 5.7,
       "id": 454,
@@ -22119,6 +24084,11 @@
       "webName": "Elanga"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 0.3,
       "id": 456,
@@ -22175,6 +24145,11 @@
       "webName": "J.Ramsey"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 0.3,
       "id": 457,
@@ -22231,6 +24206,11 @@
       "webName": "J.Murphy"
     },
     {
+      "availability": {
+        "chance": 100,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 2.0,
       "id": 459,
@@ -22287,6 +24267,11 @@
       "webName": "L.Miley"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 3.0,
       "id": 460,
@@ -22343,6 +24328,11 @@
       "webName": "Willock"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 0.3,
       "id": 461,
@@ -22399,6 +24389,11 @@
       "webName": "Tour\u00e9"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 0.7,
       "id": 462,
@@ -22455,6 +24450,11 @@
       "webName": "Steur"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 4,
       "form": 4.0,
       "id": 464,
@@ -22511,6 +24511,11 @@
       "webName": "Wissa"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 0.3,
       "id": 559,
@@ -22567,6 +24572,11 @@
       "webName": "Bamba"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 1,
       "form": 2.7,
       "id": 567,
@@ -22623,6 +24633,11 @@
       "webName": "Horn\u00ed\u010dek"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 4.0,
       "id": 593,
@@ -22679,6 +24694,11 @@
       "webName": "Dedi\u0107"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 0.0,
       "id": 609,
@@ -22735,6 +24755,11 @@
       "webName": "Shahar"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 4,
       "form": 0.0,
       "id": 634,
@@ -22791,6 +24816,11 @@
       "webName": "Fernandez-Pardo"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 4,
       "form": 0.3,
       "id": 167,
@@ -22847,6 +24877,11 @@
       "webName": "Delap"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 0.0,
       "id": 201,
@@ -22903,6 +24938,11 @@
       "webName": "Mu\u00f1oz"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 1,
       "form": 1.0,
       "id": 467,
@@ -22959,6 +24999,11 @@
       "webName": "Sels"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 1,
       "form": 0.0,
       "id": 468,
@@ -23015,6 +25060,11 @@
       "webName": "John"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 2.7,
       "id": 469,
@@ -23071,6 +25121,11 @@
       "webName": "N.Williams"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 1.7,
       "id": 471,
@@ -23127,6 +25182,11 @@
       "webName": "Milenkovi\u0107"
     },
     {
+      "availability": {
+        "chance": 100,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 1.7,
       "id": 472,
@@ -23183,6 +25243,11 @@
       "webName": "Murillo"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 1.7,
       "id": 473,
@@ -23239,6 +25304,11 @@
       "webName": "Aina"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 0.7,
       "id": 474,
@@ -23295,6 +25365,11 @@
       "webName": "Jair Cunha"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 0.0,
       "id": 476,
@@ -23351,6 +25426,11 @@
       "webName": "O.Richards"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 0.7,
       "id": 478,
@@ -23407,6 +25487,11 @@
       "webName": "Netz"
     },
     {
+      "availability": {
+        "chance": 100,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 5.0,
       "id": 480,
@@ -23463,6 +25548,11 @@
       "webName": "Gibbs-White"
     },
     {
+      "availability": {
+        "chance": 100,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 0.3,
       "id": 482,
@@ -23519,6 +25609,11 @@
       "webName": "Hudson-Odoi"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 4.0,
       "id": 483,
@@ -23575,6 +25670,11 @@
       "webName": "Ndoye"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 1.7,
       "id": 486,
@@ -23631,6 +25731,11 @@
       "webName": "McAtee"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 0.3,
       "id": 487,
@@ -23687,6 +25792,11 @@
       "webName": "Dominguez"
     },
     {
+      "availability": {
+        "chance": 100,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 0.7,
       "id": 488,
@@ -23743,6 +25853,11 @@
       "webName": "I.Sangar\u00e9"
     },
     {
+      "availability": {
+        "chance": 100,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 0.0,
       "id": 489,
@@ -23799,6 +25914,11 @@
       "webName": "Yates"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 4,
       "form": 0.3,
       "id": 490,
@@ -23855,6 +25975,11 @@
       "webName": "Wood"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 4,
       "form": 1.0,
       "id": 491,
@@ -23911,6 +26036,11 @@
       "webName": "Igor Jesus"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 4,
       "form": 0.3,
       "id": 493,
@@ -23967,6 +26097,11 @@
       "webName": "Kalimuendo"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 1.7,
       "id": 558,
@@ -24023,6 +26158,11 @@
       "webName": "Schlager"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 0.0,
       "id": 581,
@@ -24079,6 +26219,11 @@
       "webName": "Diomande"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 1,
       "form": 0.0,
       "id": 590,
@@ -24135,6 +26280,11 @@
       "webName": "Benda"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 0.7,
       "id": 112,
@@ -24191,6 +26341,11 @@
       "webName": "Van Hecke"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 0.0,
       "id": 147,
@@ -24247,6 +26402,11 @@
       "webName": "Tosin"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 4,
       "form": 0.7,
       "id": 401,
@@ -24303,6 +26463,11 @@
       "webName": "Marmoush"
     },
     {
+      "availability": {
+        "chance": 100,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 0.0,
       "id": 403,
@@ -24359,6 +26524,11 @@
       "webName": "S\u00e1vio"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 1.3,
       "id": 455,
@@ -24415,6 +26585,11 @@
       "webName": "Tonali"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 1,
       "form": 0.0,
       "id": 495,
@@ -24471,6 +26646,11 @@
       "webName": "Austin"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 1,
       "form": 1.0,
       "id": 496,
@@ -24527,6 +26707,11 @@
       "webName": "Kinsky"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 1,
       "form": 0.0,
       "id": 497,
@@ -24583,6 +26768,11 @@
       "webName": "Dubravka"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 1.0,
       "id": 498,
@@ -24639,6 +26829,11 @@
       "webName": "Senesi"
     },
     {
+      "availability": {
+        "chance": 100,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 0.3,
       "id": 499,
@@ -24695,6 +26890,11 @@
       "webName": "Pedro Porro"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 1.7,
       "id": 502,
@@ -24751,6 +26951,11 @@
       "webName": "Robertson"
     },
     {
+      "availability": {
+        "chance": 100,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 0.0,
       "id": 503,
@@ -24807,6 +27012,11 @@
       "webName": "Van de Ven"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 0.7,
       "id": 506,
@@ -24863,6 +27073,11 @@
       "webName": "Udogie"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 0.0,
       "id": 508,
@@ -24919,6 +27134,11 @@
       "webName": "Davies"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 0.0,
       "id": 509,
@@ -24975,6 +27195,11 @@
       "webName": "Byfield"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 0.0,
       "id": 510,
@@ -25031,6 +27256,11 @@
       "webName": "Rowswell"
     },
     {
+      "availability": {
+        "chance": 100,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 0.3,
       "id": 512,
@@ -25087,6 +27317,11 @@
       "webName": "Kudus"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 1.3,
       "id": 514,
@@ -25143,6 +27378,11 @@
       "webName": "Tel"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 1.0,
       "id": 516,
@@ -25199,6 +27439,11 @@
       "webName": "Bentancur"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 0.0,
       "id": 519,
@@ -25255,6 +27500,11 @@
       "webName": "Gallagher"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 0.3,
       "id": 520,
@@ -25311,6 +27561,11 @@
       "webName": "Bergvall"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 1.3,
       "id": 522,
@@ -25367,6 +27622,11 @@
       "webName": "Gray"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 0.0,
       "id": 524,
@@ -25423,6 +27683,11 @@
       "webName": "Olusesi"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 1.0,
       "id": 525,
@@ -25479,6 +27744,11 @@
       "webName": "Fernandes"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 4,
       "form": 0.7,
       "id": 526,
@@ -25535,6 +27805,11 @@
       "webName": "Solanke"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 0.0,
       "id": 578,
@@ -25591,6 +27866,11 @@
       "webName": "Mudryk"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 0.0,
       "id": 601,
@@ -25647,6 +27927,11 @@
       "webName": "Williams-Barnett"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 0.0,
       "id": 501,
@@ -25703,6 +27988,11 @@
       "webName": "Danso"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 1,
       "form": 2.3,
       "id": 529,
@@ -25759,6 +28049,11 @@
       "webName": "Roefs"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 1,
       "form": 0.0,
       "id": 531,
@@ -25815,6 +28110,11 @@
       "webName": "Ellborg"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 2.7,
       "id": 532,
@@ -25871,6 +28171,11 @@
       "webName": "Ballard"
     },
     {
+      "availability": {
+        "chance": 100,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 3.0,
       "id": 533,
@@ -25927,6 +28232,11 @@
       "webName": "Mukiele"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 2.7,
       "id": 534,
@@ -25983,6 +28293,11 @@
       "webName": "Hume"
     },
     {
+      "availability": {
+        "chance": 100,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 0.3,
       "id": 535,
@@ -26039,6 +28354,11 @@
       "webName": "Alderete"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 2.3,
       "id": 536,
@@ -26095,6 +28415,11 @@
       "webName": "Reinildo"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 0.3,
       "id": 539,
@@ -26151,6 +28476,11 @@
       "webName": "O'Nien"
     },
     {
+      "availability": {
+        "chance": 100,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 2.3,
       "id": 541,
@@ -26207,6 +28537,11 @@
       "webName": "Meunier"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 1.7,
       "id": 542,
@@ -26263,6 +28598,11 @@
       "webName": "E.Le F\u00e9e"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 5.0,
       "id": 544,
@@ -26319,6 +28659,11 @@
       "webName": "Xhaka"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 1.7,
       "id": 545,
@@ -26375,6 +28720,11 @@
       "webName": "Sadiki"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 0.3,
       "id": 547,
@@ -26431,6 +28781,11 @@
       "webName": "Mundle"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 0.7,
       "id": 548,
@@ -26487,6 +28842,11 @@
       "webName": "Rigg"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 0.3,
       "id": 549,
@@ -26543,6 +28903,11 @@
       "webName": "Talbi"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 0.0,
       "id": 550,
@@ -26599,6 +28964,11 @@
       "webName": "Jocelin.T"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 2.7,
       "id": 551,
@@ -26655,6 +29025,11 @@
       "webName": "N.Angulo"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 4,
       "form": 1.3,
       "id": 552,
@@ -26711,6 +29086,11 @@
       "webName": "Brobbey"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 4,
       "form": 3.0,
       "id": 553,
@@ -26767,6 +29147,11 @@
       "webName": "Isidor"
     },
     {
+      "availability": {
+        "chance": 100,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 2,
       "form": 0.0,
       "id": 612,
@@ -26823,6 +29208,11 @@
       "webName": "Methalie"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 0.0,
       "id": 613,
@@ -26879,6 +29269,11 @@
       "webName": "Ahoka"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 3,
       "form": 0.0,
       "id": 646,
@@ -26935,6 +29330,11 @@
       "webName": "Fofana"
     },
     {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
       "elementType": 4,
       "form": 0.0,
       "id": 651,
@@ -27023,6 +29423,11 @@
           ],
           "transfersIn": [
             {
+              "availability": {
+                "chance": 100,
+                "news": null,
+                "status": "a"
+              },
               "id": 10,
               "position": "DEF",
               "price": 5.5,
@@ -27030,6 +29435,11 @@
               "webName": "White"
             },
             {
+              "availability": {
+                "chance": null,
+                "news": null,
+                "status": "a"
+              },
               "id": 367,
               "position": "MID",
               "price": 7.1,
@@ -27037,6 +29447,11 @@
               "webName": "Gakpo"
             },
             {
+              "availability": {
+                "chance": null,
+                "news": null,
+                "status": "a"
+              },
               "id": 379,
               "position": "FWD",
               "price": 9.0,
@@ -27044,6 +29459,11 @@
               "webName": "Isak"
             },
             {
+              "availability": {
+                "chance": null,
+                "news": null,
+                "status": "a"
+              },
               "id": 449,
               "position": "DEF",
               "price": 5.1,
@@ -27053,6 +29473,11 @@
           ],
           "transfersOut": [
             {
+              "availability": {
+                "chance": 75,
+                "news": "Unspecified injury - 75% chance of playing",
+                "status": "d"
+              },
               "id": 11,
               "position": "DEF",
               "price": 5.5,
@@ -27060,6 +29485,11 @@
               "webName": "Mosquera"
             },
             {
+              "availability": {
+                "chance": null,
+                "news": null,
+                "status": "a"
+              },
               "id": 334,
               "position": "DEF",
               "price": 5.0,
@@ -27067,6 +29497,11 @@
               "webName": "Muharemovi\u0107"
             },
             {
+              "availability": {
+                "chance": null,
+                "news": null,
+                "status": "a"
+              },
               "id": 411,
               "position": "FWD",
               "price": 15.5,
@@ -27074,6 +29509,11 @@
               "webName": "Haaland"
             },
             {
+              "availability": {
+                "chance": null,
+                "news": null,
+                "status": "a"
+              },
               "id": 557,
               "position": "MID",
               "price": 6.5,
@@ -27124,6 +29564,11 @@
           ],
           "transfersIn": [
             {
+              "availability": {
+                "chance": 100,
+                "news": null,
+                "status": "a"
+              },
               "id": 10,
               "position": "DEF",
               "price": 5.5,
@@ -27131,6 +29576,11 @@
               "webName": "White"
             },
             {
+              "availability": {
+                "chance": null,
+                "news": null,
+                "status": "a"
+              },
               "id": 367,
               "position": "MID",
               "price": 7.1,
@@ -27138,6 +29588,11 @@
               "webName": "Gakpo"
             },
             {
+              "availability": {
+                "chance": null,
+                "news": null,
+                "status": "a"
+              },
               "id": 379,
               "position": "FWD",
               "price": 9.0,
@@ -27147,6 +29602,11 @@
           ],
           "transfersOut": [
             {
+              "availability": {
+                "chance": 75,
+                "news": "Unspecified injury - 75% chance of playing",
+                "status": "d"
+              },
               "id": 11,
               "position": "DEF",
               "price": 5.5,
@@ -27154,6 +29614,11 @@
               "webName": "Mosquera"
             },
             {
+              "availability": {
+                "chance": null,
+                "news": null,
+                "status": "a"
+              },
               "id": 411,
               "position": "FWD",
               "price": 15.5,
@@ -27161,6 +29626,11 @@
               "webName": "Haaland"
             },
             {
+              "availability": {
+                "chance": null,
+                "news": null,
+                "status": "a"
+              },
               "id": 557,
               "position": "MID",
               "price": 6.5,
@@ -27211,6 +29681,11 @@
           ],
           "transfersIn": [
             {
+              "availability": {
+                "chance": 100,
+                "news": null,
+                "status": "a"
+              },
               "id": 10,
               "position": "DEF",
               "price": 5.5,
@@ -27218,6 +29693,11 @@
               "webName": "White"
             },
             {
+              "availability": {
+                "chance": null,
+                "news": null,
+                "status": "a"
+              },
               "id": 379,
               "position": "FWD",
               "price": 9.0,
@@ -27227,6 +29707,11 @@
           ],
           "transfersOut": [
             {
+              "availability": {
+                "chance": 75,
+                "news": "Unspecified injury - 75% chance of playing",
+                "status": "d"
+              },
               "id": 11,
               "position": "DEF",
               "price": 5.5,
@@ -27234,6 +29719,11 @@
               "webName": "Mosquera"
             },
             {
+              "availability": {
+                "chance": null,
+                "news": null,
+                "status": "a"
+              },
               "id": 411,
               "position": "FWD",
               "price": 15.5,
@@ -27288,6 +29778,11 @@
           ],
           "transfersIn": [
             {
+              "availability": {
+                "chance": 100,
+                "news": null,
+                "status": "a"
+              },
               "id": 10,
               "position": "DEF",
               "price": 5.5,
@@ -27295,6 +29790,11 @@
               "webName": "White"
             },
             {
+              "availability": {
+                "chance": null,
+                "news": null,
+                "status": "a"
+              },
               "id": 12,
               "position": "MID",
               "price": 9.5,
@@ -27302,6 +29802,11 @@
               "webName": "Saka"
             },
             {
+              "availability": {
+                "chance": null,
+                "news": null,
+                "status": "a"
+              },
               "id": 449,
               "position": "DEF",
               "price": 5.1,
@@ -27309,6 +29814,11 @@
               "webName": "Hall"
             },
             {
+              "availability": {
+                "chance": null,
+                "news": null,
+                "status": "a"
+              },
               "id": 464,
               "position": "FWD",
               "price": 6.1,
@@ -27318,6 +29828,11 @@
           ],
           "transfersOut": [
             {
+              "availability": {
+                "chance": 75,
+                "news": "Unspecified injury - 75% chance of playing",
+                "status": "d"
+              },
               "id": 11,
               "position": "DEF",
               "price": 5.5,
@@ -27325,6 +29840,11 @@
               "webName": "Mosquera"
             },
             {
+              "availability": {
+                "chance": null,
+                "news": null,
+                "status": "a"
+              },
               "id": 411,
               "position": "FWD",
               "price": 15.5,
@@ -27332,6 +29852,11 @@
               "webName": "Haaland"
             },
             {
+              "availability": {
+                "chance": null,
+                "news": null,
+                "status": "a"
+              },
               "id": 504,
               "position": "DEF",
               "price": 5.0,
@@ -27339,6 +29864,11 @@
               "webName": "Vuskovic"
             },
             {
+              "availability": {
+                "chance": null,
+                "news": null,
+                "status": "a"
+              },
               "id": 557,
               "position": "MID",
               "price": 6.5,
@@ -27417,6 +29947,11 @@
           ],
           "transfersIn": [
             {
+              "availability": {
+                "chance": 100,
+                "news": null,
+                "status": "a"
+              },
               "id": 10,
               "position": "DEF",
               "price": 5.5,
@@ -27424,6 +29959,11 @@
               "webName": "White"
             },
             {
+              "availability": {
+                "chance": null,
+                "news": null,
+                "status": "a"
+              },
               "id": 12,
               "position": "MID",
               "price": 9.5,
@@ -27431,6 +29971,11 @@
               "webName": "Saka"
             },
             {
+              "availability": {
+                "chance": null,
+                "news": null,
+                "status": "a"
+              },
               "id": 464,
               "position": "FWD",
               "price": 6.1,
@@ -27440,6 +29985,11 @@
           ],
           "transfersOut": [
             {
+              "availability": {
+                "chance": 75,
+                "news": "Unspecified injury - 75% chance of playing",
+                "status": "d"
+              },
               "id": 11,
               "position": "DEF",
               "price": 5.5,
@@ -27447,6 +29997,11 @@
               "webName": "Mosquera"
             },
             {
+              "availability": {
+                "chance": null,
+                "news": null,
+                "status": "a"
+              },
               "id": 411,
               "position": "FWD",
               "price": 15.5,
@@ -27454,6 +30009,11 @@
               "webName": "Haaland"
             },
             {
+              "availability": {
+                "chance": null,
+                "news": null,
+                "status": "a"
+              },
               "id": 557,
               "position": "MID",
               "price": 6.5,
@@ -27532,6 +30092,11 @@
           ],
           "transfersIn": [
             {
+              "availability": {
+                "chance": 100,
+                "news": null,
+                "status": "a"
+              },
               "id": 10,
               "position": "DEF",
               "price": 5.5,
@@ -27539,6 +30104,11 @@
               "webName": "White"
             },
             {
+              "availability": {
+                "chance": null,
+                "news": null,
+                "status": "a"
+              },
               "id": 544,
               "position": "MID",
               "price": 5.5,
@@ -27548,6 +30118,11 @@
           ],
           "transfersOut": [
             {
+              "availability": {
+                "chance": 75,
+                "news": "Unspecified injury - 75% chance of playing",
+                "status": "d"
+              },
               "id": 11,
               "position": "DEF",
               "price": 5.5,
@@ -27555,6 +30130,11 @@
               "webName": "Mosquera"
             },
             {
+              "availability": {
+                "chance": null,
+                "news": null,
+                "status": "a"
+              },
               "id": 426,
               "position": "MID",
               "price": 12.0,
@@ -27637,6 +30217,11 @@
           ],
           "transfersIn": [
             {
+              "availability": {
+                "chance": 100,
+                "news": null,
+                "status": "a"
+              },
               "id": 10,
               "position": "DEF",
               "price": 5.5,
@@ -27644,6 +30229,11 @@
               "webName": "White"
             },
             {
+              "availability": {
+                "chance": null,
+                "news": null,
+                "status": "a"
+              },
               "id": 367,
               "position": "MID",
               "price": 7.1,
@@ -27651,6 +30241,11 @@
               "webName": "Gakpo"
             },
             {
+              "availability": {
+                "chance": null,
+                "news": null,
+                "status": "a"
+              },
               "id": 449,
               "position": "DEF",
               "price": 5.1,
@@ -27658,6 +30253,11 @@
               "webName": "Hall"
             },
             {
+              "availability": {
+                "chance": null,
+                "news": null,
+                "status": "a"
+              },
               "id": 544,
               "position": "MID",
               "price": 5.5,
@@ -27667,6 +30267,11 @@
           ],
           "transfersOut": [
             {
+              "availability": {
+                "chance": 75,
+                "news": "Unspecified injury - 75% chance of playing",
+                "status": "d"
+              },
               "id": 11,
               "position": "DEF",
               "price": 5.5,
@@ -27674,6 +30279,11 @@
               "webName": "Mosquera"
             },
             {
+              "availability": {
+                "chance": null,
+                "news": null,
+                "status": "a"
+              },
               "id": 426,
               "position": "MID",
               "price": 12.0,
@@ -27681,6 +30291,11 @@
               "webName": "B.Fernandes"
             },
             {
+              "availability": {
+                "chance": null,
+                "news": null,
+                "status": "a"
+              },
               "id": 504,
               "position": "DEF",
               "price": 5.0,
@@ -27688,6 +30303,11 @@
               "webName": "Vuskovic"
             },
             {
+              "availability": {
+                "chance": null,
+                "news": null,
+                "status": "a"
+              },
               "id": 557,
               "position": "MID",
               "price": 6.5,
@@ -27794,6 +30414,11 @@
           ],
           "transfersIn": [
             {
+              "availability": {
+                "chance": 100,
+                "news": null,
+                "status": "a"
+              },
               "id": 10,
               "position": "DEF",
               "price": 5.5,
@@ -27801,6 +30426,11 @@
               "webName": "White"
             },
             {
+              "availability": {
+                "chance": null,
+                "news": null,
+                "status": "a"
+              },
               "id": 367,
               "position": "MID",
               "price": 7.1,
@@ -27808,6 +30438,11 @@
               "webName": "Gakpo"
             },
             {
+              "availability": {
+                "chance": null,
+                "news": null,
+                "status": "a"
+              },
               "id": 544,
               "position": "MID",
               "price": 5.5,
@@ -27817,6 +30452,11 @@
           ],
           "transfersOut": [
             {
+              "availability": {
+                "chance": 75,
+                "news": "Unspecified injury - 75% chance of playing",
+                "status": "d"
+              },
               "id": 11,
               "position": "DEF",
               "price": 5.5,
@@ -27824,6 +30464,11 @@
               "webName": "Mosquera"
             },
             {
+              "availability": {
+                "chance": null,
+                "news": null,
+                "status": "a"
+              },
               "id": 426,
               "position": "MID",
               "price": 12.0,
@@ -27831,6 +30476,11 @@
               "webName": "B.Fernandes"
             },
             {
+              "availability": {
+                "chance": null,
+                "news": null,
+                "status": "a"
+              },
               "id": 557,
               "position": "MID",
               "price": 6.5,
@@ -27937,6 +30587,11 @@
           ],
           "transfersIn": [
             {
+              "availability": {
+                "chance": 100,
+                "news": null,
+                "status": "a"
+              },
               "id": 10,
               "position": "DEF",
               "price": 5.5,
@@ -27944,6 +30599,11 @@
               "webName": "White"
             },
             {
+              "availability": {
+                "chance": null,
+                "news": null,
+                "status": "a"
+              },
               "id": 544,
               "position": "MID",
               "price": 5.5,
@@ -27953,6 +30613,11 @@
           ],
           "transfersOut": [
             {
+              "availability": {
+                "chance": 75,
+                "news": "Unspecified injury - 75% chance of playing",
+                "status": "d"
+              },
               "id": 11,
               "position": "DEF",
               "price": 5.5,
@@ -27960,6 +30625,11 @@
               "webName": "Mosquera"
             },
             {
+              "availability": {
+                "chance": null,
+                "news": null,
+                "status": "a"
+              },
               "id": 426,
               "position": "MID",
               "price": 12.0,
@@ -28068,6 +30738,11 @@
       ],
       "transfersIn": [
         {
+          "availability": {
+            "chance": null,
+            "news": null,
+            "status": "a"
+          },
           "id": 8,
           "position": "DEF",
           "price": 5.7,
@@ -28075,6 +30750,11 @@
           "webName": "Calafiori"
         },
         {
+          "availability": {
+            "chance": 100,
+            "news": null,
+            "status": "a"
+          },
           "id": 10,
           "position": "DEF",
           "price": 5.5,
@@ -28082,6 +30762,11 @@
           "webName": "White"
         },
         {
+          "availability": {
+            "chance": null,
+            "news": null,
+            "status": "a"
+          },
           "id": 12,
           "position": "MID",
           "price": 9.5,
@@ -28089,6 +30774,11 @@
           "webName": "Saka"
         },
         {
+          "availability": {
+            "chance": null,
+            "news": null,
+            "status": "a"
+          },
           "id": 50,
           "position": "MID",
           "price": 4.5,
@@ -28096,6 +30786,11 @@
           "webName": "Burrowes"
         },
         {
+          "availability": {
+            "chance": null,
+            "news": null,
+            "status": "a"
+          },
           "id": 86,
           "position": "MID",
           "price": 5.5,
@@ -28103,6 +30798,11 @@
           "webName": "Lewis-Potter"
         },
         {
+          "availability": {
+            "chance": null,
+            "news": null,
+            "status": "a"
+          },
           "id": 165,
           "position": "FWD",
           "price": 7.7,
@@ -28110,6 +30810,11 @@
           "webName": "Jo\u00e3o Pedro"
         },
         {
+          "availability": {
+            "chance": null,
+            "news": null,
+            "status": "a"
+          },
           "id": 173,
           "position": "DEF",
           "price": 4.0,
@@ -28117,6 +30822,11 @@
           "webName": "Thomas"
         },
         {
+          "availability": {
+            "chance": null,
+            "news": null,
+            "status": "a"
+          },
           "id": 302,
           "position": "GKP",
           "price": 4.0,
@@ -28124,6 +30834,11 @@
           "webName": "Button"
         },
         {
+          "availability": {
+            "chance": null,
+            "news": null,
+            "status": "a"
+          },
           "id": 367,
           "position": "MID",
           "price": 7.1,
@@ -28131,6 +30846,11 @@
           "webName": "Gakpo"
         },
         {
+          "availability": {
+            "chance": null,
+            "news": null,
+            "status": "a"
+          },
           "id": 368,
           "position": "MID",
           "price": 7.0,
@@ -28138,6 +30858,11 @@
           "webName": "Szoboszlai"
         },
         {
+          "availability": {
+            "chance": null,
+            "news": null,
+            "status": "a"
+          },
           "id": 379,
           "position": "FWD",
           "price": 9.0,
@@ -28145,6 +30870,11 @@
           "webName": "Isak"
         },
         {
+          "availability": {
+            "chance": null,
+            "news": null,
+            "status": "a"
+          },
           "id": 385,
           "position": "GKP",
           "price": 5.0,
@@ -28152,6 +30882,11 @@
           "webName": "Trafford"
         },
         {
+          "availability": {
+            "chance": null,
+            "news": null,
+            "status": "a"
+          },
           "id": 388,
           "position": "DEF",
           "price": 6.0,
@@ -28159,6 +30894,11 @@
           "webName": "Gu\u00e9hi"
         },
         {
+          "availability": {
+            "chance": null,
+            "news": null,
+            "status": "a"
+          },
           "id": 411,
           "position": "FWD",
           "price": 15.5,
@@ -28166,6 +30906,11 @@
           "webName": "Haaland"
         },
         {
+          "availability": {
+            "chance": null,
+            "news": null,
+            "status": "a"
+          },
           "id": 556,
           "position": "DEF",
           "price": 4.0,
@@ -28225,6 +30970,11 @@
       ],
       "transfersIn": [
         {
+          "availability": {
+            "chance": null,
+            "news": null,
+            "status": "a"
+          },
           "id": 8,
           "position": "DEF",
           "price": 5.7,
@@ -28232,6 +30982,11 @@
           "webName": "Calafiori"
         },
         {
+          "availability": {
+            "chance": 100,
+            "news": null,
+            "status": "a"
+          },
           "id": 10,
           "position": "DEF",
           "price": 5.5,
@@ -28239,6 +30994,11 @@
           "webName": "White"
         },
         {
+          "availability": {
+            "chance": null,
+            "news": null,
+            "status": "a"
+          },
           "id": 12,
           "position": "MID",
           "price": 9.5,
@@ -28246,6 +31006,11 @@
           "webName": "Saka"
         },
         {
+          "availability": {
+            "chance": null,
+            "news": null,
+            "status": "a"
+          },
           "id": 86,
           "position": "MID",
           "price": 5.5,
@@ -28253,6 +31018,11 @@
           "webName": "Lewis-Potter"
         },
         {
+          "availability": {
+            "chance": null,
+            "news": null,
+            "status": "a"
+          },
           "id": 165,
           "position": "FWD",
           "price": 7.7,
@@ -28260,6 +31030,11 @@
           "webName": "Jo\u00e3o Pedro"
         },
         {
+          "availability": {
+            "chance": null,
+            "news": null,
+            "status": "a"
+          },
           "id": 178,
           "position": "DEF",
           "price": 4.0,
@@ -28267,6 +31042,11 @@
           "webName": "Bidwell"
         },
         {
+          "availability": {
+            "chance": null,
+            "news": null,
+            "status": "a"
+          },
           "id": 367,
           "position": "MID",
           "price": 7.1,
@@ -28274,6 +31054,11 @@
           "webName": "Gakpo"
         },
         {
+          "availability": {
+            "chance": null,
+            "news": null,
+            "status": "a"
+          },
           "id": 378,
           "position": "MID",
           "price": 4.5,
@@ -28281,6 +31066,11 @@
           "webName": "McConnell"
         },
         {
+          "availability": {
+            "chance": null,
+            "news": null,
+            "status": "a"
+          },
           "id": 379,
           "position": "FWD",
           "price": 9.0,
@@ -28288,6 +31078,11 @@
           "webName": "Isak"
         },
         {
+          "availability": {
+            "chance": null,
+            "news": null,
+            "status": "a"
+          },
           "id": 385,
           "position": "GKP",
           "price": 5.0,
@@ -28295,6 +31090,11 @@
           "webName": "Trafford"
         },
         {
+          "availability": {
+            "chance": null,
+            "news": null,
+            "status": "a"
+          },
           "id": 388,
           "position": "DEF",
           "price": 6.0,
@@ -28302,6 +31102,11 @@
           "webName": "Gu\u00e9hi"
         },
         {
+          "availability": {
+            "chance": null,
+            "news": null,
+            "status": "a"
+          },
           "id": 391,
           "position": "DEF",
           "price": 5.6,
@@ -28309,6 +31114,11 @@
           "webName": "Gvardiol"
         },
         {
+          "availability": {
+            "chance": null,
+            "news": null,
+            "status": "a"
+          },
           "id": 411,
           "position": "FWD",
           "price": 15.5,
@@ -28316,6 +31126,11 @@
           "webName": "Haaland"
         },
         {
+          "availability": {
+            "chance": null,
+            "news": null,
+            "status": "a"
+          },
           "id": 495,
           "position": "GKP",
           "price": 4.0,
@@ -28323,6 +31138,11 @@
           "webName": "Austin"
         },
         {
+          "availability": {
+            "chance": null,
+            "news": null,
+            "status": "a"
+          },
           "id": 544,
           "position": "MID",
           "price": 5.5,
@@ -28431,6 +31251,11 @@
     ],
     "players": [
       {
+        "availability": {
+          "chance": null,
+          "news": null,
+          "status": "a"
+        },
         "breakdown": {
           "availabilityMultiplier": 1.0,
           "components": {
@@ -28495,6 +31320,11 @@
         "windowPoints": 20.48
       },
       {
+        "availability": {
+          "chance": null,
+          "news": null,
+          "status": "a"
+        },
         "breakdown": {
           "availabilityMultiplier": 1.0,
           "components": {
@@ -28559,6 +31389,11 @@
         "windowPoints": 22.02
       },
       {
+        "availability": {
+          "chance": 75,
+          "news": "Unspecified injury - 75% chance of playing",
+          "status": "d"
+        },
         "breakdown": {
           "availabilityMultiplier": 0.75,
           "components": {
@@ -28623,6 +31458,11 @@
         "windowPoints": 22.25
       },
       {
+        "availability": {
+          "chance": null,
+          "news": null,
+          "status": "a"
+        },
         "breakdown": {
           "availabilityMultiplier": 1.0,
           "components": {
@@ -28687,6 +31527,11 @@
         "windowPoints": 19.31
       },
       {
+        "availability": {
+          "chance": null,
+          "news": null,
+          "status": "a"
+        },
         "breakdown": {
           "availabilityMultiplier": 1.0,
           "components": {
@@ -28751,6 +31596,11 @@
         "windowPoints": 32.59
       },
       {
+        "availability": {
+          "chance": null,
+          "news": null,
+          "status": "a"
+        },
         "breakdown": {
           "availabilityMultiplier": 1.0,
           "components": {
@@ -28815,6 +31665,11 @@
         "windowPoints": 26.06
       },
       {
+        "availability": {
+          "chance": null,
+          "news": null,
+          "status": "a"
+        },
         "breakdown": {
           "availabilityMultiplier": 1.0,
           "components": {
@@ -28879,6 +31734,11 @@
         "windowPoints": 25.34
       },
       {
+        "availability": {
+          "chance": null,
+          "news": null,
+          "status": "a"
+        },
         "breakdown": {
           "availabilityMultiplier": 1.0,
           "components": {
@@ -28943,6 +31803,11 @@
         "windowPoints": 18.21
       },
       {
+        "availability": {
+          "chance": null,
+          "news": null,
+          "status": "a"
+        },
         "breakdown": {
           "availabilityMultiplier": 1.0,
           "components": {
@@ -29007,6 +31872,11 @@
         "windowPoints": 23.23
       },
       {
+        "availability": {
+          "chance": null,
+          "news": null,
+          "status": "a"
+        },
         "breakdown": {
           "availabilityMultiplier": 1.0,
           "components": {
@@ -29071,6 +31941,11 @@
         "windowPoints": 35.56
       },
       {
+        "availability": {
+          "chance": null,
+          "news": null,
+          "status": "a"
+        },
         "breakdown": {
           "availabilityMultiplier": 1.0,
           "components": {
@@ -29135,6 +32010,11 @@
         "windowPoints": 33.26
       },
       {
+        "availability": {
+          "chance": null,
+          "news": null,
+          "status": "a"
+        },
         "breakdown": {
           "availabilityMultiplier": 1.0,
           "components": {
@@ -29199,6 +32079,11 @@
         "windowPoints": 17.86
       },
       {
+        "availability": {
+          "chance": null,
+          "news": null,
+          "status": "a"
+        },
         "breakdown": {
           "availabilityMultiplier": 1.0,
           "components": {
@@ -29263,6 +32148,11 @@
         "windowPoints": 17.31
       },
       {
+        "availability": {
+          "chance": null,
+          "news": null,
+          "status": "a"
+        },
         "breakdown": {
           "availabilityMultiplier": 1.0,
           "components": {
@@ -29327,6 +32217,11 @@
         "windowPoints": 5.92
       },
       {
+        "availability": {
+          "chance": null,
+          "news": null,
+          "status": "a"
+        },
         "breakdown": {
           "availabilityMultiplier": 1.0,
           "components": {

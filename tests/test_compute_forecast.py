@@ -309,3 +309,13 @@ def test_player_ref_resolves_a_held_player_absent_from_the_available_pool():
     ref = cf._player_ref(11, pool_by_id)
     assert ref["webName"] == "Mosquera"
     assert ref["price"] == 5.0
+
+
+def test_availability_info_surfaces_fpls_doubt_signal():
+    doubtful = cf._availability_info(
+        {"status": "d", "chance_of_playing_next_round": 75, "news": "Knock - 75% chance of playing"}
+    )
+    assert doubtful == {"status": "d", "chance": 75, "news": "Knock - 75% chance of playing"}
+
+    fit = cf._availability_info({"status": "a"})
+    assert fit == {"status": "a", "chance": None, "news": None}

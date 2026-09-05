@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import type { PoolPlayer, Scenario, Scenarios as ScenariosData } from "@/lib/snapshots";
+import type { PoolPlayer, Scenario, ScenarioPlayerRef, Scenarios as ScenariosData } from "@/lib/snapshots";
+import { availabilityFlag } from "@/lib/availability";
 import { kitFor } from "@/lib/teamColors";
 
 const HORIZONS = ["1", "3", "5"] as const;
@@ -18,8 +19,12 @@ function fmtNet(n: number) {
 function ShirtToken({ player, isCaptain }: { player: PoolPlayer | undefined; isCaptain: boolean }) {
   if (!player) return null;
   const kit = kitFor(player.team);
+  const doubt = availabilityFlag(player.availability);
   return (
-    <div className="flex w-16 flex-col items-center gap-0.5 sm:w-[4.5rem]" title={player.webName}>
+    <div
+      className="flex w-16 flex-col items-center gap-0.5 sm:w-[4.5rem]"
+      title={[player.webName, doubt?.label].filter(Boolean).join(" — ")}
+    >
       <div className="relative">
         <div
           className="grid h-10 w-10 place-items-center rounded-full ring-1 ring-black/30"
@@ -34,10 +39,82 @@ function ShirtToken({ player, isCaptain }: { player: PoolPlayer | undefined; isC
             C
           </span>
         )}
+        {doubt && (
+          <span
+            className="absolute -bottom-0.5 -right-0.5 h-2.5 w-2.5 rounded-full border border-[var(--bg-0)]"
+            style={{ background: doubt.color }}
+            title={doubt.label}
+          />
+        )}
       </div>
       <span className="max-w-[4rem] truncate text-[11px] font-semibold text-ink">
         {player.webName}
       </span>
+    </div>
+  );
+}
+
+/** Zip transfersOut/transfersIn into 1:1 swaps -- squad composition (2 GKP/5
+ * DEF/5 MID/3 FWD) stays fixed across any transfer, so grouping by position
+ * always yields equal-length in/out lists per position. Sorted by price
+ * (desc) within a position so the priciest swap leads. */
+function pairTransfers(scenario: Scenario): { out: ScenarioPlayerRef; in_: ScenarioPlayerRef }[] {
+  const byPosition = (refs: ScenarioPlayerRef[]) => {
+    const groups = new Map<string, ScenarioPlayerRef[]>();
+    for (const r of refs) {
+      const key = r.position ?? "?";
+      groups.set(key, [...(groups.get(key) ?? []), r]);
+    }
+    for (const list of groups.values()) list.sort((a, b) => (b.price ?? 0) - (a.price ?? 0));
+    return groups;
+  };
+  const outByPos = byPosition(scenario.transfersOut);
+  const inByPos = byPosition(scenario.transfersIn);
+  const pairs: { out: ScenarioPlayerRef; in_: ScenarioPlayerRef }[] = [];
+  for (const [pos, outs] of outByPos) {
+    const ins = inByPos.get(pos) ?? [];
+    outs.forEach((out, i) => {
+      if (ins[i]) pairs.push({ out, in_: ins[i] });
+    });
+  }
+  return pairs;
+}
+
+function SwapPlayer({ player, direction }: { player: ScenarioPlayerRef; direction: "out" | "in" }) {
+  const doubt = availabilityFlag(player.availability);
+  return (
+    <span className="inline-flex items-center gap-1 whitespace-nowrap">
+      {doubt && (
+        <span
+          className="h-1.5 w-1.5 shrink-0 rounded-full"
+          style={{ background: doubt.color }}
+          title={doubt.label}
+        />
+      )}
+      <span className={direction === "out" ? "text-ink-soft line-through" : "font-medium text-ink"}>
+        {player.webName ?? "?"}
+      </span>
+      {player.price != null && (
+        <span className="font-mono text-[10px] tabular-nums text-ink-faint">
+          £{player.price.toFixed(1)}
+        </span>
+      )}
+    </span>
+  );
+}
+
+function TransferPairs({ scenario }: { scenario: Scenario }) {
+  const pairs = pairTransfers(scenario);
+  if (pairs.length === 0) return <p className="text-xs text-ink-faint">No changes to your squad</p>;
+  return (
+    <div className="space-y-1.5">
+      {pairs.map(({ out, in_ }) => (
+        <div key={`${out.id}-${in_.id}`} className="flex flex-wrap items-center gap-1.5 text-xs">
+          <SwapPlayer player={out} direction="out" />
+          <span className="text-ink-faint">→</span>
+          <SwapPlayer player={in_} direction="in" />
+        </div>
+      ))}
     </div>
   );
 }
@@ -78,31 +155,6 @@ function ChipXi({ scenario, poolById }: { scenario: Scenario; poolById: Map<numb
   );
 }
 
-function TransferRow({
-  label,
-  players,
-}: {
-  label: string;
-  players: Scenario["transfersIn"];
-}) {
-  if (players.length === 0) return null;
-  return (
-    <div className="flex items-start gap-2 text-xs">
-      <span className="w-8 shrink-0 font-mono text-[10px] uppercase tracking-wide text-ink-faint">
-        {label}
-      </span>
-      <div className="flex min-w-0 flex-wrap gap-x-2 gap-y-1">
-        {players.map((p) => (
-          <span key={p.id} className="whitespace-nowrap text-ink-soft">
-            <span className="font-medium text-ink">{p.webName ?? "?"}</span>
-            {p.price != null && <span className="ml-1 font-mono tabular-nums">£{p.price.toFixed(1)}</span>}
-          </span>
-        ))}
-      </div>
-    </div>
-  );
-}
-
 function TransferScenarioCard({
   scenario,
   rollNetPoints,
@@ -134,10 +186,11 @@ function TransferScenarioCard({
       {scenario.hitCost > 0 && (
         <p className="text-xs text-[var(--danger)]">−{scenario.hitCost} hit taken</p>
       )}
-      <div className="space-y-1 border-t border-line pt-2">
-        <TransferRow label="In" players={scenario.transfersIn} />
-        <TransferRow label="Out" players={scenario.transfersOut} />
-      </div>
+      {nTransfers > 0 && (
+        <div className="border-t border-line pt-2">
+          <TransferPairs scenario={scenario} />
+        </div>
+      )}
     </div>
   );
 }
