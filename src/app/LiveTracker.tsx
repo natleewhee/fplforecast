@@ -232,6 +232,7 @@ function TrackerPanel({
   const gapLabel = `${up ? "+" : "−"}${Math.abs(view.gapToPar).toFixed(1)} vs par`;
   const starters = view.rows.filter((r) => !r.isBench || r.subbedIn);
   const bench = view.rows.filter((r) => r.isBench && !r.subbedIn);
+  const currentScore = starters.reduce((sum, r) => sum + r.pointsSoFar, 0);
 
   return (
     <div className="panel rise space-y-4 p-4">
@@ -257,35 +258,51 @@ function TrackerPanel({
 
       <div className="flex flex-wrap items-end gap-x-6 gap-y-3">
         <div>
+          <div className="stat text-4xl leading-none">{currentScore.toFixed(0)}</div>
+          <div className="eyebrow mt-1">current score</div>
+        </div>
+        <div>
           <div className="stat stat-glow text-4xl leading-none">
             {view.projectedTotal.toFixed(1)}
           </div>
           <div className="eyebrow mt-1">projected GW total</div>
         </div>
-        <div>
-          <div className="flex items-center gap-2">
-            <span className={BAND_CLASS[view.band]}>
-              {up ? "▲" : "▼"} {gapLabel}
-            </span>
-            {view.lowConfidence && <span className="chip">low confidence</span>}
-          </div>
-          <div className="eyebrow mt-1 tabular-nums">
-            par {view.par.toFixed(1)}{" "}
-            <span className="text-ink-faint">
-              (avg {payload.liveAverage.toFixed(1)} + margin {payload.parMargin.toFixed(1)}, buffer{" "}
-              {view.buffer.toFixed(0)})
-            </span>
-          </div>
-        </div>
       </div>
 
-      {view.lowConfidence && (
-        <p className="text-[11px] text-ink-faint">
-          {payload.marginProvisional
-            ? "Hold-rank margin still provisional — the wider buffer applies and the band will not show green yet."
-            : "No match has kicked off — the projection is the pre-baked expectation and par is not yet meaningful."}
-        </p>
-      )}
+      <div className="flex items-center gap-2">
+        <span className={BAND_CLASS[view.band]}>
+          {up ? "▲" : "▼"} {gapLabel}
+        </span>
+        {view.lowConfidence && <span className="chip">low confidence</span>}
+      </div>
+
+      <details className="text-[11px] text-ink-faint">
+        <summary className="cursor-pointer font-medium text-ink-soft hover:text-ink">
+          What&rsquo;s &ldquo;par&rdquo;?
+        </summary>
+        <div className="mt-1.5 space-y-1.5">
+          <p>
+            Par is the score you&rsquo;d need this gameweek to roughly hold your current rank in
+            your league(s) — not just &ldquo;a good score&rdquo; in the abstract. It&rsquo;s the
+            gameweek average ({payload.liveAverage.toFixed(1)}) plus your own hold-rank margin
+            (+{payload.parMargin.toFixed(1)}, from how far above the average you&rsquo;ve typically
+            needed to score to hold rank in past gameweeks). &ldquo;{gapLabel}&rdquo; is your
+            projected total measured against that line — above it and you&rsquo;re on track to
+            gain rank, below it and you&rsquo;re on track to lose some.
+          </p>
+          <p>
+            The buffer ({view.buffer.toFixed(0)} pts) is a cushion around par before the band
+            actually turns green/red, since the margin itself is an estimate.
+          </p>
+          {view.lowConfidence && (
+            <p>
+              {payload.marginProvisional
+                ? "Shown as low confidence right now because your hold-rank margin is still provisional (too few completed gameweeks) — the wider buffer applies and the band won't show green yet."
+                : "Shown as low confidence right now because no match has kicked off — the projection is still the pre-match expectation and par isn't meaningful yet."}
+            </p>
+          )}
+        </div>
+      </details>
 
       <div className="space-y-1">
         {starters.map((r) => (
