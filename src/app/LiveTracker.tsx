@@ -6,10 +6,10 @@ import {
   withinMatchWindow,
   type BreakdownItem,
   type LivePayload,
-  type PlayerStatus,
   type TrackerRow,
   type TrackerView,
 } from "@/lib/liveBlend";
+import { fdrColor } from "@/lib/teamColors";
 
 /* The in-gameweek surface (KTD7): while matches are live it leads the page with
  * a projected final total, the par band and arrow, and a per-player breakdown,
@@ -26,13 +26,36 @@ const POSITION_COLOR: Record<string, string> = {
   FWD: "bg-[var(--fwd)]",
 };
 
-const STATUS_LABEL: Record<PlayerStatus, string> = {
-  notStarted: "not started",
-  playing: "playing",
-  offPitch: "off",
-  finished: "finished",
-  didNotPlay: "did not play",
-};
+/** Status label that reflects minutes/kickoff, not just the state name — a
+ * finished player reads "FT 90'" rather than an ambiguous "finished". */
+function statusLabel(row: TrackerRow): string {
+  switch (row.status) {
+    case "finished":
+      return `FT ${row.minutes}'`;
+    case "playing":
+      return `${row.minutes}'`;
+    case "offPitch":
+      return `${row.minutes}' off`;
+    case "didNotPlay":
+      return "did not play";
+    case "notStarted":
+      return sgKickoff(row.kickoffTime);
+  }
+}
+
+/** Kickoff day + time in Singapore Time, e.g. "Sat 21:00 SGT". */
+function sgKickoff(iso: string | null): string {
+  if (!iso) return "—";
+  const d = new Date(iso);
+  if (Number.isNaN(d.getTime())) return "—";
+  const day = d.toLocaleDateString("en-GB", { weekday: "short", timeZone: "Asia/Singapore" });
+  const time = d.toLocaleTimeString("en-GB", {
+    hour: "2-digit",
+    minute: "2-digit",
+    timeZone: "Asia/Singapore",
+  });
+  return `${day} ${time} SGT`;
+}
 
 const BAND_CLASS: Record<TrackerView["band"], string> = {
   green: "chip chip-accent",
@@ -135,6 +158,26 @@ export default function LiveTracker() {
     }, POLL_MS);
     return () => clearInterval(id);
   }, [active, tick]);
+
+  // The interval above has no heartbeat of its own: if a poll is missed while
+  // the tab is backgrounded right as a match ends, the tracker can freeze on
+  // stale "playing" data indefinitely. Force an immediate re-check whenever
+  // the tab regains focus/visibility so it self-heals instead of waiting up
+  // to a full POLL_MS for the next scheduled tick.
+  useEffect(() => {
+    const onWake = () => {
+      if (document.visibilityState === "visible") {
+        setNow(Date.now());
+        void tick();
+      }
+    };
+    document.addEventListener("visibilitychange", onWake);
+    window.addEventListener("focus", onWake);
+    return () => {
+      document.removeEventListener("visibilitychange", onWake);
+      window.removeEventListener("focus", onWake);
+    };
+  }, [tick]);
 
   const view = useMemo(
     () => (polls.cur ? buildTracker(polls.cur, polls.prev) : null),
@@ -287,14 +330,23 @@ function PlayerRow({ row }: { row: TrackerRow }) {
           no xP
         </span>
       )}
-      <span className="ml-auto text-[11px] text-ink-faint">{row.opponent ?? "—"}</span>
+      <span className="ml-auto flex items-center gap-1 text-[11px] text-ink-faint">
+        {row.status === "notStarted" && row.fdrRating != null && (
+          <span
+            className="inline-block h-2 w-2 shrink-0 rounded-full"
+            style={{ backgroundColor: fdrColor(row.fdrRating) }}
+            title={`FDR ${row.fdrRating}`}
+          />
+        )}
+        {row.opponent ?? "—"}
+      </span>
       <span
-        className={`w-20 shrink-0 text-right text-[11px] ${
+        className={`w-28 shrink-0 text-right text-[11px] ${
           finished ? "font-semibold text-[var(--accent)]" : "text-ink-soft"
         }`}
       >
         {finished ? "✓ " : ""}
-        {STATUS_LABEL[row.status]}
+        {statusLabel(row)}
       </span>
       <span className="w-10 shrink-0 text-right font-mono font-bold tabular-nums text-ink">
         {row.pointsSoFar.toFixed(0)}

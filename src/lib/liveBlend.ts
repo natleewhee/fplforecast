@@ -47,6 +47,8 @@ export type LiveSquadPlayer = {
   isViceCaptain: boolean;
   opponent: string | null; // "CHE (H)" for this gameweek, null if no fixture
   hasComponents: boolean; // false when the snapshot has no baked xP for this pick
+  kickoffTime: string | null; // this gameweek's own fixture kickoff, for a not-yet-started player
+  fdrRating: number | null; // FPL's 1 (easiest) .. 5 (hardest) for this gameweek's opponent
 };
 
 export type LivePayload = {
@@ -173,6 +175,11 @@ export function buildLivePayload(args: {
   const captain = picks.picks.find((p) => p.is_captain);
   const vice = picks.picks.find((p) => p.is_vice_captain);
   const components = forecast.squadComponents ?? {};
+  // This gameweek's own FDR per squad player, from the daily snapshot's
+  // baked fixture legs -- the live route has no FDR of its own to compute.
+  const fdrByElement = new Map<number, number | null>(
+    forecast.squad.players.map((p) => [p.id, p.opponents[0]?.fdrRating ?? null]),
+  );
 
   const squad: LiveSquadPlayer[] = sorted.map((p) => {
     const meta = elementById.get(p.element);
@@ -194,6 +201,8 @@ export function buildLivePayload(args: {
       isViceCaptain: p.is_vice_captain,
       opponent,
       hasComponents: Boolean(components[String(p.element)]),
+      kickoffTime: f?.kickoff_time ?? null,
+      fdrRating: fdrByElement.get(p.element) ?? null,
     };
   });
 
@@ -243,6 +252,7 @@ export type TrackerRow = {
   position: Position;
   opponent: string | null;
   status: PlayerStatus;
+  minutes: number;
   pointsSoFar: number;
   remainingXp: number;
   contribution: number;
@@ -252,6 +262,8 @@ export type TrackerRow = {
   subbedOut: boolean;
   noBakedXp: boolean;
   breakdown: BreakdownItem[];
+  kickoffTime: string | null;
+  fdrRating: number | null;
 };
 
 export type TrackerView = {
@@ -470,6 +482,7 @@ export function buildTracker(payload: LivePayload, prev: LivePayload | null): Tr
       position: sp.position,
       opponent: sp.opponent,
       status: statusById[sp.id],
+      minutes: payload.liveByElement[sp.id]?.minutes ?? 0,
       pointsSoFar: proj.pointsSoFar,
       remainingXp: proj.remainingXp,
       contribution: proj.contribution,
@@ -479,6 +492,8 @@ export function buildTracker(payload: LivePayload, prev: LivePayload | null): Tr
       subbedOut: subbedOut.has(sp.id),
       noBakedXp: !sp.hasComponents,
       breakdown: payload.liveByElement[sp.id]?.breakdown ?? [],
+      kickoffTime: sp.kickoffTime,
+      fdrRating: sp.fdrRating,
     };
   });
 
