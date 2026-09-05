@@ -4,6 +4,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import {
   buildTracker,
   withinMatchWindow,
+  type BreakdownItem,
   type LivePayload,
   type PlayerStatus,
   type TrackerRow,
@@ -38,6 +39,48 @@ const BAND_CLASS: Record<TrackerView["band"], string> = {
   amber: "chip chip-warn",
   red: "chip chip-danger",
 };
+
+// FPL's own `explain` identifiers -> a short human label for the breakdown.
+const STAT_LABEL_MAP: Record<string, string> = {
+  minutes: "Minutes",
+  goals_scored: "Goals",
+  assists: "Assists",
+  clean_sheets: "Clean sheet",
+  goals_conceded: "Goals conceded",
+  own_goals: "Own goals",
+  penalties_saved: "Penalties saved",
+  penalties_missed: "Penalties missed",
+  yellow_cards: "Yellow card",
+  red_cards: "Red card",
+  saves: "Saves",
+  bonus: "Bonus",
+  defensive_contribution: "Defensive contribution",
+  mng_win: "Win",
+  mng_draw: "Draw",
+  mng_loss: "Loss",
+  mng_clean_sheets: "Clean sheet",
+  mng_goals_scored: "Goals scored",
+};
+
+function statLabel(identifier: string): string {
+  return (
+    STAT_LABEL_MAP[identifier] ??
+    identifier
+      .split("_")
+      .map((w) => w[0]?.toUpperCase() + w.slice(1))
+      .join(" ")
+  );
+}
+
+/** A compact one-line summary for the hover title, e.g. "90' · Clean sheet +4 · 6 pts". */
+function breakdownSummary(breakdown: BreakdownItem[], total: number): string {
+  const parts = breakdown
+    .filter((b) => b.points !== 0 || b.identifier === "minutes")
+    .map((b) =>
+      b.identifier === "minutes" ? `${b.value}'` : `${statLabel(b.identifier)} ${b.points >= 0 ? "+" : ""}${b.points}`,
+    );
+  return [...parts, `${total} pts`].join(" · ");
+}
 
 function hhmm(iso: string | null): string {
   if (!iso) return "—";
@@ -221,12 +264,11 @@ function TrackerPanel({
 function PlayerRow({ row }: { row: TrackerRow }) {
   const dim = row.isBench && !row.subbedIn;
   const showRemaining = row.status === "notStarted" || row.status === "playing";
-  return (
-    <div
-      className={`flex items-center gap-2 rounded-md px-1 py-1.5 text-sm ${
-        dim ? "opacity-50" : ""
-      } ${row.subbedIn ? "bg-[color-mix(in_srgb,var(--accent)_10%,transparent)]" : ""}`}
-    >
+  const finished = row.status === "finished";
+  const hasBreakdown = row.breakdown.length > 0;
+
+  const rowContent = (
+    <>
       <span
         className={`inline-block w-8 shrink-0 rounded py-0.5 text-center text-[9px] font-bold tracking-wide text-black/85 ${
           POSITION_COLOR[row.position] ?? "bg-ink-soft"
@@ -246,7 +288,12 @@ function PlayerRow({ row }: { row: TrackerRow }) {
         </span>
       )}
       <span className="ml-auto text-[11px] text-ink-faint">{row.opponent ?? "—"}</span>
-      <span className="w-20 shrink-0 text-right text-[11px] text-ink-soft">
+      <span
+        className={`w-20 shrink-0 text-right text-[11px] ${
+          finished ? "font-semibold text-[var(--accent)]" : "text-ink-soft"
+        }`}
+      >
+        {finished ? "✓ " : ""}
         {STATUS_LABEL[row.status]}
       </span>
       <span className="w-10 shrink-0 text-right font-mono font-bold tabular-nums text-ink">
@@ -255,6 +302,50 @@ function PlayerRow({ row }: { row: TrackerRow }) {
       <span className="w-12 shrink-0 text-right font-mono text-[11px] tabular-nums text-[var(--accent)]">
         {showRemaining ? `+${row.remainingXp.toFixed(1)}` : ""}
       </span>
-    </div>
+    </>
+  );
+
+  const rowClass = `flex items-center gap-2 rounded-md px-1 py-1.5 text-sm ${dim ? "opacity-50" : ""} ${
+    finished
+      ? "bg-[color-mix(in_srgb,var(--accent)_6%,transparent)]"
+      : row.subbedIn
+        ? "bg-[color-mix(in_srgb,var(--accent)_10%,transparent)]"
+        : ""
+  }`;
+
+  // Score is clickable once FPL's own breakdown exists (from kickoff onward);
+  // <summary> gives both a hover preview (native title tooltip) and a click
+  // to expand the full per-category breakdown below — no JS state needed.
+  if (!hasBreakdown) {
+    return <div className={rowClass}>{rowContent}</div>;
+  }
+
+  return (
+    <details>
+      <summary
+        className={`${rowClass} cursor-pointer list-none marker:content-none [&::-webkit-details-marker]:hidden`}
+        title={breakdownSummary(row.breakdown, row.pointsSoFar)}
+      >
+        {rowContent}
+      </summary>
+      <div className="ml-9 mt-0.5 flex flex-wrap gap-x-3 gap-y-0.5 border-l border-line pl-2 pb-1.5 text-[11px] text-ink-soft">
+        {row.breakdown
+          .filter((b) => b.points !== 0 || b.identifier === "minutes")
+          .map((b) => (
+            <span key={b.identifier} className="tabular-nums">
+              {statLabel(b.identifier)}
+              {b.identifier === "minutes" ? (
+                <span className="text-ink-faint"> {b.value}&apos;</span>
+              ) : (
+                <span className={b.points >= 0 ? "text-[var(--accent)]" : "text-[var(--danger)]"}>
+                  {" "}
+                  {b.points >= 0 ? "+" : ""}
+                  {b.points}
+                </span>
+              )}
+            </span>
+          ))}
+      </div>
+    </details>
   );
 }
