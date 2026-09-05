@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { loadLatestForecast } from "@/lib/snapshots";
 import {
   buildLivePayload,
+  forecastLiveInputs,
   liveGameweek,
   type FplBootstrap,
   type FplFixture,
@@ -49,7 +50,7 @@ export async function GET() {
       live,
       fixtures,
       picks,
-      forecast,
+      inputs: forecastLiveInputs(forecast),
       gameweek,
       now: new Date().toISOString(),
     });

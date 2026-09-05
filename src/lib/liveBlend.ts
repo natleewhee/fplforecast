@@ -135,16 +135,61 @@ export function liveGameweek(bootstrap: FplBootstrap): number {
   return next ? next.id : bootstrap.events[bootstrap.events.length - 1]?.id ?? 0;
 }
 
+/** Per-component xP for whatever squad this payload is being built for, plus
+ * the par-score inputs -- split out from ``Forecast`` so the same builder
+ * works for a league entry that isn't "your" forecast (no par margin of its
+ * own; ``componentXpByElement`` sourced from the pool instead of
+ * ``squadComponents`` so it covers any player, not just your held 15). */
+export type LiveProjectionInputs = {
+  componentXpByElement: Record<string, Record<string, number>>;
+  parMargin: number;
+  marginProvisional: boolean;
+  parBuffer: number;
+  parBufferProvisional: number;
+};
+
+export function forecastLiveInputs(forecast: Forecast): LiveProjectionInputs {
+  return {
+    componentXpByElement: forecast.squadComponents ?? {},
+    parMargin: forecast.parMargin ?? 0,
+    marginProvisional: forecast.marginProvisional ?? true,
+    parBuffer: forecast.parBuffer ?? 4,
+    parBufferProvisional: forecast.parBufferProvisional ?? 8,
+  };
+}
+
+/** Every pool player's target-gameweek component breakdown, keyed the same
+ * way as ``squadComponents`` -- lets a league entry's arbitrary picks (not
+ * just your own squad) get the same decay-based live projection. */
+export function poolLiveInputs(forecast: Forecast): LiveProjectionInputs {
+  const componentXpByElement: Record<string, Record<string, number>> = {};
+  for (const p of forecast.pool ?? []) {
+    if (p.components) componentXpByElement[String(p.id)] = p.components;
+  }
+  // A league entry's squad may include your own held players too (not in
+  // `pool` if one of them is unavailable) -- squadComponents fills that gap.
+  for (const [id, components] of Object.entries(forecast.squadComponents ?? {})) {
+    if (!(id in componentXpByElement)) componentXpByElement[id] = components;
+  }
+  return {
+    componentXpByElement,
+    parMargin: 0,
+    marginProvisional: true,
+    parBuffer: forecast.parBuffer ?? 4,
+    parBufferProvisional: forecast.parBufferProvisional ?? 8,
+  };
+}
+
 export function buildLivePayload(args: {
   bootstrap: FplBootstrap;
   live: FplLive;
   fixtures: FplFixture[];
   picks: FplPicks;
-  forecast: Forecast;
+  inputs: LiveProjectionInputs;
   gameweek: number;
   now: string;
 }): LivePayload {
-  const { bootstrap, live, fixtures, picks, forecast, gameweek, now } = args;
+  const { bootstrap, live, fixtures, picks, inputs, gameweek, now } = args;
 
   const elementById = new Map(bootstrap.elements.map((el) => [el.id, el]));
   const teamName = new Map(bootstrap.teams.map((t) => [t.id, t.short_name]));
@@ -176,7 +221,7 @@ export function buildLivePayload(args: {
   const bench = sorted.filter((p) => p.position >= 12).map((p) => p.element);
   const captain = picks.picks.find((p) => p.is_captain);
   const vice = picks.picks.find((p) => p.is_vice_captain);
-  const components = forecast.squadComponents ?? {};
+  const components = inputs.componentXpByElement;
 
   const squad: LiveSquadPlayer[] = sorted.map((p) => {
     const meta = elementById.get(p.element);
@@ -232,10 +277,10 @@ export function buildLivePayload(args: {
       finished: Boolean(f.finished ?? f.finished_provisional),
     })),
     componentXpByElement: components,
-    parMargin: forecast.parMargin ?? 0,
-    marginProvisional: forecast.marginProvisional ?? true,
-    parBuffer: forecast.parBuffer ?? 4,
-    parBufferProvisional: forecast.parBufferProvisional ?? 8,
+    parMargin: inputs.parMargin,
+    marginProvisional: inputs.marginProvisional,
+    parBuffer: inputs.parBuffer,
+    parBufferProvisional: inputs.parBufferProvisional,
   };
 }
 

@@ -12,6 +12,7 @@ import {
 import Pitch from "./Pitch";
 import History from "./History";
 import LiveTracker from "./LiveTracker";
+import LeagueTable from "./LeagueTable";
 import Scenarios from "./Scenarios";
 import TransferForm from "./TransferForm";
 
@@ -331,6 +332,8 @@ export default function Home() {
             {/* KTD7: the tracker self-hides until the first kickoff, then leads.
                Otherwise the projected lineup leads, ahead of the planning table. */}
             <LiveTracker />
+
+            <LeagueTable />
 
             <Pitch forecast={forecast} />
 

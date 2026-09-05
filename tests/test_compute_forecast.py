@@ -68,6 +68,11 @@ def test_pool_block_covers_every_available_player_with_per_gw_projections(foreca
         assert isinstance(p["form"], (int, float))
         assert isinstance(p["price"], (int, float))
         assert len(p["opponents"]) == ROLLING_WINDOW  # one leg group per target gameweek
+        # Target-gw component breakdown for every pool player (not just the
+        # held squad) -- the live tracker's decay math needs this to project
+        # a league entry's arbitrary picks the same way it projects yours.
+        assert p["components"] is not None
+        assert sum(p["components"].values()) == pytest.approx(p["perGameweek"][0], abs=0.05)
 
 
 def test_doubtful_player_stays_in_the_pool(forecast):
