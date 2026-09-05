@@ -1,0 +1,5 @@
+# api/solve.py only imports engine.optimise (+ engine.config), which needs
+# just PuLP -- deliberately NOT pandas/numpy (those are the root
+# requirements.txt's, for the engine/scripts model code this function never
+# imports), to keep this Vercel Python Function's bundle and cold start small.
+pulp

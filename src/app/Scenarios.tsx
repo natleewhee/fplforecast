@@ -1,7 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import type { PoolPlayer, Scenario, ScenarioPlayerRef, Scenarios as ScenariosData } from "@/lib/snapshots";
+import type {
+  ForecastPlayer,
+  PoolPlayer,
+  Scenario,
+  ScenarioPlayerRef,
+  Scenarios as ScenariosData,
+} from "@/lib/snapshots";
 import { availabilityFlag } from "@/lib/availability";
 import { OppChip } from "./Pitch";
 import { kitFor } from "@/lib/teamColors";
@@ -272,7 +278,130 @@ function ChipCard({
   );
 }
 
-export default function Scenarios({ scenarios, pool }: { scenarios: ScenariosData; pool: PoolPlayer[] }) {
+type LockState = "keep" | "remove";
+
+/** Force-keep/force-remove a squad player, then re-solve live via
+ * /api/solve.py -- the one thing that can't be precomputed at build time,
+ * since a pick is one of 15 players x keep/remove and there's no bounding
+ * that combinatorially. Everything else on this page is static JSON; this
+ * panel is the sole live network call. */
+function ForceLockPanel({
+  squad,
+  forecastGw,
+  horizon,
+}: {
+  squad: ForecastPlayer[];
+  forecastGw: number;
+  horizon: Horizon;
+}) {
+  const [locks, setLocks] = useState<Map<number, LockState>>(new Map());
+  const [result, setResult] = useState<Scenario | null>(null);
+  const [status, setStatus] = useState<"idle" | "loading" | "error">("idle");
+  const [error, setError] = useState<string | null>(null);
+
+  const cycleLock = (id: number) => {
+    setLocks((prev) => {
+      const next = new Map(prev);
+      const current = next.get(id);
+      if (current === undefined) next.set(id, "keep");
+      else if (current === "keep") next.set(id, "remove");
+      else next.delete(id);
+      return next;
+    });
+    setResult(null);
+    setStatus("idle");
+  };
+
+  const solve = async () => {
+    setStatus("loading");
+    setError(null);
+    try {
+      const forceIn = [...locks.entries()].filter(([, v]) => v === "keep").map(([id]) => id);
+      const forceOut = [...locks.entries()].filter(([, v]) => v === "remove").map(([id]) => id);
+      const res = await fetch("/api/solve", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ forecastGw, type: "transfer", horizon: Number(horizon), forceIn, forceOut }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || `solve failed (${res.status})`);
+      setResult(data as Scenario);
+      setStatus("idle");
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "solve failed");
+      setStatus("error");
+    }
+  };
+
+  return (
+    <div className="panel space-y-3 p-3">
+      <div className="flex flex-wrap items-center justify-between gap-2">
+        <h3 className="eyebrow">Force keep / remove</h3>
+        <p className="text-[11px] text-ink-faint">Tap a player: keep -&gt; remove -&gt; clear</p>
+      </div>
+      <div className="flex flex-wrap gap-1.5">
+        {squad.map((p) => {
+          const lock = locks.get(p.id);
+          return (
+            <button
+              key={p.id}
+              onClick={() => cycleLock(p.id)}
+              className="rounded-full border px-2 py-1 text-xs font-medium transition-colors"
+              style={
+                lock === "keep"
+                  ? { borderColor: "var(--accent)", color: "var(--accent)", background: "color-mix(in srgb, var(--accent) 14%, transparent)" }
+                  : lock === "remove"
+                  ? { borderColor: "var(--danger)", color: "var(--danger)", background: "color-mix(in srgb, var(--danger) 14%, transparent)", textDecoration: "line-through" }
+                  : { borderColor: "var(--border)", color: "var(--ink-soft)" }
+              }
+            >
+              {p.webName}
+            </button>
+          );
+        })}
+      </div>
+      <div className="flex items-center gap-2">
+        <button
+          className="rounded-lg bg-gradient-to-b from-[var(--accent)] to-[#23c78c] px-3 py-1.5 text-xs font-bold text-black shadow-[0_0_20px_var(--accent-glow)] transition hover:brightness-110 disabled:cursor-not-allowed disabled:bg-none disabled:bg-white/5 disabled:text-ink-faint disabled:shadow-none"
+          disabled={locks.size === 0 || status === "loading"}
+          onClick={solve}
+        >
+          {status === "loading" ? "Solving…" : `Solve with ${locks.size} pin${locks.size === 1 ? "" : "s"}`}
+        </button>
+        {locks.size > 0 && (
+          <button className="text-xs text-ink-faint underline" onClick={() => { setLocks(new Map()); setResult(null); }}>
+            clear
+          </button>
+        )}
+      </div>
+      {status === "error" && <p className="text-xs text-[var(--danger)]">{error}</p>}
+      {result && (
+        <div className="border-t border-line pt-2">
+          <div className="mb-1.5 flex items-center justify-between">
+            <span className="text-sm font-semibold text-ink">Custom scenario</span>
+            <span className="stat text-base leading-none">{result.netPoints.toFixed(1)}</span>
+          </div>
+          {result.hitCost > 0 && (
+            <p className="mb-1.5 text-xs text-[var(--danger)]">−{result.hitCost} hit taken</p>
+          )}
+          <TransferPairs scenario={result} />
+        </div>
+      )}
+    </div>
+  );
+}
+
+export default function Scenarios({
+  scenarios,
+  pool,
+  squad,
+  forecastGw,
+}: {
+  scenarios: ScenariosData;
+  pool: PoolPlayer[];
+  squad: ForecastPlayer[];
+  forecastGw: number;
+}) {
   const [horizon, setHorizon] = useState<Horizon>("1");
   const poolById = new Map(pool.map((p) => [p.id, p]));
 
@@ -315,6 +444,8 @@ export default function Scenarios({ scenarios, pool }: { scenarios: ScenariosDat
           ))}
         </div>
       )}
+
+      <ForceLockPanel squad={squad} forecastGw={forecastGw} horizon={horizon} />
 
       {(scenarios.freeHit || wildcardForHorizon) && (
         <div className="grid gap-3 sm:grid-cols-2">
