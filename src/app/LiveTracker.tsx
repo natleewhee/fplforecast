@@ -330,7 +330,7 @@ function PlayerRow({ row }: { row: TrackerRow }) {
           no xP
         </span>
       )}
-      <span className="ml-auto flex items-center gap-1 text-[11px] text-ink-faint">
+      <span className="ml-auto flex w-20 shrink-0 items-center justify-end gap-1 whitespace-nowrap text-[11px] text-ink-faint">
         {row.status === "notStarted" && row.fdrRating != null && (
           <span
             className="inline-block h-2 w-2 shrink-0 rounded-full"

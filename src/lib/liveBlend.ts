@@ -100,6 +100,8 @@ export type FplFixture = {
   kickoff_time?: string | null;
   team_h: number;
   team_a: number;
+  team_h_difficulty?: number | null;
+  team_a_difficulty?: number | null;
 };
 type FplPick = { element: number; position: number; multiplier: number; is_captain: boolean; is_vice_captain: boolean };
 export type FplPicks = { picks: FplPick[] };
@@ -175,21 +177,22 @@ export function buildLivePayload(args: {
   const captain = picks.picks.find((p) => p.is_captain);
   const vice = picks.picks.find((p) => p.is_vice_captain);
   const components = forecast.squadComponents ?? {};
-  // This gameweek's own FDR per squad player, from the daily snapshot's
-  // baked fixture legs -- the live route has no FDR of its own to compute.
-  const fdrByElement = new Map<number, number | null>(
-    forecast.squad.players.map((p) => [p.id, p.opponents[0]?.fdrRating ?? null]),
-  );
 
   const squad: LiveSquadPlayer[] = sorted.map((p) => {
     const meta = elementById.get(p.element);
     const teamId = meta?.team ?? -1;
     const f = fixtureByTeam.get(teamId);
     let opponent: string | null = null;
+    let fdrRating: number | null = null;
     if (f) {
       const home = f.team_h === teamId;
       const oppId = home ? f.team_a : f.team_h;
       opponent = `${teamName.get(oppId) ?? "???"} (${home ? "H" : "A"})`;
+      // Read the difficulty off this same gameweek's fixture rather than the
+      // latest forecast snapshot -- that snapshot can already be looking
+      // ahead to next gameweek once it's been regenerated mid-gameweek,
+      // which mismatched this FDR against the (correct) opponent above.
+      fdrRating = (home ? f.team_h_difficulty : f.team_a_difficulty) ?? null;
     }
     return {
       id: p.element,
@@ -202,7 +205,7 @@ export function buildLivePayload(args: {
       opponent,
       hasComponents: Boolean(components[String(p.element)]),
       kickoffTime: f?.kickoff_time ?? null,
-      fdrRating: fdrByElement.get(p.element) ?? null,
+      fdrRating,
     };
   });
 
@@ -315,14 +318,17 @@ export function playerStatus(
   if (!el || !el.fixtureStarted) return "notStarted";
   if (el.fixtureFinished) return el.minutes > 0 ? "finished" : "didNotPlay";
   if (el.minutes === 0) return "playing";
-  if (
+  const frozen =
     prevEl &&
     prevIso &&
     prevEl.minutes === el.minutes &&
-    el.minutes < MATCH_MINUTES &&
-    !(el.minutes >= 44 && el.minutes <= 46) &&
-    Date.parse(nowIso) - Date.parse(prevIso) >= OFF_PITCH_MIN_POLL_GAP_MS
-  ) {
+    Date.parse(nowIso) - Date.parse(prevIso) >= OFF_PITCH_MIN_POLL_GAP_MS;
+  // FPL's `finished`/`finished_provisional` flags can lag the final whistle by
+  // a poll or two while stats are checked. Once the minute count has been
+  // stuck at or past 90' across a poll gap, treat the player as finished
+  // rather than leaving them stuck on "playing" with a stale +0.0 forecast.
+  if (frozen && el.minutes >= MATCH_MINUTES) return "finished";
+  if (frozen && el.minutes < MATCH_MINUTES && !(el.minutes >= 44 && el.minutes <= 46)) {
     return "offPitch";
   }
   return "playing";
