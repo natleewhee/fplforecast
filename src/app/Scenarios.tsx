@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Carousel from "./Carousel";
 import type {
   ForecastPlayer,
   PoolPlayer,
@@ -391,6 +392,57 @@ function ForceLockPanel({
   );
 }
 
+/** Free Hit and Wildcard used to render side by side -- each is a full pitch
+ * view, so together they made this the tallest section on the page. Shown
+ * one at a time behind a toggle instead; defaults to whichever chip is
+ * actually available when only one is. */
+function ChipToggle({
+  freeHit,
+  wildcard,
+  horizon,
+  baselineFor1Gw,
+  rollForHorizon,
+  poolById,
+}: {
+  freeHit: Scenario | null;
+  wildcard: Scenario | null;
+  horizon: Horizon;
+  baselineFor1Gw: number | null;
+  rollForHorizon: number | null;
+  poolById: Map<number, PoolPlayer>;
+}) {
+  const [which, setWhich] = useState<"freeHit" | "wildcard">(freeHit ? "freeHit" : "wildcard");
+  const showToggle = freeHit && wildcard;
+  const active = which === "freeHit" && freeHit ? "freeHit" : wildcard ? "wildcard" : "freeHit";
+
+  return (
+    <div className="space-y-3">
+      {showToggle && (
+        <div className="segment">
+          <button data-active={active === "freeHit"} onClick={() => setWhich("freeHit")}>
+            Free Hit
+          </button>
+          <button data-active={active === "wildcard"} onClick={() => setWhich("wildcard")}>
+            Wildcard
+          </button>
+        </div>
+      )}
+      {active === "freeHit" && freeHit && (
+        <ChipCard title="FREE HIT" scenario={freeHit} baselineNetPoints={baselineFor1Gw} poolById={poolById} />
+      )}
+      {active === "wildcard" && wildcard && (
+        <ChipCard
+          key={horizon}
+          title={`WILDCARD — ${horizon} GW`}
+          scenario={wildcard}
+          baselineNetPoints={rollForHorizon}
+          poolById={poolById}
+        />
+      )}
+    </div>
+  );
+}
+
 export default function Scenarios({
   scenarios,
   pool,
@@ -433,7 +485,7 @@ export default function Scenarios({
       {scenariosForHorizon.length === 0 ? (
         <p className="px-1 text-sm text-ink-soft">No feasible scenario found for this horizon.</p>
       ) : (
-        <div className="grid gap-3 sm:grid-cols-3">
+        <Carousel>
           {scenariosForHorizon.map((s, i) => (
             <TransferScenarioCard
               key={i}
@@ -442,31 +494,20 @@ export default function Scenarios({
               rank={i}
             />
           ))}
-        </div>
+        </Carousel>
       )}
 
       <ForceLockPanel squad={squad} forecastGw={forecastGw} horizon={horizon} />
 
       {(scenarios.freeHit || wildcardForHorizon) && (
-        <div className="grid gap-3 sm:grid-cols-2">
-          {scenarios.freeHit && (
-            <ChipCard
-              title="FREE HIT"
-              scenario={scenarios.freeHit}
-              baselineNetPoints={baselineFor1Gw ? baselineFor1Gw.netPoints : null}
-              poolById={poolById}
-            />
-          )}
-          {wildcardForHorizon && (
-            <ChipCard
-              key={horizon}
-              title={`WILDCARD — ${horizon} GW`}
-              scenario={wildcardForHorizon}
-              baselineNetPoints={rollForHorizon}
-              poolById={poolById}
-            />
-          )}
-        </div>
+        <ChipToggle
+          freeHit={scenarios.freeHit}
+          wildcard={wildcardForHorizon}
+          horizon={horizon}
+          baselineFor1Gw={baselineFor1Gw ? baselineFor1Gw.netPoints : null}
+          rollForHorizon={rollForHorizon}
+          poolById={poolById}
+        />
       )}
     </section>
   );

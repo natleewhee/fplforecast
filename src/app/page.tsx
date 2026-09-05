@@ -15,6 +15,8 @@ import LiveTracker from "./LiveTracker";
 import LeagueTable from "./LeagueTable";
 import Scenarios from "./Scenarios";
 import TransferForm from "./TransferForm";
+import AppTabs from "./AppTabs";
+import Carousel from "./Carousel";
 
 export const dynamic = "force-static";
 
@@ -324,72 +326,83 @@ export default function Home() {
   );
 
   if (forecast && forecast.squad && forecast.squad.startingXi) {
+    const liveTab = (
+      <>
+        <LiveTracker />
+        <LeagueTable />
+      </>
+    );
+
+    const squadTab = (
+      <>
+        <Pitch forecast={forecast} />
+
+        {chips && (
+          <div className="flex flex-wrap gap-1.5">
+            {chips.map((c) => (
+              <span
+                key={c.name}
+                className={c.remaining > 0 ? "chip chip-accent" : "chip opacity-50 line-through"}
+              >
+                {c.name} {c.remaining > 0 ? `(${c.remaining})` : "used"}
+              </span>
+            ))}
+          </div>
+        )}
+
+        <Carousel>
+          <GameweekReviewModule review={forecast.lastGameweek} />
+          <RunningRecordModule record={forecast.runningRecord} />
+          <CaptainModule forecast={forecast} />
+          <ParCalibrationModule calibration={forecast.parCalibration} />
+        </Carousel>
+
+        {forecast.history && <History history={forecast.history} />}
+      </>
+    );
+
+    const scenariosTab = (
+      <>
+        {forecast.scenarios && (
+          <Scenarios
+            scenarios={forecast.scenarios}
+            pool={forecast.pool ?? []}
+            squad={forecast.squad.players}
+            forecastGw={forecast.targetGameweek}
+          />
+        )}
+
+        {overrides &&
+          overrides.basedOnGw === forecast.basedOnGameweek &&
+          overrides.transfers.length > 0 && (
+            <p className="font-mono text-[11px] text-ink-faint">
+              pending: {overrides.transfers.map((t) => `out ${t.out} → in ${t.in}`).join(", ")}
+            </p>
+          )}
+
+        <Card>
+          <TransferForm
+            squad={forecast.squad.players}
+            allPlayers={bootstrap.players}
+            basedOnGw={forecast.basedOnGameweek}
+            bank={forecast.squad.bank}
+          />
+        </Card>
+      </>
+    );
+
     return (
       <>
         <Header subtitle={`GW${forecast.targetGameweek} · from your GW${forecast.basedOnGameweek} squad`} />
         <Shell>
-          <div className="space-y-4 pt-4">
-            {/* KTD7: the tracker self-hides until the first kickoff, then leads.
-               Otherwise the projected lineup leads, ahead of the planning table. */}
-            <LiveTracker />
-
-            <LeagueTable />
-
-            <Pitch forecast={forecast} />
-
-            {forecast.scenarios && (
-              <Scenarios
-                scenarios={forecast.scenarios}
-                pool={forecast.pool ?? []}
-                squad={forecast.squad.players}
-                forecastGw={forecast.targetGameweek}
-              />
-            )}
-
-            {chips && (
-              <div className="flex flex-wrap gap-1.5">
-                {chips.map((c) => (
-                  <span
-                    key={c.name}
-                    className={
-                      c.remaining > 0 ? "chip chip-accent" : "chip opacity-50 line-through"
-                    }
-                  >
-                    {c.name} {c.remaining > 0 ? `(${c.remaining})` : "used"}
-                  </span>
-                ))}
-              </div>
-            )}
-
-            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              <GameweekReviewModule review={forecast.lastGameweek} />
-              <RunningRecordModule record={forecast.runningRecord} />
-              <CaptainModule forecast={forecast} />
-            </div>
-
-            {forecast.history && <History history={forecast.history} />}
-
-            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              <ParCalibrationModule calibration={forecast.parCalibration} />
-            </div>
-
-            {overrides &&
-              overrides.basedOnGw === forecast.basedOnGameweek &&
-              overrides.transfers.length > 0 && (
-                <p className="font-mono text-[11px] text-ink-faint">
-                  pending: {overrides.transfers.map((t) => `out ${t.out} → in ${t.in}`).join(", ")}
-                </p>
-              )}
-
-            <Card>
-              <TransferForm
-                squad={forecast.squad.players}
-                allPlayers={bootstrap.players}
-                basedOnGw={forecast.basedOnGameweek}
-                bank={forecast.squad.bank}
-              />
-            </Card>
-
+          <div className="pt-4">
+            <AppTabs
+              tabs={[
+                { id: "live", label: "Live", content: liveTab },
+                { id: "squad", label: "Squad", content: squadTab },
+                { id: "scenarios", label: "Scenarios", content: scenariosTab },
+              ]}
+            />
             {footer}
           </div>
         </Shell>

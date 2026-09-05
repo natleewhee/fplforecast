@@ -212,6 +212,7 @@ export default function Pitch({ forecast }: { forecast: Forecast }) {
   const byId = new Map(squad.players.map((p) => [p.id, p]));
   const [gwIdx, setGwIdx] = useState(0);
   const [mode, setMode] = useState<ViewMode>("model");
+  const [showAllGws, setShowAllGws] = useState(false);
 
   const active = upcoming[gwIdx] ?? upcoming[0];
   if (!active) return null;
@@ -279,9 +280,10 @@ export default function Pitch({ forecast }: { forecast: Forecast }) {
     <div className="space-y-4">
       {/* ===== the pitch ===== */}
       <div className="panel rise overflow-hidden p-3 sm:p-4">
-        {/* GW rail */}
-        <div className="-mx-1 mb-3 flex gap-1.5 overflow-x-auto px-1 pb-1">
-          {upcoming.map((u, i) => {
+        {/* GW rail -- collapsed to the current gameweek by default; "what's my
+           score next week" is secondary to "what's my team right now". */}
+        <div className="-mx-1 mb-3 flex items-center gap-1.5 overflow-x-auto px-1 pb-1">
+          {(showAllGws ? upcoming : upcoming.slice(0, 1)).map((u, i) => {
             const on = i === gwIdx;
             return (
               <button
@@ -302,6 +304,14 @@ export default function Pitch({ forecast }: { forecast: Forecast }) {
               </button>
             );
           })}
+          {!showAllGws && upcoming.length > 1 && (
+            <button
+              onClick={() => setShowAllGws(true)}
+              className="shrink-0 rounded-xl border border-line px-3 py-1.5 text-[11px] text-ink-faint transition hover:border-border-strong hover:text-ink-soft"
+            >
+              +{upcoming.length - 1} more
+            </button>
+          )}
         </div>
 
         <div className="mb-3 flex items-start justify-between gap-3">
@@ -394,15 +404,20 @@ export default function Pitch({ forecast }: { forecast: Forecast }) {
         </div>
 
         {isTargetGw && effMode === "model" && (
-          <ul className="mt-3 space-y-1 border-t border-line pt-3 font-mono text-[10.5px] leading-relaxed text-ink-faint [overflow-wrap:anywhere]">
-            {(benchIds.map((id) => byId.get(id)).filter(Boolean) as ForecastPlayer[])
-              .filter((p) => p.rationale)
-              .map((p) => (
-                <li key={p.id}>
-                  <span className="text-ink-soft">{p.webName}</span> benched — {p.rationale}
-                </li>
-              ))}
-          </ul>
+          <details className="mt-3 border-t border-line pt-3">
+            <summary className="cursor-pointer text-[11px] font-medium text-ink-soft hover:text-ink">
+              Why this XI?
+            </summary>
+            <ul className="mt-2 space-y-1 font-mono text-[10.5px] leading-relaxed text-ink-faint [overflow-wrap:anywhere]">
+              {(benchIds.map((id) => byId.get(id)).filter(Boolean) as ForecastPlayer[])
+                .filter((p) => p.rationale)
+                .map((p) => (
+                  <li key={p.id}>
+                    <span className="text-ink-soft">{p.webName}</span> benched — {p.rationale}
+                  </li>
+                ))}
+            </ul>
+          </details>
         )}
       </div>
     </div>
