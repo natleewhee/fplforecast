@@ -292,3 +292,20 @@ def test_team_id_comes_from_the_environment(monkeypatch):
     finally:
         monkeypatch.delenv("FPL_TEAM_ID", raising=False)
         importlib.reload(cf)
+
+
+def test_player_ref_resolves_a_held_player_absent_from_the_available_pool():
+    """``pool`` excludes unavailable players (status != "a"), but a held
+    squad player can still be unavailable -- the optimiser correctly sells
+    them, and they surface in a scenario's transfersOut. Without a
+    squad_cards fallback, _player_ref can't find their webName/team/price
+    and the UI renders "?" for them."""
+    squad_cards = [
+        {"id": 11, "webName": "Mosquera", "team": "ARS", "position": "DEF", "price": 5.0},
+    ]
+    pool_by_id = {}
+    for card in squad_cards:
+        pool_by_id.setdefault(card["id"], card)
+    ref = cf._player_ref(11, pool_by_id)
+    assert ref["webName"] == "Mosquera"
+    assert ref["price"] == 5.0
