@@ -176,11 +176,32 @@ Both chips are offered only while `chips: []` shows them unused — once played,
 disappears rather than showing a stale recommendation.
 
 **Solve count per forecast build:** 3 horizons × 4 transfer counts (k=0..3) + Free Hit + Wildcard
-= **14 solves**. At ~486 players × 5 gameweeks the model is roughly 5k binaries — CBC territory
-of seconds, not minutes. If the build gets slow, the fallback is to shortlist candidates (top ~40
-per position by horizon xP, plus all held players) for the *transfer* scenarios only, keeping the
-full pool for Free Hit and Wildcard. That trades global optimality for speed, so it stays a
-fallback, not the default.
+= **14 solves**.
+
+**Measured, not estimated** (2026-09-05, real 486-player pool, Wildcard shape — the hardest case,
+since it has unlimited transfers and the widest candidate set):
+
+| Formulation | Horizon | Solve time | Objective |
+|---|---|---|---|
+| All-binary | 1 GW | 0.15 s | 77.93 |
+| All-binary | 5 GW | **0.53 s** | 392.76 |
+| Continuous XI/captain | 1 GW | 0.16 s | 77.93 |
+| Continuous XI/captain | 5 GW | 3.86 s | 392.76 |
+
+Two conclusions, both of which change the implementation:
+
+1. **Speed is a non-issue — 14 solves land comfortably inside a minute.** The candidate-shortlist
+   fallback is *not needed* and should not be built. Use the full 486-player pool everywhere,
+   including the transfer scenarios, so every scenario is globally optimal.
+2. **Declare the XI and captain variables binary, not continuous.** Relaxing them is *provably
+   safe* — the position classes plus a total form a laminar family, so for any fixed squad the XI
+   polytope is integral, and the measured `worst_fractional = 0.00` across every gameweek confirms
+   it — but it is **7× slower** (3.86 s vs 0.53 s at a 5-gameweek horizon). CBC's presolve and
+   branching exploit the explicit integrality. Both formulations return the identical optimum
+   (392.76), so this is purely a performance call, and it goes against the relaxation.
+
+Keep the integrality assertion as a test regardless (the extracted XI must be 11 distinct whole
+players per gameweek) — it is cheap and pins the formulation.
 
 ### Where it runs
 
