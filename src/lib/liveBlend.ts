@@ -104,7 +104,7 @@ export type FplFixture = {
   team_a_difficulty?: number | null;
 };
 type FplPick = { element: number; position: number; multiplier: number; is_captain: boolean; is_vice_captain: boolean };
-export type FplPicks = { picks: FplPick[] };
+export type FplPicks = { picks: FplPick[]; active_chip?: string | null };
 
 const POSITION_BY_ELEMENT_TYPE: Record<number, Position> = { 1: "GKP", 2: "DEF", 3: "MID", 4: "FWD" };
 
