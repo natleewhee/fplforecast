@@ -228,11 +228,19 @@ function TrackerPanel({
   error: string | null;
   lastOk: string | null;
 }) {
-  const up = view.gapToPar >= 0;
-  const gapLabel = `${up ? "+" : "−"}${Math.abs(view.gapToPar).toFixed(1)} vs par`;
   const starters = view.rows.filter((r) => !r.isBench || r.subbedIn);
   const bench = view.rows.filter((r) => r.isBench && !r.subbedIn);
   const currentScore = starters.reduce((sum, r) => sum + r.pointsSoFar, 0);
+
+  // Safety score: score above this and you're in the clear (green) --
+  // reframed from the raw par/gap numbers, which read as unexplained jargon
+  // rather than a single actionable threshold.
+  const safetyScore = view.par + view.buffer;
+  const bandStatus: Record<TrackerView["band"], string> = {
+    green: "In the clear",
+    amber: "Borderline",
+    red: "At risk",
+  };
 
   return (
     <div className="panel rise space-y-4 p-4">
@@ -269,30 +277,29 @@ function TrackerPanel({
         </div>
       </div>
 
-      <div className="flex items-center gap-2">
-        <span className={BAND_CLASS[view.band]}>
-          {up ? "▲" : "▼"} {gapLabel}
+      <div className="flex flex-wrap items-center gap-2">
+        <span className={BAND_CLASS[view.band]}>{bandStatus[view.band]}</span>
+        <span className="text-xs text-ink-soft">
+          score above <span className="font-mono font-semibold text-ink">{safetyScore.toFixed(0)}</span>{" "}
+          and you&rsquo;re in the clear
         </span>
         {view.lowConfidence && <span className="chip">low confidence</span>}
       </div>
 
       <details className="text-[11px] text-ink-faint">
         <summary className="cursor-pointer font-medium text-ink-soft hover:text-ink">
-          What&rsquo;s &ldquo;par&rdquo;?
+          How is the safety score worked out?
         </summary>
         <div className="mt-1.5 space-y-1.5">
           <p>
-            Par is the score you&rsquo;d need this gameweek to roughly hold your current rank in
-            your league(s) — not just &ldquo;a good score&rdquo; in the abstract. It&rsquo;s the
-            gameweek average ({payload.liveAverage.toFixed(1)}) plus your own hold-rank margin
-            (+{payload.parMargin.toFixed(1)}, from how far above the average you&rsquo;ve typically
-            needed to score to hold rank in past gameweeks). &ldquo;{gapLabel}&rdquo; is your
-            projected total measured against that line — above it and you&rsquo;re on track to
-            gain rank, below it and you&rsquo;re on track to lose some.
-          </p>
-          <p>
-            The buffer ({view.buffer.toFixed(0)} pts) is a cushion around par before the band
-            actually turns green/red, since the margin itself is an estimate.
+            It&rsquo;s built from the gameweek average ({payload.liveAverage.toFixed(1)}) plus
+            your own hold-rank margin (+{payload.parMargin.toFixed(1)}, from how far above the
+            average you&rsquo;ve typically needed to score to hold rank in past gameweeks) — that
+            sum is &ldquo;par&rdquo; ({view.par.toFixed(1)}), the break-even line. The safety score
+            adds a buffer on top ({view.buffer.toFixed(0)} pts, a cushion since the margin itself
+            is an estimate): score above the safety score and you&rsquo;re safely in the clear;
+            between par and the safety score is borderline; below par you&rsquo;re on track to
+            lose rank.
           </p>
           {view.lowConfidence && (
             <p>

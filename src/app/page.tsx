@@ -351,9 +351,9 @@ export default function Home() {
         )}
 
         <Carousel>
+          <CaptainModule forecast={forecast} />
           <GameweekReviewModule review={forecast.lastGameweek} />
           <RunningRecordModule record={forecast.runningRecord} />
-          <CaptainModule forecast={forecast} />
           <ParCalibrationModule calibration={forecast.parCalibration} />
         </Carousel>
 

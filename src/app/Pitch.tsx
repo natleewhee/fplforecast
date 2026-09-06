@@ -11,19 +11,12 @@ function bandLabel(band: { floor: number; ceiling: number; bandProvisional: bool
   return band.bandProvisional ? `${range} (provisional range)` : range;
 }
 
-type ViewMode = "model" | "baseline" | "yours";
-// One-line "what am I looking at" for each toggle position -- Model/Baseline/
-// Your XI reads as three unlabelled tabs otherwise.
-const MODE_CAPTION: Record<ViewMode, string> = {
-  model: "This app's recommended XI and captain: scoring history, form and ICT, plus fixture difficulty and minutes risk.",
-  baseline: "A simpler comparison XI: scoring history, form and ICT only -- no fixture or minutes adjustment. What the model has to beat.",
-  yours: "The XI and captain you've actually left in as of last week, unchanged.",
-};
-const MODE_LABEL: Record<ViewMode, string> = {
-  model: "Model",
-  baseline: "Baseline",
-  yours: "Your XI",
-};
+// This app's recommended XI/captain is the only view shown (Baseline and
+// Your XI were removed as a toggle per feedback -- the comparison deltas
+// below the header ("vs no change", "vs baseline") still carry that
+// information without needing a separate pitch view to switch to).
+const MODEL_CAPTION =
+  "This app's recommended XI and captain: scoring history, form and ICT, plus fixture difficulty and minutes risk.";
 
 const POSITION_DOT: Record<string, string> = {
   GKP: "var(--gkp)",
@@ -218,53 +211,34 @@ export default function Pitch({ forecast }: { forecast: Forecast }) {
   const { squad, upcoming } = forecast;
   const byId = new Map(squad.players.map((p) => [p.id, p]));
   const [gwIdx, setGwIdx] = useState(0);
-  const [mode, setMode] = useState<ViewMode>("model");
   const [showAllGws, setShowAllGws] = useState(false);
 
   const active = upcoming[gwIdx] ?? upcoming[0];
   if (!active) return null;
   const isTargetGw = gwIdx === 0;
-  const effMode: ViewMode = isTargetGw ? mode : "model";
 
-  // which eleven + captain
-  let xiIds: number[];
-  let benchIds: number[];
-  let captainId: number | null;
-  let viceId: number | null;
-  if (effMode === "baseline") {
-    xiIds = squad.baselineXi;
-    benchIds = squad.baselineBench;
-    captainId = squad.baselineCaptainId;
-    viceId = null;
-  } else if (effMode === "yours") {
-    xiIds = squad.yourXi;
-    benchIds = squad.yourBench;
-    captainId = squad.yourCaptainId;
-    viceId = null;
-  } else {
-    xiIds = active.startingXi;
-    benchIds = active.bench;
-    captainId = active.captainId;
-    viceId = active.viceCaptainId;
-  }
+  // which eleven + captain -- always this app's recommended XI
+  const xiIds = active.startingXi;
+  const benchIds = active.bench;
+  const captainId = active.captainId;
+  const viceId = active.viceCaptainId;
 
-  // per-player xP / opponents for the shown GW+mode
+  // per-player xP / opponents for the shown GW, from that gameweek's own
+  // player entry (fixtures/minutes can differ gameweek to gameweek).
   const gwPlayerById = new Map(active.players.map((p) => [p.id, p]));
   const tok = (id: number): Tok | null => {
     const base = byId.get(id);
     if (!base) return null;
     const gp = gwPlayerById.get(id);
-    // baseline / yours at the target GW: score on the model's target-GW points
-    const useSquad = effMode !== "model";
     return {
       id,
       webName: base.webName,
       position: base.position,
       team: base.team,
-      xp: useSquad ? base.projectedPoints ?? null : gp?.projectedPoints ?? null,
-      provisional: useSquad ? base.provisional : gp?.provisional,
+      xp: gp?.projectedPoints ?? null,
+      provisional: gp?.provisional,
       minutesRisk: base.minutesRisk,
-      opponents: useSquad ? base.opponents : gp?.opponents ?? [],
+      opponents: gp?.opponents ?? [],
       breakdown: base.breakdown,
       floorCeiling: base.floorCeiling,
       availability: base.availability,
@@ -275,13 +249,7 @@ export default function Pitch({ forecast }: { forecast: Forecast }) {
   const benched = benchIds.map(tok).filter(Boolean) as Tok[];
   const rows = ROWS.map((pos) => xi.filter((p) => p.position === pos)).filter((r) => r.length);
 
-  // headline total for this view
-  let headline = active.points;
-  if (effMode === "baseline")
-    headline = forecast.nextGw.points - forecast.nextGw.deltaVsBaselineXi;
-  if (effMode === "yours")
-    headline = forecast.nextGw.points - forecast.nextGw.deltaVsNoChange;
-  const vsModel = headline - forecast.nextGw.points;
+  const headline = active.points;
 
   return (
     <div className="space-y-4">
@@ -324,21 +292,12 @@ export default function Pitch({ forecast }: { forecast: Forecast }) {
         <div className="mb-3 flex items-start justify-between gap-3">
           <div className="min-w-0">
             <h2 className="font-mono text-[13px] font-bold tracking-[0.12em] text-ink">
-              {isTargetGw ? MODE_LABEL[mode].toUpperCase() : "MODEL"} · GW{active.gameweek}
+              MODEL · GW{active.gameweek}
             </h2>
             {isTargetGw ? (
-              <>
-                <div className="mt-1 segment">
-                  {(Object.keys(MODE_LABEL) as ViewMode[]).map((m) => (
-                    <button key={m} data-active={mode === m} onClick={() => setMode(m)}>
-                      {MODE_LABEL[m]}
-                    </button>
-                  ))}
-                </div>
-                <p className="mt-1 max-w-[26rem] text-[10.5px] leading-snug text-ink-faint">
-                  {MODE_CAPTION[mode]}
-                </p>
-              </>
+              <p className="mt-1 max-w-[26rem] text-[10.5px] leading-snug text-ink-faint">
+                {MODEL_CAPTION}
+              </p>
             ) : (
               <p className="eyebrow mt-0.5">projected lineup</p>
             )}
@@ -348,35 +307,28 @@ export default function Pitch({ forecast }: { forecast: Forecast }) {
               {headline.toFixed(0)}
             </div>
             <div className="eyebrow mt-1">proj pts</div>
-            {isTargetGw && effMode === "model" && (
-              <div
-                className="mt-0.5 font-mono text-[10px] text-ink-faint"
-                title="Safety-score band: one realised-residual stdev either side, aggregated over the XI assuming independence"
-              >
-                {forecast.xiFloorCeiling.floor.toFixed(0)}–{forecast.xiFloorCeiling.ceiling.toFixed(0)}
-                {forecast.xiFloorCeiling.bandProvisional && " (provisional)"}
-              </div>
+            {isTargetGw && (
+              <details className="mt-0.5">
+                <summary className="cursor-pointer list-none font-mono text-[10px] text-ink-faint hover:text-ink-soft">
+                  {forecast.xiFloorCeiling.floor.toFixed(0)}–{forecast.xiFloorCeiling.ceiling.toFixed(0)}
+                  {forecast.xiFloorCeiling.bandProvisional && " (prov.)"}
+                </summary>
+                <p className="mt-1 max-w-[10rem] text-left text-[10px] leading-snug text-ink-faint">
+                  Likely range for the XI&rsquo;s total: one realised-residual standard deviation
+                  either side of the projection.
+                  {forecast.xiFloorCeiling.bandProvisional &&
+                    " Provisional -- too little realised history yet, so this band is wider than it will settle to."}
+                </p>
+              </details>
             )}
           </div>
         </div>
 
         {isTargetGw && (
           <div className="mb-2 flex flex-wrap items-center gap-1.5">
-            {effMode === "model" ? (
-              <>
-                <span className="chip">{fmtDelta(forecast.nextGw.deltaVsNoChange)} vs no change</span>
-                <span className="chip">
-                  {fmtDelta(forecast.nextGw.deltaVsBaselineXi)} vs baseline
-                </span>
-                <span className="chip">
-                  agree {forecast.lineupAgreement}/11
-                </span>
-              </>
-            ) : (
-              <span className={vsModel >= 0 ? "chip chip-accent" : "chip chip-danger"}>
-                {fmtDelta(vsModel)} vs model XI
-              </span>
-            )}
+            <span className="chip">{fmtDelta(forecast.nextGw.deltaVsNoChange)} vs no change</span>
+            <span className="chip">{fmtDelta(forecast.nextGw.deltaVsBaselineXi)} vs baseline</span>
+            <span className="chip">agree {forecast.lineupAgreement}/11</span>
           </div>
         )}
 
@@ -415,7 +367,7 @@ export default function Pitch({ forecast }: { forecast: Forecast }) {
           </div>
         </div>
 
-        {isTargetGw && effMode === "model" && (
+        {isTargetGw && (
           <details className="mt-3 border-t border-line pt-3">
             <summary className="cursor-pointer text-[11px] font-medium text-ink-soft hover:text-ink">
               Why this XI?
