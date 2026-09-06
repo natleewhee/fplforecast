@@ -88,6 +88,11 @@ export type LeaguePayload = {
   entries: LeagueEntryRow[]; // top 10 plus your own entry if you're outside it
   myRank: number | null;
   myEntryId: number;
+  // Set to your own entry id only when it was appended after the top 10 (i.e.
+  // you're outside it) -- an explicit flag rather than inferring it from a
+  // rank-number gap, since tied ranks (FPL gives equal `rank` to entries tied
+  // on points) make consecutive array rows' ranks not always differ by 1.
+  appendedEntryId: number | null;
   totalEntries: number; // count of entries actually paged through
   totalEntriesIsFloor: boolean; // true if the league is bigger than we paged through (totalEntries is a lower bound)
 };
@@ -128,14 +133,16 @@ async function fetchLeague(
     return null; // one league failing shouldn't sink the others
   }
 
-  // Top 10 always come from the first page (already sorted by rank). If
-  // your own entry isn't in it, keep paging (lightly -- just the standings
-  // list, no picks) until it turns up or the page cap is hit.
+  // Top 10 always come from the first page (already sorted by rank). Page
+  // through the rest (lightly -- just the standings list, no picks) up to
+  // the cap regardless of whether your entry has already turned up: stopping
+  // early the moment it's found would make `allResults.length` reflect
+  // "which page your rank happened to fall on" rather than a stable count,
+  // e.g. showing a *smaller* total for a *better* rank.
   const allResults = [...firstPage.standings.results];
   let hasNext = firstPage.standings.has_next;
   let page = 1;
-  let myResult = allResults.find((r) => r.entry === myEntryId);
-  while (!myResult && hasNext && page < MAX_STANDINGS_PAGES) {
+  while (hasNext && page < MAX_STANDINGS_PAGES) {
     page += 1;
     try {
       const next = await fpl<FplStandings>(
@@ -143,15 +150,15 @@ async function fetchLeague(
       );
       allResults.push(...next.standings.results);
       hasNext = next.standings.has_next;
-      myResult = allResults.find((r) => r.entry === myEntryId);
     } catch {
       break; // couldn't page further -- show what we have
     }
   }
+  const myResult = allResults.find((r) => r.entry === myEntryId);
 
   const top10 = firstPage.standings.results.slice(0, 10);
-  const resultsToDetail =
-    myResult && !top10.some((r) => r.entry === myResult!.entry) ? [...top10, myResult] : top10;
+  const wasAppended = Boolean(myResult && !top10.some((r) => r.entry === myResult.entry));
+  const resultsToDetail = wasAppended ? [...top10, myResult!] : top10;
 
   const entries = await Promise.all(
     resultsToDetail.map(async (row): Promise<LeagueEntryRow> => {
@@ -202,6 +209,7 @@ async function fetchLeague(
     entries,
     myRank: myResult?.rank ?? null,
     myEntryId,
+    appendedEntryId: wasAppended ? myEntryId : null,
     totalEntries: allResults.length,
     totalEntriesIsFloor: hasNext,
   };

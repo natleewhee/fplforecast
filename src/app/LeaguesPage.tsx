@@ -30,7 +30,7 @@ function RankHeader({ league }: { league: NonNullable<LeaguesResponse["league"]>
         Your rank: <span className="font-mono font-bold text-[var(--accent)]">#{league.myRank ?? "?"}</span>{" "}
         of {total}
       </span>
-      {league.myRank != null && league.myRank > 10 && (
+      {league.appendedEntryId != null && (
         <button
           type="button"
           onClick={scrollToMe}
@@ -73,11 +73,11 @@ function LeagueTable({ league, gameweek }: { league: LeaguesResponse["league"]; 
             {league.entries.map((e, i) => {
               const moved = e.lastRank - e.rank;
               const isMe = e.entryId === league.myEntryId;
-              // A gap in rank numbers between consecutive rows means "my"
-              // entry was appended after the top 10 -- draw a divider so
-              // it doesn't read as if they're adjacent in the standings.
-              const prevRank = i > 0 ? league.entries[i - 1].rank : null;
-              const showDivider = prevRank != null && e.rank - prevRank > 1;
+              // Driven by the server's explicit `appendedEntryId`, not a gap
+              // between consecutive ranks -- FPL gives tied entries the same
+              // `rank`, so a rank-number gap isn't a reliable "was this
+              // appended after the top 10" signal.
+              const showDivider = i > 0 && e.entryId === league.appendedEntryId;
               return (
                 <Fragment key={e.entryId}>
                   {showDivider && (
