@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { Dropdown } from "./Dropdown";
 import type { ForecastPlayer, Player } from "@/lib/snapshots";
 
 type Props = {
@@ -68,18 +69,14 @@ export default function TransferForm({ squad, allPlayers, basedOnGw, bank }: Pro
       </p>
 
       <label className="mt-3 block text-xs font-medium text-ink-soft">Out</label>
-      <select
-        className={fieldClass}
-        value={outId}
-        onChange={(e) => setOutId(e.target.value ? Number(e.target.value) : "")}
-      >
-        <option value="">Select player to transfer out…</option>
-        {squad.map((p) => (
-          <option key={p.id} value={p.id}>
-            {p.webName} ({p.position})
-          </option>
-        ))}
-      </select>
+      <div className="mt-1">
+        <Dropdown
+          value={outId}
+          onChange={setOutId}
+          placeholder="Select player to transfer out…"
+          options={squad.map((p) => ({ value: p.id, label: `${p.webName} (${p.position})` }))}
+        />
+      </div>
 
       <label className="mt-3 block text-xs font-medium text-ink-soft">In</label>
       <input

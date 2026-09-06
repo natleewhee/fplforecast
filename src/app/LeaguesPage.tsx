@@ -1,6 +1,7 @@
 "use client";
 
 import { Fragment, useCallback, useEffect, useState } from "react";
+import { Dropdown } from "./Dropdown";
 import type { LeagueEntryRow, LeaguesResponse } from "./api/league/route";
 
 const POLL_MS = 60_000;
@@ -226,17 +227,11 @@ export default function LeaguesPage() {
   return (
     <div className="space-y-4">
       {data.leagues.length > 1 && (
-        <select
-          className="w-full rounded border border-line bg-[var(--bg-0)] px-2 py-1.5 text-sm text-ink"
+        <Dropdown
           value={currentId ?? ""}
-          onChange={(e) => handleSelect(Number(e.target.value))}
-        >
-          {data.leagues.map((l) => (
-            <option key={l.leagueId} value={l.leagueId}>
-              {l.leagueName}
-            </option>
-          ))}
-        </select>
+          onChange={handleSelect}
+          options={data.leagues.map((l) => ({ value: l.leagueId, label: l.leagueName }))}
+        />
       )}
       <LeagueTable league={data.league} gameweek={data.gameweek} />
       {data.league && (
