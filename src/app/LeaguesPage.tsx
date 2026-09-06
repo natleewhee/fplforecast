@@ -7,7 +7,7 @@ const POLL_MS = 60_000;
 const STORAGE_KEY = "fplforecast:selectedLeagueId";
 
 function LiveCell({ entry }: { entry: LeagueEntryRow }) {
-  if (entry.playersLive == null || entry.playersToPlay == null) return <span>—</span>;
+  if (entry.playersLive == null || entry.playersToPlay == null) return null;
   return (
     <span className="whitespace-nowrap">
       <span className="text-[var(--accent)]">{entry.playersLive}</span> live ·{" "}
@@ -55,15 +55,25 @@ function LeagueTable({ league, gameweek }: { league: LeaguesResponse["league"]; 
       </div>
       <RankHeader league={league} />
       {/* Fixed height with its own scroll, not the page's -- a 20-manager
-         league shouldn't push everything below it half a screen down. */}
+         league shouldn't push everything below it half a screen down.
+         table-fixed + explicit column widths (no horizontal scroll) so the
+         5 columns always fit a phone width -- captain/chip/live-play all
+         fold into the Manager cell as extra lines rather than becoming
+         their own columns, which is what pushed this past the viewport
+         width before. */}
       <div className="panel !p-0 max-h-96 overflow-y-auto">
-        <table className="w-full text-xs sm:text-sm">
+        <table className="w-full table-fixed text-xs sm:text-sm">
+          <colgroup>
+            <col className="w-[13%]" />
+            <col className="w-[46%]" />
+            <col className="w-[13%]" />
+            <col className="w-[13%]" />
+            <col className="w-[15%]" />
+          </colgroup>
           <thead className="sticky top-0 bg-[var(--bg-0)]">
             <tr className="border-b border-line text-left eyebrow">
               <th className="px-1.5 py-2 font-bold sm:px-3">Rk</th>
               <th className="px-1.5 py-2 font-bold sm:px-3">Manager</th>
-              <th className="px-1.5 py-2 font-bold sm:px-3">Captain</th>
-              <th className="px-1.5 py-2 font-bold sm:px-3">Live</th>
               <th className="px-1.5 py-2 text-right font-bold sm:px-3">Tot</th>
               <th className="px-1.5 py-2 text-right font-bold sm:px-3">GW</th>
               <th className="px-1.5 py-2 text-right font-bold sm:px-3">xP</th>
@@ -82,7 +92,7 @@ function LeagueTable({ league, gameweek }: { league: LeaguesResponse["league"]; 
                 <Fragment key={e.entryId}>
                   {showDivider && (
                     <tr key={`divider-${e.entryId}`} aria-hidden="true">
-                      <td colSpan={7} className="px-1.5 py-1 text-center text-[10px] text-ink-faint sm:px-3">
+                      <td colSpan={5} className="px-1.5 py-1 text-center text-[10px] text-ink-faint sm:px-3">
                         ⋯
                       </td>
                     </tr>
@@ -119,10 +129,13 @@ function LeagueTable({ league, gameweek }: { league: LeaguesResponse["league"]; 
                         )}
                       </div>
                       <div className="truncate text-[10px] text-ink-faint">{e.playerName}</div>
-                    </td>
-                    <td className="truncate px-1.5 py-2 text-ink-soft sm:px-3">{e.captainName ?? "—"}</td>
-                    <td className="px-1.5 py-2 text-[11px] sm:px-3">
-                      <LiveCell entry={e} />
+                      {(e.captainName || e.playersLive != null) && (
+                        <div className="truncate text-[10px] text-ink-faint">
+                          {e.captainName && <>C: {e.captainName}</>}
+                          {e.captainName && e.playersLive != null && " · "}
+                          <LiveCell entry={e} />
+                        </div>
+                      )}
                     </td>
                     <td className="truncate px-1.5 py-2 text-right font-mono tabular-nums text-ink-soft sm:px-3">
                       {e.totalPoints}
