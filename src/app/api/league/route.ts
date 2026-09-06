@@ -178,8 +178,12 @@ async function fetchLeague(
         projectedXp = tracker.projectedTotal;
         chip = picks.active_chip ? CHIP_LABEL[picks.active_chip] ?? picks.active_chip : null;
         captainName = payload.squad.find((s) => s.isCaptain)?.webName ?? null;
+        // "Live" here means "already contributing to the score" -- playing,
+        // finished, or subbed off -- not literally mid-match; only a player
+        // whose fixture hasn't kicked off yet counts as "to play". The two
+        // always sum to the full XI (11), matching FPL's own gameweek view.
         const lineupRows = tracker.rows.filter((r) => !r.isBench);
-        playersLive = lineupRows.filter((r) => r.status === "playing").length;
+        playersLive = lineupRows.filter((r) => r.status !== "notStarted").length;
         playersToPlay = lineupRows.filter((r) => r.status === "notStarted").length;
       } catch {
         projectedXp = null; // one entry's picks failing shouldn't sink the table

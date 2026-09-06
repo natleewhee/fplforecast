@@ -429,7 +429,16 @@ export default function Home() {
           </Card>
 
           <Card className="!p-0 overflow-hidden">
-            <table className="w-full text-sm">
+            {/* table-fixed + colgroup, same as the Leagues table -- an
+               unconstrained table can grow past the viewport on a long
+               player name with no way to scroll to see it. */}
+            <table className="w-full table-fixed text-sm">
+              <colgroup>
+                <col className="w-[46%]" />
+                <col className="w-[24%]" />
+                <col className="w-[15%]" />
+                <col className="w-[15%]" />
+              </colgroup>
               <thead>
                 <tr className="border-b border-line text-left eyebrow">
                   <th className="px-4 py-2.5 font-bold">Player</th>
@@ -442,12 +451,12 @@ export default function Home() {
                 {top.map((p) => (
                   <tr key={p.id} className="border-b border-line last:border-0 hover:bg-white/[0.03]">
                     <td className="px-4 py-2">
-                      <div className="flex items-center gap-2">
+                      <div className="flex min-w-0 items-center gap-2">
                         <PositionBadge position={p.position} />
-                        <span className="font-medium text-ink">{p.webName}</span>
+                        <span className="truncate font-medium text-ink">{p.webName}</span>
                       </div>
                     </td>
-                    <td className="px-4 py-2 text-ink-soft">{p.team}</td>
+                    <td className="truncate px-4 py-2 text-ink-soft">{p.team}</td>
                     <td className="px-4 py-2 text-right font-mono tabular-nums text-ink-soft">
                       {p.priceMillions.toFixed(1)}
                     </td>
