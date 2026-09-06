@@ -12,6 +12,7 @@ import pulp
 
 from engine.config import (
     CLUB_LIMIT,
+    FT_MAX_BANKED,
     HIT_COST,
     HIT_TIEBREAK_EPSILON,
     SQUAD_COMPOSITION,
@@ -70,6 +71,7 @@ def solve_squad(
     unlimited: bool = False,
     force_in: list[int] | set[int] | None = None,
     force_out: list[int] | set[int] | None = None,
+    retain_bias: float = 0.0,
 ) -> ScenarioResult:
     """Solve for the 15-man squad (plus per-gameweek XI and captain) that
     maximises projected points over ``horizon_gws`` gameweeks (the first
@@ -89,6 +91,15 @@ def solve_squad(
     constraint, not a preference, so an infeasible combination (e.g.
     force_in exceeding budget or a club/position limit) returns
     ``feasible=False`` rather than silently ignoring the pin.
+
+    ``retain_bias`` adds a tiny per-held-player bonus to the objective, far
+    smaller than any real xP difference -- it only breaks ties among
+    otherwise-equal solutions in favour of the status quo, so a bench spot
+    with no bearing on the XI doesn't get swapped for an equally-worthless
+    alternative. Off by default (0.0) since a caller solving a single,
+    one-shot scenario has no "status quo" across calls to prefer; used by
+    ``plan_transfers``, where a no-op churn between chained weekly calls
+    would otherwise show up as a meaningless "transfer".
     """
     held_ids = set(held)
     by_id = {p["id"]: p for p in players}
@@ -175,6 +186,10 @@ def solve_squad(
     objective = pulp.lpSum(points_terms)
     if hits is not None:
         objective = objective - HIT_COST * hits - HIT_TIEBREAK_EPSILON * hits
+    if retain_bias:
+        objective = objective + retain_bias * pulp.lpSum(
+            x[pid] for pid in held_ids if pid in x
+        )
     prob += objective
 
     status = prob.solve(pulp.PULP_CBC_CMD(msg=False))
@@ -206,6 +221,114 @@ def solve_squad(
         net_points=round(gross_points - hit_cost_value, 2),
         horizon_gws=horizon_gws,
     )
+
+
+@dataclass
+class PlanWeek:
+    """One week of a chained multi-week transfer plan -- see
+    ``plan_transfers``. ``target_offset`` is 0-indexed from the plan's own
+    first gameweek."""
+
+    feasible: bool
+    target_offset: int
+    squad_ids: list[int] = field(default_factory=list)
+    xi_ids: list[int] = field(default_factory=list)
+    captain_id: int | None = None
+    transfers_in: list[int] = field(default_factory=list)
+    transfers_out: list[int] = field(default_factory=list)
+    hit_cost: int = 0
+    ft_before: int = 0
+    ft_after: int = 0
+    bank_after: float = 0.0
+
+
+def plan_transfers(
+    players: list[dict],
+    held: list[int] | set[int],
+    bank: float,
+    free_transfers: int,
+    weeks: int,
+) -> list[PlanWeek]:
+    """A week-by-week transfer plan: each week, ``solve_squad`` picks
+    whatever number of transfers (0 or more, taking a hit if it pays off)
+    is optimal for *that week alone* given the free transfers banked so
+    far; the resulting squad, bank and FT then roll forward into the next
+    week. This is a myopic (not globally jointly-optimal) sequencing -- it
+    doesn't look ahead to "bank this week's transfer for a bigger swing
+    next week" -- but it mirrors how a manager actually decides one
+    gameweek at a time, and avoids the combinatorial blow-up of solving
+    every week's transfer window jointly.
+
+    Approximation: a player's sell price after being bought *within* this
+    plan is treated as their listed buy price (no profit-taking modelled
+    for a same-plan flip); only players held before week 0 keep their real
+    snapshot sell price throughout. Stops early (returning fewer than
+    ``weeks`` entries, last one infeasible) if a week's window has no
+    feasible squad at all -- doesn't happen in practice since holding the
+    prior week's squad unchanged (0 transfers) is always feasible once the
+    first week is, but guards against it rather than raising.
+    """
+    by_id = {p["id"]: p for p in players}
+    current_held = set(held)
+    current_bank = bank
+    current_ft = free_transfers
+    sell_price = {pid: by_id[pid]["sellPrice"] for pid in current_held if pid in by_id}
+    plan: list[PlanWeek] = []
+
+    for offset in range(weeks):
+        week_sell_price: dict[int, float] = {}
+        week_players = []
+        for p in players:
+            wp = dict(p)
+            per_gw = p.get("perGameweek") or []
+            wp["perGameweek"] = [per_gw[offset] if offset < len(per_gw) else 0.0]
+            if p["id"] in current_held:
+                wp["sellPrice"] = sell_price.get(p["id"], p.get("sellPrice", p["price"]))
+            week_sell_price[p["id"]] = wp["sellPrice"]
+            week_players.append(wp)
+
+        result = solve_squad(
+            week_players,
+            held=current_held,
+            bank=current_bank,
+            free_transfers=current_ft,
+            horizon_gws=1,
+            retain_bias=1e-4,
+        )
+        if not result.feasible:
+            plan.append(PlanWeek(feasible=False, target_offset=offset, ft_before=current_ft))
+            break
+
+        n_transfers = len(result.transfers_out)
+        ft_after = min(FT_MAX_BANKED, max(0, current_ft - n_transfers) + 1)
+        buys = sum(by_id[pid]["price"] for pid in result.transfers_in if pid in by_id)
+        sales = sum(week_sell_price.get(pid, 0.0) for pid in result.transfers_out)
+        current_bank = round(current_bank - buys + sales, 1)
+
+        plan.append(
+            PlanWeek(
+                feasible=True,
+                target_offset=offset,
+                squad_ids=result.squad_ids,
+                xi_ids=result.xi_by_gw[0] if result.xi_by_gw else [],
+                captain_id=result.captain_by_gw[0] if result.captain_by_gw else None,
+                transfers_in=result.transfers_in,
+                transfers_out=result.transfers_out,
+                hit_cost=result.hit_cost,
+                ft_before=current_ft,
+                ft_after=ft_after,
+                bank_after=current_bank,
+            )
+        )
+
+        for pid in result.transfers_in:
+            sell_price[pid] = by_id[pid]["price"] if pid in by_id else current_bank
+        for pid in result.transfers_out:
+            sell_price.pop(pid, None)
+        current_held = set(result.squad_ids)
+        current_ft = ft_after
+
+    return plan
 
 
 def derive_free_transfers(

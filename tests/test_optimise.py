@@ -12,7 +12,7 @@ from pathlib import Path
 import pytest
 
 from engine.config import FT_MAX_BANKED, HIT_COST
-from engine.optimise import derive_free_transfers, solve_squad
+from engine.optimise import derive_free_transfers, plan_transfers, solve_squad
 from engine.squad import best_xi
 
 DATA_DIR = Path(__file__).resolve().parent.parent / "data"
@@ -203,6 +203,49 @@ def test_xi_extraction_is_eleven_distinct_players_per_gameweek():
     for gw_xi in result.xi_by_gw:
         assert len(gw_xi) == 11
         assert len(set(gw_xi)) == 11
+
+
+def test_plan_transfers_holds_an_already_optimal_squad():
+    players, known_optimal = _pool_with_known_optimal()
+    squad = [p for p in players if p["id"] in known_optimal]
+    ids = [p["id"] for p in squad]
+
+    plan = plan_transfers(players, held=ids, bank=0.0, free_transfers=1, weeks=3)
+
+    assert len(plan) == 3
+    for week in plan:
+        assert week.feasible
+        assert week.transfers_in == []
+        assert week.transfers_out == []
+        assert week.hit_cost == 0
+    # FT accrues (capped at FT_MAX_BANKED) since nothing is ever spent.
+    assert [w.ft_before for w in plan] == [1, 2, 3]
+    assert [w.ft_after for w in plan] == [2, 3, 4]
+
+
+def test_plan_transfers_takes_an_available_improving_swap():
+    players, known_optimal = _pool_with_known_optimal()
+    # Hold the known-optimal squad but with GKP #1 (xp 4.0) swapped out for
+    # decoy GKP #3 (xp 2.0) -- a strictly worse pick that's cheap enough to
+    # leave spare bank for the swap back. Both #1 and #2 are held-position
+    # rivals for the same single starting-keeper slot, so which of the two
+    # non-#1 GKPs ends up benched vs sold is a genuine tie (bench players
+    # don't affect the objective) -- only #1 landing in the squad and
+    # starting XI is asserted, not which of {2, 3} got sold.
+    held_ids = (known_optimal - {1}) | {3}
+
+    plan = plan_transfers(players, held=held_ids, bank=1.0, free_transfers=1, weeks=2)
+
+    assert len(plan) == 2
+    assert plan[0].feasible
+    assert plan[0].transfers_in == [1]
+    assert len(plan[0].transfers_out) == 1
+    assert plan[0].hit_cost == 0
+    assert 1 in plan[0].squad_ids
+    assert 1 in plan[0].xi_ids  # #1 (xp 4.0) is the best GKP, so it starts
+    # Second week: holding a squad with no further improving move available.
+    assert plan[1].transfers_in == []
+    assert plan[1].transfers_out == []
 
 
 def test_derive_free_transfers_floors_at_one():

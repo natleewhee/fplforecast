@@ -170,8 +170,8 @@ function PlayerToken({
         </Ring>
         {(isCaptain || isVice) && (
           <span
-            className={`absolute -right-1 -top-1 grid h-4 w-4 place-items-center rounded-full text-[9px] font-black ${
-              isCaptain ? "bg-[var(--accent)] text-black" : "bg-[var(--border-strong)] text-ink"
+            className={`armband absolute -right-1 -top-1 h-4 w-4 text-[9px] ${
+              isCaptain ? "armband-captain" : "armband-vice"
             }`}
           >
             {isCaptain ? "C" : "V"}

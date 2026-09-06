@@ -28,7 +28,13 @@ from engine.config import (
 from engine.features import UNAVAILABLE_STATUSES, POSITIONS, build_feature_frame, team_fixtures
 from engine.history import ColdStart, classify, load_history
 from engine.model import ModelContext
-from engine.optimise import ScenarioResult, derive_free_transfers, solve_squad
+from engine.optimise import (
+    PlanWeek,
+    ScenarioResult,
+    derive_free_transfers,
+    plan_transfers,
+    solve_squad,
+)
 from engine.squad import (
     best_xi,
     floor_ceiling,
@@ -467,6 +473,46 @@ def _scenario_to_dict(result: ScenarioResult, pool_by_id: dict, target_gw: int) 
     }
 
 
+def _plan_week_to_dict(week: PlanWeek, pool_by_id: dict, target_gw: int) -> dict:
+    xi_players = []
+    week_xp = 0.0
+    for pid in week.xi_ids:
+        p = pool_by_id.get(pid, {})
+        per_gw = p.get("perGameweek") or []
+        xp = per_gw[week.target_offset] if week.target_offset < len(per_gw) else None
+        opponents_by_gw = p.get("opponents") or []
+        opponents = (
+            opponents_by_gw[week.target_offset] if week.target_offset < len(opponents_by_gw) else []
+        )
+        is_captain = pid == week.captain_id
+        xi_players.append(
+            {
+                "id": pid,
+                "webName": p.get("webName"),
+                "position": p.get("position"),
+                "team": p.get("team"),
+                "xp": xp,
+                "opponents": opponents,
+                "isCaptain": is_captain,
+            }
+        )
+        if xp is not None:
+            week_xp += xp * (2 if is_captain else 1)
+    return {
+        "targetGw": target_gw + week.target_offset,
+        "feasible": week.feasible,
+        "squad": week.squad_ids,
+        "xi": xi_players,
+        "transfersIn": [_player_ref(pid, pool_by_id) for pid in week.transfers_in],
+        "transfersOut": [_player_ref(pid, pool_by_id) for pid in week.transfers_out],
+        "hitCost": week.hit_cost,
+        "ftBefore": week.ft_before,
+        "ftAfter": week.ft_after,
+        "bankAfter": week.bank_after,
+        "weekXp": round(week_xp, 2),
+    }
+
+
 def build_scenarios(
     pool: list[dict],
     squad_ids: list[int],
@@ -540,12 +586,20 @@ def build_scenarios(
             if result.feasible:
                 wildcard_by_horizon[str(horizon)] = _scenario_to_dict(result, pool_by_id, target_gw)
 
+    # A week-by-week transfer plan (KTD-plan): unlike byHorizon's single
+    # up-front decision, this lets FT get spent unevenly across the window
+    # (e.g. 1 transfer this week, bank the rest, 2 next week) -- see
+    # ``engine.optimise.plan_transfers`` for the chaining/approximations.
+    plan_weeks = plan_transfers(pool, held=squad_ids, bank=bank, free_transfers=ft_value, weeks=5)
+    plan = [_plan_week_to_dict(w, pool_by_id, target_gw) for w in plan_weeks]
+
     return {
         "freeTransfers": {"value": ft_value, "derivation": ft_derivation},
         "chipsAvailable": chips_available,
         "byHorizon": by_horizon,
         "freeHit": free_hit,
         "wildcard": wildcard_by_horizon if wildcard_by_horizon else None,
+        "plan": plan,
     }
 
 

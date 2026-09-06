@@ -348,12 +348,17 @@ function PlayerRow({ row }: { row: TrackerRow }) {
         >
           {row.position}
         </span>
+        {row.status === "playing" && (
+          <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--accent)] pulse" title="live" />
+        )}
         <span
           className={`min-w-0 truncate font-medium text-ink ${row.subbedOut ? "line-through opacity-60" : ""}`}
         >
           {row.webName}
         </span>
-        {row.isArmband && <span className="chip chip-accent !py-0 text-[10px]">C</span>}
+        {row.isArmband && (
+          <span className="armband armband-captain h-4 w-4 shrink-0 text-[9px]">C</span>
+        )}
         {row.subbedIn && <span className="chip chip-accent !py-0 text-[10px]">sub ▲</span>}
         {row.subbedOut && <span className="chip chip-danger !py-0 text-[10px]">sub ▼</span>}
         {row.noBakedXp && (

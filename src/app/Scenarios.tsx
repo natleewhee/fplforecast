@@ -4,9 +4,11 @@ import { useState } from "react";
 import Carousel from "./Carousel";
 import type {
   ForecastPlayer,
+  PlanWeek,
   PoolPlayer,
   Scenario,
   ScenarioPlayerRef,
+  ScenarioWeek,
   Scenarios as ScenariosData,
 } from "@/lib/snapshots";
 import { availabilityFlag } from "@/lib/availability";
@@ -57,7 +59,7 @@ function ShirtToken({
           </span>
         </div>
         {isCaptain && (
-          <span className="absolute -right-1 -top-1 grid h-4 w-4 place-items-center rounded-full bg-[var(--accent)] text-[9px] font-black text-black">
+          <span className="armband armband-captain absolute -right-1 -top-1 h-4 w-4 text-[9px]">
             C
           </span>
         )}
@@ -81,7 +83,10 @@ function ShirtToken({
  * DEF/5 MID/3 FWD) stays fixed across any transfer, so grouping by position
  * always yields equal-length in/out lists per position. Sorted by price
  * (desc) within a position so the priciest swap leads. */
-function pairTransfers(scenario: Scenario): { out: ScenarioPlayerRef; in_: ScenarioPlayerRef }[] {
+function pairTransfers(transfers: {
+  transfersIn: ScenarioPlayerRef[];
+  transfersOut: ScenarioPlayerRef[];
+}): { out: ScenarioPlayerRef; in_: ScenarioPlayerRef }[] {
   const byPosition = (refs: ScenarioPlayerRef[]) => {
     const groups = new Map<string, ScenarioPlayerRef[]>();
     for (const r of refs) {
@@ -91,8 +96,8 @@ function pairTransfers(scenario: Scenario): { out: ScenarioPlayerRef; in_: Scena
     for (const list of groups.values()) list.sort((a, b) => (b.price ?? 0) - (a.price ?? 0));
     return groups;
   };
-  const outByPos = byPosition(scenario.transfersOut);
-  const inByPos = byPosition(scenario.transfersIn);
+  const outByPos = byPosition(transfers.transfersOut);
+  const inByPos = byPosition(transfers.transfersIn);
   const pairs: { out: ScenarioPlayerRef; in_: ScenarioPlayerRef }[] = [];
   for (const [pos, outs] of outByPos) {
     const ins = inByPos.get(pos) ?? [];
@@ -126,8 +131,14 @@ function SwapPlayer({ player, direction }: { player: ScenarioPlayerRef; directio
   );
 }
 
-function TransferPairs({ scenario }: { scenario: Scenario }) {
-  const pairs = pairTransfers(scenario);
+function TransferPairs({
+  transfersIn,
+  transfersOut,
+}: {
+  transfersIn: ScenarioPlayerRef[];
+  transfersOut: ScenarioPlayerRef[];
+}) {
+  const pairs = pairTransfers({ transfersIn, transfersOut });
   if (pairs.length === 0) return <p className="text-xs text-ink-faint">No changes to your squad</p>;
   return (
     <div className="space-y-1.5">
@@ -142,18 +153,26 @@ function TransferPairs({ scenario }: { scenario: Scenario }) {
   );
 }
 
-function ChipXi({
-  scenario,
+/** The pitch + bench view for one gameweek of a squad -- shared by the
+ * chip cards, the "show squad for these GWs" disclosure on a transfer
+ * scenario, and the multi-week plan timeline. `weekIndex` is the absolute
+ * offset from the forecast's own first gameweek (0 = forecastGw), which is
+ * what indexes into a `PoolPlayer`'s `perGameweek`/`opponents` arrays --
+ * not necessarily the same as a position within `xi`/`squad`'s own horizon. */
+function XiPitch({
+  squad,
+  xi,
+  captainId,
   poolById,
   weekIndex,
 }: {
-  scenario: Scenario;
+  squad: number[];
+  xi: number[];
+  captainId: number | null;
   poolById: Map<number, PoolPlayer>;
   weekIndex: number;
 }) {
-  const xi = scenario.xiByGw[weekIndex] ?? [];
-  const captainId = scenario.captainByGw[weekIndex] ?? null;
-  const bench = scenario.squad.filter((id) => !xi.includes(id));
+  const bench = squad.filter((id) => !xi.includes(id));
   const rows = ROWS.map((pos) =>
     xi.map((id) => poolById.get(id)).filter((p): p is PoolPlayer => !!p && p.position === pos)
   ).filter((r) => r.length);
@@ -186,14 +205,64 @@ function ChipXi({
   );
 }
 
+/** A GW picker (when there's more than one week) plus that week's XiPitch --
+ * `weeks`/`xiByGw`/`captainByGw` are index-aligned (position i = the i-th
+ * gameweek of this scenario's own horizon, itself starting at the forecast's
+ * own first gameweek, so the picker's index doubles as XiPitch's absolute
+ * weekIndex). */
+function WeeklyXi({
+  weeks,
+  squad,
+  xiByGw,
+  captainByGw,
+  poolById,
+}: {
+  weeks: ScenarioWeek[];
+  squad: number[];
+  xiByGw: number[][];
+  captainByGw: (number | null)[];
+  poolById: Map<number, PoolPlayer>;
+}) {
+  const [weekIndex, setWeekIndex] = useState(0);
+  const activeWeek = weeks[Math.min(weekIndex, weeks.length - 1)];
+
+  return (
+    <div className="space-y-3">
+      {weeks.length > 1 && (
+        <div className="flex items-center justify-between gap-2">
+          <div className="segment">
+            {weeks.map((w, i) => (
+              <button key={w.targetGw} data-active={i === weekIndex} onClick={() => setWeekIndex(i)}>
+                GW{w.targetGw}
+              </button>
+            ))}
+          </div>
+          {activeWeek && (
+            <span className="font-mono text-xs text-ink-faint">{activeWeek.totalXp.toFixed(1)} this GW</span>
+          )}
+        </div>
+      )}
+      <XiPitch
+        squad={squad}
+        xi={xiByGw[weekIndex] ?? []}
+        captainId={captainByGw[weekIndex] ?? null}
+        poolById={poolById}
+        weekIndex={weekIndex}
+      />
+    </div>
+  );
+}
+
 function TransferScenarioCard({
   scenario,
   rollNetPoints,
   rank,
+  poolById,
 }: {
   scenario: Scenario;
   rollNetPoints: number | null;
   rank: number;
+  poolById: Map<number, PoolPlayer>;
 }) {
   const nTransfers = scenario.transfersOut.length;
   const label =
@@ -219,8 +288,24 @@ function TransferScenarioCard({
       )}
       {nTransfers > 0 && (
         <div className="border-t border-line pt-2">
-          <TransferPairs scenario={scenario} />
+          <TransferPairs transfersIn={scenario.transfersIn} transfersOut={scenario.transfersOut} />
         </div>
+      )}
+      {scenario.weeks.length > 1 && (
+        <details className="border-t border-line pt-2">
+          <summary className="cursor-pointer text-xs font-medium text-ink-soft">
+            Show my squad over these {scenario.weeks.length} GWs
+          </summary>
+          <div className="mt-2">
+            <WeeklyXi
+              weeks={scenario.weeks}
+              squad={scenario.squad}
+              xiByGw={scenario.xiByGw}
+              captainByGw={scenario.captainByGw}
+              poolById={poolById}
+            />
+          </div>
+        </details>
       )}
     </div>
   );
@@ -237,10 +322,7 @@ function ChipCard({
   baselineNetPoints: number | null;
   poolById: Map<number, PoolPlayer>;
 }) {
-  const [weekIndex, setWeekIndex] = useState(0);
   const gain = baselineNetPoints != null ? scenario.netPoints - baselineNetPoints : null;
-  const weeks = scenario.weeks;
-  const activeWeek = weeks[Math.min(weekIndex, weeks.length - 1)];
 
   return (
     <div className="panel rise space-y-3 p-3">
@@ -259,22 +341,13 @@ function ChipCard({
         </div>
       </div>
 
-      {weeks.length > 1 && (
-        <div className="flex items-center justify-between gap-2">
-          <div className="segment">
-            {weeks.map((w, i) => (
-              <button key={w.targetGw} data-active={i === weekIndex} onClick={() => setWeekIndex(i)}>
-                GW{w.targetGw}
-              </button>
-            ))}
-          </div>
-          {activeWeek && (
-            <span className="font-mono text-xs text-ink-faint">{activeWeek.totalXp.toFixed(1)} this GW</span>
-          )}
-        </div>
-      )}
-
-      <ChipXi scenario={scenario} poolById={poolById} weekIndex={weekIndex} />
+      <WeeklyXi
+        weeks={scenario.weeks}
+        squad={scenario.squad}
+        xiByGw={scenario.xiByGw}
+        captainByGw={scenario.captainByGw}
+        poolById={poolById}
+      />
     </div>
   );
 }
@@ -385,10 +458,116 @@ function ForceLockPanel({
           {result.hitCost > 0 && (
             <p className="mb-1.5 text-xs text-[var(--danger)]">−{result.hitCost} hit taken</p>
           )}
-          <TransferPairs scenario={result} />
+          <TransferPairs transfersIn={result.transfersIn} transfersOut={result.transfersOut} />
         </div>
       )}
     </div>
+  );
+}
+
+/** One week's row in the multi-week plan timeline: a GW badge, the
+ * transfer(s) made that week (or "Hold"), hit cost if any, and the FT
+ * banked before/after. Tapping it opens that week's full XI. */
+function PlanWeekRow({
+  week,
+  isOpen,
+  onToggle,
+  forecastGw,
+  poolById,
+}: {
+  week: PlanWeek;
+  isOpen: boolean;
+  onToggle: () => void;
+  forecastGw: number;
+  poolById: Map<number, PoolPlayer>;
+}) {
+  const nTransfers = week.transfersOut.length;
+  const captainId = week.xi.find((p) => p.isCaptain)?.id ?? null;
+
+  return (
+    <div className="rounded-lg border border-line">
+      <button
+        type="button"
+        onClick={onToggle}
+        className="flex w-full items-center justify-between gap-2 px-2.5 py-2 text-left"
+      >
+        <div className="flex items-center gap-2">
+          <span className="font-mono text-xs font-bold text-ink">GW{week.targetGw}</span>
+          <span className="text-xs text-ink-soft">
+            {nTransfers === 0 ? "Hold" : `${nTransfers} transfer${nTransfers > 1 ? "s" : ""}`}
+          </span>
+          {week.hitCost > 0 && (
+            <span className="text-[11px] text-[var(--danger)]">−{week.hitCost}</span>
+          )}
+        </div>
+        <div className="flex items-center gap-2 text-[11px] text-ink-faint">
+          <span>{week.ftBefore} FT → {week.ftAfter} FT</span>
+          <span className="font-mono text-xs font-semibold text-[var(--accent)]">
+            {week.weekXp.toFixed(1)}
+          </span>
+          <span className="text-ink-faint">{isOpen ? "▾" : "▸"}</span>
+        </div>
+      </button>
+      {isOpen && (
+        <div className="space-y-2 border-t border-line p-2.5">
+          {nTransfers > 0 && (
+            <TransferPairs transfersIn={week.transfersIn} transfersOut={week.transfersOut} />
+          )}
+          <XiPitch
+            squad={week.squad}
+            xi={week.xi.map((p) => p.id)}
+            captainId={captainId}
+            poolById={poolById}
+            weekIndex={week.targetGw - forecastGw}
+          />
+        </div>
+      )}
+    </div>
+  );
+}
+
+/** A week-by-week transfer plan, letting FT get spent unevenly across the
+ * window (e.g. 1 transfer this week, bank the rest, 2 next week) rather
+ * than the single up-front decision the horizon toggle above models. Rows
+ * collapse by default -- 5 weeks of full pitches at once would be a lot of
+ * scrolling for what's meant to be a skimmable itinerary. */
+function PlanTimeline({
+  plan,
+  forecastGw,
+  poolById,
+}: {
+  plan: PlanWeek[];
+  forecastGw: number;
+  poolById: Map<number, PoolPlayer>;
+}) {
+  const [openGw, setOpenGw] = useState<number | null>(plan[0]?.targetGw ?? null);
+  const feasibleWeeks = plan.filter((w) => w.feasible);
+  if (feasibleWeeks.length === 0) return null;
+
+  return (
+    <section className="space-y-2">
+      <div className="flex flex-wrap items-center justify-between gap-2 px-1">
+        <h2 className="eyebrow">Multi-week plan</h2>
+        <span className="text-[11px] text-ink-faint">spend FT unevenly across the window</span>
+      </div>
+      <div className="space-y-1.5">
+        {feasibleWeeks.map((week) => (
+          <PlanWeekRow
+            key={week.targetGw}
+            week={week}
+            isOpen={openGw === week.targetGw}
+            onToggle={() => setOpenGw((prev) => (prev === week.targetGw ? null : week.targetGw))}
+            forecastGw={forecastGw}
+            poolById={poolById}
+          />
+        ))}
+      </div>
+      <p className="px-1 text-[11px] text-ink-faint">
+        Each week is solved as if it were the only decision -- it takes whatever transfer(s) pay off
+        that week alone, not the biggest swing over the whole window, and a bought-in player&rsquo;s
+        future sell price is assumed equal to what you paid (no profit-taking modelled).
+      </p>
+    </section>
   );
 }
 
@@ -492,12 +671,17 @@ export default function Scenarios({
               scenario={s}
               rollNetPoints={roll ? roll.netPoints : null}
               rank={i}
+              poolById={poolById}
             />
           ))}
         </Carousel>
       )}
 
       <ForceLockPanel squad={squad} forecastGw={forecastGw} horizon={horizon} />
+
+      {scenarios.plan && (
+        <PlanTimeline plan={scenarios.plan} forecastGw={forecastGw} poolById={poolById} />
+      )}
 
       {(scenarios.freeHit || wildcardForHorizon) && (
         <ChipToggle
