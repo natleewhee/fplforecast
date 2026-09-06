@@ -228,7 +228,7 @@ option {
   font-weight: 700;
   letter-spacing: 0.02em;
   color: var(--text-soft);
-  transition: color 0.18s ease, background 0.18s ease;
+  transition: color 0.18s ease, background 0.18s ease, transform 0.12s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 .segment button[data-active="true"] {
   color: #04120c;
@@ -320,6 +320,49 @@ option {
   .pulse,
   .shimmer {
     animation: none;
+  }
+}
+
+/* captain/vice armband badge -- a HUD-style pill (not plain text) so the
+   captaincy marker reads as a status icon everywhere it appears (pitch
+   tokens, scenario shirts, live tracker rows). */
+.armband {
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+  font-weight: 900;
+  line-height: 1;
+}
+.armband-captain {
+  background: linear-gradient(180deg, var(--accent), #23c78c);
+  color: #04120c;
+  box-shadow: 0 0 0 2px var(--bg-0), 0 0 10px var(--accent-glow);
+}
+.armband-vice {
+  background: var(--border-strong);
+  color: var(--text);
+  box-shadow: 0 0 0 2px var(--bg-0);
+}
+
+/* button press feedback -- app-wide "juicy" tap response: a quick
+   scale-down on press with a spring-back release, rather than the flat,
+   instant state-change a plain webpage button gives.
+   `:where(...)` keeps this at zero specificity so it never fights a
+   component's own `transition`/`transition-colors` utility class (several
+   buttons already animate hover color/border and should keep doing so
+   uninterrupted) -- this just supplies a default for buttons that don't
+   declare one, and the active-state transform itself still applies
+   everywhere since nothing else sets `transform` on `:active`. */
+:where(button:not(:disabled)) {
+  transition: transform 0.12s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+button:not(:disabled):active {
+  transform: scale(0.94);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  button:not(:disabled):active {
+    transform: none;
   }
 }
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { Fragment, useCallback, useEffect, useState } from "react";
 import type { LeagueEntryRow, LeaguesResponse } from "./api/league/route";
 
 const POLL_MS = 60_000;
@@ -16,6 +16,33 @@ function LiveCell({ entry }: { entry: LeagueEntryRow }) {
   );
 }
 
+function RankHeader({ league }: { league: NonNullable<LeaguesResponse["league"]> }) {
+  const total = `${league.totalEntries}${league.totalEntriesIsFloor ? "+" : ""}`;
+  const scrollToMe = () => {
+    document.getElementById(`league-entry-${league.myEntryId}`)?.scrollIntoView({
+      behavior: "smooth",
+      block: "center",
+    });
+  };
+  return (
+    <div className="flex flex-wrap items-center justify-between gap-2 rounded bg-white/[0.03] px-2.5 py-2">
+      <span className="text-xs text-ink-soft">
+        Your rank: <span className="font-mono font-bold text-[var(--accent)]">#{league.myRank ?? "?"}</span>{" "}
+        of {total}
+      </span>
+      {league.appendedEntryId != null && (
+        <button
+          type="button"
+          onClick={scrollToMe}
+          className="rounded bg-white/[0.06] px-2 py-1 text-[11px] font-medium text-ink-soft hover:bg-white/[0.1]"
+        >
+          Jump to my position ↓
+        </button>
+      )}
+    </div>
+  );
+}
+
 function LeagueTable({ league, gameweek }: { league: LeaguesResponse["league"]; gameweek: number }) {
   if (!league) {
     return <div className="panel p-3 text-xs text-ink-faint">No private leagues found.</div>;
@@ -26,6 +53,7 @@ function LeagueTable({ league, gameweek }: { league: LeaguesResponse["league"]; 
         <h2 className="eyebrow">{league.leagueName}</h2>
         <span className="text-[11px] text-ink-faint">GW{gameweek}</span>
       </div>
+      <RankHeader league={league} />
       {/* Fixed height with its own scroll, not the page's -- a 20-manager
          league shouldn't push everything below it half a screen down. */}
       <div className="panel !p-0 max-h-96 overflow-y-auto">
@@ -42,46 +70,71 @@ function LeagueTable({ league, gameweek }: { league: LeaguesResponse["league"]; 
             </tr>
           </thead>
           <tbody>
-            {league.entries.map((e) => {
+            {league.entries.map((e, i) => {
               const moved = e.lastRank - e.rank;
+              const isMe = e.entryId === league.myEntryId;
+              // Driven by the server's explicit `appendedEntryId`, not a gap
+              // between consecutive ranks -- FPL gives tied entries the same
+              // `rank`, so a rank-number gap isn't a reliable "was this
+              // appended after the top 10" signal.
+              const showDivider = i > 0 && e.entryId === league.appendedEntryId;
               return (
-                <tr key={e.entryId} className="border-b border-line last:border-0 hover:bg-white/[0.03]">
-                  <td className="truncate px-1.5 py-2 sm:px-3">
-                    <span className="font-mono tabular-nums">{e.rank}</span>
-                    {moved !== 0 && (
-                      <span
-                        className={`ml-0.5 font-mono text-[9px] ${moved > 0 ? "text-[var(--accent)]" : "text-[var(--danger)]"}`}
-                      >
-                        {moved > 0 ? "▲" : "▼"}
-                        {Math.abs(moved)}
-                      </span>
-                    )}
-                  </td>
-                  <td className="min-w-0 px-1.5 py-2 sm:px-3">
-                    <div className="flex items-center gap-1.5 truncate font-medium text-ink">
-                      {e.entryName}
-                      {e.chip && (
-                        <span className="rounded bg-[var(--accent)]/15 px-1 py-0.5 text-[9px] font-bold text-[var(--accent)]">
-                          {e.chip}
+                <Fragment key={e.entryId}>
+                  {showDivider && (
+                    <tr key={`divider-${e.entryId}`} aria-hidden="true">
+                      <td colSpan={7} className="px-1.5 py-1 text-center text-[10px] text-ink-faint sm:px-3">
+                        ⋯
+                      </td>
+                    </tr>
+                  )}
+                  <tr
+                    id={`league-entry-${e.entryId}`}
+                    className={`border-b border-line last:border-0 hover:bg-white/[0.03] ${
+                      isMe ? "bg-[var(--accent)]/[0.08]" : ""
+                    }`}
+                  >
+                    <td className="truncate px-1.5 py-2 sm:px-3">
+                      <span className="font-mono tabular-nums">{e.rank}</span>
+                      {moved !== 0 && (
+                        <span
+                          className={`ml-0.5 font-mono text-[9px] ${moved > 0 ? "text-[var(--accent)]" : "text-[var(--danger)]"}`}
+                        >
+                          {moved > 0 ? "▲" : "▼"}
+                          {Math.abs(moved)}
                         </span>
                       )}
-                    </div>
-                    <div className="truncate text-[10px] text-ink-faint">{e.playerName}</div>
-                  </td>
-                  <td className="truncate px-1.5 py-2 text-ink-soft sm:px-3">{e.captainName ?? "—"}</td>
-                  <td className="px-1.5 py-2 text-[11px] sm:px-3">
-                    <LiveCell entry={e} />
-                  </td>
-                  <td className="truncate px-1.5 py-2 text-right font-mono tabular-nums text-ink-soft sm:px-3">
-                    {e.totalPoints}
-                  </td>
-                  <td className="truncate px-1.5 py-2 text-right font-mono tabular-nums text-ink-soft sm:px-3">
-                    {e.eventPoints}
-                  </td>
-                  <td className="truncate px-1.5 py-2 text-right font-mono font-semibold tabular-nums text-[var(--accent)] sm:px-3">
-                    {e.projectedXp != null ? e.projectedXp.toFixed(1) : "—"}
-                  </td>
-                </tr>
+                    </td>
+                    <td className="min-w-0 px-1.5 py-2 sm:px-3">
+                      <div className="flex items-center gap-1.5 truncate font-medium text-ink">
+                        {e.entryName}
+                        {isMe && (
+                          <span className="rounded bg-[var(--accent)] px-1 py-0.5 text-[9px] font-bold text-[var(--bg-0)]">
+                            YOU
+                          </span>
+                        )}
+                        {e.chip && (
+                          <span className="rounded bg-[var(--accent)]/15 px-1 py-0.5 text-[9px] font-bold text-[var(--accent)]">
+                            {e.chip}
+                          </span>
+                        )}
+                      </div>
+                      <div className="truncate text-[10px] text-ink-faint">{e.playerName}</div>
+                    </td>
+                    <td className="truncate px-1.5 py-2 text-ink-soft sm:px-3">{e.captainName ?? "—"}</td>
+                    <td className="px-1.5 py-2 text-[11px] sm:px-3">
+                      <LiveCell entry={e} />
+                    </td>
+                    <td className="truncate px-1.5 py-2 text-right font-mono tabular-nums text-ink-soft sm:px-3">
+                      {e.totalPoints}
+                    </td>
+                    <td className="truncate px-1.5 py-2 text-right font-mono tabular-nums text-ink-soft sm:px-3">
+                      {e.eventPoints}
+                    </td>
+                    <td className="truncate px-1.5 py-2 text-right font-mono font-semibold tabular-nums text-[var(--accent)] sm:px-3">
+                      {e.projectedXp != null ? e.projectedXp.toFixed(1) : "—"}
+                    </td>
+                  </tr>
+                </Fragment>
               );
             })}
           </tbody>

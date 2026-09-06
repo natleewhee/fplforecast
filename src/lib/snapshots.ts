@@ -237,12 +237,31 @@ export type Scenario = {
   weeks: ScenarioWeek[];
 };
 
+// One week of a chained multi-week transfer plan -- unlike `byHorizon`'s
+// single up-front decision, FT can get spent unevenly across the plan (e.g.
+// 1 transfer this week, bank the rest, 2 next week). See
+// `engine.optimise.plan_transfers` for how it's chained/its approximations.
+export type PlanWeek = {
+  targetGw: number;
+  feasible: boolean;
+  squad: number[];
+  xi: ScenarioWeekPlayer[];
+  transfersIn: ScenarioPlayerRef[];
+  transfersOut: ScenarioPlayerRef[];
+  hitCost: number;
+  ftBefore: number;
+  ftAfter: number;
+  bankAfter: number;
+  weekXp: number;
+};
+
 export type Scenarios = {
   freeTransfers: { value: number; derivation: string };
   chipsAvailable: { freeHit: boolean; wildcard: boolean };
   byHorizon: Record<string, Scenario[]>; // "1" | "3" | "5" -> top-3 by net points
   freeHit: Scenario | null;
   wildcard: Record<string, Scenario> | null; // "1" | "3" | "5" -> that horizon's rebuild
+  plan: PlanWeek[] | null; // absent/null on an older snapshot built before this field existed
 };
 
 export type UpcomingPlayer = {

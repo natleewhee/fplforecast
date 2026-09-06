@@ -51,10 +51,14 @@ export default function AppTabs({ tabs }: { tabs: Tab[] }) {
         onTouchEnd={onTouchEnd}
       >
         <div
-          className="flex transition-transform duration-200 ease-out"
+          className="flex transition-transform"
           style={{
             width: `${tabs.length * 100}%`,
             transform: `translateX(-${(active * 100) / tabs.length}%)`,
+            // A slight overshoot-then-settle spring, closer to a game menu's
+            // panel slide than a flat linear/ease-out webpage transition.
+            transitionDuration: "320ms",
+            transitionTimingFunction: "cubic-bezier(0.22, 1.12, 0.36, 1)",
           }}
         >
           {tabs.map((t) => (
