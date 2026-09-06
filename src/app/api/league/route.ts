@@ -78,6 +78,7 @@ export type LeagueEntryRow = {
   projectedXp: number | null; // this app's live-tracker-style projection, null if their picks couldn't be fetched
   chip: string | null; // short badge (WC/FH/BB/TC) if a chip is active this gameweek, else null
   captainName: string | null;
+  playersPlayed: number | null; // starting-lineup players whose match has finished (or they were subbed off)
   playersLive: number | null; // starting-lineup players currently mid-match
   playersToPlay: number | null; // starting-lineup players who haven't kicked off yet
 };
@@ -165,6 +166,7 @@ async function fetchLeague(
       let projectedXp: number | null = null;
       let chip: string | null = null;
       let captainName: string | null = null;
+      let playersPlayed: number | null = null;
       let playersLive: number | null = null;
       let playersToPlay: number | null = null;
       try {
@@ -178,12 +180,15 @@ async function fetchLeague(
         projectedXp = tracker.projectedTotal;
         chip = picks.active_chip ? CHIP_LABEL[picks.active_chip] ?? picks.active_chip : null;
         captainName = payload.squad.find((s) => s.isCaptain)?.webName ?? null;
-        // "Live" here means "already contributing to the score" -- playing,
-        // finished, or subbed off -- not literally mid-match; only a player
-        // whose fixture hasn't kicked off yet counts as "to play". The two
-        // always sum to the full XI (11), matching FPL's own gameweek view.
+        // Three-way split matching FPL's own gameweek view: played (their
+        // match is over, or they were subbed off mid-match), live
+        // (currently mid-match), to play (fixture hasn't kicked off). The
+        // three always sum to the full XI (11).
         const lineupRows = tracker.rows.filter((r) => !r.isBench);
-        playersLive = lineupRows.filter((r) => r.status !== "notStarted").length;
+        playersPlayed = lineupRows.filter(
+          (r) => r.status === "finished" || r.status === "offPitch" || r.status === "didNotPlay",
+        ).length;
+        playersLive = lineupRows.filter((r) => r.status === "playing").length;
         playersToPlay = lineupRows.filter((r) => r.status === "notStarted").length;
       } catch {
         projectedXp = null; // one entry's picks failing shouldn't sink the table
@@ -199,6 +204,7 @@ async function fetchLeague(
         projectedXp,
         chip,
         captainName,
+        playersPlayed,
         playersLive,
         playersToPlay,
       };

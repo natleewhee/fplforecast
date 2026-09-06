@@ -8,9 +8,12 @@ const POLL_MS = 60_000;
 const STORAGE_KEY = "fplforecast:selectedLeagueId";
 
 function LiveCell({ entry }: { entry: LeagueEntryRow }) {
-  if (entry.playersLive == null || entry.playersToPlay == null) return null;
+  if (entry.playersPlayed == null || entry.playersLive == null || entry.playersToPlay == null) {
+    return null;
+  }
   return (
     <span className="whitespace-nowrap">
+      <span className="text-ink-soft">{entry.playersPlayed}</span> played ·{" "}
       <span className="text-[var(--accent)]">{entry.playersLive}</span> live ·{" "}
       <span className="text-ink-faint">{entry.playersToPlay}</span> to play
     </span>
