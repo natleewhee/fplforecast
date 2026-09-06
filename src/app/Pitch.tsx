@@ -12,6 +12,13 @@ function bandLabel(band: { floor: number; ceiling: number; bandProvisional: bool
 }
 
 type ViewMode = "model" | "baseline" | "yours";
+// One-line "what am I looking at" for each toggle position -- Model/Baseline/
+// Your XI reads as three unlabelled tabs otherwise.
+const MODE_CAPTION: Record<ViewMode, string> = {
+  model: "This app's recommended XI and captain: scoring history, form and ICT, plus fixture difficulty and minutes risk.",
+  baseline: "A simpler comparison XI: scoring history, form and ICT only -- no fixture or minutes adjustment. What the model has to beat.",
+  yours: "The XI and captain you've actually left in as of last week, unchanged.",
+};
 const MODE_LABEL: Record<ViewMode, string> = {
   model: "Model",
   baseline: "Baseline",
@@ -320,13 +327,18 @@ export default function Pitch({ forecast }: { forecast: Forecast }) {
               {isTargetGw ? MODE_LABEL[mode].toUpperCase() : "MODEL"} · GW{active.gameweek}
             </h2>
             {isTargetGw ? (
-              <div className="mt-1 segment">
-                {(Object.keys(MODE_LABEL) as ViewMode[]).map((m) => (
-                  <button key={m} data-active={mode === m} onClick={() => setMode(m)}>
-                    {MODE_LABEL[m]}
-                  </button>
-                ))}
-              </div>
+              <>
+                <div className="mt-1 segment">
+                  {(Object.keys(MODE_LABEL) as ViewMode[]).map((m) => (
+                    <button key={m} data-active={mode === m} onClick={() => setMode(m)}>
+                      {MODE_LABEL[m]}
+                    </button>
+                  ))}
+                </div>
+                <p className="mt-1 max-w-[26rem] text-[10.5px] leading-snug text-ink-faint">
+                  {MODE_CAPTION[mode]}
+                </p>
+              </>
             ) : (
               <p className="eyebrow mt-0.5">projected lineup</p>
             )}

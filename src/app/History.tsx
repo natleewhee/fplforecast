@@ -135,8 +135,8 @@ export default function History({ history }: { history: SeasonHistory }) {
                   <span className="stat w-8 text-ink">{g.points}</span>
                   {g.hit > 0 && <span className="text-[var(--danger)]">−{g.hit}</span>}
                   <span className="flex-1 truncate text-ink-faint">
-                    bench {g.benchPoints ?? "—"} · OR {compactRank(g.overallRank)} · £
-                    {g.teamValue.toFixed(1)}
+                    bench {g.benchPoints ?? "—"} · GWR {compactRank(g.rank)} · OR{" "}
+                    {compactRank(g.overallRank)} · £{g.teamValue.toFixed(1)}
                   </span>
                   {scored && (
                     <span className="font-mono text-[10px] text-ink-soft">

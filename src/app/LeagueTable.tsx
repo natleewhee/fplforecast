@@ -49,15 +49,26 @@ export default function LeagueTable() {
         <h2 className="eyebrow">{data.leagueName}</h2>
         <span className="text-[11px] text-ink-faint">GW{data.gameweek}</span>
       </div>
-      <div className="panel !p-0 overflow-x-auto">
-        <table className="w-full min-w-[480px] text-sm">
-          <thead>
+      {/* Fixed height with its own scroll, not the page's -- a 20-manager
+         league shouldn't push everything below it half a screen down.
+         table-fixed + explicit column widths (no horizontal scroll) so all
+         5 columns fit a 375px phone. */}
+      <div className="panel !p-0 max-h-80 overflow-y-auto">
+        <table className="w-full table-fixed text-xs sm:text-sm">
+          <colgroup>
+            <col className="w-[15%]" />
+            <col className="w-[40%]" />
+            <col className="w-[15%]" />
+            <col className="w-[13%]" />
+            <col className="w-[17%]" />
+          </colgroup>
+          <thead className="sticky top-0 bg-[var(--bg-0)]">
             <tr className="border-b border-line text-left eyebrow">
-              <th className="px-3 py-2 font-bold">Rank</th>
-              <th className="px-3 py-2 font-bold">Manager</th>
-              <th className="px-3 py-2 text-right font-bold">Total</th>
-              <th className="px-3 py-2 text-right font-bold">GW pts</th>
-              <th className="px-3 py-2 text-right font-bold">Live xP</th>
+              <th className="px-1.5 py-2 font-bold sm:px-3">Rk</th>
+              <th className="px-1.5 py-2 font-bold sm:px-3">Manager</th>
+              <th className="px-1.5 py-2 text-right font-bold sm:px-3">Tot</th>
+              <th className="px-1.5 py-2 text-right font-bold sm:px-3">GW</th>
+              <th className="px-1.5 py-2 text-right font-bold sm:px-3">xP</th>
             </tr>
           </thead>
           <tbody>
@@ -65,28 +76,28 @@ export default function LeagueTable() {
               const moved = e.lastRank - e.rank;
               return (
                 <tr key={e.entryId} className="border-b border-line last:border-0 hover:bg-white/[0.03]">
-                  <td className="px-3 py-2">
+                  <td className="truncate px-1.5 py-2 sm:px-3">
                     <span className="font-mono tabular-nums">{e.rank}</span>
                     {moved !== 0 && (
                       <span
-                        className={`ml-1 font-mono text-[10px] ${moved > 0 ? "text-[var(--accent)]" : "text-[var(--danger)]"}`}
+                        className={`ml-0.5 font-mono text-[9px] ${moved > 0 ? "text-[var(--accent)]" : "text-[var(--danger)]"}`}
                       >
                         {moved > 0 ? "▲" : "▼"}
                         {Math.abs(moved)}
                       </span>
                     )}
                   </td>
-                  <td className="px-3 py-2">
-                    <div className="font-medium text-ink">{e.entryName}</div>
-                    <div className="text-[11px] text-ink-faint">{e.playerName}</div>
+                  <td className="min-w-0 px-1.5 py-2 sm:px-3">
+                    <div className="truncate font-medium text-ink">{e.entryName}</div>
+                    <div className="truncate text-[10px] text-ink-faint">{e.playerName}</div>
                   </td>
-                  <td className="px-3 py-2 text-right font-mono tabular-nums text-ink-soft">
+                  <td className="truncate px-1.5 py-2 text-right font-mono tabular-nums text-ink-soft sm:px-3">
                     {e.totalPoints}
                   </td>
-                  <td className="px-3 py-2 text-right font-mono tabular-nums text-ink-soft">
+                  <td className="truncate px-1.5 py-2 text-right font-mono tabular-nums text-ink-soft sm:px-3">
                     {e.eventPoints}
                   </td>
-                  <td className="px-3 py-2 text-right font-mono font-semibold tabular-nums text-[var(--accent)]">
+                  <td className="truncate px-1.5 py-2 text-right font-mono font-semibold tabular-nums text-[var(--accent)] sm:px-3">
                     {e.projectedXp != null ? e.projectedXp.toFixed(1) : "—"}
                   </td>
                 </tr>

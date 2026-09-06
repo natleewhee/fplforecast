@@ -1,52 +1,50 @@
 "use client";
 
-import { Children, useRef, useState, type ReactNode } from "react";
+import { Children, useState, type ReactNode } from "react";
 
-/** Native horizontal scroll-snap carousel -- swipe works for free on
- * touch/trackpad, no gesture code needed. Shows small dot indicators and
- * snaps one child per "page" (a child can itself be wider on desktop via
- * its own className; the dots just track scroll position). */
+/** Shows one child at a time with dot navigation (tap only, no touch-drag).
+ * Deliberately not swipeable: this lives inside AppTabs' swipeable page
+ * shell, and a horizontal drag gesture here would fight the outer page-swipe
+ * (the same touch is ambiguous between "change card" and "change tab").
+ * Swipe is for pages; a toggle/tap is for content within a page. */
 export default function Carousel({ children }: { children: ReactNode }) {
   const items = Children.toArray(children);
   const [active, setActive] = useState(0);
-  const trackRef = useRef<HTMLDivElement>(null);
 
-  const onScroll = () => {
-    const el = trackRef.current;
-    if (!el || el.children.length === 0) return;
-    const childWidth = (el.children[0] as HTMLElement).offsetWidth + 12; // + gap
-    setActive(Math.round(el.scrollLeft / childWidth));
-  };
+  if (items.length === 0) return null;
+  if (items.length === 1) return <>{items}</>;
 
-  const goTo = (i: number) => {
-    const el = trackRef.current;
-    if (!el || !el.children[i]) return;
-    (el.children[i] as HTMLElement).scrollIntoView({ behavior: "smooth", inline: "start", block: "nearest" });
-  };
-
-  if (items.length <= 1) return <>{items}</>;
+  const clamped = Math.min(active, items.length - 1);
 
   return (
     <div>
-      <div
-        ref={trackRef}
-        onScroll={onScroll}
-        className="flex snap-x snap-mandatory gap-3 overflow-x-auto pb-1 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-      >
-        {items.map((child, i) => (
-          <div key={i} className="w-full shrink-0 snap-start">
-            {child}
-          </div>
-        ))}
+      <div className="relative flex items-center gap-1.5">
+        <button
+          onClick={() => setActive((a) => Math.max(0, a - 1))}
+          disabled={clamped === 0}
+          aria-label="Previous"
+          className="shrink-0 rounded-full border border-line p-1.5 text-ink-soft transition hover:border-border-strong hover:text-ink disabled:opacity-30"
+        >
+          ‹
+        </button>
+        <div className="min-w-0 flex-1">{items[clamped]}</div>
+        <button
+          onClick={() => setActive((a) => Math.min(items.length - 1, a + 1))}
+          disabled={clamped === items.length - 1}
+          aria-label="Next"
+          className="shrink-0 rounded-full border border-line p-1.5 text-ink-soft transition hover:border-border-strong hover:text-ink disabled:opacity-30"
+        >
+          ›
+        </button>
       </div>
       <div className="mt-1.5 flex justify-center gap-1.5">
         {items.map((_, i) => (
           <button
             key={i}
-            onClick={() => goTo(i)}
+            onClick={() => setActive(i)}
             aria-label={`Go to ${i + 1}`}
             className={`h-1.5 rounded-full transition-all ${
-              i === active ? "w-4 bg-[var(--accent)]" : "w-1.5 bg-[var(--border-strong)]"
+              i === clamped ? "w-4 bg-[var(--accent)]" : "w-1.5 bg-[var(--border-strong)]"
             }`}
           />
         ))}
