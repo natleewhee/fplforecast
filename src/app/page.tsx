@@ -12,7 +12,7 @@ import {
 import Pitch from "./Pitch";
 import History from "./History";
 import LiveTracker from "./LiveTracker";
-import LeagueTable from "./LeagueTable";
+import LeaguesPage from "./LeaguesPage";
 import Scenarios from "./Scenarios";
 import TransferForm from "./TransferForm";
 import AppTabs from "./AppTabs";
@@ -326,12 +326,9 @@ export default function Home() {
   );
 
   if (forecast && forecast.squad && forecast.squad.startingXi) {
-    const liveTab = (
-      <>
-        <LiveTracker />
-        <LeagueTable />
-      </>
-    );
+    const liveTab = <LiveTracker />;
+
+    const leaguesTab = <LeaguesPage />;
 
     const squadTab = (
       <>
@@ -401,6 +398,7 @@ export default function Home() {
                 { id: "live", label: "Live", content: liveTab },
                 { id: "squad", label: "Squad", content: squadTab },
                 { id: "scenarios", label: "Scenarios", content: scenariosTab },
+                { id: "leagues", label: "Leagues", content: leaguesTab },
               ]}
             />
             {footer}
