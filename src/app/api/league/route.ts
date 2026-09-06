@@ -85,7 +85,11 @@ export type LeagueEntryRow = {
 export type LeaguePayload = {
   leagueId: number;
   leagueName: string;
-  entries: LeagueEntryRow[];
+  entries: LeagueEntryRow[]; // top 10 plus your own entry if you're outside it
+  myRank: number | null;
+  myEntryId: number;
+  totalEntries: number; // count of entries actually paged through
+  totalEntriesIsFloor: boolean; // true if the league is bigger than we paged through (totalEntries is a lower bound)
 };
 
 export type LeagueSummary = { leagueId: number; leagueName: string };
@@ -97,6 +101,12 @@ export type LeaguesResponse = {
   league: LeaguePayload | null; // the selected league's standings, null if the manager has none
 };
 
+// Cap how many standings pages we page through looking for "your" entry --
+// a league with thousands of entries would otherwise mean thousands of
+// sequential FPL requests just to find one rank. Past this cap, your rank
+// (if not yet found) shows as unknown rather than blocking the page.
+const MAX_STANDINGS_PAGES = 10;
+
 async function fetchLeague(
   leagueRef: FplClassicLeagueRef,
   args: {
@@ -106,18 +116,45 @@ async function fetchLeague(
     inputs: ReturnType<typeof poolLiveInputs>;
     gameweek: number;
     now: string;
+    myEntryId: number;
   },
 ): Promise<LeaguePayload | null> {
-  const { bootstrap, live, fixtures, inputs, gameweek, now } = args;
-  let standings: FplStandings;
+  const { bootstrap, live, fixtures, inputs, gameweek, now, myEntryId } = args;
+
+  let firstPage: FplStandings;
   try {
-    standings = await fpl<FplStandings>(`/leagues-classic/${leagueRef.id}/standings/`);
+    firstPage = await fpl<FplStandings>(`/leagues-classic/${leagueRef.id}/standings/`);
   } catch {
     return null; // one league failing shouldn't sink the others
   }
 
+  // Top 10 always come from the first page (already sorted by rank). If
+  // your own entry isn't in it, keep paging (lightly -- just the standings
+  // list, no picks) until it turns up or the page cap is hit.
+  const allResults = [...firstPage.standings.results];
+  let hasNext = firstPage.standings.has_next;
+  let page = 1;
+  let myResult = allResults.find((r) => r.entry === myEntryId);
+  while (!myResult && hasNext && page < MAX_STANDINGS_PAGES) {
+    page += 1;
+    try {
+      const next = await fpl<FplStandings>(
+        `/leagues-classic/${leagueRef.id}/standings/?page_standings=${page}`,
+      );
+      allResults.push(...next.standings.results);
+      hasNext = next.standings.has_next;
+      myResult = allResults.find((r) => r.entry === myEntryId);
+    } catch {
+      break; // couldn't page further -- show what we have
+    }
+  }
+
+  const top10 = firstPage.standings.results.slice(0, 10);
+  const resultsToDetail =
+    myResult && !top10.some((r) => r.entry === myResult!.entry) ? [...top10, myResult] : top10;
+
   const entries = await Promise.all(
-    standings.standings.results.map(async (row): Promise<LeagueEntryRow> => {
+    resultsToDetail.map(async (row): Promise<LeagueEntryRow> => {
       let projectedXp: number | null = null;
       let chip: string | null = null;
       let captainName: string | null = null;
@@ -160,9 +197,13 @@ async function fetchLeague(
   entries.sort((a, b) => a.rank - b.rank);
 
   return {
-    leagueId: standings.league.id,
-    leagueName: standings.league.name,
+    leagueId: firstPage.league.id,
+    leagueName: firstPage.league.name,
     entries,
+    myRank: myResult?.rank ?? null,
+    myEntryId,
+    totalEntries: allResults.length,
+    totalEntriesIsFloor: hasNext,
   };
 }
 
@@ -202,7 +243,15 @@ export async function GET(request: Request) {
     const now = new Date().toISOString();
 
     const league = selectedRef
-      ? await fetchLeague(selectedRef, { bootstrap, live, fixtures, inputs, gameweek, now })
+      ? await fetchLeague(selectedRef, {
+          bootstrap,
+          live,
+          fixtures,
+          inputs,
+          gameweek,
+          now,
+          myEntryId: Number(TEAM_ID),
+        })
       : null;
 
     const payload: LeaguesResponse = { gameweek, generatedAt: now, leagues: leagueOptions, league };
