@@ -235,6 +235,11 @@ option {
   background: linear-gradient(180deg, var(--accent), #23c78c);
   box-shadow: 0 0 18px var(--accent-glow);
 }
+.segment button:disabled {
+  color: var(--text-faint);
+  cursor: not-allowed;
+  opacity: 0.5;
+}
 
 /* broadcast pitch */
 .turf {
