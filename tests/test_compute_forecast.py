@@ -48,7 +48,7 @@ def test_targets_the_upcoming_gameweek(forecast):
 
 
 def test_pool_block_covers_every_available_player_with_per_gw_projections(forecast):
-    from engine.config import ROLLING_WINDOW
+    from engine.config import POOL_HORIZON_WEEKS
 
     bootstrap = cf.load_bootstrap()
     # "Available" here means eligible for the optimiser to select or
@@ -62,12 +62,12 @@ def test_pool_block_covers_every_available_player_with_per_gw_projections(foreca
     pool = forecast["pool"]
     assert {p["id"] for p in pool} == available
     for p in pool:
-        assert len(p["perGameweek"]) == ROLLING_WINDOW
+        assert len(p["perGameweek"]) == POOL_HORIZON_WEEKS
         assert p["total"] == pytest.approx(sum(p["perGameweek"]))
         assert isinstance(p["selectedByPercent"], (int, float))
         assert isinstance(p["form"], (int, float))
         assert isinstance(p["price"], (int, float))
-        assert len(p["opponents"]) == ROLLING_WINDOW  # one leg group per target gameweek
+        assert len(p["opponents"]) == POOL_HORIZON_WEEKS  # one leg group per target gameweek
         # Target-gw component breakdown for every pool player (not just the
         # held squad) -- the live tracker's decay math needs this to project
         # a league entry's arbitrary picks the same way it projects yours.

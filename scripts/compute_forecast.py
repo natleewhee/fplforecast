@@ -22,6 +22,7 @@ from engine.config import (
     PAR_BUFFER_POINTS,
     PAR_BUFFER_PROVISIONAL_POINTS,
     PAR_MARGIN_MIN_GAMEWEEKS,
+    POOL_HORIZON_WEEKS,
     ROLLING_WINDOW,
     SETTLE_GAMEWEEK,
 )
@@ -573,13 +574,18 @@ def build_scenarios(
         if result.feasible:
             free_hit = _scenario_to_dict(result, pool_by_id, target_gw)
 
-    # Wildcard, unlike Free Hit, is a permanent squad -- solved at each of the
-    # same 1/3/5 horizons (rather than once at 5 GW) so the horizon toggle
-    # picks an actually-different, horizon-optimal squad, not just a slice of
-    # the 5-GW one.
+    # Wildcard, unlike Free Hit, is a permanent squad -- solved at each of
+    # 1/3/5/7 horizons (rather than once at a fixed length) so the horizon
+    # toggle picks an actually-different, horizon-optimal squad, not just a
+    # slice of the longest one. 7 GWs is Wildcard-only (not offered for the
+    # pinned-transfer-count byHorizon scenarios above): a Wildcard rebuild
+    # has no held squad to price against, so it stays a single ILP solve at
+    # any horizon, while a longer pinned-transfer horizon would need the
+    # multi-week planner's chained-week approach instead of blowing up this
+    # one-shot solve's variable count.
     wildcard_by_horizon: dict[str, dict] = {}
     if chips_available["wildcard"]:
-        for horizon in (1, 3, 5):
+        for horizon in (1, 3, 5, 7):
             result = solve_squad(
                 pool, held=[], bank=total_budget, free_transfers=0, horizon_gws=horizon, unlimited=True
             )
@@ -668,7 +674,14 @@ def main(now: datetime | None = None) -> int:
         return baseline.project(row)
 
     model_window = window_points(feature_frame, model_fn, target_gw)
-    model_window_by_gw = window_points_by_gw(feature_frame, model_fn, target_gw)
+    # Pool players carry POOL_HORIZON_WEEKS of projections (currently more
+    # than ROLLING_WINDOW) so the Wildcard optimiser can solve out to its
+    # longest horizon; every other rolling-window use in this file (squad
+    # cards' windowPoints, the GW rail, xiFloorCeiling) stays at the
+    # unchanged 5-week ROLLING_WINDOW below.
+    model_window_by_gw = window_points_by_gw(
+        feature_frame, model_fn, target_gw, window=POOL_HORIZON_WEEKS
+    )
     baseline_window = window_points(feature_frame, baseline_fn, target_gw)
 
     minutes_risk_by_id = {
@@ -931,12 +944,13 @@ def main(now: datetime | None = None) -> int:
             }
         )
 
-    # Whole-pool five-gameweek projections for the pre-deadline planning table
-    # (R9, R10, R14). Opponent legs come straight from the fixture list -- no
-    # per-pool-player model evaluation (KTD3).
+    # Whole-pool POOL_HORIZON_WEEKS-gameweek projections for the pre-deadline
+    # planning table (R9, R10, R14) and the optimiser. Opponent legs come
+    # straight from the fixture list -- no per-pool-player model evaluation
+    # (KTD3).
     def _pool_opponents(club_team_id: int) -> list[list[dict]]:
         legs_by_gw: list[list[dict]] = []
-        for gw in range(target_gw, target_gw + ROLLING_WINDOW):
+        for gw in range(target_gw, target_gw + POOL_HORIZON_WEEKS):
             legs = team_fixtures(club_team_id, gw, ctx.fixtures)
             legs_by_gw.append(
                 [

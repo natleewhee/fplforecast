@@ -229,10 +229,19 @@ function WeeklyXi({
   return (
     <div className="space-y-3">
       {weeks.length > 1 && (
-        <div className="flex items-center justify-between gap-2">
-          <div className="segment">
+        <div className="flex flex-wrap items-center justify-between gap-2">
+          {/* overflow-x-auto, not flex-wrap, on the segment itself -- a long
+             horizon (Wildcard's 7 GW) fits more GW buttons than a phone is
+             wide; scrolling the pill row keeps it a single line instead of
+             wrapping into two, or pushing the page wider. */}
+          <div className="segment max-w-full overflow-x-auto">
             {weeks.map((w, i) => (
-              <button key={w.targetGw} data-active={i === weekIndex} onClick={() => setWeekIndex(i)}>
+              <button
+                key={w.targetGw}
+                data-active={i === weekIndex}
+                onClick={() => setWeekIndex(i)}
+                className="shrink-0"
+              >
                 GW{w.targetGw}
               </button>
             ))}
@@ -571,28 +580,44 @@ function PlanTimeline({
   );
 }
 
+// Wildcard rebuilds the whole squad with no held constraint, so unlike the
+// pinned-transfer-count byHorizon scenarios (capped at 5 -- a longer pinned
+// horizon would need the multi-week planner's chained-week approach instead
+// of blowing up a one-shot solve's variable count), it can offer a longer,
+// Wildcard-only 7-GW option. Kept as its own horizon, independent of the
+// main transfer-scenario horizon toggle above.
+const WILDCARD_HORIZONS = ["1", "3", "5", "7"] as const;
+type WildcardHorizon = (typeof WILDCARD_HORIZONS)[number];
+
 /** Free Hit and Wildcard used to render side by side -- each is a full pitch
  * view, so together they made this the tallest section on the page. Shown
  * one at a time behind a toggle instead; defaults to whichever chip is
  * actually available when only one is. */
 function ChipToggle({
   freeHit,
-  wildcard,
-  horizon,
+  wildcardByHorizon,
+  byHorizon,
   baselineFor1Gw,
-  rollForHorizon,
   poolById,
 }: {
   freeHit: Scenario | null;
-  wildcard: Scenario | null;
-  horizon: Horizon;
+  wildcardByHorizon: Record<string, Scenario> | null;
+  byHorizon: Record<string, Scenario[]>;
   baselineFor1Gw: number | null;
-  rollForHorizon: number | null;
   poolById: Map<number, PoolPlayer>;
 }) {
   const [which, setWhich] = useState<"freeHit" | "wildcard">(freeHit ? "freeHit" : "wildcard");
-  const showToggle = freeHit && wildcard;
-  const active = which === "freeHit" && freeHit ? "freeHit" : wildcard ? "wildcard" : "freeHit";
+  const [wildcardHorizon, setWildcardHorizon] = useState<WildcardHorizon>("1");
+  const showToggle = freeHit && wildcardByHorizon;
+  const active = which === "freeHit" && freeHit ? "freeHit" : wildcardByHorizon ? "wildcard" : "freeHit";
+  const wildcard = wildcardByHorizon?.[wildcardHorizon] ?? null;
+  // A "roll" (0-transfer) baseline only exists at 1/3/5 (byHorizon's own
+  // range) -- at 7 GW there's nothing to compare against, so the gain line
+  // just doesn't render (ChipCard already handles a null baseline).
+  const rollAtWildcardHorizon = (byHorizon[wildcardHorizon] ?? []).find(
+    (s) => s.transfersOut.length === 0,
+  );
+  const rollForWildcardHorizon = rollAtWildcardHorizon ? rollAtWildcardHorizon.netPoints : null;
 
   return (
     <div className="space-y-3">
@@ -609,14 +634,30 @@ function ChipToggle({
       {active === "freeHit" && freeHit && (
         <ChipCard title="FREE HIT" scenario={freeHit} baselineNetPoints={baselineFor1Gw} poolById={poolById} />
       )}
-      {active === "wildcard" && wildcard && (
-        <ChipCard
-          key={horizon}
-          title={`WILDCARD — ${horizon} GW`}
-          scenario={wildcard}
-          baselineNetPoints={rollForHorizon}
-          poolById={poolById}
-        />
+      {active === "wildcard" && wildcardByHorizon && (
+        <div className="space-y-2">
+          <div className="segment">
+            {WILDCARD_HORIZONS.map((h) => (
+              <button
+                key={h}
+                data-active={wildcardHorizon === h}
+                disabled={!wildcardByHorizon[h]}
+                onClick={() => setWildcardHorizon(h)}
+              >
+                {h} GW
+              </button>
+            ))}
+          </div>
+          {wildcard && (
+            <ChipCard
+              key={wildcardHorizon}
+              title={`WILDCARD — ${wildcardHorizon} GW`}
+              scenario={wildcard}
+              baselineNetPoints={rollForWildcardHorizon}
+              poolById={poolById}
+            />
+          )}
+        </div>
       )}
     </div>
   );
@@ -639,8 +680,6 @@ export default function Scenarios({
   const scenariosForHorizon = scenarios.byHorizon[horizon] ?? [];
   const roll = scenariosForHorizon.find((s) => s.transfersOut.length === 0) ?? null;
   const baselineFor1Gw = (scenarios.byHorizon["1"] ?? []).find((s) => s.transfersOut.length === 0);
-  const wildcardForHorizon = scenarios.wildcard?.[horizon] ?? null;
-  const rollForHorizon = roll ? roll.netPoints : null;
 
   return (
     <section className="space-y-4">
@@ -683,13 +722,12 @@ export default function Scenarios({
         <PlanTimeline plan={scenarios.plan} forecastGw={forecastGw} poolById={poolById} />
       )}
 
-      {(scenarios.freeHit || wildcardForHorizon) && (
+      {(scenarios.freeHit || scenarios.wildcard) && (
         <ChipToggle
           freeHit={scenarios.freeHit}
-          wildcard={wildcardForHorizon}
-          horizon={horizon}
+          wildcardByHorizon={scenarios.wildcard}
+          byHorizon={scenarios.byHorizon}
           baselineFor1Gw={baselineFor1Gw ? baselineFor1Gw.netPoints : null}
-          rollForHorizon={rollForHorizon}
           poolById={poolById}
         />
       )}

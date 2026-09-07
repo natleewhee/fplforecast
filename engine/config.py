@@ -13,6 +13,14 @@ from __future__ import annotations
 # (captaincy is still scored on the single upcoming gameweek). Inherits KD8.
 ROLLING_WINDOW = 5
 
+# How many future gameweeks' projections the transfer-scenario pool carries
+# (each pool player's `perGameweek`/`opponents` arrays). Must be >= the
+# largest horizon offered anywhere in the optimiser -- currently Wildcard's
+# 7-GW option. Kept separate from ROLLING_WINDOW, which is a distinct 5-week
+# snapshot metric (squad cards' windowPoints, xiFloorCeiling) that shouldn't
+# silently change just because a scenario horizon grew.
+POOL_HORIZON_WEEKS = 7
+
 # Completed seasons the multi-season archive and backtest cover -- the same list
 # as scripts/resolve_entities.py's PAST_SEASONS. Inherits KTD3.
 ARCHIVE_SEASONS = ["2025-26", "2024-25", "2023-24"]
