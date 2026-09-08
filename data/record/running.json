@@ -7,13 +7,19 @@
     {
       "gameweek": 2,
       "status": "no_prediction"
+    },
+    {
+      "baselinePoints": 29.0,
+      "delta": 19.0,
+      "gameweek": 3,
+      "modelPoints": 48.0
     }
   ],
   "summary": {
-    "baselineTotal": 0,
-    "gameweeksScored": 0,
-    "meaningful": false,
-    "modelTotal": 0,
-    "pooledDeltaPerGw": 0.0
+    "baselineTotal": 29.0,
+    "gameweeksScored": 1,
+    "meaningful": true,
+    "modelTotal": 48.0,
+    "pooledDeltaPerGw": 19.0
   }
 }
