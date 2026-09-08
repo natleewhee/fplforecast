@@ -55,10 +55,12 @@ export default function AppTabs({ tabs }: { tabs: Tab[] }) {
           style={{
             width: `${tabs.length * 100}%`,
             transform: `translateX(-${(active * 100) / tabs.length}%)`,
-            // A slight overshoot-then-settle spring, closer to a game menu's
-            // panel slide than a flat linear/ease-out webpage transition.
+            // Exponential ease-out (quint) -- fast start, smooth decelerate
+            // to a stop with no overshoot. An overshoot/bounce curve reads
+            // as dated rather than premium; real panels don't spring past
+            // their resting position and snap back.
             transitionDuration: "320ms",
-            transitionTimingFunction: "cubic-bezier(0.22, 1.12, 0.36, 1)",
+            transitionTimingFunction: "cubic-bezier(0.22, 1, 0.36, 1)",
           }}
         >
           {tabs.map((t) => (
