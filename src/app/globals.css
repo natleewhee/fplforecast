@@ -228,7 +228,7 @@ option {
   font-weight: 700;
   letter-spacing: 0.02em;
   color: var(--text-soft);
-  transition: color 0.18s ease, background 0.18s ease, transform 0.12s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition: color 0.18s ease, background 0.18s ease, transform 0.12s cubic-bezier(0.22, 1, 0.36, 1);
 }
 .segment button[data-active="true"] {
   color: #04120c;
@@ -350,8 +350,9 @@ option {
 }
 
 /* button press feedback -- app-wide "juicy" tap response: a quick
-   scale-down on press with a spring-back release, rather than the flat,
-   instant state-change a plain webpage button gives.
+   scale-down on press with a smooth (no-overshoot) decelerate back on
+   release, rather than the flat, instant state-change a plain webpage
+   button gives.
    `:where(...)` keeps this at zero specificity so it never fights a
    component's own `transition`/`transition-colors` utility class (several
    buttons already animate hover color/border and should keep doing so
@@ -359,7 +360,7 @@ option {
    declare one, and the active-state transform itself still applies
    everywhere since nothing else sets `transform` on `:active`. */
 :where(button:not(:disabled)) {
-  transition: transform 0.12s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition: transform 0.12s cubic-bezier(0.22, 1, 0.36, 1);
 }
 button:not(:disabled):active {
   transform: scale(0.94);
