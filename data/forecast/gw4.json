@@ -11,7 +11,7 @@
   },
   "earlySeason": true,
   "effectiveGap": 10.0,
-  "generatedAt": "2026-09-09T07:59:31.037424+00:00",
+  "generatedAt": "2026-09-10T07:59:21.736880+00:00",
   "history": {
     "gameweeks": [
       {
@@ -462,7 +462,7 @@
       ],
       "position": "DEF",
       "price": 8.0,
-      "selectedByPercent": 24.8,
+      "selectedByPercent": 24.6,
       "sellPrice": 8.0,
       "team": "ARS",
       "total": 40.32,
@@ -726,7 +726,7 @@
       ],
       "position": "DEF",
       "price": 5.7,
-      "selectedByPercent": 47.7,
+      "selectedByPercent": 48.0,
       "sellPrice": 5.7,
       "team": "ARS",
       "total": 41.73,
@@ -990,7 +990,7 @@
       ],
       "position": "DEF",
       "price": 5.4,
-      "selectedByPercent": 3.4,
+      "selectedByPercent": 3.3,
       "sellPrice": 5.4,
       "team": "ARS",
       "total": 22.82,
@@ -1166,7 +1166,7 @@
       ],
       "position": "MID",
       "price": 7.4,
-      "selectedByPercent": 13.6,
+      "selectedByPercent": 13.5,
       "sellPrice": 7.4,
       "team": "ARS",
       "total": 34.89,
@@ -1342,7 +1342,7 @@
       ],
       "position": "MID",
       "price": 6.6,
-      "selectedByPercent": 13.6,
+      "selectedByPercent": 14.5,
       "sellPrice": 6.6,
       "team": "ARS",
       "total": 48.43,
@@ -1870,7 +1870,7 @@
       ],
       "position": "FWD",
       "price": 7.5,
-      "selectedByPercent": 7.5,
+      "selectedByPercent": 7.6,
       "sellPrice": 7.5,
       "team": "ARS",
       "total": 36.4,
@@ -1958,7 +1958,7 @@
       ],
       "position": "DEF",
       "price": 4.4,
-      "selectedByPercent": 13.3,
+      "selectedByPercent": 13.8,
       "sellPrice": 4.4,
       "team": "ARS",
       "total": 20.37,
@@ -2134,7 +2134,7 @@
       ],
       "position": "MID",
       "price": 6.4,
-      "selectedByPercent": 17.4,
+      "selectedByPercent": 17.2,
       "sellPrice": 6.4,
       "team": "ARS",
       "total": 25.78,
@@ -2230,19 +2230,19 @@
     },
     {
       "availability": {
-        "chance": null,
-        "news": null,
-        "status": "a"
+        "chance": 75,
+        "news": "Muscular injury - 75% chance of playing",
+        "status": "d"
       },
       "components": {
-        "appearance": 2.0,
-        "assists": 0.22,
-        "bonus": 0.04,
-        "cards": -0.29,
-        "cleanSheet": 1.12,
-        "defensiveContribution": 1.04,
-        "goals": 0.46,
-        "goalsConceded": -0.61,
+        "appearance": 1.5,
+        "assists": 0.17,
+        "bonus": 0.03,
+        "cards": -0.21,
+        "cleanSheet": 0.84,
+        "defensiveContribution": 0.78,
+        "goals": 0.35,
+        "goalsConceded": -0.46,
         "saves": 0.0
       },
       "elementType": 2,
@@ -2300,20 +2300,20 @@
         ]
       ],
       "perGameweek": [
-        3.99,
-        3.35,
-        3.79,
-        3.11,
-        2.98,
-        3.98,
-        3.44
+        2.99,
+        2.51,
+        2.84,
+        2.33,
+        2.24,
+        2.99,
+        2.58
       ],
       "position": "DEF",
       "price": 4.5,
-      "selectedByPercent": 6.8,
+      "selectedByPercent": 6.7,
       "sellPrice": 4.5,
       "team": "AVL",
-      "total": 24.64,
+      "total": 18.48,
       "webName": "Cash"
     },
     {
@@ -3894,7 +3894,7 @@
       ],
       "position": "GKP",
       "price": 5.0,
-      "selectedByPercent": 1.5,
+      "selectedByPercent": 1.6,
       "sellPrice": 5.0,
       "team": "AVL",
       "total": 16.0,
@@ -4075,94 +4075,6 @@
       "team": "AVL",
       "total": 16.4,
       "webName": "Wan-Bissaka"
-    },
-    {
-      "availability": {
-        "chance": null,
-        "news": null,
-        "status": "a"
-      },
-      "components": {
-        "appearance": 0.0,
-        "assists": 0.07,
-        "bonus": 0.16,
-        "cards": 0.0,
-        "cleanSheet": 0.0,
-        "defensiveContribution": 0.31,
-        "goals": 0.24,
-        "goalsConceded": 0.0,
-        "saves": 0.0
-      },
-      "elementType": 3,
-      "form": 0.0,
-      "id": 618,
-      "opponents": [
-        [
-          {
-            "fdrRating": 3,
-            "team": "NFO",
-            "wasHome": true
-          }
-        ],
-        [
-          {
-            "fdrRating": 3,
-            "team": "TOT",
-            "wasHome": false
-          }
-        ],
-        [
-          {
-            "fdrRating": 3,
-            "team": "BRE",
-            "wasHome": true
-          }
-        ],
-        [
-          {
-            "fdrRating": 3,
-            "team": "NEW",
-            "wasHome": false
-          }
-        ],
-        [
-          {
-            "fdrRating": 4,
-            "team": "MCI",
-            "wasHome": true
-          }
-        ],
-        [
-          {
-            "fdrRating": 2,
-            "team": "FUL",
-            "wasHome": true
-          }
-        ],
-        [
-          {
-            "fdrRating": 4,
-            "team": "MUN",
-            "wasHome": false
-          }
-        ]
-      ],
-      "perGameweek": [
-        0.78,
-        0.77,
-        0.8,
-        0.74,
-        0.69,
-        0.78,
-        0.74
-      ],
-      "position": "MID",
-      "price": 6.0,
-      "selectedByPercent": 0.1,
-      "sellPrice": 6.0,
-      "team": "AVL",
-      "total": 5.3,
-      "webName": "Goretzka"
     },
     {
       "availability": {
@@ -5214,7 +5126,7 @@
       ],
       "position": "MID",
       "price": 6.0,
-      "selectedByPercent": 4.4,
+      "selectedByPercent": 4.7,
       "sellPrice": 6.0,
       "team": "BOU",
       "total": 39.06,
@@ -5918,7 +5830,7 @@
       ],
       "position": "FWD",
       "price": 6.0,
-      "selectedByPercent": 3.3,
+      "selectedByPercent": 3.2,
       "sellPrice": 6.0,
       "team": "BOU",
       "total": 29.44,
@@ -6446,7 +6358,7 @@
       ],
       "position": "GKP",
       "price": 5.0,
-      "selectedByPercent": 6.8,
+      "selectedByPercent": 6.7,
       "sellPrice": 5.0,
       "team": "BRE",
       "total": 23.46,
@@ -6622,7 +6534,7 @@
       ],
       "position": "DEF",
       "price": 5.5,
-      "selectedByPercent": 1.8,
+      "selectedByPercent": 1.7,
       "sellPrice": 5.5,
       "team": "BRE",
       "total": 5.83,
@@ -6798,7 +6710,7 @@
       ],
       "position": "DEF",
       "price": 4.5,
-      "selectedByPercent": 4.9,
+      "selectedByPercent": 4.8,
       "sellPrice": 4.5,
       "team": "BRE",
       "total": 31.61,
@@ -6886,7 +6798,7 @@
       ],
       "position": "DEF",
       "price": 4.6,
-      "selectedByPercent": 9.1,
+      "selectedByPercent": 9.0,
       "sellPrice": 4.6,
       "team": "BRE",
       "total": 27.44,
@@ -7590,7 +7502,7 @@
       ],
       "position": "MID",
       "price": 5.0,
-      "selectedByPercent": 1.6,
+      "selectedByPercent": 1.7,
       "sellPrice": 5.0,
       "team": "BRE",
       "total": 33.34,
@@ -7942,7 +7854,7 @@
       ],
       "position": "FWD",
       "price": 7.9,
-      "selectedByPercent": 11.9,
+      "selectedByPercent": 11.8,
       "sellPrice": 7.9,
       "team": "BRE",
       "total": 35.28,
@@ -8206,7 +8118,7 @@
       ],
       "position": "MID",
       "price": 5.7,
-      "selectedByPercent": 14.1,
+      "selectedByPercent": 13.8,
       "sellPrice": 5.7,
       "team": "BRE",
       "total": 26.51,
@@ -8734,7 +8646,7 @@
       ],
       "position": "DEF",
       "price": 4.8,
-      "selectedByPercent": 19.8,
+      "selectedByPercent": 20.1,
       "sellPrice": 4.8,
       "team": "BHA",
       "total": 30.32,
@@ -9174,7 +9086,7 @@
       ],
       "position": "MID",
       "price": 6.0,
-      "selectedByPercent": 1.1,
+      "selectedByPercent": 1.0,
       "sellPrice": 6.0,
       "team": "BHA",
       "total": 12.14,
@@ -9261,9 +9173,9 @@
         5.42
       ],
       "position": "MID",
-      "price": 5.5,
-      "selectedByPercent": 16.2,
-      "sellPrice": 5.5,
+      "price": 5.6,
+      "selectedByPercent": 16.3,
+      "sellPrice": 5.6,
       "team": "BHA",
       "total": 35.14,
       "webName": "Gro\u00df"
@@ -10054,7 +9966,7 @@
       ],
       "position": "DEF",
       "price": 5.0,
-      "selectedByPercent": 2.9,
+      "selectedByPercent": 3.0,
       "sellPrice": 5.0,
       "team": "BHA",
       "total": 28.21,
@@ -10318,7 +10230,7 @@
       ],
       "position": "MID",
       "price": 4.5,
-      "selectedByPercent": 2.8,
+      "selectedByPercent": 2.9,
       "sellPrice": 4.5,
       "team": "BHA",
       "total": 20.63,
@@ -10582,7 +10494,7 @@
       ],
       "position": "GKP",
       "price": 5.0,
-      "selectedByPercent": 4.9,
+      "selectedByPercent": 5.0,
       "sellPrice": 5.0,
       "team": "CHE",
       "total": 22.14,
@@ -10670,7 +10582,7 @@
       ],
       "position": "MID",
       "price": 7.6,
-      "selectedByPercent": 28.5,
+      "selectedByPercent": 29.3,
       "sellPrice": 7.6,
       "team": "CHE",
       "total": 36.63,
@@ -11198,7 +11110,7 @@
       ],
       "position": "DEF",
       "price": 4.5,
-      "selectedByPercent": 0.8,
+      "selectedByPercent": 0.9,
       "sellPrice": 4.5,
       "team": "CHE",
       "total": 27.19,
@@ -11550,7 +11462,7 @@
       ],
       "position": "MID",
       "price": 9.6,
-      "selectedByPercent": 22.2,
+      "selectedByPercent": 23.0,
       "sellPrice": 9.6,
       "team": "CHE",
       "total": 39.51,
@@ -11823,7 +11735,7 @@
     {
       "availability": {
         "chance": 75,
-        "news": "Unspecified injury - 75% chance of playing",
+        "news": "Calf injury - 75% chance of playing",
         "status": "d"
       },
       "components": {
@@ -12166,7 +12078,7 @@
       ],
       "position": "FWD",
       "price": 7.7,
-      "selectedByPercent": 72.4,
+      "selectedByPercent": 72.5,
       "sellPrice": 7.7,
       "team": "CHE",
       "total": 40.5,
@@ -12262,18 +12174,18 @@
     },
     {
       "availability": {
-        "chance": 100,
-        "news": null,
-        "status": "a"
+        "chance": 75,
+        "news": "Hamstring injury - 75% chance of playing",
+        "status": "d"
       },
       "components": {
         "appearance": 0.0,
         "assists": 0.01,
         "bonus": 0.0,
-        "cards": -0.05,
+        "cards": -0.03,
         "cleanSheet": 0.0,
-        "defensiveContribution": 0.09,
-        "goals": 0.13,
+        "defensiveContribution": 0.07,
+        "goals": 0.1,
         "goalsConceded": 0.0,
         "saves": 0.0
       },
@@ -12332,20 +12244,20 @@
         ]
       ],
       "perGameweek": [
-        0.19,
-        0.17,
-        0.18,
+        0.14,
+        0.13,
+        0.14,
+        0.11,
         0.15,
-        0.2,
-        0.18,
-        0.16
+        0.14,
+        0.12
       ],
       "position": "FWD",
       "price": 5.0,
       "selectedByPercent": 0.2,
       "sellPrice": 5.0,
       "team": "CHE",
-      "total": 1.23,
+      "total": 0.93,
       "webName": "Emegha"
     },
     {
@@ -12430,7 +12342,7 @@
       ],
       "position": "DEF",
       "price": 6.0,
-      "selectedByPercent": 8.2,
+      "selectedByPercent": 8.1,
       "sellPrice": 6.0,
       "team": "CHE",
       "total": 33.07,
@@ -13222,7 +13134,7 @@
       ],
       "position": "DEF",
       "price": 4.0,
-      "selectedByPercent": 8.7,
+      "selectedByPercent": 8.8,
       "sellPrice": 4.0,
       "team": "COV",
       "total": 35.43,
@@ -13310,7 +13222,7 @@
       ],
       "position": "DEF",
       "price": 4.0,
-      "selectedByPercent": 11.1,
+      "selectedByPercent": 11.0,
       "sellPrice": 4.0,
       "team": "COV",
       "total": 24.86,
@@ -14278,7 +14190,7 @@
       ],
       "position": "MID",
       "price": 4.5,
-      "selectedByPercent": 0.3,
+      "selectedByPercent": 0.2,
       "sellPrice": 4.5,
       "team": "COV",
       "total": 1.43,
@@ -15598,7 +15510,7 @@
       ],
       "position": "DEF",
       "price": 4.5,
-      "selectedByPercent": 5.7,
+      "selectedByPercent": 5.8,
       "sellPrice": 4.5,
       "team": "CRY",
       "total": 34.78,
@@ -15950,7 +15862,7 @@
       ],
       "position": "MID",
       "price": 4.5,
-      "selectedByPercent": 8.9,
+      "selectedByPercent": 8.8,
       "sellPrice": 4.5,
       "team": "CRY",
       "total": 9.87,
@@ -16389,9 +16301,9 @@
         0.21
       ],
       "position": "MID",
-      "price": 5.0,
+      "price": 4.9,
       "selectedByPercent": 0.0,
-      "sellPrice": 5.0,
+      "sellPrice": 4.9,
       "team": "CRY",
       "total": 1.58,
       "webName": "J.Rak-Sakyi"
@@ -17270,7 +17182,7 @@
       ],
       "position": "DEF",
       "price": 4.5,
-      "selectedByPercent": 0.3,
+      "selectedByPercent": 0.4,
       "sellPrice": 4.5,
       "team": "CRY",
       "total": 10.94,
@@ -18590,7 +18502,7 @@
       ],
       "position": "MID",
       "price": 5.5,
-      "selectedByPercent": 0.4,
+      "selectedByPercent": 0.5,
       "sellPrice": 5.5,
       "team": "EVE",
       "total": 33.91,
@@ -18942,7 +18854,7 @@
       ],
       "position": "MID",
       "price": 5.0,
-      "selectedByPercent": 0.1,
+      "selectedByPercent": 0.0,
       "sellPrice": 5.0,
       "team": "EVE",
       "total": 27.81,
@@ -19118,7 +19030,7 @@
       ],
       "position": "FWD",
       "price": 5.6,
-      "selectedByPercent": 5.5,
+      "selectedByPercent": 5.6,
       "sellPrice": 5.6,
       "team": "EVE",
       "total": 32.04,
@@ -19206,7 +19118,7 @@
       ],
       "position": "DEF",
       "price": 4.5,
-      "selectedByPercent": 0.1,
+      "selectedByPercent": 0.2,
       "sellPrice": 4.5,
       "team": "EVE",
       "total": 9.86,
@@ -19998,7 +19910,7 @@
       ],
       "position": "DEF",
       "price": 4.5,
-      "selectedByPercent": 0.9,
+      "selectedByPercent": 0.8,
       "sellPrice": 4.5,
       "team": "FUL",
       "total": 29.1,
@@ -21934,7 +21846,7 @@
       ],
       "position": "DEF",
       "price": 4.1,
-      "selectedByPercent": 11.2,
+      "selectedByPercent": 11.4,
       "sellPrice": 4.1,
       "team": "HUL",
       "total": 27.54,
@@ -22022,7 +21934,7 @@
       ],
       "position": "DEF",
       "price": 4.0,
-      "selectedByPercent": 0.5,
+      "selectedByPercent": 0.6,
       "sellPrice": 4.0,
       "team": "HUL",
       "total": 17.26,
@@ -22206,19 +22118,19 @@
     },
     {
       "availability": {
-        "chance": null,
-        "news": null,
-        "status": "a"
+        "chance": 75,
+        "news": "Foot injury - 75% chance of playing",
+        "status": "d"
       },
       "components": {
-        "appearance": 0.33,
-        "assists": 0.04,
+        "appearance": 0.25,
+        "assists": 0.03,
         "bonus": 0.01,
-        "cards": -0.03,
+        "cards": -0.02,
         "cleanSheet": 0.0,
-        "defensiveContribution": 0.42,
-        "goals": 0.05,
-        "goalsConceded": -0.24,
+        "defensiveContribution": 0.32,
+        "goals": 0.04,
+        "goalsConceded": -0.18,
         "saves": 0.0
       },
       "elementType": 2,
@@ -22276,20 +22188,20 @@
         ]
       ],
       "perGameweek": [
-        0.57,
-        0.57,
-        0.67,
-        0.62,
-        0.65,
-        0.72,
-        0.51
+        0.43,
+        0.43,
+        0.51,
+        0.47,
+        0.48,
+        0.54,
+        0.38
       ],
       "position": "DEF",
       "price": 4.0,
       "selectedByPercent": 0.1,
       "sellPrice": 4.0,
       "team": "HUL",
-      "total": 4.31,
+      "total": 3.24,
       "webName": "McNair"
     },
     {
@@ -22374,7 +22286,7 @@
       ],
       "position": "MID",
       "price": 5.0,
-      "selectedByPercent": 0.9,
+      "selectedByPercent": 1.0,
       "sellPrice": 5.0,
       "team": "HUL",
       "total": 25.17,
@@ -22462,7 +22374,7 @@
       ],
       "position": "MID",
       "price": 4.5,
-      "selectedByPercent": 0.4,
+      "selectedByPercent": 0.3,
       "sellPrice": 4.5,
       "team": "HUL",
       "total": 1.43,
@@ -23174,94 +23086,6 @@
     },
     {
       "availability": {
-        "chance": 100,
-        "news": null,
-        "status": "a"
-      },
-      "components": {
-        "appearance": 0.33,
-        "assists": 0.03,
-        "bonus": 0.07,
-        "cards": -0.07,
-        "cleanSheet": 0.0,
-        "defensiveContribution": 0.37,
-        "goals": 0.06,
-        "goalsConceded": 0.0,
-        "saves": 0.0
-      },
-      "elementType": 3,
-      "form": 0.3,
-      "id": 563,
-      "opponents": [
-        [
-          {
-            "fdrRating": 4,
-            "team": "CHE",
-            "wasHome": false
-          }
-        ],
-        [
-          {
-            "fdrRating": 3,
-            "team": "NEW",
-            "wasHome": false
-          }
-        ],
-        [
-          {
-            "fdrRating": 3,
-            "team": "EVE",
-            "wasHome": true
-          }
-        ],
-        [
-          {
-            "fdrRating": 3,
-            "team": "FUL",
-            "wasHome": false
-          }
-        ],
-        [
-          {
-            "fdrRating": 3,
-            "team": "BRE",
-            "wasHome": true
-          }
-        ],
-        [
-          {
-            "fdrRating": 2,
-            "team": "IPS",
-            "wasHome": true
-          }
-        ],
-        [
-          {
-            "fdrRating": 5,
-            "team": "ARS",
-            "wasHome": false
-          }
-        ]
-      ],
-      "perGameweek": [
-        0.8,
-        0.8,
-        0.81,
-        0.8,
-        0.82,
-        0.85,
-        0.76
-      ],
-      "position": "MID",
-      "price": 5.0,
-      "selectedByPercent": 0.0,
-      "sellPrice": 5.0,
-      "team": "HUL",
-      "total": 5.64,
-      "webName": "Morita"
-    },
-    {
-      "availability": {
         "chance": null,
         "news": null,
         "status": "a"
@@ -23342,7 +23166,7 @@
       ],
       "position": "GKP",
       "price": 4.6,
-      "selectedByPercent": 9.3,
+      "selectedByPercent": 9.4,
       "sellPrice": 4.6,
       "team": "HUL",
       "total": 26.2,
@@ -23694,7 +23518,7 @@
       ],
       "position": "DEF",
       "price": 4.0,
-      "selectedByPercent": 7.2,
+      "selectedByPercent": 7.5,
       "sellPrice": 4.0,
       "team": "HUL",
       "total": 23.83,
@@ -23884,94 +23708,6 @@
       },
       "components": {
         "appearance": 0.0,
-        "assists": 0.04,
-        "bonus": 0.0,
-        "cards": -0.07,
-        "cleanSheet": 0.0,
-        "defensiveContribution": 0.14,
-        "goals": 0.12,
-        "goalsConceded": 0.0,
-        "saves": 0.0
-      },
-      "elementType": 4,
-      "form": 0.0,
-      "id": 632,
-      "opponents": [
-        [
-          {
-            "fdrRating": 4,
-            "team": "CHE",
-            "wasHome": false
-          }
-        ],
-        [
-          {
-            "fdrRating": 3,
-            "team": "NEW",
-            "wasHome": false
-          }
-        ],
-        [
-          {
-            "fdrRating": 3,
-            "team": "EVE",
-            "wasHome": true
-          }
-        ],
-        [
-          {
-            "fdrRating": 3,
-            "team": "FUL",
-            "wasHome": false
-          }
-        ],
-        [
-          {
-            "fdrRating": 3,
-            "team": "BRE",
-            "wasHome": true
-          }
-        ],
-        [
-          {
-            "fdrRating": 2,
-            "team": "IPS",
-            "wasHome": true
-          }
-        ],
-        [
-          {
-            "fdrRating": 5,
-            "team": "ARS",
-            "wasHome": false
-          }
-        ]
-      ],
-      "perGameweek": [
-        0.23,
-        0.23,
-        0.24,
-        0.24,
-        0.27,
-        0.32,
-        0.17
-      ],
-      "position": "FWD",
-      "price": 5.0,
-      "selectedByPercent": 0.0,
-      "sellPrice": 5.0,
-      "team": "HUL",
-      "total": 1.7,
-      "webName": "Ansah"
-    },
-    {
-      "availability": {
-        "chance": null,
-        "news": null,
-        "status": "a"
-      },
-      "components": {
-        "appearance": 0.0,
         "assists": 0.01,
         "bonus": 0.0,
         "cards": -0.07,
@@ -24134,7 +23870,7 @@
       ],
       "position": "DEF",
       "price": 4.0,
-      "selectedByPercent": 0.2,
+      "selectedByPercent": 0.3,
       "sellPrice": 4.0,
       "team": "HUL",
       "total": 10.45,
@@ -24398,7 +24134,7 @@
       ],
       "position": "DEF",
       "price": 4.0,
-      "selectedByPercent": 14.8,
+      "selectedByPercent": 14.7,
       "sellPrice": 4.0,
       "team": "IPS",
       "total": 25.73,
@@ -25630,7 +25366,7 @@
       ],
       "position": "FWD",
       "price": 5.0,
-      "selectedByPercent": 1.1,
+      "selectedByPercent": 1.2,
       "sellPrice": 5.0,
       "team": "IPS",
       "total": 7.71,
@@ -26598,7 +26334,7 @@
       ],
       "position": "MID",
       "price": 6.3,
-      "selectedByPercent": 3.3,
+      "selectedByPercent": 3.2,
       "sellPrice": 6.3,
       "team": "LEE",
       "total": 18.23,
@@ -26774,7 +26510,7 @@
       ],
       "position": "DEF",
       "price": 4.5,
-      "selectedByPercent": 1.5,
+      "selectedByPercent": 1.6,
       "sellPrice": 4.5,
       "team": "LEE",
       "total": 33.27,
@@ -27038,7 +26774,7 @@
       ],
       "position": "DEF",
       "price": 5.0,
-      "selectedByPercent": 3.4,
+      "selectedByPercent": 3.5,
       "sellPrice": 5.0,
       "team": "LEE",
       "total": 27.66,
@@ -27390,7 +27126,7 @@
       ],
       "position": "MID",
       "price": 5.5,
-      "selectedByPercent": 1.1,
+      "selectedByPercent": 1.0,
       "sellPrice": 5.5,
       "team": "LEE",
       "total": 31.31,
@@ -27830,7 +27566,7 @@
       ],
       "position": "FWD",
       "price": 6.0,
-      "selectedByPercent": 23.9,
+      "selectedByPercent": 23.6,
       "sellPrice": 6.0,
       "team": "LEE",
       "total": 30.79,
@@ -28446,7 +28182,7 @@
       ],
       "position": "GKP",
       "price": 4.0,
-      "selectedByPercent": 0.4,
+      "selectedByPercent": 0.5,
       "sellPrice": 4.0,
       "team": "LEE",
       "total": 0.65,
@@ -29590,7 +29326,7 @@
       ],
       "position": "MID",
       "price": 7.4,
-      "selectedByPercent": 8.4,
+      "selectedByPercent": 8.3,
       "sellPrice": 7.4,
       "team": "LIV",
       "total": 35.03,
@@ -29598,18 +29334,18 @@
     },
     {
       "availability": {
-        "chance": null,
-        "news": null,
-        "status": "a"
+        "chance": 75,
+        "news": "Thigh injury - 75% chance of playing",
+        "status": "d"
       },
       "components": {
-        "appearance": 2.0,
-        "assists": 0.88,
-        "bonus": 1.24,
-        "cards": -0.08,
-        "cleanSheet": 0.33,
-        "defensiveContribution": 1.33,
-        "goals": 1.47,
+        "appearance": 1.5,
+        "assists": 0.66,
+        "bonus": 0.93,
+        "cards": -0.06,
+        "cleanSheet": 0.25,
+        "defensiveContribution": 1.0,
+        "goals": 1.1,
         "goalsConceded": 0.0,
         "saves": 0.0
       },
@@ -29668,20 +29404,20 @@
         ]
       ],
       "perGameweek": [
-        7.17,
-        6.8,
-        6.36,
-        6.86,
-        7.15,
-        6.07,
-        6.76
+        5.38,
+        5.1,
+        4.77,
+        5.14,
+        5.36,
+        4.55,
+        5.07
       ],
       "position": "MID",
       "price": 7.2,
-      "selectedByPercent": 14.5,
+      "selectedByPercent": 14.3,
       "sellPrice": 7.2,
       "team": "LIV",
-      "total": 47.17,
+      "total": 35.37,
       "webName": "Gakpo"
     },
     {
@@ -30470,7 +30206,7 @@
       ],
       "position": "FWD",
       "price": 9.1,
-      "selectedByPercent": 20.6,
+      "selectedByPercent": 21.1,
       "sellPrice": 9.1,
       "team": "LIV",
       "total": 44.6,
@@ -30998,7 +30734,7 @@
       ],
       "position": "MID",
       "price": 5.9,
-      "selectedByPercent": 10.1,
+      "selectedByPercent": 9.9,
       "sellPrice": 5.9,
       "team": "MCI",
       "total": 38.16,
@@ -31262,7 +30998,7 @@
       ],
       "position": "DEF",
       "price": 6.5,
-      "selectedByPercent": 15.0,
+      "selectedByPercent": 14.6,
       "sellPrice": 6.5,
       "team": "MCI",
       "total": 21.01,
@@ -32054,7 +31790,7 @@
       ],
       "position": "MID",
       "price": 8.4,
-      "selectedByPercent": 18.0,
+      "selectedByPercent": 17.7,
       "sellPrice": 8.4,
       "team": "MCI",
       "total": 37.51,
@@ -32142,7 +31878,7 @@
       ],
       "position": "MID",
       "price": 7.0,
-      "selectedByPercent": 4.8,
+      "selectedByPercent": 4.6,
       "sellPrice": 7.0,
       "team": "MCI",
       "total": 39.21,
@@ -32230,7 +31966,7 @@
       ],
       "position": "MID",
       "price": 7.8,
-      "selectedByPercent": 30.3,
+      "selectedByPercent": 30.2,
       "sellPrice": 7.8,
       "team": "MCI",
       "total": 40.08,
@@ -32406,7 +32142,7 @@
       ],
       "position": "FWD",
       "price": 15.5,
-      "selectedByPercent": 71.2,
+      "selectedByPercent": 71.3,
       "sellPrice": 15.5,
       "team": "MCI",
       "total": 55.86,
@@ -33374,7 +33110,7 @@
       ],
       "position": "GKP",
       "price": 5.0,
-      "selectedByPercent": 12.3,
+      "selectedByPercent": 12.2,
       "sellPrice": 5.0,
       "team": "MUN",
       "total": 23.46,
@@ -33462,7 +33198,7 @@
       ],
       "position": "MID",
       "price": 5.8,
-      "selectedByPercent": 0.7,
+      "selectedByPercent": 0.6,
       "sellPrice": 5.8,
       "team": "MUN",
       "total": 16.44,
@@ -33638,7 +33374,7 @@
       ],
       "position": "DEF",
       "price": 4.9,
-      "selectedByPercent": 12.4,
+      "selectedByPercent": 12.1,
       "sellPrice": 4.9,
       "team": "MUN",
       "total": 28.75,
@@ -33989,9 +33725,9 @@
         2.73
       ],
       "position": "DEF",
-      "price": 4.5,
+      "price": 4.4,
       "selectedByPercent": 0.6,
-      "sellPrice": 4.5,
+      "sellPrice": 4.4,
       "team": "MUN",
       "total": 18.63,
       "webName": "Mazraoui"
@@ -34078,7 +33814,7 @@
       ],
       "position": "DEF",
       "price": 4.4,
-      "selectedByPercent": 13.9,
+      "selectedByPercent": 13.7,
       "sellPrice": 4.4,
       "team": "MUN",
       "total": 28.72,
@@ -34254,7 +33990,7 @@
       ],
       "position": "MID",
       "price": 12.0,
-      "selectedByPercent": 46.2,
+      "selectedByPercent": 45.7,
       "sellPrice": 12.0,
       "team": "MUN",
       "total": 43.32,
@@ -34342,7 +34078,7 @@
       ],
       "position": "MID",
       "price": 7.9,
-      "selectedByPercent": 25.5,
+      "selectedByPercent": 25.3,
       "sellPrice": 7.9,
       "team": "MUN",
       "total": 43.35,
@@ -34430,7 +34166,7 @@
       ],
       "position": "MID",
       "price": 7.9,
-      "selectedByPercent": 7.0,
+      "selectedByPercent": 6.9,
       "sellPrice": 7.9,
       "team": "MUN",
       "total": 33.52,
@@ -34781,9 +34517,9 @@
         1.28
       ],
       "position": "MID",
-      "price": 5.0,
+      "price": 4.9,
       "selectedByPercent": 0.0,
-      "sellPrice": 5.0,
+      "sellPrice": 4.9,
       "team": "MUN",
       "total": 8.76,
       "webName": "J.Fletcher"
@@ -35486,7 +35222,7 @@
       ],
       "position": "GKP",
       "price": 4.9,
-      "selectedByPercent": 1.1,
+      "selectedByPercent": 1.0,
       "sellPrice": 4.9,
       "team": "NEW",
       "total": 3.66,
@@ -36014,7 +35750,7 @@
       ],
       "position": "DEF",
       "price": 5.1,
-      "selectedByPercent": 11.8,
+      "selectedByPercent": 12.1,
       "sellPrice": 5.1,
       "team": "NEW",
       "total": 37.41,
@@ -36717,9 +36453,9 @@
         1.04
       ],
       "position": "MID",
-      "price": 5.9,
+      "price": 5.8,
       "selectedByPercent": 0.1,
-      "sellPrice": 5.9,
+      "sellPrice": 5.8,
       "team": "NEW",
       "total": 7.38,
       "webName": "Tour\u00e9"
@@ -36894,7 +36630,7 @@
       ],
       "position": "FWD",
       "price": 6.2,
-      "selectedByPercent": 17.0,
+      "selectedByPercent": 17.1,
       "sellPrice": 6.2,
       "team": "NEW",
       "total": 36.04,
@@ -37078,19 +36814,19 @@
     },
     {
       "availability": {
-        "chance": null,
-        "news": null,
-        "status": "a"
+        "chance": 75,
+        "news": "Hamstring injury - 75% chance of playing",
+        "status": "d"
       },
       "components": {
-        "appearance": 2.0,
-        "assists": 0.08,
-        "bonus": 0.29,
-        "cards": -0.08,
-        "cleanSheet": 0.92,
-        "defensiveContribution": 0.91,
-        "goals": 0.16,
-        "goalsConceded": -0.52,
+        "appearance": 1.5,
+        "assists": 0.06,
+        "bonus": 0.22,
+        "cards": -0.06,
+        "cleanSheet": 0.69,
+        "defensiveContribution": 0.68,
+        "goals": 0.12,
+        "goalsConceded": -0.39,
         "saves": 0.0
       },
       "elementType": 2,
@@ -37148,20 +36884,20 @@
         ]
       ],
       "perGameweek": [
-        3.77,
-        3.89,
-        3.59,
-        3.7,
-        3.79,
-        4.29,
-        3.73
+        2.82,
+        2.92,
+        2.69,
+        2.78,
+        2.84,
+        3.22,
+        2.79
       ],
       "position": "DEF",
       "price": 4.5,
-      "selectedByPercent": 3.6,
+      "selectedByPercent": 3.5,
       "sellPrice": 4.5,
       "team": "NEW",
-      "total": 26.76,
+      "total": 20.06,
       "webName": "Dedi\u0107"
     },
     {
@@ -37774,7 +37510,7 @@
       ],
       "position": "DEF",
       "price": 5.0,
-      "selectedByPercent": 8.3,
+      "selectedByPercent": 8.2,
       "sellPrice": 5.0,
       "team": "NFO",
       "total": 30.58,
@@ -39534,7 +39270,7 @@
       ],
       "position": "DEF",
       "price": 4.9,
-      "selectedByPercent": 7.0,
+      "selectedByPercent": 6.9,
       "sellPrice": 4.9,
       "team": "TOT",
       "total": 32.96,
@@ -40062,7 +39798,7 @@
       ],
       "position": "GKP",
       "price": 4.5,
-      "selectedByPercent": 18.7,
+      "selectedByPercent": 18.6,
       "sellPrice": 4.5,
       "team": "TOT",
       "total": 23.86,
@@ -40238,7 +39974,7 @@
       ],
       "position": "DEF",
       "price": 5.9,
-      "selectedByPercent": 4.9,
+      "selectedByPercent": 4.8,
       "sellPrice": 5.9,
       "team": "TOT",
       "total": 16.43,
@@ -41645,9 +41381,9 @@
         2.38
       ],
       "position": "MID",
-      "price": 5.9,
+      "price": 5.8,
       "selectedByPercent": 1.0,
-      "sellPrice": 5.9,
+      "sellPrice": 5.8,
       "team": "TOT",
       "total": 16.73,
       "webName": "Fernandes"
@@ -42438,7 +42174,7 @@
       ],
       "position": "DEF",
       "price": 4.5,
-      "selectedByPercent": 4.6,
+      "selectedByPercent": 4.4,
       "sellPrice": 4.5,
       "team": "SUN",
       "total": 22.04,
@@ -42878,7 +42614,7 @@
       ],
       "position": "MID",
       "price": 5.9,
-      "selectedByPercent": 5.1,
+      "selectedByPercent": 5.0,
       "sellPrice": 5.9,
       "team": "SUN",
       "total": 34.58,
@@ -43053,100 +42789,12 @@
         3.83
       ],
       "position": "MID",
-      "price": 5.0,
+      "price": 4.9,
       "selectedByPercent": 0.3,
-      "sellPrice": 5.0,
+      "sellPrice": 4.9,
       "team": "SUN",
       "total": 26.26,
       "webName": "Sadiki"
-    },
-    {
-      "availability": {
-        "chance": null,
-        "news": null,
-        "status": "a"
-      },
-      "components": {
-        "appearance": 0.33,
-        "assists": 0.16,
-        "bonus": 0.1,
-        "cards": -0.12,
-        "cleanSheet": 0.0,
-        "defensiveContribution": 1.35,
-        "goals": 0.52,
-        "goalsConceded": 0.0,
-        "saves": 0.0
-      },
-      "elementType": 3,
-      "form": 0.3,
-      "id": 547,
-      "opponents": [
-        [
-          {
-            "fdrRating": 4,
-            "team": "ARS",
-            "wasHome": true
-          }
-        ],
-        [
-          {
-            "fdrRating": 5,
-            "team": "MCI",
-            "wasHome": false
-          }
-        ],
-        [
-          {
-            "fdrRating": 2,
-            "team": "BHA",
-            "wasHome": true
-          }
-        ],
-        [
-          {
-            "fdrRating": 3,
-            "team": "BOU",
-            "wasHome": false
-          }
-        ],
-        [
-          {
-            "fdrRating": 2,
-            "team": "LEE",
-            "wasHome": true
-          }
-        ],
-        [
-          {
-            "fdrRating": 2,
-            "team": "COV",
-            "wasHome": false
-          }
-        ],
-        [
-          {
-            "fdrRating": 4,
-            "team": "CHE",
-            "wasHome": true
-          }
-        ]
-      ],
-      "perGameweek": [
-        2.34,
-        2.38,
-        2.83,
-        2.68,
-        2.84,
-        2.7,
-        2.78
-      ],
-      "position": "MID",
-      "price": 4.9,
-      "selectedByPercent": 0.0,
-      "sellPrice": 4.9,
-      "team": "SUN",
-      "total": 18.55,
-      "webName": "Mundle"
     },
     {
       "availability": {
@@ -43582,7 +43230,7 @@
       ],
       "position": "FWD",
       "price": 5.9,
-      "selectedByPercent": 7.9,
+      "selectedByPercent": 7.7,
       "sellPrice": 5.9,
       "team": "SUN",
       "total": 25.27,
@@ -43846,7 +43494,7 @@
       ],
       "position": "MID",
       "price": 4.5,
-      "selectedByPercent": 0.2,
+      "selectedByPercent": 0.3,
       "sellPrice": 4.5,
       "team": "SUN",
       "total": 1.55,
@@ -44057,10 +43705,10 @@
             204,
             212,
             305,
-            334,
             346,
             366,
             411,
+            418,
             426,
             496,
             504
@@ -44122,11 +43770,11 @@
                 "news": null,
                 "status": "a"
               },
-              "id": 418,
+              "id": 334,
               "position": "DEF",
-              "price": 4.9,
-              "team": "MUN",
-              "webName": "Maguire"
+              "price": 5.0,
+              "team": "LEE",
+              "webName": "Muharemovi\u0107"
             },
             {
               "availability": {
@@ -49063,6 +48711,21 @@
                   "xp": 4.65
                 },
                 {
+                  "id": 504,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 4,
+                      "team": "ARS",
+                      "wasHome": true
+                    }
+                  ],
+                  "position": "DEF",
+                  "team": "BHA",
+                  "webName": "Vuskovic",
+                  "xp": 3.71
+                },
+                {
                   "id": 165,
                   "isCaptain": false,
                   "opponents": [
@@ -49076,21 +48739,6 @@
                   "team": "CHE",
                   "webName": "Jo\u00e3o Pedro",
                   "xp": 5.71
-                },
-                {
-                  "id": 305,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 3,
-                      "team": "EVE",
-                      "wasHome": false
-                    }
-                  ],
-                  "position": "DEF",
-                  "team": "IPS",
-                  "webName": "Davis",
-                  "xp": 3.71
                 },
                 {
                   "id": 334,
@@ -49718,8 +49366,8 @@
               1,
               68,
               124,
+              504,
               165,
-              305,
               334,
               346,
               366,
@@ -49780,24 +49428,24 @@
       ],
       "hitCost": 0,
       "horizonGws": 1,
-      "netPoints": 79.58,
-      "points": 79.58,
+      "netPoints": 78.58,
+      "points": 78.58,
       "squad": [
         10,
         12,
         15,
         68,
-        147,
-        175,
+        165,
         204,
-        273,
-        347,
-        367,
+        350,
         368,
         379,
-        385,
         388,
-        411
+        411,
+        524,
+        555,
+        585,
+        611
       ],
       "transfersIn": [
         {
@@ -49854,23 +49502,11 @@
             "news": null,
             "status": "a"
           },
-          "id": 147,
-          "position": "DEF",
-          "price": 4.4,
-          "team": "TOT",
-          "webName": "Tosin"
-        },
-        {
-          "availability": {
-            "chance": null,
-            "news": null,
-            "status": "a"
-          },
-          "id": 175,
-          "position": "DEF",
-          "price": 4.0,
-          "team": "COV",
-          "webName": "van Ewijk"
+          "id": 165,
+          "position": "FWD",
+          "price": 7.7,
+          "team": "CHE",
+          "webName": "Jo\u00e3o Pedro"
         },
         {
           "availability": {
@@ -49890,35 +49526,11 @@
             "news": null,
             "status": "a"
           },
-          "id": 273,
+          "id": 350,
           "position": "GKP",
-          "price": 4.0,
-          "team": "HUL",
-          "webName": "Phillips"
-        },
-        {
-          "availability": {
-            "chance": null,
-            "news": null,
-            "status": "a"
-          },
-          "id": 347,
-          "position": "FWD",
-          "price": 5.4,
-          "team": "LEE",
-          "webName": "Nmecha"
-        },
-        {
-          "availability": {
-            "chance": null,
-            "news": null,
-            "status": "a"
-          },
-          "id": 367,
-          "position": "MID",
-          "price": 7.2,
+          "price": 5.5,
           "team": "LIV",
-          "webName": "Gakpo"
+          "webName": "A.Becker"
         },
         {
           "availability": {
@@ -49950,18 +49562,6 @@
             "news": null,
             "status": "a"
           },
-          "id": 385,
-          "position": "GKP",
-          "price": 5.0,
-          "team": "LEE",
-          "webName": "Trafford"
-        },
-        {
-          "availability": {
-            "chance": null,
-            "news": null,
-            "status": "a"
-          },
           "id": 388,
           "position": "DEF",
           "price": 6.0,
@@ -49979,6 +49579,54 @@
           "price": 15.5,
           "team": "MCI",
           "webName": "Haaland"
+        },
+        {
+          "availability": {
+            "chance": null,
+            "news": null,
+            "status": "a"
+          },
+          "id": 524,
+          "position": "MID",
+          "price": 4.5,
+          "team": "TOT",
+          "webName": "Olusesi"
+        },
+        {
+          "availability": {
+            "chance": null,
+            "news": null,
+            "status": "a"
+          },
+          "id": 555,
+          "position": "GKP",
+          "price": 4.0,
+          "team": "CRY",
+          "webName": "Matthews"
+        },
+        {
+          "availability": {
+            "chance": null,
+            "news": null,
+            "status": "a"
+          },
+          "id": 585,
+          "position": "DEF",
+          "price": 4.0,
+          "team": "HUL",
+          "webName": "Herrington"
+        },
+        {
+          "availability": {
+            "chance": null,
+            "news": null,
+            "status": "a"
+          },
+          "id": 611,
+          "position": "DEF",
+          "price": 4.5,
+          "team": "AVL",
+          "webName": "Wan-Bissaka"
         }
       ],
       "transfersOut": [],
@@ -50046,6 +49694,21 @@
               "xp": 6.67
             },
             {
+              "id": 165,
+              "isCaptain": false,
+              "opponents": [
+                {
+                  "fdrRating": 2,
+                  "team": "HUL",
+                  "wasHome": true
+                }
+              ],
+              "position": "FWD",
+              "team": "CHE",
+              "webName": "Jo\u00e3o Pedro",
+              "xp": 5.98
+            },
+            {
               "id": 204,
               "isCaptain": false,
               "opponents": [
@@ -50061,22 +49724,7 @@
               "xp": 6.0
             },
             {
-              "id": 385,
-              "isCaptain": false,
-              "opponents": [
-                {
-                  "fdrRating": 2,
-                  "team": "NEW",
-                  "wasHome": true
-                }
-              ],
-              "position": "GKP",
-              "team": "LEE",
-              "webName": "Trafford",
-              "xp": 4.56
-            },
-            {
-              "id": 367,
+              "id": 350,
               "isCaptain": false,
               "opponents": [
                 {
@@ -50085,10 +49733,10 @@
                   "wasHome": true
                 }
               ],
-              "position": "MID",
+              "position": "GKP",
               "team": "LIV",
-              "webName": "Gakpo",
-              "xp": 7.17
+              "webName": "A.Becker",
+              "xp": 4.75
             },
             {
               "id": 368,
@@ -50152,7 +49800,7 @@
             }
           ],
           "targetGw": 4,
-          "totalXp": 79.58
+          "totalXp": 78.58
         }
       ],
       "xiByGw": [
@@ -50161,9 +49809,9 @@
           12,
           15,
           68,
+          165,
           204,
-          385,
-          367,
+          350,
           368,
           379,
           388,
@@ -50446,7 +50094,7 @@
         ]
       },
       {
-        "bankAfter": 0.4,
+        "bankAfter": 0.1,
         "feasible": true,
         "ftAfter": 1,
         "ftBefore": 1,
@@ -50461,12 +50109,12 @@
           212,
           305,
           346,
-          367,
+          366,
           411,
           418,
           426,
-          496,
-          504
+          449,
+          496
         ],
         "targetGw": 5,
         "transfersIn": [
@@ -50476,11 +50124,11 @@
               "news": null,
               "status": "a"
             },
-            "id": 367,
-            "position": "MID",
-            "price": 7.2,
-            "team": "LIV",
-            "webName": "Gakpo"
+            "id": 449,
+            "position": "DEF",
+            "price": 5.1,
+            "team": "NEW",
+            "webName": "Hall"
           }
         ],
         "transfersOut": [
@@ -50490,14 +50138,14 @@
               "news": null,
               "status": "a"
             },
-            "id": 366,
-            "position": "MID",
-            "price": 7.4,
-            "team": "LIV",
-            "webName": "Wirtz"
+            "id": 504,
+            "position": "DEF",
+            "price": 5.0,
+            "team": "BHA",
+            "webName": "Vuskovic"
           }
         ],
-        "weekXp": 69.94,
+        "weekXp": 69.48,
         "xi": [
           {
             "id": 1,
@@ -50605,7 +50253,7 @@
             "xp": 4.55
           },
           {
-            "id": 367,
+            "id": 366,
             "isCaptain": false,
             "opponents": [
               {
@@ -50616,8 +50264,8 @@
             ],
             "position": "MID",
             "team": "LIV",
-            "webName": "Gakpo",
-            "xp": 6.8
+            "webName": "Wirtz",
+            "xp": 5.06
           },
           {
             "id": 411,
@@ -50635,21 +50283,6 @@
             "xp": 7.93
           },
           {
-            "id": 418,
-            "isCaptain": false,
-            "opponents": [
-              {
-                "fdrRating": 3,
-                "team": "FUL",
-                "wasHome": false
-              }
-            ],
-            "position": "DEF",
-            "team": "MUN",
-            "webName": "Maguire",
-            "xp": 4.2
-          },
-          {
             "id": 426,
             "isCaptain": false,
             "opponents": [
@@ -50663,11 +50296,26 @@
             "team": "MUN",
             "webName": "B.Fernandes",
             "xp": 6.11
+          },
+          {
+            "id": 449,
+            "isCaptain": false,
+            "opponents": [
+              {
+                "fdrRating": 2,
+                "team": "HUL",
+                "wasHome": true
+              }
+            ],
+            "position": "DEF",
+            "team": "NEW",
+            "webName": "Hall",
+            "xp": 5.48
           }
         ]
       },
       {
-        "bankAfter": 0.4,
+        "bankAfter": 1.5,
         "feasible": true,
         "ftAfter": 1,
         "ftBefore": 1,
@@ -50676,18 +50324,18 @@
           1,
           10,
           15,
+          68,
+          124,
           165,
           204,
           212,
           305,
           346,
-          367,
           411,
           418,
           426,
-          496,
-          504,
-          544
+          449,
+          496
         ],
         "targetGw": 6,
         "transfersIn": [
@@ -50697,11 +50345,11 @@
               "news": null,
               "status": "a"
             },
-            "id": 544,
+            "id": 68,
             "position": "MID",
-            "price": 5.5,
-            "team": "SUN",
-            "webName": "Xhaka"
+            "price": 6.0,
+            "team": "BOU",
+            "webName": "Tavernier"
           }
         ],
         "transfersOut": [
@@ -50711,14 +50359,14 @@
               "news": null,
               "status": "a"
             },
-            "id": 124,
+            "id": 366,
             "position": "MID",
-            "price": 5.5,
-            "team": "BHA",
-            "webName": "Gro\u00df"
+            "price": 7.4,
+            "team": "LIV",
+            "webName": "Wirtz"
           }
         ],
-        "weekXp": 71.96,
+        "weekXp": 71.67,
         "xi": [
           {
             "id": 1,
@@ -50766,7 +50414,22 @@
             "xp": 7.27
           },
           {
-            "id": 504,
+            "id": 68,
+            "isCaptain": false,
+            "opponents": [
+              {
+                "fdrRating": 4,
+                "team": "CHE",
+                "wasHome": false
+              }
+            ],
+            "position": "MID",
+            "team": "BOU",
+            "webName": "Tavernier",
+            "xp": 6.21
+          },
+          {
+            "id": 124,
             "isCaptain": false,
             "opponents": [
               {
@@ -50775,10 +50438,10 @@
                 "wasHome": false
               }
             ],
-            "position": "DEF",
+            "position": "MID",
             "team": "BHA",
-            "webName": "Vuskovic",
-            "xp": 4.42
+            "webName": "Gro\u00df",
+            "xp": 5.07
           },
           {
             "id": 165,
@@ -50809,21 +50472,6 @@
             "team": "CRY",
             "webName": "Mitchell",
             "xp": 5.3
-          },
-          {
-            "id": 367,
-            "isCaptain": false,
-            "opponents": [
-              {
-                "fdrRating": 4,
-                "team": "MCI",
-                "wasHome": true
-              }
-            ],
-            "position": "MID",
-            "team": "LIV",
-            "webName": "Gakpo",
-            "xp": 6.36
           },
           {
             "id": 411,
@@ -50871,24 +50519,24 @@
             "xp": 6.64
           },
           {
-            "id": 544,
+            "id": 449,
             "isCaptain": false,
             "opponents": [
               {
                 "fdrRating": 2,
-                "team": "BHA",
-                "wasHome": true
+                "team": "COV",
+                "wasHome": false
               }
             ],
-            "position": "MID",
-            "team": "SUN",
-            "webName": "Xhaka",
-            "xp": 5.87
+            "position": "DEF",
+            "team": "NEW",
+            "webName": "Hall",
+            "xp": 5.08
           }
         ]
       },
       {
-        "bankAfter": 0.9,
+        "bankAfter": 0.4,
         "feasible": true,
         "ftAfter": 1,
         "ftBefore": 1,
@@ -50897,18 +50545,18 @@
           1,
           10,
           15,
-          138,
+          68,
+          124,
           165,
           204,
           212,
           305,
-          367,
+          346,
+          388,
           411,
-          418,
           426,
-          496,
-          504,
-          544
+          449,
+          496
         ],
         "targetGw": 7,
         "transfersIn": [
@@ -50918,11 +50566,11 @@
               "news": null,
               "status": "a"
             },
-            "id": 138,
-            "position": "FWD",
-            "price": 5.5,
-            "team": "BHA",
-            "webName": "Kostoulas"
+            "id": 388,
+            "position": "DEF",
+            "price": 6.0,
+            "team": "MCI",
+            "webName": "Gu\u00e9hi"
           }
         ],
         "transfersOut": [
@@ -50932,14 +50580,14 @@
               "news": null,
               "status": "a"
             },
-            "id": 346,
-            "position": "FWD",
-            "price": 6.0,
-            "team": "LEE",
-            "webName": "Calvert-Lewin"
+            "id": 418,
+            "position": "DEF",
+            "price": 4.9,
+            "team": "MUN",
+            "webName": "Maguire"
           }
         ],
-        "weekXp": 74.83,
+        "weekXp": 77.52,
         "xi": [
           {
             "id": 1,
@@ -50987,22 +50635,22 @@
             "xp": 6.86
           },
           {
-            "id": 138,
+            "id": 68,
             "isCaptain": false,
             "opponents": [
               {
-                "fdrRating": 3,
-                "team": "CRY",
+                "fdrRating": 2,
+                "team": "SUN",
                 "wasHome": true
               }
             ],
-            "position": "FWD",
-            "team": "BHA",
-            "webName": "Kostoulas",
-            "xp": 5.31
+            "position": "MID",
+            "team": "BOU",
+            "webName": "Tavernier",
+            "xp": 6.51
           },
           {
-            "id": 504,
+            "id": 124,
             "isCaptain": false,
             "opponents": [
               {
@@ -51011,10 +50659,10 @@
                 "wasHome": true
               }
             ],
-            "position": "DEF",
+            "position": "MID",
             "team": "BHA",
-            "webName": "Vuskovic",
-            "xp": 4.64
+            "webName": "Gro\u00df",
+            "xp": 5.36
           },
           {
             "id": 165,
@@ -51047,19 +50695,19 @@
             "xp": 4.7
           },
           {
-            "id": 367,
+            "id": 388,
             "isCaptain": false,
             "opponents": [
               {
-                "fdrRating": 3,
-                "team": "BRE",
-                "wasHome": false
+                "fdrRating": 2,
+                "team": "IPS",
+                "wasHome": true
               }
             ],
-            "position": "MID",
-            "team": "LIV",
-            "webName": "Gakpo",
-            "xp": 6.86
+            "position": "DEF",
+            "team": "MCI",
+            "webName": "Gu\u00e9hi",
+            "xp": 8.07
           },
           {
             "id": 411,
@@ -51092,24 +50740,24 @@
             "xp": 6.14
           },
           {
-            "id": 544,
+            "id": 449,
             "isCaptain": false,
             "opponents": [
               {
                 "fdrRating": 3,
-                "team": "BOU",
-                "wasHome": false
+                "team": "AVL",
+                "wasHome": true
               }
             ],
-            "position": "MID",
-            "team": "SUN",
-            "webName": "Xhaka",
-            "xp": 5.68
+            "position": "DEF",
+            "team": "NEW",
+            "webName": "Hall",
+            "xp": 5.24
           }
         ]
       },
       {
-        "bankAfter": 0.3,
+        "bankAfter": 0.5,
         "feasible": true,
         "ftAfter": 1,
         "ftBefore": 1,
@@ -51118,16 +50766,16 @@
           1,
           10,
           15,
-          138,
+          68,
           165,
           204,
           212,
           305,
-          367,
-          391,
+          346,
+          388,
           411,
-          418,
           426,
+          449,
           496,
           544
         ],
@@ -51139,11 +50787,11 @@
               "news": null,
               "status": "a"
             },
-            "id": 391,
-            "position": "DEF",
-            "price": 5.6,
-            "team": "MCI",
-            "webName": "Gvardiol"
+            "id": 544,
+            "position": "MID",
+            "price": 5.5,
+            "team": "SUN",
+            "webName": "Xhaka"
           }
         ],
         "transfersOut": [
@@ -51153,14 +50801,14 @@
               "news": null,
               "status": "a"
             },
-            "id": 504,
-            "position": "DEF",
-            "price": 5.0,
+            "id": 124,
+            "position": "MID",
+            "price": 5.6,
             "team": "BHA",
-            "webName": "Vuskovic"
+            "webName": "Gro\u00df"
           }
         ],
-        "weekXp": 74.74,
+        "weekXp": 75.12,
         "xi": [
           {
             "id": 1,
@@ -51208,19 +50856,19 @@
             "xp": 7.03
           },
           {
-            "id": 138,
+            "id": 68,
             "isCaptain": false,
             "opponents": [
               {
                 "fdrRating": 4,
-                "team": "LIV",
+                "team": "MUN",
                 "wasHome": false
               }
             ],
-            "position": "FWD",
-            "team": "BHA",
-            "webName": "Kostoulas",
-            "xp": 4.77
+            "position": "MID",
+            "team": "BOU",
+            "webName": "Tavernier",
+            "xp": 6.29
           },
           {
             "id": 165,
@@ -51253,22 +50901,7 @@
             "xp": 4.8
           },
           {
-            "id": 367,
-            "isCaptain": false,
-            "opponents": [
-              {
-                "fdrRating": 2,
-                "team": "BHA",
-                "wasHome": true
-              }
-            ],
-            "position": "MID",
-            "team": "LIV",
-            "webName": "Gakpo",
-            "xp": 7.15
-          },
-          {
-            "id": 391,
+            "id": 388,
             "isCaptain": false,
             "opponents": [
               {
@@ -51279,8 +50912,8 @@
             ],
             "position": "DEF",
             "team": "MCI",
-            "webName": "Gvardiol",
-            "xp": 5.57
+            "webName": "Gu\u00e9hi",
+            "xp": 6.31
           },
           {
             "id": 411,
@@ -51313,6 +50946,21 @@
             "xp": 6.46
           },
           {
+            "id": 449,
+            "isCaptain": false,
+            "opponents": [
+              {
+                "fdrRating": 3,
+                "team": "CRY",
+                "wasHome": false
+              }
+            ],
+            "position": "DEF",
+            "team": "NEW",
+            "webName": "Hall",
+            "xp": 5.27
+          },
+          {
             "id": 544,
             "isCaptain": false,
             "opponents": [
@@ -51337,24 +50985,24 @@
         ],
         "hitCost": 0,
         "horizonGws": 1,
-        "netPoints": 79.58,
-        "points": 79.58,
+        "netPoints": 78.58,
+        "points": 78.58,
         "squad": [
           10,
           12,
           15,
           68,
-          147,
-          175,
+          165,
           204,
-          273,
-          347,
-          367,
+          350,
           368,
           379,
-          385,
           388,
-          411
+          411,
+          524,
+          555,
+          585,
+          611
         ],
         "transfersIn": [
           {
@@ -51411,23 +51059,11 @@
               "news": null,
               "status": "a"
             },
-            "id": 147,
-            "position": "DEF",
-            "price": 4.4,
-            "team": "TOT",
-            "webName": "Tosin"
-          },
-          {
-            "availability": {
-              "chance": null,
-              "news": null,
-              "status": "a"
-            },
-            "id": 175,
-            "position": "DEF",
-            "price": 4.0,
-            "team": "COV",
-            "webName": "van Ewijk"
+            "id": 165,
+            "position": "FWD",
+            "price": 7.7,
+            "team": "CHE",
+            "webName": "Jo\u00e3o Pedro"
           },
           {
             "availability": {
@@ -51447,35 +51083,11 @@
               "news": null,
               "status": "a"
             },
-            "id": 273,
+            "id": 350,
             "position": "GKP",
-            "price": 4.0,
-            "team": "HUL",
-            "webName": "Phillips"
-          },
-          {
-            "availability": {
-              "chance": null,
-              "news": null,
-              "status": "a"
-            },
-            "id": 347,
-            "position": "FWD",
-            "price": 5.4,
-            "team": "LEE",
-            "webName": "Nmecha"
-          },
-          {
-            "availability": {
-              "chance": null,
-              "news": null,
-              "status": "a"
-            },
-            "id": 367,
-            "position": "MID",
-            "price": 7.2,
+            "price": 5.5,
             "team": "LIV",
-            "webName": "Gakpo"
+            "webName": "A.Becker"
           },
           {
             "availability": {
@@ -51507,18 +51119,6 @@
               "news": null,
               "status": "a"
             },
-            "id": 385,
-            "position": "GKP",
-            "price": 5.0,
-            "team": "LEE",
-            "webName": "Trafford"
-          },
-          {
-            "availability": {
-              "chance": null,
-              "news": null,
-              "status": "a"
-            },
             "id": 388,
             "position": "DEF",
             "price": 6.0,
@@ -51536,6 +51136,54 @@
             "price": 15.5,
             "team": "MCI",
             "webName": "Haaland"
+          },
+          {
+            "availability": {
+              "chance": null,
+              "news": null,
+              "status": "a"
+            },
+            "id": 524,
+            "position": "MID",
+            "price": 4.5,
+            "team": "TOT",
+            "webName": "Olusesi"
+          },
+          {
+            "availability": {
+              "chance": null,
+              "news": null,
+              "status": "a"
+            },
+            "id": 555,
+            "position": "GKP",
+            "price": 4.0,
+            "team": "CRY",
+            "webName": "Matthews"
+          },
+          {
+            "availability": {
+              "chance": null,
+              "news": null,
+              "status": "a"
+            },
+            "id": 585,
+            "position": "DEF",
+            "price": 4.0,
+            "team": "HUL",
+            "webName": "Herrington"
+          },
+          {
+            "availability": {
+              "chance": null,
+              "news": null,
+              "status": "a"
+            },
+            "id": 611,
+            "position": "DEF",
+            "price": 4.5,
+            "team": "AVL",
+            "webName": "Wan-Bissaka"
           }
         ],
         "transfersOut": [],
@@ -51603,6 +51251,21 @@
                 "xp": 6.67
               },
               {
+                "id": 165,
+                "isCaptain": false,
+                "opponents": [
+                  {
+                    "fdrRating": 2,
+                    "team": "HUL",
+                    "wasHome": true
+                  }
+                ],
+                "position": "FWD",
+                "team": "CHE",
+                "webName": "Jo\u00e3o Pedro",
+                "xp": 5.98
+              },
+              {
                 "id": 204,
                 "isCaptain": false,
                 "opponents": [
@@ -51618,22 +51281,7 @@
                 "xp": 6.0
               },
               {
-                "id": 385,
-                "isCaptain": false,
-                "opponents": [
-                  {
-                    "fdrRating": 2,
-                    "team": "NEW",
-                    "wasHome": true
-                  }
-                ],
-                "position": "GKP",
-                "team": "LEE",
-                "webName": "Trafford",
-                "xp": 4.56
-              },
-              {
-                "id": 367,
+                "id": 350,
                 "isCaptain": false,
                 "opponents": [
                   {
@@ -51642,10 +51290,10 @@
                     "wasHome": true
                   }
                 ],
-                "position": "MID",
+                "position": "GKP",
                 "team": "LIV",
-                "webName": "Gakpo",
-                "xp": 7.17
+                "webName": "A.Becker",
+                "xp": 4.75
               },
               {
                 "id": 368,
@@ -51709,7 +51357,7 @@
               }
             ],
             "targetGw": 4,
-            "totalXp": 79.58
+            "totalXp": 78.58
           }
         ],
         "xiByGw": [
@@ -51718,9 +51366,9 @@
             12,
             15,
             68,
+            165,
             204,
-            385,
-            367,
+            350,
             368,
             379,
             388,
@@ -51736,24 +51384,24 @@
         ],
         "hitCost": 0,
         "horizonGws": 3,
-        "netPoints": 234.69,
-        "points": 234.69,
+        "netPoints": 232.68,
+        "points": 232.68,
         "squad": [
           10,
           12,
           15,
           68,
-          179,
+          86,
           204,
-          332,
-          367,
           379,
           385,
           388,
+          391,
           411,
           427,
           441,
-          555
+          476,
+          572
         ],
         "transfersIn": [
           {
@@ -51810,11 +51458,11 @@
               "news": null,
               "status": "a"
             },
-            "id": 179,
-            "position": "DEF",
-            "price": 4.0,
-            "team": "COV",
-            "webName": "Latibeaudiere"
+            "id": 86,
+            "position": "MID",
+            "price": 5.5,
+            "team": "BRE",
+            "webName": "Lewis-Potter"
           },
           {
             "availability": {
@@ -51827,30 +51475,6 @@
             "price": 4.5,
             "team": "CRY",
             "webName": "Mitchell"
-          },
-          {
-            "availability": {
-              "chance": null,
-              "news": null,
-              "status": "a"
-            },
-            "id": 332,
-            "position": "DEF",
-            "price": 4.5,
-            "team": "LEE",
-            "webName": "Justin"
-          },
-          {
-            "availability": {
-              "chance": null,
-              "news": null,
-              "status": "a"
-            },
-            "id": 367,
-            "position": "MID",
-            "price": 7.2,
-            "team": "LIV",
-            "webName": "Gakpo"
           },
           {
             "availability": {
@@ -51894,6 +51518,18 @@
               "news": null,
               "status": "a"
             },
+            "id": 391,
+            "position": "DEF",
+            "price": 5.6,
+            "team": "MCI",
+            "webName": "Gvardiol"
+          },
+          {
+            "availability": {
+              "chance": null,
+              "news": null,
+              "status": "a"
+            },
             "id": 411,
             "position": "FWD",
             "price": 15.5,
@@ -51930,11 +51566,792 @@
               "news": null,
               "status": "a"
             },
-            "id": 555,
+            "id": 476,
+            "position": "DEF",
+            "price": 4.0,
+            "team": "NFO",
+            "webName": "O.Richards"
+          },
+          {
+            "availability": {
+              "chance": null,
+              "news": null,
+              "status": "a"
+            },
+            "id": 572,
+            "position": "GKP",
+            "price": 4.6,
+            "team": "HUL",
+            "webName": "Tzolakis"
+          }
+        ],
+        "transfersOut": [],
+        "weeks": [
+          {
+            "players": [
+              {
+                "id": 10,
+                "isCaptain": false,
+                "opponents": [
+                  {
+                    "fdrRating": 3,
+                    "team": "SUN",
+                    "wasHome": false
+                  }
+                ],
+                "position": "DEF",
+                "team": "ARS",
+                "webName": "White",
+                "xp": 6.64
+              },
+              {
+                "id": 12,
+                "isCaptain": false,
+                "opponents": [
+                  {
+                    "fdrRating": 3,
+                    "team": "SUN",
+                    "wasHome": false
+                  }
+                ],
+                "position": "MID",
+                "team": "ARS",
+                "webName": "Saka",
+                "xp": 6.82
+              },
+              {
+                "id": 15,
+                "isCaptain": false,
+                "opponents": [
+                  {
+                    "fdrRating": 3,
+                    "team": "SUN",
+                    "wasHome": false
+                  }
+                ],
+                "position": "MID",
+                "team": "ARS",
+                "webName": "\u00d8degaard",
+                "xp": 6.74
+              },
+              {
+                "id": 68,
+                "isCaptain": false,
+                "opponents": [
+                  {
+                    "fdrRating": 3,
+                    "team": "BRE",
+                    "wasHome": true
+                  }
+                ],
+                "position": "MID",
+                "team": "BOU",
+                "webName": "Tavernier",
+                "xp": 6.67
+              },
+              {
+                "id": 86,
+                "isCaptain": false,
+                "opponents": [
+                  {
+                    "fdrRating": 3,
+                    "team": "BOU",
+                    "wasHome": false
+                  }
+                ],
+                "position": "MID",
+                "team": "BRE",
+                "webName": "Lewis-Potter",
+                "xp": 5.65
+              },
+              {
+                "id": 204,
+                "isCaptain": false,
+                "opponents": [
+                  {
+                    "fdrRating": 2,
+                    "team": "IPS",
+                    "wasHome": true
+                  }
+                ],
+                "position": "DEF",
+                "team": "CRY",
+                "webName": "Mitchell",
+                "xp": 6.0
+              },
+              {
+                "id": 385,
+                "isCaptain": false,
+                "opponents": [
+                  {
+                    "fdrRating": 2,
+                    "team": "NEW",
+                    "wasHome": true
+                  }
+                ],
+                "position": "GKP",
+                "team": "LEE",
+                "webName": "Trafford",
+                "xp": 4.56
+              },
+              {
+                "id": 379,
+                "isCaptain": false,
+                "opponents": [
+                  {
+                    "fdrRating": 2,
+                    "team": "FUL",
+                    "wasHome": true
+                  }
+                ],
+                "position": "FWD",
+                "team": "LIV",
+                "webName": "Isak",
+                "xp": 6.81
+              },
+              {
+                "id": 388,
+                "isCaptain": false,
+                "opponents": [
+                  {
+                    "fdrRating": 4,
+                    "team": "MUN",
+                    "wasHome": false
+                  }
+                ],
+                "position": "DEF",
+                "team": "MCI",
+                "webName": "Gu\u00e9hi",
+                "xp": 6.52
+              },
+              {
+                "id": 391,
+                "isCaptain": false,
+                "opponents": [
+                  {
+                    "fdrRating": 4,
+                    "team": "MUN",
+                    "wasHome": false
+                  }
+                ],
+                "position": "DEF",
+                "team": "MCI",
+                "webName": "Gvardiol",
+                "xp": 5.77
+              },
+              {
+                "id": 411,
+                "isCaptain": true,
+                "opponents": [
+                  {
+                    "fdrRating": 4,
+                    "team": "MUN",
+                    "wasHome": false
+                  }
+                ],
+                "position": "FWD",
+                "team": "MCI",
+                "webName": "Haaland",
+                "xp": 7.69
+              }
+            ],
+            "targetGw": 4,
+            "totalXp": 77.56
+          },
+          {
+            "players": [
+              {
+                "id": 10,
+                "isCaptain": false,
+                "opponents": [
+                  {
+                    "fdrRating": 3,
+                    "team": "BHA",
+                    "wasHome": false
+                  }
+                ],
+                "position": "DEF",
+                "team": "ARS",
+                "webName": "White",
+                "xp": 6.36
+              },
+              {
+                "id": 12,
+                "isCaptain": false,
+                "opponents": [
+                  {
+                    "fdrRating": 3,
+                    "team": "BHA",
+                    "wasHome": false
+                  }
+                ],
+                "position": "MID",
+                "team": "ARS",
+                "webName": "Saka",
+                "xp": 6.97
+              },
+              {
+                "id": 15,
+                "isCaptain": false,
+                "opponents": [
+                  {
+                    "fdrRating": 3,
+                    "team": "BHA",
+                    "wasHome": false
+                  }
+                ],
+                "position": "MID",
+                "team": "ARS",
+                "webName": "\u00d8degaard",
+                "xp": 6.86
+              },
+              {
+                "id": 68,
+                "isCaptain": false,
+                "opponents": [
+                  {
+                    "fdrRating": 4,
+                    "team": "LIV",
+                    "wasHome": true
+                  }
+                ],
+                "position": "MID",
+                "team": "BOU",
+                "webName": "Tavernier",
+                "xp": 6.22
+              },
+              {
+                "id": 86,
+                "isCaptain": false,
+                "opponents": [
+                  {
+                    "fdrRating": 4,
+                    "team": "CHE",
+                    "wasHome": true
+                  }
+                ],
+                "position": "MID",
+                "team": "BRE",
+                "webName": "Lewis-Potter",
+                "xp": 5.8
+              },
+              {
+                "id": 385,
+                "isCaptain": false,
+                "opponents": [
+                  {
+                    "fdrRating": 3,
+                    "team": "CRY",
+                    "wasHome": true
+                  }
+                ],
+                "position": "GKP",
+                "team": "LEE",
+                "webName": "Trafford",
+                "xp": 4.8
+              },
+              {
+                "id": 379,
+                "isCaptain": false,
+                "opponents": [
+                  {
+                    "fdrRating": 3,
+                    "team": "BOU",
+                    "wasHome": false
+                  }
+                ],
+                "position": "FWD",
+                "team": "LIV",
+                "webName": "Isak",
+                "xp": 6.45
+              },
+              {
+                "id": 388,
+                "isCaptain": false,
+                "opponents": [
+                  {
+                    "fdrRating": 2,
+                    "team": "SUN",
+                    "wasHome": true
+                  }
+                ],
+                "position": "DEF",
+                "team": "MCI",
+                "webName": "Gu\u00e9hi",
+                "xp": 7.26
+              },
+              {
+                "id": 391,
+                "isCaptain": false,
+                "opponents": [
+                  {
+                    "fdrRating": 2,
+                    "team": "SUN",
+                    "wasHome": true
+                  }
+                ],
+                "position": "DEF",
+                "team": "MCI",
+                "webName": "Gvardiol",
+                "xp": 6.47
+              },
+              {
+                "id": 411,
+                "isCaptain": true,
+                "opponents": [
+                  {
+                    "fdrRating": 2,
+                    "team": "SUN",
+                    "wasHome": true
+                  }
+                ],
+                "position": "FWD",
+                "team": "MCI",
+                "webName": "Haaland",
+                "xp": 7.93
+              },
+              {
+                "id": 427,
+                "isCaptain": false,
+                "opponents": [
+                  {
+                    "fdrRating": 3,
+                    "team": "FUL",
+                    "wasHome": false
+                  }
+                ],
+                "position": "MID",
+                "team": "MUN",
+                "webName": "Mbeumo",
+                "xp": 6.11
+              }
+            ],
+            "targetGw": 5,
+            "totalXp": 79.16
+          },
+          {
+            "players": [
+              {
+                "id": 10,
+                "isCaptain": false,
+                "opponents": [
+                  {
+                    "fdrRating": 2,
+                    "team": "LEE",
+                    "wasHome": true
+                  }
+                ],
+                "position": "DEF",
+                "team": "ARS",
+                "webName": "White",
+                "xp": 6.99
+              },
+              {
+                "id": 12,
+                "isCaptain": true,
+                "opponents": [
+                  {
+                    "fdrRating": 2,
+                    "team": "LEE",
+                    "wasHome": true
+                  }
+                ],
+                "position": "MID",
+                "team": "ARS",
+                "webName": "Saka",
+                "xp": 7.45
+              },
+              {
+                "id": 15,
+                "isCaptain": false,
+                "opponents": [
+                  {
+                    "fdrRating": 2,
+                    "team": "LEE",
+                    "wasHome": true
+                  }
+                ],
+                "position": "MID",
+                "team": "ARS",
+                "webName": "\u00d8degaard",
+                "xp": 7.27
+              },
+              {
+                "id": 68,
+                "isCaptain": false,
+                "opponents": [
+                  {
+                    "fdrRating": 4,
+                    "team": "CHE",
+                    "wasHome": false
+                  }
+                ],
+                "position": "MID",
+                "team": "BOU",
+                "webName": "Tavernier",
+                "xp": 6.21
+              },
+              {
+                "id": 86,
+                "isCaptain": false,
+                "opponents": [
+                  {
+                    "fdrRating": 4,
+                    "team": "AVL",
+                    "wasHome": false
+                  }
+                ],
+                "position": "MID",
+                "team": "BRE",
+                "webName": "Lewis-Potter",
+                "xp": 5.57
+              },
+              {
+                "id": 204,
+                "isCaptain": false,
+                "opponents": [
+                  {
+                    "fdrRating": 3,
+                    "team": "NFO",
+                    "wasHome": true
+                  }
+                ],
+                "position": "DEF",
+                "team": "CRY",
+                "webName": "Mitchell",
+                "xp": 5.3
+              },
+              {
+                "id": 572,
+                "isCaptain": false,
+                "opponents": [
+                  {
+                    "fdrRating": 3,
+                    "team": "EVE",
+                    "wasHome": true
+                  }
+                ],
+                "position": "GKP",
+                "team": "HUL",
+                "webName": "Tzolakis",
+                "xp": 4.12
+              },
+              {
+                "id": 379,
+                "isCaptain": false,
+                "opponents": [
+                  {
+                    "fdrRating": 4,
+                    "team": "MCI",
+                    "wasHome": true
+                  }
+                ],
+                "position": "FWD",
+                "team": "LIV",
+                "webName": "Isak",
+                "xp": 6.0
+              },
+              {
+                "id": 388,
+                "isCaptain": false,
+                "opponents": [
+                  {
+                    "fdrRating": 4,
+                    "team": "LIV",
+                    "wasHome": false
+                  }
+                ],
+                "position": "DEF",
+                "team": "MCI",
+                "webName": "Gu\u00e9hi",
+                "xp": 5.71
+              },
+              {
+                "id": 411,
+                "isCaptain": false,
+                "opponents": [
+                  {
+                    "fdrRating": 4,
+                    "team": "LIV",
+                    "wasHome": false
+                  }
+                ],
+                "position": "FWD",
+                "team": "MCI",
+                "webName": "Haaland",
+                "xp": 7.22
+              },
+              {
+                "id": 427,
+                "isCaptain": false,
+                "opponents": [
+                  {
+                    "fdrRating": 3,
+                    "team": "TOT",
+                    "wasHome": true
+                  }
+                ],
+                "position": "MID",
+                "team": "MUN",
+                "webName": "Mbeumo",
+                "xp": 6.67
+              }
+            ],
+            "targetGw": 6,
+            "totalXp": 75.96
+          }
+        ],
+        "xiByGw": [
+          [
+            10,
+            12,
+            15,
+            68,
+            86,
+            204,
+            385,
+            379,
+            388,
+            391,
+            411
+          ],
+          [
+            10,
+            12,
+            15,
+            68,
+            86,
+            385,
+            379,
+            388,
+            391,
+            411,
+            427
+          ],
+          [
+            10,
+            12,
+            15,
+            68,
+            86,
+            204,
+            572,
+            379,
+            388,
+            411,
+            427
+          ]
+        ]
+      },
+      "5": {
+        "captainByGw": [
+          411,
+          411,
+          12,
+          411,
+          411
+        ],
+        "hitCost": 0,
+        "horizonGws": 5,
+        "netPoints": 394.79,
+        "points": 394.79,
+        "squad": [
+          10,
+          12,
+          15,
+          68,
+          204,
+          272,
+          332,
+          379,
+          385,
+          388,
+          391,
+          411,
+          427,
+          544,
+          623
+        ],
+        "transfersIn": [
+          {
+            "availability": {
+              "chance": 100,
+              "news": null,
+              "status": "a"
+            },
+            "id": 10,
+            "position": "DEF",
+            "price": 5.5,
+            "team": "ARS",
+            "webName": "White"
+          },
+          {
+            "availability": {
+              "chance": null,
+              "news": null,
+              "status": "a"
+            },
+            "id": 12,
+            "position": "MID",
+            "price": 9.5,
+            "team": "ARS",
+            "webName": "Saka"
+          },
+          {
+            "availability": {
+              "chance": null,
+              "news": null,
+              "status": "a"
+            },
+            "id": 15,
+            "position": "MID",
+            "price": 6.6,
+            "team": "ARS",
+            "webName": "\u00d8degaard"
+          },
+          {
+            "availability": {
+              "chance": null,
+              "news": null,
+              "status": "a"
+            },
+            "id": 68,
+            "position": "MID",
+            "price": 6.0,
+            "team": "BOU",
+            "webName": "Tavernier"
+          },
+          {
+            "availability": {
+              "chance": null,
+              "news": null,
+              "status": "a"
+            },
+            "id": 204,
+            "position": "DEF",
+            "price": 4.5,
+            "team": "CRY",
+            "webName": "Mitchell"
+          },
+          {
+            "availability": {
+              "chance": null,
+              "news": null,
+              "status": "a"
+            },
+            "id": 272,
+            "position": "FWD",
+            "price": 4.5,
+            "team": "FUL",
+            "webName": "Kusi-Asare"
+          },
+          {
+            "availability": {
+              "chance": null,
+              "news": null,
+              "status": "a"
+            },
+            "id": 332,
+            "position": "DEF",
+            "price": 4.5,
+            "team": "LEE",
+            "webName": "Justin"
+          },
+          {
+            "availability": {
+              "chance": null,
+              "news": null,
+              "status": "a"
+            },
+            "id": 379,
+            "position": "FWD",
+            "price": 9.1,
+            "team": "LIV",
+            "webName": "Isak"
+          },
+          {
+            "availability": {
+              "chance": null,
+              "news": null,
+              "status": "a"
+            },
+            "id": 385,
+            "position": "GKP",
+            "price": 5.0,
+            "team": "LEE",
+            "webName": "Trafford"
+          },
+          {
+            "availability": {
+              "chance": null,
+              "news": null,
+              "status": "a"
+            },
+            "id": 388,
+            "position": "DEF",
+            "price": 6.0,
+            "team": "MCI",
+            "webName": "Gu\u00e9hi"
+          },
+          {
+            "availability": {
+              "chance": null,
+              "news": null,
+              "status": "a"
+            },
+            "id": 391,
+            "position": "DEF",
+            "price": 5.6,
+            "team": "MCI",
+            "webName": "Gvardiol"
+          },
+          {
+            "availability": {
+              "chance": null,
+              "news": null,
+              "status": "a"
+            },
+            "id": 411,
+            "position": "FWD",
+            "price": 15.5,
+            "team": "MCI",
+            "webName": "Haaland"
+          },
+          {
+            "availability": {
+              "chance": null,
+              "news": null,
+              "status": "a"
+            },
+            "id": 427,
+            "position": "MID",
+            "price": 7.9,
+            "team": "MUN",
+            "webName": "Mbeumo"
+          },
+          {
+            "availability": {
+              "chance": null,
+              "news": null,
+              "status": "a"
+            },
+            "id": 544,
+            "position": "MID",
+            "price": 5.5,
+            "team": "SUN",
+            "webName": "Xhaka"
+          },
+          {
+            "availability": {
+              "chance": null,
+              "news": null,
+              "status": "a"
+            },
+            "id": 623,
             "position": "GKP",
             "price": 4.0,
-            "team": "CRY",
-            "webName": "Matthews"
+            "team": "COV",
+            "webName": "Bentley"
           }
         ],
         "transfersOut": [],
@@ -52032,21 +52449,6 @@
                 "xp": 4.56
               },
               {
-                "id": 367,
-                "isCaptain": false,
-                "opponents": [
-                  {
-                    "fdrRating": 2,
-                    "team": "FUL",
-                    "wasHome": true
-                  }
-                ],
-                "position": "MID",
-                "team": "LIV",
-                "webName": "Gakpo",
-                "xp": 7.17
-              },
-              {
                 "id": 379,
                 "isCaptain": false,
                 "opponents": [
@@ -52075,6 +52477,21 @@
                 "team": "MCI",
                 "webName": "Gu\u00e9hi",
                 "xp": 6.52
+              },
+              {
+                "id": 391,
+                "isCaptain": false,
+                "opponents": [
+                  {
+                    "fdrRating": 4,
+                    "team": "MUN",
+                    "wasHome": false
+                  }
+                ],
+                "position": "DEF",
+                "team": "MCI",
+                "webName": "Gvardiol",
+                "xp": 5.77
               },
               {
                 "id": 411,
@@ -52108,7 +52525,7 @@
               }
             ],
             "targetGw": 4,
-            "totalXp": 78.93
+            "totalXp": 77.53
           },
           {
             "players": [
@@ -52203,21 +52620,6 @@
                 "xp": 4.8
               },
               {
-                "id": 367,
-                "isCaptain": false,
-                "opponents": [
-                  {
-                    "fdrRating": 3,
-                    "team": "BOU",
-                    "wasHome": false
-                  }
-                ],
-                "position": "MID",
-                "team": "LIV",
-                "webName": "Gakpo",
-                "xp": 6.8
-              },
-              {
                 "id": 379,
                 "isCaptain": false,
                 "opponents": [
@@ -52246,6 +52648,21 @@
                 "team": "MCI",
                 "webName": "Gu\u00e9hi",
                 "xp": 7.26
+              },
+              {
+                "id": 391,
+                "isCaptain": false,
+                "opponents": [
+                  {
+                    "fdrRating": 2,
+                    "team": "SUN",
+                    "wasHome": true
+                  }
+                ],
+                "position": "DEF",
+                "team": "MCI",
+                "webName": "Gvardiol",
+                "xp": 6.47
               },
               {
                 "id": 411,
@@ -52279,7 +52696,7 @@
               }
             ],
             "targetGw": 5,
-            "totalXp": 79.11
+            "totalXp": 78.78
           },
           {
             "players": [
@@ -52374,7 +52791,864 @@
                 "xp": 4.02
               },
               {
-                "id": 367,
+                "id": 379,
+                "isCaptain": false,
+                "opponents": [
+                  {
+                    "fdrRating": 4,
+                    "team": "MCI",
+                    "wasHome": true
+                  }
+                ],
+                "position": "FWD",
+                "team": "LIV",
+                "webName": "Isak",
+                "xp": 6.0
+              },
+              {
+                "id": 388,
+                "isCaptain": false,
+                "opponents": [
+                  {
+                    "fdrRating": 4,
+                    "team": "LIV",
+                    "wasHome": false
+                  }
+                ],
+                "position": "DEF",
+                "team": "MCI",
+                "webName": "Gu\u00e9hi",
+                "xp": 5.71
+              },
+              {
+                "id": 411,
+                "isCaptain": false,
+                "opponents": [
+                  {
+                    "fdrRating": 4,
+                    "team": "LIV",
+                    "wasHome": false
+                  }
+                ],
+                "position": "FWD",
+                "team": "MCI",
+                "webName": "Haaland",
+                "xp": 7.22
+              },
+              {
+                "id": 427,
+                "isCaptain": false,
+                "opponents": [
+                  {
+                    "fdrRating": 3,
+                    "team": "TOT",
+                    "wasHome": true
+                  }
+                ],
+                "position": "MID",
+                "team": "MUN",
+                "webName": "Mbeumo",
+                "xp": 6.67
+              },
+              {
+                "id": 544,
+                "isCaptain": false,
+                "opponents": [
+                  {
+                    "fdrRating": 2,
+                    "team": "BHA",
+                    "wasHome": true
+                  }
+                ],
+                "position": "MID",
+                "team": "SUN",
+                "webName": "Xhaka",
+                "xp": 5.87
+              }
+            ],
+            "targetGw": 6,
+            "totalXp": 76.16
+          },
+          {
+            "players": [
+              {
+                "id": 10,
+                "isCaptain": false,
+                "opponents": [
+                  {
+                    "fdrRating": 3,
+                    "team": "NFO",
+                    "wasHome": false
+                  }
+                ],
+                "position": "DEF",
+                "team": "ARS",
+                "webName": "White",
+                "xp": 6.52
+              },
+              {
+                "id": 12,
+                "isCaptain": false,
+                "opponents": [
+                  {
+                    "fdrRating": 3,
+                    "team": "NFO",
+                    "wasHome": false
+                  }
+                ],
+                "position": "MID",
+                "team": "ARS",
+                "webName": "Saka",
+                "xp": 6.97
+              },
+              {
+                "id": 15,
+                "isCaptain": false,
+                "opponents": [
+                  {
+                    "fdrRating": 3,
+                    "team": "NFO",
+                    "wasHome": false
+                  }
+                ],
+                "position": "MID",
+                "team": "ARS",
+                "webName": "\u00d8degaard",
+                "xp": 6.86
+              },
+              {
+                "id": 68,
+                "isCaptain": false,
+                "opponents": [
+                  {
+                    "fdrRating": 2,
+                    "team": "SUN",
+                    "wasHome": true
+                  }
+                ],
+                "position": "MID",
+                "team": "BOU",
+                "webName": "Tavernier",
+                "xp": 6.51
+              },
+              {
+                "id": 385,
+                "isCaptain": false,
+                "opponents": [
+                  {
+                    "fdrRating": 4,
+                    "team": "MUN",
+                    "wasHome": true
+                  }
+                ],
+                "position": "GKP",
+                "team": "LEE",
+                "webName": "Trafford",
+                "xp": 4.7
+              },
+              {
+                "id": 379,
+                "isCaptain": false,
+                "opponents": [
+                  {
+                    "fdrRating": 3,
+                    "team": "BRE",
+                    "wasHome": false
+                  }
+                ],
+                "position": "FWD",
+                "team": "LIV",
+                "webName": "Isak",
+                "xp": 6.54
+              },
+              {
+                "id": 388,
+                "isCaptain": false,
+                "opponents": [
+                  {
+                    "fdrRating": 2,
+                    "team": "IPS",
+                    "wasHome": true
+                  }
+                ],
+                "position": "DEF",
+                "team": "MCI",
+                "webName": "Gu\u00e9hi",
+                "xp": 8.07
+              },
+              {
+                "id": 391,
+                "isCaptain": false,
+                "opponents": [
+                  {
+                    "fdrRating": 2,
+                    "team": "IPS",
+                    "wasHome": true
+                  }
+                ],
+                "position": "DEF",
+                "team": "MCI",
+                "webName": "Gvardiol",
+                "xp": 7.06
+              },
+              {
+                "id": 411,
+                "isCaptain": true,
+                "opponents": [
+                  {
+                    "fdrRating": 2,
+                    "team": "IPS",
+                    "wasHome": true
+                  }
+                ],
+                "position": "FWD",
+                "team": "MCI",
+                "webName": "Haaland",
+                "xp": 9.33
+              },
+              {
+                "id": 427,
+                "isCaptain": false,
+                "opponents": [
+                  {
+                    "fdrRating": 3,
+                    "team": "LEE",
+                    "wasHome": false
+                  }
+                ],
+                "position": "MID",
+                "team": "MUN",
+                "webName": "Mbeumo",
+                "xp": 6.14
+              },
+              {
+                "id": 544,
+                "isCaptain": false,
+                "opponents": [
+                  {
+                    "fdrRating": 3,
+                    "team": "BOU",
+                    "wasHome": false
+                  }
+                ],
+                "position": "MID",
+                "team": "SUN",
+                "webName": "Xhaka",
+                "xp": 5.68
+              }
+            ],
+            "targetGw": 7,
+            "totalXp": 83.71
+          },
+          {
+            "players": [
+              {
+                "id": 10,
+                "isCaptain": false,
+                "opponents": [
+                  {
+                    "fdrRating": 3,
+                    "team": "EVE",
+                    "wasHome": true
+                  }
+                ],
+                "position": "DEF",
+                "team": "ARS",
+                "webName": "White",
+                "xp": 7.07
+              },
+              {
+                "id": 12,
+                "isCaptain": false,
+                "opponents": [
+                  {
+                    "fdrRating": 3,
+                    "team": "EVE",
+                    "wasHome": true
+                  }
+                ],
+                "position": "MID",
+                "team": "ARS",
+                "webName": "Saka",
+                "xp": 7.16
+              },
+              {
+                "id": 15,
+                "isCaptain": false,
+                "opponents": [
+                  {
+                    "fdrRating": 3,
+                    "team": "EVE",
+                    "wasHome": true
+                  }
+                ],
+                "position": "MID",
+                "team": "ARS",
+                "webName": "\u00d8degaard",
+                "xp": 7.03
+              },
+              {
+                "id": 68,
+                "isCaptain": false,
+                "opponents": [
+                  {
+                    "fdrRating": 4,
+                    "team": "MUN",
+                    "wasHome": false
+                  }
+                ],
+                "position": "MID",
+                "team": "BOU",
+                "webName": "Tavernier",
+                "xp": 6.29
+              },
+              {
+                "id": 385,
+                "isCaptain": false,
+                "opponents": [
+                  {
+                    "fdrRating": 3,
+                    "team": "SUN",
+                    "wasHome": false
+                  }
+                ],
+                "position": "GKP",
+                "team": "LEE",
+                "webName": "Trafford",
+                "xp": 4.59
+              },
+              {
+                "id": 379,
+                "isCaptain": false,
+                "opponents": [
+                  {
+                    "fdrRating": 2,
+                    "team": "BHA",
+                    "wasHome": true
+                  }
+                ],
+                "position": "FWD",
+                "team": "LIV",
+                "webName": "Isak",
+                "xp": 6.82
+              },
+              {
+                "id": 388,
+                "isCaptain": false,
+                "opponents": [
+                  {
+                    "fdrRating": 4,
+                    "team": "AVL",
+                    "wasHome": false
+                  }
+                ],
+                "position": "DEF",
+                "team": "MCI",
+                "webName": "Gu\u00e9hi",
+                "xp": 6.31
+              },
+              {
+                "id": 391,
+                "isCaptain": false,
+                "opponents": [
+                  {
+                    "fdrRating": 4,
+                    "team": "AVL",
+                    "wasHome": false
+                  }
+                ],
+                "position": "DEF",
+                "team": "MCI",
+                "webName": "Gvardiol",
+                "xp": 5.57
+              },
+              {
+                "id": 411,
+                "isCaptain": true,
+                "opponents": [
+                  {
+                    "fdrRating": 4,
+                    "team": "AVL",
+                    "wasHome": false
+                  }
+                ],
+                "position": "FWD",
+                "team": "MCI",
+                "webName": "Haaland",
+                "xp": 7.68
+              },
+              {
+                "id": 427,
+                "isCaptain": false,
+                "opponents": [
+                  {
+                    "fdrRating": 3,
+                    "team": "BOU",
+                    "wasHome": true
+                  }
+                ],
+                "position": "MID",
+                "team": "MUN",
+                "webName": "Mbeumo",
+                "xp": 6.49
+              },
+              {
+                "id": 544,
+                "isCaptain": false,
+                "opponents": [
+                  {
+                    "fdrRating": 2,
+                    "team": "LEE",
+                    "wasHome": true
+                  }
+                ],
+                "position": "MID",
+                "team": "SUN",
+                "webName": "Xhaka",
+                "xp": 5.92
+              }
+            ],
+            "targetGw": 8,
+            "totalXp": 78.61
+          }
+        ],
+        "xiByGw": [
+          [
+            10,
+            12,
+            15,
+            68,
+            204,
+            385,
+            379,
+            388,
+            391,
+            411,
+            427
+          ],
+          [
+            10,
+            12,
+            15,
+            68,
+            332,
+            385,
+            379,
+            388,
+            391,
+            411,
+            427
+          ],
+          [
+            10,
+            12,
+            15,
+            68,
+            204,
+            385,
+            379,
+            388,
+            411,
+            427,
+            544
+          ],
+          [
+            10,
+            12,
+            15,
+            68,
+            385,
+            379,
+            388,
+            391,
+            411,
+            427,
+            544
+          ],
+          [
+            10,
+            12,
+            15,
+            68,
+            385,
+            379,
+            388,
+            391,
+            411,
+            427,
+            544
+          ]
+        ]
+      },
+      "7": {
+        "captainByGw": [
+          411,
+          411,
+          12,
+          411,
+          411,
+          411,
+          411
+        ],
+        "hitCost": 0,
+        "horizonGws": 7,
+        "netPoints": 551.24,
+        "points": 551.24,
+        "squad": [
+          10,
+          12,
+          15,
+          68,
+          204,
+          332,
+          355,
+          379,
+          385,
+          388,
+          391,
+          411,
+          427,
+          544,
+          651
+        ],
+        "transfersIn": [
+          {
+            "availability": {
+              "chance": 100,
+              "news": null,
+              "status": "a"
+            },
+            "id": 10,
+            "position": "DEF",
+            "price": 5.5,
+            "team": "ARS",
+            "webName": "White"
+          },
+          {
+            "availability": {
+              "chance": null,
+              "news": null,
+              "status": "a"
+            },
+            "id": 12,
+            "position": "MID",
+            "price": 9.5,
+            "team": "ARS",
+            "webName": "Saka"
+          },
+          {
+            "availability": {
+              "chance": null,
+              "news": null,
+              "status": "a"
+            },
+            "id": 15,
+            "position": "MID",
+            "price": 6.6,
+            "team": "ARS",
+            "webName": "\u00d8degaard"
+          },
+          {
+            "availability": {
+              "chance": null,
+              "news": null,
+              "status": "a"
+            },
+            "id": 68,
+            "position": "MID",
+            "price": 6.0,
+            "team": "BOU",
+            "webName": "Tavernier"
+          },
+          {
+            "availability": {
+              "chance": null,
+              "news": null,
+              "status": "a"
+            },
+            "id": 204,
+            "position": "DEF",
+            "price": 4.5,
+            "team": "CRY",
+            "webName": "Mitchell"
+          },
+          {
+            "availability": {
+              "chance": null,
+              "news": null,
+              "status": "a"
+            },
+            "id": 332,
+            "position": "DEF",
+            "price": 4.5,
+            "team": "LEE",
+            "webName": "Justin"
+          },
+          {
+            "availability": {
+              "chance": null,
+              "news": null,
+              "status": "a"
+            },
+            "id": 355,
+            "position": "GKP",
+            "price": 4.0,
+            "team": "LIV",
+            "webName": "Davies"
+          },
+          {
+            "availability": {
+              "chance": null,
+              "news": null,
+              "status": "a"
+            },
+            "id": 379,
+            "position": "FWD",
+            "price": 9.1,
+            "team": "LIV",
+            "webName": "Isak"
+          },
+          {
+            "availability": {
+              "chance": null,
+              "news": null,
+              "status": "a"
+            },
+            "id": 385,
+            "position": "GKP",
+            "price": 5.0,
+            "team": "LEE",
+            "webName": "Trafford"
+          },
+          {
+            "availability": {
+              "chance": null,
+              "news": null,
+              "status": "a"
+            },
+            "id": 388,
+            "position": "DEF",
+            "price": 6.0,
+            "team": "MCI",
+            "webName": "Gu\u00e9hi"
+          },
+          {
+            "availability": {
+              "chance": null,
+              "news": null,
+              "status": "a"
+            },
+            "id": 391,
+            "position": "DEF",
+            "price": 5.6,
+            "team": "MCI",
+            "webName": "Gvardiol"
+          },
+          {
+            "availability": {
+              "chance": null,
+              "news": null,
+              "status": "a"
+            },
+            "id": 411,
+            "position": "FWD",
+            "price": 15.5,
+            "team": "MCI",
+            "webName": "Haaland"
+          },
+          {
+            "availability": {
+              "chance": null,
+              "news": null,
+              "status": "a"
+            },
+            "id": 427,
+            "position": "MID",
+            "price": 7.9,
+            "team": "MUN",
+            "webName": "Mbeumo"
+          },
+          {
+            "availability": {
+              "chance": null,
+              "news": null,
+              "status": "a"
+            },
+            "id": 544,
+            "position": "MID",
+            "price": 5.5,
+            "team": "SUN",
+            "webName": "Xhaka"
+          },
+          {
+            "availability": {
+              "chance": null,
+              "news": null,
+              "status": "a"
+            },
+            "id": 651,
+            "position": "FWD",
+            "price": 4.5,
+            "team": "SUN",
+            "webName": "J.Angulo"
+          }
+        ],
+        "transfersOut": [],
+        "weeks": [
+          {
+            "players": [
+              {
+                "id": 10,
+                "isCaptain": false,
+                "opponents": [
+                  {
+                    "fdrRating": 3,
+                    "team": "SUN",
+                    "wasHome": false
+                  }
+                ],
+                "position": "DEF",
+                "team": "ARS",
+                "webName": "White",
+                "xp": 6.64
+              },
+              {
+                "id": 12,
+                "isCaptain": false,
+                "opponents": [
+                  {
+                    "fdrRating": 3,
+                    "team": "SUN",
+                    "wasHome": false
+                  }
+                ],
+                "position": "MID",
+                "team": "ARS",
+                "webName": "Saka",
+                "xp": 6.82
+              },
+              {
+                "id": 15,
+                "isCaptain": false,
+                "opponents": [
+                  {
+                    "fdrRating": 3,
+                    "team": "SUN",
+                    "wasHome": false
+                  }
+                ],
+                "position": "MID",
+                "team": "ARS",
+                "webName": "\u00d8degaard",
+                "xp": 6.74
+              },
+              {
+                "id": 68,
+                "isCaptain": false,
+                "opponents": [
+                  {
+                    "fdrRating": 3,
+                    "team": "BRE",
+                    "wasHome": true
+                  }
+                ],
+                "position": "MID",
+                "team": "BOU",
+                "webName": "Tavernier",
+                "xp": 6.67
+              },
+              {
+                "id": 204,
+                "isCaptain": false,
+                "opponents": [
+                  {
+                    "fdrRating": 2,
+                    "team": "IPS",
+                    "wasHome": true
+                  }
+                ],
+                "position": "DEF",
+                "team": "CRY",
+                "webName": "Mitchell",
+                "xp": 6.0
+              },
+              {
+                "id": 385,
+                "isCaptain": false,
+                "opponents": [
+                  {
+                    "fdrRating": 2,
+                    "team": "NEW",
+                    "wasHome": true
+                  }
+                ],
+                "position": "GKP",
+                "team": "LEE",
+                "webName": "Trafford",
+                "xp": 4.56
+              },
+              {
+                "id": 379,
+                "isCaptain": false,
+                "opponents": [
+                  {
+                    "fdrRating": 2,
+                    "team": "FUL",
+                    "wasHome": true
+                  }
+                ],
+                "position": "FWD",
+                "team": "LIV",
+                "webName": "Isak",
+                "xp": 6.81
+              },
+              {
+                "id": 388,
+                "isCaptain": false,
+                "opponents": [
+                  {
+                    "fdrRating": 4,
+                    "team": "MUN",
+                    "wasHome": false
+                  }
+                ],
+                "position": "DEF",
+                "team": "MCI",
+                "webName": "Gu\u00e9hi",
+                "xp": 6.52
+              },
+              {
+                "id": 391,
+                "isCaptain": false,
+                "opponents": [
+                  {
+                    "fdrRating": 4,
+                    "team": "MUN",
+                    "wasHome": false
+                  }
+                ],
+                "position": "DEF",
+                "team": "MCI",
+                "webName": "Gvardiol",
+                "xp": 5.77
+              },
+              {
+                "id": 411,
+                "isCaptain": true,
+                "opponents": [
+                  {
+                    "fdrRating": 4,
+                    "team": "MUN",
+                    "wasHome": false
+                  }
+                ],
+                "position": "FWD",
+                "team": "MCI",
+                "webName": "Haaland",
+                "xp": 7.69
+              },
+              {
+                "id": 427,
                 "isCaptain": false,
                 "opponents": [
                   {
@@ -52384,9 +53658,276 @@
                   }
                 ],
                 "position": "MID",
-                "team": "LIV",
-                "webName": "Gakpo",
+                "team": "MUN",
+                "webName": "Mbeumo",
+                "xp": 5.62
+              }
+            ],
+            "targetGw": 4,
+            "totalXp": 77.53
+          },
+          {
+            "players": [
+              {
+                "id": 10,
+                "isCaptain": false,
+                "opponents": [
+                  {
+                    "fdrRating": 3,
+                    "team": "BHA",
+                    "wasHome": false
+                  }
+                ],
+                "position": "DEF",
+                "team": "ARS",
+                "webName": "White",
                 "xp": 6.36
+              },
+              {
+                "id": 12,
+                "isCaptain": false,
+                "opponents": [
+                  {
+                    "fdrRating": 3,
+                    "team": "BHA",
+                    "wasHome": false
+                  }
+                ],
+                "position": "MID",
+                "team": "ARS",
+                "webName": "Saka",
+                "xp": 6.97
+              },
+              {
+                "id": 15,
+                "isCaptain": false,
+                "opponents": [
+                  {
+                    "fdrRating": 3,
+                    "team": "BHA",
+                    "wasHome": false
+                  }
+                ],
+                "position": "MID",
+                "team": "ARS",
+                "webName": "\u00d8degaard",
+                "xp": 6.86
+              },
+              {
+                "id": 68,
+                "isCaptain": false,
+                "opponents": [
+                  {
+                    "fdrRating": 4,
+                    "team": "LIV",
+                    "wasHome": true
+                  }
+                ],
+                "position": "MID",
+                "team": "BOU",
+                "webName": "Tavernier",
+                "xp": 6.22
+              },
+              {
+                "id": 332,
+                "isCaptain": false,
+                "opponents": [
+                  {
+                    "fdrRating": 3,
+                    "team": "CRY",
+                    "wasHome": true
+                  }
+                ],
+                "position": "DEF",
+                "team": "LEE",
+                "webName": "Justin",
+                "xp": 5.42
+              },
+              {
+                "id": 385,
+                "isCaptain": false,
+                "opponents": [
+                  {
+                    "fdrRating": 3,
+                    "team": "CRY",
+                    "wasHome": true
+                  }
+                ],
+                "position": "GKP",
+                "team": "LEE",
+                "webName": "Trafford",
+                "xp": 4.8
+              },
+              {
+                "id": 379,
+                "isCaptain": false,
+                "opponents": [
+                  {
+                    "fdrRating": 3,
+                    "team": "BOU",
+                    "wasHome": false
+                  }
+                ],
+                "position": "FWD",
+                "team": "LIV",
+                "webName": "Isak",
+                "xp": 6.45
+              },
+              {
+                "id": 388,
+                "isCaptain": false,
+                "opponents": [
+                  {
+                    "fdrRating": 2,
+                    "team": "SUN",
+                    "wasHome": true
+                  }
+                ],
+                "position": "DEF",
+                "team": "MCI",
+                "webName": "Gu\u00e9hi",
+                "xp": 7.26
+              },
+              {
+                "id": 391,
+                "isCaptain": false,
+                "opponents": [
+                  {
+                    "fdrRating": 2,
+                    "team": "SUN",
+                    "wasHome": true
+                  }
+                ],
+                "position": "DEF",
+                "team": "MCI",
+                "webName": "Gvardiol",
+                "xp": 6.47
+              },
+              {
+                "id": 411,
+                "isCaptain": true,
+                "opponents": [
+                  {
+                    "fdrRating": 2,
+                    "team": "SUN",
+                    "wasHome": true
+                  }
+                ],
+                "position": "FWD",
+                "team": "MCI",
+                "webName": "Haaland",
+                "xp": 7.93
+              },
+              {
+                "id": 427,
+                "isCaptain": false,
+                "opponents": [
+                  {
+                    "fdrRating": 3,
+                    "team": "FUL",
+                    "wasHome": false
+                  }
+                ],
+                "position": "MID",
+                "team": "MUN",
+                "webName": "Mbeumo",
+                "xp": 6.11
+              }
+            ],
+            "targetGw": 5,
+            "totalXp": 78.78
+          },
+          {
+            "players": [
+              {
+                "id": 10,
+                "isCaptain": false,
+                "opponents": [
+                  {
+                    "fdrRating": 2,
+                    "team": "LEE",
+                    "wasHome": true
+                  }
+                ],
+                "position": "DEF",
+                "team": "ARS",
+                "webName": "White",
+                "xp": 6.99
+              },
+              {
+                "id": 12,
+                "isCaptain": true,
+                "opponents": [
+                  {
+                    "fdrRating": 2,
+                    "team": "LEE",
+                    "wasHome": true
+                  }
+                ],
+                "position": "MID",
+                "team": "ARS",
+                "webName": "Saka",
+                "xp": 7.45
+              },
+              {
+                "id": 15,
+                "isCaptain": false,
+                "opponents": [
+                  {
+                    "fdrRating": 2,
+                    "team": "LEE",
+                    "wasHome": true
+                  }
+                ],
+                "position": "MID",
+                "team": "ARS",
+                "webName": "\u00d8degaard",
+                "xp": 7.27
+              },
+              {
+                "id": 68,
+                "isCaptain": false,
+                "opponents": [
+                  {
+                    "fdrRating": 4,
+                    "team": "CHE",
+                    "wasHome": false
+                  }
+                ],
+                "position": "MID",
+                "team": "BOU",
+                "webName": "Tavernier",
+                "xp": 6.21
+              },
+              {
+                "id": 204,
+                "isCaptain": false,
+                "opponents": [
+                  {
+                    "fdrRating": 3,
+                    "team": "NFO",
+                    "wasHome": true
+                  }
+                ],
+                "position": "DEF",
+                "team": "CRY",
+                "webName": "Mitchell",
+                "xp": 5.3
+              },
+              {
+                "id": 385,
+                "isCaptain": false,
+                "opponents": [
+                  {
+                    "fdrRating": 5,
+                    "team": "ARS",
+                    "wasHome": false
+                  }
+                ],
+                "position": "GKP",
+                "team": "LEE",
+                "webName": "Trafford",
+                "xp": 4.02
               },
               {
                 "id": 379,
@@ -52447,779 +53988,25 @@
                 "team": "MUN",
                 "webName": "Mbeumo",
                 "xp": 6.67
+              },
+              {
+                "id": 544,
+                "isCaptain": false,
+                "opponents": [
+                  {
+                    "fdrRating": 2,
+                    "team": "BHA",
+                    "wasHome": true
+                  }
+                ],
+                "position": "MID",
+                "team": "SUN",
+                "webName": "Xhaka",
+                "xp": 5.87
               }
             ],
             "targetGw": 6,
-            "totalXp": 76.65
-          }
-        ],
-        "xiByGw": [
-          [
-            10,
-            12,
-            15,
-            68,
-            204,
-            385,
-            367,
-            379,
-            388,
-            411,
-            427
-          ],
-          [
-            10,
-            12,
-            15,
-            68,
-            332,
-            385,
-            367,
-            379,
-            388,
-            411,
-            427
-          ],
-          [
-            10,
-            12,
-            15,
-            68,
-            204,
-            385,
-            367,
-            379,
-            388,
-            411,
-            427
-          ]
-        ]
-      },
-      "5": {
-        "captainByGw": [
-          411,
-          411,
-          12,
-          411,
-          411
-        ],
-        "hitCost": 0,
-        "horizonGws": 5,
-        "netPoints": 398.84,
-        "points": 398.84,
-        "squad": [
-          10,
-          12,
-          15,
-          38,
-          68,
-          182,
-          301,
-          367,
-          368,
-          379,
-          385,
-          388,
-          391,
-          411,
-          651
-        ],
-        "transfersIn": [
-          {
-            "availability": {
-              "chance": 100,
-              "news": null,
-              "status": "a"
-            },
-            "id": 10,
-            "position": "DEF",
-            "price": 5.5,
-            "team": "ARS",
-            "webName": "White"
-          },
-          {
-            "availability": {
-              "chance": null,
-              "news": null,
-              "status": "a"
-            },
-            "id": 12,
-            "position": "MID",
-            "price": 9.5,
-            "team": "ARS",
-            "webName": "Saka"
-          },
-          {
-            "availability": {
-              "chance": null,
-              "news": null,
-              "status": "a"
-            },
-            "id": 15,
-            "position": "MID",
-            "price": 6.6,
-            "team": "ARS",
-            "webName": "\u00d8degaard"
-          },
-          {
-            "availability": {
-              "chance": null,
-              "news": null,
-              "status": "a"
-            },
-            "id": 38,
-            "position": "DEF",
-            "price": 4.0,
-            "team": "AVL",
-            "webName": "A.Garc\u00eda"
-          },
-          {
-            "availability": {
-              "chance": null,
-              "news": null,
-              "status": "a"
-            },
-            "id": 68,
-            "position": "MID",
-            "price": 6.0,
-            "team": "BOU",
-            "webName": "Tavernier"
-          },
-          {
-            "availability": {
-              "chance": null,
-              "news": null,
-              "status": "a"
-            },
-            "id": 182,
-            "position": "DEF",
-            "price": 4.0,
-            "team": "COV",
-            "webName": "Amenda"
-          },
-          {
-            "availability": {
-              "chance": null,
-              "news": null,
-              "status": "a"
-            },
-            "id": 301,
-            "position": "GKP",
-            "price": 4.0,
-            "team": "IPS",
-            "webName": "Palmer"
-          },
-          {
-            "availability": {
-              "chance": null,
-              "news": null,
-              "status": "a"
-            },
-            "id": 367,
-            "position": "MID",
-            "price": 7.2,
-            "team": "LIV",
-            "webName": "Gakpo"
-          },
-          {
-            "availability": {
-              "chance": null,
-              "news": null,
-              "status": "a"
-            },
-            "id": 368,
-            "position": "MID",
-            "price": 7.0,
-            "team": "LIV",
-            "webName": "Szoboszlai"
-          },
-          {
-            "availability": {
-              "chance": null,
-              "news": null,
-              "status": "a"
-            },
-            "id": 379,
-            "position": "FWD",
-            "price": 9.1,
-            "team": "LIV",
-            "webName": "Isak"
-          },
-          {
-            "availability": {
-              "chance": null,
-              "news": null,
-              "status": "a"
-            },
-            "id": 385,
-            "position": "GKP",
-            "price": 5.0,
-            "team": "LEE",
-            "webName": "Trafford"
-          },
-          {
-            "availability": {
-              "chance": null,
-              "news": null,
-              "status": "a"
-            },
-            "id": 388,
-            "position": "DEF",
-            "price": 6.0,
-            "team": "MCI",
-            "webName": "Gu\u00e9hi"
-          },
-          {
-            "availability": {
-              "chance": null,
-              "news": null,
-              "status": "a"
-            },
-            "id": 391,
-            "position": "DEF",
-            "price": 5.6,
-            "team": "MCI",
-            "webName": "Gvardiol"
-          },
-          {
-            "availability": {
-              "chance": null,
-              "news": null,
-              "status": "a"
-            },
-            "id": 411,
-            "position": "FWD",
-            "price": 15.5,
-            "team": "MCI",
-            "webName": "Haaland"
-          },
-          {
-            "availability": {
-              "chance": null,
-              "news": null,
-              "status": "a"
-            },
-            "id": 651,
-            "position": "FWD",
-            "price": 4.5,
-            "team": "SUN",
-            "webName": "J.Angulo"
-          }
-        ],
-        "transfersOut": [],
-        "weeks": [
-          {
-            "players": [
-              {
-                "id": 10,
-                "isCaptain": false,
-                "opponents": [
-                  {
-                    "fdrRating": 3,
-                    "team": "SUN",
-                    "wasHome": false
-                  }
-                ],
-                "position": "DEF",
-                "team": "ARS",
-                "webName": "White",
-                "xp": 6.64
-              },
-              {
-                "id": 12,
-                "isCaptain": false,
-                "opponents": [
-                  {
-                    "fdrRating": 3,
-                    "team": "SUN",
-                    "wasHome": false
-                  }
-                ],
-                "position": "MID",
-                "team": "ARS",
-                "webName": "Saka",
-                "xp": 6.82
-              },
-              {
-                "id": 15,
-                "isCaptain": false,
-                "opponents": [
-                  {
-                    "fdrRating": 3,
-                    "team": "SUN",
-                    "wasHome": false
-                  }
-                ],
-                "position": "MID",
-                "team": "ARS",
-                "webName": "\u00d8degaard",
-                "xp": 6.74
-              },
-              {
-                "id": 68,
-                "isCaptain": false,
-                "opponents": [
-                  {
-                    "fdrRating": 3,
-                    "team": "BRE",
-                    "wasHome": true
-                  }
-                ],
-                "position": "MID",
-                "team": "BOU",
-                "webName": "Tavernier",
-                "xp": 6.67
-              },
-              {
-                "id": 385,
-                "isCaptain": false,
-                "opponents": [
-                  {
-                    "fdrRating": 2,
-                    "team": "NEW",
-                    "wasHome": true
-                  }
-                ],
-                "position": "GKP",
-                "team": "LEE",
-                "webName": "Trafford",
-                "xp": 4.56
-              },
-              {
-                "id": 367,
-                "isCaptain": false,
-                "opponents": [
-                  {
-                    "fdrRating": 2,
-                    "team": "FUL",
-                    "wasHome": true
-                  }
-                ],
-                "position": "MID",
-                "team": "LIV",
-                "webName": "Gakpo",
-                "xp": 7.17
-              },
-              {
-                "id": 368,
-                "isCaptain": false,
-                "opponents": [
-                  {
-                    "fdrRating": 2,
-                    "team": "FUL",
-                    "wasHome": true
-                  }
-                ],
-                "position": "MID",
-                "team": "LIV",
-                "webName": "Szoboszlai",
-                "xp": 6.27
-              },
-              {
-                "id": 379,
-                "isCaptain": false,
-                "opponents": [
-                  {
-                    "fdrRating": 2,
-                    "team": "FUL",
-                    "wasHome": true
-                  }
-                ],
-                "position": "FWD",
-                "team": "LIV",
-                "webName": "Isak",
-                "xp": 6.81
-              },
-              {
-                "id": 388,
-                "isCaptain": false,
-                "opponents": [
-                  {
-                    "fdrRating": 4,
-                    "team": "MUN",
-                    "wasHome": false
-                  }
-                ],
-                "position": "DEF",
-                "team": "MCI",
-                "webName": "Gu\u00e9hi",
-                "xp": 6.52
-              },
-              {
-                "id": 391,
-                "isCaptain": false,
-                "opponents": [
-                  {
-                    "fdrRating": 4,
-                    "team": "MUN",
-                    "wasHome": false
-                  }
-                ],
-                "position": "DEF",
-                "team": "MCI",
-                "webName": "Gvardiol",
-                "xp": 5.77
-              },
-              {
-                "id": 411,
-                "isCaptain": true,
-                "opponents": [
-                  {
-                    "fdrRating": 4,
-                    "team": "MUN",
-                    "wasHome": false
-                  }
-                ],
-                "position": "FWD",
-                "team": "MCI",
-                "webName": "Haaland",
-                "xp": 7.69
-              }
-            ],
-            "targetGw": 4,
-            "totalXp": 79.35
-          },
-          {
-            "players": [
-              {
-                "id": 10,
-                "isCaptain": false,
-                "opponents": [
-                  {
-                    "fdrRating": 3,
-                    "team": "BHA",
-                    "wasHome": false
-                  }
-                ],
-                "position": "DEF",
-                "team": "ARS",
-                "webName": "White",
-                "xp": 6.36
-              },
-              {
-                "id": 12,
-                "isCaptain": false,
-                "opponents": [
-                  {
-                    "fdrRating": 3,
-                    "team": "BHA",
-                    "wasHome": false
-                  }
-                ],
-                "position": "MID",
-                "team": "ARS",
-                "webName": "Saka",
-                "xp": 6.97
-              },
-              {
-                "id": 15,
-                "isCaptain": false,
-                "opponents": [
-                  {
-                    "fdrRating": 3,
-                    "team": "BHA",
-                    "wasHome": false
-                  }
-                ],
-                "position": "MID",
-                "team": "ARS",
-                "webName": "\u00d8degaard",
-                "xp": 6.86
-              },
-              {
-                "id": 68,
-                "isCaptain": false,
-                "opponents": [
-                  {
-                    "fdrRating": 4,
-                    "team": "LIV",
-                    "wasHome": true
-                  }
-                ],
-                "position": "MID",
-                "team": "BOU",
-                "webName": "Tavernier",
-                "xp": 6.22
-              },
-              {
-                "id": 385,
-                "isCaptain": false,
-                "opponents": [
-                  {
-                    "fdrRating": 3,
-                    "team": "CRY",
-                    "wasHome": true
-                  }
-                ],
-                "position": "GKP",
-                "team": "LEE",
-                "webName": "Trafford",
-                "xp": 4.8
-              },
-              {
-                "id": 367,
-                "isCaptain": false,
-                "opponents": [
-                  {
-                    "fdrRating": 3,
-                    "team": "BOU",
-                    "wasHome": false
-                  }
-                ],
-                "position": "MID",
-                "team": "LIV",
-                "webName": "Gakpo",
-                "xp": 6.8
-              },
-              {
-                "id": 368,
-                "isCaptain": false,
-                "opponents": [
-                  {
-                    "fdrRating": 3,
-                    "team": "BOU",
-                    "wasHome": false
-                  }
-                ],
-                "position": "MID",
-                "team": "LIV",
-                "webName": "Szoboszlai",
-                "xp": 5.91
-              },
-              {
-                "id": 379,
-                "isCaptain": false,
-                "opponents": [
-                  {
-                    "fdrRating": 3,
-                    "team": "BOU",
-                    "wasHome": false
-                  }
-                ],
-                "position": "FWD",
-                "team": "LIV",
-                "webName": "Isak",
-                "xp": 6.45
-              },
-              {
-                "id": 388,
-                "isCaptain": false,
-                "opponents": [
-                  {
-                    "fdrRating": 2,
-                    "team": "SUN",
-                    "wasHome": true
-                  }
-                ],
-                "position": "DEF",
-                "team": "MCI",
-                "webName": "Gu\u00e9hi",
-                "xp": 7.26
-              },
-              {
-                "id": 391,
-                "isCaptain": false,
-                "opponents": [
-                  {
-                    "fdrRating": 2,
-                    "team": "SUN",
-                    "wasHome": true
-                  }
-                ],
-                "position": "DEF",
-                "team": "MCI",
-                "webName": "Gvardiol",
-                "xp": 6.47
-              },
-              {
-                "id": 411,
-                "isCaptain": true,
-                "opponents": [
-                  {
-                    "fdrRating": 2,
-                    "team": "SUN",
-                    "wasHome": true
-                  }
-                ],
-                "position": "FWD",
-                "team": "MCI",
-                "webName": "Haaland",
-                "xp": 7.93
-              }
-            ],
-            "targetGw": 5,
-            "totalXp": 79.96
-          },
-          {
-            "players": [
-              {
-                "id": 10,
-                "isCaptain": false,
-                "opponents": [
-                  {
-                    "fdrRating": 2,
-                    "team": "LEE",
-                    "wasHome": true
-                  }
-                ],
-                "position": "DEF",
-                "team": "ARS",
-                "webName": "White",
-                "xp": 6.99
-              },
-              {
-                "id": 12,
-                "isCaptain": true,
-                "opponents": [
-                  {
-                    "fdrRating": 2,
-                    "team": "LEE",
-                    "wasHome": true
-                  }
-                ],
-                "position": "MID",
-                "team": "ARS",
-                "webName": "Saka",
-                "xp": 7.45
-              },
-              {
-                "id": 15,
-                "isCaptain": false,
-                "opponents": [
-                  {
-                    "fdrRating": 2,
-                    "team": "LEE",
-                    "wasHome": true
-                  }
-                ],
-                "position": "MID",
-                "team": "ARS",
-                "webName": "\u00d8degaard",
-                "xp": 7.27
-              },
-              {
-                "id": 68,
-                "isCaptain": false,
-                "opponents": [
-                  {
-                    "fdrRating": 4,
-                    "team": "CHE",
-                    "wasHome": false
-                  }
-                ],
-                "position": "MID",
-                "team": "BOU",
-                "webName": "Tavernier",
-                "xp": 6.21
-              },
-              {
-                "id": 385,
-                "isCaptain": false,
-                "opponents": [
-                  {
-                    "fdrRating": 5,
-                    "team": "ARS",
-                    "wasHome": false
-                  }
-                ],
-                "position": "GKP",
-                "team": "LEE",
-                "webName": "Trafford",
-                "xp": 4.02
-              },
-              {
-                "id": 367,
-                "isCaptain": false,
-                "opponents": [
-                  {
-                    "fdrRating": 4,
-                    "team": "MCI",
-                    "wasHome": true
-                  }
-                ],
-                "position": "MID",
-                "team": "LIV",
-                "webName": "Gakpo",
-                "xp": 6.36
-              },
-              {
-                "id": 368,
-                "isCaptain": false,
-                "opponents": [
-                  {
-                    "fdrRating": 4,
-                    "team": "MCI",
-                    "wasHome": true
-                  }
-                ],
-                "position": "MID",
-                "team": "LIV",
-                "webName": "Szoboszlai",
-                "xp": 5.48
-              },
-              {
-                "id": 379,
-                "isCaptain": false,
-                "opponents": [
-                  {
-                    "fdrRating": 4,
-                    "team": "MCI",
-                    "wasHome": true
-                  }
-                ],
-                "position": "FWD",
-                "team": "LIV",
-                "webName": "Isak",
-                "xp": 6.0
-              },
-              {
-                "id": 388,
-                "isCaptain": false,
-                "opponents": [
-                  {
-                    "fdrRating": 4,
-                    "team": "LIV",
-                    "wasHome": false
-                  }
-                ],
-                "position": "DEF",
-                "team": "MCI",
-                "webName": "Gu\u00e9hi",
-                "xp": 5.71
-              },
-              {
-                "id": 391,
-                "isCaptain": false,
-                "opponents": [
-                  {
-                    "fdrRating": 4,
-                    "team": "LIV",
-                    "wasHome": false
-                  }
-                ],
-                "position": "DEF",
-                "team": "MCI",
-                "webName": "Gvardiol",
-                "xp": 5.05
-              },
-              {
-                "id": 411,
-                "isCaptain": false,
-                "opponents": [
-                  {
-                    "fdrRating": 4,
-                    "team": "LIV",
-                    "wasHome": false
-                  }
-                ],
-                "position": "FWD",
-                "team": "MCI",
-                "webName": "Haaland",
-                "xp": 7.22
-              }
-            ],
-            "targetGw": 6,
-            "totalXp": 75.21
+            "totalXp": 76.16
           },
           {
             "players": [
@@ -53299,36 +54086,6 @@
                 "xp": 4.7
               },
               {
-                "id": 367,
-                "isCaptain": false,
-                "opponents": [
-                  {
-                    "fdrRating": 3,
-                    "team": "BRE",
-                    "wasHome": false
-                  }
-                ],
-                "position": "MID",
-                "team": "LIV",
-                "webName": "Gakpo",
-                "xp": 6.86
-              },
-              {
-                "id": 368,
-                "isCaptain": false,
-                "opponents": [
-                  {
-                    "fdrRating": 3,
-                    "team": "BRE",
-                    "wasHome": false
-                  }
-                ],
-                "position": "MID",
-                "team": "LIV",
-                "webName": "Szoboszlai",
-                "xp": 5.97
-              },
-              {
                 "id": 379,
                 "isCaptain": false,
                 "opponents": [
@@ -53387,10 +54144,40 @@
                 "team": "MCI",
                 "webName": "Haaland",
                 "xp": 9.33
+              },
+              {
+                "id": 427,
+                "isCaptain": false,
+                "opponents": [
+                  {
+                    "fdrRating": 3,
+                    "team": "LEE",
+                    "wasHome": false
+                  }
+                ],
+                "position": "MID",
+                "team": "MUN",
+                "webName": "Mbeumo",
+                "xp": 6.14
+              },
+              {
+                "id": 544,
+                "isCaptain": false,
+                "opponents": [
+                  {
+                    "fdrRating": 3,
+                    "team": "BOU",
+                    "wasHome": false
+                  }
+                ],
+                "position": "MID",
+                "team": "SUN",
+                "webName": "Xhaka",
+                "xp": 5.68
               }
             ],
             "targetGw": 7,
-            "totalXp": 84.72
+            "totalXp": 83.71
           },
           {
             "players": [
@@ -53470,36 +54257,6 @@
                 "xp": 4.59
               },
               {
-                "id": 367,
-                "isCaptain": false,
-                "opponents": [
-                  {
-                    "fdrRating": 2,
-                    "team": "BHA",
-                    "wasHome": true
-                  }
-                ],
-                "position": "MID",
-                "team": "LIV",
-                "webName": "Gakpo",
-                "xp": 7.15
-              },
-              {
-                "id": 368,
-                "isCaptain": false,
-                "opponents": [
-                  {
-                    "fdrRating": 2,
-                    "team": "BHA",
-                    "wasHome": true
-                  }
-                ],
-                "position": "MID",
-                "team": "LIV",
-                "webName": "Szoboszlai",
-                "xp": 6.25
-              },
-              {
                 "id": 379,
                 "isCaptain": false,
                 "opponents": [
@@ -53558,1149 +54315,40 @@
                 "team": "MCI",
                 "webName": "Haaland",
                 "xp": 7.68
+              },
+              {
+                "id": 427,
+                "isCaptain": false,
+                "opponents": [
+                  {
+                    "fdrRating": 3,
+                    "team": "BOU",
+                    "wasHome": true
+                  }
+                ],
+                "position": "MID",
+                "team": "MUN",
+                "webName": "Mbeumo",
+                "xp": 6.49
+              },
+              {
+                "id": 544,
+                "isCaptain": false,
+                "opponents": [
+                  {
+                    "fdrRating": 2,
+                    "team": "LEE",
+                    "wasHome": true
+                  }
+                ],
+                "position": "MID",
+                "team": "SUN",
+                "webName": "Xhaka",
+                "xp": 5.92
               }
             ],
             "targetGw": 8,
-            "totalXp": 79.6
-          }
-        ],
-        "xiByGw": [
-          [
-            10,
-            12,
-            15,
-            68,
-            385,
-            367,
-            368,
-            379,
-            388,
-            391,
-            411
-          ],
-          [
-            10,
-            12,
-            15,
-            68,
-            385,
-            367,
-            368,
-            379,
-            388,
-            391,
-            411
-          ],
-          [
-            10,
-            12,
-            15,
-            68,
-            385,
-            367,
-            368,
-            379,
-            388,
-            391,
-            411
-          ],
-          [
-            10,
-            12,
-            15,
-            68,
-            385,
-            367,
-            368,
-            379,
-            388,
-            391,
-            411
-          ],
-          [
-            10,
-            12,
-            15,
-            68,
-            385,
-            367,
-            368,
-            379,
-            388,
-            391,
-            411
-          ]
-        ]
-      },
-      "7": {
-        "captainByGw": [
-          411,
-          411,
-          12,
-          411,
-          411,
-          411,
-          411
-        ],
-        "hitCost": 0,
-        "horizonGws": 7,
-        "netPoints": 555.63,
-        "points": 555.63,
-        "squad": [
-          10,
-          12,
-          15,
-          58,
-          68,
-          173,
-          367,
-          368,
-          379,
-          385,
-          388,
-          391,
-          411,
-          606,
-          651
-        ],
-        "transfersIn": [
-          {
-            "availability": {
-              "chance": 100,
-              "news": null,
-              "status": "a"
-            },
-            "id": 10,
-            "position": "DEF",
-            "price": 5.5,
-            "team": "ARS",
-            "webName": "White"
-          },
-          {
-            "availability": {
-              "chance": null,
-              "news": null,
-              "status": "a"
-            },
-            "id": 12,
-            "position": "MID",
-            "price": 9.5,
-            "team": "ARS",
-            "webName": "Saka"
-          },
-          {
-            "availability": {
-              "chance": null,
-              "news": null,
-              "status": "a"
-            },
-            "id": 15,
-            "position": "MID",
-            "price": 6.6,
-            "team": "ARS",
-            "webName": "\u00d8degaard"
-          },
-          {
-            "availability": {
-              "chance": null,
-              "news": null,
-              "status": "a"
-            },
-            "id": 58,
-            "position": "GKP",
-            "price": 4.0,
-            "team": "BOU",
-            "webName": "Forster"
-          },
-          {
-            "availability": {
-              "chance": null,
-              "news": null,
-              "status": "a"
-            },
-            "id": 68,
-            "position": "MID",
-            "price": 6.0,
-            "team": "BOU",
-            "webName": "Tavernier"
-          },
-          {
-            "availability": {
-              "chance": null,
-              "news": null,
-              "status": "a"
-            },
-            "id": 173,
-            "position": "DEF",
-            "price": 4.0,
-            "team": "COV",
-            "webName": "Thomas"
-          },
-          {
-            "availability": {
-              "chance": null,
-              "news": null,
-              "status": "a"
-            },
-            "id": 367,
-            "position": "MID",
-            "price": 7.2,
-            "team": "LIV",
-            "webName": "Gakpo"
-          },
-          {
-            "availability": {
-              "chance": null,
-              "news": null,
-              "status": "a"
-            },
-            "id": 368,
-            "position": "MID",
-            "price": 7.0,
-            "team": "LIV",
-            "webName": "Szoboszlai"
-          },
-          {
-            "availability": {
-              "chance": null,
-              "news": null,
-              "status": "a"
-            },
-            "id": 379,
-            "position": "FWD",
-            "price": 9.1,
-            "team": "LIV",
-            "webName": "Isak"
-          },
-          {
-            "availability": {
-              "chance": null,
-              "news": null,
-              "status": "a"
-            },
-            "id": 385,
-            "position": "GKP",
-            "price": 5.0,
-            "team": "LEE",
-            "webName": "Trafford"
-          },
-          {
-            "availability": {
-              "chance": null,
-              "news": null,
-              "status": "a"
-            },
-            "id": 388,
-            "position": "DEF",
-            "price": 6.0,
-            "team": "MCI",
-            "webName": "Gu\u00e9hi"
-          },
-          {
-            "availability": {
-              "chance": null,
-              "news": null,
-              "status": "a"
-            },
-            "id": 391,
-            "position": "DEF",
-            "price": 5.6,
-            "team": "MCI",
-            "webName": "Gvardiol"
-          },
-          {
-            "availability": {
-              "chance": null,
-              "news": null,
-              "status": "a"
-            },
-            "id": 411,
-            "position": "FWD",
-            "price": 15.5,
-            "team": "MCI",
-            "webName": "Haaland"
-          },
-          {
-            "availability": {
-              "chance": null,
-              "news": null,
-              "status": "a"
-            },
-            "id": 606,
-            "position": "DEF",
-            "price": 4.0,
-            "team": "AVL",
-            "webName": "Rowe"
-          },
-          {
-            "availability": {
-              "chance": null,
-              "news": null,
-              "status": "a"
-            },
-            "id": 651,
-            "position": "FWD",
-            "price": 4.5,
-            "team": "SUN",
-            "webName": "J.Angulo"
-          }
-        ],
-        "transfersOut": [],
-        "weeks": [
-          {
-            "players": [
-              {
-                "id": 10,
-                "isCaptain": false,
-                "opponents": [
-                  {
-                    "fdrRating": 3,
-                    "team": "SUN",
-                    "wasHome": false
-                  }
-                ],
-                "position": "DEF",
-                "team": "ARS",
-                "webName": "White",
-                "xp": 6.64
-              },
-              {
-                "id": 12,
-                "isCaptain": false,
-                "opponents": [
-                  {
-                    "fdrRating": 3,
-                    "team": "SUN",
-                    "wasHome": false
-                  }
-                ],
-                "position": "MID",
-                "team": "ARS",
-                "webName": "Saka",
-                "xp": 6.82
-              },
-              {
-                "id": 15,
-                "isCaptain": false,
-                "opponents": [
-                  {
-                    "fdrRating": 3,
-                    "team": "SUN",
-                    "wasHome": false
-                  }
-                ],
-                "position": "MID",
-                "team": "ARS",
-                "webName": "\u00d8degaard",
-                "xp": 6.74
-              },
-              {
-                "id": 68,
-                "isCaptain": false,
-                "opponents": [
-                  {
-                    "fdrRating": 3,
-                    "team": "BRE",
-                    "wasHome": true
-                  }
-                ],
-                "position": "MID",
-                "team": "BOU",
-                "webName": "Tavernier",
-                "xp": 6.67
-              },
-              {
-                "id": 385,
-                "isCaptain": false,
-                "opponents": [
-                  {
-                    "fdrRating": 2,
-                    "team": "NEW",
-                    "wasHome": true
-                  }
-                ],
-                "position": "GKP",
-                "team": "LEE",
-                "webName": "Trafford",
-                "xp": 4.56
-              },
-              {
-                "id": 367,
-                "isCaptain": false,
-                "opponents": [
-                  {
-                    "fdrRating": 2,
-                    "team": "FUL",
-                    "wasHome": true
-                  }
-                ],
-                "position": "MID",
-                "team": "LIV",
-                "webName": "Gakpo",
-                "xp": 7.17
-              },
-              {
-                "id": 368,
-                "isCaptain": false,
-                "opponents": [
-                  {
-                    "fdrRating": 2,
-                    "team": "FUL",
-                    "wasHome": true
-                  }
-                ],
-                "position": "MID",
-                "team": "LIV",
-                "webName": "Szoboszlai",
-                "xp": 6.27
-              },
-              {
-                "id": 379,
-                "isCaptain": false,
-                "opponents": [
-                  {
-                    "fdrRating": 2,
-                    "team": "FUL",
-                    "wasHome": true
-                  }
-                ],
-                "position": "FWD",
-                "team": "LIV",
-                "webName": "Isak",
-                "xp": 6.81
-              },
-              {
-                "id": 388,
-                "isCaptain": false,
-                "opponents": [
-                  {
-                    "fdrRating": 4,
-                    "team": "MUN",
-                    "wasHome": false
-                  }
-                ],
-                "position": "DEF",
-                "team": "MCI",
-                "webName": "Gu\u00e9hi",
-                "xp": 6.52
-              },
-              {
-                "id": 391,
-                "isCaptain": false,
-                "opponents": [
-                  {
-                    "fdrRating": 4,
-                    "team": "MUN",
-                    "wasHome": false
-                  }
-                ],
-                "position": "DEF",
-                "team": "MCI",
-                "webName": "Gvardiol",
-                "xp": 5.77
-              },
-              {
-                "id": 411,
-                "isCaptain": true,
-                "opponents": [
-                  {
-                    "fdrRating": 4,
-                    "team": "MUN",
-                    "wasHome": false
-                  }
-                ],
-                "position": "FWD",
-                "team": "MCI",
-                "webName": "Haaland",
-                "xp": 7.69
-              }
-            ],
-            "targetGw": 4,
-            "totalXp": 79.35
-          },
-          {
-            "players": [
-              {
-                "id": 10,
-                "isCaptain": false,
-                "opponents": [
-                  {
-                    "fdrRating": 3,
-                    "team": "BHA",
-                    "wasHome": false
-                  }
-                ],
-                "position": "DEF",
-                "team": "ARS",
-                "webName": "White",
-                "xp": 6.36
-              },
-              {
-                "id": 12,
-                "isCaptain": false,
-                "opponents": [
-                  {
-                    "fdrRating": 3,
-                    "team": "BHA",
-                    "wasHome": false
-                  }
-                ],
-                "position": "MID",
-                "team": "ARS",
-                "webName": "Saka",
-                "xp": 6.97
-              },
-              {
-                "id": 15,
-                "isCaptain": false,
-                "opponents": [
-                  {
-                    "fdrRating": 3,
-                    "team": "BHA",
-                    "wasHome": false
-                  }
-                ],
-                "position": "MID",
-                "team": "ARS",
-                "webName": "\u00d8degaard",
-                "xp": 6.86
-              },
-              {
-                "id": 68,
-                "isCaptain": false,
-                "opponents": [
-                  {
-                    "fdrRating": 4,
-                    "team": "LIV",
-                    "wasHome": true
-                  }
-                ],
-                "position": "MID",
-                "team": "BOU",
-                "webName": "Tavernier",
-                "xp": 6.22
-              },
-              {
-                "id": 385,
-                "isCaptain": false,
-                "opponents": [
-                  {
-                    "fdrRating": 3,
-                    "team": "CRY",
-                    "wasHome": true
-                  }
-                ],
-                "position": "GKP",
-                "team": "LEE",
-                "webName": "Trafford",
-                "xp": 4.8
-              },
-              {
-                "id": 367,
-                "isCaptain": false,
-                "opponents": [
-                  {
-                    "fdrRating": 3,
-                    "team": "BOU",
-                    "wasHome": false
-                  }
-                ],
-                "position": "MID",
-                "team": "LIV",
-                "webName": "Gakpo",
-                "xp": 6.8
-              },
-              {
-                "id": 368,
-                "isCaptain": false,
-                "opponents": [
-                  {
-                    "fdrRating": 3,
-                    "team": "BOU",
-                    "wasHome": false
-                  }
-                ],
-                "position": "MID",
-                "team": "LIV",
-                "webName": "Szoboszlai",
-                "xp": 5.91
-              },
-              {
-                "id": 379,
-                "isCaptain": false,
-                "opponents": [
-                  {
-                    "fdrRating": 3,
-                    "team": "BOU",
-                    "wasHome": false
-                  }
-                ],
-                "position": "FWD",
-                "team": "LIV",
-                "webName": "Isak",
-                "xp": 6.45
-              },
-              {
-                "id": 388,
-                "isCaptain": false,
-                "opponents": [
-                  {
-                    "fdrRating": 2,
-                    "team": "SUN",
-                    "wasHome": true
-                  }
-                ],
-                "position": "DEF",
-                "team": "MCI",
-                "webName": "Gu\u00e9hi",
-                "xp": 7.26
-              },
-              {
-                "id": 391,
-                "isCaptain": false,
-                "opponents": [
-                  {
-                    "fdrRating": 2,
-                    "team": "SUN",
-                    "wasHome": true
-                  }
-                ],
-                "position": "DEF",
-                "team": "MCI",
-                "webName": "Gvardiol",
-                "xp": 6.47
-              },
-              {
-                "id": 411,
-                "isCaptain": true,
-                "opponents": [
-                  {
-                    "fdrRating": 2,
-                    "team": "SUN",
-                    "wasHome": true
-                  }
-                ],
-                "position": "FWD",
-                "team": "MCI",
-                "webName": "Haaland",
-                "xp": 7.93
-              }
-            ],
-            "targetGw": 5,
-            "totalXp": 79.96
-          },
-          {
-            "players": [
-              {
-                "id": 10,
-                "isCaptain": false,
-                "opponents": [
-                  {
-                    "fdrRating": 2,
-                    "team": "LEE",
-                    "wasHome": true
-                  }
-                ],
-                "position": "DEF",
-                "team": "ARS",
-                "webName": "White",
-                "xp": 6.99
-              },
-              {
-                "id": 12,
-                "isCaptain": true,
-                "opponents": [
-                  {
-                    "fdrRating": 2,
-                    "team": "LEE",
-                    "wasHome": true
-                  }
-                ],
-                "position": "MID",
-                "team": "ARS",
-                "webName": "Saka",
-                "xp": 7.45
-              },
-              {
-                "id": 15,
-                "isCaptain": false,
-                "opponents": [
-                  {
-                    "fdrRating": 2,
-                    "team": "LEE",
-                    "wasHome": true
-                  }
-                ],
-                "position": "MID",
-                "team": "ARS",
-                "webName": "\u00d8degaard",
-                "xp": 7.27
-              },
-              {
-                "id": 68,
-                "isCaptain": false,
-                "opponents": [
-                  {
-                    "fdrRating": 4,
-                    "team": "CHE",
-                    "wasHome": false
-                  }
-                ],
-                "position": "MID",
-                "team": "BOU",
-                "webName": "Tavernier",
-                "xp": 6.21
-              },
-              {
-                "id": 385,
-                "isCaptain": false,
-                "opponents": [
-                  {
-                    "fdrRating": 5,
-                    "team": "ARS",
-                    "wasHome": false
-                  }
-                ],
-                "position": "GKP",
-                "team": "LEE",
-                "webName": "Trafford",
-                "xp": 4.02
-              },
-              {
-                "id": 367,
-                "isCaptain": false,
-                "opponents": [
-                  {
-                    "fdrRating": 4,
-                    "team": "MCI",
-                    "wasHome": true
-                  }
-                ],
-                "position": "MID",
-                "team": "LIV",
-                "webName": "Gakpo",
-                "xp": 6.36
-              },
-              {
-                "id": 368,
-                "isCaptain": false,
-                "opponents": [
-                  {
-                    "fdrRating": 4,
-                    "team": "MCI",
-                    "wasHome": true
-                  }
-                ],
-                "position": "MID",
-                "team": "LIV",
-                "webName": "Szoboszlai",
-                "xp": 5.48
-              },
-              {
-                "id": 379,
-                "isCaptain": false,
-                "opponents": [
-                  {
-                    "fdrRating": 4,
-                    "team": "MCI",
-                    "wasHome": true
-                  }
-                ],
-                "position": "FWD",
-                "team": "LIV",
-                "webName": "Isak",
-                "xp": 6.0
-              },
-              {
-                "id": 388,
-                "isCaptain": false,
-                "opponents": [
-                  {
-                    "fdrRating": 4,
-                    "team": "LIV",
-                    "wasHome": false
-                  }
-                ],
-                "position": "DEF",
-                "team": "MCI",
-                "webName": "Gu\u00e9hi",
-                "xp": 5.71
-              },
-              {
-                "id": 391,
-                "isCaptain": false,
-                "opponents": [
-                  {
-                    "fdrRating": 4,
-                    "team": "LIV",
-                    "wasHome": false
-                  }
-                ],
-                "position": "DEF",
-                "team": "MCI",
-                "webName": "Gvardiol",
-                "xp": 5.05
-              },
-              {
-                "id": 411,
-                "isCaptain": false,
-                "opponents": [
-                  {
-                    "fdrRating": 4,
-                    "team": "LIV",
-                    "wasHome": false
-                  }
-                ],
-                "position": "FWD",
-                "team": "MCI",
-                "webName": "Haaland",
-                "xp": 7.22
-              }
-            ],
-            "targetGw": 6,
-            "totalXp": 75.21
-          },
-          {
-            "players": [
-              {
-                "id": 10,
-                "isCaptain": false,
-                "opponents": [
-                  {
-                    "fdrRating": 3,
-                    "team": "NFO",
-                    "wasHome": false
-                  }
-                ],
-                "position": "DEF",
-                "team": "ARS",
-                "webName": "White",
-                "xp": 6.52
-              },
-              {
-                "id": 12,
-                "isCaptain": false,
-                "opponents": [
-                  {
-                    "fdrRating": 3,
-                    "team": "NFO",
-                    "wasHome": false
-                  }
-                ],
-                "position": "MID",
-                "team": "ARS",
-                "webName": "Saka",
-                "xp": 6.97
-              },
-              {
-                "id": 15,
-                "isCaptain": false,
-                "opponents": [
-                  {
-                    "fdrRating": 3,
-                    "team": "NFO",
-                    "wasHome": false
-                  }
-                ],
-                "position": "MID",
-                "team": "ARS",
-                "webName": "\u00d8degaard",
-                "xp": 6.86
-              },
-              {
-                "id": 68,
-                "isCaptain": false,
-                "opponents": [
-                  {
-                    "fdrRating": 2,
-                    "team": "SUN",
-                    "wasHome": true
-                  }
-                ],
-                "position": "MID",
-                "team": "BOU",
-                "webName": "Tavernier",
-                "xp": 6.51
-              },
-              {
-                "id": 385,
-                "isCaptain": false,
-                "opponents": [
-                  {
-                    "fdrRating": 4,
-                    "team": "MUN",
-                    "wasHome": true
-                  }
-                ],
-                "position": "GKP",
-                "team": "LEE",
-                "webName": "Trafford",
-                "xp": 4.7
-              },
-              {
-                "id": 367,
-                "isCaptain": false,
-                "opponents": [
-                  {
-                    "fdrRating": 3,
-                    "team": "BRE",
-                    "wasHome": false
-                  }
-                ],
-                "position": "MID",
-                "team": "LIV",
-                "webName": "Gakpo",
-                "xp": 6.86
-              },
-              {
-                "id": 368,
-                "isCaptain": false,
-                "opponents": [
-                  {
-                    "fdrRating": 3,
-                    "team": "BRE",
-                    "wasHome": false
-                  }
-                ],
-                "position": "MID",
-                "team": "LIV",
-                "webName": "Szoboszlai",
-                "xp": 5.97
-              },
-              {
-                "id": 379,
-                "isCaptain": false,
-                "opponents": [
-                  {
-                    "fdrRating": 3,
-                    "team": "BRE",
-                    "wasHome": false
-                  }
-                ],
-                "position": "FWD",
-                "team": "LIV",
-                "webName": "Isak",
-                "xp": 6.54
-              },
-              {
-                "id": 388,
-                "isCaptain": false,
-                "opponents": [
-                  {
-                    "fdrRating": 2,
-                    "team": "IPS",
-                    "wasHome": true
-                  }
-                ],
-                "position": "DEF",
-                "team": "MCI",
-                "webName": "Gu\u00e9hi",
-                "xp": 8.07
-              },
-              {
-                "id": 391,
-                "isCaptain": false,
-                "opponents": [
-                  {
-                    "fdrRating": 2,
-                    "team": "IPS",
-                    "wasHome": true
-                  }
-                ],
-                "position": "DEF",
-                "team": "MCI",
-                "webName": "Gvardiol",
-                "xp": 7.06
-              },
-              {
-                "id": 411,
-                "isCaptain": true,
-                "opponents": [
-                  {
-                    "fdrRating": 2,
-                    "team": "IPS",
-                    "wasHome": true
-                  }
-                ],
-                "position": "FWD",
-                "team": "MCI",
-                "webName": "Haaland",
-                "xp": 9.33
-              }
-            ],
-            "targetGw": 7,
-            "totalXp": 84.72
-          },
-          {
-            "players": [
-              {
-                "id": 10,
-                "isCaptain": false,
-                "opponents": [
-                  {
-                    "fdrRating": 3,
-                    "team": "EVE",
-                    "wasHome": true
-                  }
-                ],
-                "position": "DEF",
-                "team": "ARS",
-                "webName": "White",
-                "xp": 7.07
-              },
-              {
-                "id": 12,
-                "isCaptain": false,
-                "opponents": [
-                  {
-                    "fdrRating": 3,
-                    "team": "EVE",
-                    "wasHome": true
-                  }
-                ],
-                "position": "MID",
-                "team": "ARS",
-                "webName": "Saka",
-                "xp": 7.16
-              },
-              {
-                "id": 15,
-                "isCaptain": false,
-                "opponents": [
-                  {
-                    "fdrRating": 3,
-                    "team": "EVE",
-                    "wasHome": true
-                  }
-                ],
-                "position": "MID",
-                "team": "ARS",
-                "webName": "\u00d8degaard",
-                "xp": 7.03
-              },
-              {
-                "id": 68,
-                "isCaptain": false,
-                "opponents": [
-                  {
-                    "fdrRating": 4,
-                    "team": "MUN",
-                    "wasHome": false
-                  }
-                ],
-                "position": "MID",
-                "team": "BOU",
-                "webName": "Tavernier",
-                "xp": 6.29
-              },
-              {
-                "id": 385,
-                "isCaptain": false,
-                "opponents": [
-                  {
-                    "fdrRating": 3,
-                    "team": "SUN",
-                    "wasHome": false
-                  }
-                ],
-                "position": "GKP",
-                "team": "LEE",
-                "webName": "Trafford",
-                "xp": 4.59
-              },
-              {
-                "id": 367,
-                "isCaptain": false,
-                "opponents": [
-                  {
-                    "fdrRating": 2,
-                    "team": "BHA",
-                    "wasHome": true
-                  }
-                ],
-                "position": "MID",
-                "team": "LIV",
-                "webName": "Gakpo",
-                "xp": 7.15
-              },
-              {
-                "id": 368,
-                "isCaptain": false,
-                "opponents": [
-                  {
-                    "fdrRating": 2,
-                    "team": "BHA",
-                    "wasHome": true
-                  }
-                ],
-                "position": "MID",
-                "team": "LIV",
-                "webName": "Szoboszlai",
-                "xp": 6.25
-              },
-              {
-                "id": 379,
-                "isCaptain": false,
-                "opponents": [
-                  {
-                    "fdrRating": 2,
-                    "team": "BHA",
-                    "wasHome": true
-                  }
-                ],
-                "position": "FWD",
-                "team": "LIV",
-                "webName": "Isak",
-                "xp": 6.82
-              },
-              {
-                "id": 388,
-                "isCaptain": false,
-                "opponents": [
-                  {
-                    "fdrRating": 4,
-                    "team": "AVL",
-                    "wasHome": false
-                  }
-                ],
-                "position": "DEF",
-                "team": "MCI",
-                "webName": "Gu\u00e9hi",
-                "xp": 6.31
-              },
-              {
-                "id": 391,
-                "isCaptain": false,
-                "opponents": [
-                  {
-                    "fdrRating": 4,
-                    "team": "AVL",
-                    "wasHome": false
-                  }
-                ],
-                "position": "DEF",
-                "team": "MCI",
-                "webName": "Gvardiol",
-                "xp": 5.57
-              },
-              {
-                "id": 411,
-                "isCaptain": true,
-                "opponents": [
-                  {
-                    "fdrRating": 4,
-                    "team": "AVL",
-                    "wasHome": false
-                  }
-                ],
-                "position": "FWD",
-                "team": "MCI",
-                "webName": "Haaland",
-                "xp": 7.68
-              }
-            ],
-            "targetGw": 8,
-            "totalXp": 79.6
+            "totalXp": 78.61
           },
           {
             "players": [
@@ -54765,21 +54413,6 @@
                 "xp": 6.66
               },
               {
-                "id": 173,
-                "isCaptain": false,
-                "opponents": [
-                  {
-                    "fdrRating": 2,
-                    "team": "SUN",
-                    "wasHome": true
-                  }
-                ],
-                "position": "DEF",
-                "team": "COV",
-                "webName": "Thomas",
-                "xp": 5.42
-              },
-              {
                 "id": 385,
                 "isCaptain": false,
                 "opponents": [
@@ -54793,21 +54426,6 @@
                 "team": "LEE",
                 "webName": "Trafford",
                 "xp": 4.49
-              },
-              {
-                "id": 367,
-                "isCaptain": false,
-                "opponents": [
-                  {
-                    "fdrRating": 4,
-                    "team": "ARS",
-                    "wasHome": true
-                  }
-                ],
-                "position": "MID",
-                "team": "LIV",
-                "webName": "Gakpo",
-                "xp": 6.07
               },
               {
                 "id": 379,
@@ -54868,10 +54486,40 @@
                 "team": "MCI",
                 "webName": "Haaland",
                 "xp": 8.28
+              },
+              {
+                "id": 427,
+                "isCaptain": false,
+                "opponents": [
+                  {
+                    "fdrRating": 4,
+                    "team": "CHE",
+                    "wasHome": false
+                  }
+                ],
+                "position": "MID",
+                "team": "MUN",
+                "webName": "Mbeumo",
+                "xp": 5.95
+              },
+              {
+                "id": 544,
+                "isCaptain": false,
+                "opponents": [
+                  {
+                    "fdrRating": 2,
+                    "team": "COV",
+                    "wasHome": false
+                  }
+                ],
+                "position": "MID",
+                "team": "SUN",
+                "webName": "Xhaka",
+                "xp": 5.69
               }
             ],
             "targetGw": 9,
-            "totalXp": 76.6
+            "totalXp": 76.75
           },
           {
             "players": [
@@ -54951,36 +54599,6 @@
                 "xp": 4.72
               },
               {
-                "id": 367,
-                "isCaptain": false,
-                "opponents": [
-                  {
-                    "fdrRating": 3,
-                    "team": "CRY",
-                    "wasHome": false
-                  }
-                ],
-                "position": "MID",
-                "team": "LIV",
-                "webName": "Gakpo",
-                "xp": 6.76
-              },
-              {
-                "id": 368,
-                "isCaptain": false,
-                "opponents": [
-                  {
-                    "fdrRating": 3,
-                    "team": "CRY",
-                    "wasHome": false
-                  }
-                ],
-                "position": "MID",
-                "team": "LIV",
-                "webName": "Szoboszlai",
-                "xp": 5.87
-              },
-              {
                 "id": 379,
                 "isCaptain": false,
                 "opponents": [
@@ -55039,10 +54657,40 @@
                 "team": "MCI",
                 "webName": "Haaland",
                 "xp": 7.73
+              },
+              {
+                "id": 427,
+                "isCaptain": false,
+                "opponents": [
+                  {
+                    "fdrRating": 3,
+                    "team": "AVL",
+                    "wasHome": true
+                  }
+                ],
+                "position": "MID",
+                "team": "MUN",
+                "webName": "Mbeumo",
+                "xp": 6.37
+              },
+              {
+                "id": 544,
+                "isCaptain": false,
+                "opponents": [
+                  {
+                    "fdrRating": 4,
+                    "team": "CHE",
+                    "wasHome": true
+                  }
+                ],
+                "position": "MID",
+                "team": "SUN",
+                "webName": "Xhaka",
+                "xp": 5.77
               }
             ],
             "targetGw": 10,
-            "totalXp": 80.19
+            "totalXp": 79.7
           }
         ],
         "xiByGw": [
@@ -55051,13 +54699,39 @@
             12,
             15,
             68,
+            204,
             385,
-            367,
-            368,
             379,
             388,
             391,
-            411
+            411,
+            427
+          ],
+          [
+            10,
+            12,
+            15,
+            68,
+            332,
+            385,
+            379,
+            388,
+            391,
+            411,
+            427
+          ],
+          [
+            10,
+            12,
+            15,
+            68,
+            204,
+            385,
+            379,
+            388,
+            411,
+            427,
+            544
           ],
           [
             10,
@@ -55065,12 +54739,12 @@
             15,
             68,
             385,
-            367,
-            368,
             379,
             388,
             391,
-            411
+            411,
+            427,
+            544
           ],
           [
             10,
@@ -55078,12 +54752,12 @@
             15,
             68,
             385,
-            367,
-            368,
             379,
             388,
             391,
-            411
+            411,
+            427,
+            544
           ],
           [
             10,
@@ -55091,12 +54765,12 @@
             15,
             68,
             385,
-            367,
-            368,
             379,
             388,
             391,
-            411
+            411,
+            427,
+            544
           ],
           [
             10,
@@ -55104,38 +54778,12 @@
             15,
             68,
             385,
-            367,
-            368,
             379,
             388,
             391,
-            411
-          ],
-          [
-            10,
-            12,
-            15,
-            68,
-            173,
-            385,
-            367,
-            379,
-            388,
-            391,
-            411
-          ],
-          [
-            10,
-            12,
-            15,
-            68,
-            385,
-            367,
-            368,
-            379,
-            388,
-            391,
-            411
+            411,
+            427,
+            544
           ]
         ]
       }
@@ -55712,13 +55360,13 @@
           }
         ],
         "position": "MID",
-        "price": 5.5,
+        "price": 5.6,
         "projectedPoints": 5.15,
         "provisional": false,
         "rateSource": "history",
         "rationale": "5.2 proj \u2014 @COV (FDR 2)",
         "role": "start",
-        "sellPrice": 5.5,
+        "sellPrice": 5.6,
         "team": "BHA",
         "webName": "Gro\u00df",
         "windowPoints": 25.06
