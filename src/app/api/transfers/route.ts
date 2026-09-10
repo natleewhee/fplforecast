@@ -3,7 +3,10 @@ import { NextRequest, NextResponse } from "next/server";
 const OWNER = "natleewhee";
 const REPO = "fplforecast";
 const FILE_PATH = "data/overrides/transfers.json";
-const BRANCH = process.env.FPL_REPO_BRANCH || "main";
+// This repo has never had a "main" branch -- everything lives on
+// claude/fpl-forecaster-build-setup-ksd7z0 (the Vercel production branch),
+// so that's the correct default rather than a generic guess that 404s.
+const BRANCH = process.env.FPL_REPO_BRANCH || "claude/fpl-forecaster-build-setup-ksd7z0";
 
 type PendingTransfer = { out: number; in: number; note?: string };
 type OverridesFile = { basedOnGw: number; transfers: PendingTransfer[] };
