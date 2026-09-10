@@ -23,6 +23,15 @@ export function Dropdown<T extends string | number>({
 }) {
   const [open, setOpen] = useState(false);
   const rootRef = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
+
+  // Closing unmounts whichever option `<li>` button was focused -- without
+  // this, a keyboard user's focus falls off the DOM entirely (back to
+  // `<body>`) instead of landing back on the trigger, every time.
+  const close = () => {
+    setOpen(false);
+    triggerRef.current?.focus();
+  };
 
   useEffect(() => {
     if (!open) return;
@@ -30,7 +39,7 @@ export function Dropdown<T extends string | number>({
       if (rootRef.current && !rootRef.current.contains(e.target as Node)) setOpen(false);
     };
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setOpen(false);
+      if (e.key === "Escape") close();
     };
     document.addEventListener("mousedown", onPointerDown);
     document.addEventListener("keydown", onKey);
@@ -45,6 +54,7 @@ export function Dropdown<T extends string | number>({
   return (
     <div ref={rootRef} className="relative">
       <button
+        ref={triggerRef}
         type="button"
         onClick={() => setOpen((o) => !o)}
         aria-haspopup="listbox"
@@ -71,7 +81,7 @@ export function Dropdown<T extends string | number>({
                 type="button"
                 onClick={() => {
                   onChange(o.value);
-                  setOpen(false);
+                  close();
                 }}
                 className={`block w-full truncate rounded-md px-2.5 py-1.5 text-left transition-colors hover:bg-white/[0.06] ${
                   o.value === value ? "font-semibold text-[var(--accent)]" : "text-ink"
