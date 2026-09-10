@@ -23,7 +23,12 @@
 
   --text: #eef2f8;
   --text-soft: #94a1b6;
-  --text-faint: #5b6576;
+  /* Lifted from the original #5b6576 (~3.4:1 on --bg-0) -- this app uses
+     "faint" for real small-print body text (timestamps, captions, GW
+     labels) at 9-11px throughout, not large text or a decorative label,
+     so WCAG AA's 4.5:1 minimum applies. #7482a0 clears 4.5:1 against
+     every surface in the app, including the lightest (--bg-2, ~4.7:1). */
+  --text-faint: #7482a0;
 
   --accent: #35e0a1; /* spring green — model / positive */
   --accent-2: #38bdf8; /* cyan — secondary highlight */
@@ -295,6 +300,20 @@ option {
   animation: hud-shimmer 2.6s linear infinite;
 }
 
+/* AppTabs' swipe-between-panes transition -- a named class instead of an
+   inline style, so prefers-reduced-motion (below) can actually reach it.
+   An inline `transitionDuration`/`transitionTimingFunction` always wins
+   over a stylesheet rule regardless of specificity, so it can't be
+   overridden by a media query the way a class can. */
+.tab-swipe {
+  transition-property: transform;
+  transition-duration: 320ms;
+  /* Exponential ease-out (quint) -- fast start, smooth decelerate to a
+     stop with no overshoot; see the button-press comment below for why
+     this app avoids overshoot/bounce curves generally. */
+  transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
 /* entrance */
 @keyframes hud-rise {
   from { opacity: 0; transform: translateY(6px); }
@@ -318,6 +337,12 @@ option {
   .pulse,
   .shimmer {
     animation: none;
+  }
+  .tab-swipe {
+    /* Intentional alternative, not just "no animation": panes still
+       switch instantly on tap or swipe -- the interaction still works,
+       it just doesn't animate getting there. */
+    transition: none;
   }
 }
 
