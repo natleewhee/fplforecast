@@ -23,7 +23,7 @@ export default function Carousel({ children }: { children: ReactNode }) {
           onClick={() => setActive((a) => Math.max(0, a - 1))}
           disabled={clamped === 0}
           aria-label="Previous"
-          className="shrink-0 rounded-full border border-line p-1.5 text-ink-soft transition hover:border-border-strong hover:text-ink disabled:opacity-30"
+          className="grid h-11 w-11 shrink-0 place-items-center rounded-full border border-line text-ink-soft transition hover:border-border-strong hover:text-ink disabled:opacity-30"
         >
           ‹
         </button>
@@ -32,21 +32,28 @@ export default function Carousel({ children }: { children: ReactNode }) {
           onClick={() => setActive((a) => Math.min(items.length - 1, a + 1))}
           disabled={clamped === items.length - 1}
           aria-label="Next"
-          className="shrink-0 rounded-full border border-line p-1.5 text-ink-soft transition hover:border-border-strong hover:text-ink disabled:opacity-30"
+          className="grid h-11 w-11 shrink-0 place-items-center rounded-full border border-line text-ink-soft transition hover:border-border-strong hover:text-ink disabled:opacity-30"
         >
           ›
         </button>
       </div>
-      <div className="mt-1.5 flex justify-center gap-1.5">
+      <div className="mt-1.5 flex justify-center gap-1">
         {items.map((_, i) => (
+          // The visible dot stays small; the button itself gets enough
+          // padding to clear the 44x44px minimum touch target (adapt.md) --
+          // otherwise this is a real mis-tap risk on a phone.
           <button
             key={i}
             onClick={() => setActive(i)}
             aria-label={`Go to ${i + 1}`}
-            className={`h-1.5 rounded-full transition-all ${
-              i === clamped ? "w-4 bg-[var(--accent)]" : "w-1.5 bg-[var(--border-strong)]"
-            }`}
-          />
+            className="grid h-11 w-6 place-items-center"
+          >
+            <span
+              className={`h-1.5 rounded-full transition-all ${
+                i === clamped ? "w-4 bg-[var(--accent)]" : "w-1.5 bg-[var(--border-strong)]"
+              }`}
+            />
+          </button>
         ))}
       </div>
     </div>
