@@ -7,7 +7,7 @@ assert on the file it writes, restoring it afterwards.
 from __future__ import annotations
 
 import json
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 import pandas as pd
@@ -19,11 +19,49 @@ from engine.history import HistoryArchive
 from engine.optimise import ScenarioResult
 
 ROOT = Path(__file__).resolve().parent.parent
-NOW = datetime(2026, 9, 1, 12, 0, tzinfo=timezone.utc)  # between GW2 and GW3 deadlines
+
+# Fixed instant, used only by the fully-synthetic test_upcoming_gameweek_*
+# test below (its own hand-built `events` list, never touches committed data).
+NOW = datetime(2026, 9, 1, 12, 0, tzinfo=timezone.utc)
+
+
+def _forecast_now() -> datetime:
+    """An instant that sits strictly between the latest committed picks'
+    own gameweek deadline and the next gameweek's deadline, derived from
+    whatever's actually committed right now -- not a fixed calendar date.
+
+    This module's tests run the real pipeline against the real committed
+    snapshots (its own docstring: "integration tests ... against the
+    committed snapshots"), and those snapshots keep moving forward via the
+    daily "Snapshot FPL data" cron. A fixed `now` inevitably drifts out of
+    sync with that (e.g. it once assumed GW2's picks were the latest and
+    GW3 hadn't happened; today both have passed), so it's derived here
+    instead: `basedOnGameweek` is always `load_latest_picks()`'s own
+    gameweek, and picking `now` just before the *next* gameweek's deadline
+    makes `targetGameweek` reliably that same gameweek + 1, regardless of
+    which real gameweek the committed snapshots currently sit at.
+    """
+    bootstrap = cf.load_bootstrap()
+    events_by_id = {e["id"]: e for e in bootstrap["events"]}
+    latest_picks = cf.load_latest_picks()
+    picks_gw = latest_picks[0] if latest_picks else 1
+    next_event = events_by_id.get(picks_gw + 1)
+    if next_event is None:
+        # Final gameweek of the season already has picks committed -- just
+        # sit after its own deadline instead.
+        deadline = datetime.fromisoformat(
+            events_by_id[picks_gw]["deadline_time"].replace("Z", "+00:00")
+        )
+        return deadline + timedelta(hours=1)
+    next_deadline = datetime.fromisoformat(next_event["deadline_time"].replace("Z", "+00:00"))
+    return next_deadline - timedelta(hours=1)
+
+
+FORECAST_NOW = _forecast_now()
 
 
 def _target_path() -> Path:
-    gw = cf.upcoming_gameweek(cf.load_bootstrap(), NOW, fallback=99)
+    gw = cf.upcoming_gameweek(cf.load_bootstrap(), FORECAST_NOW, fallback=99)
     return ROOT / "data" / "forecast" / f"gw{gw}.json"
 
 
@@ -32,7 +70,7 @@ def forecast():
     path = _target_path()
     original = path.read_bytes() if path.exists() else None
     try:
-        assert cf.main(now=NOW) == 0
+        assert cf.main(now=FORECAST_NOW) == 0
         yield json.loads(path.read_text())
     finally:
         if original is not None:
@@ -42,9 +80,12 @@ def forecast():
 
 
 def test_targets_the_upcoming_gameweek(forecast):
-    # GW1 finished, GW2's deadline is past on NOW -> GW3.
-    assert forecast["targetGameweek"] == 3
-    assert forecast["basedOnGameweek"] == 2  # squad still from the last finished GW
+    # FORECAST_NOW is derived to sit just before the gameweek after whichever
+    # squad's picks are the latest committed -- so basedOnGameweek is always
+    # that picks gameweek, and targetGameweek is always one past it.
+    picks_gw, _, _ = cf.load_latest_picks()
+    assert forecast["basedOnGameweek"] == picks_gw
+    assert forecast["targetGameweek"] == picks_gw + 1
 
 
 def test_pool_block_covers_every_available_player_with_per_gw_projections(forecast):
@@ -202,14 +243,22 @@ def test_exactly_one_captain_in_the_squad(forecast):
     assert forecast["captain"]["id"] == captains[0]["id"]
 
 
-def test_running_record_is_null_until_a_gameweek_is_scored(forecast):
-    assert forecast["runningRecord"] is None
+def test_running_record_matches_the_committed_out_of_sample_record(forecast):
+    # Was "is null until a gameweek is scored" -- true when this test was
+    # written (nothing had been scored yet), but that premise can't stay
+    # true forever as the season (and the committed running.json) moves
+    # forward. Assert the structural contract instead: the forecast's
+    # runningRecord is exactly whatever the loader reads off disk, whether
+    # that's still None or -- as it is once a gameweek has been scored --
+    # the real summary.
+    assert forecast["runningRecord"] == cf.load_running_record()
 
 
 def test_par_calibration_reflects_the_committed_calibration_record(forecast):
     # Unlike runningRecord (needs a frozen pre-deadline prediction), the par
-    # calibration check only needs history + the bootstrap average -- GW2 is
-    # already scorable from the committed snapshots, so this is not null.
+    # calibration check only needs history + the bootstrap average -- the
+    # last finished gameweek is always scorable from the committed
+    # snapshots, so this is not null.
     calibration = forecast["parCalibration"]
     assert calibration is None or calibration["gameweeksScored"] > 0
 
@@ -232,13 +281,21 @@ def test_load_par_calibration_record_reads_the_committed_file(monkeypatch, tmp_p
 
 
 def test_last_gameweek_review_reports_the_held_squad_result(forecast):
+    # Derive the expected values from the same committed files the review
+    # itself reads, rather than hardcoding this gameweek's actual scores --
+    # those are a fact about whichever gameweek is currently the last
+    # finished one, which keeps moving forward as the season progresses.
+    bootstrap = cf.load_bootstrap()
+    last_gw = max(e["id"] for e in bootstrap["events"] if e.get("finished"))
+    picks_data = cf.load_json(cf.DATA_DIR / f"picks-{cf.TEAM_ID}" / f"gw{last_gw}.json")
+    entry_history = picks_data["entry_history"]
+
     review = forecast["lastGameweek"]
     assert review is not None
-    assert review["gameweek"] == 2  # the last finished GW in the committed snapshots
-    assert review["xiPoints"] == 113  # straight from entry_history.points
-    assert review["benchPoints"] == 7
-    # no frozen prediction exists for GW2 -> the model/baseline row says so
-    assert review["modelVsBaseline"] == {"status": "no_prediction"}
+    assert review["gameweek"] == last_gw
+    assert review["xiPoints"] == entry_history["points"]
+    assert review["benchPoints"] == entry_history["points_on_bench"]
+    assert review["modelVsBaseline"] == cf._gw_model_vs_baseline(last_gw)
 
 
 def test_last_gameweek_review_is_null_without_snapshotted_picks(monkeypatch):
@@ -281,7 +338,7 @@ def test_newcomers_get_a_provisional_projection(monkeypatch):
     monkeypatch.setattr(cf, "load_entity_resolution", lambda: {})
     monkeypatch.setattr(cf, "load_history", lambda _d: HistoryArchive(frame=pd.DataFrame(), coverage={}))
     try:
-        assert cf.main(now=NOW) == 0
+        assert cf.main(now=FORECAST_NOW) == 0
         players = json.loads(path.read_text())["squad"]["players"]
         assert all(p["provisional"] for p in players)
         assert all(p["projectedPoints"] is not None for p in players)  # a number, not "no history"
