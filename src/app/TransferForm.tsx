@@ -126,7 +126,12 @@ export default function TransferForm({ squad, allPlayers, basedOnGw, bank }: Pro
       )}
 
       <label className="mt-3 block text-xs font-medium text-ink-soft">Note (optional)</label>
-      <input className={fieldClass} value={note} onChange={(e) => setNote(e.target.value)} />
+      <input
+        className={fieldClass}
+        value={note}
+        maxLength={200}
+        onChange={(e) => setNote(e.target.value)}
+      />
 
       <button
         className="mt-4 w-full rounded-lg bg-gradient-to-b from-[var(--accent)] to-[#23c78c] py-2 text-sm font-bold text-black shadow-[0_0_20px_var(--accent-glow)] transition hover:brightness-110 disabled:cursor-not-allowed disabled:bg-none disabled:bg-white/5 disabled:text-ink-faint disabled:shadow-none"

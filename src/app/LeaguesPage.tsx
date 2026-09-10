@@ -1,6 +1,6 @@
 "use client";
 
-import { Fragment, useCallback, useEffect, useState } from "react";
+import { Fragment, useCallback, useEffect, useRef, useState } from "react";
 import { Dropdown } from "./Dropdown";
 import type { LeagueEntryRow, LeaguesResponse } from "./api/league/route";
 
@@ -196,19 +196,36 @@ export default function LeaguesPage() {
     }
   });
 
+  // Guards against a stale response landing after the user has already
+  // switched leagues: a slow request for the *previous* selection could
+  // otherwise resolve after a fast one for the *new* selection and clobber
+  // it with the wrong league's table.
+  const selectedIdRef = useRef(selectedId);
+  useEffect(() => {
+    selectedIdRef.current = selectedId;
+  }, [selectedId]);
+
   const tick = useCallback(async () => {
+    const requestedId = selectedIdRef.current;
     try {
-      const qs = selectedId != null ? `?leagueId=${selectedId}` : "";
+      const qs = requestedId != null ? `?leagueId=${requestedId}` : "";
       const res = await fetch(`/api/league${qs}`, { cache: "no-store" });
       const json = await res.json();
       if (!res.ok) throw new Error(json.error || `HTTP ${res.status}`);
+      if (selectedIdRef.current !== requestedId) return; // superseded by a newer selection
       setData(json as LeaguesResponse);
       setError(null);
     } catch (err) {
+      if (selectedIdRef.current !== requestedId) return;
       setError((err as Error).message);
     } finally {
-      setLoading(false);
+      if (selectedIdRef.current === requestedId) setLoading(false);
     }
+    // selectedId isn't read in the body (selectedIdRef is), but it must stay
+    // a dependency so a new `tick` is created on selection change -- that's
+    // what makes the polling effect below (keyed on `tick`) restart the
+    // interval and fire an immediate fetch for the new league.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedId]);
 
   useEffect(() => {
