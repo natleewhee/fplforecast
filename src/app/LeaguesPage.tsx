@@ -166,6 +166,23 @@ function LeagueTable({ league, gameweek }: { league: LeaguesResponse["league"]; 
  * league are excluded server-side, since they have too many entries for a
  * per-entry-picks table to be meaningful). Selection is remembered across
  * visits via localStorage. */
+/** Matches TrackerSkeleton's (LiveTracker.tsx) treatment -- same shimmer
+ * bars, same panel/rise shell -- so every "fetching from the FPL API"
+ * moment in the app reads as one consistent loading language rather than
+ * two different ones. */
+function LeaguesSkeleton() {
+  return (
+    <div className="panel rise space-y-3 p-4">
+      <div className="h-3 w-28 animate-pulse rounded bg-white/10" />
+      <div className="space-y-1.5">
+        {Array.from({ length: 5 }).map((_, i) => (
+          <div key={i} className="h-7 animate-pulse rounded bg-white/[0.05]" />
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export default function LeaguesPage() {
   const [data, setData] = useState<LeaguesResponse | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -214,7 +231,7 @@ export default function LeaguesPage() {
   };
 
   if (loading) {
-    return <div className="panel p-3 text-xs text-ink-faint">Loading your leagues…</div>;
+    return <LeaguesSkeleton />;
   }
   if (error) {
     return (
