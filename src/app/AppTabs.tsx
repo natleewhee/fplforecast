@@ -51,16 +51,10 @@ export default function AppTabs({ tabs }: { tabs: Tab[] }) {
         onTouchEnd={onTouchEnd}
       >
         <div
-          className="flex transition-transform"
+          className="tab-swipe flex"
           style={{
             width: `${tabs.length * 100}%`,
             transform: `translateX(-${(active * 100) / tabs.length}%)`,
-            // Exponential ease-out (quint) -- fast start, smooth decelerate
-            // to a stop with no overshoot. An overshoot/bounce curve reads
-            // as dated rather than premium; real panels don't spring past
-            // their resting position and snap back.
-            transitionDuration: "320ms",
-            transitionTimingFunction: "cubic-bezier(0.22, 1, 0.36, 1)",
           }}
         >
           {tabs.map((t) => (

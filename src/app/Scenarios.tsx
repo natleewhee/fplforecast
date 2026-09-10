@@ -701,7 +701,12 @@ export default function Scenarios({
       </p>
 
       {scenariosForHorizon.length === 0 ? (
-        <p className="px-1 text-sm text-ink-soft">No feasible scenario found for this horizon.</p>
+        <div className="panel rise px-3 py-4 text-center">
+          <p className="text-sm text-ink-soft">No feasible scenario found for this horizon.</p>
+          <p className="mt-1 text-xs text-ink-faint">
+            Try a shorter horizon, or come back once transfer prices settle.
+          </p>
+        </div>
       ) : (
         <Carousel>
           {scenariosForHorizon.map((s, i) => (
