@@ -1,0 +1,15 @@
+{
+  "basedOnGw": 3,
+  "transfers": [
+    { "out": 418, "in": 109, "note": "Wildcard" },
+    { "out": 504, "in": 115, "note": "Wildcard" },
+    { "out": 426, "in": 8, "note": "Wildcard" },
+    { "out": 366, "in": 31, "note": "Wildcard" },
+    { "out": 557, "in": 154, "note": "Wildcard" },
+    { "out": 346, "in": 368, "note": "Wildcard" },
+    { "out": 1, "in": 12, "note": "Wildcard" },
+    { "out": 11, "in": 249, "note": "Wildcard" },
+    { "out": 212, "in": 449, "note": "Wildcard" },
+    { "out": 305, "in": 268, "note": "Wildcard" }
+  ]
+}
