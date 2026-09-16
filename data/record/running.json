@@ -13,13 +13,19 @@
       "delta": 19.0,
       "gameweek": 3,
       "modelPoints": 48.0
+    },
+    {
+      "baselinePoints": 57.0,
+      "delta": -3.0,
+      "gameweek": 4,
+      "modelPoints": 54.0
     }
   ],
   "summary": {
-    "baselineTotal": 29.0,
-    "gameweeksScored": 1,
+    "baselineTotal": 86.0,
+    "gameweeksScored": 2,
     "meaningful": true,
-    "modelTotal": 48.0,
-    "pooledDeltaPerGw": 19.0
+    "modelTotal": 102.0,
+    "pooledDeltaPerGw": 8.0
   }
 }
