@@ -11,7 +11,7 @@
   },
   "earlySeason": true,
   "effectiveGap": 8.8,
-  "generatedAt": "2026-09-16T08:25:24.116974+00:00",
+  "generatedAt": "2026-09-17T08:30:51.520183+00:00",
   "history": {
     "gameweeks": [
       {
@@ -114,9 +114,9 @@
   "lineupAgreement": 8,
   "marginProvisional": false,
   "nextGw": {
-    "deltaVsBaselineXi": 3.7,
-    "deltaVsNoChange": 5.4,
-    "points": 69.9
+    "deltaVsBaselineXi": 4.2,
+    "deltaVsNoChange": 6.0,
+    "points": 69.0
   },
   "overridesApplied": 0,
   "parBuffer": 4.0,
@@ -214,7 +214,7 @@
       ],
       "position": "GKP",
       "price": 6.0,
-      "selectedByPercent": 40.6,
+      "selectedByPercent": 40.8,
       "sellPrice": 6.0,
       "team": "ARS",
       "total": 31.71,
@@ -918,7 +918,7 @@
       ],
       "position": "DEF",
       "price": 5.5,
-      "selectedByPercent": 6.5,
+      "selectedByPercent": 6.2,
       "sellPrice": 5.5,
       "team": "ARS",
       "total": 28.63,
@@ -1006,7 +1006,7 @@
       ],
       "position": "DEF",
       "price": 5.3,
-      "selectedByPercent": 2.0,
+      "selectedByPercent": 1.9,
       "sellPrice": 5.3,
       "team": "ARS",
       "total": 11.77,
@@ -1094,7 +1094,7 @@
       ],
       "position": "MID",
       "price": 9.5,
-      "selectedByPercent": 12.3,
+      "selectedByPercent": 12.4,
       "sellPrice": 9.5,
       "team": "ARS",
       "total": 52.37,
@@ -1358,7 +1358,7 @@
       ],
       "position": "MID",
       "price": 6.7,
-      "selectedByPercent": 19.4,
+      "selectedByPercent": 19.5,
       "sellPrice": 6.7,
       "team": "ARS",
       "total": 46.49,
@@ -1974,7 +1974,7 @@
       ],
       "position": "DEF",
       "price": 4.5,
-      "selectedByPercent": 18.2,
+      "selectedByPercent": 18.3,
       "sellPrice": 4.5,
       "team": "ARS",
       "total": 23.81,
@@ -2150,7 +2150,7 @@
       ],
       "position": "MID",
       "price": 6.4,
-      "selectedByPercent": 14.6,
+      "selectedByPercent": 14.4,
       "sellPrice": 6.4,
       "team": "ARS",
       "total": 24.64,
@@ -2158,20 +2158,20 @@
     },
     {
       "availability": {
-        "chance": null,
-        "news": null,
-        "status": "a"
+        "chance": 75,
+        "news": "Back injury - 75% chance of playing",
+        "status": "d"
       },
       "components": {
-        "appearance": 0.5,
-        "assists": 0.09,
-        "bonus": 0.05,
+        "appearance": 0.38,
+        "assists": 0.07,
+        "bonus": 0.04,
         "cards": -0.0,
-        "cleanSheet": 0.18,
+        "cleanSheet": 0.14,
         "defensiveContribution": 0.0,
-        "goals": 0.53,
-        "goalsConceded": -0.52,
-        "saves": 0.72
+        "goals": 0.4,
+        "goalsConceded": -0.39,
+        "saves": 0.54
       },
       "elementType": 1,
       "form": 0.2,
@@ -2228,37 +2228,37 @@
         ]
       ],
       "perGameweek": [
-        1.55,
-        1.64,
-        1.48,
-        1.38,
-        1.63,
-        1.49,
-        1.6
+        1.16,
+        1.23,
+        1.11,
+        1.04,
+        1.22,
+        1.12,
+        1.2
       ],
       "position": "GKP",
       "price": 4.5,
       "selectedByPercent": 0.1,
       "sellPrice": 4.5,
       "team": "AVL",
-      "total": 10.77,
+      "total": 8.08,
       "webName": "M.Bizot"
     },
     {
       "availability": {
-        "chance": 75,
-        "news": "Muscular injury - 75% chance of playing",
-        "status": "d"
+        "chance": 100,
+        "news": null,
+        "status": "a"
       },
       "components": {
-        "appearance": 1.12,
-        "assists": 0.13,
-        "bonus": 0.03,
-        "cards": -0.19,
-        "cleanSheet": 0.41,
-        "defensiveContribution": 0.68,
-        "goals": 0.28,
-        "goalsConceded": -0.53,
+        "appearance": 1.5,
+        "assists": 0.17,
+        "bonus": 0.04,
+        "cards": -0.26,
+        "cleanSheet": 0.54,
+        "defensiveContribution": 0.9,
+        "goals": 0.37,
+        "goalsConceded": -0.7,
         "saves": 0.0
       },
       "elementType": 2,
@@ -2316,20 +2316,20 @@
         ]
       ],
       "perGameweek": [
-        1.92,
-        2.19,
-        1.78,
-        1.7,
-        2.3,
-        1.98,
-        2.4
+        2.57,
+        2.92,
+        2.37,
+        2.27,
+        3.07,
+        2.64,
+        3.19
       ],
       "position": "DEF",
       "price": 4.4,
-      "selectedByPercent": 5.3,
+      "selectedByPercent": 5.2,
       "sellPrice": 4.4,
       "team": "AVL",
-      "total": 14.27,
+      "total": 19.03,
       "webName": "Cash"
     },
     {
@@ -2942,7 +2942,7 @@
       ],
       "position": "MID",
       "price": 5.9,
-      "selectedByPercent": 1.0,
+      "selectedByPercent": 0.9,
       "sellPrice": 5.9,
       "team": "AVL",
       "total": 30.7,
@@ -3566,18 +3566,18 @@
     },
     {
       "availability": {
-        "chance": 100,
-        "news": null,
-        "status": "a"
+        "chance": 75,
+        "news": "Calf injury - 75% chance of playing",
+        "status": "d"
       },
       "components": {
-        "appearance": 0.25,
-        "assists": 0.03,
-        "bonus": 0.07,
-        "cards": -0.03,
+        "appearance": 0.19,
+        "assists": 0.02,
+        "bonus": 0.05,
+        "cards": -0.02,
         "cleanSheet": 0.0,
-        "defensiveContribution": 0.32,
-        "goals": 0.04,
+        "defensiveContribution": 0.24,
+        "goals": 0.03,
         "goalsConceded": 0.0,
         "saves": 0.0
       },
@@ -3636,20 +3636,20 @@
         ]
       ],
       "perGameweek": [
-        0.67,
-        0.68,
-        0.67,
-        0.66,
-        0.68,
-        0.67,
-        0.67
+        0.51,
+        0.51,
+        0.5,
+        0.49,
+        0.51,
+        0.5,
+        0.5
       ],
       "position": "MID",
       "price": 5.5,
       "selectedByPercent": 0.0,
       "sellPrice": 5.5,
       "team": "AVL",
-      "total": 4.7,
+      "total": 3.52,
       "webName": "Gomes"
     },
     {
@@ -5230,7 +5230,7 @@
       ],
       "position": "MID",
       "price": 6.1,
-      "selectedByPercent": 5.5,
+      "selectedByPercent": 5.8,
       "sellPrice": 6.1,
       "team": "BOU",
       "total": 45.68,
@@ -5318,7 +5318,7 @@
       ],
       "position": "MID",
       "price": 6.1,
-      "selectedByPercent": 5.9,
+      "selectedByPercent": 5.8,
       "sellPrice": 6.1,
       "team": "BOU",
       "total": 38.6,
@@ -5933,9 +5933,9 @@
         1.24
       ],
       "position": "MID",
-      "price": 5.0,
+      "price": 4.9,
       "selectedByPercent": 0.0,
-      "sellPrice": 5.0,
+      "sellPrice": 4.9,
       "team": "BOU",
       "total": 8.51,
       "webName": "T\u00f3th.A"
@@ -6550,7 +6550,7 @@
       ],
       "position": "GKP",
       "price": 5.0,
-      "selectedByPercent": 6.3,
+      "selectedByPercent": 6.2,
       "sellPrice": 5.0,
       "team": "BRE",
       "total": 26.29,
@@ -6902,7 +6902,7 @@
       ],
       "position": "DEF",
       "price": 4.6,
-      "selectedByPercent": 8.1,
+      "selectedByPercent": 8.0,
       "sellPrice": 4.6,
       "team": "BRE",
       "total": 24.44,
@@ -7342,7 +7342,7 @@
       ],
       "position": "MID",
       "price": 6.1,
-      "selectedByPercent": 6.2,
+      "selectedByPercent": 6.5,
       "sellPrice": 6.1,
       "team": "BRE",
       "total": 40.22,
@@ -7958,7 +7958,7 @@
       ],
       "position": "FWD",
       "price": 7.9,
-      "selectedByPercent": 9.5,
+      "selectedByPercent": 9.3,
       "sellPrice": 7.9,
       "team": "BRE",
       "total": 32.83,
@@ -8134,7 +8134,7 @@
       ],
       "position": "MID",
       "price": 5.7,
-      "selectedByPercent": 12.0,
+      "selectedByPercent": 11.8,
       "sellPrice": 5.7,
       "team": "BRE",
       "total": 27.67,
@@ -8398,7 +8398,7 @@
       ],
       "position": "GKP",
       "price": 4.5,
-      "selectedByPercent": 21.9,
+      "selectedByPercent": 21.8,
       "sellPrice": 4.5,
       "team": "BHA",
       "total": 22.63,
@@ -8749,9 +8749,9 @@
         4.71
       ],
       "position": "DEF",
-      "price": 4.8,
-      "selectedByPercent": 23.8,
-      "sellPrice": 4.8,
+      "price": 4.9,
+      "selectedByPercent": 24.1,
+      "sellPrice": 4.9,
       "team": "BHA",
       "total": 31.75,
       "webName": "De Cuyper"
@@ -9190,7 +9190,7 @@
       ],
       "position": "MID",
       "price": 5.7,
-      "selectedByPercent": 19.0,
+      "selectedByPercent": 19.6,
       "sellPrice": 5.7,
       "team": "BHA",
       "total": 39.94,
@@ -9718,7 +9718,7 @@
       ],
       "position": "FWD",
       "price": 5.5,
-      "selectedByPercent": 0.7,
+      "selectedByPercent": 0.8,
       "sellPrice": 5.5,
       "team": "BHA",
       "total": 36.15,
@@ -10598,7 +10598,7 @@
       ],
       "position": "GKP",
       "price": 5.0,
-      "selectedByPercent": 5.0,
+      "selectedByPercent": 4.9,
       "sellPrice": 5.0,
       "team": "CHE",
       "total": 22.74,
@@ -10686,7 +10686,7 @@
       ],
       "position": "MID",
       "price": 7.7,
-      "selectedByPercent": 37.9,
+      "selectedByPercent": 38.3,
       "sellPrice": 7.7,
       "team": "CHE",
       "total": 38.02,
@@ -10774,7 +10774,7 @@
       ],
       "position": "FWD",
       "price": 5.9,
-      "selectedByPercent": 0.7,
+      "selectedByPercent": 0.8,
       "sellPrice": 5.9,
       "team": "CHE",
       "total": 11.23,
@@ -10862,7 +10862,7 @@
       ],
       "position": "DEF",
       "price": 5.4,
-      "selectedByPercent": 7.2,
+      "selectedByPercent": 7.1,
       "sellPrice": 5.4,
       "team": "CHE",
       "total": 26.09,
@@ -11838,18 +11838,18 @@
     },
     {
       "availability": {
-        "chance": null,
-        "news": null,
-        "status": "a"
+        "chance": 75,
+        "news": "Unspecified injury - 75% chance of playing",
+        "status": "d"
       },
       "components": {
-        "appearance": 2.0,
-        "assists": 0.27,
-        "bonus": 1.33,
-        "cards": -0.22,
+        "appearance": 1.5,
+        "assists": 0.2,
+        "bonus": 1.0,
+        "cards": -0.17,
         "cleanSheet": 0.0,
-        "defensiveContribution": 0.82,
-        "goals": 1.79,
+        "defensiveContribution": 0.62,
+        "goals": 1.34,
         "goalsConceded": 0.0,
         "saves": 0.0
       },
@@ -11908,20 +11908,20 @@
         ]
       ],
       "perGameweek": [
-        5.99,
-        6.22,
-        5.69,
-        6.4,
-        6.16,
-        5.74,
-        6.24
+        4.49,
+        4.66,
+        4.27,
+        4.8,
+        4.62,
+        4.3,
+        4.68
       ],
       "position": "FWD",
       "price": 7.8,
-      "selectedByPercent": 75.4,
+      "selectedByPercent": 74.6,
       "sellPrice": 7.8,
       "team": "CHE",
-      "total": 42.44,
+      "total": 31.82,
       "webName": "Jo\u00e3o Pedro"
     },
     {
@@ -12094,7 +12094,7 @@
       ],
       "position": "DEF",
       "price": 6.0,
-      "selectedByPercent": 7.3,
+      "selectedByPercent": 7.2,
       "sellPrice": 6.0,
       "team": "CHE",
       "total": 27.87,
@@ -12542,18 +12542,18 @@
     },
     {
       "availability": {
-        "chance": 50,
-        "news": "Hand injury - 50% chance of playing",
-        "status": "d"
+        "chance": 100,
+        "news": null,
+        "status": "a"
       },
       "components": {
-        "appearance": 0.75,
-        "assists": 0.08,
-        "bonus": 0.02,
-        "cards": -0.04,
-        "cleanSheet": 0.08,
-        "defensiveContribution": 0.61,
-        "goals": 0.12,
+        "appearance": 1.5,
+        "assists": 0.15,
+        "bonus": 0.05,
+        "cards": -0.08,
+        "cleanSheet": 0.16,
+        "defensiveContribution": 1.22,
+        "goals": 0.25,
         "goalsConceded": 0.0,
         "saves": 0.0
       },
@@ -12612,20 +12612,20 @@
         ]
       ],
       "perGameweek": [
-        1.63,
-        1.64,
-        1.63,
-        1.68,
-        1.67,
-        1.63,
-        1.67
+        3.25,
+        3.29,
+        3.26,
+        3.35,
+        3.34,
+        3.25,
+        3.35
       ],
       "position": "MID",
       "price": 4.9,
       "selectedByPercent": 0.1,
       "sellPrice": 4.9,
       "team": "COV",
-      "total": 11.55,
+      "total": 23.09,
       "webName": "Onyeka"
     },
     {
@@ -12886,7 +12886,7 @@
       ],
       "position": "DEF",
       "price": 4.0,
-      "selectedByPercent": 8.9,
+      "selectedByPercent": 8.8,
       "sellPrice": 4.0,
       "team": "COV",
       "total": 35.38,
@@ -12974,7 +12974,7 @@
       ],
       "position": "DEF",
       "price": 4.0,
-      "selectedByPercent": 10.0,
+      "selectedByPercent": 9.9,
       "sellPrice": 4.0,
       "team": "COV",
       "total": 25.68,
@@ -13246,19 +13246,19 @@
     },
     {
       "availability": {
-        "chance": null,
-        "news": null,
-        "status": "a"
+        "chance": 50,
+        "news": "Calf injury - 50% chance of playing",
+        "status": "d"
       },
       "components": {
-        "appearance": 2.0,
-        "assists": 0.14,
-        "bonus": 0.06,
-        "cards": -0.14,
-        "cleanSheet": 0.86,
-        "defensiveContribution": 1.0,
-        "goals": 0.1,
-        "goalsConceded": -0.58,
+        "appearance": 1.0,
+        "assists": 0.07,
+        "bonus": 0.03,
+        "cards": -0.07,
+        "cleanSheet": 0.43,
+        "defensiveContribution": 0.5,
+        "goals": 0.05,
+        "goalsConceded": -0.29,
         "saves": 0.0
       },
       "elementType": 2,
@@ -13316,20 +13316,20 @@
         ]
       ],
       "perGameweek": [
-        3.43,
-        3.27,
-        3.16,
-        3.73,
-        3.92,
-        3.7,
-        3.79
+        1.72,
+        1.64,
+        1.58,
+        1.86,
+        1.96,
+        1.85,
+        1.9
       ],
       "position": "DEF",
       "price": 4.0,
       "selectedByPercent": 0.7,
       "sellPrice": 4.0,
       "team": "COV",
-      "total": 25.0,
+      "total": 12.51,
       "webName": "Amenda"
     },
     {
@@ -14470,7 +14470,7 @@
       ],
       "position": "GKP",
       "price": 4.0,
-      "selectedByPercent": 0.5,
+      "selectedByPercent": 0.6,
       "sellPrice": 4.0,
       "team": "COV",
       "total": 0.48,
@@ -15179,6 +15179,94 @@
       "team": "CRY",
       "total": 5.16,
       "webName": "Mingueza"
+    },
+    {
+      "availability": {
+        "chance": 50,
+        "news": "Groin injury - 50% chance of playing",
+        "status": "d"
+      },
+      "components": {
+        "appearance": 0.0,
+        "assists": 0.07,
+        "bonus": 0.04,
+        "cards": -0.07,
+        "cleanSheet": 0.0,
+        "defensiveContribution": 0.33,
+        "goals": 0.18,
+        "goalsConceded": 0.0,
+        "saves": 0.0
+      },
+      "elementType": 3,
+      "form": 0.0,
+      "id": 208,
+      "opponents": [
+        [
+          {
+            "fdrRating": 3,
+            "team": "LEE",
+            "wasHome": false
+          }
+        ],
+        [
+          {
+            "fdrRating": 3,
+            "team": "NFO",
+            "wasHome": true
+          }
+        ],
+        [
+          {
+            "fdrRating": 3,
+            "team": "BHA",
+            "wasHome": false
+          }
+        ],
+        [
+          {
+            "fdrRating": 2,
+            "team": "NEW",
+            "wasHome": true
+          }
+        ],
+        [
+          {
+            "fdrRating": 3,
+            "team": "TOT",
+            "wasHome": false
+          }
+        ],
+        [
+          {
+            "fdrRating": 4,
+            "team": "LIV",
+            "wasHome": true
+          }
+        ],
+        [
+          {
+            "fdrRating": 2,
+            "team": "COV",
+            "wasHome": false
+          }
+        ]
+      ],
+      "perGameweek": [
+        0.56,
+        0.59,
+        0.56,
+        0.59,
+        0.58,
+        0.54,
+        0.56
+      ],
+      "position": "MID",
+      "price": 6.2,
+      "selectedByPercent": 0.6,
+      "sellPrice": 6.2,
+      "team": "CRY",
+      "total": 3.98,
+      "webName": "Sarr"
     },
     {
       "availability": {
@@ -16934,7 +17022,7 @@
       ],
       "position": "GKP",
       "price": 5.5,
-      "selectedByPercent": 8.8,
+      "selectedByPercent": 8.9,
       "sellPrice": 5.5,
       "team": "EVE",
       "total": 24.72,
@@ -17198,7 +17286,7 @@
       ],
       "position": "DEF",
       "price": 6.1,
-      "selectedByPercent": 13.3,
+      "selectedByPercent": 13.5,
       "sellPrice": 6.1,
       "team": "EVE",
       "total": 35.84,
@@ -17286,7 +17374,7 @@
       ],
       "position": "DEF",
       "price": 5.5,
-      "selectedByPercent": 2.1,
+      "selectedByPercent": 2.2,
       "sellPrice": 5.5,
       "team": "EVE",
       "total": 31.23,
@@ -17550,7 +17638,7 @@
       ],
       "position": "DEF",
       "price": 4.5,
-      "selectedByPercent": 3.1,
+      "selectedByPercent": 3.2,
       "sellPrice": 4.5,
       "team": "EVE",
       "total": 32.89,
@@ -17638,7 +17726,7 @@
       ],
       "position": "MID",
       "price": 6.5,
-      "selectedByPercent": 5.2,
+      "selectedByPercent": 5.3,
       "sellPrice": 6.5,
       "team": "EVE",
       "total": 34.03,
@@ -18174,18 +18262,18 @@
     },
     {
       "availability": {
-        "chance": null,
-        "news": null,
-        "status": "a"
+        "chance": 75,
+        "news": "Unspecified injury - 75% chance of playing",
+        "status": "d"
       },
       "components": {
-        "appearance": 1.5,
-        "assists": 0.23,
-        "bonus": 0.06,
-        "cards": -0.32,
-        "cleanSheet": 0.29,
-        "defensiveContribution": 1.38,
-        "goals": 0.45,
+        "appearance": 1.12,
+        "assists": 0.17,
+        "bonus": 0.04,
+        "cards": -0.24,
+        "cleanSheet": 0.22,
+        "defensiveContribution": 1.03,
+        "goals": 0.33,
         "goalsConceded": 0.0,
         "saves": 0.0
       },
@@ -18244,20 +18332,20 @@
         ]
       ],
       "perGameweek": [
-        3.58,
-        3.26,
-        3.3,
-        2.99,
-        3.2,
-        3.37,
-        3.26
+        2.68,
+        2.44,
+        2.47,
+        2.24,
+        2.4,
+        2.52,
+        2.44
       ],
       "position": "MID",
       "price": 4.9,
       "selectedByPercent": 0.0,
       "sellPrice": 4.9,
       "team": "EVE",
-      "total": 22.96,
+      "total": 17.19,
       "webName": "R\u00f6hl"
     },
     {
@@ -18430,7 +18518,7 @@
       ],
       "position": "FWD",
       "price": 5.6,
-      "selectedByPercent": 6.6,
+      "selectedByPercent": 6.7,
       "sellPrice": 5.6,
       "team": "EVE",
       "total": 31.82,
@@ -18518,7 +18606,7 @@
       ],
       "position": "DEF",
       "price": 4.5,
-      "selectedByPercent": 0.7,
+      "selectedByPercent": 0.8,
       "sellPrice": 4.5,
       "team": "EVE",
       "total": 17.56,
@@ -19838,7 +19926,7 @@
       ],
       "position": "MID",
       "price": 5.5,
-      "selectedByPercent": 1.5,
+      "selectedByPercent": 1.6,
       "sellPrice": 5.5,
       "team": "FUL",
       "total": 34.78,
@@ -20190,7 +20278,7 @@
       ],
       "position": "FWD",
       "price": 4.5,
-      "selectedByPercent": 5.9,
+      "selectedByPercent": 5.8,
       "sellPrice": 4.5,
       "team": "FUL",
       "total": 3.83,
@@ -21158,7 +21246,7 @@
       ],
       "position": "DEF",
       "price": 4.2,
-      "selectedByPercent": 13.7,
+      "selectedByPercent": 13.8,
       "sellPrice": 4.2,
       "team": "HUL",
       "total": 28.34,
@@ -21246,7 +21334,7 @@
       ],
       "position": "DEF",
       "price": 4.0,
-      "selectedByPercent": 0.6,
+      "selectedByPercent": 0.7,
       "sellPrice": 4.0,
       "team": "HUL",
       "total": 19.51,
@@ -21598,7 +21686,7 @@
       ],
       "position": "MID",
       "price": 5.1,
-      "selectedByPercent": 3.3,
+      "selectedByPercent": 3.5,
       "sellPrice": 5.1,
       "team": "HUL",
       "total": 23.96,
@@ -22390,7 +22478,7 @@
       ],
       "position": "GKP",
       "price": 4.6,
-      "selectedByPercent": 10.9,
+      "selectedByPercent": 11.0,
       "sellPrice": 4.6,
       "team": "HUL",
       "total": 26.78,
@@ -22742,7 +22830,7 @@
       ],
       "position": "DEF",
       "price": 4.1,
-      "selectedByPercent": 7.2,
+      "selectedByPercent": 7.1,
       "sellPrice": 4.1,
       "team": "HUL",
       "total": 11.08,
@@ -23358,7 +23446,7 @@
       ],
       "position": "DEF",
       "price": 4.0,
-      "selectedByPercent": 13.7,
+      "selectedByPercent": 13.6,
       "sellPrice": 4.0,
       "team": "IPS",
       "total": 25.04,
@@ -23798,7 +23886,7 @@
       ],
       "position": "DEF",
       "price": 3.9,
-      "selectedByPercent": 0.8,
+      "selectedByPercent": 0.9,
       "sellPrice": 3.9,
       "team": "IPS",
       "total": 1.23,
@@ -23974,7 +24062,7 @@
       ],
       "position": "DEF",
       "price": 4.0,
-      "selectedByPercent": 6.3,
+      "selectedByPercent": 6.4,
       "sellPrice": 4.0,
       "team": "IPS",
       "total": 26.1,
@@ -24590,7 +24678,7 @@
       ],
       "position": "FWD",
       "price": 5.5,
-      "selectedByPercent": 2.7,
+      "selectedByPercent": 2.8,
       "sellPrice": 5.5,
       "team": "IPS",
       "total": 23.85,
@@ -25118,7 +25206,7 @@
       ],
       "position": "MID",
       "price": 5.4,
-      "selectedByPercent": 0.3,
+      "selectedByPercent": 0.2,
       "sellPrice": 5.4,
       "team": "IPS",
       "total": 21.45,
@@ -25558,7 +25646,7 @@
       ],
       "position": "MID",
       "price": 5.0,
-      "selectedByPercent": 0.0,
+      "selectedByPercent": 0.1,
       "sellPrice": 5.0,
       "team": "IPS",
       "total": 20.34,
@@ -25734,7 +25822,7 @@
       ],
       "position": "MID",
       "price": 6.3,
-      "selectedByPercent": 2.5,
+      "selectedByPercent": 2.4,
       "sellPrice": 6.3,
       "team": "LEE",
       "total": 16.52,
@@ -25910,7 +25998,7 @@
       ],
       "position": "DEF",
       "price": 4.5,
-      "selectedByPercent": 3.5,
+      "selectedByPercent": 4.1,
       "sellPrice": 4.5,
       "team": "LEE",
       "total": 36.57,
@@ -26174,7 +26262,7 @@
       ],
       "position": "DEF",
       "price": 5.0,
-      "selectedByPercent": 4.0,
+      "selectedByPercent": 4.1,
       "sellPrice": 5.0,
       "team": "LEE",
       "total": 27.79,
@@ -26350,7 +26438,7 @@
       ],
       "position": "MID",
       "price": 5.8,
-      "selectedByPercent": 0.3,
+      "selectedByPercent": 0.4,
       "sellPrice": 5.8,
       "team": "LEE",
       "total": 26.3,
@@ -26966,7 +27054,7 @@
       ],
       "position": "FWD",
       "price": 6.0,
-      "selectedByPercent": 22.8,
+      "selectedByPercent": 23.3,
       "sellPrice": 6.0,
       "team": "LEE",
       "total": 33.36,
@@ -27582,7 +27670,7 @@
       ],
       "position": "GKP",
       "price": 4.0,
-      "selectedByPercent": 0.6,
+      "selectedByPercent": 0.7,
       "sellPrice": 4.0,
       "team": "LEE",
       "total": 0.57,
@@ -28198,7 +28286,7 @@
       ],
       "position": "DEF",
       "price": 6.5,
-      "selectedByPercent": 16.7,
+      "selectedByPercent": 16.6,
       "sellPrice": 6.5,
       "team": "LIV",
       "total": 33.39,
@@ -28382,19 +28470,19 @@
     },
     {
       "availability": {
-        "chance": 75,
-        "news": "Muscular injury - 75% chance of playing",
-        "status": "d"
+        "chance": 100,
+        "news": null,
+        "status": "a"
       },
       "components": {
         "appearance": 0.0,
-        "assists": 0.09,
-        "bonus": 0.05,
-        "cards": -0.06,
+        "assists": 0.12,
+        "bonus": 0.06,
+        "cards": -0.08,
         "cleanSheet": 0.0,
-        "defensiveContribution": 0.48,
-        "goals": 0.19,
-        "goalsConceded": -0.21,
+        "defensiveContribution": 0.64,
+        "goals": 0.25,
+        "goalsConceded": -0.28,
         "saves": 0.0
       },
       "elementType": 2,
@@ -28452,20 +28540,20 @@
         ]
       ],
       "perGameweek": [
-        0.54,
-        0.44,
-        0.54,
-        0.6,
-        0.41,
+        0.71,
+        0.59,
+        0.72,
+        0.8,
         0.55,
-        0.6
+        0.73,
+        0.79
       ],
       "position": "DEF",
       "price": 4.9,
       "selectedByPercent": 0.0,
       "sellPrice": 4.9,
       "team": "LIV",
-      "total": 3.68,
+      "total": 4.89,
       "webName": "Gomez"
     },
     {
@@ -28638,7 +28726,7 @@
       ],
       "position": "DEF",
       "price": 5.0,
-      "selectedByPercent": 3.1,
+      "selectedByPercent": 3.2,
       "sellPrice": 5.0,
       "team": "LIV",
       "total": 28.5,
@@ -28814,7 +28902,7 @@
       ],
       "position": "MID",
       "price": 7.4,
-      "selectedByPercent": 6.9,
+      "selectedByPercent": 6.7,
       "sellPrice": 7.4,
       "team": "LIV",
       "total": 35.0,
@@ -28902,7 +28990,7 @@
       ],
       "position": "MID",
       "price": 7.2,
-      "selectedByPercent": 12.2,
+      "selectedByPercent": 12.4,
       "sellPrice": 7.2,
       "team": "LIV",
       "total": 41.17,
@@ -28990,7 +29078,7 @@
       ],
       "position": "MID",
       "price": 7.0,
-      "selectedByPercent": 35.9,
+      "selectedByPercent": 35.7,
       "sellPrice": 7.0,
       "team": "LIV",
       "total": 40.47,
@@ -29694,7 +29782,7 @@
       ],
       "position": "FWD",
       "price": 9.1,
-      "selectedByPercent": 22.0,
+      "selectedByPercent": 21.9,
       "sellPrice": 9.1,
       "team": "LIV",
       "total": 42.57,
@@ -30222,7 +30310,7 @@
       ],
       "position": "MID",
       "price": 5.9,
-      "selectedByPercent": 7.9,
+      "selectedByPercent": 7.8,
       "sellPrice": 5.9,
       "team": "MCI",
       "total": 34.57,
@@ -30310,7 +30398,7 @@
       ],
       "position": "GKP",
       "price": 5.5,
-      "selectedByPercent": 7.6,
+      "selectedByPercent": 7.7,
       "sellPrice": 5.5,
       "team": "MCI",
       "total": 26.69,
@@ -30486,7 +30574,7 @@
       ],
       "position": "DEF",
       "price": 6.4,
-      "selectedByPercent": 12.3,
+      "selectedByPercent": 12.2,
       "sellPrice": 6.4,
       "team": "MCI",
       "total": 24.32,
@@ -30838,7 +30926,7 @@
       ],
       "position": "DEF",
       "price": 5.7,
-      "selectedByPercent": 23.4,
+      "selectedByPercent": 23.9,
       "sellPrice": 5.7,
       "team": "MCI",
       "total": 43.32,
@@ -31278,7 +31366,7 @@
       ],
       "position": "MID",
       "price": 8.4,
-      "selectedByPercent": 15.4,
+      "selectedByPercent": 15.2,
       "sellPrice": 8.4,
       "team": "MCI",
       "total": 36.27,
@@ -31366,7 +31454,7 @@
       ],
       "position": "MID",
       "price": 7.8,
-      "selectedByPercent": 28.3,
+      "selectedByPercent": 28.2,
       "sellPrice": 7.8,
       "team": "MCI",
       "total": 35.9,
@@ -31542,7 +31630,7 @@
       ],
       "position": "FWD",
       "price": 15.5,
-      "selectedByPercent": 72.5,
+      "selectedByPercent": 72.6,
       "sellPrice": 15.5,
       "team": "MCI",
       "total": 58.08,
@@ -32510,7 +32598,7 @@
       ],
       "position": "GKP",
       "price": 4.9,
-      "selectedByPercent": 10.8,
+      "selectedByPercent": 10.7,
       "sellPrice": 4.9,
       "team": "MUN",
       "total": 22.39,
@@ -32686,7 +32774,7 @@
       ],
       "position": "DEF",
       "price": 4.9,
-      "selectedByPercent": 1.8,
+      "selectedByPercent": 1.7,
       "sellPrice": 4.9,
       "team": "MUN",
       "total": 20.03,
@@ -32774,7 +32862,7 @@
       ],
       "position": "DEF",
       "price": 4.9,
-      "selectedByPercent": 10.1,
+      "selectedByPercent": 9.9,
       "sellPrice": 4.9,
       "team": "MUN",
       "total": 27.21,
@@ -33214,7 +33302,7 @@
       ],
       "position": "DEF",
       "price": 4.4,
-      "selectedByPercent": 10.2,
+      "selectedByPercent": 9.9,
       "sellPrice": 4.4,
       "team": "MUN",
       "total": 16.62,
@@ -33390,7 +33478,7 @@
       ],
       "position": "MID",
       "price": 12.0,
-      "selectedByPercent": 41.5,
+      "selectedByPercent": 41.3,
       "sellPrice": 12.0,
       "team": "MUN",
       "total": 42.17,
@@ -33478,7 +33566,7 @@
       ],
       "position": "MID",
       "price": 7.9,
-      "selectedByPercent": 22.7,
+      "selectedByPercent": 22.5,
       "sellPrice": 7.9,
       "team": "MUN",
       "total": 43.08,
@@ -33566,7 +33654,7 @@
       ],
       "position": "MID",
       "price": 7.9,
-      "selectedByPercent": 6.1,
+      "selectedByPercent": 6.0,
       "sellPrice": 7.9,
       "team": "MUN",
       "total": 32.2,
@@ -34006,7 +34094,7 @@
       ],
       "position": "MID",
       "price": 4.9,
-      "selectedByPercent": 0.0,
+      "selectedByPercent": 0.1,
       "sellPrice": 4.9,
       "team": "MUN",
       "total": 6.23,
@@ -34270,7 +34358,7 @@
       ],
       "position": "FWD",
       "price": 7.0,
-      "selectedByPercent": 1.7,
+      "selectedByPercent": 1.8,
       "sellPrice": 7.0,
       "team": "MUN",
       "total": 18.25,
@@ -35238,7 +35326,7 @@
       ],
       "position": "MID",
       "price": 6.0,
-      "selectedByPercent": 3.2,
+      "selectedByPercent": 3.4,
       "sellPrice": 6.0,
       "team": "NEW",
       "total": 36.21,
@@ -35854,7 +35942,7 @@
       ],
       "position": "FWD",
       "price": 6.2,
-      "selectedByPercent": 18.1,
+      "selectedByPercent": 18.2,
       "sellPrice": 6.2,
       "team": "NEW",
       "total": 34.17,
@@ -36382,7 +36470,7 @@
       ],
       "position": "FWD",
       "price": 5.5,
-      "selectedByPercent": 1.5,
+      "selectedByPercent": 1.7,
       "sellPrice": 5.5,
       "team": "NFO",
       "total": 17.59,
@@ -36734,7 +36822,7 @@
       ],
       "position": "DEF",
       "price": 5.0,
-      "selectedByPercent": 8.6,
+      "selectedByPercent": 8.7,
       "sellPrice": 5.0,
       "team": "NFO",
       "total": 30.35,
@@ -36822,7 +36910,7 @@
       ],
       "position": "DEF",
       "price": 5.5,
-      "selectedByPercent": 1.9,
+      "selectedByPercent": 2.0,
       "sellPrice": 5.5,
       "team": "NFO",
       "total": 30.49,
@@ -37262,7 +37350,7 @@
       ],
       "position": "MID",
       "price": 8.0,
-      "selectedByPercent": 12.4,
+      "selectedByPercent": 13.1,
       "sellPrice": 8.0,
       "team": "NFO",
       "total": 42.77,
@@ -39110,7 +39198,7 @@
       ],
       "position": "DEF",
       "price": 5.8,
-      "selectedByPercent": 4.0,
+      "selectedByPercent": 3.9,
       "sellPrice": 5.8,
       "team": "TOT",
       "total": 13.47,
@@ -39198,7 +39286,7 @@
       ],
       "position": "DEF",
       "price": 5.5,
-      "selectedByPercent": 9.1,
+      "selectedByPercent": 8.8,
       "sellPrice": 5.5,
       "team": "TOT",
       "total": 13.72,
@@ -39286,7 +39374,7 @@
       ],
       "position": "DEF",
       "price": 4.4,
-      "selectedByPercent": 2.7,
+      "selectedByPercent": 2.6,
       "sellPrice": 4.4,
       "team": "TOT",
       "total": 27.43,
@@ -41046,7 +41134,7 @@
       ],
       "position": "DEF",
       "price": 4.9,
-      "selectedByPercent": 2.9,
+      "selectedByPercent": 2.8,
       "sellPrice": 4.9,
       "team": "SUN",
       "total": 29.32,
@@ -41222,7 +41310,7 @@
       ],
       "position": "DEF",
       "price": 4.4,
-      "selectedByPercent": 3.5,
+      "selectedByPercent": 3.4,
       "sellPrice": 4.4,
       "team": "SUN",
       "total": 17.23,
@@ -41662,7 +41750,7 @@
       ],
       "position": "MID",
       "price": 5.5,
-      "selectedByPercent": 4.0,
+      "selectedByPercent": 3.9,
       "sellPrice": 5.5,
       "team": "SUN",
       "total": 37.23,
@@ -42190,7 +42278,7 @@
       ],
       "position": "FWD",
       "price": 5.8,
-      "selectedByPercent": 6.0,
+      "selectedByPercent": 5.9,
       "sellPrice": 5.8,
       "team": "SUN",
       "total": 23.63,
@@ -42630,7 +42718,7 @@
       ],
       "position": "FWD",
       "price": 4.5,
-      "selectedByPercent": 0.6,
+      "selectedByPercent": 0.7,
       "sellPrice": 4.5,
       "team": "SUN",
       "total": 2.96,
@@ -42654,8 +42742,8 @@
           ],
           "hitCost": 0,
           "horizonGws": 1,
-          "netPoints": 75.04,
-          "points": 75.04,
+          "netPoints": 74.17,
+          "points": 74.17,
           "squad": [
             8,
             12,
@@ -42813,19 +42901,19 @@
                   "xp": 5.25
                 },
                 {
-                  "id": 165,
+                  "id": 249,
                   "isCaptain": false,
                   "opponents": [
                     {
-                      "fdrRating": 3,
-                      "team": "BRE",
-                      "wasHome": false
+                      "fdrRating": 2,
+                      "team": "IPS",
+                      "wasHome": true
                     }
                   ],
                   "position": "FWD",
-                  "team": "CHE",
-                  "webName": "Jo\u00e3o Pedro",
-                  "xp": 5.99
+                  "team": "EVE",
+                  "webName": "Barry",
+                  "xp": 5.12
                 },
                 {
                   "id": 368,
@@ -42919,7 +43007,7 @@
                 }
               ],
               "targetGw": 5,
-              "totalXp": 75.04
+              "totalXp": 74.17
             }
           ],
           "xiByGw": [
@@ -42928,7 +43016,7 @@
               12,
               15,
               124,
-              165,
+              249,
               368,
               388,
               391,
@@ -42944,8 +43032,8 @@
           ],
           "hitCost": 0,
           "horizonGws": 1,
-          "netPoints": 73.59,
-          "points": 73.59,
+          "netPoints": 72.67,
+          "points": 72.67,
           "squad": [
             8,
             12,
@@ -43079,21 +43167,6 @@
                   "xp": 5.25
                 },
                 {
-                  "id": 165,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 3,
-                      "team": "BRE",
-                      "wasHome": false
-                    }
-                  ],
-                  "position": "FWD",
-                  "team": "CHE",
-                  "webName": "Jo\u00e3o Pedro",
-                  "xp": 5.99
-                },
-                {
                   "id": 249,
                   "isCaptain": false,
                   "opponents": [
@@ -43107,6 +43180,21 @@
                   "team": "EVE",
                   "webName": "Barry",
                   "xp": 5.12
+                },
+                {
+                  "id": 268,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 4,
+                      "team": "MUN",
+                      "wasHome": true
+                    }
+                  ],
+                  "position": "MID",
+                  "team": "FUL",
+                  "webName": "King",
+                  "xp": 5.07
                 },
                 {
                   "id": 368,
@@ -43185,7 +43273,7 @@
                 }
               ],
               "targetGw": 5,
-              "totalXp": 73.59
+              "totalXp": 72.67
             }
           ],
           "xiByGw": [
@@ -43194,8 +43282,8 @@
               12,
               15,
               124,
-              165,
               249,
+              268,
               368,
               388,
               411,
@@ -43210,8 +43298,8 @@
           ],
           "hitCost": 0,
           "horizonGws": 1,
-          "netPoints": 71.26,
-          "points": 71.26,
+          "netPoints": 70.34,
+          "points": 70.34,
           "squad": [
             8,
             12,
@@ -43321,21 +43409,6 @@
                   "xp": 5.39
                 },
                 {
-                  "id": 165,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 3,
-                      "team": "BRE",
-                      "wasHome": false
-                    }
-                  ],
-                  "position": "FWD",
-                  "team": "CHE",
-                  "webName": "Jo\u00e3o Pedro",
-                  "xp": 5.99
-                },
-                {
                   "id": 249,
                   "isCaptain": false,
                   "opponents": [
@@ -43349,6 +43422,21 @@
                   "team": "EVE",
                   "webName": "Barry",
                   "xp": 5.12
+                },
+                {
+                  "id": 268,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 4,
+                      "team": "MUN",
+                      "wasHome": true
+                    }
+                  ],
+                  "position": "MID",
+                  "team": "FUL",
+                  "webName": "King",
+                  "xp": 5.07
                 },
                 {
                   "id": 330,
@@ -43427,7 +43515,7 @@
                 }
               ],
               "targetGw": 5,
-              "totalXp": 71.26
+              "totalXp": 70.34
             }
           ],
           "xiByGw": [
@@ -43436,8 +43524,8 @@
               12,
               124,
               154,
-              165,
               249,
+              268,
               330,
               368,
               411,
@@ -43456,8 +43544,8 @@
           ],
           "hitCost": 0,
           "horizonGws": 3,
-          "netPoints": 228.73,
-          "points": 228.73,
+          "netPoints": 226.02,
+          "points": 226.02,
           "squad": [
             8,
             12,
@@ -43615,19 +43703,19 @@
                   "xp": 5.25
                 },
                 {
-                  "id": 165,
+                  "id": 249,
                   "isCaptain": false,
                   "opponents": [
                     {
-                      "fdrRating": 3,
-                      "team": "BRE",
-                      "wasHome": false
+                      "fdrRating": 2,
+                      "team": "IPS",
+                      "wasHome": true
                     }
                   ],
                   "position": "FWD",
-                  "team": "CHE",
-                  "webName": "Jo\u00e3o Pedro",
-                  "xp": 5.99
+                  "team": "EVE",
+                  "webName": "Barry",
+                  "xp": 5.12
                 },
                 {
                   "id": 368,
@@ -43721,7 +43809,7 @@
                 }
               ],
               "targetGw": 5,
-              "totalXp": 75.04
+              "totalXp": 74.17
             },
             {
               "players": [
@@ -43786,6 +43874,21 @@
                   "xp": 3.46
                 },
                 {
+                  "id": 115,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 3,
+                      "team": "SUN",
+                      "wasHome": false
+                    }
+                  ],
+                  "position": "DEF",
+                  "team": "BHA",
+                  "webName": "De Cuyper",
+                  "xp": 4.95
+                },
+                {
                   "id": 124,
                   "isCaptain": false,
                   "opponents": [
@@ -43799,21 +43902,6 @@
                   "team": "BHA",
                   "webName": "Gro\u00df",
                   "xp": 5.75
-                },
-                {
-                  "id": 165,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 3,
-                      "team": "BOU",
-                      "wasHome": true
-                    }
-                  ],
-                  "position": "FWD",
-                  "team": "CHE",
-                  "webName": "Jo\u00e3o Pedro",
-                  "xp": 6.22
                 },
                 {
                   "id": 268,
@@ -43892,7 +43980,7 @@
                 }
               ],
               "targetGw": 6,
-              "totalXp": 73.27
+              "totalXp": 72.0
             },
             {
               "players": [
@@ -43987,19 +44075,19 @@
                   "xp": 6.11
                 },
                 {
-                  "id": 165,
+                  "id": 268,
                   "isCaptain": false,
                   "opponents": [
                     {
-                      "fdrRating": 3,
-                      "team": "EVE",
-                      "wasHome": false
+                      "fdrRating": 2,
+                      "team": "HUL",
+                      "wasHome": true
                     }
                   ],
-                  "position": "FWD",
-                  "team": "CHE",
-                  "webName": "Jo\u00e3o Pedro",
-                  "xp": 5.69
+                  "position": "MID",
+                  "team": "FUL",
+                  "webName": "King",
+                  "xp": 5.12
                 },
                 {
                   "id": 368,
@@ -44063,7 +44151,7 @@
                 }
               ],
               "targetGw": 7,
-              "totalXp": 80.42
+              "totalXp": 79.85
             }
           ],
           "xiByGw": [
@@ -44072,7 +44160,7 @@
               12,
               15,
               124,
-              165,
+              249,
               368,
               388,
               391,
@@ -44085,8 +44173,8 @@
               12,
               15,
               109,
+              115,
               124,
-              165,
               268,
               368,
               388,
@@ -44100,7 +44188,7 @@
               109,
               115,
               124,
-              165,
+              268,
               368,
               388,
               391,
@@ -44116,8 +44204,8 @@
           ],
           "hitCost": 0,
           "horizonGws": 3,
-          "netPoints": 225.06,
-          "points": 225.06,
+          "netPoints": 222.09,
+          "points": 222.09,
           "squad": [
             8,
             12,
@@ -44251,21 +44339,6 @@
                   "xp": 5.25
                 },
                 {
-                  "id": 165,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 3,
-                      "team": "BRE",
-                      "wasHome": false
-                    }
-                  ],
-                  "position": "FWD",
-                  "team": "CHE",
-                  "webName": "Jo\u00e3o Pedro",
-                  "xp": 5.99
-                },
-                {
                   "id": 249,
                   "isCaptain": false,
                   "opponents": [
@@ -44279,6 +44352,21 @@
                   "team": "EVE",
                   "webName": "Barry",
                   "xp": 5.12
+                },
+                {
+                  "id": 268,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 4,
+                      "team": "MUN",
+                      "wasHome": true
+                    }
+                  ],
+                  "position": "MID",
+                  "team": "FUL",
+                  "webName": "King",
+                  "xp": 5.07
                 },
                 {
                   "id": 368,
@@ -44357,7 +44445,7 @@
                 }
               ],
               "targetGw": 5,
-              "totalXp": 73.59
+              "totalXp": 72.67
             },
             {
               "players": [
@@ -44452,21 +44540,6 @@
                   "xp": 5.75
                 },
                 {
-                  "id": 165,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 3,
-                      "team": "BOU",
-                      "wasHome": true
-                    }
-                  ],
-                  "position": "FWD",
-                  "team": "CHE",
-                  "webName": "Jo\u00e3o Pedro",
-                  "xp": 6.22
-                },
-                {
                   "id": 268,
                   "isCaptain": false,
                   "opponents": [
@@ -44525,10 +44598,25 @@
                   "team": "MCI",
                   "webName": "Haaland",
                   "xp": 7.41
+                },
+                {
+                  "id": 449,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 2,
+                      "team": "COV",
+                      "wasHome": false
+                    }
+                  ],
+                  "position": "DEF",
+                  "team": "NEW",
+                  "webName": "Hall",
+                  "xp": 4.85
                 }
               ],
               "targetGw": 6,
-              "totalXp": 73.05
+              "totalXp": 71.68
             },
             {
               "players": [
@@ -44623,21 +44711,6 @@
                   "xp": 6.11
                 },
                 {
-                  "id": 165,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 3,
-                      "team": "EVE",
-                      "wasHome": false
-                    }
-                  ],
-                  "position": "FWD",
-                  "team": "CHE",
-                  "webName": "Jo\u00e3o Pedro",
-                  "xp": 5.69
-                },
-                {
                   "id": 268,
                   "isCaptain": false,
                   "opponents": [
@@ -44696,10 +44769,25 @@
                   "team": "MCI",
                   "webName": "Haaland",
                   "xp": 9.63
+                },
+                {
+                  "id": 449,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 3,
+                      "team": "AVL",
+                      "wasHome": true
+                    }
+                  ],
+                  "position": "DEF",
+                  "team": "NEW",
+                  "webName": "Hall",
+                  "xp": 5.01
                 }
               ],
               "targetGw": 7,
-              "totalXp": 78.42
+              "totalXp": 77.74
             }
           ],
           "xiByGw": [
@@ -44708,8 +44796,8 @@
               12,
               15,
               124,
-              165,
               249,
+              268,
               368,
               388,
               411,
@@ -44723,11 +44811,11 @@
               109,
               115,
               124,
-              165,
               268,
               368,
               388,
-              411
+              411,
+              449
             ],
             [
               8,
@@ -44736,11 +44824,11 @@
               109,
               115,
               124,
-              165,
               268,
               368,
               388,
-              411
+              411,
+              449
             ]
           ]
         },
@@ -44752,8 +44840,8 @@
           ],
           "hitCost": 0,
           "horizonGws": 3,
-          "netPoints": 218.19,
-          "points": 218.19,
+          "netPoints": 214.63,
+          "points": 214.63,
           "squad": [
             8,
             12,
@@ -44863,21 +44951,6 @@
                   "xp": 5.25
                 },
                 {
-                  "id": 165,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 3,
-                      "team": "BRE",
-                      "wasHome": false
-                    }
-                  ],
-                  "position": "FWD",
-                  "team": "CHE",
-                  "webName": "Jo\u00e3o Pedro",
-                  "xp": 5.99
-                },
-                {
                   "id": 249,
                   "isCaptain": false,
                   "opponents": [
@@ -44891,6 +44964,21 @@
                   "team": "EVE",
                   "webName": "Barry",
                   "xp": 5.12
+                },
+                {
+                  "id": 268,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 4,
+                      "team": "MUN",
+                      "wasHome": true
+                    }
+                  ],
+                  "position": "MID",
+                  "team": "FUL",
+                  "webName": "King",
+                  "xp": 5.07
                 },
                 {
                   "id": 334,
@@ -44969,7 +45057,7 @@
                 }
               ],
               "targetGw": 5,
-              "totalXp": 70.75
+              "totalXp": 69.83
             },
             {
               "players": [
@@ -45076,7 +45164,7 @@
                   "position": "FWD",
                   "team": "CHE",
                   "webName": "Jo\u00e3o Pedro",
-                  "xp": 6.22
+                  "xp": 4.66
                 },
                 {
                   "id": 268,
@@ -45140,7 +45228,7 @@
                 }
               ],
               "targetGw": 6,
-              "totalXp": 71.74
+              "totalXp": 70.18
             },
             {
               "players": [
@@ -45235,19 +45323,19 @@
                   "xp": 6.11
                 },
                 {
-                  "id": 165,
+                  "id": 249,
                   "isCaptain": false,
                   "opponents": [
                     {
-                      "fdrRating": 3,
-                      "team": "EVE",
-                      "wasHome": false
+                      "fdrRating": 4,
+                      "team": "CHE",
+                      "wasHome": true
                     }
                   ],
                   "position": "FWD",
-                  "team": "CHE",
-                  "webName": "Jo\u00e3o Pedro",
-                  "xp": 5.69
+                  "team": "EVE",
+                  "webName": "Barry",
+                  "xp": 4.61
                 },
                 {
                   "id": 268,
@@ -45311,7 +45399,7 @@
                 }
               ],
               "targetGw": 7,
-              "totalXp": 75.7
+              "totalXp": 74.62
             }
           ],
           "xiByGw": [
@@ -45320,8 +45408,8 @@
               12,
               68,
               124,
-              165,
               249,
+              268,
               334,
               368,
               411,
@@ -45348,7 +45436,7 @@
               109,
               115,
               124,
-              165,
+              249,
               268,
               368,
               411,
@@ -45368,8 +45456,8 @@
           ],
           "hitCost": 0,
           "horizonGws": 5,
-          "netPoints": 377.59,
-          "points": 377.59,
+          "netPoints": 371.53,
+          "points": 371.53,
           "squad": [
             8,
             12,
@@ -45542,19 +45630,19 @@
                   "xp": 5.25
                 },
                 {
-                  "id": 165,
+                  "id": 249,
                   "isCaptain": false,
                   "opponents": [
                     {
-                      "fdrRating": 3,
-                      "team": "BRE",
-                      "wasHome": false
+                      "fdrRating": 2,
+                      "team": "IPS",
+                      "wasHome": true
                     }
                   ],
                   "position": "FWD",
-                  "team": "CHE",
-                  "webName": "Jo\u00e3o Pedro",
-                  "xp": 5.99
+                  "team": "EVE",
+                  "webName": "Barry",
+                  "xp": 5.12
                 },
                 {
                   "id": 368,
@@ -45633,7 +45721,7 @@
                 }
               ],
               "targetGw": 5,
-              "totalXp": 74.72
+              "totalXp": 73.85
             },
             {
               "players": [
@@ -45743,21 +45831,6 @@
                   "xp": 5.75
                 },
                 {
-                  "id": 165,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 3,
-                      "team": "BOU",
-                      "wasHome": true
-                    }
-                  ],
-                  "position": "FWD",
-                  "team": "CHE",
-                  "webName": "Jo\u00e3o Pedro",
-                  "xp": 6.22
-                },
-                {
                   "id": 368,
                   "isCaptain": false,
                   "opponents": [
@@ -45801,10 +45874,25 @@
                   "team": "MCI",
                   "webName": "Haaland",
                   "xp": 7.41
+                },
+                {
+                  "id": 449,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 2,
+                      "team": "COV",
+                      "wasHome": false
+                    }
+                  ],
+                  "position": "DEF",
+                  "team": "NEW",
+                  "webName": "Hall",
+                  "xp": 4.85
                 }
               ],
               "targetGw": 6,
-              "totalXp": 74.01
+              "totalXp": 72.64
             },
             {
               "players": [
@@ -45914,21 +46002,6 @@
                   "xp": 6.11
                 },
                 {
-                  "id": 165,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 3,
-                      "team": "EVE",
-                      "wasHome": false
-                    }
-                  ],
-                  "position": "FWD",
-                  "team": "CHE",
-                  "webName": "Jo\u00e3o Pedro",
-                  "xp": 5.69
-                },
-                {
                   "id": 368,
                   "isCaptain": false,
                   "opponents": [
@@ -45972,10 +46045,25 @@
                   "team": "MCI",
                   "webName": "Haaland",
                   "xp": 9.63
+                },
+                {
+                  "id": 449,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 3,
+                      "team": "AVL",
+                      "wasHome": true
+                    }
+                  ],
+                  "position": "DEF",
+                  "team": "NEW",
+                  "webName": "Hall",
+                  "xp": 5.01
                 }
               ],
               "targetGw": 7,
-              "totalXp": 79.85
+              "totalXp": 79.17
             },
             {
               "players": [
@@ -46067,7 +46155,7 @@
                   "position": "FWD",
                   "team": "CHE",
                   "webName": "Jo\u00e3o Pedro",
-                  "xp": 6.4
+                  "xp": 4.8
                 },
                 {
                   "id": 368,
@@ -46146,7 +46234,7 @@
                 }
               ],
               "targetGw": 8,
-              "totalXp": 74.96
+              "totalXp": 73.36
             },
             {
               "players": [
@@ -46238,7 +46326,7 @@
                   "position": "FWD",
                   "team": "CHE",
                   "webName": "Jo\u00e3o Pedro",
-                  "xp": 6.16
+                  "xp": 4.62
                 },
                 {
                   "id": 368,
@@ -46317,7 +46405,7 @@
                 }
               ],
               "targetGw": 9,
-              "totalXp": 74.05
+              "totalXp": 72.51
             }
           ],
           "xiByGw": [
@@ -46327,7 +46415,7 @@
               15,
               68,
               124,
-              165,
+              249,
               368,
               388,
               411,
@@ -46342,10 +46430,10 @@
               109,
               115,
               124,
-              165,
               368,
               388,
-              411
+              411,
+              449
             ],
             [
               8,
@@ -46355,10 +46443,10 @@
               109,
               115,
               124,
-              165,
               368,
               388,
-              411
+              411,
+              449
             ],
             [
               8,
@@ -46398,8 +46486,8 @@
           ],
           "hitCost": 0,
           "horizonGws": 5,
-          "netPoints": 370.79,
-          "points": 370.79,
+          "netPoints": 364.68,
+          "points": 364.68,
           "squad": [
             8,
             12,
@@ -46533,21 +46621,6 @@
                   "xp": 5.25
                 },
                 {
-                  "id": 165,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 3,
-                      "team": "BRE",
-                      "wasHome": false
-                    }
-                  ],
-                  "position": "FWD",
-                  "team": "CHE",
-                  "webName": "Jo\u00e3o Pedro",
-                  "xp": 5.99
-                },
-                {
                   "id": 249,
                   "isCaptain": false,
                   "opponents": [
@@ -46561,6 +46634,21 @@
                   "team": "EVE",
                   "webName": "Barry",
                   "xp": 5.12
+                },
+                {
+                  "id": 268,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 4,
+                      "team": "MUN",
+                      "wasHome": true
+                    }
+                  ],
+                  "position": "MID",
+                  "team": "FUL",
+                  "webName": "King",
+                  "xp": 5.07
                 },
                 {
                   "id": 368,
@@ -46639,7 +46727,7 @@
                 }
               ],
               "targetGw": 5,
-              "totalXp": 73.59
+              "totalXp": 72.67
             },
             {
               "players": [
@@ -46734,21 +46822,6 @@
                   "xp": 5.75
                 },
                 {
-                  "id": 165,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 3,
-                      "team": "BOU",
-                      "wasHome": true
-                    }
-                  ],
-                  "position": "FWD",
-                  "team": "CHE",
-                  "webName": "Jo\u00e3o Pedro",
-                  "xp": 6.22
-                },
-                {
                   "id": 268,
                   "isCaptain": false,
                   "opponents": [
@@ -46807,10 +46880,25 @@
                   "team": "MCI",
                   "webName": "Haaland",
                   "xp": 7.41
+                },
+                {
+                  "id": 449,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 2,
+                      "team": "COV",
+                      "wasHome": false
+                    }
+                  ],
+                  "position": "DEF",
+                  "team": "NEW",
+                  "webName": "Hall",
+                  "xp": 4.85
                 }
               ],
               "targetGw": 6,
-              "totalXp": 73.05
+              "totalXp": 71.68
             },
             {
               "players": [
@@ -46905,21 +46993,6 @@
                   "xp": 6.11
                 },
                 {
-                  "id": 165,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 3,
-                      "team": "EVE",
-                      "wasHome": false
-                    }
-                  ],
-                  "position": "FWD",
-                  "team": "CHE",
-                  "webName": "Jo\u00e3o Pedro",
-                  "xp": 5.69
-                },
-                {
                   "id": 268,
                   "isCaptain": false,
                   "opponents": [
@@ -46978,10 +47051,25 @@
                   "team": "MCI",
                   "webName": "Haaland",
                   "xp": 9.63
+                },
+                {
+                  "id": 449,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 3,
+                      "team": "AVL",
+                      "wasHome": true
+                    }
+                  ],
+                  "position": "DEF",
+                  "team": "NEW",
+                  "webName": "Hall",
+                  "xp": 5.01
                 }
               ],
               "targetGw": 7,
-              "totalXp": 78.42
+              "totalXp": 77.74
             },
             {
               "players": [
@@ -47058,7 +47146,7 @@
                   "position": "FWD",
                   "team": "CHE",
                   "webName": "Jo\u00e3o Pedro",
-                  "xp": 6.4
+                  "xp": 4.8
                 },
                 {
                   "id": 268,
@@ -47152,7 +47240,7 @@
                 }
               ],
               "targetGw": 8,
-              "totalXp": 73.56
+              "totalXp": 71.96
             },
             {
               "players": [
@@ -47229,7 +47317,7 @@
                   "position": "FWD",
                   "team": "CHE",
                   "webName": "Jo\u00e3o Pedro",
-                  "xp": 6.16
+                  "xp": 4.62
                 },
                 {
                   "id": 268,
@@ -47323,7 +47411,7 @@
                 }
               ],
               "targetGw": 9,
-              "totalXp": 72.17
+              "totalXp": 70.63
             }
           ],
           "xiByGw": [
@@ -47332,8 +47420,8 @@
               12,
               15,
               124,
-              165,
               249,
+              268,
               368,
               388,
               411,
@@ -47347,11 +47435,11 @@
               109,
               115,
               124,
-              165,
               268,
               368,
               388,
-              411
+              411,
+              449
             ],
             [
               8,
@@ -47360,11 +47448,11 @@
               109,
               115,
               124,
-              165,
               268,
               368,
               388,
-              411
+              411,
+              449
             ],
             [
               8,
@@ -47404,20 +47492,20 @@
           ],
           "hitCost": 0,
           "horizonGws": 5,
-          "netPoints": 359.53,
-          "points": 359.53,
+          "netPoints": 353.23,
+          "points": 353.23,
           "squad": [
             8,
             12,
             31,
-            68,
             109,
             115,
             124,
+            154,
             165,
             249,
             268,
-            334,
+            330,
             368,
             411,
             449,
@@ -47430,25 +47518,25 @@
                 "news": null,
                 "status": "a"
               },
-              "id": 68,
-              "position": "MID",
-              "price": 6.1,
-              "team": "BOU",
-              "webName": "Tavernier"
+              "id": 330,
+              "position": "DEF",
+              "price": 4.5,
+              "team": "LEE",
+              "webName": "Bogle"
             }
           ],
           "transfersOut": [
             {
               "availability": {
-                "chance": 100,
+                "chance": null,
                 "news": null,
                 "status": "a"
               },
-              "id": 154,
-              "position": "MID",
-              "price": 9.7,
-              "team": "CHE",
-              "webName": "Palmer"
+              "id": 334,
+              "position": "DEF",
+              "price": 5.0,
+              "team": "LEE",
+              "webName": "Muharemovi\u0107"
             }
           ],
           "weeks": [
@@ -47485,21 +47573,6 @@
                   "xp": 7.39
                 },
                 {
-                  "id": 68,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 4,
-                      "team": "LIV",
-                      "wasHome": true
-                    }
-                  ],
-                  "position": "MID",
-                  "team": "BOU",
-                  "webName": "Tavernier",
-                  "xp": 6.25
-                },
-                {
                   "id": 124,
                   "isCaptain": false,
                   "opponents": [
@@ -47515,7 +47588,7 @@
                   "xp": 5.25
                 },
                 {
-                  "id": 165,
+                  "id": 154,
                   "isCaptain": false,
                   "opponents": [
                     {
@@ -47524,10 +47597,10 @@
                       "wasHome": false
                     }
                   ],
-                  "position": "FWD",
+                  "position": "MID",
                   "team": "CHE",
-                  "webName": "Jo\u00e3o Pedro",
-                  "xp": 5.99
+                  "webName": "Palmer",
+                  "xp": 5.39
                 },
                 {
                   "id": 249,
@@ -47545,7 +47618,22 @@
                   "xp": 5.12
                 },
                 {
-                  "id": 334,
+                  "id": 268,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 4,
+                      "team": "MUN",
+                      "wasHome": true
+                    }
+                  ],
+                  "position": "MID",
+                  "team": "FUL",
+                  "webName": "King",
+                  "xp": 5.07
+                },
+                {
+                  "id": 330,
                   "isCaptain": false,
                   "opponents": [
                     {
@@ -47556,8 +47644,8 @@
                   ],
                   "position": "DEF",
                   "team": "LEE",
-                  "webName": "Muharemovi\u0107",
-                  "xp": 4.41
+                  "webName": "Bogle",
+                  "xp": 5.78
                 },
                 {
                   "id": 368,
@@ -47621,7 +47709,7 @@
                 }
               ],
               "targetGw": 5,
-              "totalXp": 70.75
+              "totalXp": 70.34
             },
             {
               "players": [
@@ -47654,21 +47742,6 @@
                   "team": "ARS",
                   "webName": "Saka",
                   "xp": 7.97
-                },
-                {
-                  "id": 68,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 4,
-                      "team": "CHE",
-                      "wasHome": false
-                    }
-                  ],
-                  "position": "MID",
-                  "team": "BOU",
-                  "webName": "Tavernier",
-                  "xp": 6.24
                 },
                 {
                   "id": 109,
@@ -47716,6 +47789,21 @@
                   "xp": 5.75
                 },
                 {
+                  "id": 154,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 3,
+                      "team": "BOU",
+                      "wasHome": true
+                    }
+                  ],
+                  "position": "MID",
+                  "team": "CHE",
+                  "webName": "Palmer",
+                  "xp": 5.66
+                },
+                {
                   "id": 165,
                   "isCaptain": false,
                   "opponents": [
@@ -47728,7 +47816,7 @@
                   "position": "FWD",
                   "team": "CHE",
                   "webName": "Jo\u00e3o Pedro",
-                  "xp": 6.22
+                  "xp": 4.66
                 },
                 {
                   "id": 268,
@@ -47792,7 +47880,7 @@
                 }
               ],
               "targetGw": 6,
-              "totalXp": 71.74
+              "totalXp": 69.6
             },
             {
               "players": [
@@ -47825,21 +47913,6 @@
                   "team": "ARS",
                   "webName": "Saka",
                   "xp": 7.38
-                },
-                {
-                  "id": 68,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 2,
-                      "team": "SUN",
-                      "wasHome": true
-                    }
-                  ],
-                  "position": "MID",
-                  "team": "BOU",
-                  "webName": "Tavernier",
-                  "xp": 6.55
                 },
                 {
                   "id": 109,
@@ -47887,7 +47960,7 @@
                   "xp": 6.11
                 },
                 {
-                  "id": 165,
+                  "id": 154,
                   "isCaptain": false,
                   "opponents": [
                     {
@@ -47896,10 +47969,10 @@
                       "wasHome": false
                     }
                   ],
-                  "position": "FWD",
+                  "position": "MID",
                   "team": "CHE",
-                  "webName": "Jo\u00e3o Pedro",
-                  "xp": 5.69
+                  "webName": "Palmer",
+                  "xp": 5.2
                 },
                 {
                   "id": 268,
@@ -47915,6 +47988,21 @@
                   "team": "FUL",
                   "webName": "King",
                   "xp": 5.12
+                },
+                {
+                  "id": 330,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 4,
+                      "team": "MUN",
+                      "wasHome": true
+                    }
+                  ],
+                  "position": "DEF",
+                  "team": "LEE",
+                  "webName": "Bogle",
+                  "xp": 5.57
                 },
                 {
                   "id": 368,
@@ -47963,7 +48051,7 @@
                 }
               ],
               "targetGw": 7,
-              "totalXp": 75.7
+              "totalXp": 74.23
             },
             {
               "players": [
@@ -47998,21 +48086,6 @@
                   "xp": 7.59
                 },
                 {
-                  "id": 68,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 4,
-                      "team": "MUN",
-                      "wasHome": false
-                    }
-                  ],
-                  "position": "MID",
-                  "team": "BOU",
-                  "webName": "Tavernier",
-                  "xp": 6.32
-                },
-                {
                   "id": 124,
                   "isCaptain": false,
                   "opponents": [
@@ -48028,6 +48101,21 @@
                   "xp": 5.49
                 },
                 {
+                  "id": 154,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 3,
+                      "team": "TOT",
+                      "wasHome": true
+                    }
+                  ],
+                  "position": "MID",
+                  "team": "CHE",
+                  "webName": "Palmer",
+                  "xp": 5.81
+                },
+                {
                   "id": 165,
                   "isCaptain": false,
                   "opponents": [
@@ -48040,7 +48128,7 @@
                   "position": "FWD",
                   "team": "CHE",
                   "webName": "Jo\u00e3o Pedro",
-                  "xp": 6.4
+                  "xp": 4.8
                 },
                 {
                   "id": 268,
@@ -48058,7 +48146,7 @@
                   "xp": 4.92
                 },
                 {
-                  "id": 334,
+                  "id": 330,
                   "isCaptain": false,
                   "opponents": [
                     {
@@ -48069,8 +48157,8 @@
                   ],
                   "position": "DEF",
                   "team": "LEE",
-                  "webName": "Muharemovi\u0107",
-                  "xp": 4.24
+                  "webName": "Bogle",
+                  "xp": 5.45
                 },
                 {
                   "id": 368,
@@ -48134,7 +48222,7 @@
                 }
               ],
               "targetGw": 8,
-              "totalXp": 71.38
+              "totalXp": 70.48
             },
             {
               "players": [
@@ -48169,21 +48257,6 @@
                   "xp": 6.78
                 },
                 {
-                  "id": 68,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 2,
-                      "team": "LEE",
-                      "wasHome": true
-                    }
-                  ],
-                  "position": "MID",
-                  "team": "BOU",
-                  "webName": "Tavernier",
-                  "xp": 6.72
-                },
-                {
                   "id": 124,
                   "isCaptain": false,
                   "opponents": [
@@ -48199,6 +48272,21 @@
                   "xp": 5.28
                 },
                 {
+                  "id": 154,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 4,
+                      "team": "MUN",
+                      "wasHome": true
+                    }
+                  ],
+                  "position": "MID",
+                  "team": "CHE",
+                  "webName": "Palmer",
+                  "xp": 5.61
+                },
+                {
                   "id": 165,
                   "isCaptain": false,
                   "opponents": [
@@ -48211,7 +48299,7 @@
                   "position": "FWD",
                   "team": "CHE",
                   "webName": "Jo\u00e3o Pedro",
-                  "xp": 6.16
+                  "xp": 4.62
                 },
                 {
                   "id": 268,
@@ -48229,7 +48317,7 @@
                   "xp": 4.84
                 },
                 {
-                  "id": 334,
+                  "id": 330,
                   "isCaptain": false,
                   "opponents": [
                     {
@@ -48240,8 +48328,8 @@
                   ],
                   "position": "DEF",
                   "team": "LEE",
-                  "webName": "Muharemovi\u0107",
-                  "xp": 3.9
+                  "webName": "Bogle",
+                  "xp": 5.17
                 },
                 {
                   "id": 368,
@@ -48305,18 +48393,18 @@
                 }
               ],
               "targetGw": 9,
-              "totalXp": 69.96
+              "totalXp": 68.58
             }
           ],
           "xiByGw": [
             [
               8,
               12,
-              68,
               124,
-              165,
+              154,
               249,
-              334,
+              268,
+              330,
               368,
               411,
               449,
@@ -48325,10 +48413,10 @@
             [
               8,
               12,
-              68,
               109,
               115,
               124,
+              154,
               165,
               268,
               368,
@@ -48338,12 +48426,12 @@
             [
               8,
               12,
-              68,
               109,
               115,
               124,
-              165,
+              154,
               268,
+              330,
               368,
               411,
               449
@@ -48351,11 +48439,11 @@
             [
               8,
               12,
-              68,
               124,
+              154,
               165,
               268,
-              334,
+              330,
               368,
               411,
               449,
@@ -48364,11 +48452,11 @@
             [
               8,
               12,
-              68,
               124,
+              154,
               165,
               268,
-              334,
+              330,
               368,
               411,
               449,
@@ -48388,24 +48476,24 @@
       ],
       "hitCost": 0,
       "horizonGws": 1,
-      "netPoints": 79.29,
-      "points": 79.29,
+      "netPoints": 79.22,
+      "points": 79.22,
       "squad": [
         12,
         15,
         68,
-        165,
+        94,
         229,
-        321,
+        303,
+        379,
         385,
         388,
         391,
         411,
-        427,
         480,
-        508,
-        629,
-        638
+        603,
+        623,
+        651
       ],
       "transfersIn": [
         {
@@ -48450,11 +48538,11 @@
             "news": null,
             "status": "a"
           },
-          "id": 165,
-          "position": "FWD",
-          "price": 7.8,
-          "team": "CHE",
-          "webName": "Jo\u00e3o Pedro"
+          "id": 94,
+          "position": "MID",
+          "price": 6.1,
+          "team": "BRE",
+          "webName": "Schade"
         },
         {
           "availability": {
@@ -48474,11 +48562,23 @@
             "news": null,
             "status": "a"
           },
-          "id": 321,
-          "position": "FWD",
-          "price": 4.5,
+          "id": 303,
+          "position": "DEF",
+          "price": 3.9,
           "team": "IPS",
-          "webName": "Walle Egeli"
+          "webName": "Kipr\u00e9"
+        },
+        {
+          "availability": {
+            "chance": null,
+            "news": null,
+            "status": "a"
+          },
+          "id": 379,
+          "position": "FWD",
+          "price": 9.1,
+          "team": "LIV",
+          "webName": "Isak"
         },
         {
           "availability": {
@@ -48530,18 +48630,6 @@
         },
         {
           "availability": {
-            "chance": null,
-            "news": null,
-            "status": "a"
-          },
-          "id": 427,
-          "position": "MID",
-          "price": 7.9,
-          "team": "MUN",
-          "webName": "Mbeumo"
-        },
-        {
-          "availability": {
             "chance": 100,
             "news": null,
             "status": "a"
@@ -48558,23 +48646,11 @@
             "news": null,
             "status": "a"
           },
-          "id": 508,
+          "id": 603,
           "position": "DEF",
-          "price": 4.0,
-          "team": "TOT",
-          "webName": "Davies"
-        },
-        {
-          "availability": {
-            "chance": null,
-            "news": null,
-            "status": "a"
-          },
-          "id": 629,
-          "position": "GKP",
           "price": 4.0,
           "team": "LEE",
-          "webName": "Zetterer"
+          "webName": "Lienou"
         },
         {
           "availability": {
@@ -48582,11 +48658,23 @@
             "news": null,
             "status": "a"
           },
-          "id": 638,
-          "position": "DEF",
+          "id": 623,
+          "position": "GKP",
           "price": 4.0,
-          "team": "HUL",
-          "webName": "Norton-Cuffy"
+          "team": "COV",
+          "webName": "Bentley"
+        },
+        {
+          "availability": {
+            "chance": null,
+            "news": null,
+            "status": "a"
+          },
+          "id": 651,
+          "position": "FWD",
+          "price": 4.5,
+          "team": "SUN",
+          "webName": "J.Angulo"
         }
       ],
       "transfersOut": [],
@@ -48639,19 +48727,19 @@
               "xp": 6.25
             },
             {
-              "id": 165,
+              "id": 94,
               "isCaptain": false,
               "opponents": [
                 {
-                  "fdrRating": 3,
-                  "team": "BRE",
-                  "wasHome": false
+                  "fdrRating": 4,
+                  "team": "CHE",
+                  "wasHome": true
                 }
               ],
-              "position": "FWD",
-              "team": "CHE",
-              "webName": "Jo\u00e3o Pedro",
-              "xp": 5.99
+              "position": "MID",
+              "team": "BRE",
+              "webName": "Schade",
+              "xp": 5.81
             },
             {
               "id": 229,
@@ -48682,6 +48770,21 @@
               "team": "LEE",
               "webName": "Trafford",
               "xp": 4.62
+            },
+            {
+              "id": 379,
+              "isCaptain": false,
+              "opponents": [
+                {
+                  "fdrRating": 3,
+                  "team": "BOU",
+                  "wasHome": false
+                }
+              ],
+              "position": "FWD",
+              "team": "LIV",
+              "webName": "Isak",
+              "xp": 6.17
             },
             {
               "id": 388,
@@ -48729,21 +48832,6 @@
               "xp": 8.16
             },
             {
-              "id": 427,
-              "isCaptain": false,
-              "opponents": [
-                {
-                  "fdrRating": 3,
-                  "team": "FUL",
-                  "wasHome": false
-                }
-              ],
-              "position": "MID",
-              "team": "MUN",
-              "webName": "Mbeumo",
-              "xp": 6.06
-            },
-            {
               "id": 480,
               "isCaptain": false,
               "opponents": [
@@ -48760,7 +48848,7 @@
             }
           ],
           "targetGw": 5,
-          "totalXp": 79.29
+          "totalXp": 79.22
         }
       ],
       "xiByGw": [
@@ -48768,13 +48856,13 @@
           12,
           15,
           68,
-          165,
+          94,
           229,
           385,
+          379,
           388,
           391,
           411,
-          427,
           480
         ]
       ]
@@ -48794,7 +48882,6 @@
           8,
           12,
           15,
-          109,
           115,
           124,
           165,
@@ -48805,7 +48892,8 @@
           388,
           391,
           411,
-          449
+          449,
+          496
         ],
         "targetGw": 5,
         "transfersIn": [
@@ -48873,6 +48961,18 @@
           },
           {
             "availability": {
+              "chance": null,
+              "news": null,
+              "status": "a"
+            },
+            "id": 109,
+            "position": "GKP",
+            "price": 4.5,
+            "team": "BHA",
+            "webName": "Verbruggen"
+          },
+          {
+            "availability": {
               "chance": 100,
               "news": null,
               "status": "a"
@@ -48894,21 +48994,9 @@
             "price": 5.0,
             "team": "LEE",
             "webName": "Muharemovi\u0107"
-          },
-          {
-            "availability": {
-              "chance": null,
-              "news": null,
-              "status": "a"
-            },
-            "id": 496,
-            "position": "GKP",
-            "price": 4.5,
-            "team": "TOT",
-            "webName": "Kinsky"
           }
         ],
-        "weekXp": 76.31,
+        "weekXp": 75.44,
         "xi": [
           {
             "id": 8,
@@ -48971,19 +49059,19 @@
             "xp": 5.25
           },
           {
-            "id": 165,
+            "id": 249,
             "isCaptain": false,
             "opponents": [
               {
-                "fdrRating": 3,
-                "team": "BRE",
-                "wasHome": false
+                "fdrRating": 2,
+                "team": "IPS",
+                "wasHome": true
               }
             ],
             "position": "FWD",
-            "team": "CHE",
-            "webName": "Jo\u00e3o Pedro",
-            "xp": 5.99
+            "team": "EVE",
+            "webName": "Barry",
+            "xp": 5.12
           },
           {
             "id": 385,
@@ -49088,7 +49176,6 @@
           12,
           15,
           68,
-          109,
           115,
           124,
           165,
@@ -49098,7 +49185,8 @@
           388,
           391,
           411,
-          449
+          449,
+          496
         ],
         "targetGw": 6,
         "transfersIn": [
@@ -49129,7 +49217,7 @@
             "webName": "Szoboszlai"
           }
         ],
-        "weekXp": 74.55,
+        "weekXp": 73.28,
         "xi": [
           {
             "id": 8,
@@ -49192,6 +49280,21 @@
             "xp": 6.24
           },
           {
+            "id": 115,
+            "isCaptain": false,
+            "opponents": [
+              {
+                "fdrRating": 3,
+                "team": "SUN",
+                "wasHome": false
+              }
+            ],
+            "position": "DEF",
+            "team": "BHA",
+            "webName": "De Cuyper",
+            "xp": 4.95
+          },
+          {
             "id": 124,
             "isCaptain": false,
             "opponents": [
@@ -49205,21 +49308,6 @@
             "team": "BHA",
             "webName": "Gro\u00df",
             "xp": 5.75
-          },
-          {
-            "id": 165,
-            "isCaptain": false,
-            "opponents": [
-              {
-                "fdrRating": 3,
-                "team": "BOU",
-                "wasHome": true
-              }
-            ],
-            "position": "FWD",
-            "team": "CHE",
-            "webName": "Jo\u00e3o Pedro",
-            "xp": 6.22
           },
           {
             "id": 268,
@@ -49309,7 +49397,6 @@
           12,
           15,
           68,
-          109,
           115,
           124,
           249,
@@ -49319,7 +49406,8 @@
           388,
           391,
           411,
-          449
+          449,
+          496
         ],
         "targetGw": 7,
         "transfersIn": [
@@ -49339,9 +49427,9 @@
         "transfersOut": [
           {
             "availability": {
-              "chance": null,
-              "news": null,
-              "status": "a"
+              "chance": 75,
+              "news": "Unspecified injury - 75% chance of playing",
+              "status": "d"
             },
             "id": 165,
             "position": "FWD",
@@ -49530,7 +49618,6 @@
           12,
           15,
           68,
-          109,
           115,
           124,
           249,
@@ -49540,6 +49627,7 @@
           391,
           411,
           449,
+          496,
           544
         ],
         "targetGw": 8,
@@ -49741,26 +49829,26 @@
         ]
       },
       {
-        "bankAfter": 1.4,
+        "bankAfter": 1.9,
         "feasible": true,
         "ftAfter": 1,
         "ftBefore": 1,
         "hitCost": 0,
         "squad": [
-          8,
           12,
           15,
           68,
-          109,
           115,
           124,
-          165,
+          173,
           249,
+          379,
           385,
           388,
           391,
           411,
           449,
+          496,
           544
         ],
         "targetGw": 9,
@@ -49771,11 +49859,11 @@
               "news": null,
               "status": "a"
             },
-            "id": 165,
-            "position": "FWD",
-            "price": 7.8,
-            "team": "CHE",
-            "webName": "Jo\u00e3o Pedro"
+            "id": 173,
+            "position": "DEF",
+            "price": 4.0,
+            "team": "COV",
+            "webName": "Thomas"
           }
         ],
         "transfersOut": [
@@ -49785,14 +49873,14 @@
               "news": null,
               "status": "a"
             },
-            "id": 379,
-            "position": "FWD",
-            "price": 9.1,
-            "team": "LIV",
-            "webName": "Isak"
+            "id": 8,
+            "position": "DEF",
+            "price": 5.8,
+            "team": "ARS",
+            "webName": "Calafiori"
           }
         ],
-        "weekXp": 76.39,
+        "weekXp": 75.66,
         "xi": [
           {
             "id": 12,
@@ -49840,34 +49928,19 @@
             "xp": 6.72
           },
           {
-            "id": 124,
+            "id": 173,
             "isCaptain": false,
             "opponents": [
               {
-                "fdrRating": 5,
-                "team": "MCI",
-                "wasHome": false
-              }
-            ],
-            "position": "MID",
-            "team": "BHA",
-            "webName": "Gro\u00df",
-            "xp": 5.28
-          },
-          {
-            "id": 165,
-            "isCaptain": false,
-            "opponents": [
-              {
-                "fdrRating": 4,
-                "team": "MUN",
+                "fdrRating": 2,
+                "team": "SUN",
                 "wasHome": true
               }
             ],
-            "position": "FWD",
-            "team": "CHE",
-            "webName": "Jo\u00e3o Pedro",
-            "xp": 6.16
+            "position": "DEF",
+            "team": "COV",
+            "webName": "Thomas",
+            "xp": 5.39
           },
           {
             "id": 385,
@@ -49883,6 +49956,21 @@
             "team": "LEE",
             "webName": "Trafford",
             "xp": 4.33
+          },
+          {
+            "id": 379,
+            "isCaptain": false,
+            "opponents": [
+              {
+                "fdrRating": 4,
+                "team": "ARS",
+                "wasHome": true
+              }
+            ],
+            "position": "FWD",
+            "team": "LIV",
+            "webName": "Isak",
+            "xp": 5.32
           },
           {
             "id": 388,
@@ -49988,7 +50076,7 @@
       165
     ],
     "bench": [
-      268,
+      165,
       115,
       31,
       109
@@ -50121,13 +50209,13 @@
           }
         ],
         "position": "DEF",
-        "price": 4.8,
+        "price": 4.9,
         "projectedPoints": 4.01,
         "provisional": false,
         "rateSource": "history",
         "rationale": "4.0 proj, under the 3.4 XI cut \u2014 vARS (FDR 4)",
         "role": "bench",
-        "sellPrice": 4.8,
+        "sellPrice": 4.9,
         "team": "BHA",
         "webName": "De Cuyper",
         "windowPoints": 21.89
@@ -50686,20 +50774,20 @@
       },
       {
         "availability": {
-          "chance": null,
-          "news": null,
-          "status": "a"
+          "chance": 75,
+          "news": "Unspecified injury - 75% chance of playing",
+          "status": "d"
         },
         "breakdown": {
-          "availabilityMultiplier": 1.0,
+          "availabilityMultiplier": 0.75,
           "components": {
-            "appearance": 2.0,
-            "assists": 0.27,
-            "bonus": 1.33,
-            "cards": -0.22,
+            "appearance": 1.5,
+            "assists": 0.2,
+            "bonus": 1.0,
+            "cards": -0.17,
             "cleanSheet": 0.0,
-            "defensiveContribution": 0.82,
-            "goals": 1.79,
+            "defensiveContribution": 0.62,
+            "goals": 1.34,
             "goalsConceded": 0.0,
             "saves": 0.0
           },
@@ -50716,15 +50804,15 @@
               "wasHome": false
             }
           ],
-          "points": 5.99,
+          "points": 4.49,
           "provisional": false,
           "rateSource": "history"
         },
         "elementType": 4,
         "floorCeiling": {
           "bandProvisional": false,
-          "ceiling": 8.09,
-          "floor": 3.89
+          "ceiling": 6.59,
+          "floor": 2.39
         },
         "id": 165,
         "isCaptain": false,
@@ -50743,15 +50831,15 @@
         ],
         "position": "FWD",
         "price": 7.8,
-        "projectedPoints": 5.99,
+        "projectedPoints": 4.49,
         "provisional": false,
         "rateSource": "history",
-        "rationale": "6.0 proj \u2014 @BRE (FDR 3)",
-        "role": "start",
+        "rationale": "4.5 proj, under the 3.4 XI cut \u2014 @BRE (FDR 3)",
+        "role": "bench",
         "sellPrice": 7.8,
         "team": "CHE",
         "webName": "Jo\u00e3o Pedro",
-        "windowPoints": 30.46
+        "windowPoints": 22.84
       },
       {
         "availability": {
@@ -51022,8 +51110,8 @@
         "projectedPoints": 5.07,
         "provisional": false,
         "rateSource": "history",
-        "rationale": "5.1 proj, under the 3.4 XI cut \u2014 vMUN (FDR 4)",
-        "role": "bench",
+        "rationale": "5.1 proj \u2014 vMUN (FDR 4)",
+        "role": "start",
         "sellPrice": 5.5,
         "team": "FUL",
         "webName": "King",
@@ -51039,11 +51127,11 @@
       368,
       154,
       124,
+      268,
       411,
-      165,
       249
     ],
-    "windowPoints": 387.29,
+    "windowPoints": 379.67,
     "yourBench": [
       496,
       449,
@@ -51122,13 +51210,13 @@
       "saves": 0.0
     },
     "165": {
-      "appearance": 2.0,
-      "assists": 0.27,
-      "bonus": 1.33,
-      "cards": -0.22,
+      "appearance": 1.5,
+      "assists": 0.2,
+      "bonus": 1.0,
+      "cards": -0.17,
       "cleanSheet": 0.0,
-      "defensiveContribution": 0.82,
-      "goals": 1.79,
+      "defensiveContribution": 0.62,
+      "goals": 1.34,
       "goalsConceded": 0.0,
       "saves": 0.0
     },
@@ -51236,7 +51324,7 @@
   "upcoming": [
     {
       "bench": [
-        268,
+        165,
         115,
         31,
         109
@@ -51384,7 +51472,7 @@
               "wasHome": false
             }
           ],
-          "projectedPoints": 5.99,
+          "projectedPoints": 4.49,
           "provisional": false
         },
         {
@@ -51440,7 +51528,7 @@
           "provisional": false
         }
       ],
-      "points": 69.9,
+      "points": 69.0,
       "startingXi": [
         496,
         8,
@@ -51450,8 +51538,8 @@
         368,
         154,
         124,
+        268,
         411,
-        165,
         249
       ],
       "viceCaptainId": 12
@@ -51606,7 +51694,7 @@
               "wasHome": true
             }
           ],
-          "projectedPoints": 6.22,
+          "projectedPoints": 4.66,
           "provisional": false
         },
         {
@@ -51662,7 +51750,7 @@
           "provisional": false
         }
       ],
-      "points": 71.2,
+      "points": 69.6,
       "startingXi": [
         109,
         8,
@@ -51680,7 +51768,7 @@
     },
     {
       "bench": [
-        249,
+        165,
         334,
         496,
         31
@@ -51828,7 +51916,7 @@
               "wasHome": false
             }
           ],
-          "projectedPoints": 5.69,
+          "projectedPoints": 4.27,
           "provisional": false
         },
         {
@@ -51884,7 +51972,7 @@
           "provisional": false
         }
       ],
-      "points": 74.3,
+      "points": 73.3,
       "startingXi": [
         109,
         8,
@@ -51896,7 +51984,7 @@
         154,
         268,
         411,
-        165
+        249
       ],
       "viceCaptainId": 12
     },
@@ -52050,7 +52138,7 @@
               "wasHome": true
             }
           ],
-          "projectedPoints": 6.4,
+          "projectedPoints": 4.8,
           "provisional": false
         },
         {
@@ -52106,7 +52194,7 @@
           "provisional": false
         }
       ],
-      "points": 70.9,
+      "points": 69.3,
       "startingXi": [
         496,
         8,
@@ -52272,7 +52360,7 @@
               "wasHome": true
             }
           ],
-          "projectedPoints": 6.16,
+          "projectedPoints": 4.62,
           "provisional": false
         },
         {
@@ -52328,7 +52416,7 @@
           "provisional": false
         }
       ],
-      "points": 68.8,
+      "points": 67.3,
       "startingXi": [
         496,
         449,
@@ -52352,7 +52440,7 @@
   },
   "xiFloorCeiling": {
     "bandProvisional": false,
-    "ceiling": 77.88,
-    "floor": 61.9
+    "ceiling": 76.94,
+    "floor": 61.0
   }
 }
