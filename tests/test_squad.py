@@ -12,7 +12,7 @@ from engine.config import (
     SAFETY_MIN_SAMPLE_PER_POSITION,
 )
 from engine.history import ColdStart
-from engine.squad import floor_ceiling, window_points, window_points_by_gw, xi_floor_ceiling
+from engine.squad import best_xi, floor_ceiling, window_points, window_points_by_gw, xi_floor_ceiling
 
 
 def frame(*ids: int) -> pd.DataFrame:
@@ -142,5 +142,28 @@ def test_xi_floor_ceiling_is_provisional_if_any_player_is():
     ]
 
     assert xi_floor_ceiling(xi, by_position)["bandProvisional"] is True
+
+
+def _player(pid, elem_type, projected):
+    return {"id": pid, "element_type": elem_type, "projected": projected}
+
+
+def test_best_xi_bench_always_puts_the_gk_first():
+    # A valid 15-man squad (1-4-4-2 starting XI) where the benched GK's
+    # projected score is the *lowest* of the four bench spots -- proving the
+    # bench order is GK-first by rule, not just because the GK happens to
+    # rank highest among bench players that gameweek.
+    squad = [
+        _player(1, 1, 10.0), _player(2, 1, 0.5),  # GKP: starts, bench (weakest bench score)
+        _player(11, 2, 9.0), _player(12, 2, 8.0), _player(13, 2, 7.0), _player(14, 2, 6.0),
+        _player(15, 2, 5.0),  # DEF: 4 start, 1 bench
+        _player(21, 3, 9.0), _player(22, 3, 8.0), _player(23, 3, 7.0), _player(24, 3, 6.0),
+        _player(25, 3, 4.0),  # MID: 4 start, 1 bench
+        _player(31, 4, 9.0), _player(32, 4, 8.0), _player(33, 4, 3.0),  # FWD: 2 start, 1 bench
+    ]
+
+    _, bench = best_xi(squad)
+
+    assert [p["id"] for p in bench] == [2, 15, 25, 33]  # GK first, then by projected desc
 
 

@@ -66,6 +66,7 @@ export type LivePayload = {
   marginProvisional: boolean;
   parBuffer: number;
   parBufferProvisional: number;
+  nextDeadline: string | null; // the next not-yet-passed gameweek deadline, for the idle-state countdown
 };
 
 // Minimal shapes of the FPL responses this module reads.
@@ -76,6 +77,7 @@ type FplEvent = {
   finished?: boolean;
   data_checked?: boolean;
   average_entry_score?: number | null;
+  deadline_time?: string | null;
 };
 export type FplBootstrap = {
   events: FplEvent[];
@@ -257,6 +259,13 @@ export function buildLivePayload(args: {
   const event = bootstrap.events.find((e) => e.id === gameweek);
   const matchesLive = gwFixtures.some((f) => f.started && !(f.finished ?? f.finished_provisional));
 
+  const nowMs = Date.parse(now);
+  const nextDeadline =
+    bootstrap.events
+      .filter((e) => e.deadline_time && Date.parse(e.deadline_time) > nowMs)
+      .sort((a, b) => Date.parse(a.deadline_time!) - Date.parse(b.deadline_time!))[0]
+      ?.deadline_time ?? null;
+
   return {
     gameweek,
     generatedAt: now,
@@ -281,6 +290,7 @@ export function buildLivePayload(args: {
     marginProvisional: inputs.marginProvisional,
     parBuffer: inputs.parBuffer,
     parBufferProvisional: inputs.parBufferProvisional,
+    nextDeadline,
   };
 }
 

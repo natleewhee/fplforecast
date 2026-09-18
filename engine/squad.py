@@ -57,7 +57,11 @@ def best_xi(squad: list[dict]) -> tuple[list[dict], list[dict]]:
 
     starting_ids = {p["id"] for p in best_combo}
     bench = [p for p in squad if p["id"] not in starting_ids]
-    bench.sort(key=lambda p: p["projected"], reverse=True)
+    # GK always first (bench position 1), matching real FPL's own bench-order
+    # convention and the "who can even sub in" rule (only the benched GK can
+    # replace a starting GK) -- outfield subs then rank by projected points,
+    # the substitution priority order.
+    bench.sort(key=lambda p: (p["element_type"] != 1, -p["projected"]))
     return best_combo, bench
 
 

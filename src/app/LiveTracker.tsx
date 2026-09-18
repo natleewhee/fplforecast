@@ -10,6 +10,7 @@ import {
   type TrackerView,
 } from "@/lib/liveBlend";
 import { fdrColor } from "@/lib/teamColors";
+import type { GameweekReview } from "@/lib/snapshots";
 
 /* The in-gameweek surface (KTD7): while matches are live it leads the page with
  * a projected final total, the par band and arrow, and a per-player breakdown,
@@ -115,7 +116,7 @@ function hhmm(iso: string | null): string {
 
 type Polls = { cur: LivePayload | null; prev: LivePayload | null };
 
-export default function LiveTracker() {
+export default function LiveTracker({ lastGameweek }: { lastGameweek: GameweekReview | null }) {
   // Keep the last two polls: `prev` feeds off-pitch inference (frozen minutes).
   const [polls, setPolls] = useState<Polls>({ cur: null, prev: null });
   const [now, setNow] = useState<number>(() => Date.now());
@@ -185,19 +186,86 @@ export default function LiveTracker() {
   );
 
   if (loading) return <TrackerSkeleton />;
-  if (!polls.cur || !view) return null; // first load failed — pitch and table still render
+  // First load failed outright (no live payload at all) -- still show
+  // whatever we have (last result, and the deadline once a payload lands).
+  if (!polls.cur || !view) {
+    return <IdleTracker lastGameweek={lastGameweek} nextDeadline={null} now={now} />;
+  }
 
   const anyStarted = polls.cur.fixtures.some((f) => f.started);
-  // Before any match kicks off there is nothing to track and par is meaningless
-  // (KD6) — stay hidden so the planning table and pitch lead. Once the
-  // gameweek is data_checked (bonus applied, stats final) the tracker's job
-  // is done too — hand the lead back to the planning table for the next
-  // gameweek's decisions (KTD7), rather than sitting on top showing a frozen
-  // final score for the days until the next deadline.
-  if (!active && (!anyStarted || polls.cur.dataChecked)) return null;
+  // Before any match kicks off there is nothing to *track* and par is
+  // meaningless (KD6), and once the gameweek is data_checked (bonus applied,
+  // stats final) the tracker's job is done too (KTD7) -- but the tab used to
+  // just go blank for that whole stretch (deadline day through kickoff, and
+  // again once the gameweek wraps up). Show the idle recap/countdown instead
+  // of nothing so the tab always has content, and hand the *planning* lead
+  // back to the Squad/Scenarios tabs rather than a frozen live score.
+  if (!active && (!anyStarted || polls.cur.dataChecked)) {
+    return (
+      <IdleTracker lastGameweek={lastGameweek} nextDeadline={polls.cur.nextDeadline} now={now} />
+    );
+  }
 
   return (
     <TrackerPanel view={view} payload={polls.cur} active={active} error={error} lastOk={lastOk} />
+  );
+}
+
+function countdown(deadline: string, nowMs: number): string {
+  const diffMs = Date.parse(deadline) - nowMs;
+  if (diffMs <= 0) return "deadline passed";
+  const totalMinutes = Math.floor(diffMs / 60_000);
+  const days = Math.floor(totalMinutes / (60 * 24));
+  const hours = Math.floor((totalMinutes % (60 * 24)) / 60);
+  const minutes = totalMinutes % 60;
+  if (days > 0) return `${days}d ${hours}h`;
+  if (hours > 0) return `${hours}h ${minutes}m`;
+  return `${minutes}m`;
+}
+
+/** What the Live tab shows outside a live window: last gameweek's final
+ * result (if we have one) and a countdown to the next deadline (once the
+ * live payload has told us when that is) -- so the tab always has something
+ * to say rather than rendering nothing between gameweeks. */
+function IdleTracker({
+  lastGameweek,
+  nextDeadline,
+  now,
+}: {
+  lastGameweek: GameweekReview | null;
+  nextDeadline: string | null;
+  now: number;
+}) {
+  if (!lastGameweek && !nextDeadline) return null; // genuinely nothing to say yet
+
+  return (
+    <div className="panel rise space-y-3 p-4">
+      {nextDeadline && (
+        <div className="flex items-center justify-between">
+          <p className="eyebrow">Next deadline</p>
+          <p className="stat text-sm text-ink">{countdown(nextDeadline, now)}</p>
+        </div>
+      )}
+      {lastGameweek && lastGameweek.xiPoints != null && (
+        <div
+          className={`flex items-end gap-4 ${nextDeadline ? "border-t border-line pt-3" : ""}`}
+        >
+          <div>
+            <div className="stat text-3xl leading-none text-ink">{lastGameweek.xiPoints}</div>
+            <div className="eyebrow mt-1">GW{lastGameweek.gameweek} final</div>
+          </div>
+          <div className="space-y-0.5 text-xs text-ink-soft">
+            <div className="stat">
+              {lastGameweek.benchPoints ?? "—"}
+              <span className="ml-1 font-sans font-normal text-ink-faint">bench</span>
+            </div>
+            {lastGameweek.transfersCost > 0 && (
+              <div className="text-[var(--danger)]">−{lastGameweek.transfersCost} hit</div>
+            )}
+          </div>
+        </div>
+      )}
+    </div>
   );
 }
 
