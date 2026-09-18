@@ -100,6 +100,7 @@ export default function TransferForm({ squad, allPlayers, basedOnGw, bank }: Pro
               }}
             >
               {p.webName} ({p.position}, {p.team}) — £{p.priceMillions.toFixed(1)}m
+              <span className="text-ink-faint"> · {p.selectedByPercent.toFixed(1)}% owned</span>
             </li>
           ))}
         </ul>

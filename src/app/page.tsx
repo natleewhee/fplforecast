@@ -326,7 +326,7 @@ export default function Home() {
   );
 
   if (forecast && forecast.squad && forecast.squad.startingXi) {
-    const liveTab = <LiveTracker />;
+    const liveTab = <LiveTracker lastGameweek={forecast.lastGameweek} />;
 
     const leaguesTab = <LeaguesPage />;
 

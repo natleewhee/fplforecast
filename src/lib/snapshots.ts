@@ -19,6 +19,7 @@ export type Player = {
   epNext: number;
   status: string;
   chanceOfPlayingNextRound: number | null;
+  selectedByPercent: number;
 };
 
 export type BootstrapSnapshot = {
@@ -416,6 +417,7 @@ export function loadBootstrapSnapshot(): BootstrapSnapshot | null {
     epNext: parseFloat((el.ep_next as string) ?? "0"),
     status: el.status as string,
     chanceOfPlayingNextRound: (el.chance_of_playing_next_round as number | null) ?? null,
+    selectedByPercent: parseFloat((el.selected_by_percent as string) ?? "0"),
   }));
 
   return { date: found.date, players };
