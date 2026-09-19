@@ -1,0 +1,5940 @@
+{
+  "bootstrapDate": "2026-09-19",
+  "gameweeksUsed": 4,
+  "personalPriorHits": 406,
+  "predictions": {
+    "1": {
+      "expectedMinutes": 90.0,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 1.0,
+      "pUnused": 0.0,
+      "per90Points": 6.29,
+      "priorSource": "2025-26-personal"
+    },
+    "10": {
+      "expectedMinutes": 78.3,
+      "gamesObserved": 4,
+      "pCameo": 0.25,
+      "pStart": 0.75,
+      "pUnused": 0.0,
+      "per90Points": 5.93,
+      "priorSource": "2025-26-personal"
+    },
+    "100": {
+      "expectedMinutes": 42.9,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 11.7,
+      "priorSource": "2025-26-personal"
+    },
+    "101": {
+      "expectedMinutes": 37.2,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 3.58,
+      "priorSource": "2025-26-personal"
+    },
+    "102": {
+      "expectedMinutes": 59.0,
+      "gamesObserved": 4,
+      "pCameo": 1.0,
+      "pStart": 0.0,
+      "pUnused": 0.0,
+      "per90Points": 3.58,
+      "priorSource": "2025-26-personal"
+    },
+    "103": {
+      "expectedMinutes": 0.9,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 90.0,
+      "priorSource": "2025-26-personal"
+    },
+    "104": {
+      "expectedMinutes": 69.7,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.75,
+      "pUnused": 0.25,
+      "per90Points": 6.8,
+      "priorSource": "2025-26-personal"
+    },
+    "105": {
+      "expectedMinutes": 63.1,
+      "gamesObserved": 4,
+      "pCameo": 0.75,
+      "pStart": 0.25,
+      "pUnused": 0.0,
+      "per90Points": 3.29,
+      "priorSource": "2025-26-personal"
+    },
+    "106": {
+      "expectedMinutes": 88.3,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 1.0,
+      "pUnused": 0.0,
+      "per90Points": 2.53,
+      "priorSource": "2025-26-personal"
+    },
+    "107": {
+      "expectedMinutes": 0.4,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 90.0,
+      "priorSource": "2025-26-personal"
+    },
+    "108": {
+      "expectedMinutes": 49.9,
+      "gamesObserved": 4,
+      "pCameo": 0.75,
+      "pStart": 0.0,
+      "pUnused": 0.25,
+      "per90Points": 6.84,
+      "priorSource": "2025-26-personal"
+    },
+    "109": {
+      "expectedMinutes": 90.0,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 1.0,
+      "pUnused": 0.0,
+      "per90Points": 3.97,
+      "priorSource": "2025-26-personal"
+    },
+    "11": {
+      "expectedMinutes": 71.0,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.5,
+      "pUnused": 0.5,
+      "per90Points": 4.99,
+      "priorSource": "2025-26-personal"
+    },
+    "110": {
+      "expectedMinutes": 62.5,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 1.0,
+      "pUnused": 0.0,
+      "per90Points": 2.0,
+      "priorSource": "position"
+    },
+    "111": {
+      "expectedMinutes": 11.1,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 3.51,
+      "priorSource": "position"
+    },
+    "112": {
+      "expectedMinutes": 89.6,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 1.0,
+      "pUnused": 0.0,
+      "per90Points": 4.38,
+      "priorSource": "2025-26-personal"
+    },
+    "113": {
+      "expectedMinutes": 76.2,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.75,
+      "pUnused": 0.25,
+      "per90Points": 3.05,
+      "priorSource": "2025-26-personal"
+    },
+    "114": {
+      "expectedMinutes": 87.6,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 1.0,
+      "pUnused": 0.0,
+      "per90Points": 3.72,
+      "priorSource": "2025-26-personal"
+    },
+    "115": {
+      "expectedMinutes": 83.0,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 1.0,
+      "pUnused": 0.0,
+      "per90Points": 7.5,
+      "priorSource": "2025-26-personal"
+    },
+    "116": {
+      "expectedMinutes": 90.6,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 1.0,
+      "pUnused": 0.0,
+      "per90Points": 4.72,
+      "priorSource": "2025-26-personal"
+    },
+    "117": {
+      "expectedMinutes": 41.4,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 4.66,
+      "priorSource": "2025-26-personal"
+    },
+    "118": {
+      "expectedMinutes": 44.1,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 5.24,
+      "priorSource": "2025-26-personal"
+    },
+    "119": {
+      "expectedMinutes": 23.5,
+      "gamesObserved": 4,
+      "pCameo": 1.0,
+      "pStart": 0.0,
+      "pUnused": 0.0,
+      "per90Points": 4.13,
+      "priorSource": "position"
+    },
+    "12": {
+      "expectedMinutes": 86.0,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 1.0,
+      "pUnused": 0.0,
+      "per90Points": 7.45,
+      "priorSource": "2025-26-personal"
+    },
+    "120": {
+      "expectedMinutes": 15.8,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 3.87,
+      "priorSource": "position"
+    },
+    "121": {
+      "expectedMinutes": 38.7,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 3.26,
+      "priorSource": "2025-26-personal"
+    },
+    "122": {
+      "expectedMinutes": 39.4,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 4.41,
+      "priorSource": "2025-26-personal"
+    },
+    "123": {
+      "expectedMinutes": 46.2,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.25,
+      "pUnused": 0.75,
+      "per90Points": 9.42,
+      "priorSource": "2025-26-personal"
+    },
+    "124": {
+      "expectedMinutes": 90.4,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 1.0,
+      "pUnused": 0.0,
+      "per90Points": 6.93,
+      "priorSource": "2025-26-personal"
+    },
+    "125": {
+      "expectedMinutes": 50.9,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.25,
+      "pUnused": 0.75,
+      "per90Points": 4.61,
+      "priorSource": "2025-26-personal"
+    },
+    "126": {
+      "expectedMinutes": 44.1,
+      "gamesObserved": 4,
+      "pCameo": 0.25,
+      "pStart": 0.0,
+      "pUnused": 0.75,
+      "per90Points": 7.38,
+      "priorSource": "2025-26-personal"
+    },
+    "127": {
+      "expectedMinutes": 84.6,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 1.0,
+      "pUnused": 0.0,
+      "per90Points": 4.13,
+      "priorSource": "2025-26-personal"
+    },
+    "128": {
+      "expectedMinutes": 34.7,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 3.33,
+      "priorSource": "2025-26-personal"
+    },
+    "129": {
+      "expectedMinutes": 75.9,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.75,
+      "pUnused": 0.25,
+      "per90Points": 4.51,
+      "priorSource": "2025-26-personal"
+    },
+    "13": {
+      "expectedMinutes": 83.7,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 1.0,
+      "pUnused": 0.0,
+      "per90Points": 5.34,
+      "priorSource": "2025-26-personal"
+    },
+    "130": {
+      "expectedMinutes": 57.7,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.5,
+      "pUnused": 0.5,
+      "per90Points": 4.26,
+      "priorSource": "2025-26-personal"
+    },
+    "131": {
+      "expectedMinutes": 30.7,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 3.06,
+      "priorSource": "2025-26-personal"
+    },
+    "132": {
+      "expectedMinutes": 39.4,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 3.91,
+      "priorSource": "2025-26-personal"
+    },
+    "133": {
+      "expectedMinutes": 24.4,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 7.89,
+      "priorSource": "2025-26-personal"
+    },
+    "134": {
+      "expectedMinutes": 0.4,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 90.0,
+      "priorSource": "2025-26-personal"
+    },
+    "135": {
+      "expectedMinutes": 14.3,
+      "gamesObserved": 4,
+      "pCameo": 0.25,
+      "pStart": 0.0,
+      "pUnused": 0.75,
+      "per90Points": 4.7,
+      "priorSource": "position"
+    },
+    "136": {
+      "expectedMinutes": 39.2,
+      "gamesObserved": 4,
+      "pCameo": 0.5,
+      "pStart": 0.0,
+      "pUnused": 0.5,
+      "per90Points": 5.58,
+      "priorSource": "2025-26-personal"
+    },
+    "137": {
+      "expectedMinutes": 56.6,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 10.91,
+      "priorSource": "2025-26-personal"
+    },
+    "138": {
+      "expectedMinutes": 114.9,
+      "gamesObserved": 4,
+      "pCameo": 0.25,
+      "pStart": 0.75,
+      "pUnused": 0.0,
+      "per90Points": 7.06,
+      "priorSource": "2025-26-personal"
+    },
+    "139": {
+      "expectedMinutes": 10.6,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 4.84,
+      "priorSource": "position"
+    },
+    "14": {
+      "expectedMinutes": 46.4,
+      "gamesObserved": 4,
+      "pCameo": 0.75,
+      "pStart": 0.0,
+      "pUnused": 0.25,
+      "per90Points": 5.0,
+      "priorSource": "2025-26-personal"
+    },
+    "140": {
+      "expectedMinutes": 50.1,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.25,
+      "pUnused": 0.75,
+      "per90Points": 2.9,
+      "priorSource": "2025-26-personal"
+    },
+    "141": {
+      "expectedMinutes": 54.0,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 2.14,
+      "priorSource": "2025-26-personal"
+    },
+    "142": {
+      "expectedMinutes": 83.6,
+      "gamesObserved": 4,
+      "pCameo": 0.25,
+      "pStart": 0.75,
+      "pUnused": 0.0,
+      "per90Points": 2.59,
+      "priorSource": "2025-26-personal"
+    },
+    "143": {
+      "expectedMinutes": 38.4,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 4.4,
+      "priorSource": "2025-26-personal"
+    },
+    "144": {
+      "expectedMinutes": 76.0,
+      "gamesObserved": 4,
+      "pCameo": 0.25,
+      "pStart": 0.75,
+      "pUnused": 0.0,
+      "per90Points": 2.32,
+      "priorSource": "2025-26-personal"
+    },
+    "145": {
+      "expectedMinutes": 71.4,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.75,
+      "pUnused": 0.25,
+      "per90Points": 2.31,
+      "priorSource": "2025-26-personal"
+    },
+    "146": {
+      "expectedMinutes": 33.6,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 1.34,
+      "priorSource": "2025-26-personal"
+    },
+    "147": {
+      "expectedMinutes": 42.9,
+      "gamesObserved": 4,
+      "pCameo": 0.25,
+      "pStart": 0.0,
+      "pUnused": 0.75,
+      "per90Points": 4.26,
+      "priorSource": "2025-26-personal"
+    },
+    "148": {
+      "expectedMinutes": 77.5,
+      "gamesObserved": 4,
+      "pCameo": 0.5,
+      "pStart": 0.5,
+      "pUnused": 0.0,
+      "per90Points": 2.26,
+      "priorSource": "2025-26-personal"
+    },
+    "149": {
+      "expectedMinutes": 84.1,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.75,
+      "pUnused": 0.25,
+      "per90Points": 1.75,
+      "priorSource": "2025-26-personal"
+    },
+    "15": {
+      "expectedMinutes": 80.1,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 1.0,
+      "pUnused": 0.0,
+      "per90Points": 6.82,
+      "priorSource": "2025-26-personal"
+    },
+    "150": {
+      "expectedMinutes": 42.9,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 2.7,
+      "priorSource": "2025-26-personal"
+    },
+    "151": {
+      "expectedMinutes": 64.1,
+      "gamesObserved": 4,
+      "pCameo": 0.25,
+      "pStart": 0.5,
+      "pUnused": 0.25,
+      "per90Points": 3.7,
+      "priorSource": "2025-26-personal"
+    },
+    "152": {
+      "expectedMinutes": 15.8,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 3.87,
+      "priorSource": "position"
+    },
+    "153": {
+      "expectedMinutes": 58.2,
+      "gamesObserved": 4,
+      "pCameo": 0.5,
+      "pStart": 0.25,
+      "pUnused": 0.25,
+      "per90Points": 2.27,
+      "priorSource": "2025-26-personal"
+    },
+    "154": {
+      "expectedMinutes": 85.2,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 1.0,
+      "pUnused": 0.0,
+      "per90Points": 6.18,
+      "priorSource": "2025-26-personal"
+    },
+    "155": {
+      "expectedMinutes": 64.0,
+      "gamesObserved": 4,
+      "pCameo": 0.25,
+      "pStart": 0.5,
+      "pUnused": 0.25,
+      "per90Points": 3.76,
+      "priorSource": "2025-26-personal"
+    },
+    "156": {
+      "expectedMinutes": 72.7,
+      "gamesObserved": 4,
+      "pCameo": 0.25,
+      "pStart": 0.75,
+      "pUnused": 0.0,
+      "per90Points": 4.34,
+      "priorSource": "2025-26-personal"
+    },
+    "157": {
+      "expectedMinutes": 32.8,
+      "gamesObserved": 4,
+      "pCameo": 0.75,
+      "pStart": 0.0,
+      "pUnused": 0.25,
+      "per90Points": 6.95,
+      "priorSource": "2025-26-personal"
+    },
+    "158": {
+      "expectedMinutes": 41.7,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 4.63,
+      "priorSource": "2025-26-personal"
+    },
+    "159": {
+      "expectedMinutes": 39.3,
+      "gamesObserved": 4,
+      "pCameo": 0.25,
+      "pStart": 0.0,
+      "pUnused": 0.75,
+      "per90Points": 3.77,
+      "priorSource": "2025-26-personal"
+    },
+    "16": {
+      "expectedMinutes": 35.6,
+      "gamesObserved": 4,
+      "pCameo": 0.5,
+      "pStart": 0.0,
+      "pUnused": 0.5,
+      "per90Points": 5.66,
+      "priorSource": "2025-26-personal"
+    },
+    "160": {
+      "expectedMinutes": 43.0,
+      "gamesObserved": 4,
+      "pCameo": 0.75,
+      "pStart": 0.0,
+      "pUnused": 0.25,
+      "per90Points": 4.69,
+      "priorSource": "2025-26-personal"
+    },
+    "161": {
+      "expectedMinutes": 76.9,
+      "gamesObserved": 4,
+      "pCameo": 0.25,
+      "pStart": 0.75,
+      "pUnused": 0.0,
+      "per90Points": 3.55,
+      "priorSource": "2025-26-personal"
+    },
+    "162": {
+      "expectedMinutes": 52.8,
+      "gamesObserved": 4,
+      "pCameo": 0.5,
+      "pStart": 0.25,
+      "pUnused": 0.25,
+      "per90Points": 3.7,
+      "priorSource": "2025-26-personal"
+    },
+    "163": {
+      "expectedMinutes": 11.1,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 3.46,
+      "priorSource": "2025-26-personal"
+    },
+    "164": {
+      "expectedMinutes": 13.7,
+      "gamesObserved": 4,
+      "pCameo": 0.25,
+      "pStart": 0.0,
+      "pUnused": 0.75,
+      "per90Points": 4.8,
+      "priorSource": "position"
+    },
+    "165": {
+      "expectedMinutes": 88.2,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 1.0,
+      "pUnused": 0.0,
+      "per90Points": 7.5,
+      "priorSource": "2025-26-personal"
+    },
+    "166": {
+      "expectedMinutes": 39.0,
+      "gamesObserved": 4,
+      "pCameo": 0.25,
+      "pStart": 0.5,
+      "pUnused": 0.25,
+      "per90Points": 3.25,
+      "priorSource": "position"
+    },
+    "167": {
+      "expectedMinutes": 65.7,
+      "gamesObserved": 4,
+      "pCameo": 0.25,
+      "pStart": 0.5,
+      "pUnused": 0.25,
+      "per90Points": 3.78,
+      "priorSource": "2025-26-personal"
+    },
+    "168": {
+      "expectedMinutes": 113.6,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 4.42,
+      "priorSource": "2025-26-personal"
+    },
+    "169": {
+      "expectedMinutes": 0.4,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 90.0,
+      "priorSource": "2025-26-personal"
+    },
+    "17": {
+      "expectedMinutes": 51.2,
+      "gamesObserved": 4,
+      "pCameo": 1.0,
+      "pStart": 0.0,
+      "pUnused": 0.0,
+      "per90Points": 5.76,
+      "priorSource": "2025-26-personal"
+    },
+    "170": {
+      "expectedMinutes": 10.6,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 4.84,
+      "priorSource": "position"
+    },
+    "171": {
+      "expectedMinutes": 11.1,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 3.51,
+      "priorSource": "position"
+    },
+    "172": {
+      "expectedMinutes": 11.1,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 3.51,
+      "priorSource": "position"
+    },
+    "173": {
+      "expectedMinutes": 65.4,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 1.0,
+      "pUnused": 0.0,
+      "per90Points": 3.88,
+      "priorSource": "position"
+    },
+    "174": {
+      "expectedMinutes": 15.8,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 3.87,
+      "priorSource": "position"
+    },
+    "175": {
+      "expectedMinutes": 67.3,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 1.0,
+      "pUnused": 0.0,
+      "per90Points": 2.29,
+      "priorSource": "position"
+    },
+    "176": {
+      "expectedMinutes": 66.4,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 1.0,
+      "pUnused": 0.0,
+      "per90Points": 2.15,
+      "priorSource": "position"
+    },
+    "177": {
+      "expectedMinutes": 15.8,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 3.87,
+      "priorSource": "position"
+    },
+    "178": {
+      "expectedMinutes": 15.8,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 3.87,
+      "priorSource": "position"
+    },
+    "179": {
+      "expectedMinutes": 15.8,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 3.87,
+      "priorSource": "position"
+    },
+    "18": {
+      "expectedMinutes": 41.5,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 4.82,
+      "priorSource": "2025-26-personal"
+    },
+    "180": {
+      "expectedMinutes": 15.8,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 3.87,
+      "priorSource": "position"
+    },
+    "181": {
+      "expectedMinutes": 15.8,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 3.87,
+      "priorSource": "position"
+    },
+    "182": {
+      "expectedMinutes": 67.3,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 1.0,
+      "pUnused": 0.0,
+      "per90Points": 1.96,
+      "priorSource": "position"
+    },
+    "183": {
+      "expectedMinutes": 44.5,
+      "gamesObserved": 4,
+      "pCameo": 0.25,
+      "pStart": 0.75,
+      "pUnused": 0.0,
+      "per90Points": 3.79,
+      "priorSource": "position"
+    },
+    "184": {
+      "expectedMinutes": 63.0,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 1.0,
+      "pUnused": 0.0,
+      "per90Points": 2.87,
+      "priorSource": "position"
+    },
+    "185": {
+      "expectedMinutes": 17.0,
+      "gamesObserved": 4,
+      "pCameo": 0.25,
+      "pStart": 0.0,
+      "pUnused": 0.75,
+      "per90Points": 4.28,
+      "priorSource": "position"
+    },
+    "186": {
+      "expectedMinutes": 39.1,
+      "gamesObserved": 4,
+      "pCameo": 0.5,
+      "pStart": 0.25,
+      "pUnused": 0.25,
+      "per90Points": 3.2,
+      "priorSource": "position"
+    },
+    "187": {
+      "expectedMinutes": 12.5,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 4.51,
+      "priorSource": "position"
+    },
+    "188": {
+      "expectedMinutes": 20.1,
+      "gamesObserved": 4,
+      "pCameo": 0.75,
+      "pStart": 0.0,
+      "pUnused": 0.25,
+      "per90Points": 4.64,
+      "priorSource": "position"
+    },
+    "189": {
+      "expectedMinutes": 12.5,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 4.51,
+      "priorSource": "position"
+    },
+    "19": {
+      "expectedMinutes": 46.1,
+      "gamesObserved": 4,
+      "pCameo": 1.0,
+      "pStart": 0.0,
+      "pUnused": 0.0,
+      "per90Points": 4.52,
+      "priorSource": "2025-26-personal"
+    },
+    "190": {
+      "expectedMinutes": 62.3,
+      "gamesObserved": 4,
+      "pCameo": 0.5,
+      "pStart": 0.25,
+      "pUnused": 0.25,
+      "per90Points": 3.23,
+      "priorSource": "2025-26-personal"
+    },
+    "191": {
+      "expectedMinutes": 12.5,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 4.51,
+      "priorSource": "position"
+    },
+    "192": {
+      "expectedMinutes": 12.5,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 4.51,
+      "priorSource": "position"
+    },
+    "193": {
+      "expectedMinutes": 10.6,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 4.84,
+      "priorSource": "position"
+    },
+    "194": {
+      "expectedMinutes": 30.2,
+      "gamesObserved": 4,
+      "pCameo": 0.75,
+      "pStart": 0.25,
+      "pUnused": 0.0,
+      "per90Points": 4.17,
+      "priorSource": "position"
+    },
+    "195": {
+      "expectedMinutes": 23.2,
+      "gamesObserved": 4,
+      "pCameo": 0.25,
+      "pStart": 0.25,
+      "pUnused": 0.5,
+      "per90Points": 4.26,
+      "priorSource": "position"
+    },
+    "196": {
+      "expectedMinutes": 10.6,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 4.84,
+      "priorSource": "position"
+    },
+    "197": {
+      "expectedMinutes": 10.6,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 4.84,
+      "priorSource": "position"
+    },
+    "198": {
+      "expectedMinutes": 77.1,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.75,
+      "pUnused": 0.25,
+      "per90Points": 2.42,
+      "priorSource": "2025-26-personal"
+    },
+    "199": {
+      "expectedMinutes": 51.4,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.25,
+      "pUnused": 0.75,
+      "per90Points": 5.33,
+      "priorSource": "2025-26-personal"
+    },
+    "2": {
+      "expectedMinutes": 38.6,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 2.0,
+      "priorSource": "2025-26-personal"
+    },
+    "20": {
+      "expectedMinutes": 65.1,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 9.47,
+      "priorSource": "2025-26-personal"
+    },
+    "200": {
+      "expectedMinutes": 76.9,
+      "gamesObserved": 4,
+      "pCameo": 0.25,
+      "pStart": 0.75,
+      "pUnused": 0.0,
+      "per90Points": 3.76,
+      "priorSource": "2025-26-personal"
+    },
+    "201": {
+      "expectedMinutes": 60.5,
+      "gamesObserved": 4,
+      "pCameo": 0.5,
+      "pStart": 0.25,
+      "pUnused": 0.25,
+      "per90Points": 3.35,
+      "priorSource": "2025-26-personal"
+    },
+    "202": {
+      "expectedMinutes": 90.5,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 1.0,
+      "pUnused": 0.0,
+      "per90Points": 2.36,
+      "priorSource": "2025-26-personal"
+    },
+    "203": {
+      "expectedMinutes": 79.3,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.75,
+      "pUnused": 0.25,
+      "per90Points": 2.35,
+      "priorSource": "2025-26-personal"
+    },
+    "204": {
+      "expectedMinutes": 85.7,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 1.0,
+      "pUnused": 0.0,
+      "per90Points": 4.33,
+      "priorSource": "2025-26-personal"
+    },
+    "205": {
+      "expectedMinutes": 42.4,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 5.45,
+      "priorSource": "2025-26-personal"
+    },
+    "206": {
+      "expectedMinutes": 49.6,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.25,
+      "pUnused": 0.75,
+      "per90Points": 2.69,
+      "priorSource": "2025-26-personal"
+    },
+    "207": {
+      "expectedMinutes": 18.1,
+      "gamesObserved": 4,
+      "pCameo": 0.5,
+      "pStart": 0.0,
+      "pUnused": 0.5,
+      "per90Points": 4.48,
+      "priorSource": "position"
+    },
+    "208": {
+      "expectedMinutes": 38.8,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 4.85,
+      "priorSource": "2025-26-personal"
+    },
+    "209": {
+      "expectedMinutes": 63.3,
+      "gamesObserved": 4,
+      "pCameo": 0.5,
+      "pStart": 0.5,
+      "pUnused": 0.0,
+      "per90Points": 3.27,
+      "priorSource": "2025-26-personal"
+    },
+    "21": {
+      "expectedMinutes": 43.3,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 6.24,
+      "priorSource": "2025-26-personal"
+    },
+    "210": {
+      "expectedMinutes": 87.1,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 1.0,
+      "pUnused": 0.0,
+      "per90Points": 3.06,
+      "priorSource": "2025-26-personal"
+    },
+    "211": {
+      "expectedMinutes": 66.5,
+      "gamesObserved": 4,
+      "pCameo": 0.5,
+      "pStart": 0.5,
+      "pUnused": 0.0,
+      "per90Points": 4.14,
+      "priorSource": "2025-26-personal"
+    },
+    "212": {
+      "expectedMinutes": 39.3,
+      "gamesObserved": 4,
+      "pCameo": 0.5,
+      "pStart": 0.0,
+      "pUnused": 0.5,
+      "per90Points": 3.1,
+      "priorSource": "2025-26-personal"
+    },
+    "213": {
+      "expectedMinutes": 41.9,
+      "gamesObserved": 4,
+      "pCameo": 0.25,
+      "pStart": 0.0,
+      "pUnused": 0.75,
+      "per90Points": 3.97,
+      "priorSource": "2025-26-personal"
+    },
+    "214": {
+      "expectedMinutes": 87.1,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 1.0,
+      "pUnused": 0.0,
+      "per90Points": 4.13,
+      "priorSource": "2025-26-personal"
+    },
+    "215": {
+      "expectedMinutes": 48.1,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 4.13,
+      "priorSource": "2025-26-personal"
+    },
+    "216": {
+      "expectedMinutes": 17.1,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 9.0,
+      "priorSource": "2025-26-personal"
+    },
+    "217": {
+      "expectedMinutes": 12.5,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 4.51,
+      "priorSource": "position"
+    },
+    "218": {
+      "expectedMinutes": 12.5,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 4.51,
+      "priorSource": "position"
+    },
+    "219": {
+      "expectedMinutes": 12.5,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 4.51,
+      "priorSource": "position"
+    },
+    "22": {
+      "expectedMinutes": 70.7,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 4.36,
+      "priorSource": "2025-26-personal"
+    },
+    "220": {
+      "expectedMinutes": 38.6,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 2.0,
+      "priorSource": "2025-26-personal"
+    },
+    "221": {
+      "expectedMinutes": 3.0,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 25.71,
+      "priorSource": "2025-26-personal"
+    },
+    "222": {
+      "expectedMinutes": 68.9,
+      "gamesObserved": 4,
+      "pCameo": 0.5,
+      "pStart": 0.5,
+      "pUnused": 0.0,
+      "per90Points": 4.05,
+      "priorSource": "2025-26-personal"
+    },
+    "223": {
+      "expectedMinutes": 46.7,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.25,
+      "pUnused": 0.75,
+      "per90Points": 4.2,
+      "priorSource": "2025-26-personal"
+    },
+    "224": {
+      "expectedMinutes": 112.6,
+      "gamesObserved": 4,
+      "pCameo": 0.5,
+      "pStart": 0.25,
+      "pUnused": 0.25,
+      "per90Points": 4.41,
+      "priorSource": "2025-26-personal"
+    },
+    "225": {
+      "expectedMinutes": 68.1,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 9.62,
+      "priorSource": "2025-26-personal"
+    },
+    "226": {
+      "expectedMinutes": 90.0,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 1.0,
+      "pUnused": 0.0,
+      "per90Points": 4.02,
+      "priorSource": "2025-26-personal"
+    },
+    "227": {
+      "expectedMinutes": 11.1,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 3.51,
+      "priorSource": "position"
+    },
+    "228": {
+      "expectedMinutes": 11.1,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 3.51,
+      "priorSource": "position"
+    },
+    "229": {
+      "expectedMinutes": 90.0,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 1.0,
+      "pUnused": 0.0,
+      "per90Points": 6.36,
+      "priorSource": "2025-26-personal"
+    },
+    "23": {
+      "expectedMinutes": 12.5,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 4.51,
+      "priorSource": "position"
+    },
+    "230": {
+      "expectedMinutes": 92.9,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 1.0,
+      "pUnused": 0.0,
+      "per90Points": 4.58,
+      "priorSource": "2025-26-personal"
+    },
+    "231": {
+      "expectedMinutes": 38.2,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 4.56,
+      "priorSource": "2025-26-personal"
+    },
+    "232": {
+      "expectedMinutes": 40.3,
+      "gamesObserved": 4,
+      "pCameo": 0.25,
+      "pStart": 0.0,
+      "pUnused": 0.75,
+      "per90Points": 3.55,
+      "priorSource": "2025-26-personal"
+    },
+    "233": {
+      "expectedMinutes": 89.9,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 1.0,
+      "pUnused": 0.0,
+      "per90Points": 4.63,
+      "priorSource": "2025-26-personal"
+    },
+    "234": {
+      "expectedMinutes": 34.0,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 8.32,
+      "priorSource": "2025-26-personal"
+    },
+    "235": {
+      "expectedMinutes": 15.8,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 3.87,
+      "priorSource": "position"
+    },
+    "236": {
+      "expectedMinutes": 89.0,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 1.0,
+      "pUnused": 0.0,
+      "per90Points": 4.56,
+      "priorSource": "2025-26-personal"
+    },
+    "237": {
+      "expectedMinutes": 81.7,
+      "gamesObserved": 4,
+      "pCameo": 0.25,
+      "pStart": 0.75,
+      "pUnused": 0.0,
+      "per90Points": 4.63,
+      "priorSource": "2025-26-personal"
+    },
+    "238": {
+      "expectedMinutes": 46.9,
+      "gamesObserved": 4,
+      "pCameo": 0.75,
+      "pStart": 0.0,
+      "pUnused": 0.25,
+      "per90Points": 4.46,
+      "priorSource": "2025-26-personal"
+    },
+    "239": {
+      "expectedMinutes": 72.5,
+      "gamesObserved": 4,
+      "pCameo": 0.25,
+      "pStart": 0.75,
+      "pUnused": 0.0,
+      "per90Points": 3.53,
+      "priorSource": "2025-26-personal"
+    },
+    "24": {
+      "expectedMinutes": 50.6,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 9.92,
+      "priorSource": "2025-26-personal"
+    },
+    "240": {
+      "expectedMinutes": 40.8,
+      "gamesObserved": 4,
+      "pCameo": 0.5,
+      "pStart": 0.0,
+      "pUnused": 0.5,
+      "per90Points": 4.08,
+      "priorSource": "2025-26-personal"
+    },
+    "241": {
+      "expectedMinutes": 47.5,
+      "gamesObserved": 4,
+      "pCameo": 0.25,
+      "pStart": 0.25,
+      "pUnused": 0.5,
+      "per90Points": 3.82,
+      "priorSource": "2025-26-personal"
+    },
+    "242": {
+      "expectedMinutes": 193.0,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 1.0,
+      "pUnused": 0.0,
+      "per90Points": 4.93,
+      "priorSource": "2025-26-personal"
+    },
+    "243": {
+      "expectedMinutes": 49.2,
+      "gamesObserved": 4,
+      "pCameo": 0.5,
+      "pStart": 0.0,
+      "pUnused": 0.5,
+      "per90Points": 4.23,
+      "priorSource": "2025-26-personal"
+    },
+    "244": {
+      "expectedMinutes": 88.3,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 1.0,
+      "pUnused": 0.0,
+      "per90Points": 3.56,
+      "priorSource": "2025-26-personal"
+    },
+    "245": {
+      "expectedMinutes": 37.4,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 4.64,
+      "priorSource": "2025-26-personal"
+    },
+    "246": {
+      "expectedMinutes": 83.8,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.75,
+      "pUnused": 0.25,
+      "per90Points": 3.27,
+      "priorSource": "2025-26-personal"
+    },
+    "247": {
+      "expectedMinutes": 32.0,
+      "gamesObserved": 4,
+      "pCameo": 0.75,
+      "pStart": 0.25,
+      "pUnused": 0.0,
+      "per90Points": 5.13,
+      "priorSource": "position"
+    },
+    "248": {
+      "expectedMinutes": 43.5,
+      "gamesObserved": 4,
+      "pCameo": 0.5,
+      "pStart": 0.0,
+      "pUnused": 0.5,
+      "per90Points": 6.0,
+      "priorSource": "2025-26-personal"
+    },
+    "249": {
+      "expectedMinutes": 85.4,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 1.0,
+      "pUnused": 0.0,
+      "per90Points": 4.08,
+      "priorSource": "2025-26-personal"
+    },
+    "25": {
+      "expectedMinutes": 38.3,
+      "gamesObserved": 4,
+      "pCameo": 0.25,
+      "pStart": 0.0,
+      "pUnused": 0.75,
+      "per90Points": 5.34,
+      "priorSource": "2025-26-personal"
+    },
+    "250": {
+      "expectedMinutes": 90.0,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 1.0,
+      "pUnused": 0.0,
+      "per90Points": 3.57,
+      "priorSource": "2025-26-personal"
+    },
+    "251": {
+      "expectedMinutes": 11.1,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 3.51,
+      "priorSource": "position"
+    },
+    "252": {
+      "expectedMinutes": 11.1,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 3.51,
+      "priorSource": "position"
+    },
+    "253": {
+      "expectedMinutes": 63.1,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.5,
+      "pUnused": 0.5,
+      "per90Points": 2.42,
+      "priorSource": "2025-26-personal"
+    },
+    "254": {
+      "expectedMinutes": 85.9,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 1.0,
+      "pUnused": 0.0,
+      "per90Points": 3.1,
+      "priorSource": "2025-26-personal"
+    },
+    "255": {
+      "expectedMinutes": 49.3,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.25,
+      "pUnused": 0.75,
+      "per90Points": 3.5,
+      "priorSource": "2025-26-personal"
+    },
+    "256": {
+      "expectedMinutes": 40.4,
+      "gamesObserved": 4,
+      "pCameo": 0.25,
+      "pStart": 0.0,
+      "pUnused": 0.75,
+      "per90Points": 3.54,
+      "priorSource": "2025-26-personal"
+    },
+    "257": {
+      "expectedMinutes": 90.2,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 1.0,
+      "pUnused": 0.0,
+      "per90Points": 2.72,
+      "priorSource": "2025-26-personal"
+    },
+    "258": {
+      "expectedMinutes": 84.8,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 1.0,
+      "pUnused": 0.0,
+      "per90Points": 4.51,
+      "priorSource": "2025-26-personal"
+    },
+    "259": {
+      "expectedMinutes": 94.9,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 1.0,
+      "pUnused": 0.0,
+      "per90Points": 2.48,
+      "priorSource": "2025-26-personal"
+    },
+    "26": {
+      "expectedMinutes": 84.9,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 1.0,
+      "pUnused": 0.0,
+      "per90Points": 4.82,
+      "priorSource": "2025-26-personal"
+    },
+    "260": {
+      "expectedMinutes": 56.5,
+      "gamesObserved": 4,
+      "pCameo": 0.75,
+      "pStart": 0.25,
+      "pUnused": 0.0,
+      "per90Points": 4.52,
+      "priorSource": "2025-26-personal"
+    },
+    "261": {
+      "expectedMinutes": 84.0,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 1.0,
+      "pUnused": 0.0,
+      "per90Points": 2.89,
+      "priorSource": "2025-26-personal"
+    },
+    "262": {
+      "expectedMinutes": 42.6,
+      "gamesObserved": 4,
+      "pCameo": 0.75,
+      "pStart": 0.0,
+      "pUnused": 0.25,
+      "per90Points": 4.35,
+      "priorSource": "2025-26-personal"
+    },
+    "263": {
+      "expectedMinutes": 55.0,
+      "gamesObserved": 4,
+      "pCameo": 0.75,
+      "pStart": 0.0,
+      "pUnused": 0.25,
+      "per90Points": 4.69,
+      "priorSource": "2025-26-personal"
+    },
+    "264": {
+      "expectedMinutes": 79.1,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 1.0,
+      "pUnused": 0.0,
+      "per90Points": 3.44,
+      "priorSource": "2025-26-personal"
+    },
+    "265": {
+      "expectedMinutes": 75.6,
+      "gamesObserved": 4,
+      "pCameo": 0.25,
+      "pStart": 0.75,
+      "pUnused": 0.0,
+      "per90Points": 2.71,
+      "priorSource": "2025-26-personal"
+    },
+    "266": {
+      "expectedMinutes": 54.0,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 4.88,
+      "priorSource": "2025-26-personal"
+    },
+    "267": {
+      "expectedMinutes": 83.9,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 1.0,
+      "pUnused": 0.0,
+      "per90Points": 2.83,
+      "priorSource": "2025-26-personal"
+    },
+    "268": {
+      "expectedMinutes": 86.3,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 1.0,
+      "pUnused": 0.0,
+      "per90Points": 5.27,
+      "priorSource": "2025-26-personal"
+    },
+    "269": {
+      "expectedMinutes": 46.1,
+      "gamesObserved": 4,
+      "pCameo": 0.75,
+      "pStart": 0.0,
+      "pUnused": 0.25,
+      "per90Points": 4.86,
+      "priorSource": "2025-26-personal"
+    },
+    "27": {
+      "expectedMinutes": 59.7,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 5.17,
+      "priorSource": "2025-26-personal"
+    },
+    "270": {
+      "expectedMinutes": 38.1,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 15.17,
+      "priorSource": "2025-26-personal"
+    },
+    "271": {
+      "expectedMinutes": 46.3,
+      "gamesObserved": 4,
+      "pCameo": 0.75,
+      "pStart": 0.0,
+      "pUnused": 0.25,
+      "per90Points": 4.14,
+      "priorSource": "2025-26-personal"
+    },
+    "272": {
+      "expectedMinutes": 21.0,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 11.02,
+      "priorSource": "2025-26-personal"
+    },
+    "273": {
+      "expectedMinutes": 11.1,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 3.51,
+      "priorSource": "position"
+    },
+    "274": {
+      "expectedMinutes": 11.1,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 3.51,
+      "priorSource": "position"
+    },
+    "275": {
+      "expectedMinutes": 11.1,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 3.51,
+      "priorSource": "position"
+    },
+    "276": {
+      "expectedMinutes": 11.1,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 3.51,
+      "priorSource": "position"
+    },
+    "277": {
+      "expectedMinutes": 67.3,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 1.0,
+      "pUnused": 0.0,
+      "per90Points": 5.46,
+      "priorSource": "position"
+    },
+    "278": {
+      "expectedMinutes": 15.8,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 3.87,
+      "priorSource": "position"
+    },
+    "279": {
+      "expectedMinutes": 63.4,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 1.0,
+      "pUnused": 0.0,
+      "per90Points": 5.92,
+      "priorSource": "position"
+    },
+    "28": {
+      "expectedMinutes": 76.5,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.75,
+      "pUnused": 0.25,
+      "per90Points": 2.92,
+      "priorSource": "2025-26-personal"
+    },
+    "280": {
+      "expectedMinutes": 52.7,
+      "gamesObserved": 4,
+      "pCameo": 0.25,
+      "pStart": 0.75,
+      "pUnused": 0.0,
+      "per90Points": 4.26,
+      "priorSource": "position"
+    },
+    "281": {
+      "expectedMinutes": 25.1,
+      "gamesObserved": 4,
+      "pCameo": 0.5,
+      "pStart": 0.0,
+      "pUnused": 0.5,
+      "per90Points": 3.58,
+      "priorSource": "position"
+    },
+    "282": {
+      "expectedMinutes": 66.4,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 1.0,
+      "pUnused": 0.0,
+      "per90Points": 5.35,
+      "priorSource": "position"
+    },
+    "283": {
+      "expectedMinutes": 15.8,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 3.87,
+      "priorSource": "position"
+    },
+    "284": {
+      "expectedMinutes": 15.8,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 3.87,
+      "priorSource": "position"
+    },
+    "285": {
+      "expectedMinutes": 19.5,
+      "gamesObserved": 4,
+      "pCameo": 0.25,
+      "pStart": 0.0,
+      "pUnused": 0.75,
+      "per90Points": 3.82,
+      "priorSource": "position"
+    },
+    "286": {
+      "expectedMinutes": 57.1,
+      "gamesObserved": 4,
+      "pCameo": 0.25,
+      "pStart": 0.75,
+      "pUnused": 0.0,
+      "per90Points": 6.59,
+      "priorSource": "position"
+    },
+    "287": {
+      "expectedMinutes": 19.7,
+      "gamesObserved": 4,
+      "pCameo": 0.5,
+      "pStart": 0.0,
+      "pUnused": 0.5,
+      "per90Points": 5.88,
+      "priorSource": "position"
+    },
+    "288": {
+      "expectedMinutes": 12.5,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 4.51,
+      "priorSource": "position"
+    },
+    "289": {
+      "expectedMinutes": 35.1,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.5,
+      "pUnused": 0.5,
+      "per90Points": 3.2,
+      "priorSource": "position"
+    },
+    "29": {
+      "expectedMinutes": 54.6,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.25,
+      "pUnused": 0.75,
+      "per90Points": 1.97,
+      "priorSource": "2025-26-personal"
+    },
+    "290": {
+      "expectedMinutes": 64.0,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 1.0,
+      "pUnused": 0.0,
+      "per90Points": 3.67,
+      "priorSource": "position"
+    },
+    "291": {
+      "expectedMinutes": 12.5,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 4.51,
+      "priorSource": "position"
+    },
+    "292": {
+      "expectedMinutes": 12.5,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 4.51,
+      "priorSource": "position"
+    },
+    "293": {
+      "expectedMinutes": 12.5,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 4.51,
+      "priorSource": "position"
+    },
+    "294": {
+      "expectedMinutes": 12.5,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 4.51,
+      "priorSource": "position"
+    },
+    "295": {
+      "expectedMinutes": 60.7,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 1.0,
+      "pUnused": 0.0,
+      "per90Points": 3.67,
+      "priorSource": "position"
+    },
+    "296": {
+      "expectedMinutes": 12.5,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 4.51,
+      "priorSource": "position"
+    },
+    "297": {
+      "expectedMinutes": 12.5,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 4.51,
+      "priorSource": "position"
+    },
+    "298": {
+      "expectedMinutes": 10.6,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 4.84,
+      "priorSource": "position"
+    },
+    "299": {
+      "expectedMinutes": 10.6,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 4.84,
+      "priorSource": "position"
+    },
+    "3": {
+      "expectedMinutes": 11.1,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 3.51,
+      "priorSource": "position"
+    },
+    "30": {
+      "expectedMinutes": 37.6,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 4.74,
+      "priorSource": "2025-26-personal"
+    },
+    "300": {
+      "expectedMinutes": 11.1,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 3.51,
+      "priorSource": "position"
+    },
+    "301": {
+      "expectedMinutes": 11.1,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 3.51,
+      "priorSource": "position"
+    },
+    "302": {
+      "expectedMinutes": 11.1,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 3.51,
+      "priorSource": "position"
+    },
+    "303": {
+      "expectedMinutes": 15.8,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 3.87,
+      "priorSource": "position"
+    },
+    "304": {
+      "expectedMinutes": 67.3,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 1.0,
+      "pUnused": 0.0,
+      "per90Points": 2.62,
+      "priorSource": "position"
+    },
+    "305": {
+      "expectedMinutes": 67.3,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 1.0,
+      "pUnused": 0.0,
+      "per90Points": 5.12,
+      "priorSource": "position"
+    },
+    "306": {
+      "expectedMinutes": 66.8,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 1.0,
+      "pUnused": 0.0,
+      "per90Points": 1.8,
+      "priorSource": "position"
+    },
+    "307": {
+      "expectedMinutes": 15.8,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 3.87,
+      "priorSource": "position"
+    },
+    "308": {
+      "expectedMinutes": 18.3,
+      "gamesObserved": 4,
+      "pCameo": 0.25,
+      "pStart": 0.0,
+      "pUnused": 0.75,
+      "per90Points": 4.0,
+      "priorSource": "position"
+    },
+    "309": {
+      "expectedMinutes": 32.5,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.5,
+      "pUnused": 0.5,
+      "per90Points": 4.23,
+      "priorSource": "position"
+    },
+    "31": {
+      "expectedMinutes": 65.5,
+      "gamesObserved": 4,
+      "pCameo": 0.25,
+      "pStart": 0.5,
+      "pUnused": 0.25,
+      "per90Points": 4.11,
+      "priorSource": "2025-26-personal"
+    },
+    "310": {
+      "expectedMinutes": 12.5,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 4.51,
+      "priorSource": "position"
+    },
+    "311": {
+      "expectedMinutes": 12.5,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 4.51,
+      "priorSource": "position"
+    },
+    "312": {
+      "expectedMinutes": 12.5,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 4.51,
+      "priorSource": "position"
+    },
+    "313": {
+      "expectedMinutes": 27.5,
+      "gamesObserved": 4,
+      "pCameo": 0.5,
+      "pStart": 0.25,
+      "pUnused": 0.25,
+      "per90Points": 5.69,
+      "priorSource": "position"
+    },
+    "314": {
+      "expectedMinutes": 12.5,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 4.51,
+      "priorSource": "position"
+    },
+    "315": {
+      "expectedMinutes": 53.4,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 1.0,
+      "pUnused": 0.0,
+      "per90Points": 3.48,
+      "priorSource": "position"
+    },
+    "316": {
+      "expectedMinutes": 44.4,
+      "gamesObserved": 4,
+      "pCameo": 0.25,
+      "pStart": 0.75,
+      "pUnused": 0.0,
+      "per90Points": 7.27,
+      "priorSource": "position"
+    },
+    "317": {
+      "expectedMinutes": 10.6,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 4.84,
+      "priorSource": "position"
+    },
+    "318": {
+      "expectedMinutes": 16.5,
+      "gamesObserved": 4,
+      "pCameo": 0.25,
+      "pStart": 0.0,
+      "pUnused": 0.75,
+      "per90Points": 4.34,
+      "priorSource": "position"
+    },
+    "319": {
+      "expectedMinutes": 12.5,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 4.51,
+      "priorSource": "position"
+    },
+    "32": {
+      "expectedMinutes": 73.9,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.75,
+      "pUnused": 0.25,
+      "per90Points": 2.92,
+      "priorSource": "2025-26-personal"
+    },
+    "320": {
+      "expectedMinutes": 20.4,
+      "gamesObserved": 4,
+      "pCameo": 0.5,
+      "pStart": 0.0,
+      "pUnused": 0.5,
+      "per90Points": 5.67,
+      "priorSource": "position"
+    },
+    "321": {
+      "expectedMinutes": 12.0,
+      "gamesObserved": 4,
+      "pCameo": 0.25,
+      "pStart": 0.0,
+      "pUnused": 0.75,
+      "per90Points": 5.06,
+      "priorSource": "position"
+    },
+    "322": {
+      "expectedMinutes": 10.6,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 4.84,
+      "priorSource": "position"
+    },
+    "323": {
+      "expectedMinutes": 18.5,
+      "gamesObserved": 4,
+      "pCameo": 0.75,
+      "pStart": 0.0,
+      "pUnused": 0.25,
+      "per90Points": 4.87,
+      "priorSource": "position"
+    },
+    "324": {
+      "expectedMinutes": 12.5,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 4.51,
+      "priorSource": "position"
+    },
+    "325": {
+      "expectedMinutes": 38.6,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 3.23,
+      "priorSource": "2025-26-personal"
+    },
+    "326": {
+      "expectedMinutes": 38.6,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 2.69,
+      "priorSource": "2025-26-personal"
+    },
+    "327": {
+      "expectedMinutes": 62.0,
+      "gamesObserved": 4,
+      "pCameo": 0.5,
+      "pStart": 0.25,
+      "pUnused": 0.25,
+      "per90Points": 5.61,
+      "priorSource": "2025-26-personal"
+    },
+    "328": {
+      "expectedMinutes": 40.0,
+      "gamesObserved": 4,
+      "pCameo": 0.5,
+      "pStart": 0.0,
+      "pUnused": 0.5,
+      "per90Points": 4.02,
+      "priorSource": "2025-26-personal"
+    },
+    "329": {
+      "expectedMinutes": 55.9,
+      "gamesObserved": 4,
+      "pCameo": 0.25,
+      "pStart": 0.25,
+      "pUnused": 0.5,
+      "per90Points": 4.05,
+      "priorSource": "2025-26-personal"
+    },
+    "33": {
+      "expectedMinutes": 62.2,
+      "gamesObserved": 4,
+      "pCameo": 0.25,
+      "pStart": 0.5,
+      "pUnused": 0.25,
+      "per90Points": 3.54,
+      "priorSource": "2025-26-personal"
+    },
+    "330": {
+      "expectedMinutes": 80.1,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 1.0,
+      "pUnused": 0.0,
+      "per90Points": 8.11,
+      "priorSource": "2025-26-personal"
+    },
+    "331": {
+      "expectedMinutes": 59.6,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.5,
+      "pUnused": 0.5,
+      "per90Points": 3.33,
+      "priorSource": "2025-26-personal"
+    },
+    "332": {
+      "expectedMinutes": 90.1,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 1.0,
+      "pUnused": 0.0,
+      "per90Points": 4.49,
+      "priorSource": "2025-26-personal"
+    },
+    "333": {
+      "expectedMinutes": 36.8,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 5.24,
+      "priorSource": "2025-26-personal"
+    },
+    "334": {
+      "expectedMinutes": 67.3,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 1.0,
+      "pUnused": 0.0,
+      "per90Points": 4.79,
+      "priorSource": "position"
+    },
+    "335": {
+      "expectedMinutes": 87.3,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 1.0,
+      "pUnused": 0.0,
+      "per90Points": 5.43,
+      "priorSource": "2025-26-personal"
+    },
+    "336": {
+      "expectedMinutes": 67.0,
+      "gamesObserved": 4,
+      "pCameo": 0.25,
+      "pStart": 0.75,
+      "pUnused": 0.0,
+      "per90Points": 6.16,
+      "priorSource": "2025-26-personal"
+    },
+    "337": {
+      "expectedMinutes": 59.6,
+      "gamesObserved": 4,
+      "pCameo": 0.75,
+      "pStart": 0.25,
+      "pUnused": 0.0,
+      "per90Points": 3.9,
+      "priorSource": "2025-26-personal"
+    },
+    "338": {
+      "expectedMinutes": 89.6,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 1.0,
+      "pUnused": 0.0,
+      "per90Points": 3.96,
+      "priorSource": "2025-26-personal"
+    },
+    "339": {
+      "expectedMinutes": 44.4,
+      "gamesObserved": 4,
+      "pCameo": 0.5,
+      "pStart": 0.0,
+      "pUnused": 0.5,
+      "per90Points": 5.71,
+      "priorSource": "2025-26-personal"
+    },
+    "34": {
+      "expectedMinutes": 66.5,
+      "gamesObserved": 4,
+      "pCameo": 0.25,
+      "pStart": 0.5,
+      "pUnused": 0.25,
+      "per90Points": 2.42,
+      "priorSource": "2025-26-personal"
+    },
+    "340": {
+      "expectedMinutes": 12.5,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 4.51,
+      "priorSource": "position"
+    },
+    "341": {
+      "expectedMinutes": 55.8,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 5.53,
+      "priorSource": "2025-26-personal"
+    },
+    "342": {
+      "expectedMinutes": 112.3,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 4.12,
+      "priorSource": "2025-26-personal"
+    },
+    "343": {
+      "expectedMinutes": 43.2,
+      "gamesObserved": 4,
+      "pCameo": 0.5,
+      "pStart": 0.0,
+      "pUnused": 0.5,
+      "per90Points": 4.12,
+      "priorSource": "2025-26-personal"
+    },
+    "344": {
+      "expectedMinutes": 37.7,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 3.82,
+      "priorSource": "2025-26-personal"
+    },
+    "345": {
+      "expectedMinutes": 66.9,
+      "gamesObserved": 4,
+      "pCameo": 0.25,
+      "pStart": 0.5,
+      "pUnused": 0.25,
+      "per90Points": 5.19,
+      "priorSource": "2025-26-personal"
+    },
+    "346": {
+      "expectedMinutes": 85.9,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 1.0,
+      "pUnused": 0.0,
+      "per90Points": 5.2,
+      "priorSource": "2025-26-personal"
+    },
+    "347": {
+      "expectedMinutes": 52.8,
+      "gamesObserved": 4,
+      "pCameo": 0.75,
+      "pStart": 0.0,
+      "pUnused": 0.25,
+      "per90Points": 7.18,
+      "priorSource": "2025-26-personal"
+    },
+    "348": {
+      "expectedMinutes": 52.3,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 6.27,
+      "priorSource": "2025-26-personal"
+    },
+    "349": {
+      "expectedMinutes": 10.6,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 4.84,
+      "priorSource": "position"
+    },
+    "35": {
+      "expectedMinutes": 42.9,
+      "gamesObserved": 4,
+      "pCameo": 0.25,
+      "pStart": 0.0,
+      "pUnused": 0.75,
+      "per90Points": 3.63,
+      "priorSource": "2025-26-personal"
+    },
+    "350": {
+      "expectedMinutes": 90.0,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 1.0,
+      "pUnused": 0.0,
+      "per90Points": 4.33,
+      "priorSource": "2025-26-personal"
+    },
+    "351": {
+      "expectedMinutes": 37.2,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 3.53,
+      "priorSource": "2025-26-personal"
+    },
+    "352": {
+      "expectedMinutes": 45.4,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 2.55,
+      "priorSource": "2025-26-personal"
+    },
+    "353": {
+      "expectedMinutes": 11.1,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 3.51,
+      "priorSource": "position"
+    },
+    "354": {
+      "expectedMinutes": 11.1,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 3.51,
+      "priorSource": "position"
+    },
+    "355": {
+      "expectedMinutes": 11.1,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 3.51,
+      "priorSource": "position"
+    },
+    "356": {
+      "expectedMinutes": 90.0,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 1.0,
+      "pUnused": 0.0,
+      "per90Points": 4.37,
+      "priorSource": "2025-26-personal"
+    },
+    "357": {
+      "expectedMinutes": 62.3,
+      "gamesObserved": 4,
+      "pCameo": 0.25,
+      "pStart": 0.5,
+      "pUnused": 0.25,
+      "per90Points": 3.27,
+      "priorSource": "2025-26-personal"
+    },
+    "358": {
+      "expectedMinutes": 77.9,
+      "gamesObserved": 4,
+      "pCameo": 0.25,
+      "pStart": 0.75,
+      "pUnused": 0.0,
+      "per90Points": 2.61,
+      "priorSource": "2025-26-personal"
+    },
+    "359": {
+      "expectedMinutes": 36.4,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 5.0,
+      "priorSource": "2025-26-personal"
+    },
+    "36": {
+      "expectedMinutes": 87.9,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 1.0,
+      "pUnused": 0.0,
+      "per90Points": 2.64,
+      "priorSource": "2025-26-personal"
+    },
+    "360": {
+      "expectedMinutes": 33.1,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 4.07,
+      "priorSource": "2025-26-personal"
+    },
+    "361": {
+      "expectedMinutes": 15.8,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 3.87,
+      "priorSource": "position"
+    },
+    "362": {
+      "expectedMinutes": 62.3,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 1.0,
+      "pUnused": 0.0,
+      "per90Points": 4.59,
+      "priorSource": "position"
+    },
+    "363": {
+      "expectedMinutes": 15.8,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 3.87,
+      "priorSource": "position"
+    },
+    "364": {
+      "expectedMinutes": 25.0,
+      "gamesObserved": 4,
+      "pCameo": 0.5,
+      "pStart": 0.0,
+      "pUnused": 0.5,
+      "per90Points": 3.59,
+      "priorSource": "position"
+    },
+    "365": {
+      "expectedMinutes": 15.8,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 3.87,
+      "priorSource": "position"
+    },
+    "366": {
+      "expectedMinutes": 85.1,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 1.0,
+      "pUnused": 0.0,
+      "per90Points": 3.78,
+      "priorSource": "2025-26-personal"
+    },
+    "367": {
+      "expectedMinutes": 76.6,
+      "gamesObserved": 4,
+      "pCameo": 0.25,
+      "pStart": 0.75,
+      "pUnused": 0.0,
+      "per90Points": 7.36,
+      "priorSource": "2025-26-personal"
+    },
+    "368": {
+      "expectedMinutes": 89.9,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 1.0,
+      "pUnused": 0.0,
+      "per90Points": 4.49,
+      "priorSource": "2025-26-personal"
+    },
+    "369": {
+      "expectedMinutes": 61.0,
+      "gamesObserved": 4,
+      "pCameo": 0.5,
+      "pStart": 0.25,
+      "pUnused": 0.25,
+      "per90Points": 5.85,
+      "priorSource": "2025-26-personal"
+    },
+    "37": {
+      "expectedMinutes": 88.1,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 1.0,
+      "pUnused": 0.0,
+      "per90Points": 2.09,
+      "priorSource": "2025-26-personal"
+    },
+    "370": {
+      "expectedMinutes": 135.9,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 10.5,
+      "priorSource": "2025-26-personal"
+    },
+    "371": {
+      "expectedMinutes": 63.6,
+      "gamesObserved": 4,
+      "pCameo": 0.75,
+      "pStart": 0.25,
+      "pUnused": 0.0,
+      "per90Points": 4.15,
+      "priorSource": "2025-26-personal"
+    },
+    "372": {
+      "expectedMinutes": 67.5,
+      "gamesObserved": 4,
+      "pCameo": 0.5,
+      "pStart": 0.5,
+      "pUnused": 0.0,
+      "per90Points": 3.03,
+      "priorSource": "2025-26-personal"
+    },
+    "373": {
+      "expectedMinutes": 45.8,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 3.79,
+      "priorSource": "2025-26-personal"
+    },
+    "374": {
+      "expectedMinutes": 72.9,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 6.35,
+      "priorSource": "2025-26-personal"
+    },
+    "375": {
+      "expectedMinutes": 11.7,
+      "gamesObserved": 4,
+      "pCameo": 0.5,
+      "pStart": 0.0,
+      "pUnused": 0.5,
+      "per90Points": 24.16,
+      "priorSource": "2025-26-personal"
+    },
+    "376": {
+      "expectedMinutes": 12.5,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 4.51,
+      "priorSource": "position"
+    },
+    "377": {
+      "expectedMinutes": 46.7,
+      "gamesObserved": 4,
+      "pCameo": 0.5,
+      "pStart": 0.5,
+      "pUnused": 0.0,
+      "per90Points": 4.95,
+      "priorSource": "position"
+    },
+    "378": {
+      "expectedMinutes": 12.5,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 4.51,
+      "priorSource": "position"
+    },
+    "379": {
+      "expectedMinutes": 84.8,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 1.0,
+      "pUnused": 0.0,
+      "per90Points": 6.25,
+      "priorSource": "2025-26-personal"
+    },
+    "38": {
+      "expectedMinutes": 35.6,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 5.42,
+      "priorSource": "2025-26-personal"
+    },
+    "380": {
+      "expectedMinutes": 36.7,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 6.26,
+      "priorSource": "2025-26-personal"
+    },
+    "381": {
+      "expectedMinutes": 14.4,
+      "gamesObserved": 4,
+      "pCameo": 0.5,
+      "pStart": 0.0,
+      "pUnused": 0.5,
+      "per90Points": 5.14,
+      "priorSource": "position"
+    },
+    "382": {
+      "expectedMinutes": 10.6,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 4.84,
+      "priorSource": "position"
+    },
+    "383": {
+      "expectedMinutes": 47.1,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 4.09,
+      "priorSource": "2025-26-personal"
+    },
+    "384": {
+      "expectedMinutes": 90.0,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 1.0,
+      "pUnused": 0.0,
+      "per90Points": 4.16,
+      "priorSource": "2025-26-personal"
+    },
+    "385": {
+      "expectedMinutes": 90.0,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 1.0,
+      "pUnused": 0.0,
+      "per90Points": 4.08,
+      "priorSource": "2025-26-personal"
+    },
+    "386": {
+      "expectedMinutes": 11.1,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 3.51,
+      "priorSource": "position"
+    },
+    "387": {
+      "expectedMinutes": 61.6,
+      "gamesObserved": 4,
+      "pCameo": 0.25,
+      "pStart": 0.5,
+      "pUnused": 0.25,
+      "per90Points": 4.23,
+      "priorSource": "2025-26-personal"
+    },
+    "388": {
+      "expectedMinutes": 90.0,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 1.0,
+      "pUnused": 0.0,
+      "per90Points": 6.04,
+      "priorSource": "2025-26-personal"
+    },
+    "389": {
+      "expectedMinutes": 55.9,
+      "gamesObserved": 4,
+      "pCameo": 0.25,
+      "pStart": 0.25,
+      "pUnused": 0.5,
+      "per90Points": 5.85,
+      "priorSource": "2025-26-personal"
+    },
+    "39": {
+      "expectedMinutes": 15.8,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 3.87,
+      "priorSource": "position"
+    },
+    "390": {
+      "expectedMinutes": 89.6,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 1.0,
+      "pUnused": 0.0,
+      "per90Points": 4.25,
+      "priorSource": "2025-26-personal"
+    },
+    "391": {
+      "expectedMinutes": 85.8,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 1.0,
+      "pUnused": 0.0,
+      "per90Points": 7.45,
+      "priorSource": "2025-26-personal"
+    },
+    "392": {
+      "expectedMinutes": 34.7,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 5.56,
+      "priorSource": "2025-26-personal"
+    },
+    "393": {
+      "expectedMinutes": 79.1,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.75,
+      "pUnused": 0.25,
+      "per90Points": 3.51,
+      "priorSource": "2025-26-personal"
+    },
+    "394": {
+      "expectedMinutes": 28.9,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 3.33,
+      "priorSource": "2025-26-personal"
+    },
+    "395": {
+      "expectedMinutes": 51.0,
+      "gamesObserved": 4,
+      "pCameo": 0.25,
+      "pStart": 0.0,
+      "pUnused": 0.75,
+      "per90Points": 3.63,
+      "priorSource": "2025-26-personal"
+    },
+    "396": {
+      "expectedMinutes": 16.0,
+      "gamesObserved": 4,
+      "pCameo": 0.25,
+      "pStart": 0.0,
+      "pUnused": 0.75,
+      "per90Points": 4.35,
+      "priorSource": "position"
+    },
+    "397": {
+      "expectedMinutes": 88.5,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 1.0,
+      "pUnused": 0.0,
+      "per90Points": 4.56,
+      "priorSource": "2025-26-personal"
+    },
+    "398": {
+      "expectedMinutes": 69.7,
+      "gamesObserved": 4,
+      "pCameo": 0.5,
+      "pStart": 0.5,
+      "pUnused": 0.0,
+      "per90Points": 4.61,
+      "priorSource": "2025-26-personal"
+    },
+    "399": {
+      "expectedMinutes": 71.1,
+      "gamesObserved": 4,
+      "pCameo": 0.5,
+      "pStart": 0.5,
+      "pUnused": 0.0,
+      "per90Points": 8.98,
+      "priorSource": "2025-26-personal"
+    },
+    "4": {
+      "expectedMinutes": 90.7,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 1.0,
+      "pUnused": 0.0,
+      "per90Points": 6.28,
+      "priorSource": "2025-26-personal"
+    },
+    "40": {
+      "expectedMinutes": 87.6,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 1.0,
+      "pUnused": 0.0,
+      "per90Points": 6.19,
+      "priorSource": "2025-26-personal"
+    },
+    "400": {
+      "expectedMinutes": 40.0,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 6.09,
+      "priorSource": "2025-26-personal"
+    },
+    "401": {
+      "expectedMinutes": 72.6,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.75,
+      "pUnused": 0.25,
+      "per90Points": 4.32,
+      "priorSource": "2025-26-personal"
+    },
+    "402": {
+      "expectedMinutes": 38.1,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 4.11,
+      "priorSource": "2025-26-personal"
+    },
+    "403": {
+      "expectedMinutes": 71.4,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.5,
+      "pUnused": 0.5,
+      "per90Points": 4.22,
+      "priorSource": "2025-26-personal"
+    },
+    "404": {
+      "expectedMinutes": 36.6,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 5.1,
+      "priorSource": "2025-26-personal"
+    },
+    "405": {
+      "expectedMinutes": 62.8,
+      "gamesObserved": 4,
+      "pCameo": 0.25,
+      "pStart": 0.5,
+      "pUnused": 0.25,
+      "per90Points": 3.21,
+      "priorSource": "2025-26-personal"
+    },
+    "406": {
+      "expectedMinutes": 59.6,
+      "gamesObserved": 4,
+      "pCameo": 0.5,
+      "pStart": 0.0,
+      "pUnused": 0.5,
+      "per90Points": 6.06,
+      "priorSource": "2025-26-personal"
+    },
+    "407": {
+      "expectedMinutes": 12.5,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 4.51,
+      "priorSource": "position"
+    },
+    "408": {
+      "expectedMinutes": 12.5,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 4.51,
+      "priorSource": "position"
+    },
+    "409": {
+      "expectedMinutes": 10.7,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 7.2,
+      "priorSource": "2025-26-personal"
+    },
+    "41": {
+      "expectedMinutes": 80.2,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 1.0,
+      "pUnused": 0.0,
+      "per90Points": 3.57,
+      "priorSource": "2025-26-personal"
+    },
+    "410": {
+      "expectedMinutes": 12.5,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 4.51,
+      "priorSource": "position"
+    },
+    "411": {
+      "expectedMinutes": 88.7,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 1.0,
+      "pUnused": 0.0,
+      "per90Points": 7.93,
+      "priorSource": "2025-26-personal"
+    },
+    "412": {
+      "expectedMinutes": 90.0,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 1.0,
+      "pUnused": 0.0,
+      "per90Points": 2.3,
+      "priorSource": "2025-26-personal"
+    },
+    "413": {
+      "expectedMinutes": 38.6,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 1.83,
+      "priorSource": "2025-26-personal"
+    },
+    "414": {
+      "expectedMinutes": 11.1,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 3.51,
+      "priorSource": "position"
+    },
+    "415": {
+      "expectedMinutes": 64.7,
+      "gamesObserved": 4,
+      "pCameo": 0.75,
+      "pStart": 0.25,
+      "pUnused": 0.0,
+      "per90Points": 4.66,
+      "priorSource": "2025-26-personal"
+    },
+    "416": {
+      "expectedMinutes": 38.6,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 3.31,
+      "priorSource": "2025-26-personal"
+    },
+    "417": {
+      "expectedMinutes": 75.1,
+      "gamesObserved": 4,
+      "pCameo": 0.25,
+      "pStart": 0.75,
+      "pUnused": 0.0,
+      "per90Points": 2.82,
+      "priorSource": "2025-26-personal"
+    },
+    "418": {
+      "expectedMinutes": 88.6,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 1.0,
+      "pUnused": 0.0,
+      "per90Points": 2.97,
+      "priorSource": "2025-26-personal"
+    },
+    "419": {
+      "expectedMinutes": 79.1,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.75,
+      "pUnused": 0.25,
+      "per90Points": 2.69,
+      "priorSource": "2025-26-personal"
+    },
+    "42": {
+      "expectedMinutes": 51.0,
+      "gamesObserved": 4,
+      "pCameo": 0.5,
+      "pStart": 0.0,
+      "pUnused": 0.5,
+      "per90Points": 4.12,
+      "priorSource": "2025-26-personal"
+    },
+    "420": {
+      "expectedMinutes": 44.3,
+      "gamesObserved": 4,
+      "pCameo": 0.5,
+      "pStart": 0.0,
+      "pUnused": 0.5,
+      "per90Points": 3.49,
+      "priorSource": "2025-26-personal"
+    },
+    "421": {
+      "expectedMinutes": 48.7,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.25,
+      "pUnused": 0.75,
+      "per90Points": 3.07,
+      "priorSource": "2025-26-personal"
+    },
+    "422": {
+      "expectedMinutes": 51.9,
+      "gamesObserved": 4,
+      "pCameo": 0.5,
+      "pStart": 0.25,
+      "pUnused": 0.25,
+      "per90Points": 4.15,
+      "priorSource": "2025-26-personal"
+    },
+    "423": {
+      "expectedMinutes": 72.3,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.75,
+      "pUnused": 0.25,
+      "per90Points": 2.77,
+      "priorSource": "2025-26-personal"
+    },
+    "424": {
+      "expectedMinutes": 15.8,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 3.87,
+      "priorSource": "position"
+    },
+    "425": {
+      "expectedMinutes": 0.9,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 45.0,
+      "priorSource": "2025-26-personal"
+    },
+    "426": {
+      "expectedMinutes": 89.0,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 1.0,
+      "pUnused": 0.0,
+      "per90Points": 7.13,
+      "priorSource": "2025-26-personal"
+    },
+    "427": {
+      "expectedMinutes": 87.5,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 1.0,
+      "pUnused": 0.0,
+      "per90Points": 5.53,
+      "priorSource": "2025-26-personal"
+    },
+    "428": {
+      "expectedMinutes": 82.1,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 1.0,
+      "pUnused": 0.0,
+      "per90Points": 4.77,
+      "priorSource": "2025-26-personal"
+    },
+    "429": {
+      "expectedMinutes": 51.8,
+      "gamesObserved": 4,
+      "pCameo": 0.25,
+      "pStart": 0.75,
+      "pUnused": 0.0,
+      "per90Points": 3.37,
+      "priorSource": "position"
+    },
+    "43": {
+      "expectedMinutes": 82.5,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 1.0,
+      "pUnused": 0.0,
+      "per90Points": 3.03,
+      "priorSource": "2025-26-personal"
+    },
+    "430": {
+      "expectedMinutes": 36.1,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 5.17,
+      "priorSource": "2025-26-personal"
+    },
+    "431": {
+      "expectedMinutes": 37.1,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 3.5,
+      "priorSource": "2025-26-personal"
+    },
+    "432": {
+      "expectedMinutes": 83.6,
+      "gamesObserved": 4,
+      "pCameo": 0.25,
+      "pStart": 0.75,
+      "pUnused": 0.0,
+      "per90Points": 5.13,
+      "priorSource": "2025-26-personal"
+    },
+    "433": {
+      "expectedMinutes": 46.9,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 3.9,
+      "priorSource": "2025-26-personal"
+    },
+    "434": {
+      "expectedMinutes": 45.9,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 2.52,
+      "priorSource": "2025-26-personal"
+    },
+    "435": {
+      "expectedMinutes": 18.6,
+      "gamesObserved": 4,
+      "pCameo": 0.25,
+      "pStart": 0.0,
+      "pUnused": 0.75,
+      "per90Points": 6.87,
+      "priorSource": "2025-26-personal"
+    },
+    "436": {
+      "expectedMinutes": 12.5,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 4.51,
+      "priorSource": "position"
+    },
+    "437": {
+      "expectedMinutes": 6.4,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 6.0,
+      "priorSource": "2025-26-personal"
+    },
+    "438": {
+      "expectedMinutes": 7.3,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 10.59,
+      "priorSource": "2025-26-personal"
+    },
+    "439": {
+      "expectedMinutes": 51.9,
+      "gamesObserved": 4,
+      "pCameo": 1.0,
+      "pStart": 0.0,
+      "pUnused": 0.0,
+      "per90Points": 7.12,
+      "priorSource": "2025-26-personal"
+    },
+    "44": {
+      "expectedMinutes": 64.3,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 4.2,
+      "priorSource": "2025-26-personal"
+    },
+    "440": {
+      "expectedMinutes": 53.0,
+      "gamesObserved": 4,
+      "pCameo": 0.25,
+      "pStart": 0.0,
+      "pUnused": 0.75,
+      "per90Points": 6.48,
+      "priorSource": "2025-26-personal"
+    },
+    "441": {
+      "expectedMinutes": 10.6,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 4.84,
+      "priorSource": "position"
+    },
+    "442": {
+      "expectedMinutes": 38.3,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 3.58,
+      "priorSource": "2025-26-personal"
+    },
+    "443": {
+      "expectedMinutes": 11.1,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 3.51,
+      "priorSource": "position"
+    },
+    "444": {
+      "expectedMinutes": 11.1,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 3.51,
+      "priorSource": "position"
+    },
+    "445": {
+      "expectedMinutes": 89.9,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 1.0,
+      "pUnused": 0.0,
+      "per90Points": 2.94,
+      "priorSource": "2025-26-personal"
+    },
+    "446": {
+      "expectedMinutes": 42.6,
+      "gamesObserved": 4,
+      "pCameo": 0.25,
+      "pStart": 0.0,
+      "pUnused": 0.75,
+      "per90Points": 4.69,
+      "priorSource": "2025-26-personal"
+    },
+    "447": {
+      "expectedMinutes": 88.9,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 1.0,
+      "pUnused": 0.0,
+      "per90Points": 3.29,
+      "priorSource": "2025-26-personal"
+    },
+    "448": {
+      "expectedMinutes": 37.6,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 3.81,
+      "priorSource": "2025-26-personal"
+    },
+    "449": {
+      "expectedMinutes": 90.1,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 1.0,
+      "pUnused": 0.0,
+      "per90Points": 4.1,
+      "priorSource": "2025-26-personal"
+    },
+    "45": {
+      "expectedMinutes": 82.8,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 1.0,
+      "pUnused": 0.0,
+      "per90Points": 3.34,
+      "priorSource": "2025-26-personal"
+    },
+    "450": {
+      "expectedMinutes": 45.3,
+      "gamesObserved": 4,
+      "pCameo": 0.5,
+      "pStart": 0.0,
+      "pUnused": 0.5,
+      "per90Points": 5.07,
+      "priorSource": "2025-26-personal"
+    },
+    "451": {
+      "expectedMinutes": 3.0,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 25.71,
+      "priorSource": "2025-26-personal"
+    },
+    "452": {
+      "expectedMinutes": 48.1,
+      "gamesObserved": 4,
+      "pCameo": 0.5,
+      "pStart": 0.0,
+      "pUnused": 0.5,
+      "per90Points": 7.11,
+      "priorSource": "2025-26-personal"
+    },
+    "453": {
+      "expectedMinutes": 95.4,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 1.0,
+      "pUnused": 0.0,
+      "per90Points": 4.8,
+      "priorSource": "2025-26-personal"
+    },
+    "454": {
+      "expectedMinutes": 73.0,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.75,
+      "pUnused": 0.25,
+      "per90Points": 5.38,
+      "priorSource": "2025-26-personal"
+    },
+    "455": {
+      "expectedMinutes": 84.2,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 1.0,
+      "pUnused": 0.0,
+      "per90Points": 3.05,
+      "priorSource": "2025-26-personal"
+    },
+    "456": {
+      "expectedMinutes": 51.0,
+      "gamesObserved": 4,
+      "pCameo": 0.75,
+      "pStart": 0.0,
+      "pUnused": 0.25,
+      "per90Points": 5.33,
+      "priorSource": "2025-26-personal"
+    },
+    "457": {
+      "expectedMinutes": 49.2,
+      "gamesObserved": 4,
+      "pCameo": 1.0,
+      "pStart": 0.0,
+      "pUnused": 0.0,
+      "per90Points": 3.72,
+      "priorSource": "2025-26-personal"
+    },
+    "458": {
+      "expectedMinutes": 36.3,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 3.37,
+      "priorSource": "2025-26-personal"
+    },
+    "459": {
+      "expectedMinutes": 86.4,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 1.0,
+      "pUnused": 0.0,
+      "per90Points": 3.09,
+      "priorSource": "2025-26-personal"
+    },
+    "46": {
+      "expectedMinutes": 94.8,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 1.0,
+      "pUnused": 0.0,
+      "per90Points": 3.91,
+      "priorSource": "2025-26-personal"
+    },
+    "460": {
+      "expectedMinutes": 69.9,
+      "gamesObserved": 4,
+      "pCameo": 0.5,
+      "pStart": 0.5,
+      "pUnused": 0.0,
+      "per90Points": 4.53,
+      "priorSource": "2025-26-personal"
+    },
+    "461": {
+      "expectedMinutes": 17.4,
+      "gamesObserved": 4,
+      "pCameo": 0.5,
+      "pStart": 0.0,
+      "pUnused": 0.5,
+      "per90Points": 6.74,
+      "priorSource": "position"
+    },
+    "462": {
+      "expectedMinutes": 35.1,
+      "gamesObserved": 4,
+      "pCameo": 0.75,
+      "pStart": 0.25,
+      "pUnused": 0.0,
+      "per90Points": 3.73,
+      "priorSource": "position"
+    },
+    "463": {
+      "expectedMinutes": 36.6,
+      "gamesObserved": 4,
+      "pCameo": 0.25,
+      "pStart": 0.0,
+      "pUnused": 0.75,
+      "per90Points": 6.45,
+      "priorSource": "2025-26-personal"
+    },
+    "464": {
+      "expectedMinutes": 105.5,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 1.0,
+      "pUnused": 0.0,
+      "per90Points": 4.14,
+      "priorSource": "2025-26-personal"
+    },
+    "465": {
+      "expectedMinutes": 51.0,
+      "gamesObserved": 4,
+      "pCameo": 0.25,
+      "pStart": 0.0,
+      "pUnused": 0.75,
+      "per90Points": 8.04,
+      "priorSource": "2025-26-personal"
+    },
+    "466": {
+      "expectedMinutes": 5.6,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 6.92,
+      "priorSource": "2025-26-personal"
+    },
+    "467": {
+      "expectedMinutes": 89.5,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 1.0,
+      "pUnused": 0.0,
+      "per90Points": 3.18,
+      "priorSource": "2025-26-personal"
+    },
+    "468": {
+      "expectedMinutes": 37.5,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 2.27,
+      "priorSource": "2025-26-personal"
+    },
+    "469": {
+      "expectedMinutes": 89.6,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 1.0,
+      "pUnused": 0.0,
+      "per90Points": 4.03,
+      "priorSource": "2025-26-personal"
+    },
+    "47": {
+      "expectedMinutes": 87.0,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 1.0,
+      "pUnused": 0.0,
+      "per90Points": 2.8,
+      "priorSource": "2025-26-personal"
+    },
+    "470": {
+      "expectedMinutes": 41.0,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 3.56,
+      "priorSource": "2025-26-personal"
+    },
+    "471": {
+      "expectedMinutes": 77.7,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.75,
+      "pUnused": 0.25,
+      "per90Points": 3.67,
+      "priorSource": "2025-26-personal"
+    },
+    "472": {
+      "expectedMinutes": 87.8,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 1.0,
+      "pUnused": 0.0,
+      "per90Points": 4.34,
+      "priorSource": "2025-26-personal"
+    },
+    "473": {
+      "expectedMinutes": 81.5,
+      "gamesObserved": 4,
+      "pCameo": 0.25,
+      "pStart": 0.75,
+      "pUnused": 0.0,
+      "per90Points": 2.89,
+      "priorSource": "2025-26-personal"
+    },
+    "474": {
+      "expectedMinutes": 75.3,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.75,
+      "pUnused": 0.25,
+      "per90Points": 2.91,
+      "priorSource": "2025-26-personal"
+    },
+    "475": {
+      "expectedMinutes": 39.9,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 3.42,
+      "priorSource": "2025-26-personal"
+    },
+    "476": {
+      "expectedMinutes": 15.8,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 3.87,
+      "priorSource": "position"
+    },
+    "477": {
+      "expectedMinutes": 35.4,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 1.64,
+      "priorSource": "2025-26-personal"
+    },
+    "478": {
+      "expectedMinutes": 53.3,
+      "gamesObserved": 4,
+      "pCameo": 0.5,
+      "pStart": 0.0,
+      "pUnused": 0.5,
+      "per90Points": 3.42,
+      "priorSource": "2025-26-personal"
+    },
+    "479": {
+      "expectedMinutes": 15.8,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 3.87,
+      "priorSource": "position"
+    },
+    "48": {
+      "expectedMinutes": 35.8,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 3.9,
+      "priorSource": "2025-26-personal"
+    },
+    "480": {
+      "expectedMinutes": 89.4,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 1.0,
+      "pUnused": 0.0,
+      "per90Points": 6.15,
+      "priorSource": "2025-26-personal"
+    },
+    "481": {
+      "expectedMinutes": 84.7,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 1.0,
+      "pUnused": 0.0,
+      "per90Points": 4.07,
+      "priorSource": "2025-26-personal"
+    },
+    "482": {
+      "expectedMinutes": 37.7,
+      "gamesObserved": 4,
+      "pCameo": 0.25,
+      "pStart": 0.0,
+      "pUnused": 0.75,
+      "per90Points": 4.78,
+      "priorSource": "2025-26-personal"
+    },
+    "483": {
+      "expectedMinutes": 72.6,
+      "gamesObserved": 4,
+      "pCameo": 0.25,
+      "pStart": 0.75,
+      "pUnused": 0.0,
+      "per90Points": 4.46,
+      "priorSource": "2025-26-personal"
+    },
+    "484": {
+      "expectedMinutes": 42.3,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 4.4,
+      "priorSource": "2025-26-personal"
+    },
+    "485": {
+      "expectedMinutes": 39.2,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 4.26,
+      "priorSource": "2025-26-personal"
+    },
+    "486": {
+      "expectedMinutes": 109.4,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 1.0,
+      "pUnused": 0.0,
+      "per90Points": 3.61,
+      "priorSource": "2025-26-personal"
+    },
+    "487": {
+      "expectedMinutes": 29.6,
+      "gamesObserved": 4,
+      "pCameo": 0.25,
+      "pStart": 0.0,
+      "pUnused": 0.75,
+      "per90Points": 4.18,
+      "priorSource": "2025-26-personal"
+    },
+    "488": {
+      "expectedMinutes": 49.5,
+      "gamesObserved": 4,
+      "pCameo": 0.25,
+      "pStart": 0.25,
+      "pUnused": 0.5,
+      "per90Points": 3.47,
+      "priorSource": "2025-26-personal"
+    },
+    "489": {
+      "expectedMinutes": 129.0,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 4.49,
+      "priorSource": "2025-26-personal"
+    },
+    "49": {
+      "expectedMinutes": 12.5,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 4.51,
+      "priorSource": "position"
+    },
+    "490": {
+      "expectedMinutes": 41.3,
+      "gamesObserved": 4,
+      "pCameo": 0.75,
+      "pStart": 0.0,
+      "pUnused": 0.25,
+      "per90Points": 4.49,
+      "priorSource": "2025-26-personal"
+    },
+    "491": {
+      "expectedMinutes": 67.4,
+      "gamesObserved": 4,
+      "pCameo": 0.5,
+      "pStart": 0.5,
+      "pUnused": 0.0,
+      "per90Points": 4.42,
+      "priorSource": "2025-26-personal"
+    },
+    "492": {
+      "expectedMinutes": 101.7,
+      "gamesObserved": 4,
+      "pCameo": 0.5,
+      "pStart": 0.5,
+      "pUnused": 0.0,
+      "per90Points": 4.18,
+      "priorSource": "2025-26-personal"
+    },
+    "493": {
+      "expectedMinutes": 38.3,
+      "gamesObserved": 4,
+      "pCameo": 0.25,
+      "pStart": 0.0,
+      "pUnused": 0.75,
+      "per90Points": 9.55,
+      "priorSource": "2025-26-personal"
+    },
+    "494": {
+      "expectedMinutes": 38.6,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 2.9,
+      "priorSource": "2025-26-personal"
+    },
+    "495": {
+      "expectedMinutes": 11.1,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 3.51,
+      "priorSource": "position"
+    },
+    "496": {
+      "expectedMinutes": 90.0,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 1.0,
+      "pUnused": 0.0,
+      "per90Points": 3.62,
+      "priorSource": "2025-26-personal"
+    },
+    "497": {
+      "expectedMinutes": 38.6,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 2.74,
+      "priorSource": "2025-26-personal"
+    },
+    "498": {
+      "expectedMinutes": 50.9,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.25,
+      "pUnused": 0.75,
+      "per90Points": 4.19,
+      "priorSource": "2025-26-personal"
+    },
+    "499": {
+      "expectedMinutes": 63.1,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.5,
+      "pUnused": 0.5,
+      "per90Points": 3.89,
+      "priorSource": "2025-26-personal"
+    },
+    "5": {
+      "expectedMinutes": 44.0,
+      "gamesObserved": 4,
+      "pCameo": 0.25,
+      "pStart": 0.0,
+      "pUnused": 0.75,
+      "per90Points": 4.78,
+      "priorSource": "2025-26-personal"
+    },
+    "50": {
+      "expectedMinutes": 6.9,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 5.62,
+      "priorSource": "2025-26-personal"
+    },
+    "500": {
+      "expectedMinutes": 36.4,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 4.38,
+      "priorSource": "2025-26-personal"
+    },
+    "501": {
+      "expectedMinutes": 63.3,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.5,
+      "pUnused": 0.5,
+      "per90Points": 2.65,
+      "priorSource": "2025-26-personal"
+    },
+    "502": {
+      "expectedMinutes": 84.8,
+      "gamesObserved": 4,
+      "pCameo": 0.25,
+      "pStart": 0.75,
+      "pUnused": 0.0,
+      "per90Points": 4.24,
+      "priorSource": "2025-26-personal"
+    },
+    "503": {
+      "expectedMinutes": 75.8,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.75,
+      "pUnused": 0.25,
+      "per90Points": 4.37,
+      "priorSource": "2025-26-personal"
+    },
+    "504": {
+      "expectedMinutes": 65.4,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 1.0,
+      "pUnused": 0.0,
+      "per90Points": 5.42,
+      "priorSource": "position"
+    },
+    "505": {
+      "expectedMinutes": 38.2,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 3.43,
+      "priorSource": "2025-26-personal"
+    },
+    "506": {
+      "expectedMinutes": 53.2,
+      "gamesObserved": 4,
+      "pCameo": 0.5,
+      "pStart": 0.25,
+      "pUnused": 0.25,
+      "per90Points": 3.69,
+      "priorSource": "2025-26-personal"
+    },
+    "507": {
+      "expectedMinutes": 15.8,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 3.87,
+      "priorSource": "position"
+    },
+    "508": {
+      "expectedMinutes": 29.1,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 6.62,
+      "priorSource": "2025-26-personal"
+    },
+    "509": {
+      "expectedMinutes": 0.4,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 90.0,
+      "priorSource": "2025-26-personal"
+    },
+    "51": {
+      "expectedMinutes": 50.6,
+      "gamesObserved": 4,
+      "pCameo": 0.25,
+      "pStart": 0.75,
+      "pUnused": 0.0,
+      "per90Points": 4.39,
+      "priorSource": "2025-26-personal"
+    },
+    "510": {
+      "expectedMinutes": 0.4,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 90.0,
+      "priorSource": "2025-26-personal"
+    },
+    "511": {
+      "expectedMinutes": 30.4,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 1.9,
+      "priorSource": "2025-26-personal"
+    },
+    "512": {
+      "expectedMinutes": 45.8,
+      "gamesObserved": 4,
+      "pCameo": 0.75,
+      "pStart": 0.0,
+      "pUnused": 0.25,
+      "per90Points": 4.11,
+      "priorSource": "2025-26-personal"
+    },
+    "513": {
+      "expectedMinutes": 39.4,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 4.12,
+      "priorSource": "2025-26-personal"
+    },
+    "514": {
+      "expectedMinutes": 80.7,
+      "gamesObserved": 4,
+      "pCameo": 0.25,
+      "pStart": 0.75,
+      "pUnused": 0.0,
+      "per90Points": 3.82,
+      "priorSource": "2025-26-personal"
+    },
+    "515": {
+      "expectedMinutes": 19.6,
+      "gamesObserved": 4,
+      "pCameo": 0.5,
+      "pStart": 0.0,
+      "pUnused": 0.5,
+      "per90Points": 7.49,
+      "priorSource": "2025-26-personal"
+    },
+    "516": {
+      "expectedMinutes": 76.0,
+      "gamesObserved": 4,
+      "pCameo": 0.25,
+      "pStart": 0.75,
+      "pUnused": 0.0,
+      "per90Points": 3.71,
+      "priorSource": "2025-26-personal"
+    },
+    "517": {
+      "expectedMinutes": 41.7,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 4.26,
+      "priorSource": "2025-26-personal"
+    },
+    "518": {
+      "expectedMinutes": 45.8,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 4.6,
+      "priorSource": "2025-26-personal"
+    },
+    "519": {
+      "expectedMinutes": 54.5,
+      "gamesObserved": 4,
+      "pCameo": 0.25,
+      "pStart": 0.25,
+      "pUnused": 0.5,
+      "per90Points": 2.83,
+      "priorSource": "2025-26-personal"
+    },
+    "52": {
+      "expectedMinutes": 32.6,
+      "gamesObserved": 4,
+      "pCameo": 1.0,
+      "pStart": 0.0,
+      "pUnused": 0.0,
+      "per90Points": 6.57,
+      "priorSource": "2025-26-personal"
+    },
+    "520": {
+      "expectedMinutes": 47.5,
+      "gamesObserved": 4,
+      "pCameo": 0.5,
+      "pStart": 0.0,
+      "pUnused": 0.5,
+      "per90Points": 4.01,
+      "priorSource": "2025-26-personal"
+    },
+    "521": {
+      "expectedMinutes": 12.5,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 4.51,
+      "priorSource": "position"
+    },
+    "522": {
+      "expectedMinutes": 68.7,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.75,
+      "pUnused": 0.25,
+      "per90Points": 3.13,
+      "priorSource": "2025-26-personal"
+    },
+    "523": {
+      "expectedMinutes": 25.3,
+      "gamesObserved": 4,
+      "pCameo": 0.25,
+      "pStart": 0.25,
+      "pUnused": 0.5,
+      "per90Points": 4.02,
+      "priorSource": "position"
+    },
+    "524": {
+      "expectedMinutes": 6.0,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 6.43,
+      "priorSource": "2025-26-personal"
+    },
+    "525": {
+      "expectedMinutes": 41.7,
+      "gamesObserved": 4,
+      "pCameo": 0.5,
+      "pStart": 0.5,
+      "pUnused": 0.0,
+      "per90Points": 3.52,
+      "priorSource": "position"
+    },
+    "526": {
+      "expectedMinutes": 53.8,
+      "gamesObserved": 4,
+      "pCameo": 0.75,
+      "pStart": 0.25,
+      "pUnused": 0.0,
+      "per90Points": 3.86,
+      "priorSource": "2025-26-personal"
+    },
+    "527": {
+      "expectedMinutes": 51.4,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.25,
+      "pUnused": 0.75,
+      "per90Points": 4.72,
+      "priorSource": "2025-26-personal"
+    },
+    "528": {
+      "expectedMinutes": 3.0,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 25.71,
+      "priorSource": "2025-26-personal"
+    },
+    "529": {
+      "expectedMinutes": 90.0,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 1.0,
+      "pUnused": 0.0,
+      "per90Points": 3.13,
+      "priorSource": "2025-26-personal"
+    },
+    "53": {
+      "expectedMinutes": 16.4,
+      "gamesObserved": 4,
+      "pCameo": 0.25,
+      "pStart": 0.0,
+      "pUnused": 0.75,
+      "per90Points": 4.36,
+      "priorSource": "position"
+    },
+    "530": {
+      "expectedMinutes": 11.1,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 3.51,
+      "priorSource": "position"
+    },
+    "531": {
+      "expectedMinutes": 38.6,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 5.33,
+      "priorSource": "2025-26-personal"
+    },
+    "532": {
+      "expectedMinutes": 89.7,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 1.0,
+      "pUnused": 0.0,
+      "per90Points": 3.62,
+      "priorSource": "2025-26-personal"
+    },
+    "533": {
+      "expectedMinutes": 75.9,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.75,
+      "pUnused": 0.25,
+      "per90Points": 4.55,
+      "priorSource": "2025-26-personal"
+    },
+    "534": {
+      "expectedMinutes": 66.1,
+      "gamesObserved": 4,
+      "pCameo": 0.25,
+      "pStart": 0.5,
+      "pUnused": 0.25,
+      "per90Points": 3.73,
+      "priorSource": "2025-26-personal"
+    },
+    "535": {
+      "expectedMinutes": 40.7,
+      "gamesObserved": 4,
+      "pCameo": 0.25,
+      "pStart": 0.0,
+      "pUnused": 0.75,
+      "per90Points": 4.01,
+      "priorSource": "2025-26-personal"
+    },
+    "536": {
+      "expectedMinutes": 88.1,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 1.0,
+      "pUnused": 0.0,
+      "per90Points": 2.3,
+      "priorSource": "2025-26-personal"
+    },
+    "537": {
+      "expectedMinutes": 57.0,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 1.35,
+      "priorSource": "2025-26-personal"
+    },
+    "538": {
+      "expectedMinutes": 15.8,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 3.87,
+      "priorSource": "position"
+    },
+    "539": {
+      "expectedMinutes": 57.9,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.25,
+      "pUnused": 0.75,
+      "per90Points": 3.4,
+      "priorSource": "2025-26-personal"
+    },
+    "54": {
+      "expectedMinutes": 18.1,
+      "gamesObserved": 4,
+      "pCameo": 0.25,
+      "pStart": 0.0,
+      "pUnused": 0.75,
+      "per90Points": 2.89,
+      "priorSource": "position"
+    },
+    "540": {
+      "expectedMinutes": 26.8,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 0.72,
+      "priorSource": "2025-26-personal"
+    },
+    "541": {
+      "expectedMinutes": 61.3,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 1.0,
+      "pUnused": 0.0,
+      "per90Points": 3.39,
+      "priorSource": "position"
+    },
+    "542": {
+      "expectedMinutes": 87.8,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 1.0,
+      "pUnused": 0.0,
+      "per90Points": 3.76,
+      "priorSource": "2025-26-personal"
+    },
+    "543": {
+      "expectedMinutes": 44.1,
+      "gamesObserved": 4,
+      "pCameo": 0.5,
+      "pStart": 0.0,
+      "pUnused": 0.5,
+      "per90Points": 5.77,
+      "priorSource": "2025-26-personal"
+    },
+    "544": {
+      "expectedMinutes": 90.3,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 1.0,
+      "pUnused": 0.0,
+      "per90Points": 4.45,
+      "priorSource": "2025-26-personal"
+    },
+    "545": {
+      "expectedMinutes": 86.5,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 1.0,
+      "pUnused": 0.0,
+      "per90Points": 2.23,
+      "priorSource": "2025-26-personal"
+    },
+    "546": {
+      "expectedMinutes": 30.9,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 4.71,
+      "priorSource": "2025-26-personal"
+    },
+    "547": {
+      "expectedMinutes": 85.6,
+      "gamesObserved": 4,
+      "pCameo": 0.25,
+      "pStart": 0.0,
+      "pUnused": 0.75,
+      "per90Points": 3.64,
+      "priorSource": "2025-26-personal"
+    },
+    "548": {
+      "expectedMinutes": 32.0,
+      "gamesObserved": 4,
+      "pCameo": 0.5,
+      "pStart": 0.0,
+      "pUnused": 0.5,
+      "per90Points": 4.82,
+      "priorSource": "2025-26-personal"
+    },
+    "549": {
+      "expectedMinutes": 46.0,
+      "gamesObserved": 4,
+      "pCameo": 0.25,
+      "pStart": 0.0,
+      "pUnused": 0.75,
+      "per90Points": 4.53,
+      "priorSource": "2025-26-personal"
+    },
+    "55": {
+      "expectedMinutes": 36.8,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 5.31,
+      "priorSource": "2025-26-personal"
+    },
+    "550": {
+      "expectedMinutes": 16.3,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 2.37,
+      "priorSource": "2025-26-personal"
+    },
+    "551": {
+      "expectedMinutes": 70.7,
+      "gamesObserved": 4,
+      "pCameo": 0.25,
+      "pStart": 0.75,
+      "pUnused": 0.0,
+      "per90Points": 3.7,
+      "priorSource": "2025-26-personal"
+    },
+    "552": {
+      "expectedMinutes": 81.5,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 1.0,
+      "pUnused": 0.0,
+      "per90Points": 2.88,
+      "priorSource": "2025-26-personal"
+    },
+    "553": {
+      "expectedMinutes": 58.3,
+      "gamesObserved": 4,
+      "pCameo": 1.0,
+      "pStart": 0.0,
+      "pUnused": 0.0,
+      "per90Points": 8.38,
+      "priorSource": "2025-26-personal"
+    },
+    "554": {
+      "expectedMinutes": 11.1,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 3.51,
+      "priorSource": "position"
+    },
+    "555": {
+      "expectedMinutes": 11.1,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 3.51,
+      "priorSource": "position"
+    },
+    "556": {
+      "expectedMinutes": 16.5,
+      "gamesObserved": 4,
+      "pCameo": 0.25,
+      "pStart": 0.0,
+      "pUnused": 0.75,
+      "per90Points": 4.25,
+      "priorSource": "position"
+    },
+    "557": {
+      "expectedMinutes": 54.0,
+      "gamesObserved": 4,
+      "pCameo": 0.25,
+      "pStart": 0.75,
+      "pUnused": 0.0,
+      "per90Points": 4.41,
+      "priorSource": "position"
+    },
+    "558": {
+      "expectedMinutes": 53.4,
+      "gamesObserved": 4,
+      "pCameo": 0.25,
+      "pStart": 0.75,
+      "pUnused": 0.0,
+      "per90Points": 3.87,
+      "priorSource": "position"
+    },
+    "559": {
+      "expectedMinutes": 16.0,
+      "gamesObserved": 4,
+      "pCameo": 0.5,
+      "pStart": 0.0,
+      "pUnused": 0.5,
+      "per90Points": 4.86,
+      "priorSource": "position"
+    },
+    "56": {
+      "expectedMinutes": 69.4,
+      "gamesObserved": 4,
+      "pCameo": 0.75,
+      "pStart": 0.0,
+      "pUnused": 0.25,
+      "per90Points": 6.47,
+      "priorSource": "2025-26-personal"
+    },
+    "560": {
+      "expectedMinutes": 11.1,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 3.51,
+      "priorSource": "position"
+    },
+    "561": {
+      "expectedMinutes": 15.8,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 3.87,
+      "priorSource": "position"
+    },
+    "562": {
+      "expectedMinutes": 47.3,
+      "gamesObserved": 4,
+      "pCameo": 0.25,
+      "pStart": 0.75,
+      "pUnused": 0.0,
+      "per90Points": 3.41,
+      "priorSource": "position"
+    },
+    "563": {
+      "expectedMinutes": 19.0,
+      "gamesObserved": 4,
+      "pCameo": 0.25,
+      "pStart": 0.0,
+      "pUnused": 0.75,
+      "per90Points": 4.01,
+      "priorSource": "position"
+    },
+    "564": {
+      "expectedMinutes": 62.5,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 1.0,
+      "pUnused": 0.0,
+      "per90Points": 2.34,
+      "priorSource": "position"
+    },
+    "565": {
+      "expectedMinutes": 55.4,
+      "gamesObserved": 4,
+      "pCameo": 0.25,
+      "pStart": 0.75,
+      "pUnused": 0.0,
+      "per90Points": 5.82,
+      "priorSource": "position"
+    },
+    "566": {
+      "expectedMinutes": 67.3,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 1.0,
+      "pUnused": 0.0,
+      "per90Points": 2.96,
+      "priorSource": "position"
+    },
+    "567": {
+      "expectedMinutes": 62.5,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 1.0,
+      "pUnused": 0.0,
+      "per90Points": 3.0,
+      "priorSource": "position"
+    },
+    "568": {
+      "expectedMinutes": 16.7,
+      "gamesObserved": 4,
+      "pCameo": 0.5,
+      "pStart": 0.0,
+      "pUnused": 0.5,
+      "per90Points": 4.32,
+      "priorSource": "position"
+    },
+    "569": {
+      "expectedMinutes": 60.0,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 1.0,
+      "pUnused": 0.0,
+      "per90Points": 3.71,
+      "priorSource": "position"
+    },
+    "57": {
+      "expectedMinutes": 90.0,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 1.0,
+      "pUnused": 0.0,
+      "per90Points": 2.25,
+      "priorSource": "2025-26-personal"
+    },
+    "570": {
+      "expectedMinutes": 42.1,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.75,
+      "pUnused": 0.25,
+      "per90Points": 4.66,
+      "priorSource": "position"
+    },
+    "571": {
+      "expectedMinutes": 37.9,
+      "gamesObserved": 4,
+      "pCameo": 0.25,
+      "pStart": 0.0,
+      "pUnused": 0.75,
+      "per90Points": 3.82,
+      "priorSource": "2025-26-personal"
+    },
+    "572": {
+      "expectedMinutes": 62.5,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 1.0,
+      "pUnused": 0.0,
+      "per90Points": 5.84,
+      "priorSource": "position"
+    },
+    "573": {
+      "expectedMinutes": 15.8,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 3.87,
+      "priorSource": "position"
+    },
+    "574": {
+      "expectedMinutes": 13.7,
+      "gamesObserved": 4,
+      "pCameo": 0.25,
+      "pStart": 0.0,
+      "pUnused": 0.75,
+      "per90Points": 4.8,
+      "priorSource": "position"
+    },
+    "575": {
+      "expectedMinutes": 37.5,
+      "gamesObserved": 4,
+      "pCameo": 0.5,
+      "pStart": 0.5,
+      "pUnused": 0.0,
+      "per90Points": 3.81,
+      "priorSource": "position"
+    },
+    "576": {
+      "expectedMinutes": 48.1,
+      "gamesObserved": 4,
+      "pCameo": 0.5,
+      "pStart": 0.5,
+      "pUnused": 0.0,
+      "per90Points": 3.36,
+      "priorSource": "position"
+    },
+    "577": {
+      "expectedMinutes": 36.4,
+      "gamesObserved": 4,
+      "pCameo": 0.5,
+      "pStart": 0.25,
+      "pUnused": 0.25,
+      "per90Points": 2.71,
+      "priorSource": "position"
+    },
+    "578": {
+      "expectedMinutes": 14.8,
+      "gamesObserved": 4,
+      "pCameo": 0.25,
+      "pStart": 0.0,
+      "pUnused": 0.75,
+      "per90Points": 4.6,
+      "priorSource": "position"
+    },
+    "579": {
+      "expectedMinutes": 43.5,
+      "gamesObserved": 4,
+      "pCameo": 0.5,
+      "pStart": 0.5,
+      "pUnused": 0.0,
+      "per90Points": 5.47,
+      "priorSource": "position"
+    },
+    "58": {
+      "expectedMinutes": 11.1,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 3.51,
+      "priorSource": "position"
+    },
+    "580": {
+      "expectedMinutes": 43.0,
+      "gamesObserved": 4,
+      "pCameo": 0.5,
+      "pStart": 0.5,
+      "pUnused": 0.0,
+      "per90Points": 4.13,
+      "priorSource": "position"
+    },
+    "581": {
+      "expectedMinutes": 28.8,
+      "gamesObserved": 4,
+      "pCameo": 0.25,
+      "pStart": 0.25,
+      "pUnused": 0.5,
+      "per90Points": 4.23,
+      "priorSource": "position"
+    },
+    "582": {
+      "expectedMinutes": 10.6,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 4.84,
+      "priorSource": "position"
+    },
+    "583": {
+      "expectedMinutes": 32.7,
+      "gamesObserved": 4,
+      "pCameo": 1.0,
+      "pStart": 0.0,
+      "pUnused": 0.0,
+      "per90Points": 3.55,
+      "priorSource": "position"
+    },
+    "584": {
+      "expectedMinutes": 17.1,
+      "gamesObserved": 4,
+      "pCameo": 0.75,
+      "pStart": 0.0,
+      "pUnused": 0.25,
+      "per90Points": 5.1,
+      "priorSource": "position"
+    },
+    "585": {
+      "expectedMinutes": 31.1,
+      "gamesObserved": 4,
+      "pCameo": 1.0,
+      "pStart": 0.0,
+      "pUnused": 0.0,
+      "per90Points": 3.68,
+      "priorSource": "position"
+    },
+    "586": {
+      "expectedMinutes": 51.4,
+      "gamesObserved": 4,
+      "pCameo": 0.5,
+      "pStart": 0.5,
+      "pUnused": 0.0,
+      "per90Points": 6.87,
+      "priorSource": "position"
+    },
+    "587": {
+      "expectedMinutes": 11.1,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 3.51,
+      "priorSource": "position"
+    },
+    "588": {
+      "expectedMinutes": 57.1,
+      "gamesObserved": 4,
+      "pCameo": 0.25,
+      "pStart": 0.75,
+      "pUnused": 0.0,
+      "per90Points": 3.98,
+      "priorSource": "position"
+    },
+    "589": {
+      "expectedMinutes": 30.5,
+      "gamesObserved": 4,
+      "pCameo": 0.25,
+      "pStart": 0.25,
+      "pUnused": 0.5,
+      "per90Points": 3.54,
+      "priorSource": "position"
+    },
+    "59": {
+      "expectedMinutes": 11.1,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 3.51,
+      "priorSource": "position"
+    },
+    "590": {
+      "expectedMinutes": 11.1,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 3.51,
+      "priorSource": "position"
+    },
+    "591": {
+      "expectedMinutes": 61.1,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 1.0,
+      "pUnused": 0.0,
+      "per90Points": 3.81,
+      "priorSource": "position"
+    },
+    "592": {
+      "expectedMinutes": 21.7,
+      "gamesObserved": 4,
+      "pCameo": 1.0,
+      "pStart": 0.0,
+      "pUnused": 0.0,
+      "per90Points": 4.78,
+      "priorSource": "position"
+    },
+    "593": {
+      "expectedMinutes": 62.5,
+      "gamesObserved": 4,
+      "pCameo": 0.25,
+      "pStart": 0.75,
+      "pUnused": 0.0,
+      "per90Points": 3.68,
+      "priorSource": "position"
+    },
+    "594": {
+      "expectedMinutes": 13.9,
+      "gamesObserved": 4,
+      "pCameo": 0.5,
+      "pStart": 0.0,
+      "pUnused": 0.5,
+      "per90Points": 4.73,
+      "priorSource": "position"
+    },
+    "595": {
+      "expectedMinutes": 16.5,
+      "gamesObserved": 4,
+      "pCameo": 0.5,
+      "pStart": 0.0,
+      "pUnused": 0.5,
+      "per90Points": 4.77,
+      "priorSource": "position"
+    },
+    "596": {
+      "expectedMinutes": 19.1,
+      "gamesObserved": 4,
+      "pCameo": 0.5,
+      "pStart": 0.0,
+      "pUnused": 0.5,
+      "per90Points": 4.32,
+      "priorSource": "position"
+    },
+    "597": {
+      "expectedMinutes": 49.6,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.75,
+      "pUnused": 0.25,
+      "per90Points": 4.21,
+      "priorSource": "position"
+    },
+    "598": {
+      "expectedMinutes": 49.5,
+      "gamesObserved": 4,
+      "pCameo": 0.25,
+      "pStart": 0.5,
+      "pUnused": 0.25,
+      "per90Points": 3.19,
+      "priorSource": "position"
+    },
+    "599": {
+      "expectedMinutes": 14.9,
+      "gamesObserved": 4,
+      "pCameo": 0.25,
+      "pStart": 0.0,
+      "pUnused": 0.75,
+      "per90Points": 4.58,
+      "priorSource": "position"
+    },
+    "6": {
+      "expectedMinutes": 37.3,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 4.72,
+      "priorSource": "2025-26-personal"
+    },
+    "60": {
+      "expectedMinutes": 92.4,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 1.0,
+      "pUnused": 0.0,
+      "per90Points": 2.9,
+      "priorSource": "2025-26-personal"
+    },
+    "600": {
+      "expectedMinutes": 18.3,
+      "gamesObserved": 4,
+      "pCameo": 0.75,
+      "pStart": 0.0,
+      "pUnused": 0.25,
+      "per90Points": 4.92,
+      "priorSource": "position"
+    },
+    "601": {
+      "expectedMinutes": 12.5,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 4.51,
+      "priorSource": "position"
+    },
+    "602": {
+      "expectedMinutes": 12.5,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 4.51,
+      "priorSource": "position"
+    },
+    "603": {
+      "expectedMinutes": 15.8,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 3.87,
+      "priorSource": "position"
+    },
+    "604": {
+      "expectedMinutes": 12.5,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 4.51,
+      "priorSource": "position"
+    },
+    "605": {
+      "expectedMinutes": 45.5,
+      "gamesObserved": 4,
+      "pCameo": 0.25,
+      "pStart": 0.75,
+      "pUnused": 0.0,
+      "per90Points": 6.14,
+      "priorSource": "position"
+    },
+    "606": {
+      "expectedMinutes": 15.8,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 3.87,
+      "priorSource": "position"
+    },
+    "607": {
+      "expectedMinutes": 12.5,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 4.51,
+      "priorSource": "position"
+    },
+    "608": {
+      "expectedMinutes": 12.9,
+      "gamesObserved": 4,
+      "pCameo": 0.5,
+      "pStart": 0.0,
+      "pUnused": 0.5,
+      "per90Points": 5.36,
+      "priorSource": "position"
+    },
+    "609": {
+      "expectedMinutes": 15.8,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 3.87,
+      "priorSource": "position"
+    },
+    "61": {
+      "expectedMinutes": 89.5,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 1.0,
+      "pUnused": 0.0,
+      "per90Points": 2.8,
+      "priorSource": "2025-26-personal"
+    },
+    "610": {
+      "expectedMinutes": 15.8,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 3.87,
+      "priorSource": "position"
+    },
+    "611": {
+      "expectedMinutes": 63.1,
+      "gamesObserved": 3,
+      "pCameo": 0.667,
+      "pStart": 0.333,
+      "pUnused": 0.0,
+      "per90Points": 3.39,
+      "priorSource": "2025-26-personal"
+    },
+    "612": {
+      "expectedMinutes": 18.5,
+      "gamesObserved": 3,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 3.87,
+      "priorSource": "position"
+    },
+    "613": {
+      "expectedMinutes": 14.6,
+      "gamesObserved": 3,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 4.51,
+      "priorSource": "position"
+    },
+    "614": {
+      "expectedMinutes": 18.5,
+      "gamesObserved": 3,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 3.87,
+      "priorSource": "position"
+    },
+    "615": {
+      "expectedMinutes": 12.9,
+      "gamesObserved": 3,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 3.51,
+      "priorSource": "position"
+    },
+    "616": {
+      "expectedMinutes": 18.3,
+      "gamesObserved": 3,
+      "pCameo": 0.667,
+      "pStart": 0.0,
+      "pUnused": 0.333,
+      "per90Points": 4.91,
+      "priorSource": "position"
+    },
+    "617": {
+      "expectedMinutes": 22.1,
+      "gamesObserved": 3,
+      "pCameo": 1.0,
+      "pStart": 0.0,
+      "pUnused": 0.0,
+      "per90Points": 4.81,
+      "priorSource": "position"
+    },
+    "618": {
+      "expectedMinutes": 14.6,
+      "gamesObserved": 3,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 4.51,
+      "priorSource": "position"
+    },
+    "619": {
+      "expectedMinutes": 47.1,
+      "gamesObserved": 3,
+      "pCameo": 0.333,
+      "pStart": 0.667,
+      "pUnused": 0.0,
+      "per90Points": 4.33,
+      "priorSource": "position"
+    },
+    "62": {
+      "expectedMinutes": 36.4,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 3.25,
+      "priorSource": "2025-26-personal"
+    },
+    "620": {
+      "expectedMinutes": 50.1,
+      "gamesObserved": 3,
+      "pCameo": 0.333,
+      "pStart": 0.0,
+      "pUnused": 0.667,
+      "per90Points": 3.39,
+      "priorSource": "2025-26-personal"
+    },
+    "621": {
+      "expectedMinutes": 16.5,
+      "gamesObserved": 3,
+      "pCameo": 0.667,
+      "pStart": 0.0,
+      "pUnused": 0.333,
+      "per90Points": 5.19,
+      "priorSource": "position"
+    },
+    "622": {
+      "expectedMinutes": 18.6,
+      "gamesObserved": 3,
+      "pCameo": 0.333,
+      "pStart": 0.0,
+      "pUnused": 0.667,
+      "per90Points": 4.35,
+      "priorSource": "position"
+    },
+    "623": {
+      "expectedMinutes": 12.9,
+      "gamesObserved": 3,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 3.51,
+      "priorSource": "position"
+    },
+    "624": {
+      "expectedMinutes": 14.6,
+      "gamesObserved": 3,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 4.51,
+      "priorSource": "position"
+    },
+    "625": {
+      "expectedMinutes": 12.9,
+      "gamesObserved": 3,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 3.51,
+      "priorSource": "position"
+    },
+    "626": {
+      "expectedMinutes": 14.6,
+      "gamesObserved": 3,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 4.51,
+      "priorSource": "position"
+    },
+    "627": {
+      "expectedMinutes": 37.0,
+      "gamesObserved": 2,
+      "pCameo": 0.5,
+      "pStart": 0.5,
+      "pUnused": 0.0,
+      "per90Points": 4.23,
+      "priorSource": "position"
+    },
+    "628": {
+      "expectedMinutes": 17.6,
+      "gamesObserved": 2,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 4.51,
+      "priorSource": "position"
+    },
+    "629": {
+      "expectedMinutes": 15.5,
+      "gamesObserved": 2,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 3.51,
+      "priorSource": "position"
+    },
+    "63": {
+      "expectedMinutes": 39.3,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 4.66,
+      "priorSource": "2025-26-personal"
+    },
+    "630": {
+      "expectedMinutes": 22.2,
+      "gamesObserved": 2,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 3.87,
+      "priorSource": "position"
+    },
+    "631": {
+      "expectedMinutes": 23.0,
+      "gamesObserved": 2,
+      "pCameo": 0.5,
+      "pStart": 0.0,
+      "pUnused": 0.5,
+      "per90Points": 4.36,
+      "priorSource": "position"
+    },
+    "632": {
+      "expectedMinutes": 14.8,
+      "gamesObserved": 2,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 4.84,
+      "priorSource": "position"
+    },
+    "633": {
+      "expectedMinutes": 40.2,
+      "gamesObserved": 2,
+      "pCameo": 0.0,
+      "pStart": 0.5,
+      "pUnused": 0.5,
+      "per90Points": 3.58,
+      "priorSource": "position"
+    },
+    "634": {
+      "expectedMinutes": 31.6,
+      "gamesObserved": 2,
+      "pCameo": 1.0,
+      "pStart": 0.0,
+      "pUnused": 0.0,
+      "per90Points": 3.98,
+      "priorSource": "position"
+    },
+    "635": {
+      "expectedMinutes": 22.4,
+      "gamesObserved": 2,
+      "pCameo": 1.0,
+      "pStart": 0.0,
+      "pUnused": 0.0,
+      "per90Points": 4.86,
+      "priorSource": "position"
+    },
+    "636": {
+      "expectedMinutes": 17.6,
+      "gamesObserved": 2,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 4.51,
+      "priorSource": "position"
+    },
+    "637": {
+      "expectedMinutes": 16.4,
+      "gamesObserved": 2,
+      "pCameo": 0.5,
+      "pStart": 0.0,
+      "pUnused": 0.5,
+      "per90Points": 5.11,
+      "priorSource": "position"
+    },
+    "638": {
+      "expectedMinutes": 29.0,
+      "gamesObserved": 2,
+      "pCameo": 1.0,
+      "pStart": 0.0,
+      "pUnused": 0.0,
+      "per90Points": 3.68,
+      "priorSource": "position"
+    },
+    "639": {
+      "expectedMinutes": 22.6,
+      "gamesObserved": 2,
+      "pCameo": 0.5,
+      "pStart": 0.0,
+      "pUnused": 0.5,
+      "per90Points": 5.72,
+      "priorSource": "position"
+    },
+    "64": {
+      "expectedMinutes": 84.3,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 1.0,
+      "pUnused": 0.0,
+      "per90Points": 1.95,
+      "priorSource": "2025-26-personal"
+    },
+    "640": {
+      "expectedMinutes": 60.6,
+      "gamesObserved": 2,
+      "pCameo": 1.0,
+      "pStart": 0.0,
+      "pUnused": 0.0,
+      "per90Points": 6.27,
+      "priorSource": "2025-26-personal"
+    },
+    "641": {
+      "expectedMinutes": 25.8,
+      "gamesObserved": 2,
+      "pCameo": 0.5,
+      "pStart": 0.0,
+      "pUnused": 0.5,
+      "per90Points": 3.98,
+      "priorSource": "position"
+    },
+    "642": {
+      "expectedMinutes": 29.0,
+      "gamesObserved": 2,
+      "pCameo": 1.0,
+      "pStart": 0.0,
+      "pUnused": 0.0,
+      "per90Points": 4.19,
+      "priorSource": "position"
+    },
+    "643": {
+      "expectedMinutes": 28.0,
+      "gamesObserved": 2,
+      "pCameo": 1.0,
+      "pStart": 0.0,
+      "pUnused": 0.0,
+      "per90Points": 6.78,
+      "priorSource": "position"
+    },
+    "644": {
+      "expectedMinutes": 50.2,
+      "gamesObserved": 2,
+      "pCameo": 0.0,
+      "pStart": 1.0,
+      "pUnused": 0.0,
+      "per90Points": 3.94,
+      "priorSource": "position"
+    },
+    "645": {
+      "expectedMinutes": 17.6,
+      "gamesObserved": 2,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 4.51,
+      "priorSource": "position"
+    },
+    "646": {
+      "expectedMinutes": 23.6,
+      "gamesObserved": 2,
+      "pCameo": 1.0,
+      "pStart": 0.0,
+      "pUnused": 0.0,
+      "per90Points": 4.72,
+      "priorSource": "position"
+    },
+    "647": {
+      "expectedMinutes": 17.8,
+      "gamesObserved": 2,
+      "pCameo": 0.5,
+      "pStart": 0.0,
+      "pUnused": 0.5,
+      "per90Points": 4.98,
+      "priorSource": "position"
+    },
+    "648": {
+      "expectedMinutes": 17.6,
+      "gamesObserved": 2,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 4.51,
+      "priorSource": "position"
+    },
+    "649": {
+      "expectedMinutes": 39.6,
+      "gamesObserved": 2,
+      "pCameo": 0.5,
+      "pStart": 0.5,
+      "pUnused": 0.0,
+      "per90Points": 6.99,
+      "priorSource": "position"
+    },
+    "65": {
+      "expectedMinutes": 15.8,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 3.87,
+      "priorSource": "position"
+    },
+    "650": {
+      "expectedMinutes": 40.2,
+      "gamesObserved": 2,
+      "pCameo": 0.0,
+      "pStart": 0.5,
+      "pUnused": 0.5,
+      "per90Points": 5.25,
+      "priorSource": "position"
+    },
+    "651": {
+      "expectedMinutes": 14.8,
+      "gamesObserved": 2,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 4.84,
+      "priorSource": "position"
+    },
+    "652": {
+      "expectedMinutes": 17.6,
+      "gamesObserved": 2,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 4.51,
+      "priorSource": "position"
+    },
+    "653": {
+      "expectedMinutes": 17.6,
+      "gamesObserved": 2,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 4.51,
+      "priorSource": "position"
+    },
+    "654": {
+      "expectedMinutes": 17.6,
+      "gamesObserved": 2,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 4.51,
+      "priorSource": "position"
+    },
+    "655": {
+      "expectedMinutes": 22.0,
+      "gamesObserved": 1,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 4.51,
+      "priorSource": "position"
+    },
+    "656": {
+      "expectedMinutes": 27.7,
+      "gamesObserved": 1,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 3.87,
+      "priorSource": "position"
+    },
+    "657": {
+      "expectedMinutes": 22.0,
+      "gamesObserved": 1,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 4.51,
+      "priorSource": "position"
+    },
+    "658": {
+      "expectedMinutes": 22.0,
+      "gamesObserved": 1,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 4.51,
+      "priorSource": "position"
+    },
+    "659": {
+      "expectedMinutes": 22.0,
+      "gamesObserved": 1,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 4.51,
+      "priorSource": "position"
+    },
+    "66": {
+      "expectedMinutes": 14.6,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 7.94,
+      "priorSource": "2025-26-personal"
+    },
+    "67": {
+      "expectedMinutes": 86.2,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 1.0,
+      "pUnused": 0.0,
+      "per90Points": 3.22,
+      "priorSource": "2025-26-personal"
+    },
+    "68": {
+      "expectedMinutes": 87.8,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 1.0,
+      "pUnused": 0.0,
+      "per90Points": 6.46,
+      "priorSource": "2025-26-personal"
+    },
+    "69": {
+      "expectedMinutes": 86.8,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 1.0,
+      "pUnused": 0.0,
+      "per90Points": 6.14,
+      "priorSource": "2025-26-personal"
+    },
+    "7": {
+      "expectedMinutes": 98.5,
+      "gamesObserved": 4,
+      "pCameo": 0.25,
+      "pStart": 0.75,
+      "pUnused": 0.0,
+      "per90Points": 3.29,
+      "priorSource": "2025-26-personal"
+    },
+    "70": {
+      "expectedMinutes": 82.5,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 1.0,
+      "pUnused": 0.0,
+      "per90Points": 4.33,
+      "priorSource": "2025-26-personal"
+    },
+    "71": {
+      "expectedMinutes": 70.3,
+      "gamesObserved": 4,
+      "pCameo": 0.5,
+      "pStart": 0.5,
+      "pUnused": 0.0,
+      "per90Points": 3.98,
+      "priorSource": "2025-26-personal"
+    },
+    "72": {
+      "expectedMinutes": 46.4,
+      "gamesObserved": 4,
+      "pCameo": 0.75,
+      "pStart": 0.0,
+      "pUnused": 0.25,
+      "per90Points": 10.35,
+      "priorSource": "2025-26-personal"
+    },
+    "73": {
+      "expectedMinutes": 63.5,
+      "gamesObserved": 4,
+      "pCameo": 0.5,
+      "pStart": 0.5,
+      "pUnused": 0.0,
+      "per90Points": 3.83,
+      "priorSource": "2025-26-personal"
+    },
+    "74": {
+      "expectedMinutes": 43.5,
+      "gamesObserved": 4,
+      "pCameo": 0.75,
+      "pStart": 0.0,
+      "pUnused": 0.25,
+      "per90Points": 4.69,
+      "priorSource": "2025-26-personal"
+    },
+    "75": {
+      "expectedMinutes": 50.6,
+      "gamesObserved": 4,
+      "pCameo": 0.75,
+      "pStart": 0.0,
+      "pUnused": 0.25,
+      "per90Points": 5.04,
+      "priorSource": "2025-26-personal"
+    },
+    "76": {
+      "expectedMinutes": 31.1,
+      "gamesObserved": 4,
+      "pCameo": 0.25,
+      "pStart": 0.0,
+      "pUnused": 0.75,
+      "per90Points": 5.38,
+      "priorSource": "2025-26-personal"
+    },
+    "77": {
+      "expectedMinutes": 46.0,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 5.61,
+      "priorSource": "2025-26-personal"
+    },
+    "78": {
+      "expectedMinutes": 33.9,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 6.12,
+      "priorSource": "2025-26-personal"
+    },
+    "79": {
+      "expectedMinutes": 84.4,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 1.0,
+      "pUnused": 0.0,
+      "per90Points": 4.12,
+      "priorSource": "2025-26-personal"
+    },
+    "8": {
+      "expectedMinutes": 79.6,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 1.0,
+      "pUnused": 0.0,
+      "per90Points": 7.04,
+      "priorSource": "2025-26-personal"
+    },
+    "80": {
+      "expectedMinutes": 91.7,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 11.36,
+      "priorSource": "2025-26-personal"
+    },
+    "81": {
+      "expectedMinutes": 12.0,
+      "gamesObserved": 4,
+      "pCameo": 0.5,
+      "pStart": 0.0,
+      "pUnused": 0.5,
+      "per90Points": 5.53,
+      "priorSource": "position"
+    },
+    "82": {
+      "expectedMinutes": 90.0,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 1.0,
+      "pUnused": 0.0,
+      "per90Points": 3.62,
+      "priorSource": "2025-26-personal"
+    },
+    "83": {
+      "expectedMinutes": 38.6,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 1.0,
+      "priorSource": "2025-26-personal"
+    },
+    "84": {
+      "expectedMinutes": 67.8,
+      "gamesObserved": 4,
+      "pCameo": 0.25,
+      "pStart": 0.5,
+      "pUnused": 0.25,
+      "per90Points": 4.26,
+      "priorSource": "2025-26-personal"
+    },
+    "85": {
+      "expectedMinutes": 39.4,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 3.68,
+      "priorSource": "2025-26-personal"
+    },
+    "86": {
+      "expectedMinutes": 84.8,
+      "gamesObserved": 4,
+      "pCameo": 0.25,
+      "pStart": 0.75,
+      "pUnused": 0.0,
+      "per90Points": 5.26,
+      "priorSource": "2025-26-personal"
+    },
+    "87": {
+      "expectedMinutes": 90.1,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 1.0,
+      "pUnused": 0.0,
+      "per90Points": 3.6,
+      "priorSource": "2025-26-personal"
+    },
+    "88": {
+      "expectedMinutes": 70.0,
+      "gamesObserved": 4,
+      "pCameo": 0.5,
+      "pStart": 0.5,
+      "pUnused": 0.0,
+      "per90Points": 5.15,
+      "priorSource": "2025-26-personal"
+    },
+    "89": {
+      "expectedMinutes": 40.8,
+      "gamesObserved": 4,
+      "pCameo": 0.25,
+      "pStart": 0.0,
+      "pUnused": 0.75,
+      "per90Points": 4.0,
+      "priorSource": "2025-26-personal"
+    },
+    "9": {
+      "expectedMinutes": 42.9,
+      "gamesObserved": 4,
+      "pCameo": 0.5,
+      "pStart": 0.0,
+      "pUnused": 0.5,
+      "per90Points": 4.57,
+      "priorSource": "2025-26-personal"
+    },
+    "90": {
+      "expectedMinutes": 55.1,
+      "gamesObserved": 4,
+      "pCameo": 0.75,
+      "pStart": 0.25,
+      "pUnused": 0.0,
+      "per90Points": 4.0,
+      "priorSource": "2025-26-personal"
+    },
+    "91": {
+      "expectedMinutes": 61.5,
+      "gamesObserved": 4,
+      "pCameo": 0.25,
+      "pStart": 0.5,
+      "pUnused": 0.25,
+      "per90Points": 3.37,
+      "priorSource": "2025-26-personal"
+    },
+    "92": {
+      "expectedMinutes": 15.8,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 3.87,
+      "priorSource": "position"
+    },
+    "93": {
+      "expectedMinutes": 39.1,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.5,
+      "pUnused": 0.5,
+      "per90Points": 3.87,
+      "priorSource": "position"
+    },
+    "94": {
+      "expectedMinutes": 87.8,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 1.0,
+      "pUnused": 0.0,
+      "per90Points": 6.4,
+      "priorSource": "2025-26-personal"
+    },
+    "95": {
+      "expectedMinutes": 63.2,
+      "gamesObserved": 4,
+      "pCameo": 0.75,
+      "pStart": 0.25,
+      "pUnused": 0.0,
+      "per90Points": 4.31,
+      "priorSource": "2025-26-personal"
+    },
+    "96": {
+      "expectedMinutes": 64.7,
+      "gamesObserved": 4,
+      "pCameo": 0.5,
+      "pStart": 0.5,
+      "pUnused": 0.0,
+      "per90Points": 5.48,
+      "priorSource": "2025-26-personal"
+    },
+    "97": {
+      "expectedMinutes": 46.3,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.25,
+      "pUnused": 0.75,
+      "per90Points": 5.08,
+      "priorSource": "2025-26-personal"
+    },
+    "98": {
+      "expectedMinutes": 92.4,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 1.0,
+      "pUnused": 0.0,
+      "per90Points": 5.71,
+      "priorSource": "2025-26-personal"
+    },
+    "99": {
+      "expectedMinutes": 19.3,
+      "gamesObserved": 4,
+      "pCameo": 0.0,
+      "pStart": 0.0,
+      "pUnused": 1.0,
+      "per90Points": 2.0,
+      "priorSource": "2025-26-personal"
+    }
+  },
+  "priorSeason": "2025-26",
+  "rollingWindow": 5
+}
