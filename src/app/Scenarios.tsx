@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Carousel from "./Carousel";
 import type {
+  ChipStatus,
   ForecastPlayer,
   PlanWeek,
   PoolPlayer,
@@ -10,6 +11,7 @@ import type {
   ScenarioPlayerRef,
   ScenarioWeek,
   Scenarios as ScenariosData,
+  UpcomingGameweek,
 } from "@/lib/snapshots";
 import { availabilityFlag } from "@/lib/availability";
 import { OppChip } from "./Pitch";
@@ -663,16 +665,101 @@ function ChipToggle({
   );
 }
 
+/** Bench Boost / Triple Captain timing: unlike Wildcard/Free Hit these don't
+ * change the squad at all, so there's nothing for the ILP optimiser to
+ * solve -- it's purely "which gameweek in the window is best to press the
+ * button", holding the squad exactly as forecast. Derived entirely from
+ * `upcoming` (already computed per-GW for the pitch view), no new backend
+ * data needed. */
+function ChipTimingCard({
+  upcoming,
+  squad,
+  chips,
+}: {
+  upcoming: UpcomingGameweek[];
+  squad: ForecastPlayer[];
+  chips: ChipStatus[] | null;
+}) {
+  if (upcoming.length === 0) return null;
+  const squadById = new Map(squad.map((p) => [p.id, p]));
+
+  // Chip-usage history may not have loaded -- fail open (assume available)
+  // rather than hiding the recommendation over missing metadata.
+  const bboostRemaining = chips?.find((c) => c.name === "bboost")?.remaining ?? 1;
+  const tcRemaining = chips?.find((c) => c.name === "3xc")?.remaining ?? 1;
+  if (bboostRemaining === 0 && tcRemaining === 0) return null; // both used
+
+  const bboostRanked = upcoming
+    .map((gw) => ({
+      gw,
+      benchTotal: gw.bench.reduce((sum, id) => {
+        const p = gw.players.find((pl) => pl.id === id);
+        return sum + (p?.projectedPoints ?? 0);
+      }, 0),
+    }))
+    .sort((a, b) => b.benchTotal - a.benchTotal);
+  const bestBboost = bboostRanked[0];
+
+  const tcRanked = upcoming
+    .map((gw) => {
+      const cap = gw.captainId != null ? gw.players.find((pl) => pl.id === gw.captainId) : null;
+      return { gw, captainId: gw.captainId, captainPoints: cap?.projectedPoints ?? 0 };
+    })
+    .sort((a, b) => b.captainPoints - a.captainPoints);
+  const bestTc = tcRanked[0];
+
+  return (
+    <div className="panel space-y-3 p-3">
+      <p className="eyebrow">Chip timing</p>
+      <div className="grid grid-cols-2 gap-3">
+        <div>
+          <p className="text-[11px] text-ink-faint">Bench Boost</p>
+          {bboostRemaining > 0 ? (
+            <>
+              <p className="stat text-lg text-ink">GW{bestBboost.gw.gameweek}</p>
+              <p className="text-xs text-ink-soft">+{bestBboost.benchTotal.toFixed(1)} bench pts</p>
+            </>
+          ) : (
+            <p className="mt-1 text-sm text-ink-faint opacity-60">used</p>
+          )}
+        </div>
+        <div>
+          <p className="text-[11px] text-ink-faint">Triple Captain</p>
+          {tcRemaining > 0 ? (
+            <>
+              <p className="stat text-lg text-ink">GW{bestTc.gw.gameweek}</p>
+              <p className="text-xs text-ink-soft">
+                {bestTc.captainId != null ? squadById.get(bestTc.captainId)?.webName ?? "?" : "—"}
+                , +{bestTc.captainPoints.toFixed(1)} extra
+              </p>
+            </>
+          ) : (
+            <p className="mt-1 text-sm text-ink-faint opacity-60">used</p>
+          )}
+        </div>
+      </div>
+      <p className="text-[11px] text-ink-faint">
+        Best gameweek in the {upcoming.length}-GW window to hold your squad unchanged and press
+        the button — assumes no transfers between now and then.
+      </p>
+    </div>
+  );
+}
+
 export default function Scenarios({
   scenarios,
   pool,
   squad,
   forecastGw,
+  upcoming,
+  chips,
 }: {
   scenarios: ScenariosData;
   pool: PoolPlayer[];
   squad: ForecastPlayer[];
   forecastGw: number;
+  upcoming: UpcomingGameweek[];
+  chips: ChipStatus[] | null;
 }) {
   const [horizon, setHorizon] = useState<Horizon>("1");
   const poolById = new Map(pool.map((p) => [p.id, p]));
@@ -736,6 +823,8 @@ export default function Scenarios({
           poolById={poolById}
         />
       )}
+
+      <ChipTimingCard upcoming={upcoming} squad={squad} chips={chips} />
     </section>
   );
 }

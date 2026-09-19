@@ -366,6 +366,8 @@ export default function Home() {
             pool={forecast.pool ?? []}
             squad={forecast.squad.players}
             forecastGw={forecast.targetGameweek}
+            upcoming={forecast.upcoming}
+            chips={chips}
           />
         )}
 
