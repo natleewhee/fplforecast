@@ -177,6 +177,19 @@ export type Forecast = {
   marginProvisional: boolean; // too few completed GWs -> margin is 0, buffer widens
   parBuffer: number;
   parBufferProvisional: number;
+  rankCalibration: RankCalibration | null; // fit for the live tracker's overall-rank estimate
+};
+
+/** A personal fit of log(overall rank) ~ intercept + slope*(points - gameweek
+ * average) over the manager's own finished gameweeks -- FPL doesn't publish
+ * the live population's score distribution, so this is the closest
+ * available stand-in. `null` until there's enough gameweek history. */
+export type RankCalibration = {
+  slope: number;
+  intercept: number;
+  sampleSize: number;
+  lastKnownRank: number | null;
+  lastKnownEvent: number | null;
 };
 
 export type PoolPlayer = {

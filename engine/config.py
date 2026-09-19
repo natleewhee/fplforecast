@@ -76,6 +76,14 @@ PAR_BUFFER_POINTS = 4.0
 PAR_BUFFER_PROVISIONAL_POINTS = 2 * PAR_BUFFER_POINTS
 PAR_MARGIN_MIN_GAMEWEEKS = 3
 
+# FPL doesn't publish the live population's score distribution, so the live
+# overall-rank estimate is a personal calibration instead: how *this*
+# manager's own overall rank has historically moved with their score above/
+# below the gameweek average, fit as log(rank) ~ a + b*(points - average)
+# over their finished gameweeks. Needs more evidence than the par margin
+# above (a rank fit is noisier than a simple median) before it's trusted.
+RANK_CALIBRATION_MIN_GAMEWEEKS = 4
+
 # Pseudo-observations that pull a player's noisy recent scoring/form means
 # toward their position's average (empirical-Bayes, as in the minutes model).
 # Early in a season one big gameweek would otherwise dominate every projection.

@@ -10,6 +10,7 @@ ranking and the per-player projections, and writes ``data/forecast/gwNN.json``.
 from __future__ import annotations
 
 import json
+import math
 import os
 import sys
 from datetime import datetime, timezone
@@ -23,6 +24,7 @@ from engine.config import (
     PAR_BUFFER_PROVISIONAL_POINTS,
     PAR_MARGIN_MIN_GAMEWEEKS,
     POOL_HORIZON_WEEKS,
+    RANK_CALIBRATION_MIN_GAMEWEEKS,
     ROLLING_WINDOW,
     SETTLE_GAMEWEEK,
 )
@@ -348,6 +350,51 @@ def par_margin(
     mid = len(deltas) // 2
     median = deltas[mid] if len(deltas) % 2 else (deltas[mid - 1] + deltas[mid]) / 2
     return float(median), False
+
+
+def rank_calibration(
+    current: list[dict], events: list[dict], min_gameweeks: int = RANK_CALIBRATION_MIN_GAMEWEEKS
+) -> dict | None:
+    """A personal calibration for the live tracker's overall-rank estimate:
+    FPL doesn't publish the live population's score distribution, so instead
+    fit how *this* manager's own overall rank has moved with their score
+    above/below the gameweek average -- log(rank) ~ a + b*(points - average)
+    -- over their finished gameweeks (ordinary least squares, one predictor).
+    Returns ``None`` until there's enough evidence for a stable fit; the
+    client then estimates ``exp(intercept + slope * (live - liveAverage))``
+    off a live gameweek's score."""
+    avg_by_event = {
+        e.get("id"): e.get("average_entry_score")
+        for e in events
+        if e.get("finished") and e.get("average_entry_score") is not None
+    }
+    points = [
+        (entry["points"] - avg_by_event[entry["event"]], math.log(entry["overall_rank"]))
+        for entry in current
+        if entry.get("event") in avg_by_event
+        and entry.get("points") is not None
+        and entry.get("overall_rank")
+    ]
+    if len(points) < min_gameweeks:
+        return None
+
+    n = len(points)
+    mean_x = sum(x for x, _ in points) / n
+    mean_y = sum(y for _, y in points) / n
+    variance_x = sum((x - mean_x) ** 2 for x, _ in points)
+    if variance_x == 0:
+        return None  # every gameweek landed exactly on average -- no slope to fit
+    slope = sum((x - mean_x) * (y - mean_y) for x, y in points) / variance_x
+    intercept = mean_y - slope * mean_x
+
+    last = max(current, key=lambda e: e.get("event") or 0)
+    return {
+        "slope": slope,
+        "intercept": intercept,
+        "sampleSize": n,
+        "lastKnownRank": last.get("overall_rank"),
+        "lastKnownEvent": last.get("event"),
+    }
 
 
 def effective_gap(target_gw: int) -> float:
@@ -1016,6 +1063,9 @@ def main(now: datetime | None = None) -> int:
     par_hold_margin, margin_provisional = par_margin(
         season_history.get("current") or [], bootstrap.get("events") or []
     )
+    rank_calibration_fit = rank_calibration(
+        season_history.get("current") or [], bootstrap.get("events") or []
+    )
 
     scenarios = build_scenarios(pool, squad_ids, bank, season_history, target_gw, squad_cards=players)
 
@@ -1073,6 +1123,7 @@ def main(now: datetime | None = None) -> int:
         "marginProvisional": margin_provisional,
         "parBuffer": PAR_BUFFER_POINTS,
         "parBufferProvisional": PAR_BUFFER_PROVISIONAL_POINTS,
+        "rankCalibration": rank_calibration_fit,
         "scenarios": scenarios,
         "history": build_history(season_history),
     }
