@@ -210,17 +210,39 @@ function ManagerSquadPreview({ entryId, name, onClose }: { entryId: number; name
     // The parent keys this component by entryId, so a manager switch is a
     // fresh mount (state already starts at null) -- no reset needed here.
     let cancelled = false;
-    fetch(`/api/forecast?teamId=${entryId}`)
-      .then(async (res) => {
-        const json = await res.json();
-        if (!res.ok) throw new Error(json.error || `HTTP ${res.status}`);
+    const controller = new AbortController();
+    // Matches AppShell.tsx's loadTeam: api/forecast.py's cold-start model
+    // fit can take a while, and a slow/failed request must not leave this
+    // skeleton spinning forever with nothing to show for it.
+    const timeout = setTimeout(() => controller.abort(), 45_000);
+
+    (async () => {
+      try {
+        const res = await fetch(`/api/forecast?teamId=${entryId}`, { signal: controller.signal });
+        const text = await res.text();
+        let json: Forecast | { error?: string };
+        try {
+          json = JSON.parse(text);
+        } catch {
+          throw new Error(
+            res.ok
+              ? "Got an unreadable response -- try again in a moment."
+              : `Server error (HTTP ${res.status}) -- try again in a moment.`,
+          );
+        }
+        if (!res.ok) throw new Error((json as { error?: string }).error || `HTTP ${res.status}`);
         if (!cancelled) setForecast(json as Forecast);
-      })
-      .catch((err) => {
-        if (!cancelled) setError((err as Error).message);
-      });
+      } catch (err) {
+        if (cancelled) return;
+        const isAbort = err instanceof DOMException && err.name === "AbortError";
+        setError(isAbort ? "Timed out -- the model's taking too long, try again." : (err as Error).message);
+      }
+    })();
+
     return () => {
       cancelled = true;
+      clearTimeout(timeout);
+      controller.abort();
     };
   }, [entryId]);
 
