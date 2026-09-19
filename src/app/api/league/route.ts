@@ -57,6 +57,7 @@ type FplClassicLeagueRef = {
 
 type FplEntry = {
   leagues?: { classic?: FplClassicLeagueRef[] };
+  summary_overall_points?: number;
 };
 
 // FPL's own chip codes, mapped to the short badge text shown in the table.
@@ -113,6 +114,118 @@ export type LeaguesResponse = {
 // (if not yet found) shows as unknown rather than blocking the page.
 const MAX_STANDINGS_PAGES = 10;
 
+// Past MAX_STANDINGS_PAGES, "your rank" used to just show as unknown --
+// exactly the "#? of 500+" a big public/YouTuber league (thousands of
+// entries) hits every time, since 10 pages only covers the top ~500.
+// Standings are sorted descending by `total`, so instead of scanning every
+// page in between, binary-search for the page your own total points falls
+// on: exponential search to bracket an upper bound (unknown page count),
+// then bisect within it. O(log n) requests instead of O(n) -- a
+// million-entry league resolves in under 30 fetches instead of needing
+// ~20,000. `myTotal` is `summary_overall_points` (already fetched for the
+// entry), which matches a league's `total` for the common case (scored
+// from the season start); a league scored from a later gameweek would only
+// throw the estimate off by a bounded amount, so a few pages either side of
+// the estimated landing spot are checked too before giving up.
+const MAX_RANK_SEARCH_PAGES = 30;
+const RANK_SEARCH_NEIGHBOR_PAGES = 2;
+
+async function fetchStandingsPage(
+  leagueId: number,
+  page: number,
+): Promise<FplStandingsEntry[] | null> {
+  try {
+    const path =
+      page === 1
+        ? `/leagues-classic/${leagueId}/standings/`
+        : `/leagues-classic/${leagueId}/standings/?page_standings=${page}`;
+    return (await fpl<FplStandings>(path)).standings.results;
+  } catch {
+    return null;
+  }
+}
+
+async function findRankBeyondCap(
+  leagueId: number,
+  myEntryId: number,
+  myTotal: number,
+  lastScannedPage: number,
+  lastScannedResults: FplStandingsEntry[],
+): Promise<FplStandingsEntry | null> {
+  if (lastScannedResults.length === 0) return null;
+  // The caller already scanned pages 1..lastScannedPage (didn't find the
+  // entry there) -- pick up the exponential search past that instead of
+  // re-fetching pages already ruled out.
+  let low = lastScannedPage;
+  let lowResults = lastScannedResults;
+  let fetches = 0;
+
+  // Exponential search: double the page number until its lowest `total`
+  // drops to or below myTotal (meaning myEntryId's rank falls on or before
+  // this page), or the league runs out of pages.
+  let high = lastScannedPage * 2;
+  let highResults: FplStandingsEntry[] | null = null;
+  while (fetches < MAX_RANK_SEARCH_PAGES) {
+    fetches += 1;
+    const results = await fetchStandingsPage(leagueId, high);
+    if (!results || results.length === 0) break; // ran off the end of the league
+    const found = results.find((r) => r.entry === myEntryId);
+    if (found) return found;
+    const pageMinTotal = results[results.length - 1].total;
+    if (pageMinTotal <= myTotal) {
+      highResults = results;
+      break;
+    }
+    low = high;
+    lowResults = results;
+    high *= 2;
+  }
+  if (!highResults) return null; // ran out of budget or pages before bracketing
+
+  // Bisect between low (total still above myTotal) and high (total at or
+  // below myTotal) to land close to the right page.
+  while (high - low > 1 && fetches < MAX_RANK_SEARCH_PAGES) {
+    const mid = Math.floor((low + high) / 2);
+    fetches += 1;
+    const results = await fetchStandingsPage(leagueId, mid);
+    if (!results || results.length === 0) {
+      high = mid; // treat a failed/empty fetch as "at or past the end"
+      continue;
+    }
+    const found = results.find((r) => r.entry === myEntryId);
+    if (found) return found;
+    const pageMinTotal = results[results.length - 1].total;
+    if (pageMinTotal <= myTotal) {
+      high = mid;
+      highResults = results;
+    } else {
+      low = mid;
+      lowResults = results;
+    }
+  }
+
+  // Landed within one page of the right spot -- check a small neighborhood
+  // in case the estimate (summary_overall_points as a stand-in for this
+  // league's own `total`) was off by a page or so, rather than silently
+  // reporting "not found" right next to the answer.
+  for (const results of [lowResults, highResults]) {
+    const found = results.find((r) => r.entry === myEntryId);
+    if (found) return found;
+  }
+  for (
+    let page = Math.max(1, low - RANK_SEARCH_NEIGHBOR_PAGES);
+    page <= high + RANK_SEARCH_NEIGHBOR_PAGES && fetches < MAX_RANK_SEARCH_PAGES;
+    page++
+  ) {
+    if (page === low || page === high) continue; // already checked above
+    fetches += 1;
+    const results = await fetchStandingsPage(leagueId, page);
+    const found = results?.find((r) => r.entry === myEntryId);
+    if (found) return found;
+  }
+  return null;
+}
+
 async function fetchLeague(
   leagueRef: FplClassicLeagueRef,
   args: {
@@ -123,9 +236,10 @@ async function fetchLeague(
     gameweek: number;
     now: string;
     myEntryId: number;
+    myOverallPoints: number | null;
   },
 ): Promise<LeaguePayload | null> {
-  const { bootstrap, live, fixtures, inputs, gameweek, now, myEntryId } = args;
+  const { bootstrap, live, fixtures, inputs, gameweek, now, myEntryId, myOverallPoints } = args;
 
   let firstPage: FplStandings;
   try {
@@ -141,6 +255,7 @@ async function fetchLeague(
   // "which page your rank happened to fall on" rather than a stable count,
   // e.g. showing a *smaller* total for a *better* rank.
   const allResults = [...firstPage.standings.results];
+  let lastPageResults = firstPage.standings.results;
   let hasNext = firstPage.standings.has_next;
   let page = 1;
   while (hasNext && page < MAX_STANDINGS_PAGES) {
@@ -150,12 +265,21 @@ async function fetchLeague(
         `/leagues-classic/${leagueRef.id}/standings/?page_standings=${page}`,
       );
       allResults.push(...next.standings.results);
+      lastPageResults = next.standings.results;
       hasNext = next.standings.has_next;
     } catch {
       break; // couldn't page further -- show what we have
     }
   }
-  const myResult = allResults.find((r) => r.entry === myEntryId);
+  let myResult = allResults.find((r) => r.entry === myEntryId);
+
+  // Didn't turn up in the first MAX_STANDINGS_PAGES pages -- a big league
+  // (the "#? of 500+" case). Binary-search the rest instead of giving up.
+  if (!myResult && hasNext && myOverallPoints != null) {
+    myResult =
+      (await findRankBeyondCap(leagueRef.id, myEntryId, myOverallPoints, page, lastPageResults)) ??
+      undefined;
+  }
 
   const top10 = firstPage.standings.results.slice(0, 10);
   const wasAppended = Boolean(myResult && !top10.some((r) => r.entry === myResult.entry));
@@ -269,6 +393,7 @@ export async function GET(request: Request) {
           gameweek,
           now,
           myEntryId: Number(TEAM_ID),
+          myOverallPoints: entry.summary_overall_points ?? null,
         })
       : null;
 
