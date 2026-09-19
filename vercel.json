@@ -4,6 +4,11 @@
       "includeFiles": "{data/forecast/**,engine/**}",
       "memory": 1024,
       "maxDuration": 30
+    },
+    "api/forecast.py": {
+      "includeFiles": "{data-deploy/**,engine/**,scripts/**}",
+      "memory": 1024,
+      "maxDuration": 30
     }
   }
 }

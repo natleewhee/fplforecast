@@ -2,6 +2,8 @@
 
 import { Fragment, useCallback, useEffect, useRef, useState } from "react";
 import { Dropdown } from "./Dropdown";
+import Pitch from "./Pitch";
+import type { Forecast } from "@/lib/snapshots";
 import type { LeagueEntryRow, LeaguesResponse } from "./api/league/route";
 
 const POLL_MS = 60_000;
@@ -47,7 +49,15 @@ function RankHeader({ league }: { league: NonNullable<LeaguesResponse["league"]>
   );
 }
 
-function LeagueTable({ league, gameweek }: { league: LeaguesResponse["league"]; gameweek: number }) {
+function LeagueTable({
+  league,
+  gameweek,
+  onSelectManager,
+}: {
+  league: LeaguesResponse["league"];
+  gameweek: number;
+  onSelectManager: (entryId: number, name: string) => void;
+}) {
   if (!league) {
     return <div className="panel p-3 text-xs text-ink-faint">No private leagues found.</div>;
   }
@@ -119,7 +129,11 @@ function LeagueTable({ league, gameweek }: { league: LeaguesResponse["league"]; 
                       )}
                     </td>
                     <td className="min-w-0 px-1.5 py-2 sm:px-3">
-                      <div className="flex items-center gap-1.5 truncate font-medium text-ink">
+                      <button
+                        type="button"
+                        onClick={() => onSelectManager(e.entryId, e.entryName)}
+                        className="flex w-full items-center gap-1.5 truncate text-left font-medium text-ink hover:text-[var(--accent)]"
+                      >
                         {e.entryName}
                         {isMe && (
                           <span className="rounded bg-[var(--accent)] px-1 py-0.5 text-[9px] font-bold text-[var(--bg-0)]">
@@ -131,7 +145,7 @@ function LeagueTable({ league, gameweek }: { league: LeaguesResponse["league"]; 
                             {e.chip}
                           </span>
                         )}
-                      </div>
+                      </button>
                       <div className="truncate text-[10px] text-ink-faint">{e.playerName}</div>
                       {(e.captainName || e.playersLive != null) && (
                         <div className="truncate text-[10px] text-ink-faint">
@@ -183,10 +197,65 @@ function LeaguesSkeleton() {
   );
 }
 
+/** A read-only look at another manager's current squad -- their picks plus
+ * this app's own projections, reusing the same on-demand endpoint the "view
+ * any team" feature uses. No scenarios/optimizer/transfer form: those are
+ * squad-*planning* tools for whoever's actually holding the squad, not
+ * something that makes sense pointed at someone else's team. */
+function ManagerSquadPreview({ entryId, name, onClose }: { entryId: number; name: string; onClose: () => void }) {
+  const [forecast, setForecast] = useState<Forecast | null>(null);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    // The parent keys this component by entryId, so a manager switch is a
+    // fresh mount (state already starts at null) -- no reset needed here.
+    let cancelled = false;
+    fetch(`/api/forecast?teamId=${entryId}`)
+      .then(async (res) => {
+        const json = await res.json();
+        if (!res.ok) throw new Error(json.error || `HTTP ${res.status}`);
+        if (!cancelled) setForecast(json as Forecast);
+      })
+      .catch((err) => {
+        if (!cancelled) setError((err as Error).message);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [entryId]);
+
+  return (
+    <div className="panel rise space-y-3 p-3">
+      <div className="flex items-center justify-between gap-2">
+        <h3 className="eyebrow truncate">{name}&rsquo;s squad</h3>
+        <button
+          type="button"
+          onClick={onClose}
+          className="shrink-0 rounded-full border border-line px-2 py-0.5 text-[11px] text-ink-soft hover:border-border-strong"
+        >
+          Close
+        </button>
+      </div>
+      {error && <p className="text-xs text-[var(--danger)]">Couldn&rsquo;t load this squad: {error}</p>}
+      {!error && !forecast && (
+        <div className="space-y-1.5">
+          {Array.from({ length: 4 }).map((_, i) => (
+            <div key={i} className="h-7 animate-pulse rounded bg-white/[0.05]" />
+          ))}
+        </div>
+      )}
+      {forecast && <Pitch forecast={forecast} />}
+    </div>
+  );
+}
+
 export default function LeaguesPage() {
   const [data, setData] = useState<LeaguesResponse | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
+  const [viewingManager, setViewingManager] = useState<{ entryId: number; name: string } | null>(
+    null,
+  );
   const [selectedId, setSelectedId] = useState<number | null>(() => {
     try {
       const stored = localStorage.getItem(STORAGE_KEY);
@@ -270,7 +339,19 @@ export default function LeaguesPage() {
           options={data.leagues.map((l) => ({ value: l.leagueId, label: l.leagueName }))}
         />
       )}
-      <LeagueTable league={data.league} gameweek={data.gameweek} />
+      <LeagueTable
+        league={data.league}
+        gameweek={data.gameweek}
+        onSelectManager={(entryId, name) => setViewingManager({ entryId, name })}
+      />
+      {viewingManager && (
+        <ManagerSquadPreview
+          key={viewingManager.entryId}
+          entryId={viewingManager.entryId}
+          name={viewingManager.name}
+          onClose={() => setViewingManager(null)}
+        />
+      )}
       {data.league && (
         <p className="px-1 text-[11px] text-ink-faint">
           Live xP is this app&rsquo;s own projection (actual points so far + decayed expected points

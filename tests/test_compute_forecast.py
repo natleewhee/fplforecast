@@ -354,9 +354,12 @@ def test_last_gameweek_review_reports_the_held_squad_result(forecast):
     assert review["modelVsBaseline"] == cf._gw_model_vs_baseline(last_gw)
 
 
-def test_last_gameweek_review_is_null_without_snapshotted_picks(monkeypatch):
-    monkeypatch.setattr(cf, "TEAM_ID", "does-not-exist")
-    assert cf.last_gameweek_review(cf.load_bootstrap(), {}) is None
+def test_last_gameweek_review_is_null_when_based_on_gw_lags_the_latest_finished_one():
+    # The picks snapshot hasn't caught up to a newly-finished gameweek yet --
+    # last_gameweek_review should show nothing rather than a stale review.
+    bootstrap = cf.load_bootstrap()
+    last_gw = max(e["id"] for e in bootstrap["events"] if e.get("finished"))
+    assert cf.last_gameweek_review(bootstrap, {}, last_gw - 1, [], {}) is None
 
 
 def test_upcoming_covers_the_rolling_window_with_a_full_xi_each(forecast):
