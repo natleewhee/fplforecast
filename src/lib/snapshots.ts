@@ -178,6 +178,11 @@ export type Forecast = {
   parBuffer: number;
   parBufferProvisional: number;
   rankCalibration: RankCalibration | null; // fit for the live tracker's overall-rank estimate
+  // Only set by api/forecast.py's on-demand guest lookup (never the daily
+  // cron's own committed forecast) -- lets the UI confirm "this is whose
+  // team you asked for" after a team-ID switch.
+  teamName?: string;
+  managerName?: string;
 };
 
 /** A personal fit of log(overall rank) ~ intercept + slope*(points - gameweek
