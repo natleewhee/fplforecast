@@ -212,23 +212,24 @@ function CaptainModule({ forecast }: { forecast: Forecast }) {
 function TeamIdBar({
   teamId,
   onChange,
+  onReset,
   loading,
   error,
 }: {
   teamId: string;
-  onChange: (id: string | null) => void;
+  onChange: (id: string) => void;
+  onReset: () => void;
   loading: boolean;
   error: string | null;
 }) {
-  const [draft, setDraft] = useState(teamId === OWNER_TEAM_ID ? "" : teamId);
-  const isGuest = teamId !== OWNER_TEAM_ID;
+  const [draft, setDraft] = useState("");
 
   return (
     <div className="flex flex-wrap items-center gap-2 px-1 pb-1 pt-3">
       <input
         value={draft}
         onChange={(e) => setDraft(e.target.value.replace(/[^0-9]/g, ""))}
-        placeholder="Your FPL team ID"
+        placeholder="Switch team ID"
         inputMode="numeric"
         className="w-40 rounded-lg border border-line bg-[var(--bg-2)] px-2.5 py-1.5 text-xs text-ink placeholder:text-ink-faint focus:border-[var(--accent)] focus:outline-none"
       />
@@ -239,22 +240,66 @@ function TeamIdBar({
       >
         {loading ? "Loading…" : "View"}
       </button>
-      {isGuest && (
-        <button
-          className="rounded-lg px-2.5 py-1.5 text-xs text-ink-faint underline"
-          onClick={() => {
-            setDraft("");
-            onChange(null);
-          }}
-        >
-          Back to my team
-        </button>
-      )}
-      {isGuest && !loading && !error && (
-        <span className="chip chip-accent">viewing team {teamId}</span>
-      )}
+      <button
+        className="rounded-lg px-2.5 py-1.5 text-xs text-ink-faint underline"
+        onClick={() => {
+          setDraft("");
+          onReset();
+        }}
+      >
+        Switch team
+      </button>
+      {!loading && !error && <span className="chip chip-accent">viewing team {teamId}</span>}
       {error && <span className="text-xs text-[var(--danger)]">{error}</span>}
     </div>
+  );
+}
+
+/** First-visit gate: shown whenever no team ID cookie exists yet, instead of
+ * silently defaulting to this app's own team -- a visitor's dashboard should
+ * never look like it's showing their team when it's actually someone else's
+ * (KTD-style "don't assume" per the vault's own working rules). */
+function TeamIdGate({
+  onSubmit,
+  loading,
+  error,
+}: {
+  onSubmit: (id: string) => void;
+  loading: boolean;
+  error: string | null;
+}) {
+  const [draft, setDraft] = useState("");
+  return (
+    <Shell>
+      <div className="mx-auto flex max-w-sm flex-col items-center gap-3 py-16 text-center">
+        <h1 className="text-lg font-semibold text-ink">Enter your FPL team ID</h1>
+        <p className="text-xs text-ink-soft">
+          Find it in the URL on the FPL site: fantasy.premierleague.com/entry/
+          <span className="text-ink">123456</span>/event/…
+        </p>
+        <div className="flex w-full gap-2">
+          <input
+            value={draft}
+            onChange={(e) => setDraft(e.target.value.replace(/[^0-9]/g, ""))}
+            placeholder="e.g. 1168513"
+            inputMode="numeric"
+            autoFocus
+            onKeyDown={(e) => {
+              if (e.key === "Enter" && draft && !loading) onSubmit(draft);
+            }}
+            className="flex-1 rounded-lg border border-line bg-[var(--bg-2)] px-3 py-2 text-sm text-ink placeholder:text-ink-faint focus:border-[var(--accent)] focus:outline-none"
+          />
+          <button
+            className="rounded-lg border border-line px-3 py-2 text-sm font-medium text-ink-soft transition-colors hover:border-border-strong disabled:cursor-not-allowed disabled:opacity-50"
+            disabled={!draft || loading}
+            onClick={() => onSubmit(draft)}
+          >
+            {loading ? "Loading…" : "View squad"}
+          </button>
+        </div>
+        {error && <span className="text-xs text-[var(--danger)]">{error}</span>}
+      </div>
+    </Shell>
   );
 }
 
@@ -271,8 +316,11 @@ export default function AppShell({
   initialOverrides: OverridesFile | null;
   footer: ReactNode;
 }) {
-  const [teamId, setTeamId] = useState(OWNER_TEAM_ID);
-  const [forecast, setForecast] = useState(initialForecast);
+  // `null` means "no team ID cookie yet" -- shown as a prompt, never
+  // defaulted to this app's own team, so a stranger's first visit never
+  // looks like it's showing them their own squad when it isn't.
+  const [teamId, setTeamId] = useState<string | null>(null);
+  const [forecast, setForecast] = useState<Forecast | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -283,9 +331,9 @@ export default function AppShell({
   const chips = isGuest ? null : initialChips;
   const overrides = isGuest ? null : initialOverrides;
 
-  const loadTeam = async (id: string | null) => {
-    if (id == null || id === OWNER_TEAM_ID) {
-      setClientTeamId(null);
+  const loadTeam = async (id: string) => {
+    if (id === OWNER_TEAM_ID) {
+      setClientTeamId(OWNER_TEAM_ID);
       setTeamId(OWNER_TEAM_ID);
       setForecast(initialForecast);
       setError(null);
@@ -307,6 +355,13 @@ export default function AppShell({
     }
   };
 
+  const resetTeam = () => {
+    setClientTeamId(null);
+    setTeamId(null);
+    setForecast(null);
+    setError(null);
+  };
+
   // On mount only: pick up a team ID a previous visit already chose, so the
   // switch survives a refresh without needing the (static) page itself to
   // know about it server-side. Deferred one tick (matching LiveTracker's own
@@ -314,11 +369,15 @@ export default function AppShell({
   // synchronously inside the effect.
   useEffect(() => {
     const stored = getClientTeamId();
-    if (!stored || stored === OWNER_TEAM_ID) return;
+    if (!stored) return;
     const t = setTimeout(() => loadTeam(stored), 0);
     return () => clearTimeout(t);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  if (!teamId || !forecast) {
+    return <TeamIdGate onSubmit={loadTeam} loading={loading} error={error} />;
+  }
 
   const liveTab = <LiveTracker lastGameweek={forecast.lastGameweek} />;
   const leaguesTab = <LeaguesPage />;
@@ -401,7 +460,13 @@ export default function AppShell({
         }
       />
       <Shell>
-        <TeamIdBar teamId={teamId} onChange={loadTeam} loading={loading} error={error} />
+        <TeamIdBar
+          teamId={teamId}
+          onChange={loadTeam}
+          onReset={resetTeam}
+          loading={loading}
+          error={error}
+        />
         <div className="pt-1">
           <AppTabs
             tabs={[
