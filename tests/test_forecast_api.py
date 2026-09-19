@@ -106,3 +106,51 @@ def test_handler_rejects_a_non_numeric_team_id():
     raw_team_id = (query.get("teamId") or [""])[0]
     with pytest.raises(ValueError):
         int(raw_team_id)
+
+
+def test_get_pool_context_uses_a_precomputed_cache_instead_of_refitting(monkeypatch):
+    """The whole reason the cache exists: Vercel's Hobby-tier 10s function
+    timeout is tight against build_pool_context()'s own ~8s cold-start cost
+    (see _get_pool_context()'s docstring). Proves the cache is actually
+    read by making the live build_pool_context() raise if it's ever
+    called -- the request must still succeed by hitting the cache.
+
+    Writes real data/pool-context/gw<N>.pkl (the _deploy_data fixture's
+    compress_deploy_data.main() needs to walk the real, committed data/ to
+    stay honest about the actual gzip/decompress path -- same reasoning as
+    that fixture's own docstring) -- cleaned up in a finally so this test
+    never leaves the tracked data/ directory dirty."""
+    bootstrap = cf.load_bootstrap()
+    finished = [e for e in bootstrap.get("events", []) if e.get("finished")]
+    based_on_gw = max(e["id"] for e in finished)
+    target_gw = cf.upcoming_gameweek(
+        bootstrap, forecast_api.datetime.now(forecast_api.timezone.utc), fallback=based_on_gw + 1
+    )
+
+    cache_dir = DATA_DIR / "pool-context"
+    pre_existing = set(cache_dir.glob("gw*.pkl")) if cache_dir.exists() else set()
+    try:
+        real_pool_ctx = cf.build_pool_context(bootstrap, target_gw)
+        cf.save_pool_context(real_pool_ctx, target_gw)
+        compress_deploy_data.main()  # picks up the freshly-saved pool-context/ cache
+        forecast_api._decompressed = False
+        forecast_api._cached_pool_ctx = None
+        forecast_api._cached_pool_ctx_gw = None
+
+        def _must_not_be_called(*_args, **_kwargs):
+            raise AssertionError("build_pool_context() was called -- the precomputed cache was ignored")
+
+        monkeypatch.setattr(cf, "build_pool_context", _must_not_be_called)
+
+        gw, picks, entry_history, history = _latest_picks_and_history()
+        _stub_fpl_get(monkeypatch, gw, picks, entry_history, history)
+
+        status, payload = forecast_api.build_forecast_for_team(TEAM_ID)
+
+        assert status == 200
+        assert payload["targetGameweek"] == target_gw
+    finally:
+        for stale in set(cache_dir.glob("gw*.pkl")) - pre_existing:
+            stale.unlink()
+        if cache_dir.exists() and not any(cache_dir.iterdir()):
+            cache_dir.rmdir()

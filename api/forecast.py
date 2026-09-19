@@ -73,10 +73,24 @@ _cached_pool_ctx_gw: int | None = None
 
 
 def _get_pool_context(bootstrap: dict, target_gw: int) -> dict:
+    """Vercel's Hobby-tier Functions get a hard 10s wall clock regardless of
+    this app's own maxDuration config, and build_pool_context() alone is
+    ~8s -- too tight against that, on top of the FPL API round trips below.
+    The daily cron (scripts/compute_forecast.py's main()) already computes
+    this exact team-agnostic context once a day for this app's own
+    forecast, so the deploy bundle ships that run's pickled output
+    (compute_forecast.load_cached_pool_context()) and this only refits the
+    model live as a fallback -- a missing/stale/version-mismatched cache
+    (see that function's own docstring), never a silent behavior change."""
     global _cached_pool_ctx, _cached_pool_ctx_gw
     if _cached_pool_ctx is not None and _cached_pool_ctx_gw == target_gw:
         return _cached_pool_ctx
-    _cached_pool_ctx = compute_forecast.build_pool_context(bootstrap, target_gw)
+
+    pool_ctx = compute_forecast.load_cached_pool_context(target_gw)
+    if pool_ctx is None:
+        pool_ctx = compute_forecast.build_pool_context(bootstrap, target_gw)
+
+    _cached_pool_ctx = pool_ctx
     _cached_pool_ctx_gw = target_gw
     return _cached_pool_ctx
 
