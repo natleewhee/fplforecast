@@ -211,12 +211,16 @@ function CaptainModule({ forecast }: { forecast: Forecast }) {
  * feature it's here to expose. */
 function TeamIdBar({
   teamId,
+  teamName,
+  managerName,
   onChange,
   onReset,
   loading,
   error,
 }: {
   teamId: string;
+  teamName?: string;
+  managerName?: string;
   onChange: (id: string) => void;
   onReset: () => void;
   loading: boolean;
@@ -249,7 +253,11 @@ function TeamIdBar({
       >
         Switch team
       </button>
-      {!loading && !error && <span className="chip chip-accent">viewing team {teamId}</span>}
+      {!loading && !error && (
+        <span className="chip chip-accent">
+          viewing {teamName ? `${teamName} (${managerName})` : `team ${teamId}`}
+        </span>
+      )}
       {error && <span className="text-xs text-[var(--danger)]">{error}</span>}
     </div>
   );
@@ -492,13 +500,15 @@ export default function AppShell({
       <Header
         subtitle={
           isGuest
-            ? `GW${forecast.targetGameweek} · team ${teamId}`
+            ? `GW${forecast.targetGameweek} · ${forecast.teamName ?? `team ${teamId}`}`
             : `GW${forecast.targetGameweek} · from your GW${forecast.basedOnGameweek} squad`
         }
       />
       <Shell>
         <TeamIdBar
           teamId={teamId}
+          teamName={forecast.teamName}
+          managerName={forecast.managerName}
           onChange={loadTeam}
           onReset={resetTeam}
           loading={loading}
