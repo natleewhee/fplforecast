@@ -61,6 +61,25 @@ SCRATCH_DATA_DIR = Path("/tmp/fplforecast-data")
 # decompress once per container, not once per request.
 _decompressed = False
 
+# build_pool_context() is team-agnostic (feature frame + fitted model +
+# every player's pool projection) and measured ~8s locally -- by far the
+# most expensive step here. It only changes when target_gw changes (once a
+# gameweek, when the bundled model data itself is redeployed), so a warm
+# container reuses it across every guest request instead of refitting the
+# model from scratch each time. Keyed by target_gw so a stale cache from
+# before a redeploy never survives past the gameweek it was built for.
+_cached_pool_ctx: dict | None = None
+_cached_pool_ctx_gw: int | None = None
+
+
+def _get_pool_context(bootstrap: dict, target_gw: int) -> dict:
+    global _cached_pool_ctx, _cached_pool_ctx_gw
+    if _cached_pool_ctx is not None and _cached_pool_ctx_gw == target_gw:
+        return _cached_pool_ctx
+    _cached_pool_ctx = compute_forecast.build_pool_context(bootstrap, target_gw)
+    _cached_pool_ctx_gw = target_gw
+    return _cached_pool_ctx
+
 
 def _ensure_data_decompressed() -> None:
     global _decompressed
@@ -120,7 +139,7 @@ def build_forecast_for_team(team_id: int) -> tuple[int, dict]:
         return 422, {"error": f"team {team_id} has no picks recorded for GW{based_on_gw} yet"}
     squad_ids = [p["element"] for p in picks]
 
-    pool_ctx = compute_forecast.build_pool_context(bootstrap, target_gw)
+    pool_ctx = _get_pool_context(bootstrap, target_gw)
     forecast = compute_forecast.build_personal_forecast(
         bootstrap,
         pool_ctx,
