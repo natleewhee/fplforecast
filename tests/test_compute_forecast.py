@@ -65,10 +65,20 @@ def _target_path() -> Path:
     return ROOT / "data" / "forecast" / f"gw{gw}.json"
 
 
+def _pool_context_paths() -> list[Path]:
+    # main() now also writes data/pool-context/gw<N>.pkl (see
+    # save_pool_context()), pruning any other gw*.pkl as it does -- snapshot
+    # every existing one, not just the target gw's, so teardown can put the
+    # whole directory back exactly as it found it.
+    cache_dir = ROOT / "data" / "pool-context"
+    return sorted(cache_dir.glob("gw*.pkl")) if cache_dir.exists() else []
+
+
 @pytest.fixture(scope="module")
 def forecast():
     path = _target_path()
     original = path.read_bytes() if path.exists() else None
+    pool_context_originals = {p: p.read_bytes() for p in _pool_context_paths()}
     try:
         assert cf.main(now=FORECAST_NOW) == 0
         yield json.loads(path.read_text())
@@ -77,6 +87,12 @@ def forecast():
             path.write_bytes(original)
         elif path.exists():
             path.unlink()
+
+        for p in _pool_context_paths():
+            if p not in pool_context_originals:
+                p.unlink()
+        for p, data in pool_context_originals.items():
+            p.write_bytes(data)
 
 
 def test_targets_the_upcoming_gameweek(forecast):
@@ -499,3 +515,46 @@ def test_availability_info_surfaces_fpls_doubt_signal():
 
     fit = cf._availability_info({"status": "a"})
     assert fit == {"status": "a", "chance": None, "news": None}
+
+
+def test_save_and_load_pool_context_roundtrips(monkeypatch, tmp_path):
+    monkeypatch.setattr(cf, "DATA_DIR", tmp_path)
+    pool_ctx = {"targetGw": 6, "pool": [{"id": 1, "webName": "Someone"}]}
+
+    path = cf.save_pool_context(pool_ctx, target_gw=6)
+    assert path == tmp_path / "pool-context" / "gw6.pkl"
+
+    loaded = cf.load_cached_pool_context(6)
+    assert loaded == pool_ctx
+
+
+def test_load_cached_pool_context_is_none_when_no_cache_exists(monkeypatch, tmp_path):
+    monkeypatch.setattr(cf, "DATA_DIR", tmp_path)
+    assert cf.load_cached_pool_context(6) is None
+
+
+def test_load_cached_pool_context_is_none_for_a_different_gameweek(monkeypatch, tmp_path):
+    # A cache built for last gameweek must never be handed back as if it
+    # were this gameweek's -- every player's projection would be wrong.
+    monkeypatch.setattr(cf, "DATA_DIR", tmp_path)
+    cf.save_pool_context({"targetGw": 6, "pool": []}, target_gw=6)
+    assert cf.load_cached_pool_context(7) is None
+
+
+def test_load_cached_pool_context_is_none_for_a_format_version_mismatch(monkeypatch, tmp_path):
+    # Simulates a cache pickled by an older build_pool_context() shape --
+    # must fall back rather than hand back something that no longer matches
+    # what the current code expects.
+    monkeypatch.setattr(cf, "DATA_DIR", tmp_path)
+    cf.save_pool_context({"targetGw": 6, "pool": []}, target_gw=6)
+    monkeypatch.setattr(cf, "POOL_CONTEXT_FORMAT_VERSION", cf.POOL_CONTEXT_FORMAT_VERSION + 1)
+    assert cf.load_cached_pool_context(6) is None
+
+
+def test_save_pool_context_removes_a_stale_gameweek_s_cache(monkeypatch, tmp_path):
+    monkeypatch.setattr(cf, "DATA_DIR", tmp_path)
+    cf.save_pool_context({"targetGw": 5, "pool": []}, target_gw=5)
+    cf.save_pool_context({"targetGw": 6, "pool": []}, target_gw=6)
+
+    cache_dir = tmp_path / "pool-context"
+    assert [p.name for p in cache_dir.glob("gw*.pkl")] == ["gw6.pkl"]

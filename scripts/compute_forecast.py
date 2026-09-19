@@ -12,6 +12,7 @@ from __future__ import annotations
 import json
 import math
 import os
+import pickle
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
@@ -668,6 +669,76 @@ def build_scenarios(
     }
 
 
+# Bumped whenever build_pool_context()'s return shape or any pickled
+# object's class layout changes -- api/forecast.py's loader refuses a
+# pickle stamped with a different version instead of risking a confusing
+# unpickle error (or worse, a silently wrong object) from a stale artifact
+# left over from before a code change.
+POOL_CONTEXT_FORMAT_VERSION = 1
+
+
+def pool_context_cache_path(target_gw: int) -> Path:
+    return DATA_DIR / "pool-context" / f"gw{target_gw}.pkl"
+
+
+def save_pool_context(pool_ctx: dict, target_gw: int) -> Path:
+    """Pickles build_pool_context()'s output (the ~8s-to-compute, team-
+    agnostic model fit + pool projection) so api/forecast.py's on-demand
+    per-team lookups can load it instead of refitting the model on every
+    request -- see that file's own docstring for why request-time latency
+    matters there. Only ever read back by the exact same codebase (this
+    repo's own Vercel Function), so pickling is fine here even though it
+    isn't a format meant for external consumption."""
+    import numpy
+    import pandas
+
+    path = pool_context_cache_path(target_gw)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    # Only ever keep the current gameweek's cache on disk -- a stray old
+    # gw<N>.pkl left from a previous run would otherwise risk being picked
+    # as "latest" by a lexicographic filename sort once gameweek numbers
+    # reach two digits (compress-deploy-data.mjs/.py's LATEST_ONLY passes
+    # both sort filenames as strings, same as they already do for the
+    # date-named snapshot directories, where that's safe but this isn't).
+    for stale in path.parent.glob("gw*.pkl"):
+        if stale != path:
+            stale.unlink()
+    payload = {
+        "formatVersion": POOL_CONTEXT_FORMAT_VERSION,
+        "pandasVersion": pandas.__version__,
+        "numpyVersion": numpy.__version__,
+        "poolCtx": pool_ctx,
+    }
+    path.write_bytes(pickle.dumps(payload, protocol=pickle.HIGHEST_PROTOCOL))
+    return path
+
+
+def load_cached_pool_context(target_gw: int) -> dict | None:
+    """The api/forecast.py-side counterpart to save_pool_context(). Returns
+    None (never raises) on anything unexpected -- a missing file, a version
+    mismatch, a pickle from a different pandas/numpy build, a corrupt
+    read -- so a bad or stale cache always just falls back to the slower
+    live build_pool_context() rather than breaking a guest's lookup."""
+    import numpy
+    import pandas
+
+    path = pool_context_cache_path(target_gw)
+    try:
+        payload = pickle.loads(path.read_bytes())
+    except (FileNotFoundError, pickle.UnpicklingError, EOFError, AttributeError, ImportError):
+        return None
+    if (
+        payload.get("formatVersion") != POOL_CONTEXT_FORMAT_VERSION
+        or payload.get("pandasVersion") != pandas.__version__
+        or payload.get("numpyVersion") != numpy.__version__
+    ):
+        return None
+    pool_ctx = payload.get("poolCtx")
+    if not isinstance(pool_ctx, dict) or pool_ctx.get("targetGw") != target_gw:
+        return None
+    return pool_ctx
+
+
 def build_pool_context(bootstrap: dict, target_gw: int) -> dict:
     """Everything a personal forecast needs that has nothing to do with
     *which* team is asking: the shared feature frame, the fitted model
@@ -1207,6 +1278,8 @@ def main(now: datetime | None = None) -> int:
         print(f"overrides: applied {len(overrides)} manual transfer(s)")
 
     pool_ctx = build_pool_context(bootstrap, target_gw)
+    cache_path = save_pool_context(pool_ctx, target_gw)
+    print(f"cached pool context for GW{target_gw} -> {cache_path}")
     season_history = load_entry_history()
     forecast = build_personal_forecast(
         bootstrap,

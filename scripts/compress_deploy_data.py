@@ -51,6 +51,13 @@ FULL_SMALL_DIRS = ["event-live"]
 # Single files read directly, not through latest_file().
 EXTRA_FILES = ["record/residuals.json"]
 
+# The daily cron's pickled build_pool_context() output (see
+# scripts/compute_forecast.py's save_pool_context()) -- a .pkl, not .json,
+# so it gets its own latest-only pass. In practice save_pool_context()
+# only ever leaves one file here, but this mirrors LATEST_ONLY_DIRS'
+# "take the latest" shape rather than assuming that.
+LATEST_ONLY_PKL_DIRS = ["pool-context"]
+
 
 def _gzip_file(src: Path, dst: Path) -> None:
     dst.parent.mkdir(parents=True, exist_ok=True)
@@ -87,6 +94,16 @@ def main() -> int:
         if path.exists():
             _gzip_file(path, OUT_DIR / rel)
             total_files += 1
+
+    for name in LATEST_ONLY_PKL_DIRS:
+        src_dir = DATA_DIR / name
+        if not src_dir.exists():
+            continue
+        files = sorted(src_dir.glob("*.pkl"))
+        if not files:
+            continue
+        _gzip_file(files[-1], OUT_DIR / name / files[-1].name)
+        total_files += 1
 
     raw_size = sum(f.stat().st_size for f in DATA_DIR.rglob("*.json"))
     deploy_size = sum(f.stat().st_size for f in OUT_DIR.rglob("*.gz")) if OUT_DIR.exists() else 0
