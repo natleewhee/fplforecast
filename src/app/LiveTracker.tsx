@@ -343,6 +343,14 @@ function TrackerPanel({
           </div>
           <div className="eyebrow mt-1">projected GW total</div>
         </div>
+        {view.estimatedRank && (
+          <div>
+            <div className="stat text-4xl leading-none text-ink">
+              ~{view.estimatedRank.rank.toLocaleString()}
+            </div>
+            <div className="eyebrow mt-1">est. overall rank</div>
+          </div>
+        )}
       </div>
 
       <div className="flex flex-wrap items-center gap-2">
@@ -378,6 +386,27 @@ function TrackerPanel({
           )}
         </div>
       </details>
+
+      {view.estimatedRank && (
+        <details className="text-[11px] text-ink-faint">
+          <summary className="cursor-pointer font-medium text-ink-soft hover:text-ink">
+            How is the overall rank estimated?
+          </summary>
+          <div className="mt-1.5 space-y-1.5">
+            <p>
+              FPL doesn&rsquo;t publish the live population&rsquo;s score distribution, so this is
+              a personal calibration instead: fitted from how far your projected total
+              ({view.projectedTotal.toFixed(1)}) sits above or below the gameweek average
+              ({payload.liveAverage.toFixed(1)}), against how your own overall rank has actually
+              moved with that gap over your last {view.estimatedRank.sampleSize} finished
+              gameweeks. Treat it as a rough steer, not a real-time population estimate.
+            </p>
+            {view.estimatedRank.lastKnownRank != null && (
+              <p>Last known rank: {view.estimatedRank.lastKnownRank.toLocaleString()}.</p>
+            )}
+          </div>
+        </details>
+      )}
 
       <div className="space-y-1">
         {starters.map((r) => (

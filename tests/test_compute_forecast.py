@@ -188,6 +188,62 @@ def test_forecast_carries_the_par_fields(forecast):
     assert forecast["parBufferProvisional"] > forecast["parBuffer"]
 
 
+def test_rank_calibration_is_none_below_the_gameweek_floor():
+    events = [
+        {"id": 1, "finished": True, "average_entry_score": 50},
+        {"id": 2, "finished": True, "average_entry_score": 50},
+        {"id": 3, "finished": True, "average_entry_score": 50},
+    ]
+    current = [
+        {"event": 1, "points": 60, "overall_rank": 100_000},
+        {"event": 2, "points": 55, "overall_rank": 500_000},
+        {"event": 3, "points": 45, "overall_rank": 2_000_000},
+    ]
+    assert cf.rank_calibration(current, events, min_gameweeks=4) is None
+
+
+def test_rank_calibration_fits_the_manager_s_own_score_vs_rank_line():
+    import math
+
+    events = [{"id": i, "finished": True, "average_entry_score": 50} for i in range(1, 6)]
+    true_slope, true_intercept = -0.05, 10.0
+    deltas = [10, 5, 0, -5, -10]
+    current = [
+        {
+            "event": i + 1,
+            "points": 50 + delta,
+            "overall_rank": round(math.exp(true_intercept + true_slope * delta)),
+        }
+        for i, delta in enumerate(deltas)
+    ]
+
+    fit = cf.rank_calibration(current, events, min_gameweeks=4)
+
+    assert fit is not None
+    assert fit["slope"] == pytest.approx(true_slope, abs=0.01)
+    assert fit["intercept"] == pytest.approx(true_intercept, abs=0.05)
+    assert fit["sampleSize"] == 5
+    assert fit["lastKnownEvent"] == 5
+    assert fit["lastKnownRank"] == current[-1]["overall_rank"]
+
+
+def test_rank_calibration_is_none_when_every_gameweek_matched_the_average():
+    events = [{"id": i, "finished": True, "average_entry_score": 50} for i in range(1, 5)]
+    current = [
+        {"event": i, "points": 50, "overall_rank": 1_000_000} for i in range(1, 5)
+    ]  # delta is always 0 -- no spread to fit a slope against
+    assert cf.rank_calibration(current, events, min_gameweeks=4) is None
+
+
+def test_forecast_carries_the_rank_calibration_field(forecast):
+    # None (not enough history) or a well-formed fit -- either is valid, but
+    # the key must always be present so the client doesn't have to guess.
+    assert "rankCalibration" in forecast
+    fit = forecast["rankCalibration"]
+    if fit is not None:
+        assert set(fit) == {"slope", "intercept", "sampleSize", "lastKnownRank", "lastKnownEvent"}
+
+
 def test_squad_component_breakdown_sums_to_the_target_gameweek_projection(forecast):
     components = forecast["squadComponents"]
     by_id = {p["id"]: p for p in forecast["squad"]["players"]}

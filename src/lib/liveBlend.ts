@@ -4,7 +4,7 @@
  * client — blends live actuals with decayed baked xP, applies autosubs, and
  * scores par. Kept free of Next / React so a later pass can unit-test it. */
 
-import type { Forecast } from "@/lib/snapshots";
+import type { Forecast, RankCalibration } from "@/lib/snapshots";
 
 /* ---------- /api/live payload ---------- */
 
@@ -67,6 +67,7 @@ export type LivePayload = {
   parBuffer: number;
   parBufferProvisional: number;
   nextDeadline: string | null; // the next not-yet-passed gameweek deadline, for the idle-state countdown
+  rankCalibration: RankCalibration | null;
 };
 
 // Minimal shapes of the FPL responses this module reads.
@@ -148,6 +149,7 @@ export type LiveProjectionInputs = {
   marginProvisional: boolean;
   parBuffer: number;
   parBufferProvisional: number;
+  rankCalibration: RankCalibration | null;
 };
 
 export function forecastLiveInputs(forecast: Forecast): LiveProjectionInputs {
@@ -157,6 +159,7 @@ export function forecastLiveInputs(forecast: Forecast): LiveProjectionInputs {
     marginProvisional: forecast.marginProvisional ?? true,
     parBuffer: forecast.parBuffer ?? 4,
     parBufferProvisional: forecast.parBufferProvisional ?? 8,
+    rankCalibration: forecast.rankCalibration ?? null,
   };
 }
 
@@ -179,6 +182,7 @@ export function poolLiveInputs(forecast: Forecast): LiveProjectionInputs {
     marginProvisional: true,
     parBuffer: forecast.parBuffer ?? 4,
     parBufferProvisional: forecast.parBufferProvisional ?? 8,
+    rankCalibration: null, // your own rank history doesn't apply to a league entry that isn't you
   };
 }
 
@@ -291,6 +295,7 @@ export function buildLivePayload(args: {
     parBuffer: inputs.parBuffer,
     parBufferProvisional: inputs.parBufferProvisional,
     nextDeadline,
+    rankCalibration: inputs.rankCalibration,
   };
 }
 
@@ -334,7 +339,31 @@ export type TrackerView = {
   anyMatchStarted: boolean;
   armbandId: number | null;
   rows: TrackerRow[];
+  estimatedRank: EstimatedRank | null;
 };
+
+export type EstimatedRank = {
+  rank: number;
+  lastKnownRank: number | null;
+  sampleSize: number;
+};
+
+/** FPL doesn't publish the live population's score distribution, so this
+ * projects off the manager's own personal calibration instead (see
+ * `rankCalibration` / `RANK_CALIBRATION_MIN_GAMEWEEKS` in
+ * scripts/compute_forecast.py) -- a coarse but real estimate, not a
+ * guess: exp(intercept + slope*(live score - live average)). */
+function estimateRank(
+  calibration: RankCalibration | null,
+  projectedTotal: number,
+  liveAverage: number,
+): EstimatedRank | null {
+  if (!calibration) return null;
+  const delta = projectedTotal - liveAverage;
+  const rank = Math.round(Math.exp(calibration.intercept + calibration.slope * delta));
+  if (!Number.isFinite(rank) || rank < 1) return null;
+  return { rank, lastKnownRank: calibration.lastKnownRank, sampleSize: calibration.sampleSize };
+}
 
 const MATCH_MINUTES = 90;
 const OFF_PITCH_MIN_POLL_GAP_MS = 90_000;
@@ -578,5 +607,6 @@ export function buildTracker(payload: LivePayload, prev: LivePayload | null): Tr
     anyMatchStarted,
     armbandId,
     rows,
+    estimatedRank: estimateRank(payload.rankCalibration, projectedTotal, payload.liveAverage),
   };
 }
