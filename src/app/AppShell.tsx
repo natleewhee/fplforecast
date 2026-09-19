@@ -359,16 +359,35 @@ export default function AppShell({
     }
     setLoading(true);
     setError(null);
+    // api/forecast.py fits the same model the daily cron does, live, on a
+    // cold container -- measured ~8s+ for that alone, before the FPL API
+    // round trips. 45s gives real cold starts room while still surfacing a
+    // clear message instead of leaving "Loading…" up forever if something
+    // is actually stuck (a hung Vercel Function, a dropped connection).
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 45_000);
     try {
-      const res = await fetch(`/api/forecast?teamId=${id}`);
-      const json = await res.json();
-      if (!res.ok) throw new Error(json.error || `HTTP ${res.status}`);
+      const res = await fetch(`/api/forecast?teamId=${id}`, { signal: controller.signal });
+      const text = await res.text();
+      let json: Forecast | { error?: string };
+      try {
+        json = JSON.parse(text);
+      } catch {
+        throw new Error(
+          res.ok
+            ? "Got an unreadable response -- try again in a moment."
+            : `Server error (HTTP ${res.status}) -- try again in a moment.`,
+        );
+      }
+      if (!res.ok) throw new Error((json as { error?: string }).error || `HTTP ${res.status}`);
       setClientTeamId(id);
       setTeamId(id);
       setForecast(json as Forecast);
     } catch (err) {
-      setError((err as Error).message);
+      const isAbort = err instanceof DOMException && err.name === "AbortError";
+      setError(isAbort ? "Timed out -- the model's taking too long, try again." : (err as Error).message);
     } finally {
+      clearTimeout(timeout);
       setLoading(false);
     }
   };
