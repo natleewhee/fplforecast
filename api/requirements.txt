@@ -1,5 +1,17 @@
+# Vercel installs one shared set of Python dependencies for everything
+# under api/ from this file (the root requirements.txt is not used for
+# Vercel Functions) -- so it has to cover every function in this directory,
+# not just api/solve.py's.
+#
 # api/solve.py only imports engine.optimise (+ engine.config), which needs
-# just PuLP -- deliberately NOT pandas/numpy (those are the root
-# requirements.txt's, for the engine/scripts model code this function never
-# imports), to keep this Vercel Python Function's bundle and cold start small.
+# just PuLP -- deliberately NOT pandas/numpy, to keep that function's own
+# bundle and cold start small.
+#
+# api/forecast.py runs the full scripts/compute_forecast.py pipeline
+# (engine.model, engine.features, ...) on demand, which does need
+# pandas/numpy -- see that file's own docstring for why bundling them is
+# an accepted tradeoff (gzipped model data keeps the overall bundle under
+# Vercel's size limit even with pandas/numpy installed).
 pulp
+pandas
+numpy
