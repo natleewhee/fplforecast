@@ -1,5 +1,5 @@
-import { NextResponse } from "next/server";
-import { loadLatestForecast } from "@/lib/snapshots";
+import { NextRequest, NextResponse } from "next/server";
+import { loadLatestForecast, type Forecast } from "@/lib/snapshots";
 import {
   buildLivePayload,
   buildTracker,
@@ -10,9 +10,9 @@ import {
   type FplLive,
   type FplPicks,
 } from "@/lib/liveBlend";
+import { OWNER_TEAM_ID, resolveTeamId } from "@/lib/teamId";
 
 const FPL = "https://fantasy.premierleague.com/api";
-const TEAM_ID = process.env.FPL_TEAM_ID || "1168513";
 
 // Same cadence as /api/live -- a mini-league's standings/picks don't change
 // faster than that, and this fans out to one request per entry per league
@@ -352,9 +352,18 @@ async function fetchLeague(
 // Only the selected league's standings (plus every entry's picks) are
 // fetched -- showing all of a manager's leagues at once fans out one FPL
 // request per entry per league, which doesn't scale past a couple of leagues.
-export async function GET(request: Request) {
+export async function GET(request: NextRequest) {
   try {
-    const forecast = loadLatestForecast();
+    const teamId = resolveTeamId(request.cookies);
+    let forecast: Forecast | null;
+    if (teamId === OWNER_TEAM_ID) {
+      forecast = loadLatestForecast();
+    } else {
+      // Same reasoning as /api/live: a guest's own par margin/component xP
+      // don't come from the owner's cached forecast.
+      const forecastRes = await fetch(new URL(`/api/forecast?teamId=${teamId}`, request.url));
+      forecast = forecastRes.ok ? await forecastRes.json() : null;
+    }
     if (!forecast) {
       return NextResponse.json(
         { error: "no committed forecast snapshot on disk" },
@@ -368,7 +377,7 @@ export async function GET(request: Request) {
     const [live, fixtures, entry] = await Promise.all([
       fpl<FplLive>(`/event/${gameweek}/live/`),
       fpl<FplFixture[]>(`/fixtures/?event=${gameweek}`),
-      fpl<FplEntry>(`/entry/${TEAM_ID}/`),
+      fpl<FplEntry>(`/entry/${teamId}/`),
     ]);
 
     const privateLeagues = (entry.leagues?.classic ?? []).filter((l) => l.league_type === "x");
@@ -392,7 +401,7 @@ export async function GET(request: Request) {
           inputs,
           gameweek,
           now,
-          myEntryId: Number(TEAM_ID),
+          myEntryId: Number(teamId),
           myOverallPoints: entry.summary_overall_points ?? null,
         })
       : null;

@@ -47,3 +47,7 @@ yarn-error.log*
 
 # backtest reports — run on demand, not committed (see plan F3)
 data/backtest/
+
+# gzipped copy of data/ for api/forecast.py's Vercel bundle -- regenerated
+# by scripts/compress_deploy_data.py at build time, never committed
+/data-deploy/

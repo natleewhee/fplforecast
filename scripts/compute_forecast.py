@@ -254,23 +254,35 @@ def build_history(hist: dict) -> dict | None:
     return {"gameweeks": gameweeks, "seasons": seasons}
 
 
-def last_gameweek_review(bootstrap: dict, elements_by_id: dict) -> dict | None:
+def last_gameweek_review(
+    bootstrap: dict,
+    elements_by_id: dict,
+    based_on_gw: int,
+    picks: list[dict],
+    entry_history: dict,
+) -> dict | None:
     """The 'decide -> watch -> learn' card: how the held squad actually did in
     the most recent finished gameweek, plus the model-vs-baseline row once that
     gameweek has been scored. ``None`` until a finished gameweek's picks have
-    been snapshotted."""
+    been snapshotted.
+
+    ``picks``/``entry_history`` are whatever the caller already loaded for
+    ``based_on_gw`` (the squad-picks endpoint only ever returns the last
+    *finished* gameweek's picks, so this is normally exactly the gameweek
+    being reviewed) -- passed in rather than re-read from a TEAM_ID-keyed
+    disk path, so this works the same whether that snapshot came from disk
+    (the daily cron's own team) or a live fetch (an on-demand lookup for any
+    team)."""
     finished = [e for e in bootstrap.get("events", []) if e.get("finished")]
     if not finished:
         return None
     event = max(finished, key=lambda e: e["id"])
     gw = event["id"]
-
-    picks_path = DATA_DIR / f"picks-{TEAM_ID}" / f"gw{gw}.json"
-    if not picks_path.exists():
+    if gw != based_on_gw:
+        # The picks snapshot hasn't caught up to the newly-finished gameweek
+        # yet (a transient lag between a gameweek ending and the next
+        # snapshot/fetch picking it up) -- nothing to review until it does.
         return None
-    pdata = load_json(picks_path)
-    entry_history = pdata.get("entry_history", {})
-    picks = pdata.get("picks", [])
 
     live_path = DATA_DIR / "event-live" / f"gw{gw}.json"
     actual_by_id: dict[int, int | None] = {}
@@ -656,32 +668,19 @@ def build_scenarios(
     }
 
 
-def main(now: datetime | None = None) -> int:
-    now = now or datetime.now(timezone.utc)
-
-    bootstrap = load_bootstrap()
-    if bootstrap is None:
-        print("No bootstrap-static snapshot yet — run scripts/snapshot.py first", file=sys.stderr)
-        return 1
-
-    picks_result = load_latest_picks()
-    if picks_result is None:
-        print("No squad picks snapshot yet (no finished gameweek) — nothing to forecast", file=sys.stderr)
-        return 0
-
-    based_on_gw, picks, entry_history = picks_result
-    target_gw = upcoming_gameweek(bootstrap, now, fallback=based_on_gw + 1)
-    bank = round((entry_history.get("bank") or 0) / 10, 1)
+def build_pool_context(bootstrap: dict, target_gw: int) -> dict:
+    """Everything a personal forecast needs that has nothing to do with
+    *which* team is asking: the shared feature frame, the fitted model
+    context, every available player's multi-gameweek pool projection.
+    Computed once (daily, for the pre-cached default view) or on demand (for
+    an arbitrary team ID) -- either way, this is the one place that decides
+    what the model thinks of every player, so every forecast this app ever
+    shows -- yours or a lookup for someone else's team -- comes from the
+    exact same run of it."""
     gap_bar = effective_gap(target_gw)
 
     elements_by_id = {el["id"]: el for el in bootstrap["elements"]}
     teams_by_id = {t["id"]: t["short_name"] for t in bootstrap["teams"]}
-
-    overrides = load_overrides(based_on_gw)
-    squad_ids = [p["element"] for p in picks]
-    if overrides:
-        squad_ids = apply_overrides(squad_ids, overrides)
-        print(f"overrides: applied {len(overrides)} manual transfer(s)")
 
     resolved_map = load_entity_resolution()
     archive = load_history(DATA_DIR)
@@ -747,10 +746,114 @@ def main(now: datetime | None = None) -> int:
         if elements_by_id.get(pid, {}).get("status") not in UNAVAILABLE_STATUSES
     ]
 
+    # Whole-pool POOL_HORIZON_WEEKS-gameweek projections for the pre-deadline
+    # planning table (R9, R10, R14) and the optimiser. Opponent legs come
+    # straight from the fixture list -- no per-pool-player model evaluation
+    # (KTD3).
+    def _pool_opponents(club_team_id: int) -> list[list[dict]]:
+        legs_by_gw: list[list[dict]] = []
+        for gw in range(target_gw, target_gw + POOL_HORIZON_WEEKS):
+            legs = team_fixtures(club_team_id, gw, ctx.fixtures)
+            legs_by_gw.append(
+                [
+                    {
+                        "team": teams_by_id.get(leg["opponent"], "???"),
+                        "wasHome": leg["was_home"],
+                        "fdrRating": leg["difficulty"],
+                    }
+                    for leg in legs
+                ]
+            )
+        return legs_by_gw
+
+    pool = []
+    for pid in pool_ids:
+        el = elements_by_id.get(pid, {})
+        per_gw = model_window_by_gw.get(pid)
+        if per_gw is None:
+            continue
+        # Target-gameweek-only component breakdown for every pool player, not
+        # just the held squad -- lets the live tracker project a league
+        # entry's arbitrary picks with the same decay math as your own squad
+        # (KTD: "league view", 2026-09-05 follow-up).
+        components = None
+        if pid in feature_frame.index:
+            components = model.project_detail(feature_frame.loc[pid], target_gw, ctx).get(
+                "components"
+            )
+        pool.append(
+            {
+                "id": pid,
+                "webName": el.get("web_name", "???"),
+                "team": teams_by_id.get(el.get("team"), "???"),
+                "elementType": el.get("element_type"),
+                "position": POSITIONS.get(el.get("element_type"), "???"),
+                "price": round((el.get("now_cost") or 0) / 10, 1),
+                # No purchase-price data is public; sellPrice assumes bought at
+                # today's price, same as the squad cards' sellPrice (KD in the
+                # 2026-09-05 transfer-scenarios plan's "Open Questions").
+                "sellPrice": round((el.get("now_cost") or 0) / 10, 1),
+                "selectedByPercent": float(el.get("selected_by_percent") or 0),
+                "form": float(el.get("form") or 0),
+                "perGameweek": [round(v, 2) for v in per_gw],
+                "total": round(sum(per_gw), 2),
+                "opponents": _pool_opponents(el.get("team")),
+                "availability": _availability_info(el),
+                "components": components,
+            }
+        )
+
+    residuals_by_position = load_residuals_by_position()
+
+    return {
+        "targetGw": target_gw,
+        "gapBar": gap_bar,
+        "elementsById": elements_by_id,
+        "teamsById": teams_by_id,
+        "featureFrame": feature_frame,
+        "ctx": ctx,
+        "modelWindow": model_window,
+        "baselineWindow": baseline_window,
+        "minutesRiskById": minutes_risk_by_id,
+        "residualsByPosition": residuals_by_position,
+        "pool": pool,
+    }
+
+
+def build_personal_forecast(
+    bootstrap: dict,
+    pool_ctx: dict,
+    based_on_gw: int,
+    picks: list[dict],
+    entry_history: dict,
+    squad_ids: list[int],
+    overrides_applied: int = 0,
+    season_history: dict | None = None,
+) -> dict:
+    """The team-specific half: given one manager's held squad (and their own
+    season history, for the par-score/rank calibration), build the full
+    forecast -- squad cards, captain, XI/bench, chip scenarios -- against the
+    shared ``pool_ctx``. This is the only part of the pipeline that differs
+    manager to manager; ``pool_ctx`` (and therefore every player's own
+    projection) is identical whoever's asking."""
+    target_gw = pool_ctx["targetGw"]
+    gap_bar = pool_ctx["gapBar"]
+    elements_by_id = pool_ctx["elementsById"]
+    teams_by_id = pool_ctx["teamsById"]
+    feature_frame = pool_ctx["featureFrame"]
+    ctx = pool_ctx["ctx"]
+    model_window = pool_ctx["modelWindow"]
+    baseline_window = pool_ctx["baselineWindow"]
+    minutes_risk_by_id = pool_ctx["minutesRiskById"]
+    residuals_by_position = pool_ctx["residualsByPosition"]
+    pool = pool_ctx["pool"]
+    season_history = season_history or {}
+
+    bank = round((entry_history.get("bank") or 0) / 10, 1)
+
     # Your squad is the anchor: the fifteen held players, each with the model's
     # projection; the planning table (poolUpgrades below) is the sole upgrade
     # surface (KD4/KTD8).
-    residuals_by_position = load_residuals_by_position()
     players: list[dict] = []
     squad_window_total = 0.0
     for pid in squad_ids:
@@ -991,63 +1094,6 @@ def main(now: datetime | None = None) -> int:
             }
         )
 
-    # Whole-pool POOL_HORIZON_WEEKS-gameweek projections for the pre-deadline
-    # planning table (R9, R10, R14) and the optimiser. Opponent legs come
-    # straight from the fixture list -- no per-pool-player model evaluation
-    # (KTD3).
-    def _pool_opponents(club_team_id: int) -> list[list[dict]]:
-        legs_by_gw: list[list[dict]] = []
-        for gw in range(target_gw, target_gw + POOL_HORIZON_WEEKS):
-            legs = team_fixtures(club_team_id, gw, ctx.fixtures)
-            legs_by_gw.append(
-                [
-                    {
-                        "team": teams_by_id.get(leg["opponent"], "???"),
-                        "wasHome": leg["was_home"],
-                        "fdrRating": leg["difficulty"],
-                    }
-                    for leg in legs
-                ]
-            )
-        return legs_by_gw
-
-    pool = []
-    for pid in pool_ids:
-        el = elements_by_id.get(pid, {})
-        per_gw = model_window_by_gw.get(pid)
-        if per_gw is None:
-            continue
-        # Target-gameweek-only component breakdown for every pool player, not
-        # just the held squad -- lets the live tracker project a league
-        # entry's arbitrary picks with the same decay math as your own squad
-        # (KTD: "league view", 2026-09-05 follow-up).
-        components = None
-        if pid in feature_frame.index:
-            components = model.project_detail(feature_frame.loc[pid], target_gw, ctx).get(
-                "components"
-            )
-        pool.append(
-            {
-                "id": pid,
-                "webName": el.get("web_name", "???"),
-                "team": teams_by_id.get(el.get("team"), "???"),
-                "elementType": el.get("element_type"),
-                "position": POSITIONS.get(el.get("element_type"), "???"),
-                "price": round((el.get("now_cost") or 0) / 10, 1),
-                # No purchase-price data is public; sellPrice assumes bought at
-                # today's price, same as the squad cards' sellPrice (KD in the
-                # 2026-09-05 transfer-scenarios plan's "Open Questions").
-                "sellPrice": round((el.get("now_cost") or 0) / 10, 1),
-                "selectedByPercent": float(el.get("selected_by_percent") or 0),
-                "form": float(el.get("form") or 0),
-                "perGameweek": [round(v, 2) for v in per_gw],
-                "total": round(sum(per_gw), 2),
-                "opponents": _pool_opponents(el.get("team")),
-                "availability": _availability_info(el),
-                "components": components,
-            }
-        )
-
     # Per-component expected-points breakdown for the held fifteen, target
     # gameweek only -- the live tracker decays attacking value on the clock and
     # re-derives clean-sheet from the scoreline (KTD3, KTD6).
@@ -1059,7 +1105,6 @@ def main(now: datetime | None = None) -> int:
         squad_components[str(pid)] = detail.get("components", {})
 
     # Baked hold-rank margin for the live tracker's par score (KTD2).
-    season_history = load_entry_history()
     par_hold_margin, margin_provisional = par_margin(
         season_history.get("current") or [], bootstrap.get("events") or []
     )
@@ -1070,11 +1115,11 @@ def main(now: datetime | None = None) -> int:
     scenarios = build_scenarios(pool, squad_ids, bank, season_history, target_gw, squad_cards=players)
 
     forecast = {
-        "generatedAt": now.isoformat(),
+        "generatedAt": datetime.now(timezone.utc).isoformat(),
         "basedOnGameweek": based_on_gw,
         "targetGameweek": target_gw,
         "rollingWindow": ROLLING_WINDOW,
-        "overridesApplied": len(overrides),
+        "overridesApplied": overrides_applied,
         "squad": {
             "windowPoints": round(squad_window_total, 2),
             "players": players,
@@ -1115,7 +1160,9 @@ def main(now: datetime | None = None) -> int:
         "captainEdge": captain_edge,
         "runningRecord": load_running_record(),
         "parCalibration": load_par_calibration_record(),
-        "lastGameweek": last_gameweek_review(bootstrap, elements_by_id),
+        "lastGameweek": last_gameweek_review(
+            bootstrap, elements_by_id, based_on_gw, picks, entry_history
+        ),
         "upcoming": upcoming,
         "pool": pool,
         "squadComponents": squad_components,
@@ -1127,12 +1174,57 @@ def main(now: datetime | None = None) -> int:
         "scenarios": scenarios,
         "history": build_history(season_history),
     }
+    return forecast
+
+
+def main(now: datetime | None = None) -> int:
+    """The daily cron's own entrypoint: builds and writes the pre-cached
+    forecast for this app's own team (``TEAM_ID``) from the committed daily
+    snapshots. An on-demand lookup for any other team (api/forecast.py) calls
+    ``build_pool_context``/``build_personal_forecast`` directly instead, with
+    a live-fetched squad in place of the disk reads below -- same two
+    functions, same model, just a different source for "whose squad is
+    this"."""
+    now = now or datetime.now(timezone.utc)
+
+    bootstrap = load_bootstrap()
+    if bootstrap is None:
+        print("No bootstrap-static snapshot yet — run scripts/snapshot.py first", file=sys.stderr)
+        return 1
+
+    picks_result = load_latest_picks()
+    if picks_result is None:
+        print("No squad picks snapshot yet (no finished gameweek) — nothing to forecast", file=sys.stderr)
+        return 0
+
+    based_on_gw, picks, entry_history = picks_result
+    target_gw = upcoming_gameweek(bootstrap, now, fallback=based_on_gw + 1)
+
+    overrides = load_overrides(based_on_gw)
+    squad_ids = [p["element"] for p in picks]
+    if overrides:
+        squad_ids = apply_overrides(squad_ids, overrides)
+        print(f"overrides: applied {len(overrides)} manual transfer(s)")
+
+    pool_ctx = build_pool_context(bootstrap, target_gw)
+    season_history = load_entry_history()
+    forecast = build_personal_forecast(
+        bootstrap,
+        pool_ctx,
+        based_on_gw,
+        picks,
+        entry_history,
+        squad_ids,
+        overrides_applied=len(overrides),
+        season_history=season_history,
+    )
 
     out_dir = DATA_DIR / "forecast"
     out_dir.mkdir(parents=True, exist_ok=True)
     out_path = out_dir / f"gw{target_gw}.json"
     out_path.write_text(json.dumps(forecast, indent=2, sort_keys=True))
     print(f"forecast for GW{target_gw} (based on GW{based_on_gw} squad): -> {out_path}")
+    scenarios = forecast["scenarios"]
     top_scenario = (scenarios["byHorizon"].get("1") or [None])[0]
     print(
         f"free transfers: {scenarios['freeTransfers']['value']} "
