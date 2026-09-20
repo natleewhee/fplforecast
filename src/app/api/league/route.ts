@@ -307,8 +307,13 @@ async function fetchLeague(
         // Three-way split matching FPL's own gameweek view: played (their
         // match is over, or they were subbed off mid-match), live
         // (currently mid-match), to play (fixture hasn't kicked off). The
-        // three always sum to the full XI (11).
-        const lineupRows = tracker.rows.filter((r) => !r.isBench);
+        // three always sum to the full XI (11) -- which needs the *post*
+        // autosub XI (a declared starter who autosubbed off swapped out for
+        // a bench player), not the pre-match one: `!isBench` alone still
+        // counts a subbed-off starter's now-empty slot while dropping their
+        // replacement entirely, silently mis-tallying any entry that had a
+        // sub fire this gameweek.
+        const lineupRows = tracker.rows.filter((r) => (!r.isBench && !r.subbedOut) || r.subbedIn);
         playersPlayed = lineupRows.filter(
           (r) => r.status === "finished" || r.status === "offPitch" || r.status === "didNotPlay",
         ).length;
