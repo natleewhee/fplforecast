@@ -205,10 +205,12 @@ function LeaguesSkeleton() {
 function ManagerSquadPreview({ entryId, name, onClose }: { entryId: number; name: string; onClose: () => void }) {
   const [forecast, setForecast] = useState<Forecast | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [attempt, setAttempt] = useState(0);
 
   useEffect(() => {
     // The parent keys this component by entryId, so a manager switch is a
     // fresh mount (state already starts at null) -- no reset needed here.
+    // `attempt` only changes via the Retry button below.
     let cancelled = false;
     const controller = new AbortController();
     // Matches AppShell.tsx's loadTeam: api/forecast.py's cold-start model
@@ -235,7 +237,19 @@ function ManagerSquadPreview({ entryId, name, onClose }: { entryId: number; name
       } catch (err) {
         if (cancelled) return;
         const isAbort = err instanceof DOMException && err.name === "AbortError";
-        setError(isAbort ? "Timed out -- the model's taking too long, try again." : (err as Error).message);
+        // A bare "Failed to fetch" TypeError means the browser never got any
+        // response at all (dropped connection, mobile network blip) --
+        // distinct from a server-returned error, and usually transient, so
+        // it gets a message that points at retrying rather than the raw
+        // browser wording.
+        const isNetworkError = err instanceof TypeError;
+        setError(
+          isAbort
+            ? "Timed out -- the model's taking too long, try again."
+            : isNetworkError
+              ? "Network error -- the connection dropped before a response came back. Try again."
+              : (err as Error).message,
+        );
       }
     })();
 
@@ -244,7 +258,7 @@ function ManagerSquadPreview({ entryId, name, onClose }: { entryId: number; name
       clearTimeout(timeout);
       controller.abort();
     };
-  }, [entryId]);
+  }, [entryId, attempt]);
 
   return (
     <div className="panel rise space-y-3 p-3">
@@ -258,7 +272,21 @@ function ManagerSquadPreview({ entryId, name, onClose }: { entryId: number; name
           Close
         </button>
       </div>
-      {error && <p className="text-xs text-[var(--danger)]">Couldn&rsquo;t load this squad: {error}</p>}
+      {error && (
+        <div className="flex items-center justify-between gap-2">
+          <p className="text-xs text-[var(--danger)]">Couldn&rsquo;t load this squad: {error}</p>
+          <button
+            type="button"
+            onClick={() => {
+              setError(null);
+              setAttempt((a) => a + 1);
+            }}
+            className="shrink-0 rounded-full border border-line px-2 py-0.5 text-[11px] text-ink-soft hover:border-border-strong"
+          >
+            Retry
+          </button>
+        </div>
+      )}
       {!error && !forecast && (
         <div className="space-y-1.5">
           {Array.from({ length: 4 }).map((_, i) => (
