@@ -30,7 +30,7 @@ const RING_FULL = 11; // xP that fills the ring
 
 /* ---------- pitch furniture ---------- */
 
-function FieldMarkings() {
+export function FieldMarkings() {
   const line = "rgba(255,255,255,0.16)";
   return (
     <svg
@@ -85,7 +85,7 @@ function Ring({
   );
 }
 
-function ShirtGlyph({ fill }: { fill: string }) {
+export function ShirtGlyph({ fill }: { fill: string }) {
   // faint kit silhouette behind the number
   return (
     <svg viewBox="0 0 48 44" className="absolute inset-0 h-full w-full opacity-25" aria-hidden>

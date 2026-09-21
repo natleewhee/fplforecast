@@ -2,9 +2,9 @@
 
 import { Fragment, useCallback, useEffect, useRef, useState } from "react";
 import { Dropdown } from "./Dropdown";
-import Pitch from "./Pitch";
-import type { Forecast } from "@/lib/snapshots";
+import LiveSquadPitch from "./LiveSquadPitch";
 import type { LeagueEntryRow, LeaguesResponse } from "./api/league/route";
+import type { LeagueSquadResponse } from "./api/league/squad/route";
 
 const POLL_MS = 60_000;
 const STORAGE_KEY = "fplforecast:selectedLeagueId";
@@ -203,7 +203,7 @@ function LeaguesSkeleton() {
  * squad-*planning* tools for whoever's actually holding the squad, not
  * something that makes sense pointed at someone else's team. */
 function ManagerSquadPreview({ entryId, name, onClose }: { entryId: number; name: string; onClose: () => void }) {
-  const [forecast, setForecast] = useState<Forecast | null>(null);
+  const [squad, setSquad] = useState<LeagueSquadResponse | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [attempt, setAttempt] = useState(0);
 
@@ -213,16 +213,18 @@ function ManagerSquadPreview({ entryId, name, onClose }: { entryId: number; name
     // `attempt` only changes via the Retry button below.
     let cancelled = false;
     const controller = new AbortController();
-    // Matches AppShell.tsx's loadTeam: api/forecast.py's cold-start model
-    // fit can take a while, and a slow/failed request must not leave this
-    // skeleton spinning forever with nothing to show for it.
+    // Live points/status for an arbitrary entry is a couple of FPL API
+    // round trips, not a model fit -- fast in practice, but still guarded
+    // the same way as the (much slower) forecast lookup so a dropped
+    // connection or FPL-side slowness never leaves this skeleton spinning
+    // forever with nothing to show for it.
     const timeout = setTimeout(() => controller.abort(), 45_000);
 
     (async () => {
       try {
-        const res = await fetch(`/api/forecast?teamId=${entryId}`, { signal: controller.signal });
+        const res = await fetch(`/api/league/squad?entryId=${entryId}`, { signal: controller.signal });
         const text = await res.text();
-        let json: Forecast | { error?: string };
+        let json: LeagueSquadResponse | { error?: string };
         try {
           json = JSON.parse(text);
         } catch {
@@ -233,7 +235,7 @@ function ManagerSquadPreview({ entryId, name, onClose }: { entryId: number; name
           );
         }
         if (!res.ok) throw new Error((json as { error?: string }).error || `HTTP ${res.status}`);
-        if (!cancelled) setForecast(json as Forecast);
+        if (!cancelled) setSquad(json as LeagueSquadResponse);
       } catch (err) {
         if (cancelled) return;
         const isAbort = err instanceof DOMException && err.name === "AbortError";
@@ -287,14 +289,14 @@ function ManagerSquadPreview({ entryId, name, onClose }: { entryId: number; name
           </button>
         </div>
       )}
-      {!error && !forecast && (
+      {!error && !squad && (
         <div className="space-y-1.5">
           {Array.from({ length: 4 }).map((_, i) => (
             <div key={i} className="h-7 animate-pulse rounded bg-white/[0.05]" />
           ))}
         </div>
       )}
-      {forecast && <Pitch forecast={forecast} />}
+      {squad && <LiveSquadPitch data={squad} />}
     </div>
   );
 }
