@@ -26,11 +26,13 @@ function PlayerToken({ row, bench = false }: { row: LeagueSquadRow; bench?: bool
   const kit = kitFor(row.team);
   const size = bench ? 40 : 52;
   const style = STATUS_STYLE[row.status];
+  const showRemaining = row.status === "notStarted" || row.status === "playing";
   const title = [
     row.webName,
     style.label,
     row.minutes > 0 ? `${row.minutes}'` : null,
     row.subbedIn ? "subbed in" : row.subbedOut ? "subbed out" : null,
+    row.noBakedXp ? "no xP baked for this player yet" : null,
   ]
     .filter(Boolean)
     .join(" — ");
@@ -92,16 +94,23 @@ function PlayerToken({ row, bench = false }: { row: LeagueSquadRow; bench?: bool
         </span>
         {row.subbedIn && <span className="chip chip-accent !py-0 text-[9px]">▲</span>}
       </span>
+      {showRemaining && !row.noBakedXp && (
+        <span className="font-mono text-[10px] tabular-nums text-[var(--accent)]">
+          +{row.remainingXp.toFixed(1)}
+        </span>
+      )}
       <span className="text-[9px] text-ink-faint">{row.opponent ?? "— blank —"}</span>
     </div>
   );
 }
 
 /** The read-only counterpart to Pitch.tsx for someone else's team: same
- * pitch/kit formation, but every number is what actually happened this
- * gameweek (FPL's own live points, captain-doubled) rather than this app's
- * xP model -- a league entry's own forecast isn't this app's to show, and
- * isn't what "how is their team doing right now" is asking for anyway. */
+ * pitch/kit formation, but every player's own number is what actually
+ * happened this gameweek (FPL's own live points, captain-doubled) plus
+ * this app's decayed xP projection for the rest of the gameweek -- not
+ * this app's *forecast model* pointed at their squad (that's for the
+ * squad's own holder to plan transfers/captaincy with), just "where is
+ * their current team, and where's it heading". */
 export default function LiveSquadPitch({ data }: { data: LeagueSquadResponse }) {
   const starters = data.rows.filter((r) => !r.isBench);
   const bench = data.rows.filter((r) => r.isBench);
@@ -114,14 +123,22 @@ export default function LiveSquadPitch({ data }: { data: LeagueSquadResponse }) 
           <h2 className="font-mono text-[13px] font-bold tracking-[0.12em] text-ink">
             LIVE · GW{data.gameweek}
           </h2>
-          <p className="eyebrow mt-0.5">actual points so far, not a forecast</p>
+          <p className="eyebrow mt-0.5">their actual team, not a forecast</p>
         </div>
-        <div className="shrink-0 text-right">
-          <div className="stat stat-glow text-2xl leading-none sm:text-3xl">{data.totalPoints}</div>
-          <div className="eyebrow mt-1">pts so far</div>
-          {data.chip && <span className="chip chip-accent mt-1 inline-block">{data.chip}</span>}
+        <div className="flex shrink-0 items-end gap-3 text-right">
+          <div>
+            <div className="stat stat-glow text-2xl leading-none sm:text-3xl">{data.totalPoints}</div>
+            <div className="eyebrow mt-1">pts so far</div>
+          </div>
+          <div>
+            <div className="stat text-xl leading-none text-[var(--accent)] sm:text-2xl">
+              {data.totalXp.toFixed(1)}
+            </div>
+            <div className="eyebrow mt-1">proj total</div>
+          </div>
         </div>
       </div>
+      {data.chip && <span className="chip chip-accent mb-2 inline-block">{data.chip}</span>}
 
       <div
         className="relative rounded-2xl px-1 py-6"

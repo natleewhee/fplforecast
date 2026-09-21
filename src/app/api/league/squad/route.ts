@@ -1,14 +1,16 @@
 import { NextRequest, NextResponse } from "next/server";
+import { loadLatestForecast, type Forecast } from "@/lib/snapshots";
 import {
   buildLivePayload,
   buildTracker,
   liveGameweek,
+  poolLiveInputs,
   type FplBootstrap,
   type FplFixture,
   type FplLive,
   type FplPicks,
-  type LiveProjectionInputs,
 } from "@/lib/liveBlend";
+import { OWNER_TEAM_ID, resolveTeamId } from "@/lib/teamId";
 
 const FPL = "https://fantasy.premierleague.com/api";
 
@@ -37,7 +39,9 @@ export type LeagueSquadRow = {
   isArmband: boolean;
   status: "notStarted" | "playing" | "offPitch" | "finished" | "didNotPlay";
   minutes: number;
-  pointsSoFar: number; // captain multiplier already applied, matches FPL's own live score
+  pointsSoFar: number; // actual FPL points so far, captain multiplier applied
+  remainingXp: number; // this app's decayed projection for the rest of the GW, captain multiplier applied
+  noBakedXp: boolean; // this app's pool doesn't have a component breakdown for this player
   subbedIn: boolean;
   subbedOut: boolean;
   opponent: string | null;
@@ -48,34 +52,36 @@ export type LeagueSquadResponse = {
   entryName: string | null;
   managerName: string | null;
   gameweek: number;
-  totalPoints: number; // sum of the effective (post-autosub) XI's pointsSoFar
+  totalPoints: number; // effective (post-autosub) XI's actual pointsSoFar
+  totalXp: number; // same XI's pointsSoFar + remainingXp -- "where this GW is heading"
   chip: string | null;
   rows: LeagueSquadRow[];
 };
 
-// No forecast-derived xP for this view at all -- it's deliberately "what
-// actually happened", not a projection, so componentXpByElement stays
-// empty and every playerProjection() result's remainingXp/contribution
-// (the only fields that read from it) are simply unused below.
-const EMPTY_INPUTS: LiveProjectionInputs = {
-  componentXpByElement: {},
-  parMargin: 0,
-  marginProvisional: true,
-  parBuffer: 0,
-  parBufferProvisional: 0,
-  rankCalibration: null,
-};
-
-/** A single league entry's actual current-gameweek squad and live points --
- * deliberately not this app's forecast model (that's squad-specific and
- * meant for the squad's own holder to plan with, not something that makes
- * sense pointed at someone else's team, per LeaguesPage.tsx's own
- * ManagerSquadPreview docstring). This is "what actually happened" only. */
+/** A single league entry's actual current-gameweek squad, live points, and
+ * this app's remaining-xP projection for the rest of the gameweek --
+ * deliberately not the forecast *model* (that's squad-specific and meant
+ * for the squad's own holder to plan transfers/captaincy with, not
+ * something that makes sense pointed at someone else's team). "Current
+ * points and xP", not "what would this app do with their squad". Reuses
+ * the viewing manager's own pool component xP the same way /api/league's
+ * own projectedXp column already does (poolLiveInputs) -- the pool
+ * projection is squad-agnostic, so it's valid for any entry's held
+ * players, not just the viewer's. */
 export async function GET(request: NextRequest) {
   try {
     const entryId = Number(new URL(request.url).searchParams.get("entryId") ?? "");
     if (!Number.isInteger(entryId) || entryId <= 0) {
       return NextResponse.json({ error: "entryId must be a positive integer" }, { status: 400 });
+    }
+
+    const teamId = resolveTeamId(request.cookies);
+    let forecast: Forecast | null;
+    if (teamId === OWNER_TEAM_ID) {
+      forecast = loadLatestForecast();
+    } else {
+      const forecastRes = await fetch(new URL(`/api/forecast?teamId=${teamId}`, request.url));
+      forecast = forecastRes.ok ? await forecastRes.json() : null;
     }
 
     const bootstrap = await fpl<FplBootstrap>("/bootstrap-static/");
@@ -93,7 +99,14 @@ export async function GET(request: NextRequest) {
       live,
       fixtures,
       picks,
-      inputs: EMPTY_INPUTS,
+      inputs: forecast ? poolLiveInputs(forecast) : {
+        componentXpByElement: {},
+        parMargin: 0,
+        marginProvisional: true,
+        parBuffer: 0,
+        parBufferProvisional: 0,
+        rankCalibration: null,
+      },
       gameweek,
       now: new Date().toISOString(),
     });
@@ -114,6 +127,8 @@ export async function GET(request: NextRequest) {
       status: r.status,
       minutes: r.minutes,
       pointsSoFar: r.pointsSoFar,
+      remainingXp: r.remainingXp,
+      noBakedXp: r.noBakedXp,
       subbedIn: r.subbedIn,
       subbedOut: r.subbedOut,
       opponent: r.opponent,
@@ -124,6 +139,7 @@ export async function GET(request: NextRequest) {
     // `!isBench` alone is wrong once a sub has fired.
     const effectiveXi = rows.filter((r) => (!r.isBench && !r.subbedOut) || r.subbedIn);
     const totalPoints = effectiveXi.reduce((sum, r) => sum + r.pointsSoFar, 0);
+    const totalXp = effectiveXi.reduce((sum, r) => sum + r.pointsSoFar + r.remainingXp, 0);
 
     const CHIP_LABEL: Record<string, string> = {
       wildcard: "WC",
@@ -141,6 +157,7 @@ export async function GET(request: NextRequest) {
           : null,
       gameweek,
       totalPoints,
+      totalXp,
       chip: picks.active_chip ? CHIP_LABEL[picks.active_chip] ?? picks.active_chip : null,
       rows,
     };
