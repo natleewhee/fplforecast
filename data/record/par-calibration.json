@@ -20,20 +20,28 @@
       "marginProvisional": false,
       "rankMovement": "held",
       "verdict": "green"
+    },
+    {
+      "gameweek": 5,
+      "hit": true,
+      "marginProvisional": false,
+      "rankMovement": "dropped",
+      "verdict": "red"
     }
   ],
   "gameweeksIncluded": [
     2,
     3,
-    4
+    4,
+    5
   ],
   "summary": {
-    "gameweeksScored": 3,
+    "gameweeksScored": 4,
     "hitRate": 1.0,
     "hitRateByVerdict": {
       "amber": 1.0,
       "green": 1.0,
-      "red": null
+      "red": 1.0
     }
   }
 }
