@@ -11,7 +11,7 @@
   },
   "earlySeason": true,
   "effectiveGap": 7.5,
-  "generatedAt": "2026-09-22T08:23:15.759395+00:00",
+  "generatedAt": "2026-09-23T08:25:18.300565+00:00",
   "history": {
     "gameweeks": [
       {
@@ -934,7 +934,7 @@
       ],
       "position": "DEF",
       "price": 5.5,
-      "selectedByPercent": 5.1,
+      "selectedByPercent": 5.0,
       "sellPrice": 5.5,
       "team": "ARS",
       "total": 23.59,
@@ -1198,7 +1198,7 @@
       ],
       "position": "MID",
       "price": 7.4,
-      "selectedByPercent": 12.0,
+      "selectedByPercent": 11.9,
       "sellPrice": 7.4,
       "team": "ARS",
       "total": 24.91,
@@ -2166,7 +2166,7 @@
       ],
       "position": "MID",
       "price": 6.3,
-      "selectedByPercent": 12.4,
+      "selectedByPercent": 12.3,
       "sellPrice": 6.3,
       "team": "ARS",
       "total": 23.45,
@@ -2190,7 +2190,7 @@
         "saves": 0.0
       },
       "elementType": 2,
-      "form": 1.2,
+      "form": 1.8,
       "id": 32,
       "opponents": [
         [
@@ -2278,7 +2278,7 @@
         "saves": 0.0
       },
       "elementType": 2,
-      "form": 2.0,
+      "form": 2.2,
       "id": 33,
       "opponents": [
         [
@@ -2366,7 +2366,7 @@
         "saves": 0.0
       },
       "elementType": 3,
-      "form": 0.2,
+      "form": 0.0,
       "id": 35,
       "opponents": [
         [
@@ -2454,7 +2454,7 @@
         "saves": 0.0
       },
       "elementType": 2,
-      "form": 1.6,
+      "form": 2.5,
       "id": 37,
       "opponents": [
         [
@@ -2630,7 +2630,7 @@
         "saves": 0.0
       },
       "elementType": 3,
-      "form": 4.2,
+      "form": 4.8,
       "id": 41,
       "opponents": [
         [
@@ -2718,7 +2718,7 @@
         "saves": 0.0
       },
       "elementType": 3,
-      "form": 3.4,
+      "form": 4.0,
       "id": 45,
       "opponents": [
         [
@@ -2894,7 +2894,7 @@
         "saves": 0.0
       },
       "elementType": 3,
-      "form": 3.0,
+      "form": 3.2,
       "id": 47,
       "opponents": [
         [
@@ -3158,7 +3158,7 @@
         "saves": 0.0
       },
       "elementType": 3,
-      "form": 1.6,
+      "form": 1.8,
       "id": 52,
       "opponents": [
         [
@@ -3246,7 +3246,7 @@
         "saves": 0.0
       },
       "elementType": 3,
-      "form": 2.8,
+      "form": 3.5,
       "id": 53,
       "opponents": [
         [
@@ -3310,7 +3310,7 @@
       ],
       "position": "MID",
       "price": 5.9,
-      "selectedByPercent": 0.3,
+      "selectedByPercent": 0.4,
       "sellPrice": 5.9,
       "team": "AVL",
       "total": 11.94,
@@ -3334,7 +3334,7 @@
         "saves": 0.0
       },
       "elementType": 3,
-      "form": 0.4,
+      "form": 1.0,
       "id": 54,
       "opponents": [
         [
@@ -3422,7 +3422,7 @@
         "saves": 0.0
       },
       "elementType": 4,
-      "form": 0.8,
+      "form": 1.0,
       "id": 56,
       "opponents": [
         [
@@ -3510,7 +3510,7 @@
         "saves": 0.0
       },
       "elementType": 3,
-      "form": 0.6,
+      "form": 0.5,
       "id": 160,
       "opponents": [
         [
@@ -3774,7 +3774,7 @@
         "saves": 0.71
       },
       "elementType": 1,
-      "form": 3.2,
+      "form": 4.0,
       "id": 597,
       "opponents": [
         [
@@ -4478,7 +4478,7 @@
         "saves": 0.0
       },
       "elementType": 2,
-      "form": 2.4,
+      "form": 2.8,
       "id": 60,
       "opponents": [
         [
@@ -4566,7 +4566,7 @@
         "saves": 0.0
       },
       "elementType": 2,
-      "form": 2.0,
+      "form": 2.2,
       "id": 61,
       "opponents": [
         [
@@ -5006,7 +5006,7 @@
         "saves": 0.0
       },
       "elementType": 3,
-      "form": 6.2,
+      "form": 5.2,
       "id": 68,
       "opponents": [
         [
@@ -5094,7 +5094,7 @@
         "saves": 0.0
       },
       "elementType": 3,
-      "form": 6.0,
+      "form": 7.0,
       "id": 69,
       "opponents": [
         [
@@ -5182,7 +5182,7 @@
         "saves": 0.0
       },
       "elementType": 3,
-      "form": 1.6,
+      "form": 1.2,
       "id": 71,
       "opponents": [
         [
@@ -5358,7 +5358,7 @@
         "saves": 0.0
       },
       "elementType": 3,
-      "form": 2.4,
+      "form": 2.8,
       "id": 73,
       "opponents": [
         [
@@ -5446,7 +5446,7 @@
         "saves": 0.0
       },
       "elementType": 3,
-      "form": 0.6,
+      "form": 0.8,
       "id": 74,
       "opponents": [
         [
@@ -5534,7 +5534,7 @@
         "saves": 0.0
       },
       "elementType": 3,
-      "form": 1.0,
+      "form": 1.2,
       "id": 75,
       "opponents": [
         [
@@ -5622,7 +5622,7 @@
         "saves": 0.0
       },
       "elementType": 3,
-      "form": 0.4,
+      "form": 0.2,
       "id": 76,
       "opponents": [
         [
@@ -5710,7 +5710,7 @@
         "saves": 0.0
       },
       "elementType": 4,
-      "form": 3.6,
+      "form": 3.5,
       "id": 79,
       "opponents": [
         [
@@ -5798,7 +5798,7 @@
         "saves": 0.0
       },
       "elementType": 4,
-      "form": 0.4,
+      "form": 0.5,
       "id": 81,
       "opponents": [
         [
@@ -5886,7 +5886,7 @@
         "saves": 0.0
       },
       "elementType": 2,
-      "form": 2.6,
+      "form": 2.8,
       "id": 566,
       "opponents": [
         [
@@ -6062,7 +6062,7 @@
         "saves": 0.0
       },
       "elementType": 4,
-      "form": 0.6,
+      "form": 0.5,
       "id": 608,
       "opponents": [
         [
@@ -6302,7 +6302,7 @@
       ],
       "position": "GKP",
       "price": 5.0,
-      "selectedByPercent": 6.2,
+      "selectedByPercent": 6.1,
       "sellPrice": 5.0,
       "team": "BRE",
       "total": 25.18,
@@ -6654,7 +6654,7 @@
       ],
       "position": "DEF",
       "price": 4.6,
-      "selectedByPercent": 7.7,
+      "selectedByPercent": 7.6,
       "sellPrice": 4.6,
       "team": "BRE",
       "total": 24.79,
@@ -7006,7 +7006,7 @@
       ],
       "position": "DEF",
       "price": 4.5,
-      "selectedByPercent": 0.2,
+      "selectedByPercent": 0.3,
       "sellPrice": 4.5,
       "team": "BRE",
       "total": 20.13,
@@ -7094,7 +7094,7 @@
       ],
       "position": "MID",
       "price": 6.2,
-      "selectedByPercent": 10.5,
+      "selectedByPercent": 10.8,
       "sellPrice": 6.2,
       "team": "BRE",
       "total": 39.84,
@@ -7886,7 +7886,7 @@
       ],
       "position": "MID",
       "price": 5.6,
-      "selectedByPercent": 10.2,
+      "selectedByPercent": 10.1,
       "sellPrice": 5.6,
       "team": "BRE",
       "total": 24.28,
@@ -8262,7 +8262,7 @@
         "saves": 0.79
       },
       "elementType": 1,
-      "form": 4.6,
+      "form": 4.2,
       "id": 109,
       "opponents": [
         [
@@ -8438,7 +8438,7 @@
         "saves": 0.0
       },
       "elementType": 2,
-      "form": 2.6,
+      "form": 3.2,
       "id": 113,
       "opponents": [
         [
@@ -8526,7 +8526,7 @@
         "saves": 0.0
       },
       "elementType": 2,
-      "form": 3.8,
+      "form": 3.2,
       "id": 114,
       "opponents": [
         [
@@ -8614,7 +8614,7 @@
         "saves": 0.0
       },
       "elementType": 2,
-      "form": 7.6,
+      "form": 5.2,
       "id": 115,
       "opponents": [
         [
@@ -8678,7 +8678,7 @@
       ],
       "position": "DEF",
       "price": 4.9,
-      "selectedByPercent": 27.1,
+      "selectedByPercent": 27.3,
       "sellPrice": 4.9,
       "team": "BHA",
       "total": 32.48,
@@ -8686,23 +8686,23 @@
     },
     {
       "availability": {
-        "chance": null,
-        "news": null,
-        "status": "a"
+        "chance": 75,
+        "news": "Neck injury - 75% chance of playing",
+        "status": "d"
       },
       "components": {
-        "appearance": 1.6,
-        "assists": 0.11,
-        "bonus": 0.2,
-        "cards": -0.21,
-        "cleanSheet": 0.82,
-        "defensiveContribution": 1.33,
-        "goals": 0.34,
-        "goalsConceded": -0.6,
+        "appearance": 1.2,
+        "assists": 0.08,
+        "bonus": 0.15,
+        "cards": -0.16,
+        "cleanSheet": 0.62,
+        "defensiveContribution": 1.0,
+        "goals": 0.26,
+        "goalsConceded": -0.45,
         "saves": 0.0
       },
       "elementType": 2,
-      "form": 4.4,
+      "form": 4.0,
       "id": 116,
       "opponents": [
         [
@@ -8756,20 +8756,20 @@
         ]
       ],
       "perGameweek": [
-        3.6,
-        3.81,
-        2.75,
-        2.62,
-        3.6,
-        3.33,
-        3.34
+        2.7,
+        2.86,
+        2.06,
+        1.97,
+        2.7,
+        2.5,
+        2.51
       ],
       "position": "DEF",
       "price": 4.5,
       "selectedByPercent": 1.5,
       "sellPrice": 4.5,
       "team": "BHA",
-      "total": 23.05,
+      "total": 17.3,
       "webName": "Dunk"
     },
     {
@@ -9054,7 +9054,7 @@
         "saves": 0.0
       },
       "elementType": 3,
-      "form": 9.4,
+      "form": 11.2,
       "id": 124,
       "opponents": [
         [
@@ -9118,7 +9118,7 @@
       ],
       "position": "MID",
       "price": 5.8,
-      "selectedByPercent": 27.3,
+      "selectedByPercent": 27.8,
       "sellPrice": 5.8,
       "team": "BHA",
       "total": 42.68,
@@ -9142,7 +9142,7 @@
         "saves": 0.0
       },
       "elementType": 4,
-      "form": 1.2,
+      "form": 0.2,
       "id": 125,
       "opponents": [
         [
@@ -9230,7 +9230,7 @@
         "saves": 0.0
       },
       "elementType": 3,
-      "form": 0.4,
+      "form": 0.5,
       "id": 126,
       "opponents": [
         [
@@ -9318,7 +9318,7 @@
         "saves": 0.0
       },
       "elementType": 3,
-      "form": 4.8,
+      "form": 4.5,
       "id": 127,
       "opponents": [
         [
@@ -9406,7 +9406,7 @@
         "saves": 0.0
       },
       "elementType": 3,
-      "form": 3.0,
+      "form": 3.2,
       "id": 129,
       "opponents": [
         [
@@ -9582,7 +9582,7 @@
         "saves": 0.0
       },
       "elementType": 4,
-      "form": 5.6,
+      "form": 6.8,
       "id": 138,
       "opponents": [
         [
@@ -9646,7 +9646,7 @@
       ],
       "position": "FWD",
       "price": 5.6,
-      "selectedByPercent": 3.3,
+      "selectedByPercent": 3.5,
       "sellPrice": 5.6,
       "team": "BHA",
       "total": 37.08,
@@ -9654,23 +9654,23 @@
     },
     {
       "availability": {
-        "chance": 100,
-        "news": null,
-        "status": "a"
+        "chance": 75,
+        "news": "Hamstring injury - 75% chance of playing",
+        "status": "d"
       },
       "components": {
-        "appearance": 0.8,
-        "assists": 0.11,
-        "bonus": 0.03,
-        "cards": -0.25,
-        "cleanSheet": 0.21,
-        "defensiveContribution": 0.93,
-        "goals": 0.49,
-        "goalsConceded": -0.34,
+        "appearance": 0.6,
+        "assists": 0.08,
+        "bonus": 0.02,
+        "cards": -0.19,
+        "cleanSheet": 0.15,
+        "defensiveContribution": 0.7,
+        "goals": 0.36,
+        "goalsConceded": -0.26,
         "saves": 0.0
       },
       "elementType": 2,
-      "form": 1.4,
+      "form": 1.8,
       "id": 328,
       "opponents": [
         [
@@ -9724,20 +9724,20 @@
         ]
       ],
       "perGameweek": [
-        1.96,
-        2.13,
-        1.59,
-        1.48,
-        2.1,
-        1.91,
-        1.97
+        1.47,
+        1.6,
+        1.19,
+        1.11,
+        1.57,
+        1.43,
+        1.48
       ],
       "position": "DEF",
       "price": 4.9,
       "selectedByPercent": 0.2,
       "sellPrice": 4.9,
       "team": "BHA",
-      "total": 13.14,
+      "total": 9.85,
       "webName": "Struijk"
     },
     {
@@ -9758,7 +9758,7 @@
         "saves": 0.0
       },
       "elementType": 2,
-      "form": 6.4,
+      "form": 6.5,
       "id": 504,
       "opponents": [
         [
@@ -9934,7 +9934,7 @@
         "saves": 0.0
       },
       "elementType": 3,
-      "form": 0.6,
+      "form": 0.5,
       "id": 600,
       "opponents": [
         [
@@ -10022,7 +10022,7 @@
         "saves": 0.0
       },
       "elementType": 3,
-      "form": 4.0,
+      "form": 4.8,
       "id": 605,
       "opponents": [
         [
@@ -10374,7 +10374,7 @@
         "saves": 1.1
       },
       "elementType": 1,
-      "form": 1.8,
+      "form": 2.2,
       "id": 28,
       "opponents": [
         [
@@ -10526,7 +10526,7 @@
       ],
       "position": "MID",
       "price": 7.7,
-      "selectedByPercent": 40.3,
+      "selectedByPercent": 40.4,
       "sellPrice": 7.7,
       "team": "CHE",
       "total": 38.51,
@@ -10790,7 +10790,7 @@
       ],
       "position": "DEF",
       "price": 5.4,
-      "selectedByPercent": 6.0,
+      "selectedByPercent": 5.9,
       "sellPrice": 5.4,
       "team": "CHE",
       "total": 16.37,
@@ -11406,7 +11406,7 @@
       ],
       "position": "MID",
       "price": 9.7,
-      "selectedByPercent": 26.3,
+      "selectedByPercent": 26.1,
       "sellPrice": 9.7,
       "team": "CHE",
       "total": 28.54,
@@ -12022,7 +12022,7 @@
       ],
       "position": "FWD",
       "price": 7.7,
-      "selectedByPercent": 66.0,
+      "selectedByPercent": 65.8,
       "sellPrice": 7.7,
       "team": "CHE",
       "total": 26.93,
@@ -13166,7 +13166,7 @@
       ],
       "position": "DEF",
       "price": 4.0,
-      "selectedByPercent": 9.0,
+      "selectedByPercent": 8.9,
       "sellPrice": 4.0,
       "team": "COV",
       "total": 15.49,
@@ -15453,9 +15453,9 @@
         4.23
       ],
       "position": "MID",
-      "price": 5.5,
+      "price": 5.4,
       "selectedByPercent": 0.7,
-      "sellPrice": 5.5,
+      "sellPrice": 5.4,
       "team": "CRY",
       "total": 28.79,
       "webName": "Wharton"
@@ -17390,7 +17390,7 @@
       ],
       "position": "DEF",
       "price": 6.1,
-      "selectedByPercent": 15.7,
+      "selectedByPercent": 15.9,
       "sellPrice": 6.1,
       "team": "EVE",
       "total": 37.28,
@@ -18622,7 +18622,7 @@
       ],
       "position": "DEF",
       "price": 4.5,
-      "selectedByPercent": 1.2,
+      "selectedByPercent": 1.3,
       "sellPrice": 4.5,
       "team": "EVE",
       "total": 21.11,
@@ -19942,7 +19942,7 @@
       ],
       "position": "MID",
       "price": 5.5,
-      "selectedByPercent": 2.4,
+      "selectedByPercent": 2.5,
       "sellPrice": 5.5,
       "team": "FUL",
       "total": 33.69,
@@ -20294,7 +20294,7 @@
       ],
       "position": "FWD",
       "price": 4.5,
-      "selectedByPercent": 5.5,
+      "selectedByPercent": 5.4,
       "sellPrice": 4.5,
       "team": "FUL",
       "total": 3.23,
@@ -21702,7 +21702,7 @@
       ],
       "position": "MID",
       "price": 5.1,
-      "selectedByPercent": 4.8,
+      "selectedByPercent": 4.9,
       "sellPrice": 5.1,
       "team": "HUL",
       "total": 26.49,
@@ -22494,7 +22494,7 @@
       ],
       "position": "GKP",
       "price": 4.6,
-      "selectedByPercent": 12.3,
+      "selectedByPercent": 12.4,
       "sellPrice": 4.6,
       "team": "HUL",
       "total": 26.05,
@@ -23462,7 +23462,7 @@
       ],
       "position": "DEF",
       "price": 4.0,
-      "selectedByPercent": 12.9,
+      "selectedByPercent": 12.8,
       "sellPrice": 4.0,
       "team": "IPS",
       "total": 25.13,
@@ -24606,7 +24606,7 @@
       ],
       "position": "FWD",
       "price": 5.5,
-      "selectedByPercent": 3.4,
+      "selectedByPercent": 3.5,
       "sellPrice": 5.5,
       "team": "IPS",
       "total": 24.3,
@@ -25838,7 +25838,7 @@
       ],
       "position": "DEF",
       "price": 4.6,
-      "selectedByPercent": 6.7,
+      "selectedByPercent": 6.8,
       "sellPrice": 4.6,
       "team": "LEE",
       "total": 33.62,
@@ -26894,7 +26894,7 @@
       ],
       "position": "FWD",
       "price": 6.0,
-      "selectedByPercent": 25.1,
+      "selectedByPercent": 25.0,
       "sellPrice": 6.0,
       "team": "LEE",
       "total": 33.08,
@@ -27710,7 +27710,7 @@
         "saves": 1.06
       },
       "elementType": 1,
-      "form": 5.4,
+      "form": 6.2,
       "id": 350,
       "opponents": [
         [
@@ -28062,7 +28062,7 @@
         "saves": 0.0
       },
       "elementType": 2,
-      "form": 5.0,
+      "form": 5.8,
       "id": 356,
       "opponents": [
         [
@@ -28150,7 +28150,7 @@
         "saves": 0.0
       },
       "elementType": 2,
-      "form": 0.4,
+      "form": 0.5,
       "id": 357,
       "opponents": [
         [
@@ -28238,7 +28238,7 @@
         "saves": 0.0
       },
       "elementType": 2,
-      "form": 2.6,
+      "form": 3.2,
       "id": 358,
       "opponents": [
         [
@@ -28302,7 +28302,7 @@
       ],
       "position": "DEF",
       "price": 5.4,
-      "selectedByPercent": 2.3,
+      "selectedByPercent": 2.2,
       "sellPrice": 5.4,
       "team": "LIV",
       "total": 25.85,
@@ -28502,7 +28502,7 @@
         "saves": 0.0
       },
       "elementType": 2,
-      "form": 4.8,
+      "form": 5.8,
       "id": 362,
       "opponents": [
         [
@@ -28590,7 +28590,7 @@
         "saves": 0.0
       },
       "elementType": 2,
-      "form": 0.4,
+      "form": 0.5,
       "id": 364,
       "opponents": [
         [
@@ -28678,7 +28678,7 @@
         "saves": 0.0
       },
       "elementType": 3,
-      "form": 3.6,
+      "form": 4.0,
       "id": 366,
       "opponents": [
         [
@@ -28766,7 +28766,7 @@
         "saves": 0.0
       },
       "elementType": 3,
-      "form": 6.4,
+      "form": 5.0,
       "id": 367,
       "opponents": [
         [
@@ -28854,7 +28854,7 @@
         "saves": 0.0
       },
       "elementType": 3,
-      "form": 4.0,
+      "form": 3.0,
       "id": 368,
       "opponents": [
         [
@@ -28918,7 +28918,7 @@
       ],
       "position": "MID",
       "price": 7.0,
-      "selectedByPercent": 33.3,
+      "selectedByPercent": 33.1,
       "sellPrice": 7.0,
       "team": "LIV",
       "total": 38.45,
@@ -28942,7 +28942,7 @@
         "saves": 0.0
       },
       "elementType": 3,
-      "form": 0.8,
+      "form": 0.5,
       "id": 369,
       "opponents": [
         [
@@ -29030,7 +29030,7 @@
         "saves": 0.0
       },
       "elementType": 3,
-      "form": 1.8,
+      "form": 1.0,
       "id": 371,
       "opponents": [
         [
@@ -29118,7 +29118,7 @@
         "saves": 0.0
       },
       "elementType": 3,
-      "form": 2.2,
+      "form": 2.5,
       "id": 372,
       "opponents": [
         [
@@ -29294,7 +29294,7 @@
         "saves": 0.0
       },
       "elementType": 3,
-      "form": 0.6,
+      "form": 0.8,
       "id": 375,
       "opponents": [
         [
@@ -29382,7 +29382,7 @@
         "saves": 0.0
       },
       "elementType": 3,
-      "form": 3.0,
+      "form": 2.8,
       "id": 377,
       "opponents": [
         [
@@ -29558,7 +29558,7 @@
         "saves": 0.0
       },
       "elementType": 4,
-      "form": 6.6,
+      "form": 7.8,
       "id": 379,
       "opponents": [
         [
@@ -29622,7 +29622,7 @@
       ],
       "position": "FWD",
       "price": 9.1,
-      "selectedByPercent": 22.3,
+      "selectedByPercent": 22.4,
       "sellPrice": 9.1,
       "team": "LIV",
       "total": 43.79,
@@ -29646,7 +29646,7 @@
         "saves": 0.0
       },
       "elementType": 3,
-      "form": 0.6,
+      "form": 0.5,
       "id": 381,
       "opponents": [
         [
@@ -29822,7 +29822,7 @@
         "saves": 0.0
       },
       "elementType": 2,
-      "form": 4.4,
+      "form": 5.2,
       "id": 579,
       "opponents": [
         [
@@ -30150,7 +30150,7 @@
       ],
       "position": "MID",
       "price": 5.8,
-      "selectedByPercent": 6.9,
+      "selectedByPercent": 6.8,
       "sellPrice": 5.8,
       "team": "MCI",
       "total": 33.72,
@@ -30174,7 +30174,7 @@
         "saves": 1.0
       },
       "elementType": 1,
-      "form": 3.8,
+      "form": 4.0,
       "id": 384,
       "opponents": [
         [
@@ -30350,7 +30350,7 @@
         "saves": 0.0
       },
       "elementType": 2,
-      "form": 1.2,
+      "form": 1.0,
       "id": 387,
       "opponents": [
         [
@@ -30414,7 +30414,7 @@
       ],
       "position": "DEF",
       "price": 6.3,
-      "selectedByPercent": 11.1,
+      "selectedByPercent": 11.0,
       "sellPrice": 6.3,
       "team": "MCI",
       "total": 24.44,
@@ -30438,7 +30438,7 @@
         "saves": 0.0
       },
       "elementType": 2,
-      "form": 6.0,
+      "form": 5.0,
       "id": 388,
       "opponents": [
         [
@@ -30526,7 +30526,7 @@
         "saves": 0.0
       },
       "elementType": 2,
-      "form": 2.2,
+      "form": 2.5,
       "id": 389,
       "opponents": [
         [
@@ -30614,7 +30614,7 @@
         "saves": 0.0
       },
       "elementType": 2,
-      "form": 3.4,
+      "form": 3.8,
       "id": 390,
       "opponents": [
         [
@@ -30702,7 +30702,7 @@
         "saves": 0.0
       },
       "elementType": 2,
-      "form": 7.4,
+      "form": 7.0,
       "id": 391,
       "opponents": [
         [
@@ -30766,7 +30766,7 @@
       ],
       "position": "DEF",
       "price": 5.7,
-      "selectedByPercent": 26.5,
+      "selectedByPercent": 26.6,
       "sellPrice": 5.7,
       "team": "MCI",
       "total": 41.72,
@@ -30966,7 +30966,7 @@
         "saves": 0.0
       },
       "elementType": 2,
-      "form": 0.2,
+      "form": 0.0,
       "id": 395,
       "opponents": [
         [
@@ -31142,7 +31142,7 @@
         "saves": 0.0
       },
       "elementType": 3,
-      "form": 6.6,
+      "form": 7.8,
       "id": 397,
       "opponents": [
         [
@@ -31206,7 +31206,7 @@
       ],
       "position": "MID",
       "price": 8.4,
-      "selectedByPercent": 15.3,
+      "selectedByPercent": 15.5,
       "sellPrice": 8.4,
       "team": "MCI",
       "total": 37.42,
@@ -31230,7 +31230,7 @@
         "saves": 0.0
       },
       "elementType": 3,
-      "form": 6.8,
+      "form": 6.5,
       "id": 399,
       "opponents": [
         [
@@ -31406,7 +31406,7 @@
         "saves": 0.0
       },
       "elementType": 3,
-      "form": 0.4,
+      "form": 0.2,
       "id": 406,
       "opponents": [
         [
@@ -31494,7 +31494,7 @@
         "saves": 0.0
       },
       "elementType": 4,
-      "form": 7.8,
+      "form": 9.2,
       "id": 411,
       "opponents": [
         [
@@ -31558,7 +31558,7 @@
       ],
       "position": "FWD",
       "price": 15.6,
-      "selectedByPercent": 73.6,
+      "selectedByPercent": 73.7,
       "sellPrice": 15.6,
       "team": "MCI",
       "total": 56.51,
@@ -31582,7 +31582,7 @@
         "saves": 0.0
       },
       "elementType": 3,
-      "form": 3.0,
+      "form": 3.2,
       "id": 481,
       "opponents": [
         [
@@ -32877,9 +32877,9 @@
         4.18
       ],
       "position": "DEF",
-      "price": 4.9,
-      "selectedByPercent": 8.8,
-      "sellPrice": 4.9,
+      "price": 4.8,
+      "selectedByPercent": 8.7,
+      "sellPrice": 4.8,
       "team": "MUN",
       "total": 27.3,
       "webName": "Maguire"
@@ -33494,7 +33494,7 @@
       ],
       "position": "MID",
       "price": 11.9,
-      "selectedByPercent": 38.8,
+      "selectedByPercent": 38.7,
       "sellPrice": 11.9,
       "team": "MUN",
       "total": 42.26,
@@ -33582,7 +33582,7 @@
       ],
       "position": "MID",
       "price": 7.9,
-      "selectedByPercent": 20.8,
+      "selectedByPercent": 20.7,
       "sellPrice": 7.9,
       "team": "MUN",
       "total": 43.0,
@@ -34197,9 +34197,9 @@
         0.07
       ],
       "position": "MID",
-      "price": 4.5,
+      "price": 4.4,
       "selectedByPercent": 0.2,
-      "sellPrice": 4.5,
+      "sellPrice": 4.4,
       "team": "MUN",
       "total": 0.48,
       "webName": "Bendito Mantato"
@@ -34486,7 +34486,7 @@
         "saves": 0.0
       },
       "elementType": 3,
-      "form": 1.0,
+      "form": 1.2,
       "id": 405,
       "opponents": [
         [
@@ -34926,7 +34926,7 @@
         "saves": 0.0
       },
       "elementType": 2,
-      "form": 0.4,
+      "form": 0.2,
       "id": 446,
       "opponents": [
         [
@@ -35102,7 +35102,7 @@
         "saves": 0.0
       },
       "elementType": 2,
-      "form": 6.2,
+      "form": 7.0,
       "id": 449,
       "opponents": [
         [
@@ -35166,7 +35166,7 @@
       ],
       "position": "DEF",
       "price": 5.3,
-      "selectedByPercent": 16.7,
+      "selectedByPercent": 16.9,
       "sellPrice": 5.3,
       "team": "NEW",
       "total": 38.3,
@@ -35190,7 +35190,7 @@
         "saves": 0.0
       },
       "elementType": 2,
-      "form": 0.8,
+      "form": 1.0,
       "id": 450,
       "opponents": [
         [
@@ -35278,7 +35278,7 @@
         "saves": 0.0
       },
       "elementType": 3,
-      "form": 5.6,
+      "form": 6.5,
       "id": 453,
       "opponents": [
         [
@@ -35366,7 +35366,7 @@
         "saves": 0.0
       },
       "elementType": 3,
-      "form": 0.6,
+      "form": 0.8,
       "id": 457,
       "opponents": [
         [
@@ -35454,7 +35454,7 @@
         "saves": 0.0
       },
       "elementType": 3,
-      "form": 2.4,
+      "form": 2.2,
       "id": 459,
       "opponents": [
         [
@@ -35542,7 +35542,7 @@
         "saves": 0.0
       },
       "elementType": 3,
-      "form": 4.4,
+      "form": 4.0,
       "id": 460,
       "opponents": [
         [
@@ -35630,7 +35630,7 @@
         "saves": 0.0
       },
       "elementType": 3,
-      "form": 1.6,
+      "form": 2.0,
       "id": 461,
       "opponents": [
         [
@@ -35718,7 +35718,7 @@
         "saves": 0.0
       },
       "elementType": 3,
-      "form": 1.6,
+      "form": 1.8,
       "id": 462,
       "opponents": [
         [
@@ -35806,7 +35806,7 @@
         "saves": 0.0
       },
       "elementType": 4,
-      "form": 3.0,
+      "form": 2.8,
       "id": 464,
       "opponents": [
         [
@@ -35894,7 +35894,7 @@
         "saves": 0.0
       },
       "elementType": 3,
-      "form": 0.6,
+      "form": 0.5,
       "id": 559,
       "opponents": [
         [
@@ -35982,7 +35982,7 @@
         "saves": 0.98
       },
       "elementType": 1,
-      "form": 2.8,
+      "form": 3.2,
       "id": 567,
       "opponents": [
         [
@@ -36662,7 +36662,7 @@
       ],
       "position": "FWD",
       "price": 5.6,
-      "selectedByPercent": 2.8,
+      "selectedByPercent": 2.7,
       "sellPrice": 5.6,
       "team": "NFO",
       "total": 18.56,
@@ -37014,7 +37014,7 @@
       ],
       "position": "DEF",
       "price": 5.0,
-      "selectedByPercent": 8.9,
+      "selectedByPercent": 8.8,
       "sellPrice": 5.0,
       "team": "NFO",
       "total": 29.65,
@@ -38798,7 +38798,7 @@
         "saves": 0.0
       },
       "elementType": 4,
-      "form": 1.6,
+      "form": 2.0,
       "id": 401,
       "opponents": [
         [
@@ -38886,7 +38886,7 @@
         "saves": 0.0
       },
       "elementType": 3,
-      "form": 1.6,
+      "form": 2.0,
       "id": 403,
       "opponents": [
         [
@@ -41502,7 +41502,7 @@
       ],
       "position": "DEF",
       "price": 4.3,
-      "selectedByPercent": 2.9,
+      "selectedByPercent": 2.8,
       "sellPrice": 4.3,
       "team": "SUN",
       "total": 16.78,
@@ -42558,7 +42558,7 @@
       ],
       "position": "FWD",
       "price": 5.7,
-      "selectedByPercent": 6.8,
+      "selectedByPercent": 6.9,
       "sellPrice": 5.7,
       "team": "SUN",
       "total": 31.46,
