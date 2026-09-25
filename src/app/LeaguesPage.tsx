@@ -40,7 +40,7 @@ function RankHeader({ league }: { league: NonNullable<LeaguesResponse["league"]>
         <button
           type="button"
           onClick={scrollToMe}
-          className="rounded bg-white/[0.06] px-2 py-1 text-[11px] font-medium text-ink-soft hover:bg-white/[0.1]"
+          className="inline-flex h-11 items-center rounded bg-white/[0.06] px-2 text-[11px] font-medium text-ink-soft hover:bg-white/[0.1]"
         >
           Jump to my position ↓
         </button>
@@ -266,10 +266,13 @@ function ManagerSquadPreview({ entryId, name, onClose }: { entryId: number; name
     <div className="panel rise space-y-3 p-3">
       <div className="flex items-center justify-between gap-2">
         <h3 className="eyebrow truncate">{name}&rsquo;s squad</h3>
+        {/* h-11 (44px, adapt.md's minimum touch target -- see Carousel.tsx's
+         * own comment) with the visible pill kept small via padding, not
+         * button height. */}
         <button
           type="button"
           onClick={onClose}
-          className="shrink-0 rounded-full border border-line px-2 py-0.5 text-[11px] text-ink-soft hover:border-border-strong"
+          className="inline-flex h-11 shrink-0 items-center rounded-full border border-line px-3 text-[11px] text-ink-soft hover:border-border-strong"
         >
           Close
         </button>
@@ -283,7 +286,7 @@ function ManagerSquadPreview({ entryId, name, onClose }: { entryId: number; name
               setError(null);
               setAttempt((a) => a + 1);
             }}
-            className="shrink-0 rounded-full border border-line px-2 py-0.5 text-[11px] text-ink-soft hover:border-border-strong"
+            className="inline-flex h-11 shrink-0 items-center rounded-full border border-line px-3 text-[11px] text-ink-soft hover:border-border-strong"
           >
             Retry
           </button>

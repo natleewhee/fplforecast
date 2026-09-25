@@ -235,17 +235,20 @@ function TeamIdBar({
         onChange={(e) => setDraft(e.target.value.replace(/[^0-9]/g, ""))}
         placeholder="Switch team ID"
         inputMode="numeric"
-        className="w-40 rounded-lg border border-line bg-[var(--bg-2)] px-2.5 py-1.5 text-xs text-ink placeholder:text-ink-faint focus:border-[var(--accent)] focus:outline-none"
+        className="h-11 w-40 rounded-lg border border-line bg-[var(--bg-2)] px-2.5 text-xs text-ink placeholder:text-ink-faint focus:border-[var(--accent)] focus:outline-none"
       />
+      {/* h-11 (44px, adapt.md's minimum touch target -- see Carousel.tsx's
+       * own comment) on every tappable control here, padding absorbing the
+       * extra height rather than growing the text. */}
       <button
-        className="rounded-lg border border-line px-2.5 py-1.5 text-xs font-medium text-ink-soft transition-colors hover:border-border-strong disabled:cursor-not-allowed disabled:opacity-50"
+        className="inline-flex h-11 items-center rounded-lg border border-line px-2.5 text-xs font-medium text-ink-soft transition-colors hover:border-border-strong disabled:cursor-not-allowed disabled:opacity-50"
         disabled={!draft || loading}
         onClick={() => onChange(draft)}
       >
         {loading ? "Loading…" : "View"}
       </button>
       <button
-        className="rounded-lg px-2.5 py-1.5 text-xs text-ink-faint underline"
+        className="inline-flex h-11 items-center rounded-lg px-2.5 text-xs text-ink-faint underline"
         onClick={() => {
           setDraft("");
           onReset();
@@ -311,10 +314,12 @@ function TeamIdGate({
                 onKeyDown={(e) => {
                   if (e.key === "Enter" && draft && !loading) onSubmit(draft);
                 }}
-                className="flex-1 rounded-lg border border-line bg-[var(--bg-2)] px-3 py-2 text-sm text-ink placeholder:text-ink-faint focus:border-[var(--accent)] focus:outline-none"
+                className="h-11 flex-1 rounded-lg border border-line bg-[var(--bg-2)] px-3 text-sm text-ink placeholder:text-ink-faint focus:border-[var(--accent)] focus:outline-none"
               />
+              {/* h-11 (44px, adapt.md's minimum touch target) here too --
+               * this is the very first tap a new visitor makes. */}
               <button
-                className="rounded-lg border border-line px-3 py-2 text-sm font-medium text-ink-soft transition-colors hover:border-border-strong disabled:cursor-not-allowed disabled:opacity-50"
+                className="inline-flex h-11 items-center rounded-lg border border-line px-3 text-sm font-medium text-ink-soft transition-colors hover:border-border-strong disabled:cursor-not-allowed disabled:opacity-50"
                 disabled={!draft || loading}
                 onClick={() => onSubmit(draft)}
               >
