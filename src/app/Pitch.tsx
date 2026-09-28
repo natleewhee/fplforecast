@@ -1,9 +1,10 @@
 "use client";
 
-import { useState, type ReactNode } from "react";
+import { useCallback, useRef, useState, type ReactNode } from "react";
 import type { Forecast, ForecastPlayer, OpponentLeg } from "@/lib/snapshots";
 import { availabilityFlag } from "@/lib/availability";
 import { fdrColor, kitFor } from "@/lib/teamColors";
+import PlayerBreakdownSheet from "./PlayerBreakdownSheet";
 
 function bandLabel(band: { floor: number; ceiling: number; bandProvisional: boolean } | null | undefined) {
   if (!band) return "";
@@ -134,11 +135,13 @@ function PlayerToken({
   isCaptain,
   isVice,
   bench = false,
+  onSelect,
 }: {
   t: Tok;
   isCaptain?: boolean;
   isVice?: boolean;
   bench?: boolean;
+  onSelect: (id: number, trigger: HTMLButtonElement) => void;
 }) {
   const kit = kitFor(t.team);
   const size = bench ? 40 : 52;
@@ -147,8 +150,11 @@ function PlayerToken({
   const bandTitle = bandLabel(t.floorCeiling);
   const doubt = availabilityFlag(t.availability);
   return (
-    <div
-      className={`flex w-[4.4rem] flex-col items-center gap-0.5 ${bench ? "sm:w-[4.2rem]" : "sm:w-20"}`}
+    <button
+      type="button"
+      onClick={(e) => onSelect(t.id, e.currentTarget)}
+      aria-label={`${t.webName}: ${t.xp != null ? t.xp.toFixed(1) : "no"} xP, show breakdown`}
+      className={`flex w-[4.4rem] flex-col items-center gap-0.5 rounded-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--accent)] ${bench ? "sm:w-[4.2rem]" : "sm:w-20"}`}
       title={[t.webName, bandTitle && `typical range ${bandTitle}`, doubt?.label]
         .filter(Boolean)
         .join(" — ")}
@@ -201,7 +207,7 @@ function PlayerToken({
         </span>
       </span>
       <OppChip opponents={t.opponents} />
-    </div>
+    </button>
   );
 }
 
@@ -212,6 +218,16 @@ export default function Pitch({ forecast }: { forecast: Forecast }) {
   const byId = new Map(squad.players.map((p) => [p.id, p]));
   const [gwIdx, setGwIdx] = useState(0);
   const [showAllGws, setShowAllGws] = useState(false);
+  const [selectedId, setSelectedId] = useState<number | null>(null);
+  const triggerRef = useRef<HTMLButtonElement | null>(null);
+  const openSheet = useCallback((id: number, trigger: HTMLButtonElement) => {
+    triggerRef.current = trigger;
+    setSelectedId(id);
+  }, []);
+  const closeSheet = useCallback(() => {
+    setSelectedId(null);
+    triggerRef.current?.focus();
+  }, []);
 
   const active = upcoming[gwIdx] ?? upcoming[0];
   if (!active) return null;
@@ -350,6 +366,7 @@ export default function Pitch({ forecast }: { forecast: Forecast }) {
                     t={t}
                     isCaptain={t.id === captainId}
                     isVice={t.id === viceId}
+                    onSelect={openSheet}
                   />
                 ))}
               </div>
@@ -362,7 +379,7 @@ export default function Pitch({ forecast }: { forecast: Forecast }) {
           <p className="eyebrow mb-1.5">Bench</p>
           <div className="flex flex-wrap gap-x-2 gap-y-2">
             {benched.map((t) => (
-              <PlayerToken key={t.id} t={t} isCaptain={t.id === captainId} bench />
+              <PlayerToken key={t.id} t={t} isCaptain={t.id === captainId} bench onSelect={openSheet} />
             ))}
           </div>
         </div>
@@ -384,6 +401,17 @@ export default function Pitch({ forecast }: { forecast: Forecast }) {
           </details>
         )}
       </div>
+
+      {selectedId != null && byId.get(selectedId) && (
+        <PlayerBreakdownSheet
+          player={byId.get(selectedId)!}
+          xp={gwPlayerById.get(selectedId)?.projectedPoints ?? null}
+          opponents={gwPlayerById.get(selectedId)?.opponents ?? []}
+          gameweek={active.gameweek}
+          isTargetGw={isTargetGw}
+          onClose={closeSheet}
+        />
+      )}
     </div>
   );
 }
