@@ -10,7 +10,7 @@ import {
   type FplLive,
   type FplPicks,
 } from "@/lib/liveBlend";
-import { OWNER_TEAM_ID, resolveTeamId } from "@/lib/teamId";
+import { OWNER_TEAM_ID, resolveTeamIdFromRequest } from "@/lib/teamId";
 
 const FPL = "https://fantasy.premierleague.com/api";
 
@@ -359,7 +359,7 @@ async function fetchLeague(
 // request per entry per league, which doesn't scale past a couple of leagues.
 export async function GET(request: NextRequest) {
   try {
-    const teamId = resolveTeamId(request.cookies);
+    const teamId = resolveTeamIdFromRequest(request);
     let forecast: Forecast | null;
     if (teamId === OWNER_TEAM_ID) {
       forecast = loadLatestForecast();

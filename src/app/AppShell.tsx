@@ -10,7 +10,13 @@ import type {
   ParCalibration,
   RunningRecord,
 } from "@/lib/snapshots";
-import { OWNER_TEAM_ID, getClientTeamId, setClientTeamId } from "@/lib/teamId";
+import {
+  OWNER_TEAM_ID,
+  getClientTeamId,
+  setClientTeamId,
+  getUrlTeamId,
+  setUrlTeamId,
+} from "@/lib/teamId";
 import { Card, Header, Module, Shell } from "./PageChrome";
 import Pitch from "./Pitch";
 import History from "./History";
@@ -227,6 +233,30 @@ function TeamIdBar({
   error: string | null;
 }) {
   const [draft, setDraft] = useState("");
+  const [copied, setCopied] = useState(false);
+
+  const copyLink = async () => {
+    const url = `${window.location.origin}${window.location.pathname}?team=${teamId}`;
+    // Web Share API on mobile (a share sheet beats a bare clipboard copy
+    // there); clipboard everywhere else, including a share-sheet cancel.
+    if (navigator.share) {
+      try {
+        await navigator.share({ url, title: teamName ? `${teamName} on FPL Forecaster` : "FPL Forecaster" });
+        return;
+      } catch {
+        // user cancelled the share sheet, or the browser doesn't actually
+        // support it despite the feature check -- fall through to clipboard
+      }
+    }
+    try {
+      await navigator.clipboard.writeText(url);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      // clipboard access denied -- nothing more to do silently; the address
+      // bar itself already reflects this URL, so it can be copied by hand
+    }
+  };
 
   return (
     <div className="flex flex-wrap items-center gap-2 px-1 pb-1 pt-3">
@@ -256,12 +286,50 @@ function TeamIdBar({
       >
         Switch team
       </button>
+      <button
+        type="button"
+        onClick={copyLink}
+        className="inline-flex h-11 items-center rounded-lg border border-line px-2.5 text-xs font-medium text-ink-soft transition-colors hover:border-border-strong"
+      >
+        {copied ? "Copied!" : "Copy link"}
+      </button>
       {!loading && !error && (
         <span className="chip chip-accent">
           viewing {teamName ? `${teamName} (${managerName})` : `team ${teamId}`}
         </span>
       )}
       {error && <span className="text-xs text-[var(--danger)]">{error}</span>}
+    </div>
+  );
+}
+
+/** Shown only while viewing a team via a shared `?team=` link that differs
+ * from (or hasn't yet been saved as) this browser's own saved team --
+ * confirms whose team is on screen before anything else, per Nat's own
+ * choice when this was planned, rather than silently treating a link as
+ * "now your default". */
+function SharedLinkBanner({
+  teamName,
+  managerName,
+  onMakeMine,
+}: {
+  teamName?: string;
+  managerName?: string;
+  onMakeMine: () => void;
+}) {
+  return (
+    <div className="mx-1 mt-3 flex flex-wrap items-center justify-between gap-2 rounded-lg border border-[var(--accent)]/40 bg-[color-mix(in_srgb,var(--accent)_10%,transparent)] px-3 py-2 text-xs">
+      <span className="text-ink">
+        You&rsquo;re viewing <span className="font-semibold">{teamName ?? "this team"}</span>
+        {managerName && <span className="text-ink-soft"> ({managerName})</span>}
+      </span>
+      <button
+        type="button"
+        onClick={onMakeMine}
+        className="inline-flex h-11 items-center rounded-lg border border-line px-2.5 font-medium text-ink-soft transition-colors hover:border-border-strong"
+      >
+        Make this my team
+      </button>
     </div>
   );
 }
@@ -351,23 +419,34 @@ export default function AppShell({
   // defaulted to this app's own team, so a stranger's first visit never
   // looks like it's showing them their own squad when it isn't.
   const [teamId, setTeamId] = useState<string | null>(null);
+  // Mirrors the *saved* cookie (independent of `teamId`, which is whatever's
+  // currently being viewed) -- lets a shared `?team=` link be viewed without
+  // silently overwriting the browser's own saved team.
+  const [savedTeamId, setSavedTeamId] = useState<string | null>(null);
   const [forecast, setForecast] = useState<Forecast | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const isGuest = teamId !== OWNER_TEAM_ID;
+  // True only while looking at a team that differs from what's saved --
+  // i.e. an unsaved `?team=` link, not a manual switch via TeamIdBar (which
+  // always saves immediately, same as before this phase).
+  const isViewingSharedLink = teamId != null && teamId !== savedTeamId;
   // Chip-usage badges and pending-transfer display are owner-only
   // conveniences (they read this app's own committed history/overrides) --
   // hidden rather than shown wrong for a guest lookup.
   const chips = isGuest ? null : initialChips;
   const overrides = isGuest ? null : initialOverrides;
 
-  const loadTeam = async (id: string) => {
+  const loadTeam = async (id: string, opts: { save?: boolean } = {}) => {
+    const save = opts.save ?? true;
     if (id === OWNER_TEAM_ID) {
-      setClientTeamId(OWNER_TEAM_ID);
+      if (save) setClientTeamId(OWNER_TEAM_ID);
       setTeamId(OWNER_TEAM_ID);
+      if (save) setSavedTeamId(OWNER_TEAM_ID);
       setForecast(initialForecast);
       setError(null);
+      setUrlTeamId(OWNER_TEAM_ID);
       return;
     }
     setLoading(true);
@@ -393,9 +472,13 @@ export default function AppShell({
         );
       }
       if (!res.ok) throw new Error((json as { error?: string }).error || `HTTP ${res.status}`);
-      setClientTeamId(id);
+      if (save) {
+        setClientTeamId(id);
+        setSavedTeamId(id);
+      }
       setTeamId(id);
       setForecast(json as Forecast);
+      setUrlTeamId(id);
     } catch (err) {
       const isAbort = err instanceof DOMException && err.name === "AbortError";
       setError(isAbort ? "Timed out -- the model's taking too long, try again." : (err as Error).message);
@@ -407,20 +490,35 @@ export default function AppShell({
 
   const resetTeam = () => {
     setClientTeamId(null);
+    setUrlTeamId(null);
     setTeamId(null);
+    setSavedTeamId(null);
     setForecast(null);
     setError(null);
   };
 
-  // On mount only: pick up a team ID a previous visit already chose, so the
-  // switch survives a refresh without needing the (static) page itself to
-  // know about it server-side. Deferred one tick (matching LiveTracker's own
-  // first-poll pattern) so loadTeam's setState lands after mount, not
-  // synchronously inside the effect.
+  const makeThisMyTeam = () => {
+    if (!teamId) return;
+    setClientTeamId(teamId);
+    setSavedTeamId(teamId);
+  };
+
+  // On mount only: a `?team=` link takes precedence over the saved cookie
+  // (viewed without being saved, unless it happens to match the cookie
+  // already); otherwise pick up whatever a previous visit saved, so a
+  // refresh survives without the (static) page itself knowing about it
+  // server-side. Deferred one tick (matching LiveTracker's own first-poll
+  // pattern) so loadTeam's setState lands after mount, not synchronously
+  // inside the effect.
   useEffect(() => {
+    const urlTeam = getUrlTeamId();
     const stored = getClientTeamId();
-    if (!stored) return;
-    const t = setTimeout(() => loadTeam(stored), 0);
+    const toLoad = urlTeam ?? stored;
+    if (!toLoad) return;
+    const t = setTimeout(() => {
+      setSavedTeamId(stored);
+      loadTeam(toLoad, { save: toLoad === stored });
+    }, 0);
     return () => clearTimeout(t);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -429,8 +527,8 @@ export default function AppShell({
     return <TeamIdGate onSubmit={loadTeam} loading={loading} error={error} />;
   }
 
-  const liveTab = <LiveTracker lastGameweek={forecast.lastGameweek} />;
-  const leaguesTab = <LeaguesPage />;
+  const liveTab = <LiveTracker lastGameweek={forecast.lastGameweek} teamId={isViewingSharedLink ? teamId : null} />;
+  const leaguesTab = <LeaguesPage teamId={isViewingSharedLink ? teamId : null} />;
 
   const squadTab = (
     <>
@@ -519,6 +617,13 @@ export default function AppShell({
           loading={loading}
           error={error}
         />
+        {isViewingSharedLink && (
+          <SharedLinkBanner
+            teamName={forecast.teamName}
+            managerName={forecast.managerName}
+            onMakeMine={makeThisMyTeam}
+          />
+        )}
         <div className="pt-1">
           <AppTabs
             tabs={[

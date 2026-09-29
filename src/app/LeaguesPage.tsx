@@ -202,7 +202,17 @@ function LeaguesSkeleton() {
  * any team" feature uses. No scenarios/optimizer/transfer form: those are
  * squad-*planning* tools for whoever's actually holding the squad, not
  * something that makes sense pointed at someone else's team. */
-function ManagerSquadPreview({ entryId, name, onClose }: { entryId: number; name: string; onClose: () => void }) {
+function ManagerSquadPreview({
+  entryId,
+  name,
+  viewerTeamId,
+  onClose,
+}: {
+  entryId: number;
+  name: string;
+  viewerTeamId?: string | null;
+  onClose: () => void;
+}) {
   const [squad, setSquad] = useState<LeagueSquadResponse | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [attempt, setAttempt] = useState(0);
@@ -222,7 +232,8 @@ function ManagerSquadPreview({ entryId, name, onClose }: { entryId: number; name
 
     (async () => {
       try {
-        const res = await fetch(`/api/league/squad?entryId=${entryId}`, { signal: controller.signal });
+        const qs = viewerTeamId ? `&teamId=${viewerTeamId}` : "";
+        const res = await fetch(`/api/league/squad?entryId=${entryId}${qs}`, { signal: controller.signal });
         const text = await res.text();
         let json: LeagueSquadResponse | { error?: string };
         try {
@@ -260,7 +271,7 @@ function ManagerSquadPreview({ entryId, name, onClose }: { entryId: number; name
       clearTimeout(timeout);
       controller.abort();
     };
-  }, [entryId, attempt]);
+  }, [entryId, attempt, viewerTeamId]);
 
   return (
     <div className="panel rise space-y-3 p-3">
@@ -304,7 +315,7 @@ function ManagerSquadPreview({ entryId, name, onClose }: { entryId: number; name
   );
 }
 
-export default function LeaguesPage() {
+export default function LeaguesPage({ teamId }: { teamId?: string | null } = {}) {
   const [data, setData] = useState<LeaguesResponse | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
@@ -332,7 +343,10 @@ export default function LeaguesPage() {
   const tick = useCallback(async () => {
     const requestedId = selectedIdRef.current;
     try {
-      const qs = requestedId != null ? `?leagueId=${requestedId}` : "";
+      const params = new URLSearchParams();
+      if (requestedId != null) params.set("leagueId", String(requestedId));
+      if (teamId) params.set("teamId", teamId);
+      const qs = params.toString() ? `?${params.toString()}` : "";
       const res = await fetch(`/api/league${qs}`, { cache: "no-store" });
       const json = await res.json();
       if (!res.ok) throw new Error(json.error || `HTTP ${res.status}`);
@@ -350,7 +364,7 @@ export default function LeaguesPage() {
     // what makes the polling effect below (keyed on `tick`) restart the
     // interval and fire an immediate fetch for the new league.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedId]);
+  }, [selectedId, teamId]);
 
   useEffect(() => {
     const t = setTimeout(tick, 0);
@@ -404,6 +418,7 @@ export default function LeaguesPage() {
           key={viewingManager.entryId}
           entryId={viewingManager.entryId}
           name={viewingManager.name}
+          viewerTeamId={teamId}
           onClose={() => setViewingManager(null)}
         />
       )}
