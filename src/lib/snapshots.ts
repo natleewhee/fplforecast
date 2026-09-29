@@ -139,6 +139,10 @@ export type Forecast = {
   targetGameweek: number;
   rollingWindow: number;
   overridesApplied: number;
+  // targetGameweek's own deadline, feeds the deadline-day checklist.
+  // Optional: absent on a forecast snapshot committed before this field
+  // existed, until the next daily cron run regenerates it.
+  deadlineTime?: string | null;
   squad: {
     windowPoints: number;
     players: ForecastPlayer[];

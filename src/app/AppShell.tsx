@@ -19,6 +19,7 @@ import {
 } from "@/lib/teamId";
 import { Card, Header, Module, Shell } from "./PageChrome";
 import Pitch from "./Pitch";
+import DeadlineChecklist from "./DeadlineChecklist";
 import History from "./History";
 import LiveTracker from "./LiveTracker";
 import LeaguesPage from "./LeaguesPage";
@@ -532,6 +533,7 @@ export default function AppShell({
 
   const squadTab = (
     <>
+      <DeadlineChecklist forecast={forecast} chips={chips} />
       <Pitch forecast={forecast} />
 
       {chips && (

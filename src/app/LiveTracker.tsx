@@ -10,6 +10,7 @@ import {
   type TrackerView,
 } from "@/lib/liveBlend";
 import { fdrColor } from "@/lib/teamColors";
+import { countdown } from "@/lib/countdown";
 import type { GameweekReview } from "@/lib/snapshots";
 
 /* The in-gameweek surface (KTD7): while matches are live it leads the page with
@@ -220,18 +221,6 @@ export default function LiveTracker({
   return (
     <TrackerPanel view={view} payload={polls.cur} active={active} error={error} lastOk={lastOk} />
   );
-}
-
-function countdown(deadline: string, nowMs: number): string {
-  const diffMs = Date.parse(deadline) - nowMs;
-  if (diffMs <= 0) return "deadline passed";
-  const totalMinutes = Math.floor(diffMs / 60_000);
-  const days = Math.floor(totalMinutes / (60 * 24));
-  const hours = Math.floor((totalMinutes % (60 * 24)) / 60);
-  const minutes = totalMinutes % 60;
-  if (days > 0) return `${days}d ${hours}h`;
-  if (hours > 0) return `${hours}h ${minutes}m`;
-  return `${minutes}m`;
 }
 
 /** What the Live tab shows outside a live window: last gameweek's final
