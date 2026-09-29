@@ -466,6 +466,17 @@ def upcoming_gameweek(bootstrap: dict, now: datetime, fallback: int) -> int:
     return fallback
 
 
+def deadline_time_for_gw(bootstrap: dict, gw: int) -> str | None:
+    """The ISO deadline for a specific gameweek, or None if that gameweek
+    isn't in the bootstrap's events (shouldn't happen for the target
+    gameweek, but this is display data -- never worth failing the whole
+    forecast over). Feeds the deadline-day checklist's countdown."""
+    for event in bootstrap.get("events", []):
+        if event["id"] == gw:
+            return event.get("deadline_time")
+    return None
+
+
 def _player_ref(pid: int, pool_by_id: dict) -> dict:
     p = pool_by_id.get(pid, {})
     return {
@@ -1191,6 +1202,7 @@ def build_personal_forecast(
         "targetGameweek": target_gw,
         "rollingWindow": ROLLING_WINDOW,
         "overridesApplied": overrides_applied,
+        "deadlineTime": deadline_time_for_gw(bootstrap, target_gw),
         "squad": {
             "windowPoints": round(squad_window_total, 2),
             "players": players,

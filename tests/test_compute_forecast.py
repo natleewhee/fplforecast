@@ -440,6 +440,25 @@ def test_upcoming_gameweek_rolls_forward_and_falls_back():
     assert cf.upcoming_gameweek({"events": events}, later, fallback=9) == 9  # all in the past
 
 
+def test_deadline_time_for_gw_finds_the_matching_event():
+    events = [
+        {"id": 1, "deadline_time": "2026-08-21T17:30:00Z"},
+        {"id": 2, "deadline_time": "2026-08-28T17:30:00Z"},
+    ]
+    assert cf.deadline_time_for_gw({"events": events}, 2) == "2026-08-28T17:30:00Z"
+    assert cf.deadline_time_for_gw({"events": events}, 99) is None
+
+
+def test_forecast_carries_the_target_gameweeks_deadline(forecast):
+    # Deadline-day checklist's countdown -- must always be the *target*
+    # gameweek's deadline, not the based-on one.
+    picks_gw, _, _ = cf.load_latest_picks()
+    target_gw = picks_gw + 1
+    bootstrap = cf.load_bootstrap()
+    expected = next(e["deadline_time"] for e in bootstrap["events"] if e["id"] == target_gw)
+    assert forecast["deadlineTime"] == expected
+
+
 def test_team_id_comes_from_the_environment(monkeypatch):
     import importlib
 
