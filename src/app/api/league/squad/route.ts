@@ -10,7 +10,7 @@ import {
   type FplLive,
   type FplPicks,
 } from "@/lib/liveBlend";
-import { OWNER_TEAM_ID, resolveTeamId } from "@/lib/teamId";
+import { OWNER_TEAM_ID, resolveTeamIdFromRequest } from "@/lib/teamId";
 
 const FPL = "https://fantasy.premierleague.com/api";
 
@@ -75,7 +75,7 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: "entryId must be a positive integer" }, { status: 400 });
     }
 
-    const teamId = resolveTeamId(request.cookies);
+    const teamId = resolveTeamIdFromRequest(request);
     let forecast: Forecast | null;
     if (teamId === OWNER_TEAM_ID) {
       forecast = loadLatestForecast();

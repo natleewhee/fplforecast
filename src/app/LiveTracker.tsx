@@ -116,7 +116,17 @@ function hhmm(iso: string | null): string {
 
 type Polls = { cur: LivePayload | null; prev: LivePayload | null };
 
-export default function LiveTracker({ lastGameweek }: { lastGameweek: GameweekReview | null }) {
+export default function LiveTracker({
+  lastGameweek,
+  teamId,
+}: {
+  lastGameweek: GameweekReview | null;
+  // Set only while viewing a shared link that differs from the saved
+  // cookie (AppShell's isViewingSharedLink) -- passed through explicitly
+  // so this tab follows the URL's team, not whatever's saved, per the
+  // experience-roadmap plan's Phase 2 "Done when" list.
+  teamId?: string | null;
+}) {
   // Keep the last two polls: `prev` feeds off-pitch inference (frozen minutes).
   const [polls, setPolls] = useState<Polls>({ cur: null, prev: null });
   const [now, setNow] = useState<number>(() => Date.now());
@@ -126,7 +136,8 @@ export default function LiveTracker({ lastGameweek }: { lastGameweek: GameweekRe
 
   const tick = useCallback(async () => {
     try {
-      const res = await fetch("/api/live", { cache: "no-store" });
+      const qs = teamId ? `?teamId=${teamId}` : "";
+      const res = await fetch(`/api/live${qs}`, { cache: "no-store" });
       const json = await res.json();
       if (!res.ok) throw new Error(json.error || `HTTP ${res.status}`);
       setPolls((p) => ({ cur: json as LivePayload, prev: p.cur }));
@@ -138,7 +149,7 @@ export default function LiveTracker({ lastGameweek }: { lastGameweek: GameweekRe
       setLoading(false);
       setNow(Date.now());
     }
-  }, []);
+  }, [teamId]);
 
   useEffect(() => {
     // Deferred one tick so the first poll's setState lands after mount, not
