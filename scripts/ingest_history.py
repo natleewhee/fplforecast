@@ -52,6 +52,10 @@ GW_RICH_COLUMNS = {
     "expected_goals": "expected_goals",
     "expected_assists": "expected_assists",
     "defensive_contribution": "defensive_contribution",
+    "saves": "saves",
+    "bonus": "bonus",
+    "yellow_cards": "yellow_cards",
+    "goals_conceded": "goals_conceded",
 }
 
 # FPL's own per-team strength ratings, home/away and attack/defence split
@@ -80,6 +84,10 @@ _INT_FIELDS = {
     "team_h_score",
     "team_a_score",
     "id",
+    "saves",
+    "bonus",
+    "yellow_cards",
+    "goals_conceded",
     *TEAM_STRENGTH_FIELDS,
 }
 _FLOAT_FIELDS = {"ict_index", "expected_goals", "expected_assists", "defensive_contribution"}
@@ -206,15 +214,19 @@ def _atomic_write(path: Path, text: str) -> None:
     tmp.replace(path)
 
 
-def write_season(season: str, rows_by_gw: dict[int, list[dict]], history_dir: Path) -> tuple[int, int]:
+def write_season(
+    season: str, rows_by_gw: dict[int, list[dict]], history_dir: Path, *, rewrite: bool = False
+) -> tuple[int, int]:
     """Write one file per gameweek. A gameweek already on disk is left alone
-    (mirrors snapshot.py's finished-gameweek rule). Returns (written, skipped)."""
+    (mirrors snapshot.py's finished-gameweek rule) unless ``rewrite`` -- needed
+    once when a new column is added, or coverage.json would list a field the
+    existing files don't carry. Returns (written, skipped)."""
     season_dir = history_dir / season
     season_dir.mkdir(parents=True, exist_ok=True)
     written = skipped = 0
     for gw, rows in sorted(rows_by_gw.items()):
         path = season_dir / f"gw{gw}.json"
-        if path.exists():
+        if path.exists() and not rewrite:
             skipped += 1
             continue
         payload = {"season": season, "gw": gw, "rows": rows}
@@ -235,7 +247,8 @@ def write_teams(season: str, teams: list[dict], history_dir: Path) -> None:
     _atomic_write(path, json.dumps({"season": season, "teams": teams}, indent=2, sort_keys=True))
 
 
-def main() -> int:
+def main(argv: list[str] | None = None) -> int:
+    rewrite = "--rewrite" in (sys.argv[1:] if argv is None else argv)
     HISTORY_DIR.mkdir(parents=True, exist_ok=True)
 
     # Phase 1: fetch + normalise every season into memory. A season whose CSV
@@ -285,7 +298,7 @@ def main() -> int:
     # Phase 2: write.
     coverage: dict[str, list[str]] = {}
     for season, rows_by_gw, fields_present, fixtures, teams in prepared:
-        written, skipped = write_season(season, rows_by_gw, HISTORY_DIR)
+        written, skipped = write_season(season, rows_by_gw, HISTORY_DIR, rewrite=rewrite)
         if fixtures:
             write_fixtures(season, fixtures, HISTORY_DIR)
         if teams:

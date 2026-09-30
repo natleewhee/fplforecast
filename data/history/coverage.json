@@ -1,45 +1,57 @@
 {
   "2023-24": [
+    "bonus",
     "element_type",
     "expected_assists",
     "expected_goals",
+    "goals_conceded",
     "historical_id",
     "ict_index",
     "kickoff_time",
     "minutes",
     "opponent_team",
+    "saves",
     "team",
     "total_points",
     "was_home",
-    "web_name"
+    "web_name",
+    "yellow_cards"
   ],
   "2024-25": [
+    "bonus",
     "element_type",
     "expected_assists",
     "expected_goals",
+    "goals_conceded",
     "historical_id",
     "ict_index",
     "kickoff_time",
     "minutes",
     "opponent_team",
+    "saves",
     "team",
     "total_points",
     "was_home",
-    "web_name"
+    "web_name",
+    "yellow_cards"
   ],
   "2025-26": [
+    "bonus",
     "defensive_contribution",
     "element_type",
     "expected_assists",
     "expected_goals",
+    "goals_conceded",
     "historical_id",
     "ict_index",
     "kickoff_time",
     "minutes",
     "opponent_team",
+    "saves",
     "team",
     "total_points",
     "was_home",
-    "web_name"
+    "web_name",
+    "yellow_cards"
   ]
 }
