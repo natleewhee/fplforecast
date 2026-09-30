@@ -1,8 +1,8 @@
 # Backtest fidelity: make the backtest measure the model that's actually live
 
-Status: planned, not started. Written 2026-09-30.
+Status: in progress. Written 2026-09-30. Phase 1 revised the same day (see below).
 Follows from: [[2026-09-30-xp-model-residual-analysis]].
-Build order: 1 → 2 → 3 → 4. Phases 1–3 are each their own PR; Phase 4 is analysis, not code.
+Build order: 1 → 2 → 3 → 4. Each phase is its own PR.
 
 ## Why
 
@@ -12,43 +12,69 @@ the same model the app runs. Three gaps:
 
 | # | Gap | Effect in backtest | Affects live app? |
 |---|---|---|---|
-| A | `_adapt_history()` drops `defensive_contribution` | DC component always 0 | No (live reads event-live) |
+| ~~A~~ | ~~`_adapt_history()` drops `defensive_contribution`~~ **Not a real gap**: the backtest always passed it; my ad hoc analysis script didn't | n/a | n/a |
 | B | Archive never ingests `saves`, `bonus`, `yellow_cards`, `goals_conceded` | Saves, bonus and cards components always 0 | Partly: no prior-season priors for these rates |
 | C | Backtest uses `team_strength_table` (FPL admin ratings); live uses `team_goal_rate_table` (real goals) | Opponent-strength effect measured with the coarser, stale signal | No |
 
-Until all three are fixed, no backtest number (including the "model beats
+Until B and C are fixed, no backtest number (including the "model beats
 baseline" edge) can be trusted as a read on the live model.
 
 ---
 
-## Phase 1: Pass `defensive_contribution` through the backtest (gap A)
+## Phase 1: A residual analysis that can't drift from the backtest
 
 ### Problem
-`engine/backtest.py:_adapt_history()` (lines 79–97) builds a synthetic
-event-live payload with only `total_points`, `minutes`, `ict_index`,
-`expected_goals`, `expected_assists`. `engine/features.py:_LIVE_RATE_STATS`
-reads `dc90` from `stats["defensive_contribution"]`, finds nothing, and
-returns 0. The 2025-26 archive does carry the field (`coverage.json`).
+The first residual analysis copied the backtest's replay loop by hand, left
+out `defensive_contribution`, and reported a bug that isn't there (gap A
+above). Any analysis that re-implements the replay can drift the same way.
 
 ### Approach
-Add `defensive_contribution` to the stats dict. A missing column should
-stay absent (`None`), not become 0, so seasons without it (2023-24,
-2024-25) fall back to the position prior exactly as live does.
+- Split `engine/backtest.py:replay()` into `replay_gameweeks()`, a generator
+  yielding each leak-safe gameweek (feature frame, model context, actual
+  rows), and a thin `replay()` that scores squads from it.
+- Add `scripts/residual_analysis.py`, built on `replay_gameweeks()`, that
+  reports per-player residuals by position, season, component (when played)
+  and, for attackers, by the fixture's projected team goals (`lambdaFor`).
+- Phase 3 then only has to change the team-strength table in one place.
 
 ### Files
-- `engine/backtest.py`: add the field to `_adapt_history()`'s stats dict.
-- `tests/test_backtest.py`: a test that a 2025-26-shaped row with
-  `defensive_contribution` yields a non-zero `dc90` in the feature frame, and
-  a row without the column yields the prior, not 0.
-
-### Watch-outs
-- Before the 2025-26 rule, DC scored nothing. Don't let a zero-DC season
-  drag the blended `dc90` down for a season where it scores; check how
-  `_rate_features` blends across the window.
+- `engine/backtest.py`: `ReplayedGameweek`, `replay_gameweeks()`; `replay()` uses it.
+- `scripts/residual_analysis.py`: new.
+- `tests/test_backtest.py`, `tests/test_residual_analysis.py`.
 
 ### Done when
-- [ ] Backtest DEF/MID `defensiveContribution` component is non-zero for 2025-26
-- [ ] `pytest` passes
+- [x] `replay()` output identical before and after the refactor (checked on the full archive)
+- [x] Analysis runs on the real archive and reports the baseline below
+- [x] `pytest` passes
+
+### Phase 1 results (baseline for Phases 2–4)
+
+| Position | n | bias | MAE |
+|---|---|---|---|
+| GKP | 9,229 | **+0.277** | 0.575 |
+| DEF | 27,106 | −0.056 | 1.099 |
+| MID | 36,524 | −0.135 | 1.058 |
+| FWD | 9,650 | −0.021 | 1.127 |
+
+Components when played: `saves`, `bonus` and `cards` are **0.000 for every
+position** (gap B). `defensiveContribution` is non-zero (DEF 0.38, MID 0.28).
+
+Attackers (MID/FWD, played) by the fixture's projected team goals:
+
+| Tercile | avg λ for | bias | MAE |
+|---|---|---|---|
+| Low | 1.42 | +0.03 | 1.78 |
+| Mid | 1.56 | +0.28 | 2.04 |
+| High | 1.71 | **+0.50** | 2.19 |
+
+Attackers are increasingly underprojected as the fixture gets better. The
+opponent-strength bump is too weak in the backtest, consistent with gap C
+(the admin-rating table compresses elite vs weak teams). Phase 3 tests this.
+
+New lead, not acted on: MID is overprojected (−0.135), and 2025-26 overall
+is −0.219, the season DC scores. A possible cause is
+`engine/model.py`'s DC term, `min(1, dc90 / threshold)`, which treats a rate
+ratio as a probability. Revisit in Phase 4.
 
 ---
 
@@ -71,7 +97,7 @@ all averaged exactly 0.000.
    existing R3 rule: only kept for seasons whose CSV has the column.
 3. Re-run `scripts/ingest_history.py`, commit the regenerated
    `data/history/` and `coverage.json`.
-4. Pass all four through `_adapt_history()` (same edit site as Phase 1).
+4. Pass all four through `_adapt_history()`.
 
 ### Files
 - `scripts/ingest_history.py`: four new rich columns.
@@ -117,9 +143,9 @@ Fixture rows already carry `kickoff_time`, `finished` and scores, so the
 same leakage rule as `_frame_before` applies.
 
 ### Files
-- `engine/backtest.py`: `replay()` takes the other seasons' fixtures/teams;
-  builds the goal-rate table inside the gameweek loop from a leak-filtered
-  fixture list.
+- `engine/backtest.py`: `replay_gameweeks()` (Phase 1) takes the other
+  seasons' fixtures/teams and builds the goal-rate table inside its gameweek
+  loop from a leak-filtered fixture list.
 - `scripts/backtest.py`: load all seasons' fixtures and teams once, pass
   them in (reuse the loaders in `compute_forecast.py`).
 - `tests/test_backtest.py`: a leakage test — a fixture kicking off after
@@ -156,8 +182,8 @@ compare:
 | Does the model-vs-baseline edge in `scripts/backtest.py` change? | Update the headline claim wherever it's shown | Note it's now confirmed on a faithful backtest |
 | Do attackers vs leaky defences show a smaller residual than under the old table? | Evidence the goal-rate table earns its place | Look at `TEAM_GOALS_SHRINKAGE_MATCHES` |
 
-Commit the analysis script this time (`scripts/residual_analysis.py`) so
-the comparison can be repeated after any future model change.
+Use `scripts/residual_analysis.py` (Phase 1) and compare against the
+Phase 1 baseline.
 
 Only after this phase: decide whether to add `saves90`/`bonus90`/
 `yellow90` to `_ARCHIVE_RATE_NAMES` (a live-model change, see Phase 2
@@ -176,8 +202,6 @@ watch-outs).
 - **Out of scope:** changing any model formula, weight or constant. That
   waits for Phase 4's evidence.
 
-## Open decisions for Nat
-1. Phase 2 regenerates the whole history archive (large data commit). OK
-   to commit it, or keep the archive regeneration out of git?
-2. Phase 4: commit the residual-analysis script as a permanent tool, or
-   keep it ad hoc?
+## Decisions (Nat, 2026-09-30)
+1. Phase 2: **commit** the regenerated history archive, in its own commit.
+2. **Keep** the residual-analysis script in the repo as a permanent tool.

@@ -14,6 +14,9 @@ function is told which gameweek it is replaying or that it is a backtest.
 
 from __future__ import annotations
 
+from collections.abc import Iterator
+from dataclasses import dataclass
+
 import pandas as pd
 
 from engine import baseline, model
@@ -131,15 +134,28 @@ def _frame_before(season_rows: pd.DataFrame, deadline: str) -> pd.DataFrame:
     return season_rows[season_rows["kickoff_time"] < deadline]
 
 
-def replay(
+@dataclass(frozen=True)
+class ReplayedGameweek:
+    """One replayed gameweek: the leak-safe feature frame and model context the
+    projections are built from, plus that gameweek's actual archive rows."""
+
+    gw: int
+    frame: pd.DataFrame
+    ctx: ModelContext
+    rows: pd.DataFrame
+    id_to_short: dict
+
+
+def replay_gameweeks(
     season: str,
     history_frame: pd.DataFrame,
     fixtures: list[dict],
     teams: list[dict],
     rolling_window: int = ROLLING_WINDOW,
-) -> dict:
-    """Replay one season. Returns per-season model/baseline XI points, their
-    delta, and the number of gameweeks scored."""
+) -> Iterator[ReplayedGameweek]:
+    """Yield every replayable gameweek of one season under the kickoff-time
+    leakage guard. Shared by ``replay`` and ``scripts/residual_analysis.py`` so
+    the per-player analysis can never drift from what the backtest scores."""
     id_to_short = {t["id"]: t.get("short_name") for t in teams}
     name_to_id = {t.get("name"): t["id"] for t in teams}
     strength = team_strength_table({season: teams}) if teams else None
@@ -161,10 +177,7 @@ def replay(
         .dropna(subset=["kickoff_time"])
     )
     if season_rows.empty:
-        return {"season": season, "modelPoints": 0.0, "baselinePoints": 0.0, "delta": 0.0, "gameweeks": 0}
-
-    model_total = baseline_total = 0.0
-    scored = 0
+        return
 
     for gw in sorted(season_rows["gw"].unique()):
         deadline = season_rows.loc[season_rows["gw"] == gw, "kickoff_time"].min()
@@ -187,28 +200,44 @@ def replay(
             teams_by_id=id_to_short,
             team_strength=strength,
         )
+        yield ReplayedGameweek(
+            gw=int(gw),
+            frame=frame,
+            ctx=ctx,
+            rows=season_rows[season_rows["gw"] == gw],
+            id_to_short=id_to_short,
+        )
 
+
+def replay(
+    season: str,
+    history_frame: pd.DataFrame,
+    fixtures: list[dict],
+    teams: list[dict],
+    rolling_window: int = ROLLING_WINDOW,
+) -> dict:
+    """Replay one season. Returns per-season model/baseline XI points, their
+    delta, and the number of gameweeks scored."""
+    model_total = baseline_total = 0.0
+    scored = 0
+
+    for rg in replay_gameweeks(season, history_frame, fixtures, teams, rolling_window):
         model_proj: list[dict] = []
         base_proj: list[dict] = []
-        for pid, row in frame.iterrows():
+        for pid, row in rg.frame.iterrows():
             b = baseline.project(row)
-            m = model.project(row, gw, ctx)
+            m = model.project(row, rg.gw, rg.ctx)
             if isinstance(b, ColdStart) or isinstance(m, ColdStart):
                 continue
             meta = {
                 "id": int(pid),
                 "element_type": int(row["element_type"]),
-                "team": id_to_short.get(row["team"], row["team"]),
+                "team": rg.id_to_short.get(row["team"], row["team"]),
             }
             model_proj.append({**meta, "points": float(m)})
             base_proj.append({**meta, "points": float(b)})
 
-        actuals = dict(
-            zip(
-                season_rows.loc[season_rows["gw"] == gw, "historical_id"],
-                season_rows.loc[season_rows["gw"] == gw, "total_points"],
-            )
-        )
+        actuals = dict(zip(rg.rows["historical_id"], rg.rows["total_points"]))
         model_total += xi_actual_points(select_squad(model_proj), actuals)
         baseline_total += xi_actual_points(select_squad(base_proj), actuals)
         scored += 1
