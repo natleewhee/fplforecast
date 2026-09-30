@@ -157,3 +157,16 @@ def test_load_history_over_the_committed_archive_classifies_known_players():
     promoted_id = 557  # Tzolis: in this season's bootstrap, no resolved history
     assert promoted_id not in {int(k) for k in resolved}
     assert isinstance(classify(promoted_id, resolved, archive.frame), ColdStart)
+
+
+def test_backtest_only_seasons_are_hidden_from_live_loads_but_not_the_backtest():
+    from engine.config import PRIOR_ONLY_SEASONS
+
+    live = load_history(DATA_DIR)
+    backtest = load_history(DATA_DIR, include_prior_only=True)
+    live_seasons = set(live.frame.index.get_level_values("season"))
+    backtest_seasons = set(backtest.frame.index.get_level_values("season"))
+
+    assert not live_seasons & set(PRIOR_ONLY_SEASONS)
+    assert not set(live.coverage) & set(PRIOR_ONLY_SEASONS)
+    assert set(PRIOR_ONLY_SEASONS) <= backtest_seasons

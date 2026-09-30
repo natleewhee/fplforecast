@@ -22,7 +22,7 @@ import pandas as pd
 from engine import baseline, model
 from engine.config import ROLLING_WINDOW
 from engine.features import build_feature_frame
-from engine.history import ColdStart
+from engine.history import ColdStart, archive_rates_for, links_by_name, season_rates
 from engine.model import ModelContext
 from engine.squad import best_xi
 from engine.team_goals import team_goal_rate_table
@@ -176,6 +176,17 @@ def _strength_at(
     return team_goal_rate_table(fixtures_by_season, teams_by_season)
 
 
+def _prior_season_rates(history_frame: pd.DataFrame, season: str) -> dict[int, dict]:
+    """The live model's prior-season rate slice for ``season``'s players: their
+    earlier-season rows, linked by name. Earlier seasons are complete before
+    ``season`` starts, so no per-gameweek filter is needed."""
+    links = links_by_name(history_frame, season)
+    if not links:
+        return {}
+    earlier = history_frame[history_frame.index.get_level_values("season") < season]
+    return archive_rates_for(links, season_rates(earlier))
+
+
 def replay_gameweeks(
     season: str,
     history_frame: pd.DataFrame,
@@ -213,6 +224,7 @@ def replay_gameweeks(
     )
     if season_rows.empty:
         return
+    prior_rates = _prior_season_rates(history_frame, season)
 
     for gw in sorted(season_rows["gw"].unique()):
         deadline = season_rows.loc[season_rows["gw"] == gw, "kickoff_time"].min()
@@ -223,7 +235,11 @@ def replay_gameweeks(
         players, live_history = _adapt_history(before, name_to_id)
         before_ids = set(before["historical_id"])
         frame = build_feature_frame(
-            players, live_history, lambda hid: hid not in before_ids, rolling_window
+            players,
+            live_history,
+            lambda hid: hid not in before_ids,
+            rolling_window,
+            archive_rates=prior_rates,
         )
         if frame.empty:
             continue
@@ -257,6 +273,7 @@ def replay(
     delta, and the number of gameweeks scored."""
     model_total = baseline_total = 0.0
     scored = 0
+    per_gw: list[dict] = []
 
     for rg in replay_gameweeks(
         season, history_frame, fixtures, teams, rolling_window, other_seasons=other_seasons
@@ -277,8 +294,25 @@ def replay(
             base_proj.append({**meta, "points": float(b)})
 
         actuals = dict(zip(rg.rows["historical_id"], rg.rows["total_points"]))
-        model_total += xi_actual_points(select_squad(model_proj), actuals)
-        baseline_total += xi_actual_points(select_squad(base_proj), actuals)
+        model_pts = xi_actual_points(select_squad(model_proj), actuals)
+        baseline_pts = xi_actual_points(select_squad(base_proj), actuals)
+        # every projected player's squared error: far less noisy than XI points,
+        # which hinge on eleven discrete picks
+        errors = [
+            (actuals[p["id"]] - p["points"]) ** 2
+            for p in model_proj
+            if actuals.get(p["id"]) is not None
+        ]
+        per_gw.append(
+            {
+                "gw": rg.gw,
+                "model": model_pts,
+                "baseline": baseline_pts,
+                "mse": sum(errors) / len(errors) if errors else None,
+            }
+        )
+        model_total += model_pts
+        baseline_total += baseline_pts
         scored += 1
 
     return {
@@ -287,6 +321,7 @@ def replay(
         "baselinePoints": round(baseline_total, 1),
         "delta": round(model_total - baseline_total, 1),
         "gameweeks": scored,
+        "perGw": per_gw,
     }
 
 

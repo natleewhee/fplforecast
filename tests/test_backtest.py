@@ -137,7 +137,7 @@ def test_backtest_script_writes_a_report_and_exits_zero(tmp_path, monkeypatch):
     class _Archive:
         frame = pd.DataFrame([{"x": 1}])  # non-empty
 
-    monkeypatch.setattr(bt_script, "load_history", lambda _d: _Archive())
+    monkeypatch.setattr(bt_script, "load_history", lambda _d, **_k: _Archive())
     monkeypatch.setattr(
         bt_script,
         "replay",
@@ -150,7 +150,7 @@ def test_backtest_script_writes_a_report_and_exits_zero(tmp_path, monkeypatch):
         },
     )
 
-    assert bt_script.main() == 0
+    assert bt_script.main([]) == 0
     reports = list((tmp_path / "backtest").glob("*.json"))
     assert len(reports) == 1
     report = json.loads(reports[0].read_text())
@@ -237,3 +237,54 @@ def test_replay_uses_the_goal_rate_table_for_opponent_strength():
 
     assert rg.ctx.team_strength is not None
     assert set(rg.ctx.team_strength) <= {"ALP", "BET"}
+
+
+def test_compare_pairs_gameweeks_and_splits_the_holdout():
+    def report(points_by_season):
+        return {"seasons": {s: {"perGw": [{"gw": gw, "model": p, "baseline": 0} for gw, p in pts]}
+                            for s, pts in points_by_season.items()}}
+
+    old = report({"2023-24": [(1, 50), (2, 50)], "2024-25": [(1, 50)], "2025-26": [(1, 50), (30, 50)]})
+    new = report({"2023-24": [(1, 52), (2, 54)], "2024-25": [(1, 53)], "2025-26": [(1, 49), (30, 55)]})
+    out = bt_script.compare(old, new)
+
+    assert out["tune"]["xiPoints"]["n"] == 3 and out["tune"]["xiPoints"]["mean"] == pytest.approx(3.0)
+    assert out["holdout"]["xiPoints"]["mean"] == pytest.approx(2.0)
+    assert out["holdout GW1-19"]["xiPoints"]["mean"] == pytest.approx(-1.0)
+    assert out["holdout GW20+"]["xiPoints"]["mean"] == pytest.approx(5.0)
+    assert out["tune"]["mse"]["n"] == 0  # no mse in these reports -> nothing paired
+
+
+def test_replay_links_players_to_earlier_seasons_by_name_for_prior_rates():
+    from engine.backtest import _prior_season_rates
+
+    prior = _season_frame("2023-24").reset_index()
+    prior["web_name"] = prior["historical_id"].map(lambda h: f"Player {h}")
+    prior["expected_goals"] = 0.9
+    current = _season_frame("2024-25").reset_index()
+    # same people, ids shuffled -- linking must go by name, not id
+    current["web_name"] = current["historical_id"].map(lambda h: f"Player {21 - h}")
+    frame = pd.concat([prior, current]).set_index(["season", "gw", "historical_id"])
+
+    rates = _prior_season_rates(frame, "2024-25")
+
+    played_2023 = {h for h, m in zip(prior["historical_id"], prior["minutes"]) if m > 0}
+    assert rates, "expected linked prior-season rates"
+    assert set(rates) == {21 - h for h in played_2023}
+    assert all(r["xg90"] > 0 for r in rates.values())
+    assert _prior_season_rates(frame, "2023-24") == {}  # nothing earlier than the first season
+
+
+def test_ambiguous_names_are_never_linked():
+    from engine.history import links_by_name
+
+    rows = [
+        {"season": "S1", "gw": 1, "historical_id": 1, "web_name": "Danny Ward"},
+        {"season": "S1", "gw": 1, "historical_id": 2, "web_name": "Danny Ward"},
+        {"season": "S2", "gw": 1, "historical_id": 9, "web_name": "Danny Ward"},
+        {"season": "S1", "gw": 1, "historical_id": 3, "web_name": "Émile Smith Rowe"},
+        {"season": "S2", "gw": 1, "historical_id": 7, "web_name": "Emile Smith Rowe"},
+    ]
+    frame = pd.DataFrame(rows).set_index(["season", "gw", "historical_id"])
+
+    assert links_by_name(frame, "S2") == {7: {"S1": 3}}

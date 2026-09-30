@@ -25,12 +25,13 @@ from engine.config import (
     PAR_BUFFER_PROVISIONAL_POINTS,
     PAR_MARGIN_MIN_GAMEWEEKS,
     POOL_HORIZON_WEEKS,
+    PRIOR_ONLY_SEASONS,
     RANK_CALIBRATION_MIN_GAMEWEEKS,
     ROLLING_WINDOW,
     SETTLE_GAMEWEEK,
 )
 from engine.features import UNAVAILABLE_STATUSES, POSITIONS, build_feature_frame, team_fixtures
-from engine.history import ColdStart, classify, load_history
+from engine.history import ColdStart, archive_rates_for, classify, load_history, season_rates
 from engine.model import ModelContext
 from engine.optimise import (
     PlanWeek,
@@ -97,6 +98,8 @@ def load_team_strength_seasons() -> dict[str, list[dict]]:
     out: dict[str, list[dict]] = {}
     for teams_file in sorted((DATA_DIR / "history").glob("*/teams.json")):
         payload = load_json(teams_file)
+        if payload["season"] in PRIOR_ONLY_SEASONS:
+            continue
         out[payload["season"]] = payload.get("teams", [])
     return out
 
@@ -108,6 +111,8 @@ def load_history_fixtures_seasons() -> dict[str, list[dict]]:
     out: dict[str, list[dict]] = {}
     for fixtures_file in sorted((DATA_DIR / "history").glob("*/fixtures.json")):
         payload = load_json(fixtures_file)
+        if payload["season"] in PRIOR_ONLY_SEASONS:
+            continue
         out[payload["season"]] = payload.get("fixtures", [])
     return out
 
@@ -420,45 +425,10 @@ def effective_gap(target_gw: int) -> float:
 
 def archive_rates(resolved_map: dict, history_frame) -> dict[int, dict]:
     """``{current_player_id: {xg90, xa90, dc90}}`` from prior seasons -- the
-    deepest slice of the model's per-90 rate blend. Rates are per (season,
-    historical id) -- FPL reuses element ids for different players each
-    season -- averaged over the seasons a current player resolves to."""
-    if history_frame is None or getattr(history_frame, "empty", True):
-        return {}
-
-    df = history_frame.reset_index()
-    by_hist: dict[tuple[str, int], dict] = {}
-    for (season, hist_id), sub in df.groupby(["season", "historical_id"]):
-        minutes = float(sub["minutes"].sum())
-        if minutes <= 0:
-            continue
-        per90 = minutes / 90.0
-        rec = {
-            "xg90": float(sub["expected_goals"].sum()) / per90,
-            "xa90": float(sub["expected_assists"].sum()) / per90,
-        }
-        if "defensive_contribution" in sub:
-            dc = sub[sub["defensive_contribution"].notna() & (sub["minutes"] > 0)]
-            if not dc.empty and dc["minutes"].sum() > 0:
-                rec["dc90"] = float(dc["defensive_contribution"].sum()) / (dc["minutes"].sum() / 90.0)
-        by_hist[(season, int(hist_id))] = rec
-
-    out: dict[int, dict] = {}
-    for current_id, entry in resolved_map.items():
-        recs = [
-            by_hist[(season, h)]
-            for season, h in entry.get("bySeason", {}).items()
-            if (season, h) in by_hist
-        ]
-        if not recs:
-            continue
-        agg: dict[str, float] = {}
-        for key in ("xg90", "xa90", "dc90"):
-            vals = [r[key] for r in recs if key in r]
-            if vals:
-                agg[key] = sum(vals) / len(vals)
-        out[int(current_id)] = agg
-    return out
+    deepest slice of the model's per-90 rate blend. See
+    ``engine.history.season_rates`` / ``archive_rates_for``."""
+    links = {cid: entry.get("bySeason", {}) for cid, entry in resolved_map.items()}
+    return archive_rates_for(links, season_rates(history_frame))
 
 
 def upcoming_gameweek(bootstrap: dict, now: datetime, fallback: int) -> int:

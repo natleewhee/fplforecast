@@ -26,7 +26,7 @@ import urllib.request
 from io import StringIO
 from pathlib import Path
 
-from engine.config import ARCHIVE_SEASONS
+from engine.config import ARCHIVE_SEASONS, PRIOR_ONLY_SEASONS
 
 DATA_DIR = Path(__file__).resolve().parent.parent / "data"
 HISTORY_DIR = DATA_DIR / "history"
@@ -257,7 +257,7 @@ def main(argv: list[str] | None = None) -> int:
     prepared: list[tuple[str, dict[int, list[dict]], list[str], list[dict], list[dict]]] = []
     total_read = total_normalised = 0
 
-    for season in ARCHIVE_SEASONS:
+    for season in [*ARCHIVE_SEASONS, *PRIOR_ONLY_SEASONS]:
         print(f"{season}: fetching merged_gw.csv ...")
         try:
             gw_text = fetch_text(f"{VAASTAV_BASE}/{season}/gws/merged_gw.csv")

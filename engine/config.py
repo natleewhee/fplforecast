@@ -24,6 +24,9 @@ POOL_HORIZON_WEEKS = 7
 # Completed seasons the multi-season archive and backtest cover -- the same list
 # as scripts/resolve_entities.py's PAST_SEASONS. Inherits KTD3.
 ARCHIVE_SEASONS = ["2025-26", "2024-25", "2023-24"]
+# Ingested for the backtest only: prior-season rates for the earliest replayed
+# season. Skipped by every live loader so it never changes a live forecast.
+PRIOR_ONLY_SEASONS = ["2022-23"]
 
 # Pooled model-minus-baseline squad-points delta, per gameweek per squad, at or
 # above which the backtest flags the difference as meaningful. Reported, never

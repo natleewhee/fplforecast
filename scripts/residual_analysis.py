@@ -7,7 +7,7 @@ season, component, and fixture attacking outlook. Uses
 ``engine.backtest.replay_gameweeks`` so it measures exactly what the backtest
 replays. Run before and after a model change and compare.
 
-    python -m scripts.residual_analysis [--out path.json]
+    python -m scripts.residual_analysis [--seasons a,b] [--out path.json]
 """
 
 from __future__ import annotations
@@ -121,16 +121,17 @@ def summarise(records: list[dict]) -> dict:
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("--out", type=Path, help="write the summary JSON here")
+    parser.add_argument("--seasons", help="comma-separated seasons to replay (default: all)")
     args = parser.parse_args(argv)
 
-    archive = load_history(DATA_DIR)
+    archive = load_history(DATA_DIR, include_prior_only=True)
     if archive.frame.empty:
         print("No data/history/ archive — run scripts/ingest_history.py first", file=sys.stderr)
         return 0
 
     all_seasons = load_seasons()
     records: list[dict] = []
-    for season in ARCHIVE_SEASONS:
+    for season in args.seasons.split(",") if args.seasons else ARCHIVE_SEASONS:
         records += player_records(
             season,
             archive.frame,

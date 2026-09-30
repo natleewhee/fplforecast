@@ -13,11 +13,14 @@ A player with no resolvable history is a *marker*, never a number (KTD11):
 from __future__ import annotations
 
 import json
+import unicodedata
 from dataclasses import dataclass
 from pathlib import Path
 
 import numpy as np
 import pandas as pd
+
+from engine.config import PRIOR_ONLY_SEASONS
 
 INDEX_COLUMNS = ["season", "gw", "historical_id"]
 
@@ -56,13 +59,17 @@ class HistoryArchive:
         return list(self.coverage.get(season, []))
 
 
-def load_history(data_dir: str | Path) -> HistoryArchive:
+def load_history(data_dir: str | Path, *, include_prior_only: bool = False) -> HistoryArchive:
     """Read every ``data/history/<season>/gwNN.json`` into one frame indexed by
-    ``(season, gw, historical_id)``, plus ``coverage.json``."""
+    ``(season, gw, historical_id)``, plus ``coverage.json``. Seasons in
+    ``PRIOR_ONLY_SEASONS`` are skipped unless ``include_prior_only`` (the
+    backtest)."""
     history_dir = Path(data_dir) / "history"
 
     records: list[dict] = []
     for gw_file in sorted(history_dir.glob("*/gw*.json")):
+        if not include_prior_only and gw_file.parent.name in PRIOR_ONLY_SEASONS:
+            continue
         records.extend(json.loads(gw_file.read_text())["rows"])
 
     frame = pd.DataFrame.from_records(records)
@@ -71,6 +78,8 @@ def load_history(data_dir: str | Path) -> HistoryArchive:
 
     coverage_path = history_dir / "coverage.json"
     coverage = json.loads(coverage_path.read_text()) if coverage_path.exists() else {}
+    if not include_prior_only:
+        coverage = {k: v for k, v in coverage.items() if k not in PRIOR_ONLY_SEASONS}
 
     return HistoryArchive(frame=frame, coverage=coverage)
 
@@ -151,3 +160,79 @@ def assert_match_rate(
             f"likely a wrong-column join; refusing to mislabel players as cold-start"
         )
     return rate
+
+
+def season_rates(frame: pd.DataFrame) -> dict[tuple[str, int], dict]:
+    """Per-90 rates for every ``(season, historical_id)`` in the archive. Keyed
+    by season too: FPL reuses element ids for different players each season."""
+    if frame is None or frame.empty:
+        return {}
+    df = frame.reset_index()
+    out: dict[tuple[str, int], dict] = {}
+    for (season, hist_id), sub in df.groupby(["season", "historical_id"]):
+        minutes = float(sub["minutes"].sum())
+        if minutes <= 0:
+            continue
+        per90 = minutes / 90.0
+        rec = {
+            "xg90": float(sub["expected_goals"].sum()) / per90,
+            "xa90": float(sub["expected_assists"].sum()) / per90,
+        }
+        if "defensive_contribution" in sub:
+            dc = sub[sub["defensive_contribution"].notna() & (sub["minutes"] > 0)]
+            if not dc.empty and dc["minutes"].sum() > 0:
+                rec["dc90"] = float(dc["defensive_contribution"].sum()) / (dc["minutes"].sum() / 90.0)
+        out[(season, int(hist_id))] = rec
+    return out
+
+
+ARCHIVE_RATE_KEYS = ("xg90", "xa90", "dc90")
+
+
+def archive_rates_for(links: dict, rates: dict[tuple[str, int], dict]) -> dict[int, dict]:
+    """``{player_id: {rate: value}}``: each player's per-season rates, averaged
+    over the seasons in ``links[player_id]`` (``{season: historical_id}``)."""
+    out: dict[int, dict] = {}
+    for player_id, by_season in links.items():
+        recs = [rates[(s, h)] for s, h in by_season.items() if (s, h) in rates]
+        if not recs:
+            continue
+        agg = {}
+        for key in ARCHIVE_RATE_KEYS:
+            vals = [r[key] for r in recs if key in r]
+            if vals:
+                agg[key] = sum(vals) / len(vals)
+        out[int(player_id)] = agg
+    return out
+
+
+def normalise_name(name: str | None) -> str:
+    text = unicodedata.normalize("NFKD", name or "")
+    text = "".join(c for c in text if not unicodedata.combining(c))
+    return " ".join(text.lower().split())
+
+
+def links_by_name(frame: pd.DataFrame, season: str) -> dict[int, dict[str, int]]:
+    """For each player in ``season``, their ids in every *earlier* season,
+    matched by normalised full name (the archive's ``web_name``). A name held by
+    two players within one season is ambiguous and never matched, as in
+    ``scripts/resolve_entities.py``."""
+    if frame is None or frame.empty or "web_name" not in frame.columns:
+        return {}
+    df = frame.reset_index()[["season", "historical_id", "web_name"]].drop_duplicates(
+        ["season", "historical_id"]
+    )
+    df = df[df["season"] <= season]
+    df["key"] = df["web_name"].map(normalise_name)
+    unique = df.groupby(["season", "key"])["historical_id"].transform("nunique") == 1
+    df = df[unique & (df["key"] != "")]
+
+    by_season = {s: dict(zip(g["key"], g["historical_id"])) for s, g in df.groupby("season")}
+    current = by_season.get(season, {})
+    earlier = {s: m for s, m in by_season.items() if s < season}
+    links: dict[int, dict[str, int]] = {}
+    for key, hid in current.items():
+        found = {s: int(m[key]) for s, m in earlier.items() if key in m}
+        if found:
+            links[int(hid)] = found
+    return links
