@@ -1,7 +1,13 @@
 # Experience roadmap: xP breakdown, shareable links, deadline checklist
 
-Status: planned, not started. Written 2026-09-28.
+Status: **done**. Written 2026-09-28, all three phases shipped by 2026-09-29.
 Build order: 1 → 2 → 3. Each phase is its own PR and ships on its own.
+
+| Phase | PR | Merged |
+|---|---|---|
+| 1. xP breakdown on tap | [#57](https://github.com/natleewhee/fplforecast/pull/57) | 2026-09-29 |
+| 2. Shareable team links | [#58](https://github.com/natleewhee/fplforecast/pull/58) | 2026-09-29 |
+| 3. Deadline-day checklist | [#59](https://github.com/natleewhee/fplforecast/pull/59) | 2026-09-29 |
 
 ## Why these three
 
@@ -46,10 +52,10 @@ No backend change. The data is already in `data/forecast/gwN.json`.
 - The sheet must close on Escape, on a backdrop tap and via a close button, and return focus to the token (see the Dropdown focus fix from the polish pass).
 
 ### Done when
-- [ ] Tapping any XI or bench player opens the sheet; the component rows plus the multiplier line reconcile to the shown xP within ±0.1
-- [ ] Works for a guest team (the forecast comes from `api/forecast.py`, same shape)
-- [ ] Keyboard: Enter opens, Escape closes, focus returns
-- [ ] `tsc`, `eslint`, `npm run build` clean
+- [x] Tapping any XI or bench player opens the sheet; the component rows plus the multiplier line reconcile to the shown xP within ±0.1
+- [x] Works for a guest team (the forecast comes from `api/forecast.py`, same shape)
+- [x] Keyboard: Enter opens, Escape closes, focus returns
+- [x] `tsc`, `eslint`, `npm run build` clean
 
 ---
 
@@ -79,11 +85,11 @@ always gets the team-ID prompt.
 - Static page: the first paint still shows the prompt or skeleton until the effect runs. Acceptable, and consistent with the current cookie flow.
 
 ### Done when
-- [ ] Opening `/?team=123` shows team 123 without the prompt, even with no cookie
-- [ ] Opening it does not change a visitor's saved team unless they choose to
-- [ ] "Copy link" produces a URL that reproduces the current view
-- [ ] Live and League tabs follow the URL team, not the cookie, while viewing a shared link
-- [ ] `/api/transfers` still 403s for any non-owner team
+- [x] Opening `/?team=123` shows team 123 without the prompt, even with no cookie
+- [x] Opening it does not change a visitor's saved team unless they choose to
+- [x] "Copy link" produces a URL that reproduces the current view
+- [x] Live and League tabs follow the URL team, not the cookie, while viewing a shared link
+- [x] `/api/transfers` still 403s for any non-owner team
 
 ---
 
@@ -121,10 +127,10 @@ Each row links to where you act on it (Squad, Scenarios).
 - The picks-window limitation (`docs/solutions/snapshot-picks-window.md`): after the deadline passes, the squad shown is last gameweek's until the gameweek finishes. Hide the card once the deadline has passed.
 
 ### Done when
-- [ ] The card appears within 24h of the deadline, hides after it passes
-- [ ] Every row's status matches the forecast data (unit-testable pure function)
-- [ ] `pytest` passes, including the new `deadlineTime` test; TS checks clean
-- [ ] Works for owner and guest teams (chip row hidden for guests)
+- [x] The card appears within 24h of the deadline, hides after it passes
+- [x] Every row's status matches the forecast data (unit-testable pure function)
+- [x] `pytest` passes, including the new `deadlineTime` test; TS checks clean
+- [x] Works for owner and guest teams (chip row hidden for guests)
 
 ---
 
