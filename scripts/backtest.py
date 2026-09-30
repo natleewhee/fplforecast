@@ -22,6 +22,18 @@ def _season_payload(season: str, name: str) -> dict:
     return json.loads(path.read_text()) if path.exists() else {}
 
 
+def load_seasons() -> dict[str, dict]:
+    """Every archived season's fixtures and teams, for ``replay``'s
+    ``other_seasons`` (it only ever uses seasons before the one replayed)."""
+    return {
+        season: {
+            "fixtures": _season_payload(season, "fixtures.json").get("fixtures", []),
+            "teams": _season_payload(season, "teams.json").get("teams", []),
+        }
+        for season in ARCHIVE_SEASONS
+    }
+
+
 def main() -> int:
     archive = load_history(DATA_DIR)
     if archive.frame.empty:
@@ -33,12 +45,14 @@ def main() -> int:
     model_total = baseline_total = 0.0
     gameweeks = 0
 
+    all_seasons = load_seasons()
     for season in ARCHIVE_SEASONS:
         result = replay(
             season,
             archive.frame,
-            _season_payload(season, "fixtures.json").get("fixtures", []),
-            _season_payload(season, "teams.json").get("teams", []),
+            all_seasons[season]["fixtures"],
+            all_seasons[season]["teams"],
+            other_seasons=all_seasons,
         )
         seasons[season] = result
         model_total += result["modelPoints"]
