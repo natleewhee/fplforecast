@@ -2,6 +2,16 @@
 
 Status: findings written up, no fix built yet. Written 2026-09-30.
 
+> **Correction (2026-09-30, same day).** The first version of this analysis
+> used a hand-copied version of `engine/backtest.py:_adapt_history()` that
+> left out `defensive_contribution`. The real backtest has always passed it
+> through. That inflated the DEF bias and invented "root cause 1" below.
+> The analysis is now `scripts/residual_analysis.py`, which reuses the
+> backtest's own replay loop so it can't drift again. Corrected numbers are
+> in [[2026-09-30-backtest-fidelity-plan]] under "Phase 1 results". Root
+> cause 2 (saves, and also bonus and cards, never ingested) and the
+> team-strength gap still stand.
+
 ## Method
 
 `scripts/backtest.py` / `engine/backtest.py` already replay the model

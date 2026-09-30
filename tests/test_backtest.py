@@ -158,3 +158,26 @@ def test_backtest_script_writes_a_report_and_exits_zero(tmp_path, monkeypatch):
     # pooled: (200 - 160) / 20 == 2.0 per GW -> meaningful
     assert report["pooled"]["deltaPerGw"] == pytest.approx(2.0)
     assert report["pooled"]["meaningful"] is True
+
+
+def test_replay_gameweeks_yields_leak_safe_frames_matching_replay():
+    from engine.backtest import replay_gameweeks
+
+    frame = _season_frame("2024-25")
+    gws = list(replay_gameweeks("2024-25", frame, fixtures=[], teams=[]))
+
+    assert gws, "expected at least one replayable gameweek"
+    assert [g.gw for g in gws] == sorted(g.gw for g in gws)
+    for g in gws:
+        assert set(g.rows["gw"]) == {g.gw}
+    assert len(gws) == replay("2024-25", frame, fixtures=[], teams=[])["gameweeks"]
+
+
+def test_backtest_carries_defensive_contribution_into_the_rates():
+    from engine.backtest import replay_gameweeks
+
+    frame = _season_frame("2025-26")
+    last = list(replay_gameweeks("2025-26", frame, fixtures=[], teams=[]))[-1]
+    outfield_played = last.frame[last.frame["element_type"] != 1]
+
+    assert (outfield_played["dc90"] > 0).any()
