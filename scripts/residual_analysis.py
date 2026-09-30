@@ -23,14 +23,16 @@ from engine import model
 from engine.backtest import replay_gameweeks
 from engine.config import ARCHIVE_SEASONS
 from engine.history import ColdStart, load_history
-from scripts.backtest import DATA_DIR, _season_payload
+from scripts.backtest import DATA_DIR, load_seasons
 
 POSITIONS = {1: "GKP", 2: "DEF", 3: "MID", 4: "FWD"}
 
 
-def player_records(season: str, frame, fixtures: list[dict], teams: list[dict]) -> list[dict]:
+def player_records(
+    season: str, frame, fixtures: list[dict], teams: list[dict], other_seasons: dict | None = None
+) -> list[dict]:
     records = []
-    for rg in replay_gameweeks(season, frame, fixtures, teams):
+    for rg in replay_gameweeks(season, frame, fixtures, teams, other_seasons=other_seasons):
         actual_pts = dict(zip(rg.rows["historical_id"], rg.rows["total_points"]))
         actual_min = dict(zip(rg.rows["historical_id"], rg.rows["minutes"]))
         for pid, row in rg.frame.iterrows():
@@ -126,13 +128,15 @@ def main(argv: list[str] | None = None) -> int:
         print("No data/history/ archive — run scripts/ingest_history.py first", file=sys.stderr)
         return 0
 
+    all_seasons = load_seasons()
     records: list[dict] = []
     for season in ARCHIVE_SEASONS:
         records += player_records(
             season,
             archive.frame,
-            _season_payload(season, "fixtures.json").get("fixtures", []),
-            _season_payload(season, "teams.json").get("teams", []),
+            all_seasons[season]["fixtures"],
+            all_seasons[season]["teams"],
+            all_seasons,
         )
 
     summary = summarise(records)

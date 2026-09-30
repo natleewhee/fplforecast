@@ -1,6 +1,6 @@
 # Backtest fidelity: make the backtest measure the model that's actually live
 
-Status: in progress (Phases 1–2 built). Written 2026-09-30. Phase 1 revised the same day (see below).
+Status: **done** (Phases 1–4). Written 2026-09-30. Phase 1 revised the same day (see below).
 Follows from: [[2026-09-30-xp-model-residual-analysis]].
 Build order: 1 → 2 → 3 → 4. Each phase is its own PR.
 
@@ -184,30 +184,67 @@ same leakage rule as `_frame_before` applies.
   fixtures each. Cheap, but check the backtest still runs in minutes.
 
 ### Done when
-- [ ] Backtest uses `team_goal_rate_table`, leak-filtered per gameweek
-- [ ] Leakage test passes
-- [ ] `scripts/backtest.py` still completes and writes its report
+- [x] Backtest uses `team_goal_rate_table`, leak-filtered per gameweek
+- [x] Leakage tests pass (post-deadline results and later seasons don't change the table; earlier seasons do)
+- [x] `scripts/backtest.py` still completes and writes its report
+
+### Phase 3 results
+
+- λ for a player's team per fixture now spans 1.15–1.93 (low to high
+  tercile); the admin-rating table spanned 1.42–1.71.
+- Squad backtest edge over the baseline: **3.39 → 3.84 pts/GW** (model XI
+  5,405 → 5,455; 2024-25 +92, 2025-26 +8, 2023-24 −50). 2023-24 has no
+  earlier season to draw on, so it leans on shrinkage early on, as expected.
+
+| Attackers (played) | bias before | bias after |
+|---|---|---|
+| Low λ tercile | −0.01 | +0.13 |
+| Mid | +0.23 | +0.25 |
+| High | +0.45 | +0.30 |
+| **High − low spread** | **0.46** | **0.17** |
+
+Terciles are re-cut on the new λ, so they aren't the same player-gameweeks;
+read the spread, not individual cells.
+
+`engine.strength.team_strength_table` is now unused outside its own tests.
+Removing it is a separate cleanup.
 
 ---
 
 ## Phase 4: Re-run the residual analysis and decide
 
-Not a code change. Re-run the per-component residual analysis from
-[[2026-09-30-xp-model-residual-analysis]] against the fixed backtest and
-compare:
+Done 2026-09-30 with `scripts/residual_analysis.py` after Phases 1–3.
 
-| Question | If yes | If no |
+| | Phase 1 baseline | After Phases 2–3 |
 |---|---|---|
-| Does GKP/DEF bias fall to MID/FWD's near-zero level? | The live model was fine; gap was measurement only | A real model gap remains; look at `engine/model.py`'s saves/DC formulas |
-| Does the model-vs-baseline edge in `scripts/backtest.py` change? | Update the headline claim wherever it's shown | Note it's now confirmed on a faithful backtest |
-| Do attackers vs leaky defences show a smaller residual than under the old table? | Evidence the goal-rate table earns its place | Look at `TEAM_GOALS_SHRINKAGE_MATCHES` |
+| GKP bias | +0.277 | **−0.045** |
+| DEF bias | −0.056 | −0.069 |
+| MID bias | −0.135 | −0.139 |
+| FWD bias | −0.021 | −0.095 |
+| Attacker high − low λ spread | 0.46 | **0.17** |
+| Squad edge over baseline | 2.74 pts/GW | **3.84 pts/GW** |
 
-Use `scripts/residual_analysis.py` (Phase 1) and compare against the
-Phase 1 baseline.
+Answers to the three questions:
 
-Only after this phase: decide whether to add `saves90`/`bonus90`/
-`yellow90` to `_ARCHIVE_RATE_NAMES` (a live-model change, see Phase 2
-watch-outs).
+1. **GKP/DEF bias:** GKP fell to near zero once saves and bonus were
+   scored. It was a measurement gap; the live model's keeper projection
+   holds up.
+2. **Model-vs-baseline edge:** up 40% to 3.84 pts/GW on a backtest that now
+   scores the live model. The app doesn't display the backtest edge, so
+   there's nothing on screen to update.
+3. **Attackers vs leaky defences:** the goal-rate table closes most of the
+   gap. A small upward trend remains (+0.13 → +0.30).
+
+### Leads for a model-change plan (not built; each changes live projections)
+
+| Lead | Evidence | Candidate change |
+|---|---|---|
+| MID/FWD slightly overprojected, worst in 2025-26 (−0.27 overall) | MID −0.139; 2025-26 is the season defensive contribution scores | `engine/model.py` DC term uses `min(1, dc90 / threshold)` as a probability. Model P(hit threshold) properly, e.g. Poisson on the per-90 rate |
+| Residual attacker trend with λ | +0.13 → +0.30 across terciles | Test a lower `TEAM_GOALS_SHRINKAGE_MATCHES`, scored with this script |
+| No prior-season saves/bonus/cards priors live | `_ARCHIVE_RATE_NAMES` is `xg90, xa90, dc90` only; the archive now carries the rest | Add `saves90`, `bonus90`, `yellow90`, `gc90` so early-season keepers and newcomers get real priors |
+
+Each should be its own change, scored before/after with
+`scripts/residual_analysis.py` and `scripts/backtest.py`.
 
 ---
 

@@ -193,3 +193,47 @@ def test_backtest_carries_saves_bonus_and_cards_into_the_rates():
     assert (keepers["saves90"] > 0).any()
     assert (last.frame["bonus90"] > 0).any()
     assert (last.frame["yellow90"] > 0).any()
+
+
+def _fx(kickoff, h, a, hs, as_, gw=1):
+    return {"gw": gw, "kickoff_time": kickoff, "finished": True, "team_h": h, "team_a": a,
+            "team_h_score": hs, "team_a_score": as_, "team_h_difficulty": 3, "team_a_difficulty": 3}
+
+
+_TEAMS = [{"id": 1, "name": "Alpha", "short_name": "ALP"}, {"id": 2, "name": "Beta", "short_name": "BET"}]
+
+
+def test_strength_table_ignores_results_after_the_deadline():
+    from engine.backtest import _strength_at
+
+    early = [_fx("2024-08-17T14:00:00Z", 1, 2, 1, 1)]
+    late = early + [_fx("2024-08-24T14:00:00Z", 1, 2, 9, 0, gw=2)]  # GW2 thrashing
+
+    at_gw2_deadline = "2024-08-24T11:30:00Z"
+    assert _strength_at("2024-25", at_gw2_deadline, late, _TEAMS, {}) == _strength_at(
+        "2024-25", at_gw2_deadline, early, _TEAMS, {}
+    )
+
+
+def test_strength_table_ignores_later_seasons_but_uses_earlier_ones():
+    from engine.backtest import _strength_at
+
+    this = [_fx("2024-08-17T14:00:00Z", 1, 2, 1, 1)]
+    deadline = "2024-09-01T00:00:00Z"
+    later = {"2025-26": {"fixtures": [_fx("2025-08-16T14:00:00Z", 1, 2, 9, 0)], "teams": _TEAMS}}
+    earlier = {"2023-24": {"fixtures": [_fx("2023-08-12T14:00:00Z", 1, 2, 9, 0)], "teams": _TEAMS}}
+
+    alone = _strength_at("2024-25", deadline, this, _TEAMS, {})
+    assert _strength_at("2024-25", deadline, this, _TEAMS, later) == alone
+    assert _strength_at("2024-25", deadline, this, _TEAMS, earlier)["ALP"].attack > alone["ALP"].attack
+
+
+def test_replay_uses_the_goal_rate_table_for_opponent_strength():
+    from engine.backtest import replay_gameweeks
+
+    frame = _season_frame("2024-25")
+    fixtures = [_fx("2024-08-10T14:00:00Z", 1, 2, 3, 0)]
+    rg = next(iter(replay_gameweeks("2024-25", frame, fixtures, _TEAMS)))
+
+    assert rg.ctx.team_strength is not None
+    assert set(rg.ctx.team_strength) <= {"ALP", "BET"}

@@ -25,7 +25,7 @@ from engine.features import build_feature_frame
 from engine.history import ColdStart
 from engine.model import ModelContext
 from engine.squad import best_xi
-from engine.strength import team_strength_table
+from engine.team_goals import team_goal_rate_table
 
 DEFAULT_QUOTAS = {1: 2, 2: 5, 3: 5, 4: 3}  # GKP, DEF, MID, FWD
 SQUAD_SIZE = sum(DEFAULT_QUOTAS.values())
@@ -150,19 +150,50 @@ class ReplayedGameweek:
     id_to_short: dict
 
 
+def fixtures_before(fixtures: list[dict], deadline: str) -> list[dict]:
+    """Fixtures kicking off strictly before ``deadline`` -- the same leakage
+    rule as ``_frame_before``, for the team-strength table's match results."""
+    return [f for f in fixtures if f.get("kickoff_time") and f["kickoff_time"] < deadline]
+
+
+def _strength_at(
+    season: str,
+    deadline: str,
+    fixtures: list[dict],
+    teams: list[dict],
+    other_seasons: dict[str, dict],
+) -> dict | None:
+    """The live team-strength table (real goals for/against) as it stood at
+    ``deadline``: every earlier season's fixtures in full, plus this season's
+    fixtures that kicked off before the deadline. Later seasons never count,
+    whatever order they're passed in."""
+    if not teams:
+        return None
+    fixtures_by_season = {s: d.get("fixtures", []) for s, d in other_seasons.items() if s < season}
+    teams_by_season = {s: d.get("teams", []) for s, d in other_seasons.items() if s < season}
+    fixtures_by_season[season] = fixtures_before(fixtures, deadline)
+    teams_by_season[season] = teams
+    return team_goal_rate_table(fixtures_by_season, teams_by_season)
+
+
 def replay_gameweeks(
     season: str,
     history_frame: pd.DataFrame,
     fixtures: list[dict],
     teams: list[dict],
     rolling_window: int = ROLLING_WINDOW,
+    *,
+    other_seasons: dict[str, dict] | None = None,
 ) -> Iterator[ReplayedGameweek]:
     """Yield every replayable gameweek of one season under the kickoff-time
     leakage guard. Shared by ``replay`` and ``scripts/residual_analysis.py`` so
-    the per-player analysis can never drift from what the backtest scores."""
+    the per-player analysis can never drift from what the backtest scores.
+
+    ``other_seasons`` -- ``{season: {"fixtures": [...], "teams": [...]}}`` for
+    the team-strength table's prior-season results; only seasons before
+    ``season`` are used."""
     id_to_short = {t["id"]: t.get("short_name") for t in teams}
     name_to_id = {t.get("name"): t["id"] for t in teams}
-    strength = team_strength_table({season: teams}) if teams else None
     ctx_fixtures = [
         {
             "event": f["gw"],
@@ -202,7 +233,7 @@ def replay_gameweeks(
             minutes_model=_history_minutes_model(before),  # from pre-deadline rows only
             elements_by_id={},
             teams_by_id=id_to_short,
-            team_strength=strength,
+            team_strength=_strength_at(season, deadline, fixtures, teams, other_seasons or {}),
         )
         yield ReplayedGameweek(
             gw=int(gw),
@@ -219,13 +250,17 @@ def replay(
     fixtures: list[dict],
     teams: list[dict],
     rolling_window: int = ROLLING_WINDOW,
+    *,
+    other_seasons: dict[str, dict] | None = None,
 ) -> dict:
     """Replay one season. Returns per-season model/baseline XI points, their
     delta, and the number of gameweeks scored."""
     model_total = baseline_total = 0.0
     scored = 0
 
-    for rg in replay_gameweeks(season, history_frame, fixtures, teams, rolling_window):
+    for rg in replay_gameweeks(
+        season, history_frame, fixtures, teams, rolling_window, other_seasons=other_seasons
+    ):
         model_proj: list[dict] = []
         base_proj: list[dict] = []
         for pid, row in rg.frame.iterrows():
