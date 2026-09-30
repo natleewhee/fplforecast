@@ -194,3 +194,36 @@ def test_main_returns_1_when_no_season_can_be_fetched(tmp_path, monkeypatch):
 
     monkeypatch.setattr(ih, "fetch_text", always_404)
     assert ih.main() == 1
+
+
+GW_CSV_RICH = """\
+name,position,element,kickoff_time,minutes,total_points,ict_index,was_home,opponent_team,saves,bonus,yellow_cards,goals_conceded,GW
+Keeper,GK,20,2024-08-16T14:00:00Z,90,9,5.0,True,5,6,3,1,0,1
+"""
+
+
+def test_rich_per_gw_stats_are_ingested_as_ints_when_present():
+    rows_by_gw, fields, _ = ih.normalise_gw_rows(GW_CSV_RICH, "2024-25")
+    row = rows_by_gw[1][0]
+
+    assert (row["saves"], row["bonus"], row["yellow_cards"], row["goals_conceded"]) == (6, 3, 1, 0)
+    assert {"saves", "bonus", "yellow_cards", "goals_conceded"} <= set(fields)
+
+
+def test_rich_per_gw_stats_absent_from_coverage_when_the_csv_lacks_them():
+    rows_by_gw, fields, _ = ih.normalise_gw_rows(GW_CSV_NO_XG, "2023-24")
+
+    assert not {"saves", "bonus", "yellow_cards", "goals_conceded"} & set(fields)
+    assert "saves" not in rows_by_gw[1][0]
+
+
+def test_write_season_only_overwrites_existing_files_on_rewrite(tmp_path):
+    first = {1: [{"gw": 1, "v": "old"}]}
+    second = {1: [{"gw": 1, "v": "new"}]}
+    ih.write_season("S", first, tmp_path)
+
+    assert ih.write_season("S", second, tmp_path) == (0, 1)
+    assert json.loads((tmp_path / "S" / "gw1.json").read_text())["rows"][0]["v"] == "old"
+
+    assert ih.write_season("S", second, tmp_path, rewrite=True) == (1, 0)
+    assert json.loads((tmp_path / "S" / "gw1.json").read_text())["rows"][0]["v"] == "new"

@@ -181,3 +181,15 @@ def test_backtest_carries_defensive_contribution_into_the_rates():
     outfield_played = last.frame[last.frame["element_type"] != 1]
 
     assert (outfield_played["dc90"] > 0).any()
+
+
+def test_backtest_carries_saves_bonus_and_cards_into_the_rates():
+    from engine.backtest import replay_gameweeks
+
+    frame = _season_frame("2025-26").assign(saves=4, bonus=1, yellow_cards=1, goals_conceded=1)
+    last = list(replay_gameweeks("2025-26", frame, fixtures=[], teams=[]))[-1]
+    keepers = last.frame[last.frame["element_type"] == 1]
+
+    assert (keepers["saves90"] > 0).any()
+    assert (last.frame["bonus90"] > 0).any()
+    assert (last.frame["yellow90"] > 0).any()

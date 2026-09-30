@@ -1,6 +1,6 @@
 # Backtest fidelity: make the backtest measure the model that's actually live
 
-Status: in progress. Written 2026-09-30. Phase 1 revised the same day (see below).
+Status: in progress (Phases 1–2 built). Written 2026-09-30. Phase 1 revised the same day (see below).
 Follows from: [[2026-09-30-xp-model-residual-analysis]].
 Build order: 1 → 2 → 3 → 4. Each phase is its own PR.
 
@@ -90,13 +90,14 @@ all averaged exactly 0.000.
 
 ### Approach
 1. Confirm the vaastav `merged_gw.csv` source carries `saves`, `bonus`,
-   `yellow_cards`, `goals_conceded` for each archived season. **Unverified**:
-   I believe it does (they're standard FPL per-GW fields), but this sandbox
-   can't reach the source, so check first.
+   `yellow_cards`, `goals_conceded` for each archived season. **Checked
+   2026-09-30: all three seasons carry all four.**
 2. Add them to `GW_RICH_COLUMNS` and to `_INT_FIELDS` for coercion. Keep the
    existing R3 rule: only kept for seasons whose CSV has the column.
-3. Re-run `scripts/ingest_history.py`, commit the regenerated
-   `data/history/` and `coverage.json`.
+3. Re-run `scripts/ingest_history.py --rewrite` (new flag: existing GW
+   files are otherwise never rewritten, so `coverage.json` would list fields
+   the files lack), commit the regenerated `data/history/` and
+   `coverage.json`. The daily cron's plain run keeps them consistent after.
 4. Pass all four through `_adapt_history()`.
 
 ### Files
@@ -117,9 +118,28 @@ all averaged exactly 0.000.
   backtest fix, so leave it out of this phase and decide after Phase 4.
 
 ### Done when
-- [ ] `coverage.json` lists the four new fields for every season the source carries them
-- [ ] Backtest GKP `saves`, and all positions' `bonus`/`cards`, are non-zero
-- [ ] `pytest` passes; deploy bundle still builds
+- [x] `coverage.json` lists the four new fields for every season the source carries them
+- [x] Backtest GKP `saves`, and all positions' `bonus`/`cards`, are non-zero
+- [x] `pytest` passes; deploy bundle still builds (history gzips to 2.3 MB)
+
+### Phase 2 results
+
+- Rebuild only added fields: all 114 GW files and 87,087 rows are otherwise identical.
+- Live forecast unchanged: `compute_forecast.py` output identical before and after (excluding `generatedAt`).
+- Archive 35 MB → 43 MB on disk.
+
+| Position | bias before | bias after | MAE after |
+|---|---|---|---|
+| GKP | +0.277 | **−0.023** | 0.656 |
+| DEF | −0.056 | −0.040 | 1.090 |
+| MID | −0.135 | −0.136 | 1.058 |
+| FWD | −0.021 | −0.111 | 1.162 |
+
+GKP saves now average 0.92 pts per played GW. Squad backtest edge over the
+baseline: **2.74 → 3.39 pts/GW** (model XI 5,333 → 5,405 over 111 GWs).
+
+Still open: attackers by fixture λ, +0.00 (low) → +0.23 → **+0.45** (high).
+MID/FWD now slightly overprojected overall, 2025-26 worst (−0.26).
 
 ---
 

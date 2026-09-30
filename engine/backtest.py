@@ -92,6 +92,10 @@ def _adapt_history(rows: pd.DataFrame, name_to_id: dict) -> tuple[list[dict], li
                             "expected_goals": row.get("expected_goals"),
                             "expected_assists": row.get("expected_assists"),
                             "defensive_contribution": row.get("defensive_contribution"),
+                            "saves": row.get("saves"),
+                            "bonus": row.get("bonus"),
+                            "yellow_cards": row.get("yellow_cards"),
+                            "goals_conceded": row.get("goals_conceded"),
                         },
                     }
                     for _, row in gw_rows.iterrows()
