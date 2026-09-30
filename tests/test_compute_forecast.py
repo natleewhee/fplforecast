@@ -577,3 +577,20 @@ def test_save_pool_context_removes_a_stale_gameweek_s_cache(monkeypatch, tmp_pat
 
     cache_dir = tmp_path / "pool-context"
     assert [p.name for p in cache_dir.glob("gw*.pkl")] == ["gw6.pkl"]
+
+
+def test_archive_rates_do_not_mix_players_who_share_an_id_across_seasons():
+    # FPL reuses element ids: id 5 is a defender in 2023-24, a keeper in 2024-25.
+    frame = pd.DataFrame(
+        [
+            {"season": "2023-24", "gw": 1, "historical_id": 5, "minutes": 90,
+             "expected_goals": 0.9, "expected_assists": 0.0, "defensive_contribution": 12.0},
+            {"season": "2024-25", "gw": 1, "historical_id": 5, "minutes": 90,
+             "expected_goals": 0.0, "expected_assists": 0.0, "defensive_contribution": 0.0},
+        ]
+    ).set_index(["season", "gw", "historical_id"])
+
+    rates = cf.archive_rates({"77": {"bySeason": {"2023-24": 5}}}, frame)
+
+    assert rates[77]["xg90"] == pytest.approx(0.9)
+    assert rates[77]["dc90"] == pytest.approx(12.0)

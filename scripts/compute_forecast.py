@@ -420,14 +420,15 @@ def effective_gap(target_gw: int) -> float:
 
 def archive_rates(resolved_map: dict, history_frame) -> dict[int, dict]:
     """``{current_player_id: {xg90, xa90, dc90}}`` from prior seasons -- the
-    deepest slice of the model's per-90 rate blend. Rates are per historical id,
-    averaged over the seasons a current player resolves to."""
+    deepest slice of the model's per-90 rate blend. Rates are per (season,
+    historical id) -- FPL reuses element ids for different players each
+    season -- averaged over the seasons a current player resolves to."""
     if history_frame is None or getattr(history_frame, "empty", True):
         return {}
 
     df = history_frame.reset_index()
-    by_hist: dict[int, dict] = {}
-    for hist_id, sub in df.groupby("historical_id"):
+    by_hist: dict[tuple[str, int], dict] = {}
+    for (season, hist_id), sub in df.groupby(["season", "historical_id"]):
         minutes = float(sub["minutes"].sum())
         if minutes <= 0:
             continue
@@ -440,11 +441,15 @@ def archive_rates(resolved_map: dict, history_frame) -> dict[int, dict]:
             dc = sub[sub["defensive_contribution"].notna() & (sub["minutes"] > 0)]
             if not dc.empty and dc["minutes"].sum() > 0:
                 rec["dc90"] = float(dc["defensive_contribution"].sum()) / (dc["minutes"].sum() / 90.0)
-        by_hist[int(hist_id)] = rec
+        by_hist[(season, int(hist_id))] = rec
 
     out: dict[int, dict] = {}
     for current_id, entry in resolved_map.items():
-        recs = [by_hist[h] for h in entry.get("bySeason", {}).values() if h in by_hist]
+        recs = [
+            by_hist[(season, h)]
+            for season, h in entry.get("bySeason", {}).items()
+            if (season, h) in by_hist
+        ]
         if not recs:
             continue
         agg: dict[str, float] = {}
