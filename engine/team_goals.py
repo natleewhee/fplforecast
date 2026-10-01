@@ -22,7 +22,7 @@ source identically -- only the table-building call site differs."""
 
 from __future__ import annotations
 
-from engine.config import LEAGUE_AVG_GOALS_PER_TEAM, TEAM_GOALS_SHRINKAGE_MATCHES
+from engine.config import LEAGUE_AVG_GOALS_PER_TEAM, TEAM_GOALS_SEASON_DECAY, TEAM_GOALS_SHRINKAGE_MATCHES
 from engine.strength import TeamStrength
 
 
@@ -31,6 +31,7 @@ def team_goal_rate_table(
     teams_by_season: dict[str, list[dict]],
     *,
     shrinkage: float = TEAM_GOALS_SHRINKAGE_MATCHES,
+    season_decay: float = TEAM_GOALS_SEASON_DECAY,
 ) -> dict[str, TeamStrength]:
     """One ``TeamStrength`` per team, keyed by short name, from real
     per-match goals across every finished fixture in ``fixtures_by_season``.
@@ -51,11 +52,18 @@ def team_goal_rate_table(
 
     The ``seasons`` field on the result is a **match count** here, not a
     season count -- carried over from ``TeamStrength`` for shape parity with
-    the admin-rating table, not season-equivalence."""
-    goals_for: dict[str, list[float]] = {}
-    goals_against: dict[str, list[float]] = {}
+    the admin-rating table, not season-equivalence.
+
+    ``season_decay`` weights each match by ``decay ** seasons_back`` from the
+    newest season passed in; matches played then count as weighted matches
+    toward ``shrinkage``. At 1.0 every season counts equally."""
+    goals_for: dict[str, list[tuple[float, float]]] = {}
+    goals_against: dict[str, list[tuple[float, float]]] = {}
+    newest_first = sorted(fixtures_by_season, reverse=True)
+    weight_of = {season: season_decay**i for i, season in enumerate(newest_first)}
 
     for season, fixtures in fixtures_by_season.items():
+        w = weight_of[season]
         teams = teams_by_season.get(season) or []
         name_by_id = {
             t["id"]: (t.get("short_name") or t.get("name"))
@@ -71,31 +79,37 @@ def team_goal_rate_table(
             h_name = name_by_id.get(f.get("team_h"))
             a_name = name_by_id.get(f.get("team_a"))
             if h_name:
-                goals_for.setdefault(h_name, []).append(float(h_score))
-                goals_against.setdefault(h_name, []).append(float(a_score))
+                goals_for.setdefault(h_name, []).append((w, float(h_score)))
+                goals_against.setdefault(h_name, []).append((w, float(a_score)))
             if a_name:
-                goals_for.setdefault(a_name, []).append(float(a_score))
-                goals_against.setdefault(a_name, []).append(float(h_score))
+                goals_for.setdefault(a_name, []).append((w, float(a_score)))
+                goals_against.setdefault(a_name, []).append((w, float(h_score)))
 
-    all_for = [g for vals in goals_for.values() for g in vals]
-    league_avg_for = sum(all_for) / len(all_for) if all_for else LEAGUE_AVG_GOALS_PER_TEAM
-    all_against = [g for vals in goals_against.values() for g in vals]
-    league_avg_against = sum(all_against) / len(all_against) if all_against else LEAGUE_AVG_GOALS_PER_TEAM
+    def wmean(pairs: list[tuple[float, float]]) -> float | None:
+        total = sum(w for w, _ in pairs)
+        return sum(w * g for w, g in pairs) / total if total else None
+
+    all_for = [pair for vals in goals_for.values() for pair in vals]
+    league_avg_for = wmean(all_for) or LEAGUE_AVG_GOALS_PER_TEAM
+    all_against = [pair for vals in goals_against.values() for pair in vals]
+    league_avg_against = wmean(all_against) or LEAGUE_AVG_GOALS_PER_TEAM
 
     table: dict[str, TeamStrength] = {}
     for name in set(goals_for) | set(goals_against):
         gf = goals_for.get(name, [])
         ga = goals_against.get(name, [])
-        n = len(gf)  # goals_for/against always populated together, one entry per match
+        # goals_for/against always populated together, one entry per match;
+        # n is the weighted match count
+        n = sum(w for w, _ in gf)
 
         if n == 0:
             table[name] = TeamStrength(attack=1.0, defence=1.0, seasons=0)
             continue
 
-        attack_raw = (sum(gf) / n) / league_avg_for if league_avg_for else 1.0
+        attack_raw = wmean(gf) / league_avg_for if league_avg_for else 1.0
         attack = (n * attack_raw + shrinkage * 1.0) / (n + shrinkage)
 
-        own_against_rate = sum(ga) / n
+        own_against_rate = wmean(ga)
         # a shutout-so-far team (own_against_rate == 0) would divide by zero.
         # Floor it at a tenth of a goal/match rather than snapping to 1.0
         # (neutral) or leaving it undefined -- a real shutout streak should
@@ -104,5 +118,5 @@ def team_goal_rate_table(
         defence_raw = league_avg_against / max(own_against_rate, 0.1)
         defence = (n * defence_raw + shrinkage * 1.0) / (n + shrinkage)
 
-        table[name] = TeamStrength(attack=attack, defence=defence, seasons=n)
+        table[name] = TeamStrength(attack=attack, defence=defence, seasons=len(gf))
     return table
