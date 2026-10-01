@@ -162,6 +162,16 @@ def assert_match_rate(
     return rate
 
 
+# archive column -> per-90 rate, for columns only some seasons carry
+_SEASON_RATE_COLUMNS = {
+    "defensive_contribution": "dc90",
+    "saves": "saves90",
+    "bonus": "bonus90",
+    "yellow_cards": "yellow90",
+    "goals_conceded": "gc90",
+}
+
+
 def season_rates(frame: pd.DataFrame) -> dict[tuple[str, int], dict]:
     """Per-90 rates for every ``(season, historical_id)`` in the archive. Keyed
     by season too: FPL reuses element ids for different players each season."""
@@ -178,15 +188,19 @@ def season_rates(frame: pd.DataFrame) -> dict[tuple[str, int], dict]:
             "xg90": float(sub["expected_goals"].sum()) / per90,
             "xa90": float(sub["expected_assists"].sum()) / per90,
         }
-        if "defensive_contribution" in sub:
-            dc = sub[sub["defensive_contribution"].notna() & (sub["minutes"] > 0)]
-            if not dc.empty and dc["minutes"].sum() > 0:
-                rec["dc90"] = float(dc["defensive_contribution"].sum()) / (dc["minutes"].sum() / 90.0)
+        for column, rate in _SEASON_RATE_COLUMNS.items():
+            if column not in sub:
+                continue
+            rows = sub[sub[column].notna() & (sub["minutes"] > 0)]
+            if not rows.empty and rows["minutes"].sum() > 0:
+                rec[rate] = float(rows[column].sum()) / (rows["minutes"].sum() / 90.0)
         out[(season, int(hist_id))] = rec
     return out
 
 
-ARCHIVE_RATE_KEYS = ("xg90", "xa90", "dc90")
+# Rates carried from prior seasons into the live rate blend. saves/bonus/
+# cards/goals-conceded added after backtesting (model changes plan, Phase 4).
+ARCHIVE_RATE_KEYS = ("xg90", "xa90", "dc90", "saves90", "bonus90", "yellow90", "gc90")
 
 
 def archive_rates_for(links: dict, rates: dict[tuple[str, int], dict]) -> dict[int, dict]:

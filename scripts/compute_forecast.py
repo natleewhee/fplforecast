@@ -447,7 +447,7 @@ def effective_gap(target_gw: int) -> float:
 
 
 def archive_rates(resolved_map: dict, history_frame) -> dict[int, dict]:
-    """``{current_player_id: {xg90, xa90, dc90}}`` from prior seasons -- the
+    """``{current_player_id: {rate: value}}`` from prior seasons -- the
     deepest slice of the model's per-90 rate blend. See
     ``engine.history.season_rates`` / ``archive_rates_for``."""
     links = {cid: entry.get("bySeason", {}) for cid, entry in resolved_map.items()}
