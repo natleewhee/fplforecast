@@ -107,11 +107,12 @@ def test_saves_only_for_keepers_and_scale_with_a_busy_fixture():
 
 
 def test_defensive_contribution_uses_the_position_threshold():
-    # dc90 exactly at the DEF threshold -> full 2 points; MID needs more actions
+    # averaging exactly the DEF threshold hits it only about half the time --
+    # not a guaranteed 2 points -- and a MID with the same rate faces a higher bar
     d_def = project_detail(feature_row(element_type=2, dc90=DC_THRESHOLD[2]), 3, ctx())
     d_mid = project_detail(feature_row(element_type=3, dc90=DC_THRESHOLD[2]), 3, ctx())
-    assert d_def["components"]["defensiveContribution"] == pytest.approx(2.0)
-    assert d_mid["components"]["defensiveContribution"] < 2.0  # 10 / 12 of the way
+    assert 0.8 < d_def["components"]["defensiveContribution"] < 1.4
+    assert d_mid["components"]["defensiveContribution"] < d_def["components"]["defensiveContribution"]
     assert "defensiveContribution" not in [c for c in d_def if c is None]
     d_gk = project_detail(feature_row(element_type=1, dc90=20), 3, ctx())
     assert d_gk["components"]["defensiveContribution"] == 0.0
@@ -171,3 +172,26 @@ def test_minutes_risk_flag_reads_pstart():
     assert minutes_risk_flag(feature_row(), ctx(minutes={"1": {"pStart": 0.4}})) is True
     assert minutes_risk_flag(feature_row(), ctx(minutes={"1": {"pStart": 0.9}})) is False
     assert minutes_risk_flag(feature_row(), ctx(minutes={})) is False
+
+
+def test_dc_hit_probability_matches_known_poisson_and_widens_with_variance():
+    from engine.model import dc_hit_probability
+
+    # Poisson(10): P(X >= 10) = 0.5421
+    assert dc_hit_probability(10.0, 10, 1.0) == pytest.approx(0.5421, abs=1e-3)
+    assert dc_hit_probability(0.0, 10, 1.4) == 0.0
+    # more spread pushes a below-threshold player's chance up, an above one's down
+    assert dc_hit_probability(6.0, 10, 1.6) > dc_hit_probability(6.0, 10, 1.0)
+    assert dc_hit_probability(16.0, 10, 1.6) < dc_hit_probability(16.0, 10, 1.0)
+
+
+def test_dc_hit_probability_rises_with_rate_and_minutes():
+    from engine.model import dc_hit_probability
+
+    rates = [dc_hit_probability(m, 10, 1.4) for m in (2, 6, 10, 14, 20)]
+    assert rates == sorted(rates) and rates[-1] < 1.0
+
+    full = project_detail(feature_row(element_type=2, dc90=10), 3, ctx())
+    cameo_mm = {"1": {"expectedMinutes": 20, "pStart": 0.0, "pCameo": 1.0}}
+    cameo = project_detail(feature_row(element_type=2, dc90=10), 3, ctx(minutes=cameo_mm))
+    assert cameo["components"]["defensiveContribution"] < full["components"]["defensiveContribution"]

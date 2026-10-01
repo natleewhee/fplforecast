@@ -1,6 +1,6 @@
 # Model changes: prior-season rates, DC probability, team-strength tuning
 
-Status: in progress (Phase 1 built; acceptance rule revision awaiting Nat). Written 2026-09-30.
+Status: in progress (Phases 1–2 built). Written 2026-09-30.
 Follows from: [[2026-09-30-backtest-fidelity-plan]] (Phase 4 leads).
 Build order: 1 → 2 → 3 → 4. Each phase is its own PR. Phases 2–4 each change
 live projections and ship only if they pass the acceptance rule below.
@@ -16,8 +16,14 @@ is what Phase 1 fixes.
 
 ## Acceptance rule (Nat, 2026-09-30: tune on two seasons, confirm on one)
 
-> Phase 1 found the XI-points metric below too noisy to decide anything; a
-> revision is proposed under "Phase 1 results".
+> **Revised (Nat, 2026-10-01).** Phase 1 found XI points far too noisy to
+> decide anything. The rule now in force:
+> 1. **Primary:** paired per-GW change in mean squared projection error per
+>    player (`mse`). Tune must improve by more than 2 SE (mean + 2 SE < 0);
+>    holdout must improve (mean < 0).
+> 2. **Guard:** XI points not clearly worse on tune (mean + 2 SE ≥ 0).
+>
+> The original rule below is kept for the record.
 
 - **Tune** on 2023-24 + 2024-25. Pick any setting (a constant, a
   distribution parameter) using only these.
@@ -130,7 +136,7 @@ seasons, because each gameweek's result turns on eleven discrete picks. To
 clear "mean − 2 SE > 0" a change would need to gain over 2 pts/GW; realistic
 model changes move tenths. The rule as written rejects everything.
 
-**Proposed revision (awaiting Nat):**
+**Revision (adopted by Nat, 2026-10-01, see the rule above):**
 1. **Primary:** mean squared projection error per player (`mse`). It's the
    right score for an expected-points model, and has ~1/80th the noise.
    Accept if tune `mse` improves by more than 2 SE, and holdout `mse`
@@ -172,9 +178,36 @@ per-match `defensive_contribution`.
   the threshold; 0 for GKP.
 
 ### Done when
-- [ ] Calibration buckets: predicted vs actual hit rate within a few points
-- [ ] Acceptance rule passes (holdout = 2025-26 GW20–38)
-- [ ] MID bias moves toward 0
+- [x] Calibration buckets: predicted vs actual hit rate within a few points
+- [x] Acceptance rule passes (holdout = 2025-26 GW20–38)
+- [x] MID bias moves toward 0
+
+### Phase 2 results — accepted
+
+**Calibration (2025-26 GW1–19, full matches, leave-one-out player mean):**
+the old formula predicted a 73.5% chance of hitting the threshold; the real
+rate was 26.6%. Old buckets: predicted 0.93 → actual 0.43, predicted 0.70 →
+actual 0.20. With a negative binomial (variance/mean measured on the same
+half: DEF 1.43, MID 1.26, FWD 1.15; used as 1.4/1.3/1.2) the mean prediction
+is 0.271 vs 0.266 actual, and buckets track (0.15 → 0.145, 0.55 → 0.59).
+
+Partial minutes: `P(appears) × P(hit | the minutes they'd play)`.
+
+**Acceptance (paired, new − old per GW):**
+
+| | Squared error per player | XI points |
+|---|---|---|
+| Tune: 2025-26 GW1–19 | **−0.238 ± 0.022** (passes, ~11 SE) | +2.22 ± 1.14 (guard passes) |
+| Confirm: 2025-26 GW20+ | **−0.360 ± 0.062** (passes) | −0.68 ± 2.17 |
+| 2023-24, 2024-25 | 0 (DC didn't score) | 0 |
+
+Backtest edge 3.50 → **3.74 pts/GW** (2025-26 model XI 1,714 → 1,741).
+
+2025-26 bias: MID −0.327 → **−0.002**, DEF −0.242 → +0.112, FWD −0.172 →
++0.048. DC points per played GW: DEF 1.07 → 0.37, MID 0.83 → 0.17.
+
+**Live (GW6):** 419 of 487 players drop, 276 by ≥0.5; defensive
+midfielders most (Yates −1.65, Endo −1.29). Captain and XI unchanged.
 
 ---
 
@@ -250,6 +283,5 @@ fidelity plan's Phase 2.
 1. Phase 2: split 2025-26 by gameweek (tune GW1–19, confirm GW20–38). Yes.
 2. Phase 1: ingest 2022-23 so 2023-24 gets prior rates. Yes (backtest-only).
 
-## Open decision for Nat
-3. Switch the acceptance rule's primary metric to per-player squared
-   projection error, with XI points as a guard (see Phase 1 results)?
+3. Acceptance rule: per-player squared projection error as the primary
+   metric, XI points as a guard. Yes (2026-10-01).
