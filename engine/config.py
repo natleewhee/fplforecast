@@ -143,6 +143,9 @@ SAVE_POINTS_PER_SAVE = 1 / 3
 # threshold -- 10 for DEF, 12 (incl. recoveries) for MID/FWD; GKP not eligible.
 DC_POINTS = 2
 DC_THRESHOLD = {2: 10, 3: 12, 4: 12}
+# Per-match action counts vary more than Poisson: variance / mean, measured on
+# 2025-26 GW1-19 full matches (DEF 1.43, MID 1.26, FWD 1.15 on 9 players).
+DC_VARIANCE_RATIO = {2: 1.4, 3: 1.3, 4: 1.2}
 
 # Team expected goals (lambda). base * attack_ratio / opp_defence_ratio, then
 # the home side's lambda is multiplied by HOME_GOALS_FACTOR (long-run home bias).

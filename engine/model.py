@@ -10,7 +10,7 @@ uses (fplform, FantasyFootballPundit, FPL Review, FPL Pulse). Each component is
        + P(clean sheet) * cs_pts(pos) * P(60+)
        - 0.5 * lambda_against * mins90                (GKP / DEF)
        + saves/90 * mins90 * busyness / 3            (GKP)
-       + P(hit defensive-action threshold) * 2       (DEF / MID / FWD)
+       + P(plays) * P(hit action threshold) * 2   (DEF / MID / FWD)
        + expected bonus
        - expected yellow-card cost
     all * availability
@@ -38,6 +38,7 @@ from engine.config import (
     CLEAN_SHEET_POINTS,
     DC_POINTS,
     DC_THRESHOLD,
+    DC_VARIANCE_RATIO,
     GOAL_POINTS,
     GOALS_CONCEDED_PENALTY_PER_GOAL,
     LEAGUE_AVG_GOALS_PER_TEAM,
@@ -70,6 +71,25 @@ class ModelContext:
     elements_by_id: dict[int, dict]
     teams_by_id: dict[int, str] | None = None
     team_strength: dict | None = field(default=None)
+
+
+def dc_hit_probability(mean_actions: float, threshold: int, variance_ratio: float) -> float:
+    """P(at least ``threshold`` defensive actions in a match) when the count has
+    mean ``mean_actions`` and variance ``variance_ratio * mean`` -- Poisson at
+    1.0, negative binomial above it."""
+    mu = mean_actions
+    if mu <= 0:
+        return 0.0
+    if variance_ratio <= 1.0:
+        log_terms = (-mu + k * math.log(mu) - math.lgamma(k + 1) for k in range(threshold))
+    else:
+        r = mu / (variance_ratio - 1.0)
+        p = r / (r + mu)
+        log_terms = (
+            math.lgamma(k + r) - math.lgamma(k + 1) - math.lgamma(r) + r * math.log(p) + k * math.log1p(-p)
+            for k in range(threshold)
+        )
+    return min(1.0, max(0.0, 1.0 - sum(math.exp(t) for t in log_terms)))
 
 
 def _minutes_entry(feature_row: Mapping, ctx: ModelContext) -> dict | None:
@@ -172,9 +192,12 @@ def project_detail(feature_row: Mapping, target_gw: int, ctx: ModelContext) -> d
         if et == _GK:
             busyness = lam_against / LEAGUE_AVG_GOALS_PER_TEAM
             totals["saves"] += saves90 * mins90 * busyness * SAVE_POINTS_PER_SAVE
-        if et in DC_THRESHOLD:
-            p_hit = min(1.0, dc90 / DC_THRESHOLD[et])
-            totals["defensiveContribution"] += p_hit * mins90 * DC_POINTS
+        if et in DC_THRESHOLD and p_appear > 0:
+            mins_if_playing = min(1.0, mins90 / p_appear)
+            p_hit = dc_hit_probability(
+                dc90 * mins_if_playing, DC_THRESHOLD[et], DC_VARIANCE_RATIO.get(et, 1.0)
+            )
+            totals["defensiveContribution"] += p_appear * p_hit * DC_POINTS
         totals["bonus"] += bonus90 * mins90
         totals["cards"] -= yellow90 * mins90
 
