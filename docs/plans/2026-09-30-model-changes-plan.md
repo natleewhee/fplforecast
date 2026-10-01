@@ -1,6 +1,6 @@
 # Model changes: prior-season rates, DC probability, team-strength tuning
 
-Status: planned, not started. Written 2026-09-30.
+Status: in progress (Phase 1 built; acceptance rule revision awaiting Nat). Written 2026-09-30.
 Follows from: [[2026-09-30-backtest-fidelity-plan]] (Phase 4 leads).
 Build order: 1 → 2 → 3 → 4. Each phase is its own PR. Phases 2–4 each change
 live projections and ship only if they pass the acceptance rule below.
@@ -15,6 +15,9 @@ backtest couldn't score it because it never uses prior-season rates, which
 is what Phase 1 fixes.
 
 ## Acceptance rule (Nat, 2026-09-30: tune on two seasons, confirm on one)
+
+> Phase 1 found the XI-points metric below too noisy to decide anything; a
+> revision is proposed under "Phase 1 results".
 
 - **Tune** on 2023-24 + 2024-25. Pick any setting (a constant, a
   distribution parameter) using only these.
@@ -80,11 +83,60 @@ Two gaps block honest measurement of Phases 2–4:
   (e.g. two "Danny Ward"s). Same risk live already carries; count and log
   ambiguous names rather than guess.
 
+### As built
+- 2022-23 is ingested as a **backtest-only** season (`PRIOR_ONLY_SEASONS`
+  in `engine/config.py`). `load_history()` and the live fixture/team
+  loaders skip it unless the caller opts in (`include_prior_only=True`,
+  only the backtest scripts), so the live forecast is unchanged.
+- Variants aren't selected by config override after all: constants are
+  bound at import (some as default arguments), so patching them is
+  fragile. Instead, save a run with `--out` on each version of the code and
+  pair them with `--compare OLD NEW`.
+- Every run also records per-gameweek **mean squared projection error**
+  over all projected players (`mse`), alongside XI points.
+
 ### Done when
-- [ ] Backtest projections use prior-season rates; live forecast unchanged
-- [ ] New baseline recorded per season (tune vs holdout) with rates wired in
-- [ ] `--seasons` and `--compare` work; paired output per season
-- [ ] `pytest` passes
+- [x] Backtest projections use prior-season rates; live forecast unchanged (verified identical)
+- [x] New baseline recorded per season (below)
+- [x] `--seasons`, `--out` and `--compare` work; paired output per season and holdout half
+- [x] `pytest` passes (210)
+
+### Phase 1 results
+
+Model XI points (the new baseline for Phases 2–4):
+
+| Season | Before | After | Edge over baseline |
+|---|---|---|---|
+| 2023-24 | 1,768 | 1,793 | 117 |
+| 2024-25 | 1,952 | 1,910 | 113 |
+| 2025-26 | 1,735 | 1,714 | 158 |
+| Pooled edge | 3.84 pts/GW | **3.50 pts/GW** | |
+
+Paired, new − old, per gameweek:
+
+| | XI points | Squared error per player |
+|---|---|---|
+| Tune | −0.23 ± 1.07 | **−0.043 ± 0.014** |
+| Holdout | −0.57 ± 1.40 | **−0.037 ± 0.013** |
+
+Prior-season rates make projections clearly more accurate (≈3 SE on both
+tune and holdout), which backs the live model's existing prior slice and
+the id-collision hotfix. The XI-points change is noise.
+
+### Finding: the acceptance rule's metric is too noisy
+
+XI points have a paired standard error of ~1.1 pts/GW over the two tune
+seasons, because each gameweek's result turns on eleven discrete picks. To
+clear "mean − 2 SE > 0" a change would need to gain over 2 pts/GW; realistic
+model changes move tenths. The rule as written rejects everything.
+
+**Proposed revision (awaiting Nat):**
+1. **Primary:** mean squared projection error per player (`mse`). It's the
+   right score for an expected-points model, and has ~1/80th the noise.
+   Accept if tune `mse` improves by more than 2 SE, and holdout `mse`
+   improves (mean < 0).
+2. **Guard:** XI points must not be clearly worse on tune
+   (mean + 2 SE ≥ 0).
 
 ---
 
@@ -194,10 +246,10 @@ fidelity plan's Phase 2.
 - **Out of scope:** the minutes model, new data sources, price-change
   modelling.
 
-## Open decisions for Nat
-1. **Phase 2 holdout:** DC only exists in 2025-26. Split that season by
-   gameweek (tune GW1–19, confirm GW20–38)? Recommended; the alternative is
-   calibration checks only, with no true holdout.
-2. **Phase 1:** ingest 2022-23 into the archive, so 2023-24 gets prior
-   rates and the tune set has two seasons for Phases 1 and 4? Adds ~12 MB
-   and one more season of vaastav data. Recommended if Phase 4 is kept.
+## Decisions (Nat, 2026-09-30)
+1. Phase 2: split 2025-26 by gameweek (tune GW1–19, confirm GW20–38). Yes.
+2. Phase 1: ingest 2022-23 so 2023-24 gets prior rates. Yes (backtest-only).
+
+## Open decision for Nat
+3. Switch the acceptance rule's primary metric to per-player squared
+   projection error, with XI points as a guard (see Phase 1 results)?

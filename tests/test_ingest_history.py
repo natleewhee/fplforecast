@@ -146,6 +146,7 @@ def test_reconcile_row_counts_raises_on_a_dropped_row():
 
 def test_main_skips_a_404_season_and_still_writes_the_rest(tmp_path, monkeypatch):
     monkeypatch.setattr(ih, "ARCHIVE_SEASONS", ["S1", "S2"])
+    monkeypatch.setattr(ih, "PRIOR_ONLY_SEASONS", [])
     monkeypatch.setattr(ih, "HISTORY_DIR", tmp_path)
 
     def fake_fetch(url: str) -> str:
@@ -187,6 +188,7 @@ def test_normalise_teams_carries_attack_and_defence_strength():
 
 def test_main_returns_1_when_no_season_can_be_fetched(tmp_path, monkeypatch):
     monkeypatch.setattr(ih, "ARCHIVE_SEASONS", ["S1"])
+    monkeypatch.setattr(ih, "PRIOR_ONLY_SEASONS", [])
     monkeypatch.setattr(ih, "HISTORY_DIR", tmp_path)
 
     def always_404(url: str) -> str:
