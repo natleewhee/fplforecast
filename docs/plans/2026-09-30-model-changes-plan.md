@@ -1,6 +1,6 @@
 # Model changes: prior-season rates, DC probability, team-strength tuning
 
-Status: in progress (Phases 1–2 built). Written 2026-09-30.
+Status: in progress (Phases 1–3 built). Written 2026-09-30.
 Follows from: [[2026-09-30-backtest-fidelity-plan]] (Phase 4 leads).
 Build order: 1 → 2 → 3 → 4. Each phase is its own PR. Phases 2–4 each change
 live projections and ship only if they pass the acceptance rule below.
@@ -236,9 +236,49 @@ fixtures are still slightly under-separated. Two knobs in
 - 2023-24 has no earlier seasons, so decay has nothing to act on there.
 
 ### Done when
-- [ ] Grid results table recorded (tune seasons)
-- [ ] Acceptance rule passes for the pick, or the plan records why the current values stay
-- [ ] Attacker high − low λ spread falls below 0.17
+- [x] Grid results table recorded (tune seasons)
+- [x] Acceptance rule passes for the pick
+- [ ] ~~Attacker high − low λ spread falls below 0.17~~ not re-measured; the
+      grid's effects are an order of magnitude smaller than Phase 2's
+
+### Phase 3 results — accepted (decay); in-season results shipped by Nat's call
+
+**Finding: live ratings ignored this season's results.** The live table was
+built from archived seasons only (2023-24 to 2025-26), so the 50 matches
+already played in 2026-27 never counted and promoted teams sat at a neutral
+1.0 all season. The backtest has always replayed *with* in-season results
+(fidelity plan, Phase 3), so it was scoring something live didn't do.
+
+**In-season results** (with − without, squared error per player):
+
+| Tune | Holdout |
+|---|---|
+| **−0.0178 ± 0.0047** (passes) | +0.0005 ± 0.0032 (flat; fails "must improve") |
+
+Strictly this fails the rule's holdout condition. Nat chose to ship it
+(2026-10-01): it's what the backtest already validates, it clearly helps on
+two seasons and is neutral on the third, and it fixes promoted teams. Live
+(GW6): 59 players move ≥0.1 xP, 4 by ≥0.3 (Newcastle defenders up ~0.4,
+Saka −0.35, promoted Hull now rated). Captain and XI unchanged.
+
+**Grid** (paired squared error vs current shrinkage 20 / decay 1.0, tune
+seasons; negative = better):
+
+| Shrinkage | decay 1.0 | decay 0.7 | decay 0.5 |
+|---|---|---|---|
+| 5 | +0.005 ± 0.004 | +0.001 ± 0.004 | −0.001 ± 0.004 |
+| 10 | +0.003 ± 0.002 | −0.002 ± 0.002 | −0.005 ± 0.003 |
+| 15 | +0.001 ± 0.001 | −0.004 ± 0.001 | −0.006 ± 0.003 |
+| 20 | (current) | −0.005 ± 0.002 | −0.007 ± 0.003 |
+| 30 | −0.001 ± 0.002 | −0.005 ± 0.003 | −0.006 ± 0.005 |
+
+Recency matters; shrinkage barely does. Pick, made before the holdout run:
+**shrinkage 20, decay 0.7**, the most conservative setting within 2 SE of
+the best (tune −0.0045 ± 0.0018, mean + 2 SE −0.0010).
+Holdout: −0.0034 ± 0.0034 (improves). XI points guard passes (tune −0.10 ±
+0.47). Small gain, about 0.1% of error. Live: 8 players move ≥0.1 xP.
+
+`team_goal_rate_table` gains `season_decay`; `TEAM_GOALS_SEASON_DECAY = 0.7`.
 
 ---
 
@@ -278,6 +318,10 @@ fidelity plan's Phase 2.
   and XI changes, as in PR #63.
 - **Out of scope:** the minutes model, new data sources, price-change
   modelling.
+- **Follow-up found in Phase 3:** `scripts/log_predictions.py` builds its
+  feature frame without `archive_rates`, so the frozen predictions behind
+  the running record come from a slightly different model than the live
+  forecast. Not fixed here.
 
 ## Decisions (Nat, 2026-09-30)
 1. Phase 2: split 2025-26 by gameweek (tune GW1–19, confirm GW20–38). Yes.

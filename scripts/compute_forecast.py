@@ -117,6 +117,29 @@ def load_history_fixtures_seasons() -> dict[str, list[dict]]:
     return out
 
 
+def current_season_label(bootstrap: dict) -> str | None:
+    """``"2026-27"`` from the season's first deadline -- the archive's naming."""
+    events = bootstrap.get("events") or []
+    if not events:
+        return None
+    year = int(events[0]["deadline_time"][:4])
+    return f"{year}-{(year + 1) % 100:02d}"
+
+
+def live_team_strength(bootstrap: dict) -> dict:
+    """The team goal-rate table from every archived season plus this season's
+    finished matches so far (the latest fixtures snapshot), so ratings move
+    with this season's results and promoted teams aren't stuck at neutral --
+    the same inputs the backtest replays with."""
+    fixtures_by_season = load_history_fixtures_seasons()
+    teams_by_season = load_team_strength_seasons()
+    label = current_season_label(bootstrap)
+    if label and label not in fixtures_by_season:
+        fixtures_by_season[label] = [f for f in load_fixtures() if f.get("finished")]
+        teams_by_season[label] = bootstrap.get("teams", [])
+    return team_goal_rate_table(fixtures_by_season, teams_by_season)
+
+
 def load_understat_seasons() -> dict[str, dict[str, list[dict]]]:
     out: dict[str, dict[str, list[dict]]] = {}
     for path in sorted((DATA_DIR / "understat").glob("*/*.json")):
@@ -767,7 +790,7 @@ def build_pool_context(bootstrap: dict, target_gw: int) -> dict:
         minutes_model=load_minutes_model(),
         elements_by_id=elements_by_id,
         teams_by_id=teams_by_id,
-        team_strength=team_goal_rate_table(load_history_fixtures_seasons(), load_team_strength_seasons()),
+        team_strength=live_team_strength(bootstrap),
     )
 
     def model_fn(row, gw):

@@ -115,3 +115,22 @@ def test_team_ids_are_resolved_per_season_not_globally():
     }
     table = team_goal_rate_table(fixtures, teams)
     assert "OldClub" in table and "NewClub" in table
+
+
+def test_season_decay_weights_recent_seasons_more():
+    from engine.team_goals import team_goal_rate_table
+
+    teams = [{"id": 1, "short_name": "AAA"}, {"id": 2, "short_name": "BBB"}]
+
+    def fx(h, a):
+        return {"finished": True, "team_h": 1, "team_a": 2, "team_h_score": h, "team_a_score": a}
+
+    # AAA thrashed BBB long ago, drew last season
+    seasons = {"2023-24": [fx(5, 0)] * 10, "2024-25": [fx(1, 1)] * 10}
+    teams_by = {s: teams for s in seasons}
+
+    equal = team_goal_rate_table(seasons, teams_by, shrinkage=0, season_decay=1.0)
+    recent = team_goal_rate_table(seasons, teams_by, shrinkage=0, season_decay=0.5)
+
+    assert recent["AAA"].attack < equal["AAA"].attack
+    assert recent["AAA"].attack > 1.0  # the older thrashing still counts, just less

@@ -20,7 +20,6 @@ from engine.config import PREDICTION_WINDOW_HOURS, ROLLING_WINDOW
 from engine.features import build_feature_frame
 from engine.history import ColdStart, classify, load_history
 from engine.model import ModelContext
-from engine.team_goals import team_goal_rate_table
 from scripts import compute_forecast as cf
 
 DATA_DIR = Path(__file__).resolve().parent.parent / "data"
@@ -74,7 +73,7 @@ def main(now: datetime | None = None) -> int:
         minutes_model=cf.load_minutes_model(),
         elements_by_id={el["id"]: el for el in bootstrap["elements"]},
         teams_by_id={t["id"]: t["short_name"] for t in bootstrap["teams"]},
-        team_strength=team_goal_rate_table(cf.load_history_fixtures_seasons(), cf.load_team_strength_seasons()),
+        team_strength=cf.live_team_strength(bootstrap),
     )
 
     model_map: dict[str, float | None] = {}

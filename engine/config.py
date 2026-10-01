@@ -130,6 +130,11 @@ TEAM_STRENGTH_SHRINKAGE_SEASONS = 1.5
 # prior-equivalent before trusting the raw sample. Execution-tunable -- not
 # yet calibrated against a real backtest.
 TEAM_GOALS_SHRINKAGE_MATCHES = 20
+# Weight on each earlier season's matches in the team goal-rate table, per
+# season back from the newest (1.0 = every season counts equally). 0.7 chosen
+# on the 2023-24/2024-25 backtest and confirmed on 2025-26 (model changes
+# plan, Phase 3).
+TEAM_GOALS_SEASON_DECAY = 0.7
 
 # --- Component expected-points model (the deferred KTD10 rebuild) ---
 # FPL scoring by element_type (1 GKP, 2 DEF, 3 MID, 4 FWD).

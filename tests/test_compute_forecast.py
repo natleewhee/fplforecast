@@ -594,3 +594,24 @@ def test_archive_rates_do_not_mix_players_who_share_an_id_across_seasons():
 
     assert rates[77]["xg90"] == pytest.approx(0.9)
     assert rates[77]["dc90"] == pytest.approx(12.0)
+
+
+def test_live_team_strength_counts_this_seasons_finished_matches(monkeypatch):
+    teams = [{"id": 1, "short_name": "NEW"}, {"id": 2, "short_name": "OLD"}]
+    old = {"finished": True, "team_h": 2, "team_a": 9, "team_h_score": 1, "team_a_score": 1}
+    monkeypatch.setattr(cf, "load_history_fixtures_seasons", lambda: {"2025-26": [old]})
+    monkeypatch.setattr(cf, "load_team_strength_seasons", lambda: {"2025-26": [{"id": 2, "short_name": "OLD"}]})
+    monkeypatch.setattr(
+        cf,
+        "load_fixtures",
+        lambda: [
+            {"finished": True, "team_h": 1, "team_a": 2, "team_h_score": 4, "team_a_score": 0},
+            {"finished": False, "team_h": 2, "team_a": 1, "team_h_score": None, "team_a_score": None},
+        ],
+    )
+    bootstrap = {"events": [{"deadline_time": "2026-08-21T17:30:00Z"}], "teams": teams}
+
+    assert cf.current_season_label(bootstrap) == "2026-27"
+    table = cf.live_team_strength(bootstrap)
+    # a promoted side with no archive history is rated from this season's result
+    assert table["NEW"].attack > 1.0
