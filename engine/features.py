@@ -22,6 +22,7 @@ from engine.config import (
     RATE_PRIOR_GAMES,
     RATE_SEASON_FULL_GAMES,
 )
+from engine.history import ARCHIVE_RATE_KEYS
 
 UNAVAILABLE_STATUSES = {"i", "s", "u", "n"}  # injured, suspended, unavailable, not in squad
 
@@ -91,7 +92,6 @@ _LIVE_RATE_STATS = {
     "yellow90": "yellow_cards",
 }
 _RATE_NAMES = tuple(_LIVE_RATE_STATS)
-_ARCHIVE_RATE_NAMES = ("xg90", "xa90", "dc90")
 
 
 def build_feature_frame(
@@ -110,7 +110,7 @@ def build_feature_frame(
                         now_cost, plus the per-90 rate fields the model reads).
     ``live_history`` -- current-season ``event-live`` payloads, oldest first.
     ``is_cold_start``-- ``player_id -> bool`` (wired to ``engine.history.classify``).
-    ``archive_rates``-- optional ``{player_id: {xg90, xa90, dc90}}`` from prior
+    ``archive_rates``-- optional ``{player_id: {rate: value}}`` from prior
                         seasons, for the deepest slice of each rate blend.
 
     Columns (indexed by ``player_id``): element_type, team, price,
@@ -259,7 +259,7 @@ def _rate_features(
                     sources[name].append((player_recent_weight, recent_sum[pid][name] / rp90))
 
         arc = archive_rates.get(pid) or {}
-        for name in _ARCHIVE_RATE_NAMES:
+        for name in ARCHIVE_RATE_KEYS:
             value = arc.get(name)
             if value is not None:
                 sources[name].append((RATE_BLEND["archive"], float(value)))

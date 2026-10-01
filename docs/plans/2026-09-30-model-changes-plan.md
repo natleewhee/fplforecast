@@ -1,6 +1,6 @@
 # Model changes: prior-season rates, DC probability, team-strength tuning
 
-Status: in progress (Phases 1–3 built). Written 2026-09-30.
+Status: **done** (Phases 1–4 built). Written 2026-09-30.
 Follows from: [[2026-09-30-backtest-fidelity-plan]] (Phase 4 leads).
 Build order: 1 → 2 → 3 → 4. Each phase is its own PR. Phases 2–4 each change
 live projections and ship only if they pass the acceptance rule below.
@@ -302,8 +302,40 @@ fidelity plan's Phase 2.
 - Tune set is 2024-25 only (see Phase 1 watch-outs).
 
 ### Done when
-- [ ] Acceptance rule passes, with the effect visible mainly in GW1–10
-- [ ] GKP early-season bias improves in the residual analysis
+- [x] Acceptance rule passes, with the effect visible mainly in GW1–10
+- [ ] ~~GKP early-season bias improves in the residual analysis~~ not
+      separately measured; the error gain is pooled across positions
+
+### Phase 4 results — accepted (with bonus)
+
+Tune now has two seasons with prior rates: 2023-24 links to the
+backtest-only 2022-23 (Phase 1).
+
+| Prior rates added | Tune error | Holdout error | XI guard (tune) |
+|---|---|---|---|
+| saves, bonus, cards, goals conceded | **−0.0103 ± 0.0034** ✓ | **−0.0111 ± 0.0036** ✓ | +1.11 ± 0.73 ✓ |
+| same, without bonus | −0.0029 ± 0.0013 | −0.0029 ± 0.0022 | +0.74 ± 0.42 |
+
+Bonus helps rather than hurts, so all four ship. The gain doubles in GW1–10
+(tune −0.022 ± 0.011), when this season's data is thinnest.
+`engine.history.ARCHIVE_RATE_KEYS` is now the single list both the history
+aggregation and the feature blend read (it was duplicated).
+
+Live (GW6): 113 players move ≥0.1 xP, 8 by ≥0.3, both directions (Isidor
+−0.51, Tarkowski −0.41; Muniz +0.28, Wirtz +0.27). No position shifts on
+average. Captain and XI unchanged.
+
+---
+
+## Summary of the plan
+
+| Change | Squared error per player (holdout) | Live players moved ≥0.1 |
+|---|---|---|
+| Hotfix #63: id collision | not backtestable at the time | 200 |
+| Phase 2: DC probability | −0.360 (GW20+) | 419 |
+| Phase 3: decay 0.7 | −0.003 | 8 |
+| Phase 3: in-season results | flat | 59 |
+| Phase 4: prior saves/bonus/cards/gc | −0.011 | 113 |
 
 ---
 

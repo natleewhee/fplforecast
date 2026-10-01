@@ -170,3 +170,33 @@ def test_backtest_only_seasons_are_hidden_from_live_loads_but_not_the_backtest()
     assert not live_seasons & set(PRIOR_ONLY_SEASONS)
     assert not set(live.coverage) & set(PRIOR_ONLY_SEASONS)
     assert set(PRIOR_ONLY_SEASONS) <= backtest_seasons
+
+
+def test_season_rates_cover_saves_bonus_cards_and_goals_conceded():
+    import pandas as pd
+
+    from engine.history import ARCHIVE_RATE_KEYS, season_rates
+
+    frame = pd.DataFrame(
+        [
+            {"season": "S1", "gw": gw, "historical_id": 1, "minutes": 90, "expected_goals": 0.0,
+             "expected_assists": 0.0, "saves": 3, "bonus": 1, "yellow_cards": 0, "goals_conceded": 2}
+            for gw in (1, 2)
+        ]
+    ).set_index(["season", "gw", "historical_id"])
+
+    rec = season_rates(frame)[("S1", 1)]
+
+    assert (rec["saves90"], rec["bonus90"], rec["yellow90"], rec["gc90"]) == (3.0, 1.0, 0.0, 2.0)
+    assert {"saves90", "bonus90", "yellow90", "gc90"} <= set(ARCHIVE_RATE_KEYS)
+
+
+def test_prior_season_saves_reach_a_keepers_rates():
+    from engine.features import _rate_features
+
+    keeper = {"id": 9, "element_type": 1, "team": 1, "minutes": 0}
+    others = [{"id": i, "element_type": 1, "team": 1, "minutes": 0} for i in (10, 11)]
+    with_prior = _rate_features([keeper, *others], [], {9: {"saves90": 4.0}}, {})
+    without = _rate_features([keeper, *others], [], {}, {})
+
+    assert with_prior[9]["saves90"] > without[9]["saves90"]
