@@ -26,6 +26,7 @@ import LeaguesPage from "./LeaguesPage";
 import Scenarios from "./Scenarios";
 import TransferForm from "./TransferForm";
 import AppTabs from "./AppTabs";
+import { STALE_AFTER_HOURS, describeAge, forecastAgeHours } from "@/lib/forecastAge";
 import Carousel from "./Carousel";
 
 function RunningRecordModule({ record }: { record: RunningRecord | null }) {
@@ -335,6 +336,33 @@ function SharedLinkBanner({
   );
 }
 
+/** Warns when the forecast is older than a daily rebuild should ever leave it:
+ * the squad, scenarios and any saved transfers on screen are then out of date,
+ * and nothing else in the app says so. "Now" is read after mount -- this page
+ * is built statically, so a server-side clock would be frozen at build time. */
+function StaleForecastBanner({ generatedAt }: { generatedAt: string }) {
+  const [nowMs, setNowMs] = useState<number | null>(null);
+  useEffect(() => {
+    const id = setTimeout(() => setNowMs(Date.now()), 0);
+    return () => clearTimeout(id);
+  }, []);
+
+  const hours = nowMs == null ? null : forecastAgeHours(generatedAt, nowMs);
+  if (hours == null || hours < STALE_AFTER_HOURS) return null;
+  return (
+    <div
+      role="status"
+      className="mx-1 mt-3 rounded-lg border border-[var(--warn)]/40 bg-[color-mix(in_srgb,var(--warn)_10%,transparent)] px-3 py-2 text-xs text-ink"
+    >
+      <span className="font-semibold text-[var(--warn)]">Forecast is {describeAge(hours)} old.</span>{" "}
+      <span className="text-ink-soft">
+        Last rebuilt {new Date(generatedAt).toLocaleString()}. The daily rebuild may be failing, so your
+        squad, scenarios and any saved transfers could be out of date.
+      </span>
+    </div>
+  );
+}
+
 /** First-visit gate: shown whenever no team ID cookie exists yet, instead of
  * silently defaulting to this app's own team -- a visitor's dashboard should
  * never look like it's showing their team when it's actually someone else's
@@ -619,6 +647,7 @@ export default function AppShell({
           loading={loading}
           error={error}
         />
+        <StaleForecastBanner generatedAt={forecast.generatedAt} />
         {isViewingSharedLink && (
           <SharedLinkBanner
             teamName={forecast.teamName}
