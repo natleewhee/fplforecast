@@ -12,6 +12,7 @@
 # pandas/numpy -- see that file's own docstring for why bundling them is
 # an accepted tradeoff (gzipped model data keeps the overall bundle under
 # Vercel's size limit even with pandas/numpy installed).
-pulp
+# PuLP 4 (released 2026-09-25) rewrote LpVariable and breaks engine/optimise.py.
+pulp>=3.0,<4
 pandas
 numpy
