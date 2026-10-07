@@ -1,26 +1,42 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Dropdown } from "./Dropdown";
 import type { ForecastPlayer, Player } from "@/lib/snapshots";
+import type { PendingTransfer } from "@/lib/transfers";
 
 type Props = {
   squad: ForecastPlayer[];
   allPlayers: Player[];
   basedOnGw: number;
   bank: number; // £m in the bank
+  initialPending: PendingTransfer[];
+};
+
+type Rebuild = "started" | "scheduled" | "none";
+
+const REBUILD_TEXT: Record<Rebuild, string> = {
+  started: "Rebuilding the forecast now \u2014 refresh in about 5 minutes to see your updated squad.",
+  scheduled: "Your squad updates at the next daily rebuild (03:00 UTC, 11:00 SGT).",
+  none: "",
 };
 
 const fieldClass =
   "mt-1 w-full rounded-lg border border-line bg-[var(--bg-2)] px-3 py-2 text-sm text-ink placeholder:text-ink-faint focus:border-[var(--accent)] focus:outline-none focus:ring-2 focus:ring-[color-mix(in_srgb,var(--accent)_30%,transparent)]";
 
-export default function TransferForm({ squad, allPlayers, basedOnGw, bank }: Props) {
+export default function TransferForm({ squad, allPlayers, basedOnGw, bank, initialPending }: Props) {
   const [outId, setOutId] = useState<number | "">("");
   const [inQuery, setInQuery] = useState("");
   const [inId, setInId] = useState<number | "">("");
   const [note, setNote] = useState("");
   const [status, setStatus] = useState<"idle" | "saving" | "saved" | "error">("idle");
   const [errorMsg, setErrorMsg] = useState("");
+  const [pending, setPending] = useState<PendingTransfer[]>(initialPending);
+  const [confirmation, setConfirmation] = useState<{ text: string; rebuild: Rebuild } | null>(null);
+  const [removing, setRemoving] = useState<string | null>(null);
+  const inFlight = useRef(false);
+
+  const nameOf = (id: number) => allPlayers.find((p) => p.id === id)?.webName ?? `#${id}`;
 
   const squadIds = new Set(squad.map((p) => p.id));
   const matches =
@@ -39,9 +55,11 @@ export default function TransferForm({ squad, allPlayers, basedOnGw, bank }: Pro
       : null;
 
   async function submit() {
-    if (outId === "" || inId === "") return;
+    if (outId === "" || inId === "" || inFlight.current) return;
+    inFlight.current = true;
     setStatus("saving");
     setErrorMsg("");
+    const summary = `${nameOf(outId)} \u2192 ${nameOf(inId)}`;
     try {
       const res = await fetch("/api/transfers", {
         method: "POST",
@@ -50,10 +68,49 @@ export default function TransferForm({ squad, allPlayers, basedOnGw, bank }: Pro
       });
       const json = await res.json();
       if (!res.ok) throw new Error(json.error || "Failed to save");
+      setPending(json.overrides?.transfers ?? []);
+      setConfirmation({
+        text: json.duplicate ? `Already saved: ${summary}` : `Saved: ${summary}`,
+        rebuild: json.rebuild ?? "scheduled",
+      });
+      // reset the form so a second click can't save the same swap again
+      setOutId("");
+      setInId("");
+      setInQuery("");
+      setNote("");
       setStatus("saved");
     } catch (err) {
       setStatus("error");
       setErrorMsg((err as Error).message);
+    } finally {
+      inFlight.current = false;
+    }
+  }
+
+  async function remove(t: PendingTransfer) {
+    const key = `${t.out}-${t.in}`;
+    if (removing) return;
+    setRemoving(key);
+    setErrorMsg("");
+    setStatus("idle");
+    try {
+      const res = await fetch("/api/transfers", {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ outId: t.out, inId: t.in }),
+      });
+      const json = await res.json();
+      if (!res.ok) throw new Error(json.error || "Failed to remove");
+      setPending(json.overrides?.transfers ?? []);
+      setConfirmation({
+        text: `Removed: ${nameOf(t.out)} \u2192 ${nameOf(t.in)}`,
+        rebuild: json.rebuild ?? "scheduled",
+      });
+    } catch (err) {
+      setStatus("error");
+      setErrorMsg((err as Error).message);
+    } finally {
+      setRemoving(null);
     }
   }
 
@@ -63,10 +120,40 @@ export default function TransferForm({ squad, allPlayers, basedOnGw, bank }: Pro
         MAKE A TRANSFER
       </h2>
       <p className="mt-1 text-xs text-ink-soft">
-        Saves to the repo and triggers a redeploy. Bank{" "}
+        Saved transfers apply when the forecast next rebuilds. Bank{" "}
         <span className="font-semibold text-ink tabular-nums">£{bank.toFixed(1)}m</span> · sell prices
         assume each player was bought at today&apos;s price.
       </p>
+
+      {pending.length > 0 && (
+        <div className="mt-3 rounded-lg border border-line px-3 py-2">
+          <div className="font-mono text-[11px] font-bold tracking-[0.12em] text-ink-soft">
+            PENDING TRANSFERS
+          </div>
+          <ul className="mt-1 divide-y divide-[var(--line)]">
+            {pending.map((t) => {
+              const key = `${t.out}-${t.in}`;
+              return (
+                <li key={key} className="flex items-center justify-between gap-2 py-1">
+                  <span className="min-w-0 text-sm text-ink">
+                    {nameOf(t.out)} <span className="text-ink-faint">{"\u2192"}</span> {nameOf(t.in)}
+                    {t.note && <span className="text-ink-faint"> · {t.note}</span>}
+                  </span>
+                  <button
+                    type="button"
+                    className="inline-flex h-11 shrink-0 items-center rounded-lg border border-line px-3 text-xs font-medium text-ink-soft transition-colors hover:border-border-strong disabled:opacity-50"
+                    disabled={removing !== null}
+                    aria-label={`Remove pending transfer ${nameOf(t.out)} to ${nameOf(t.in)}`}
+                    onClick={() => remove(t)}
+                  >
+                    {removing === key ? "Removing\u2026" : "Remove"}
+                  </button>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      )}
 
       <label className="mt-3 block text-xs font-medium text-ink-soft">Out</label>
       <div className="mt-1">
@@ -142,13 +229,16 @@ export default function TransferForm({ squad, allPlayers, basedOnGw, bank }: Pro
         {status === "saving" ? "Saving…" : "Save transfer"}
       </button>
 
-      {status === "saved" && (
-        <p className="mt-2 text-xs font-medium text-[var(--accent)]">
-          Saved. Redeploy takes a minute or two to pick it up.
-        </p>
+      {confirmation && status !== "error" && (
+        <div role="status" className="mt-2 text-xs">
+          <p className="font-medium text-[var(--accent)]">{confirmation.text}</p>
+          {REBUILD_TEXT[confirmation.rebuild] && (
+            <p className="mt-0.5 text-ink-soft">{REBUILD_TEXT[confirmation.rebuild]}</p>
+          )}
+        </div>
       )}
       {status === "error" && (
-        <p className="mt-2 text-xs font-medium text-[var(--danger)]">{errorMsg}</p>
+        <p role="alert" className="mt-2 text-xs font-medium text-[var(--danger)]">{errorMsg}</p>
       )}
     </div>
   );
