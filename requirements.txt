@@ -7,4 +7,6 @@
 pandas
 numpy
 pytest
-pulp
+# PuLP 4 (released 2026-09-25) rewrote LpVariable around a Rust core and no
+# longer accepts cat=...; engine/optimise.py targets the 3.x API.
+pulp>=3.0,<4
