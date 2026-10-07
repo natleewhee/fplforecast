@@ -1,5 +1,6 @@
 import fs from "fs";
 import path from "path";
+import { dedupeTransfers, type PendingTransfer } from "./transfers";
 
 const DATA_DIR = path.join(process.cwd(), "data");
 
@@ -396,7 +397,7 @@ export function loadChipStatus(): ChipStatus[] | null {
   });
 }
 
-export type PendingTransfer = { out: number; in: number; note?: string };
+export type { PendingTransfer };
 
 export type OverridesFile = {
   basedOnGw: number;
@@ -406,7 +407,8 @@ export type OverridesFile = {
 export function loadOverrides(): OverridesFile | null {
   const filePath = path.join(DATA_DIR, "overrides", "transfers.json");
   if (!fs.existsSync(filePath)) return null;
-  return JSON.parse(fs.readFileSync(filePath, "utf-8"));
+  const data: OverridesFile = JSON.parse(fs.readFileSync(filePath, "utf-8"));
+  return { ...data, transfers: dedupeTransfers(data.transfers ?? []) };
 }
 
 export function loadLatestForecast(): Forecast | null {
