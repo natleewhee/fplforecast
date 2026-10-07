@@ -52,6 +52,25 @@ async function putFile(content: OverridesFile, sha: string | null, message: stri
   if (!res.ok) throw new Error(`GitHub write failed: ${res.status} ${await res.text()}`);
 }
 
+type Rebuild = "started" | "scheduled" | "none";
+
+/** Asks GitHub Actions to rebuild the forecast now, so a saved change shows up
+ * in minutes instead of at the next 03:00 UTC run. Best effort: the token may
+ * lack Actions permission, in which case the daily run picks the change up. */
+async function triggerRebuild(): Promise<Rebuild> {
+  try {
+    const res = await fetch(
+      `https://api.github.com/repos/${OWNER}/${REPO}/actions/workflows/snapshot.yml/dispatches`,
+      { method: "POST", headers: githubHeaders(), body: JSON.stringify({ ref: BRANCH }) },
+    );
+    if (res.status === 204) return "started";
+    console.warn(`rebuild dispatch refused: ${res.status} ${await res.text()}`);
+  } catch (err) {
+    console.warn(`rebuild dispatch failed: ${(err as Error).message}`);
+  }
+  return "scheduled";
+}
+
 export async function POST(req: NextRequest) {
   const teamId = resolveTeamId(req.cookies);
   if (teamId !== OWNER_TEAM_ID) {
@@ -80,14 +99,20 @@ export async function POST(req: NextRequest) {
     const incoming: PendingTransfer = { out: outId, in: inId, ...(note ? { note } : {}) };
     // a repeated click (or a retry) of the same swap must not write a second copy
     if (transfers.some((t) => sameTransfer(t, incoming))) {
-      return NextResponse.json({ ok: true, duplicate: true, overrides: { basedOnGw, transfers } });
+      return NextResponse.json({
+        ok: true,
+        duplicate: true,
+        rebuild: "none" satisfies Rebuild,
+        overrides: { basedOnGw, transfers },
+      });
     }
     transfers.push(incoming);
 
     const updated: OverridesFile = { basedOnGw, transfers };
     await putFile(updated, sha, `Transfer: out ${outId}, in ${inId}${note ? ` (${note})` : ""}`);
+    const rebuild = await triggerRebuild();
 
-    return NextResponse.json({ ok: true, overrides: updated });
+    return NextResponse.json({ ok: true, rebuild, overrides: updated });
   } catch (err) {
     return NextResponse.json({ error: (err as Error).message }, { status: 500 });
   }
@@ -102,8 +127,26 @@ export async function DELETE(req: NextRequest) {
     );
   }
   try {
-    const { sha } = await getCurrentFile();
-    if (!sha) return NextResponse.json({ ok: true, message: "nothing to clear" });
+    // With { outId, inId } remove just that transfer; with no body clear them all.
+    const body = await req.json().catch(() => null);
+    const target =
+      body && Number.isFinite(Number(body.outId)) && Number.isFinite(Number(body.inId))
+        ? { out: Number(body.outId), in: Number(body.inId) }
+        : null;
+
+    const { sha, data } = await getCurrentFile();
+    if (!sha || !data) return NextResponse.json({ ok: true, message: "nothing to clear", overrides: null });
+
+    const remaining = target ? data.transfers.filter((t) => !sameTransfer(t, target)) : [];
+    if (target && remaining.length === data.transfers.length) {
+      return NextResponse.json({ ok: true, message: "not found", overrides: data, rebuild: "none" satisfies Rebuild });
+    }
+
+    if (remaining.length > 0) {
+      const updated: OverridesFile = { basedOnGw: data.basedOnGw, transfers: remaining };
+      await putFile(updated, sha, `Remove pending transfer: out ${target!.out}, in ${target!.in}`);
+      return NextResponse.json({ ok: true, rebuild: await triggerRebuild(), overrides: updated });
+    }
 
     const res = await fetch(`https://api.github.com/repos/${OWNER}/${REPO}/contents/${FILE_PATH}`, {
       method: "DELETE",
@@ -111,7 +154,7 @@ export async function DELETE(req: NextRequest) {
       body: JSON.stringify({ message: "Clear pending transfer overrides", sha, branch: BRANCH }),
     });
     if (!res.ok) throw new Error(`GitHub delete failed: ${res.status} ${await res.text()}`);
-    return NextResponse.json({ ok: true });
+    return NextResponse.json({ ok: true, rebuild: await triggerRebuild(), overrides: null });
   } catch (err) {
     return NextResponse.json({ error: (err as Error).message }, { status: 500 });
   }
