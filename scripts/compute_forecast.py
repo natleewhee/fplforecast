@@ -183,7 +183,20 @@ def load_overrides(gw: int) -> list[dict]:
             f"picks are GW{gw})"
         )
         return []
-    return data.get("transfers", [])
+    return dedupe_overrides(data.get("transfers", []))
+
+
+def dedupe_overrides(overrides: list[dict]) -> list[dict]:
+    """Drop repeats of an identical out/in pair -- a second one can never apply,
+    its 'out' player is already gone (a double-clicked Save wrote three)."""
+    seen: set[tuple] = set()
+    out = []
+    for override in overrides:
+        key = (override.get("out"), override.get("in"))
+        if key not in seen:
+            seen.add(key)
+            out.append(override)
+    return out
 
 
 def apply_overrides(squad_ids: list[int], overrides: list[dict]) -> list[int]:
@@ -1283,9 +1296,14 @@ def main(now: datetime | None = None) -> int:
 
     overrides = load_overrides(based_on_gw)
     squad_ids = [p["element"] for p in picks]
+    overrides_applied = 0
     if overrides:
+        original_ids = set(squad_ids)
         squad_ids = apply_overrides(squad_ids, overrides)
-        print(f"overrides: applied {len(overrides)} manual transfer(s)")
+        # net players actually replaced: skipped overrides don't count, and a
+        # chain (A->B then B->C) is one transfer, as FPL counts it
+        overrides_applied = len(original_ids - set(squad_ids))
+        print(f"overrides: applied {overrides_applied} manual transfer(s)")
 
     pool_ctx = build_pool_context(bootstrap, target_gw)
     cache_path = save_pool_context(pool_ctx, target_gw)
@@ -1298,7 +1316,7 @@ def main(now: datetime | None = None) -> int:
         picks,
         entry_history,
         squad_ids,
-        overrides_applied=len(overrides),
+        overrides_applied=overrides_applied,
         season_history=season_history,
     )
 

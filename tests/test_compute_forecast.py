@@ -615,3 +615,19 @@ def test_live_team_strength_counts_this_seasons_finished_matches(monkeypatch):
     table = cf.live_team_strength(bootstrap)
     # a promoted side with no archive history is rated from this season's result
     assert table["NEW"].attack > 1.0
+
+
+def test_dedupe_overrides_keeps_the_first_of_each_out_in_pair():
+    twice = [{"out": 165, "in": 569}, {"out": 165, "in": 569, "note": "again"}, {"out": 569, "in": 7}]
+
+    assert cf.dedupe_overrides(twice) == [{"out": 165, "in": 569}, {"out": 569, "in": 7}]
+
+
+def test_load_overrides_ignores_repeated_identical_transfers(tmp_path, monkeypatch):
+    (tmp_path / "overrides").mkdir()
+    (tmp_path / "overrides" / "transfers.json").write_text(
+        json.dumps({"basedOnGw": 5, "transfers": [{"out": 165, "in": 569}] * 3})
+    )
+    monkeypatch.setattr(cf, "DATA_DIR", tmp_path)
+
+    assert cf.load_overrides(5) == [{"out": 165, "in": 569}]

@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { resolveTeamId, OWNER_TEAM_ID } from "@/lib/teamId";
+import { sameTransfer, type PendingTransfer } from "@/lib/transfers";
 
 const OWNER = "natleewhee";
 const REPO = "fplforecast";
@@ -9,7 +10,6 @@ const FILE_PATH = "data/overrides/transfers.json";
 // so that's the correct default rather than a generic guess that 404s.
 const BRANCH = process.env.FPL_REPO_BRANCH || "claude/fpl-forecaster-build-setup-ksd7z0";
 
-type PendingTransfer = { out: number; in: number; note?: string };
 type OverridesFile = { basedOnGw: number; transfers: PendingTransfer[] };
 
 function githubHeaders() {
@@ -77,7 +77,12 @@ export async function POST(req: NextRequest) {
     const { sha, data } = await getCurrentFile();
     const isStale = !data || data.basedOnGw !== basedOnGw;
     const transfers: PendingTransfer[] = isStale ? [] : [...data.transfers];
-    transfers.push({ out: outId, in: inId, ...(note ? { note } : {}) });
+    const incoming: PendingTransfer = { out: outId, in: inId, ...(note ? { note } : {}) };
+    // a repeated click (or a retry) of the same swap must not write a second copy
+    if (transfers.some((t) => sameTransfer(t, incoming))) {
+      return NextResponse.json({ ok: true, duplicate: true, overrides: { basedOnGw, transfers } });
+    }
+    transfers.push(incoming);
 
     const updated: OverridesFile = { basedOnGw, transfers };
     await putFile(updated, sha, `Transfer: out ${outId}, in ${inId}${note ? ` (${note})` : ""}`);
