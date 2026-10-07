@@ -573,14 +573,6 @@ export default function AppShell({
         />
       )}
 
-      {overrides &&
-        overrides.basedOnGw === forecast.basedOnGameweek &&
-        overrides.transfers.length > 0 && (
-          <p className="font-mono text-[11px] text-ink-faint">
-            pending: {overrides.transfers.map((t) => `out ${t.out} → in ${t.in}`).join(", ")}
-          </p>
-        )}
-
       {isGuest ? (
         <Card>
           <p className="text-xs text-ink-soft">
@@ -594,6 +586,9 @@ export default function AppShell({
             allPlayers={bootstrap.players}
             basedOnGw={forecast.basedOnGameweek}
             bank={forecast.squad.bank}
+            initialPending={
+              overrides && overrides.basedOnGw === forecast.basedOnGameweek ? overrides.transfers : []
+            }
           />
         </Card>
       )}
