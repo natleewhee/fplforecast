@@ -59,7 +59,7 @@ function EventBadges({ row, popped }: { row: TrackerRow; popped: boolean }) {
   const c = eventCounts(row.breakdown);
   const chips: { key: string; node: React.ReactNode; title: string }[] = [];
   if (c.goals) chips.push({ key: "g", title: `${c.goals} goal${c.goals > 1 ? "s" : ""}`, node: <>&#9917;{c.goals > 1 ? c.goals : ""}</> });
-  if (c.assists) chips.push({ key: "a", title: `${c.assists} assist${c.assists > 1 ? "s" : ""}`, node: <span className="font-black text-[var(--accent-2)]">A{c.assists > 1 ? c.assists : ""}</span> });
+  if (c.assists) chips.push({ key: "a", title: `${c.assists} assist${c.assists > 1 ? "s" : ""}`, node: <>{"\u{1F45F}".repeat(Math.min(c.assists, 4))}</> });
   if (c.penSaved) chips.push({ key: "ps", title: "penalty saved", node: <span className="font-black text-[var(--accent)]">PS</span> });
   if (c.yellow) chips.push({ key: "y", title: "yellow card", node: <span className="inline-block h-2.5 w-2 rounded-[1px] bg-[#facc15]" /> });
   if (c.red) chips.push({ key: "r", title: "red card", node: <span className="inline-block h-2.5 w-2 rounded-[1px] bg-[#ef4444]" /> });
