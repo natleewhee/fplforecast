@@ -2,9 +2,10 @@
 
 import { useCallback, useRef, useState } from "react";
 import type { TrackerRow } from "@/lib/liveBlend";
-import { fdrColor, kitFor } from "@/lib/teamColors";
+import { fdrColor } from "@/lib/teamColors";
 import { eventCounts, parseOpponent, sgKickoff } from "@/lib/liveLabels";
-import { FieldMarkings } from "./Pitch";
+import { PitchScene, type PitchMood } from "./PitchScene";
+import { Shirt } from "./Shirt";
 import LivePlayerSheet, { statusText } from "./LivePlayerSheet";
 import { useLiveFx, type Float } from "./useLiveFx";
 
@@ -48,12 +49,6 @@ function shortStatus(row: TrackerRow): string {
       return sgKickoff(row.kickoffTime);
   }
 }
-
-const SHIRT_PATH =
-  "M18 4 L8 9 L1 21 L10 27 L14 22 L14 48 Q28 52 42 48 L42 22 L46 27 L55 21 L48 9 L38 4 Q28 11 18 4 Z";
-
-/** Keepers play in their own colour so the line reads at a glance. */
-const GK_KIT = { primary: "#f4b740", ink: "#1a1204" };
 
 function EventBadges({ row, popped }: { row: TrackerRow; popped: boolean }) {
   const c = eventCounts(row.breakdown);
@@ -123,10 +118,8 @@ function Token({
 }) {
   const t = tone(row);
   const w = bench ? 42 : 56;
-  const h = Math.round((w * 52) / 56);
   const pts = row.pointsSoFar;
   const haul = t !== "pending" && pts >= HAUL;
-  const kit = row.position === "GKP" ? GK_KIT : kitFor(row.team);
   const accent = haul ? "var(--accent-2)" : "var(--accent)";
   const outline = t === "pending" || t === "dnp" ? "rgba(255,255,255,0.35)" : "rgba(255,255,255,0.55)";
   const frac = Math.max(0, Math.min(1, row.minutes / 90));
@@ -147,7 +140,7 @@ function Token({
         bench ? "sm:max-w-[4.2rem]" : "sm:max-w-20"
       }`}
     >
-      <div className="relative" style={{ width: w, height: h }}>
+      <div className="relative" style={{ width: w, height: Math.round((w * 52) / 56) }}>
         {heat && (
           <span
             aria-hidden
@@ -172,55 +165,19 @@ function Token({
             {Math.abs(f.delta).toFixed(0)}
           </span>
         ))}
-        <svg
-          viewBox="0 0 56 52"
+        <Shirt
+          team={row.team}
+          position={row.position}
           width={w}
-          height={h}
-          className={`relative overflow-visible ${glowing ? "live-glow-shirt" : ""}`}
-          style={{
-            opacity: dim,
-            ["--glow" as string]: haul ? "var(--accent-2)" : "var(--accent)",
-            filter: glowing ? undefined : "drop-shadow(0 2px 4px rgba(0,0,0,0.55))",
-          }}
-          aria-hidden
-        >
-          <path d={SHIRT_PATH} fill={kit.primary} />
-          <path d="M20 4.6 Q28 13 36 4.6" fill="none" stroke={kit.ink} strokeOpacity="0.45" strokeWidth="1.6" strokeLinecap="round" />
-          <path d="M14 22 V48 M42 22 V48" stroke="rgba(0,0,0,0.22)" strokeWidth="1" />
-          {/* minutes played, drawn as the shirt's outline filling up */}
-          <path
-            d={SHIRT_PATH}
-            fill="none"
-            stroke={outline}
-            strokeWidth="1.8"
-            strokeLinejoin="round"
-            strokeDasharray={t === "pending" ? "3 2.5" : undefined}
-          />
-          {t !== "pending" && t !== "dnp" && (
-            <path
-              d={SHIRT_PATH}
-              pathLength={100}
-              fill="none"
-              stroke={accent}
-              strokeWidth="3"
-              strokeLinejoin="round"
-              strokeLinecap="round"
-              strokeDasharray={`${frac * 100} 100`}
-            />
-          )}
-          <rect x="17" y="21" width="22" height="14" rx="4" fill="rgba(6,9,15,0.84)" />
-          <text
-            x="28"
-            y="31.6"
-            textAnchor="middle"
-            fontFamily="ui-monospace, monospace"
-            fontWeight="800"
-            fontSize={t === "pending" ? 11 : 12}
-            fill={t === "pending" ? "#7482a0" : pts < 0 ? "#fb7185" : "#eef2f8"}
-          >
-            {t === "pending" ? "\u2013" : pts.toFixed(0)}
-          </text>
-        </svg>
+          label={t === "pending" ? "\u2013" : pts.toFixed(0)}
+          tone={t === "pending" ? "faint" : pts < 0 ? "danger" : "ink"}
+          stroke={outline}
+          dashed={t === "pending"}
+          progress={t === "pending" || t === "dnp" ? null : frac}
+          progressColor={accent}
+          glow={glowing ? accent : null}
+          dim={dim}
+        />
         <EventBadges row={row} popped={popped} />
         {(row.isArmband || row.isViceCaptain) && (
           <span
@@ -304,13 +261,13 @@ export default function LivePitch({ rows, gameweek }: { rows: TrackerRow[]; game
   const shareOf = (r: TrackerRow) => (totalContribution > 0 ? Math.max(0, r.contribution) / totalContribution : 0);
 
   // Lights up while any of your eleven is playing, dims once they are all done.
-  const mood = onPitch.some((r) => r.status === "playing")
-    ? "mood-live"
+  const mood: PitchMood = onPitch.some((r) => r.status === "playing")
+    ? "live"
     : onPitch.every((r) => r.status === "finished" || r.status === "offPitch" || r.status === "didNotPlay")
-      ? "mood-ft"
-      : "mood-pre";
+      ? "ft"
+      : "pre";
   const moodText =
-    mood === "mood-live" ? "Floodlights on: your players are in play" : mood === "mood-ft" ? "Full time for your eleven" : "Waiting for kickoff";
+    mood === "live" ? "Floodlights on: your players are in play" : mood === "ft" ? "Full time for your eleven" : "Waiting for kickoff";
 
   return (
     <div>
@@ -331,13 +288,8 @@ export default function LivePitch({ rows, gameweek }: { rows: TrackerRow[]; game
           Heat map
         </button>
       </div>
-      <div className={`floodlit-pitch relative overflow-hidden rounded-2xl px-1 pb-6 pt-12 ${mood}`}>
-        <FieldMarkings line="rgba(255,255,255,0.22)" />
-        <div className="stand" aria-hidden />
-        <div className="beam beam-l" aria-hidden />
-        <div className="beam beam-r" aria-hidden />
-        {fx.goalFlare > 0 && <div key={fx.goalFlare} className="goal-flare" aria-hidden />}
-        <div className="relative z-10 space-y-5">
+      <PitchScene mood={mood} flare={fx.goalFlare}>
+        <div className="space-y-5">
           {lines.map((line, i) => (
             <div key={i} className="flex justify-center gap-x-1 gap-y-4">
               {line.map((r) => (
@@ -354,7 +306,7 @@ export default function LivePitch({ rows, gameweek }: { rows: TrackerRow[]; game
             </div>
           ))}
         </div>
-      </div>
+      </PitchScene>
 
       <p className="mt-2 text-[10.5px] leading-snug text-ink-faint">
         The shirt outline fills with minutes played and glows while playing · dashed = yet to start ·{" "}
