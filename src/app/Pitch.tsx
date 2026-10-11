@@ -6,7 +6,7 @@ import { availabilityFlag } from "@/lib/availability";
 import { fdrColor } from "@/lib/teamColors";
 import PlayerBreakdownSheet from "./PlayerBreakdownSheet";
 import { PitchScene } from "./PitchScene";
-import { RangeBar, Shirt, ShirtBadges } from "./Shirt";
+import { Halo, meanFdr, RangeBar, Shirt, ShirtBadges } from "./Shirt";
 
 function bandLabel(band: { floor: number; ceiling: number; bandProvisional: boolean } | null | undefined) {
   if (!band) return "";
@@ -123,12 +123,14 @@ function PlayerToken({
       aria-label={`${t.webName}: ${t.xp != null ? t.xp.toFixed(1) : "no"} xP${
         bandTitle ? `, typical range ${bandTitle}` : ""
       }${doubt ? `, ${doubt.label}` : ""}, show breakdown`}
+      data-flip={t.id}
       className={`flex min-w-0 max-w-[4.4rem] flex-1 basis-0 flex-col items-center gap-0.5 rounded-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--accent)] ${bench ? "sm:max-w-[4.2rem]" : "sm:max-w-20"}`}
       title={[t.webName, bandTitle && `typical range ${bandTitle}`, doubt?.label]
         .filter(Boolean)
         .join(" — ")}
     >
       <div className="relative" style={{ width: w, height: Math.round((w * 52) / 56) }}>
+        <Halo fdr={meanFdr(t.opponents)} width={w} />
         <Shirt
           team={t.team}
           position={t.position}
@@ -141,7 +143,8 @@ function PlayerToken({
         <ShirtBadges items={badges} />
         {(isCaptain || isVice) && (
           <span
-            className={`armband absolute -right-1 -top-1 h-4 w-4 text-[9px] ${
+            key={isCaptain ? "c" : "v"}
+            className={`armband fx-pop absolute -right-1 -top-1 h-4 w-4 text-[9px] ${
               isCaptain ? "armband-captain" : "armband-vice"
             }`}
           >

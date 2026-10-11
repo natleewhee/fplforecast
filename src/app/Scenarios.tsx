@@ -16,7 +16,7 @@ import type {
 import { availabilityFlag } from "@/lib/availability";
 import { OppChip, riskBadges } from "./Pitch";
 import { PitchScene } from "./PitchScene";
-import { Shirt, ShirtBadges } from "./Shirt";
+import { Halo, meanFdr, Shirt, ShirtBadges } from "./Shirt";
 
 const HORIZONS = ["1", "3", "5"] as const;
 type Horizon = (typeof HORIZONS)[number];
@@ -49,10 +49,12 @@ function ShirtToken({
   const w = 44;
   return (
     <div
+      data-flip={player.id}
       className="flex min-w-0 max-w-16 flex-1 basis-0 flex-col items-center gap-0.5 sm:max-w-[4.5rem]"
       title={[player.webName, doubt?.label].filter(Boolean).join(" \u2014 ")}
     >
       <div className="relative" style={{ width: w, height: Math.round((w * 52) / 56) }}>
+        <Halo fdr={meanFdr(opponents)} width={w} />
         <Shirt
           team={player.team}
           position={player.position}
@@ -62,7 +64,7 @@ function ShirtToken({
         />
         <ShirtBadges items={riskBadges(player.availability, undefined)} />
         {isCaptain && (
-          <span className="armband armband-captain absolute -right-1 -top-1 h-4 w-4 text-[9px]">
+          <span className="armband armband-captain fx-pop absolute -right-1 -top-1 h-4 w-4 text-[9px]">
             C
           </span>
         )}
