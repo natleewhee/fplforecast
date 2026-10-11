@@ -31,8 +31,7 @@ const RING_FULL = 11; // xP that fills the ring
 
 /* ---------- pitch furniture ---------- */
 
-export function FieldMarkings() {
-  const line = "rgba(255,255,255,0.16)";
+export function FieldMarkings({ line = "rgba(255,255,255,0.16)" }: { line?: string }) {
   return (
     <svg
       className="pointer-events-none absolute inset-0 h-full w-full"

@@ -330,6 +330,7 @@ export type TrackerRow = {
   contribution: number;
   isBench: boolean;
   isArmband: boolean;
+  isViceCaptain: boolean; // the named vice (the armband passes to them only if the captain doesn't play)
   subbedIn: boolean;
   subbedOut: boolean;
   noBakedXp: boolean;
@@ -597,6 +598,7 @@ export function buildTracker(payload: LivePayload, prev: LivePayload | null): Tr
       contribution: proj.contribution * multiplier,
       isBench: benchSet.has(sp.id),
       isArmband: sp.id === armbandId,
+      isViceCaptain: sp.id === viceCaptainId,
       subbedIn: subbedIn.has(sp.id),
       subbedOut: subbedOut.has(sp.id),
       noBakedXp: !sp.hasComponents,
