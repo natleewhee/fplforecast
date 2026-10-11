@@ -56,3 +56,31 @@ export function parseOpponent(opponent: string | null): { team: string; home: bo
   const m = opponent?.match(/^(.+?) \(([HA])\)$/);
   return m ? { team: m[1], home: m[2] === "H" } : null;
 }
+
+export type EventCounts = {
+  goals: number;
+  assists: number;
+  yellow: number;
+  red: number;
+  penSaved: number;
+  penMissed: number;
+  ownGoals: number;
+};
+
+/** The headline events in FPL's breakdown, as counts (`value` is the count). */
+export function eventCounts(breakdown: BreakdownItem[]): EventCounts {
+  const n = (id: string) => breakdown.find((b) => b.identifier === id)?.value ?? 0;
+  return {
+    goals: n("goals_scored"),
+    assists: n("assists"),
+    yellow: n("yellow_cards"),
+    red: n("red_cards"),
+    penSaved: n("penalties_saved"),
+    penMissed: n("penalties_missed"),
+    ownGoals: n("own_goals"),
+  };
+}
+
+export function totalEvents(c: EventCounts): number {
+  return c.goals + c.assists + c.yellow + c.red + c.penSaved + c.penMissed + c.ownGoals;
+}
