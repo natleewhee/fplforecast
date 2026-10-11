@@ -80,6 +80,9 @@ export default function LivePlayerSheet({
                 <span
                   className={`font-mono tabular-nums ${b.points < 0 ? "text-[var(--danger)]" : "text-[var(--accent)]"}`}
                 >
+                  {b.identifier !== "bonus" && b.value > 0 && (
+                    <span className="mr-2 text-ink-soft">&times;{b.value}</span>
+                  )}
                   {b.points > 0 ? "+" : ""}
                   {b.points}
                 </span>
