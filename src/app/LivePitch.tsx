@@ -72,7 +72,7 @@ function EventBadges({ row, popped }: { row: TrackerRow; popped: boolean }) {
   return (
     <span
       aria-hidden
-      className={`absolute -bottom-1.5 left-1/2 flex -translate-x-1/2 items-center gap-px rounded-full border border-white/15 bg-[rgba(6,9,15,0.9)] px-1 py-px text-[9px] leading-none text-ink ${popped ? "fx-pop" : ""}`}
+      className={`absolute -bottom-1.5 left-1/2 flex -translate-x-1/2 items-center whitespace-nowrap gap-px rounded-full border border-white/15 bg-[rgba(6,9,15,0.9)] px-1 py-px text-[9px] leading-none text-ink ${popped ? "fx-pop" : ""}`}
     >
       {shown.map((ch) => (
         <span key={ch.key} title={ch.title} className="flex items-center">
@@ -143,8 +143,8 @@ function Token({
       type="button"
       onClick={(e) => onSelect(row.id, e.currentTarget)}
       aria-label={label}
-      className={`flex w-[4.4rem] flex-col items-center gap-0.5 rounded-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--accent)] ${
-        bench ? "sm:w-[4.2rem]" : "sm:w-20"
+      className={`flex min-w-0 max-w-[4.4rem] flex-1 basis-0 flex-col items-center gap-0.5 rounded-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--accent)] ${
+        bench ? "sm:max-w-[4.2rem]" : "sm:max-w-20"
       }`}
     >
       <div className="relative" style={{ width: w, height: h }}>
@@ -244,7 +244,7 @@ function Token({
         )}
       </div>
       <span
-        className={`mt-1 max-w-[4.2rem] truncate text-[11px] font-semibold text-ink [text-shadow:0_1px_3px_rgba(0,0,0,0.85)] ${
+        className={`mt-1 max-w-full truncate text-[11px] font-semibold text-ink [text-shadow:0_1px_3px_rgba(0,0,0,0.85)] ${
           t === "dnp" ? "opacity-60" : ""
         }`}
       >
@@ -339,7 +339,7 @@ export default function LivePitch({ rows, gameweek }: { rows: TrackerRow[]; game
         {fx.goalFlare > 0 && <div key={fx.goalFlare} className="goal-flare" aria-hidden />}
         <div className="relative z-10 space-y-5">
           {lines.map((line, i) => (
-            <div key={i} className="flex flex-wrap justify-center gap-x-2 gap-y-4">
+            <div key={i} className="flex justify-center gap-x-1 gap-y-4">
               {line.map((r) => (
                 <Token
                   key={r.id}
@@ -365,7 +365,7 @@ export default function LivePitch({ rows, gameweek }: { rows: TrackerRow[]; game
       {benched.length > 0 && (
         <div className="mt-3">
           <p className="eyebrow mb-1.5">Bench</p>
-          <div className="flex flex-wrap gap-x-2 gap-y-3">
+          <div className="flex gap-x-1 gap-y-3">
             {benched.map((r) => (
               <Token
                 key={r.id}
