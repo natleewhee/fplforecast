@@ -4,14 +4,12 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import {
   buildTracker,
   withinMatchWindow,
-  type BreakdownItem,
   type LivePayload,
-  type TrackerRow,
   type TrackerView,
 } from "@/lib/liveBlend";
-import { fdrColor } from "@/lib/teamColors";
 import { countdown } from "@/lib/countdown";
 import type { GameweekReview } from "@/lib/snapshots";
+import LivePitch from "./LivePitch";
 
 /* The in-gameweek surface (KTD7): while matches are live it leads the page with
  * a projected final total, the par band and arrow, and a per-player breakdown,
@@ -21,91 +19,11 @@ import type { GameweekReview } from "@/lib/snapshots";
 
 const POLL_MS = 60_000;
 
-const POSITION_COLOR: Record<string, string> = {
-  GKP: "bg-[var(--gkp)]",
-  DEF: "bg-[var(--def)]",
-  MID: "bg-[var(--mid)]",
-  FWD: "bg-[var(--fwd)]",
-};
-
-/** Status label that reflects minutes/kickoff, not just the state name — a
- * finished player reads "FT 90'" rather than an ambiguous "finished". */
-function statusLabel(row: TrackerRow): string {
-  switch (row.status) {
-    case "finished":
-      return `FT ${row.minutes}'`;
-    case "playing":
-      return `${row.minutes}'`;
-    case "offPitch":
-      return `${row.minutes}' off`;
-    case "didNotPlay":
-      return "did not play";
-    case "notStarted":
-      return sgKickoff(row.kickoffTime);
-  }
-}
-
-/** Kickoff day + time in Singapore Time, e.g. "Sat 21:00 SGT". */
-function sgKickoff(iso: string | null): string {
-  if (!iso) return "—";
-  const d = new Date(iso);
-  if (Number.isNaN(d.getTime())) return "—";
-  const day = d.toLocaleDateString("en-GB", { weekday: "short", timeZone: "Asia/Singapore" });
-  const time = d.toLocaleTimeString("en-GB", {
-    hour: "2-digit",
-    minute: "2-digit",
-    timeZone: "Asia/Singapore",
-  });
-  return `${day} ${time} SGT`;
-}
-
 const BAND_CLASS: Record<TrackerView["band"], string> = {
   green: "chip chip-accent",
   amber: "chip chip-warn",
   red: "chip chip-danger",
 };
-
-// FPL's own `explain` identifiers -> a short human label for the breakdown.
-const STAT_LABEL_MAP: Record<string, string> = {
-  minutes: "Minutes",
-  goals_scored: "Goals",
-  assists: "Assists",
-  clean_sheets: "Clean sheet",
-  goals_conceded: "Goals conceded",
-  own_goals: "Own goals",
-  penalties_saved: "Penalties saved",
-  penalties_missed: "Penalties missed",
-  yellow_cards: "Yellow card",
-  red_cards: "Red card",
-  saves: "Saves",
-  bonus: "Bonus",
-  defensive_contribution: "Defensive contribution",
-  mng_win: "Win",
-  mng_draw: "Draw",
-  mng_loss: "Loss",
-  mng_clean_sheets: "Clean sheet",
-  mng_goals_scored: "Goals scored",
-};
-
-function statLabel(identifier: string): string {
-  return (
-    STAT_LABEL_MAP[identifier] ??
-    identifier
-      .split("_")
-      .map((w) => w[0]?.toUpperCase() + w.slice(1))
-      .join(" ")
-  );
-}
-
-/** A compact one-line summary for the hover title, e.g. "90' · Clean sheet +4 · 6 pts". */
-function breakdownSummary(breakdown: BreakdownItem[], total: number): string {
-  const parts = breakdown
-    .filter((b) => b.points !== 0 || b.identifier === "minutes")
-    .map((b) =>
-      b.identifier === "minutes" ? `${b.value}'` : `${statLabel(b.identifier)} ${b.points >= 0 ? "+" : ""}${b.points}`,
-    );
-  return [...parts, `${total} pts`].join(" · ");
-}
 
 function hhmm(iso: string | null): string {
   if (!iso) return "—";
@@ -297,7 +215,6 @@ function TrackerPanel({
   lastOk: string | null;
 }) {
   const starters = view.rows.filter((r) => !r.isBench || r.subbedIn);
-  const bench = view.rows.filter((r) => r.isBench && !r.subbedIn);
   const currentScore = starters.reduce((sum, r) => sum + r.pointsSoFar, 0);
 
   // Safety score: score above this and you're in the clear (green) --
@@ -408,130 +325,7 @@ function TrackerPanel({
         </details>
       )}
 
-      <div className="space-y-1">
-        {starters.map((r) => (
-          <PlayerRow key={r.id} row={r} />
-        ))}
-        {bench.length > 0 && (
-          <>
-            <div className="eyebrow px-1 pt-2">Bench</div>
-            {bench.map((r) => (
-              <PlayerRow key={r.id} row={r} />
-            ))}
-          </>
-        )}
-      </div>
+      <LivePitch rows={view.rows} gameweek={payload.gameweek} />
     </div>
-  );
-}
-
-function PlayerRow({ row }: { row: TrackerRow }) {
-  const dim = row.isBench && !row.subbedIn;
-  const showRemaining = row.status === "notStarted" || row.status === "playing";
-  const finished = row.status === "finished";
-  const hasBreakdown = row.breakdown.length > 0;
-
-  // Two lines per player instead of one long packed row: name/chips/score on
-  // top, opponent+FDR+status below. A single wide row (badge, name, opponent,
-  // status, points, remaining all side by side) doesn't fit a phone screen —
-  // this stacks vertically instead of overflowing horizontally.
-  const rowContent = (
-    <div className="flex min-w-0 flex-1 flex-col gap-0.5">
-      <div className="flex items-center gap-2">
-        <span
-          className={`inline-block w-8 shrink-0 rounded py-0.5 text-center text-[9px] font-bold tracking-wide text-black/85 ${
-            POSITION_COLOR[row.position] ?? "bg-ink-soft"
-          }`}
-        >
-          {row.position}
-        </span>
-        {row.status === "playing" && (
-          <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--accent)] pulse" title="live" />
-        )}
-        <span
-          className={`min-w-0 truncate font-medium text-ink ${row.subbedOut ? "line-through opacity-60" : ""}`}
-        >
-          {row.webName}
-        </span>
-        {row.isArmband && (
-          <span className="armband armband-captain h-4 w-4 shrink-0 text-[9px]">C</span>
-        )}
-        {row.subbedIn && <span className="chip chip-accent !py-0 text-[10px]">sub ▲</span>}
-        {row.subbedOut && <span className="chip chip-danger !py-0 text-[10px]">sub ▼</span>}
-        {row.noBakedXp && (
-          <span className="chip !py-0 shrink-0 text-[10px]" title="no baked xP in the latest snapshot">
-            no xP
-          </span>
-        )}
-        <span className="ml-auto shrink-0 font-mono font-bold tabular-nums text-ink">
-          {row.pointsSoFar.toFixed(0)}
-        </span>
-        <span className="w-12 shrink-0 text-right font-mono text-[11px] tabular-nums text-[var(--accent)]">
-          {showRemaining ? `+${row.remainingXp.toFixed(1)}` : ""}
-        </span>
-      </div>
-      <div className="flex items-center gap-1 pl-10 text-[11px]">
-        {row.status === "notStarted" && row.fdrRating != null && (
-          <span
-            className="inline-block h-2 w-2 shrink-0 rounded-full"
-            style={{ backgroundColor: fdrColor(row.fdrRating) }}
-            title={`FDR ${row.fdrRating}`}
-          />
-        )}
-        <span className="truncate text-ink-faint">{row.opponent ?? "—"}</span>
-        <span
-          className={`shrink-0 whitespace-nowrap ${
-            finished ? "font-semibold text-[var(--accent)]" : "text-ink-soft"
-          }`}
-        >
-          · {finished ? "✓ " : ""}
-          {statusLabel(row)}
-        </span>
-      </div>
-    </div>
-  );
-
-  const rowClass = `flex items-center gap-2 rounded-md px-1 py-1.5 text-sm ${dim ? "opacity-50" : ""} ${
-    finished
-      ? "bg-[color-mix(in_srgb,var(--accent)_6%,transparent)]"
-      : row.subbedIn
-        ? "bg-[color-mix(in_srgb,var(--accent)_10%,transparent)]"
-        : ""
-  }`;
-
-  // Score is clickable once FPL's own breakdown exists (from kickoff onward);
-  // <summary> gives both a hover preview (native title tooltip) and a click
-  // to expand the full per-category breakdown below — no JS state needed.
-  if (!hasBreakdown) {
-    return <div className={rowClass}>{rowContent}</div>;
-  }
-
-  return (
-    <details>
-      <summary
-        className={`${rowClass} cursor-pointer list-none marker:content-none [&::-webkit-details-marker]:hidden`}
-        title={breakdownSummary(row.breakdown, row.pointsSoFar)}
-      >
-        {rowContent}
-      </summary>
-      <div className="ml-9 mt-0.5 flex flex-wrap gap-x-3 gap-y-0.5 border-l border-line pl-2 pb-1.5 text-[11px] text-ink-soft">
-        {row.breakdown
-          .filter((b) => b.points !== 0 || b.identifier === "minutes")
-          .map((b) => (
-            <span key={b.identifier} className="tabular-nums">
-              {statLabel(b.identifier)}
-              {b.identifier === "minutes" ? (
-                <span className="text-ink-faint"> {b.value}&apos;</span>
-              ) : (
-                <span className={b.points >= 0 ? "text-[var(--accent)]" : "text-[var(--danger)]"}>
-                  {" "}
-                  {b.points >= 0 ? "+" : ""}
-                  {b.points}
-                </span>
-              )}
-            </span>
-          ))}
-      </div>
-    </details>
   );
 }

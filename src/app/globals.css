@@ -332,9 +332,31 @@ option {
   animation: hud-pulse 2s ease-in-out infinite;
 }
 
+/* floodlit night pitch (Live tab): striped dark turf lit from above, with a
+   vignette so the edges fall away; a live player's ring pulses a green glow. */
+.floodlit-pitch {
+  background:
+    radial-gradient(90% 55% at 50% -8%, rgba(255, 255, 255, 0.13), transparent 62%),
+    radial-gradient(120% 90% at 50% 50%, transparent 52%, rgba(0, 0, 0, 0.5)),
+    repeating-linear-gradient(180deg, #0b3a23 0 46px, #0e4529 46px 92px);
+}
+@keyframes live-glow {
+  0%, 100% {
+    box-shadow: 0 0 0 2px color-mix(in srgb, var(--glow, var(--accent)) 35%, transparent), 0 0 14px var(--glow-soft, var(--accent-glow));
+  }
+  50% {
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--glow, var(--accent)) 22%, transparent), 0 0 28px var(--glow-soft, var(--accent-glow));
+  }
+}
+.live-glow {
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--glow, var(--accent)) 30%, transparent), 0 0 20px var(--glow-soft, var(--accent-glow));
+  animation: live-glow 2.2s ease-in-out infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .rise,
   .pulse,
+  .live-glow,
   .shimmer {
     animation: none;
   }
