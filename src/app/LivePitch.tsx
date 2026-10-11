@@ -68,7 +68,7 @@ function EventBadges({ row, popped }: { row: TrackerRow; popped: boolean }) {
   if (c.penMissed) chips.push({ key: "pm", title: "penalty missed", node: <span className="font-black text-[var(--danger)]">PM</span> });
   if (c.ownGoals) chips.push({ key: "og", title: "own goal", node: <span className="font-black text-[var(--danger)]">OG</span> });
   if (!chips.length) return null;
-  const shown = chips.slice(0, 4);
+  const shown = chips.slice(0, 5);
   return (
     <span
       aria-hidden
