@@ -65,11 +65,14 @@ export type EventCounts = {
   penSaved: number;
   penMissed: number;
   ownGoals: number;
+  cleanSheet: number; // 1 only when it actually earned points (a forward's clean sheet is worth 0)
+  defcon: number; // 1 when the defensive-contribution bonus was earned
 };
 
 /** The headline events in FPL's breakdown, as counts (`value` is the count). */
 export function eventCounts(breakdown: BreakdownItem[]): EventCounts {
   const n = (id: string) => breakdown.find((b) => b.identifier === id)?.value ?? 0;
+  const scored = (id: string) => ((breakdown.find((b) => b.identifier === id)?.points ?? 0) > 0 ? 1 : 0);
   return {
     goals: n("goals_scored"),
     assists: n("assists"),
@@ -78,9 +81,11 @@ export function eventCounts(breakdown: BreakdownItem[]): EventCounts {
     penSaved: n("penalties_saved"),
     penMissed: n("penalties_missed"),
     ownGoals: n("own_goals"),
+    cleanSheet: scored("clean_sheets"),
+    defcon: scored("defensive_contribution"),
   };
 }
 
 export function totalEvents(c: EventCounts): number {
-  return c.goals + c.assists + c.yellow + c.red + c.penSaved + c.penMissed + c.ownGoals;
+  return c.goals + c.assists + c.yellow + c.red + c.penSaved + c.penMissed + c.ownGoals + c.cleanSheet + c.defcon;
 }
