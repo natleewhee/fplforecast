@@ -79,6 +79,26 @@ def load_event_live_history() -> list[dict]:
     return [load_json(f) for f in files]
 
 
+FORM_WINDOW = 5
+
+
+def recent_form_by_id(window: int = FORM_WINDOW) -> dict[int, list[int | None]]:
+    """Each player's points in the last ``window`` stored gameweeks, oldest
+    first, with ``None`` where they didn't play (so a blank reads as a missed
+    game, not a zero score). Feeds the little form bars on the pitch tokens."""
+    history = load_event_live_history()[-window:]
+    per_gw: list[dict[int, int | None]] = []
+    for payload in history:
+        gw_points: dict[int, int | None] = {}
+        for el in payload.get("elements", []):
+            stats = el.get("stats") or {}
+            played = (stats.get("minutes") or 0) > 0
+            gw_points[el["id"]] = stats.get("total_points") if played else None
+        per_gw.append(gw_points)
+    ids: set[int] = set().union(*per_gw) if per_gw else set()
+    return {pid: [gw_points.get(pid) for gw_points in per_gw] for pid in ids}
+
+
 def load_fixtures() -> list[dict]:
     path = latest_file("fixtures")
     return load_json(path).get("fixtures", []) if path else []
@@ -369,9 +389,18 @@ def _availability_info(el: dict) -> dict:
     }
 
 
-def _player_card(pid: int, elements_by_id: dict, teams_by_id: dict) -> dict:
+def _player_card(
+    pid: int,
+    elements_by_id: dict,
+    teams_by_id: dict,
+    form_by_id: dict[int, list[int | None]] | None = None,
+) -> dict:
     el = elements_by_id.get(pid, {})
     return {
+        # FPL's photo code (the headshot is served as <code>.png) and the last
+        # few gameweeks' points, for the pitch tokens.
+        "code": el.get("code"),
+        "recentPoints": (form_by_id or {}).get(pid, []),
         "id": pid,
         "webName": el.get("web_name", "???"),
         "team": teams_by_id.get(el.get("team"), "???"),
@@ -859,6 +888,7 @@ def build_pool_context(bootstrap: dict, target_gw: int) -> dict:
             )
         return legs_by_gw
 
+    form_by_id = recent_form_by_id()
     pool = []
     for pid in pool_ids:
         el = elements_by_id.get(pid, {})
@@ -888,6 +918,8 @@ def build_pool_context(bootstrap: dict, target_gw: int) -> dict:
                 "sellPrice": round((el.get("now_cost") or 0) / 10, 1),
                 "selectedByPercent": float(el.get("selected_by_percent") or 0),
                 "form": float(el.get("form") or 0),
+                "code": el.get("code"),
+                "recentPoints": form_by_id.get(pid, []),
                 "perGameweek": [round(v, 2) for v in per_gw],
                 "total": round(sum(per_gw), 2),
                 "opponents": _pool_opponents(el.get("team")),
@@ -941,6 +973,7 @@ def build_personal_forecast(
     residuals_by_position = pool_ctx["residualsByPosition"]
     pool = pool_ctx["pool"]
     season_history = season_history or {}
+    form_by_id = recent_form_by_id()
 
     bank = round((entry_history.get("bank") or 0) / 10, 1)
 
@@ -953,7 +986,7 @@ def build_personal_forecast(
         if pid not in feature_frame.index:
             continue
         detail = model.project_detail(feature_frame.loc[pid], target_gw, ctx)
-        card = _player_card(pid, elements_by_id, teams_by_id)
+        card = _player_card(pid, elements_by_id, teams_by_id, form_by_id)
         sell_price = card["price"]  # public data has no purchase price; assume bought at today's
         card["sellPrice"] = sell_price
         card["projectedPoints"] = detail.get("points")

@@ -109,14 +109,16 @@ export function Shirt({
 export function ShirtBadges({
   items,
   className = "",
+  anchor = "center",
 }: {
   items: { key: string; node: ReactNode; title: string }[];
   className?: string;
+  anchor?: "center" | "left";
 }) {
   if (!items.length) return null;
   return (
     <span
-      className={`absolute -bottom-1.5 left-1/2 flex -translate-x-1/2 items-center gap-px whitespace-nowrap rounded-full border border-white/15 bg-[rgba(6,9,15,0.9)] px-1 py-px text-[9px] leading-none text-ink ${className}`}
+      className={`absolute -bottom-1.5 ${anchor === "left" ? "-left-3" : "left-1/2 -translate-x-1/2"} flex items-center gap-px whitespace-nowrap rounded-full border border-white/15 bg-[rgba(6,9,15,0.9)] px-1 py-px text-[9px] leading-none text-ink ${className}`}
     >
       {items.map((it) => (
         <span key={it.key} title={it.title} className="flex items-center">
@@ -176,5 +178,34 @@ export function Halo({ fdr, width }: { fdr: number | null | undefined; width: nu
         opacity: 0.5,
       }}
     />
+  );
+}
+
+/** The last few gameweeks' points as tiny bars, oldest first. A game they
+ * didn't play is a thin dash, not a zero-height bar. */
+export function FormBars({ points }: { points: (number | null)[] | undefined }) {
+  const vals = (points ?? []).slice(-5);
+  if (!vals.some((v) => v != null)) return null;
+  const MAX = 12;
+  const COLOR = (v: number) =>
+    v < 0 ? "var(--danger)" : v >= 9 ? "var(--accent-2)" : v >= 5 ? "var(--accent)" : "var(--ink-soft)";
+  return (
+    <span
+      role="img"
+      aria-label={`Points in the last ${vals.length} gameweeks: ${vals.map((v) => (v == null ? "did not play" : v)).join(", ")}`}
+      className="mt-0.5 flex h-[11px] items-end gap-[2px]"
+    >
+      {vals.map((v, i) =>
+        v == null ? (
+          <span key={i} className="h-px w-1.5 bg-white/30" />
+        ) : (
+          <span
+            key={i}
+            className="w-1.5 rounded-[1px]"
+            style={{ height: Math.max(2, Math.min(11, (Math.max(v, 0) / MAX) * 11)), background: COLOR(v) }}
+          />
+        ),
+      )}
+    </span>
   );
 }

@@ -32,6 +32,7 @@ export type LeagueSquadRow = {
   id: number;
   webName: string;
   team: string; // short_name, for kit color
+  code: number | null; // FPL photo code, for the headshot
   position: "GKP" | "DEF" | "MID" | "FWD";
   isBench: boolean;
   isCaptain: boolean;
@@ -118,6 +119,7 @@ export async function GET(request: NextRequest) {
     const rows: LeagueSquadRow[] = tracker.rows.map((r) => ({
       id: r.id,
       webName: r.webName,
+      code: r.code,
       team: teamShortById.get(clubByElement.get(r.id) ?? -1) ?? "???",
       position: r.position,
       isBench: r.isBench,

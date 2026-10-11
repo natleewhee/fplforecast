@@ -6,7 +6,8 @@ import { availabilityFlag } from "@/lib/availability";
 import { fdrColor } from "@/lib/teamColors";
 import PlayerBreakdownSheet from "./PlayerBreakdownSheet";
 import { PitchScene } from "./PitchScene";
-import { Halo, meanFdr, RangeBar, Shirt, ShirtBadges } from "./Shirt";
+import { FormBars, Halo, meanFdr, RangeBar } from "./Shirt";
+import { FaceToggle, PlayerFace } from "./PlayerFace";
 
 function bandLabel(band: { floor: number; ceiling: number; bandProvisional: boolean } | null | undefined) {
   if (!band) return "";
@@ -65,6 +66,8 @@ type Tok = {
   breakdown?: ForecastPlayer["breakdown"];
   floorCeiling?: ForecastPlayer["floorCeiling"];
   availability?: ForecastPlayer["availability"];
+  code?: number | null;
+  recentPoints?: (number | null)[];
 };
 
 /** Risk icons for a shirt: FPL's doubt flag and this model's minutes risk. */
@@ -131,16 +134,17 @@ function PlayerToken({
     >
       <div className="relative" style={{ width: w, height: Math.round((w * 52) / 56) }}>
         <Halo fdr={meanFdr(t.opponents)} width={w} />
-        <Shirt
+        <PlayerFace
           team={t.team}
           position={t.position}
+          code={t.code}
           width={w}
           label={t.xp != null ? t.xp.toFixed(1) : "\u2014"}
           tone={t.provisional ? "warn" : "ink"}
           progress={frac}
           progressColor={t.provisional ? "var(--warn)" : "var(--accent)"}
+          badges={badges}
         />
-        <ShirtBadges items={badges} />
         {(isCaptain || isVice) && (
           <span
             key={isCaptain ? "c" : "v"}
@@ -164,6 +168,7 @@ function PlayerToken({
       {showRange && t.floorCeiling && (
         <RangeBar floor={t.floorCeiling.floor} ceiling={t.floorCeiling.ceiling} xp={t.xp} />
       )}
+      {!bench && <FormBars points={t.recentPoints} />}
       <OppChip opponents={t.opponents} />
     </button>
   );
@@ -216,6 +221,8 @@ export default function Pitch({ forecast }: { forecast: Forecast }) {
       breakdown: base.breakdown,
       floorCeiling: base.floorCeiling,
       availability: base.availability,
+      code: base.code,
+      recentPoints: base.recentPoints,
     };
   };
 
@@ -296,6 +303,10 @@ export default function Pitch({ forecast }: { forecast: Forecast }) {
               </details>
             )}
           </div>
+        </div>
+
+        <div className="mb-2 flex justify-end">
+          <FaceToggle />
         </div>
 
         {isTargetGw && (

@@ -1,7 +1,7 @@
 "use client";
 
 import { PitchScene, type PitchMood } from "./PitchScene";
-import { Shirt } from "./Shirt";
+import { FaceToggle, PlayerFace } from "./PlayerFace";
 import type { LeagueSquadResponse, LeagueSquadRow } from "./api/league/squad/route";
 
 const ROWS = ["GKP", "DEF", "MID", "FWD"] as const;
@@ -41,9 +41,10 @@ function PlayerToken({ row, bench = false }: { row: LeagueSquadRow; bench?: bool
       title={title}
     >
       <div className="relative" style={{ width: w, height: Math.round((w * 52) / 56) }}>
-        <Shirt
+        <PlayerFace
           team={row.team}
           position={row.position}
+          code={row.code}
           width={w}
           label={pending ? "\u2013" : String(row.pointsSoFar)}
           tone={pending ? "faint" : row.pointsSoFar < 0 ? "danger" : "ink"}
@@ -132,6 +133,9 @@ export default function LiveSquadPitch({ data }: { data: LeagueSquadResponse }) 
       </div>
       {data.chip && <span className="chip chip-accent mb-2 inline-block">{data.chip}</span>}
 
+      <div className="mb-2 flex justify-end">
+        <FaceToggle />
+      </div>
       <PitchScene mood={mood}>
         <div className="space-y-5">
           {rows.map((row, i) => (

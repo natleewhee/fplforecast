@@ -631,3 +631,33 @@ def test_load_overrides_ignores_repeated_identical_transfers(tmp_path, monkeypat
     monkeypatch.setattr(cf, "DATA_DIR", tmp_path)
 
     assert cf.load_overrides(5) == [{"out": 165, "in": 569}]
+
+
+def test_recent_form_by_id_keeps_the_last_window_and_blanks_missed_games(monkeypatch):
+    def gw(*rows):
+        return {"elements": [{"id": i, "stats": {"minutes": m, "total_points": p}} for i, m, p in rows]}
+
+    history = [
+        gw((1, 90, 2)),  # too old: outside the window
+        gw((1, 90, 6), (2, 0, 0)),
+        gw((1, 60, 9)),  # player 2 absent from this file
+        gw((1, 0, 0), (2, 90, 4)),
+    ]
+    monkeypatch.setattr(cf, "load_event_live_history", lambda: history)
+
+    form = cf.recent_form_by_id(window=3)
+
+    assert form[1] == [6, 9, None]  # a game they didn't play is None, not 0
+    assert form[2] == [None, None, 4]  # absent from a file is None too
+
+
+def test_player_card_carries_photo_code_and_recent_points():
+    elements = {7: {"web_name": "Saka", "team": 1, "element_type": 3, "now_cost": 100, "code": 223340}}
+    teams = {1: "ARS"}
+
+    card = cf._player_card(7, elements, teams, {7: [5, None, 12]})
+    assert card["code"] == 223340
+    assert card["recentPoints"] == [5, None, 12]
+
+    bare = cf._player_card(7, elements, teams)  # callers that don't pass form data
+    assert bare["recentPoints"] == []

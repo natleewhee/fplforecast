@@ -49,6 +49,7 @@ export type LiveSquadPlayer = {
   hasComponents: boolean; // false when the snapshot has no baked xP for this pick
   kickoffTime: string | null; // this gameweek's own fixture kickoff, for a not-yet-started player
   fdrRating: number | null; // FPL's 1 (easiest) .. 5 (hardest) for this gameweek's opponent
+  code?: number; // FPL photo code, for the headshot
   team?: string; // FPL short name ("ARS"), for the kit colour; absent on payloads cached before it existed
 };
 
@@ -83,7 +84,7 @@ type FplEvent = {
 };
 export type FplBootstrap = {
   events: FplEvent[];
-  elements: { id: number; team: number; element_type: number; web_name: string }[];
+  elements: { id: number; team: number; element_type: number; web_name: string; code?: number }[];
   teams: { id: number; short_name: string }[];
 };
 type FplExplainStat = { identifier: string; points: number; value: number };
@@ -268,6 +269,7 @@ export function buildLivePayload(args: {
       kickoffTime: f?.kickoff_time ?? null,
       fdrRating,
       team: teamName.get(teamId),
+      code: meta?.code,
     };
   });
 
@@ -341,6 +343,7 @@ export type TrackerRow = {
   kickoffTime: string | null;
   fdrRating: number | null;
   team: string | null; // club short name, for the kit colour
+  code: number | null; // FPL photo code, for the headshot
 };
 
 export type TrackerView = {
@@ -611,6 +614,7 @@ export function buildTracker(payload: LivePayload, prev: LivePayload | null): Tr
       kickoffTime: sp.kickoffTime,
       fdrRating: sp.fdrRating,
       team: sp.team ?? null,
+      code: sp.code ?? null,
     };
   });
 
