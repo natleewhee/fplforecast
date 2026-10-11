@@ -10,7 +10,6 @@ import {
 import { countdown } from "@/lib/countdown";
 import type { GameweekReview } from "@/lib/snapshots";
 import LivePitch from "./LivePitch";
-import LiveTrend from "./LiveTrend";
 
 /* The in-gameweek surface (KTD7): while matches are live it leads the page with
  * a projected final total, the par band and arrow, and a per-player breakdown,
@@ -138,7 +137,7 @@ export default function LiveTracker({
   }
 
   return (
-    <TrackerPanel view={view} payload={polls.cur} active={active} error={error} lastOk={lastOk} teamId={teamId} />
+    <TrackerPanel view={view} payload={polls.cur} active={active} error={error} lastOk={lastOk} />
   );
 }
 
@@ -208,9 +207,7 @@ function TrackerPanel({
   active,
   error,
   lastOk,
-  teamId,
 }: {
-  teamId?: string | null;
   view: TrackerView;
   payload: LivePayload;
   active: boolean;
@@ -327,13 +324,6 @@ function TrackerPanel({
           </div>
         </details>
       )}
-
-      <LiveTrend
-        view={view}
-        gameweek={payload.gameweek}
-        generatedAt={payload.generatedAt}
-        teamId={teamId}
-      />
 
       <LivePitch rows={view.rows} gameweek={payload.gameweek} />
     </div>
