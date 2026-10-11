@@ -49,6 +49,7 @@ export type LiveSquadPlayer = {
   hasComponents: boolean; // false when the snapshot has no baked xP for this pick
   kickoffTime: string | null; // this gameweek's own fixture kickoff, for a not-yet-started player
   fdrRating: number | null; // FPL's 1 (easiest) .. 5 (hardest) for this gameweek's opponent
+  team?: string; // FPL short name ("ARS"), for the kit colour; absent on payloads cached before it existed
 };
 
 export type LivePayload = {
@@ -266,6 +267,7 @@ export function buildLivePayload(args: {
       hasComponents: Boolean(components[String(p.element)]),
       kickoffTime: f?.kickoff_time ?? null,
       fdrRating,
+      team: teamName.get(teamId),
     };
   });
 
@@ -328,6 +330,7 @@ export type TrackerRow = {
   pointsSoFar: number;
   remainingXp: number;
   contribution: number;
+  expectedXp: number; // the model's full-match xP before kickoff (x2 for the armband), the bar to beat
   isBench: boolean;
   isArmband: boolean;
   isViceCaptain: boolean; // the named vice (the armband passes to them only if the captain doesn't play)
@@ -337,6 +340,7 @@ export type TrackerRow = {
   breakdown: BreakdownItem[];
   kickoffTime: string | null;
   fdrRating: number | null;
+  team: string | null; // club short name, for the kit colour
 };
 
 export type TrackerView = {
@@ -596,6 +600,7 @@ export function buildTracker(payload: LivePayload, prev: LivePayload | null): Tr
       pointsSoFar: proj.pointsSoFar * multiplier,
       remainingXp: proj.remainingXp * multiplier,
       contribution: proj.contribution * multiplier,
+      expectedXp: remainingXp(payload.componentXpByElement[String(sp.id)] ?? {}, 1, false) * multiplier,
       isBench: benchSet.has(sp.id),
       isArmband: sp.id === armbandId,
       isViceCaptain: sp.id === viceCaptainId,
@@ -605,6 +610,7 @@ export function buildTracker(payload: LivePayload, prev: LivePayload | null): Tr
       breakdown: payload.liveByElement[sp.id]?.breakdown ?? [],
       kickoffTime: sp.kickoffTime,
       fdrRating: sp.fdrRating,
+      team: sp.team ?? null,
     };
   });
 
