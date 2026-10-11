@@ -59,14 +59,16 @@ function EventBadges({ row, popped }: { row: TrackerRow; popped: boolean }) {
   const c = eventCounts(row.breakdown);
   const chips: { key: string; node: React.ReactNode; title: string }[] = [];
   if (c.goals) chips.push({ key: "g", title: `${c.goals} goal${c.goals > 1 ? "s" : ""}`, node: <>&#9917;{c.goals > 1 ? c.goals : ""}</> });
-  if (c.assists) chips.push({ key: "a", title: `${c.assists} assist${c.assists > 1 ? "s" : ""}`, node: <span className="font-black text-[var(--accent-2)]">A{c.assists > 1 ? c.assists : ""}</span> });
+  if (c.assists) chips.push({ key: "a", title: `${c.assists} assist${c.assists > 1 ? "s" : ""}`, node: <>{"\u{1F45F}".repeat(Math.min(c.assists, 4))}</> });
+  if (c.cleanSheet) chips.push({ key: "cs", title: "clean sheet", node: <>{"\u{1F6E1}\uFE0F"}</> });
+  if (c.defcon) chips.push({ key: "dc", title: "defensive contribution", node: <>{"\u{1F9F1}"}</> });
   if (c.penSaved) chips.push({ key: "ps", title: "penalty saved", node: <span className="font-black text-[var(--accent)]">PS</span> });
   if (c.yellow) chips.push({ key: "y", title: "yellow card", node: <span className="inline-block h-2.5 w-2 rounded-[1px] bg-[#facc15]" /> });
   if (c.red) chips.push({ key: "r", title: "red card", node: <span className="inline-block h-2.5 w-2 rounded-[1px] bg-[#ef4444]" /> });
   if (c.penMissed) chips.push({ key: "pm", title: "penalty missed", node: <span className="font-black text-[var(--danger)]">PM</span> });
   if (c.ownGoals) chips.push({ key: "og", title: "own goal", node: <span className="font-black text-[var(--danger)]">OG</span> });
   if (!chips.length) return null;
-  const shown = chips.slice(0, 4);
+  const shown = chips.slice(0, 5);
   return (
     <span
       aria-hidden
