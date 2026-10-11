@@ -95,6 +95,15 @@ type FplLiveElement = {
   explain?: { stats: FplExplainStat[] }[];
 };
 export type FplLive = { elements: FplLiveElement[] };
+/** The final whistle has gone. FPL sets `finished_provisional` when the match
+ * ends and `finished` only once bonus points are confirmed, often an hour or
+ * more later -- and sends `finished: false` meanwhile, so `finished ??
+ * finished_provisional` never falls through to the provisional flag and kept a
+ * match that had ended reading as live. */
+export function isFixtureOver(f: { finished?: boolean; finished_provisional?: boolean } | undefined): boolean {
+  return Boolean(f?.finished || f?.finished_provisional);
+}
+
 export type FplFixture = {
   event: number | null;
   started?: boolean;
@@ -217,7 +226,7 @@ export function buildLivePayload(args: {
       minutes: el.stats?.minutes ?? 0,
       goalsConceded: el.stats?.goals_conceded ?? 0,
       fixtureStarted: Boolean(f?.started),
-      fixtureFinished: Boolean(f?.finished ?? f?.finished_provisional),
+      fixtureFinished: isFixtureOver(f),
       breakdown: explainBreakdown(el.explain),
     };
   }
@@ -261,7 +270,7 @@ export function buildLivePayload(args: {
   });
 
   const event = bootstrap.events.find((e) => e.id === gameweek);
-  const matchesLive = gwFixtures.some((f) => f.started && !(f.finished ?? f.finished_provisional));
+  const matchesLive = gwFixtures.some((f) => f.started && !isFixtureOver(f));
 
   const nowMs = Date.parse(now);
   const nextDeadline =
@@ -287,7 +296,7 @@ export function buildLivePayload(args: {
     fixtures: gwFixtures.map((f) => ({
       kickoffTime: f.kickoff_time ?? null,
       started: Boolean(f.started),
-      finished: Boolean(f.finished ?? f.finished_provisional),
+      finished: isFixtureOver(f),
     })),
     componentXpByElement: components,
     parMargin: inputs.parMargin,
