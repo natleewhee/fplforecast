@@ -14,8 +14,9 @@ import type {
   UpcomingGameweek,
 } from "@/lib/snapshots";
 import { availabilityFlag } from "@/lib/availability";
-import { OppChip } from "./Pitch";
-import { kitFor } from "@/lib/teamColors";
+import { OppChip, riskBadges } from "./Pitch";
+import { PitchScene } from "./PitchScene";
+import { Shirt, ShirtBadges } from "./Shirt";
 
 const HORIZONS = ["1", "3", "5"] as const;
 type Horizon = (typeof HORIZONS)[number];
@@ -42,38 +43,31 @@ function ShirtToken({
   weekIndex: number;
 }) {
   if (!player) return null;
-  const kit = kitFor(player.team);
   const doubt = availabilityFlag(player.availability);
   const xp = player.perGameweek[weekIndex];
   const opponents = player.opponents[weekIndex] ?? [];
+  const w = 44;
   return (
     <div
-      className="flex w-16 flex-col items-center gap-0.5 sm:w-[4.5rem]"
-      title={[player.webName, doubt?.label].filter(Boolean).join(" — ")}
+      className="flex min-w-0 max-w-16 flex-1 basis-0 flex-col items-center gap-0.5 sm:max-w-[4.5rem]"
+      title={[player.webName, doubt?.label].filter(Boolean).join(" \u2014 ")}
     >
-      <div className="relative">
-        <div
-          className="grid h-10 w-10 place-items-center rounded-full ring-1 ring-black/30"
-          style={{ background: kit.primary }}
-        >
-          <span className="font-mono text-[10px] font-bold" style={{ color: kit.ink }}>
-            {xp != null ? xp.toFixed(1) : "—"}
-          </span>
-        </div>
+      <div className="relative" style={{ width: w, height: Math.round((w * 52) / 56) }}>
+        <Shirt
+          team={player.team}
+          position={player.position}
+          width={w}
+          label={xp != null ? xp.toFixed(1) : "\u2014"}
+          progress={xp != null ? xp / 11 : 0}
+        />
+        <ShirtBadges items={riskBadges(player.availability, undefined)} />
         {isCaptain && (
           <span className="armband armband-captain absolute -right-1 -top-1 h-4 w-4 text-[9px]">
             C
           </span>
         )}
-        {doubt && (
-          <span
-            className="absolute -bottom-0.5 -right-0.5 h-2.5 w-2.5 rounded-full border border-[var(--bg-0)]"
-            style={{ background: doubt.color }}
-            title={doubt.label}
-          />
-        )}
       </div>
-      <span className="max-w-[4rem] truncate text-[11px] font-semibold text-ink">
+      <span className="mt-1 max-w-full truncate text-[11px] font-semibold text-ink [text-shadow:0_1px_3px_rgba(0,0,0,0.85)]">
         {player.webName}
       </span>
       <OppChip opponents={opponents} />
@@ -181,23 +175,20 @@ function XiPitch({
 
   return (
     <div className="space-y-3">
-      <div
-        className="relative overflow-x-auto rounded-xl px-1 py-4"
-        style={{ background: "linear-gradient(160deg,#0f5130,#0c3f26 45%,#0a3421)" }}
-      >
-        <div className="min-w-[280px] space-y-3">
+      <PitchScene compact>
+        <div className="space-y-3">
           {rows.map((row, i) => (
-            <div key={i} className="flex flex-wrap justify-center gap-x-1.5 gap-y-2">
+            <div key={i} className="flex justify-center gap-x-1 gap-y-2">
               {row.map((p) => (
                 <ShirtToken key={p.id} player={p} isCaptain={p.id === captainId} weekIndex={weekIndex} />
               ))}
             </div>
           ))}
         </div>
-      </div>
+      </PitchScene>
       <div>
         <p className="eyebrow mb-1.5">Bench</p>
-        <div className="flex flex-wrap gap-x-1.5 gap-y-2 overflow-x-auto">
+        <div className="flex gap-x-1 gap-y-2">
           {bench.map((id) => (
             <ShirtToken key={id} player={poolById.get(id)} isCaptain={false} weekIndex={weekIndex} />
           ))}

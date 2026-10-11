@@ -1,7 +1,7 @@
 "use client";
 
-import { FieldMarkings, ShirtGlyph } from "./Pitch";
-import { kitFor } from "@/lib/teamColors";
+import { PitchScene, type PitchMood } from "./PitchScene";
+import { Shirt } from "./Shirt";
 import type { LeagueSquadResponse, LeagueSquadRow } from "./api/league/squad/route";
 
 const ROWS = ["GKP", "DEF", "MID", "FWD"] as const;
@@ -12,24 +12,21 @@ const POSITION_DOT: Record<string, string> = {
   FWD: "var(--fwd)",
 };
 
-// Status -> ring color + label, mirroring the played/live/toPlay split
-// shown in the league table row itself, so the two stay legible together.
-const STATUS_STYLE: Record<LeagueSquadRow["status"], { color: string; label: string }> = {
-  notStarted: { color: "rgba(255,255,255,0.16)", label: "to play" },
-  playing: { color: "var(--accent)", label: "live" },
-  offPitch: { color: "var(--warn)", label: "off (injury/red card)" },
-  finished: { color: "var(--ink-faint)", label: "played" },
-  didNotPlay: { color: "var(--danger)", label: "did not play" },
+const STATUS_LABEL: Record<LeagueSquadRow["status"], string> = {
+  notStarted: "to play",
+  playing: "live",
+  offPitch: "off (injury/red card)",
+  finished: "played",
+  didNotPlay: "did not play",
 };
 
 function PlayerToken({ row, bench = false }: { row: LeagueSquadRow; bench?: boolean }) {
-  const kit = kitFor(row.team);
-  const size = bench ? 40 : 52;
-  const style = STATUS_STYLE[row.status];
+  const w = bench ? 42 : 56;
   const showRemaining = row.status === "notStarted" || row.status === "playing";
+  const pending = row.status === "notStarted";
   const title = [
     row.webName,
-    style.label,
+    STATUS_LABEL[row.status],
     row.minutes > 0 ? `${row.minutes}'` : null,
     row.subbedIn ? "subbed in" : row.subbedOut ? "subbed out" : null,
     row.noBakedXp ? "no xP baked for this player yet" : null,
@@ -39,31 +36,22 @@ function PlayerToken({ row, bench = false }: { row: LeagueSquadRow; bench?: bool
 
   return (
     <div
-      className={`flex w-[4.4rem] flex-col items-center gap-0.5 ${bench ? "sm:w-[4.2rem]" : "sm:w-20"}`}
+      className="flex min-w-0 max-w-[4.4rem] flex-1 basis-0 flex-col items-center gap-0.5 sm:max-w-20"
       title={title}
     >
-      <div className="relative">
-        <div
-          className="grid place-items-center rounded-full"
-          style={{
-            width: size,
-            height: size,
-            boxShadow: `0 0 0 2px ${style.color}, 0 2px 10px -2px rgba(0,0,0,0.6)`,
-          }}
-        >
-          <div
-            className="relative grid h-full w-full place-items-center overflow-hidden rounded-full"
-            style={{ background: kit.primary }}
-          >
-            <ShirtGlyph fill={kit.ink} />
-            <span
-              className="relative font-mono font-bold tabular-nums"
-              style={{ color: kit.ink, fontSize: bench ? 11 : 13 }}
-            >
-              {row.pointsSoFar}
-            </span>
-          </div>
-        </div>
+      <div className="relative" style={{ width: w, height: Math.round((w * 52) / 56) }}>
+        <Shirt
+          team={row.team}
+          position={row.position}
+          width={w}
+          label={pending ? "\u2013" : String(row.pointsSoFar)}
+          tone={pending ? "faint" : row.pointsSoFar < 0 ? "danger" : "ink"}
+          dashed={pending}
+          progress={pending || row.status === "didNotPlay" ? null : row.minutes / 90}
+          progressColor={row.status === "offPitch" ? "var(--warn)" : "var(--accent)"}
+          glow={row.status === "playing" ? "var(--accent)" : null}
+          dim={row.status === "didNotPlay" ? 0.5 : row.status === "offPitch" ? 0.62 : pending ? 0.72 : 1}
+        />
         {row.isArmband && (
           <span className="armband armband-captain absolute -right-1 -top-1 h-4 w-4 text-[9px]">
             C
@@ -72,21 +60,14 @@ function PlayerToken({ row, bench = false }: { row: LeagueSquadRow; bench?: bool
         {!row.isArmband && row.isCaptain && (
           <span className="armband absolute -right-1 -top-1 h-4 w-4 text-[9px] opacity-50">C</span>
         )}
-        {row.status === "playing" && (
-          <span
-            className="absolute -bottom-0.5 -right-0.5 h-2.5 w-2.5 animate-pulse rounded-full border border-[var(--bg-0)]"
-            style={{ background: "var(--accent)" }}
-            title="live"
-          />
-        )}
       </div>
-      <span className="flex items-center gap-1">
+      <span className="mt-1 flex max-w-full items-center gap-1">
         <span
-          className="h-1 w-1 rounded-full"
+          className="h-1 w-1 shrink-0 rounded-full"
           style={{ background: POSITION_DOT[row.position] ?? "var(--ink-soft)" }}
         />
         <span
-          className={`max-w-[4.2rem] truncate text-[11px] font-semibold ${
+          className={`min-w-0 truncate text-[11px] font-semibold [text-shadow:0_1px_3px_rgba(0,0,0,0.85)] ${
             row.subbedOut ? "text-ink-faint line-through" : "text-ink"
           }`}
         >
@@ -94,12 +75,17 @@ function PlayerToken({ row, bench = false }: { row: LeagueSquadRow; bench?: bool
         </span>
         {row.subbedIn && <span className="chip chip-accent !py-0 text-[9px]">▲</span>}
       </span>
+      {row.status === "playing" && (
+        <span className="font-mono text-[10px] font-bold text-[var(--accent)]">{row.minutes}&prime;</span>
+      )}
       {showRemaining && !row.noBakedXp && (
         <span className="font-mono text-[10px] tabular-nums text-[var(--accent)]">
           +{row.remainingXp.toFixed(1)}
         </span>
       )}
-      <span className="text-[9px] text-ink-faint">{row.opponent ?? "— blank —"}</span>
+      <span className="text-[9px] text-ink-faint [text-shadow:0_1px_3px_rgba(0,0,0,0.85)]">
+        {row.opponent ?? "\u2014 blank \u2014"}
+      </span>
     </div>
   );
 }
@@ -115,6 +101,11 @@ export default function LiveSquadPitch({ data }: { data: LeagueSquadResponse }) 
   const starters = data.rows.filter((r) => !r.isBench);
   const bench = data.rows.filter((r) => r.isBench);
   const rows = ROWS.map((pos) => starters.filter((r) => r.position === pos)).filter((r) => r.length);
+  const mood: PitchMood = starters.some((r) => r.status === "playing")
+    ? "live"
+    : starters.every((r) => r.status === "finished" || r.status === "offPitch" || r.status === "didNotPlay")
+      ? "ft"
+      : "pre";
 
   return (
     <div className="panel rise overflow-hidden p-3 sm:p-4">
@@ -140,25 +131,25 @@ export default function LiveSquadPitch({ data }: { data: LeagueSquadResponse }) 
       </div>
       {data.chip && <span className="chip chip-accent mb-2 inline-block">{data.chip}</span>}
 
-      <div
-        className="relative rounded-2xl px-1 py-6"
-        style={{ background: "linear-gradient(160deg,#0f5130,#0c3f26 45%,#0a3421)" }}
-      >
-        <FieldMarkings />
-        <div className="relative z-10 space-y-5">
+      <PitchScene mood={mood}>
+        <div className="space-y-5">
           {rows.map((row, i) => (
-            <div key={i} className="flex flex-wrap justify-center gap-x-2 gap-y-3">
+            <div key={i} className="flex justify-center gap-x-1 gap-y-4">
               {row.map((r) => (
                 <PlayerToken key={r.id} row={r} />
               ))}
             </div>
           ))}
         </div>
-      </div>
+      </PitchScene>
+      <p className="mt-2 text-[10.5px] leading-snug text-ink-faint">
+        Number = points so far · the shirt outline fills with minutes played and glows while playing ·
+        dashed = yet to start · green figure = expected points still to come
+      </p>
 
       <div className="mt-3">
         <p className="eyebrow mb-1.5">Bench</p>
-        <div className="flex flex-wrap gap-x-2 gap-y-2">
+        <div className="flex gap-x-1 gap-y-3">
           {bench.map((r) => (
             <PlayerToken key={r.id} row={r} bench />
           ))}

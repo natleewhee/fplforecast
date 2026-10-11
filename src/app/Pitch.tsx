@@ -3,8 +3,10 @@
 import { useCallback, useRef, useState, type ReactNode } from "react";
 import type { Forecast, ForecastPlayer, OpponentLeg } from "@/lib/snapshots";
 import { availabilityFlag } from "@/lib/availability";
-import { fdrColor, kitFor } from "@/lib/teamColors";
+import { fdrColor } from "@/lib/teamColors";
 import PlayerBreakdownSheet from "./PlayerBreakdownSheet";
+import { PitchScene } from "./PitchScene";
+import { RangeBar, Shirt, ShirtBadges } from "./Shirt";
 
 function bandLabel(band: { floor: number; ceiling: number; bandProvisional: boolean } | null | undefined) {
   if (!band) return "";
@@ -31,71 +33,7 @@ const RING_FULL = 11; // xP that fills the ring
 
 /* ---------- pitch furniture ---------- */
 
-export function FieldMarkings({ line = "rgba(255,255,255,0.16)" }: { line?: string }) {
-  return (
-    <svg
-      className="pointer-events-none absolute inset-0 h-full w-full"
-      viewBox="0 0 300 440"
-      preserveAspectRatio="none"
-      aria-hidden
-    >
-      <g fill="none" stroke={line} strokeWidth="1.5">
-        <rect x="6" y="6" width="288" height="428" rx="4" />
-        <line x1="6" y1="220" x2="294" y2="220" />
-        <circle cx="150" cy="220" r="46" />
-        <circle cx="150" cy="220" r="2.5" fill={line} stroke="none" />
-        {/* top box */}
-        <rect x="66" y="6" width="168" height="66" />
-        <rect x="108" y="6" width="84" height="26" />
-        <path d="M112 72 A44 44 0 0 0 188 72" />
-        {/* bottom box */}
-        <rect x="66" y="368" width="168" height="66" />
-        <rect x="108" y="408" width="84" height="26" />
-        <path d="M112 368 A44 44 0 0 1 188 368" />
-      </g>
-    </svg>
-  );
-}
-
-function Ring({
-  frac,
-  color,
-  size,
-  children,
-}: {
-  frac: number;
-  color: string;
-  size: number;
-  children: ReactNode;
-}) {
-  const deg = Math.max(0, Math.min(1, frac)) * 360;
-  return (
-    <div
-      className="relative grid place-items-center rounded-full shadow-[0_2px_10px_-2px_rgba(0,0,0,0.6)]"
-      style={{
-        width: size,
-        height: size,
-        background: `conic-gradient(${color} ${deg}deg, rgba(255,255,255,0.16) 0deg)`,
-      }}
-    >
-      <div className="absolute inset-[3.5px] grid place-items-center rounded-full ring-1 ring-black/30">
-        {children}
-      </div>
-    </div>
-  );
-}
-
-export function ShirtGlyph({ fill }: { fill: string }) {
-  // faint kit silhouette behind the number
-  return (
-    <svg viewBox="0 0 48 44" className="absolute inset-0 h-full w-full opacity-25" aria-hidden>
-      <path
-        d="M17 6 L10 10 L4 20 L11 25 L13 21 L13 40 Q24 44 35 40 L35 21 L37 25 L44 20 L38 10 L31 6 Q24 12 17 6 Z"
-        fill={fill}
-      />
-    </svg>
-  );
-}
+export { FieldMarkings } from "./PitchScene";
 
 export function OppChip({ opponents }: { opponents: OpponentLeg[] }) {
   if (!opponents.length) return <span className="text-[9px] text-ink-faint">— blank —</span>;
@@ -129,50 +67,78 @@ type Tok = {
   availability?: ForecastPlayer["availability"];
 };
 
+/** Risk icons for a shirt: FPL's doubt flag and this model's minutes risk. */
+export function riskBadges(
+  availability: ForecastPlayer["availability"] | null | undefined,
+  minutesRisk: boolean | undefined,
+) {
+  const doubt = availabilityFlag(availability);
+  const items: { key: string; node: ReactNode; title: string }[] = [];
+  if (doubt) {
+    const out = doubt.color === "var(--danger)";
+    items.push({
+      key: "doubt",
+      title: doubt.label,
+      node: (
+        <span className="font-black" style={{ color: doubt.color }}>
+          {out ? "\u271A" : "!"}
+        </span>
+      ),
+    });
+  }
+  if (minutesRisk) {
+    items.push({
+      key: "mins",
+      title: "minutes risk: may not play a full match",
+      node: <span className="text-[var(--warn)]">{"\u23F1\uFE0E"}</span>,
+    });
+  }
+  return items;
+}
+
 function PlayerToken({
   t,
   isCaptain,
   isVice,
   bench = false,
+  showRange = false,
   onSelect,
 }: {
   t: Tok;
   isCaptain?: boolean;
   isVice?: boolean;
   bench?: boolean;
+  showRange?: boolean;
   onSelect: (id: number, trigger: HTMLButtonElement) => void;
 }) {
-  const kit = kitFor(t.team);
-  const size = bench ? 40 : 52;
+  const w = bench ? 42 : 56;
   const frac = t.xp != null ? t.xp / RING_FULL : 0;
-  const ringColor = t.provisional ? "var(--warn)" : "var(--accent)";
   const bandTitle = bandLabel(t.floorCeiling);
   const doubt = availabilityFlag(t.availability);
+  const badges = riskBadges(t.availability, t.minutesRisk);
   return (
     <button
       type="button"
       onClick={(e) => onSelect(t.id, e.currentTarget)}
-      aria-label={`${t.webName}: ${t.xp != null ? t.xp.toFixed(1) : "no"} xP, show breakdown`}
-      className={`flex w-[4.4rem] flex-col items-center gap-0.5 rounded-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--accent)] ${bench ? "sm:w-[4.2rem]" : "sm:w-20"}`}
+      aria-label={`${t.webName}: ${t.xp != null ? t.xp.toFixed(1) : "no"} xP${
+        bandTitle ? `, typical range ${bandTitle}` : ""
+      }${doubt ? `, ${doubt.label}` : ""}, show breakdown`}
+      className={`flex min-w-0 max-w-[4.4rem] flex-1 basis-0 flex-col items-center gap-0.5 rounded-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--accent)] ${bench ? "sm:max-w-[4.2rem]" : "sm:max-w-20"}`}
       title={[t.webName, bandTitle && `typical range ${bandTitle}`, doubt?.label]
         .filter(Boolean)
         .join(" — ")}
     >
-      <div className="relative">
-        <Ring frac={frac} color={ringColor} size={size}>
-          <div
-            className="grid h-full w-full place-items-center overflow-hidden rounded-full"
-            style={{ background: kit.primary }}
-          >
-            <ShirtGlyph fill={kit.ink} />
-            <span
-              className="relative font-mono font-bold tabular-nums"
-              style={{ color: kit.ink, fontSize: bench ? 11 : 13 }}
-            >
-              {t.xp != null ? t.xp.toFixed(1) : "—"}
-            </span>
-          </div>
-        </Ring>
+      <div className="relative" style={{ width: w, height: Math.round((w * 52) / 56) }}>
+        <Shirt
+          team={t.team}
+          position={t.position}
+          width={w}
+          label={t.xp != null ? t.xp.toFixed(1) : "\u2014"}
+          tone={t.provisional ? "warn" : "ink"}
+          progress={frac}
+          progressColor={t.provisional ? "var(--warn)" : "var(--accent)"}
+        />
+        <ShirtBadges items={badges} />
         {(isCaptain || isVice) && (
           <span
             className={`armband absolute -right-1 -top-1 h-4 w-4 text-[9px] ${
@@ -182,29 +148,19 @@ function PlayerToken({
             {isCaptain ? "C" : "V"}
           </span>
         )}
-        {t.minutesRisk && (
-          <span
-            className="absolute -bottom-0.5 -left-0.5 h-2 w-2 rounded-full border border-[var(--bg-0)] bg-[var(--warn)]"
-            title="minutes risk"
-          />
-        )}
-        {doubt && (
-          <span
-            className="absolute -bottom-0.5 -right-0.5 h-2.5 w-2.5 rounded-full border border-[var(--bg-0)]"
-            style={{ background: doubt.color }}
-            title={doubt.label}
-          />
-        )}
       </div>
-      <span className="flex items-center gap-1">
+      <span className="mt-1 flex max-w-full items-center gap-1">
         <span
-          className="h-1 w-1 rounded-full"
+          className="h-1 w-1 shrink-0 rounded-full"
           style={{ background: POSITION_DOT[t.position] ?? "var(--ink-soft)" }}
         />
-        <span className="max-w-[4.2rem] truncate text-[11px] font-semibold text-ink">
+        <span className="min-w-0 truncate text-[11px] font-semibold text-ink [text-shadow:0_1px_3px_rgba(0,0,0,0.85)]">
           {t.webName}
         </span>
       </span>
+      {showRange && t.floorCeiling && (
+        <RangeBar floor={t.floorCeiling.floor} ceiling={t.floorCeiling.ceiling} xp={t.xp} />
+      )}
       <OppChip opponents={t.opponents} />
     </button>
   );
@@ -348,37 +304,36 @@ export default function Pitch({ forecast }: { forecast: Forecast }) {
         )}
 
         {/* broadcast pitch */}
-        <div
-          className="relative rounded-2xl px-1 py-6"
-          style={{
-            background:
-              "linear-gradient(160deg,#0f5130,#0c3f26 45%,#0a3421)",
-          }}
-        >
-          <FieldMarkings />
-          <div className="relative z-10 space-y-5">
+        <PitchScene>
+          <div className="space-y-5">
             {rows.map((row, i) => (
-              <div key={i} className="flex flex-wrap justify-center gap-x-2 gap-y-3">
+              <div key={i} className="flex justify-center gap-x-1 gap-y-4">
                 {row.map((t) => (
                   <PlayerToken
                     key={t.id}
                     t={t}
                     isCaptain={t.id === captainId}
                     isVice={t.id === viceId}
+                    showRange={isTargetGw}
                     onSelect={openSheet}
                   />
                 ))}
               </div>
             ))}
           </div>
-        </div>
+        </PitchScene>
+        <p className="mt-2 text-[10.5px] leading-snug text-ink-faint">
+          Number = expected points · the shirt outline fills as expected points rise · the blue bar
+          under a name is the typical range (white tick = projection) · ✚ doubtful or out, ⏱ minutes
+          risk · tap a player for the breakdown
+        </p>
 
         {/* bench */}
         <div className="mt-3">
           <p className="eyebrow mb-1.5">Bench</p>
-          <div className="flex flex-wrap gap-x-2 gap-y-2">
+          <div className="flex gap-x-1 gap-y-3">
             {benched.map((t) => (
-              <PlayerToken key={t.id} t={t} isCaptain={t.id === captainId} bench onSelect={openSheet} />
+              <PlayerToken key={t.id} t={t} isCaptain={t.id === captainId} bench showRange={isTargetGw} onSelect={openSheet} />
             ))}
           </div>
         </div>
