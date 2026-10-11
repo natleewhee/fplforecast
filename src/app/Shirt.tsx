@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { kitFor } from "@/lib/teamColors";
+import { fdrColor, kitFor } from "@/lib/teamColors";
 
 /* One shirt for every pitch: the club's colours (keepers in their own kit), a
  * dark chest label for the number, and an outline that can fill (minutes
@@ -148,5 +148,33 @@ export function RangeBar({
       />
       {xp != null && <span className="absolute -top-px h-[6px] w-px bg-white" style={{ left: pos(xp) }} />}
     </span>
+  );
+}
+
+/** The average fixture difficulty of a gameweek's opponents (a double
+ * gameweek averages), or null when there is no rated fixture. */
+export function meanFdr(opponents: { fdrRating?: number | null }[] | undefined): number | null {
+  const rated = (opponents ?? []).map((o) => o.fdrRating).filter((n): n is number => n != null);
+  if (!rated.length) return null;
+  return Math.round(rated.reduce((a, b) => a + b, 0) / rated.length);
+}
+
+/** A soft glow behind a token in the colour of its fixture difficulty
+ * (green easy .. red hard), so a good or bad run reads without the chip. */
+export function Halo({ fdr, width }: { fdr: number | null | undefined; width: number }) {
+  if (fdr == null) return null;
+  const c = fdrColor(fdr);
+  return (
+    <span
+      aria-hidden
+      className="pointer-events-none absolute left-1/2 top-1/2 rounded-full"
+      style={{
+        width: width * 1.8,
+        height: width * 1.8,
+        transform: "translate(-50%,-50%)",
+        background: `radial-gradient(circle, ${c} 0%, transparent 66%)`,
+        opacity: 0.5,
+      }}
+    />
   );
 }

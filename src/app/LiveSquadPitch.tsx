@@ -36,6 +36,7 @@ function PlayerToken({ row, bench = false }: { row: LeagueSquadRow; bench?: bool
 
   return (
     <div
+      data-flip={row.id}
       className="flex min-w-0 max-w-[4.4rem] flex-1 basis-0 flex-col items-center gap-0.5 sm:max-w-20"
       title={title}
     >

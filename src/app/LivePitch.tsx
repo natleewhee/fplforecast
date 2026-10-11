@@ -5,7 +5,7 @@ import type { TrackerRow } from "@/lib/liveBlend";
 import { fdrColor } from "@/lib/teamColors";
 import { eventCounts, parseOpponent, sgKickoff } from "@/lib/liveLabels";
 import { PitchScene, type PitchMood } from "./PitchScene";
-import { Shirt } from "./Shirt";
+import { Halo, Shirt } from "./Shirt";
 import LivePlayerSheet, { statusText } from "./LivePlayerSheet";
 import { useLiveFx, type Float } from "./useLiveFx";
 
@@ -136,6 +136,7 @@ function Token({
       type="button"
       onClick={(e) => onSelect(row.id, e.currentTarget)}
       aria-label={label}
+      data-flip={row.id}
       className={`flex min-w-0 max-w-[4.4rem] flex-1 basis-0 flex-col items-center gap-0.5 rounded-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--accent)] ${
         bench ? "sm:max-w-[4.2rem]" : "sm:max-w-20"
       }`}
@@ -165,6 +166,7 @@ function Token({
             {Math.abs(f.delta).toFixed(0)}
           </span>
         ))}
+        {t === "pending" && !heat && <Halo fdr={row.fdrRating} width={w} />}
         <Shirt
           team={row.team}
           position={row.position}
@@ -181,7 +183,8 @@ function Token({
         <EventBadges row={row} popped={popped} />
         {(row.isArmband || row.isViceCaptain) && (
           <span
-            className={`armband absolute -right-1 -top-1 h-4 w-4 text-[9px] ${
+            key={row.isArmband ? "c" : "v"}
+            className={`armband fx-pop absolute -right-1 -top-1 h-4 w-4 text-[9px] ${
               row.isArmband ? "armband-captain" : "armband-vice"
             }`}
           >
