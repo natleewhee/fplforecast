@@ -109,6 +109,8 @@ export type PlayerCard = {
   breakdown: ProjectionBreakdown;
   floorCeiling?: FloorCeiling | null;
   availability?: Availability;
+  code?: number | null; // FPL photo code (headshot filename)
+  recentPoints?: (number | null)[]; // last few gameweeks' points, oldest first; null = didn't play
 };
 
 export type ForecastPlayer = PlayerCard & {
@@ -217,6 +219,8 @@ export type PoolPlayer = {
   opponents: OpponentLeg[][]; // one leg group per gameweek in the window
   availability: Availability;
   components: ProjectionComponents | null; // target-GW-only breakdown, for the live tracker's decay math
+  code?: number | null; // FPL photo code (headshot filename)
+  recentPoints?: (number | null)[]; // last few gameweeks' points, oldest first; null = didn't play
 };
 
 // A scenario's transfer-in/out player, as it should be shown in the UI.

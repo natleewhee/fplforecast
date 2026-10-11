@@ -5,7 +5,8 @@ import type { TrackerRow } from "@/lib/liveBlend";
 import { fdrColor } from "@/lib/teamColors";
 import { eventCounts, parseOpponent, sgKickoff } from "@/lib/liveLabels";
 import { PitchScene, type PitchMood } from "./PitchScene";
-import { Halo, Shirt } from "./Shirt";
+import { Halo } from "./Shirt";
+import { FaceToggle, PlayerFace } from "./PlayerFace";
 import LivePlayerSheet, { statusText } from "./LivePlayerSheet";
 import { useLiveFx, type Float } from "./useLiveFx";
 
@@ -50,7 +51,7 @@ function shortStatus(row: TrackerRow): string {
   }
 }
 
-function EventBadges({ row, popped }: { row: TrackerRow; popped: boolean }) {
+function eventBadgeItems(row: TrackerRow) {
   const c = eventCounts(row.breakdown);
   const chips: { key: string; node: React.ReactNode; title: string }[] = [];
   if (c.goals) chips.push({ key: "g", title: `${c.goals} goal${c.goals > 1 ? "s" : ""}`, node: <>&#9917;{c.goals > 1 ? c.goals : ""}</> });
@@ -62,20 +63,7 @@ function EventBadges({ row, popped }: { row: TrackerRow; popped: boolean }) {
   if (c.red) chips.push({ key: "r", title: "red card", node: <span className="inline-block h-2.5 w-2 rounded-[1px] bg-[#ef4444]" /> });
   if (c.penMissed) chips.push({ key: "pm", title: "penalty missed", node: <span className="font-black text-[var(--danger)]">PM</span> });
   if (c.ownGoals) chips.push({ key: "og", title: "own goal", node: <span className="font-black text-[var(--danger)]">OG</span> });
-  if (!chips.length) return null;
-  const shown = chips.slice(0, 5);
-  return (
-    <span
-      aria-hidden
-      className={`absolute -bottom-1.5 left-1/2 flex -translate-x-1/2 items-center whitespace-nowrap gap-px rounded-full border border-white/15 bg-[rgba(6,9,15,0.9)] px-1 py-px text-[9px] leading-none text-ink ${popped ? "fx-pop" : ""}`}
-    >
-      {shown.map((ch) => (
-        <span key={ch.key} title={ch.title} className="flex items-center">
-          {ch.node}
-        </span>
-      ))}
-    </span>
-  );
+  return chips.slice(0, 5);
 }
 
 /** Points scored against the model's pre-match xP: the fill is points, the tick
@@ -167,9 +155,10 @@ function Token({
           </span>
         ))}
         {t === "pending" && !heat && <Halo fdr={row.fdrRating} width={w} />}
-        <Shirt
+        <PlayerFace
           team={row.team}
           position={row.position}
+          code={row.code}
           width={w}
           label={t === "pending" ? "\u2013" : pts.toFixed(0)}
           tone={t === "pending" ? "faint" : pts < 0 ? "danger" : "ink"}
@@ -179,8 +168,9 @@ function Token({
           progressColor={accent}
           glow={glowing ? accent : null}
           dim={dim}
+          badges={eventBadgeItems(row)}
+          badgeClass={popped ? "fx-pop" : ""}
         />
-        <EventBadges row={row} popped={popped} />
         {(row.isArmband || row.isViceCaptain) && (
           <span
             key={row.isArmband ? "c" : "v"}
@@ -274,22 +264,25 @@ export default function LivePitch({ rows, gameweek }: { rows: TrackerRow[]; game
 
   return (
     <div>
-      <div className="mb-2 flex items-center justify-between gap-2">
+      <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
         <span className="text-[11px] text-ink-soft" role="status">
           {moodText}
         </span>
-        <button
-          type="button"
-          aria-pressed={heat}
-          onClick={() => setHeat((h) => !h)}
-          className={`inline-flex h-8 items-center rounded-full border px-3 text-[11px] font-semibold transition-colors ${
-            heat
-              ? "border-[var(--accent-2)] bg-[color-mix(in_srgb,var(--accent-2)_16%,transparent)] text-[var(--accent-2)]"
-              : "border-line text-ink-soft hover:border-border-strong"
-          }`}
-        >
-          Heat map
-        </button>
+        <div className="flex shrink-0 items-center gap-2">
+          <FaceToggle />
+          <button
+            type="button"
+            aria-pressed={heat}
+            onClick={() => setHeat((h) => !h)}
+            className={`inline-flex h-8 items-center rounded-full border px-3 text-[11px] font-semibold transition-colors ${
+              heat
+                ? "border-[var(--accent-2)] bg-[color-mix(in_srgb,var(--accent-2)_16%,transparent)] text-[var(--accent-2)]"
+                : "border-line text-ink-soft hover:border-border-strong"
+            }`}
+          >
+            Heat map
+          </button>
+        </div>
       </div>
       <PitchScene mood={mood} flare={fx.goalFlare}>
         <div className="space-y-5">
