@@ -8,7 +8,7 @@ import BottomSheet from "./BottomSheet";
 export function statusText(row: TrackerRow): string {
   switch (row.status) {
     case "finished":
-      return `Full time · ${row.minutes}'`;
+      return `Full time · ${row.minutes}'${row.bonusPending ? " · bonus not added yet" : ""}`;
     case "playing":
       return `Playing · ${row.minutes}'`;
     case "offPitch":

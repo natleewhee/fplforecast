@@ -7,6 +7,7 @@ import { eventCounts, parseOpponent, sgKickoff } from "@/lib/liveLabels";
 import { PitchScene, type PitchMood } from "./PitchScene";
 import { Halo } from "./Shirt";
 import { FaceToggle, PlayerFace } from "./PlayerFace";
+import { LiveFeed, NextUp } from "./LiveUpdates";
 import LivePlayerSheet, { statusText } from "./LivePlayerSheet";
 import { useLiveFx, type Float } from "./useLiveFx";
 
@@ -63,6 +64,7 @@ function eventBadgeItems(row: TrackerRow) {
   if (c.red) chips.push({ key: "r", title: "red card", node: <span className="inline-block h-2.5 w-2 rounded-[1px] bg-[#ef4444]" /> });
   if (c.penMissed) chips.push({ key: "pm", title: "penalty missed", node: <span className="font-black text-[var(--danger)]">PM</span> });
   if (c.ownGoals) chips.push({ key: "og", title: "own goal", node: <span className="font-black text-[var(--danger)]">OG</span> });
+  if (row.bonusPending) chips.push({ key: "bonus", title: "bonus points not added yet", node: <span className="text-[var(--warn)]">{"\u2605"}</span> });
   return chips.slice(0, 5);
 }
 
@@ -284,6 +286,8 @@ export default function LivePitch({ rows, gameweek }: { rows: TrackerRow[]; game
           </button>
         </div>
       </div>
+      <NextUp rows={onPitch} />
+      <LiveFeed feed={fx.feed} showEmpty={mood !== "pre"} />
       <PitchScene mood={mood} flare={fx.goalFlare}>
         <div className="space-y-5">
           {lines.map((line, i) => (
@@ -306,7 +310,7 @@ export default function LivePitch({ rows, gameweek }: { rows: TrackerRow[]; game
 
       <p className="mt-2 text-[10.5px] leading-snug text-ink-faint">
         The shirt outline fills with minutes played and glows while playing · dashed = yet to start ·{" "}
-        {toPlay} of 11 still to play · the bar under a name is points against the model&rsquo;s expected
+        {toPlay} of 11 still to play · ★ bonus not added yet · the bar under a name is points against the model&rsquo;s expected
         (white tick) · tap a player for the breakdown · times in SGT
       </p>
 

@@ -16,6 +16,7 @@ export type LiveElement = {
   goalsConceded: number; // live goals against the player's team, for the CS carve-out (KTD6)
   fixtureStarted: boolean;
   fixtureFinished: boolean;
+  bonusPending?: boolean; // the match is over but FPL hasn't confirmed it yet, so bonus points can still land
   breakdown: BreakdownItem[]; // FPL's own scoring categories, summed across legs (double GW)
 };
 
@@ -229,6 +230,7 @@ export function buildLivePayload(args: {
       goalsConceded: el.stats?.goals_conceded ?? 0,
       fixtureStarted: Boolean(f?.started),
       fixtureFinished: isFixtureOver(f),
+      bonusPending: Boolean(f?.finished_provisional && !f?.finished),
       breakdown: explainBreakdown(el.explain),
     };
   }
@@ -339,6 +341,7 @@ export type TrackerRow = {
   subbedIn: boolean;
   subbedOut: boolean;
   noBakedXp: boolean;
+  bonusPending: boolean; // finished, played, and FPL hasn't added bonus yet
   breakdown: BreakdownItem[];
   kickoffTime: string | null;
   fdrRating: number | null;
@@ -610,6 +613,7 @@ export function buildTracker(payload: LivePayload, prev: LivePayload | null): Tr
       subbedIn: subbedIn.has(sp.id),
       subbedOut: subbedOut.has(sp.id),
       noBakedXp: !sp.hasComponents,
+      bonusPending: Boolean(payload.liveByElement[sp.id]?.bonusPending && (payload.liveByElement[sp.id]?.minutes ?? 0) > 0),
       breakdown: payload.liveByElement[sp.id]?.breakdown ?? [],
       kickoffTime: sp.kickoffTime,
       fdrRating: sp.fdrRating,
