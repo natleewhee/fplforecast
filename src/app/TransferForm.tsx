@@ -4,35 +4,29 @@ import { useRef, useState } from "react";
 import { Dropdown } from "./Dropdown";
 import type { ForecastPlayer, Player } from "@/lib/snapshots";
 import type { PendingTransfer } from "@/lib/transfers";
+import { REBUILD_TEXT, removeTransfer, saveTransfer, type Rebuild } from "@/lib/transfersClient";
 
 type Props = {
   squad: ForecastPlayer[];
   allPlayers: Player[];
   basedOnGw: number;
   bank: number; // £m in the bank
-  initialPending: PendingTransfer[];
-  onPendingChange?: (count: number) => void;
-};
-
-type Rebuild = "started" | "scheduled" | "none";
-
-const REBUILD_TEXT: Record<Rebuild, string> = {
-  started: "Rebuilding the forecast now \u2014 refresh in about 5 minutes to see your updated squad.",
-  scheduled: "Your squad updates at the next daily rebuild (03:00 UTC, 11:00 SGT).",
-  none: "",
+  // The saved-but-unapplied transfers live in the page above, so the pitch's
+  // replace sheet, the deadline banner and this form always agree.
+  pending: PendingTransfer[];
+  onPendingChange: (next: PendingTransfer[]) => void;
 };
 
 const fieldClass =
   "mt-1 w-full rounded-lg border border-line bg-[var(--bg-2)] px-3 py-2 text-sm text-ink placeholder:text-ink-faint focus:border-[var(--accent)] focus:outline-none focus:ring-2 focus:ring-[color-mix(in_srgb,var(--accent)_30%,transparent)]";
 
-export default function TransferForm({ squad, allPlayers, basedOnGw, bank, initialPending, onPendingChange }: Props) {
+export default function TransferForm({ squad, allPlayers, basedOnGw, bank, pending, onPendingChange }: Props) {
   const [outId, setOutId] = useState<number | "">("");
   const [inQuery, setInQuery] = useState("");
   const [inId, setInId] = useState<number | "">("");
   const [note, setNote] = useState("");
   const [status, setStatus] = useState<"idle" | "saving" | "saved" | "error">("idle");
   const [errorMsg, setErrorMsg] = useState("");
-  const [pending, setPending] = useState<PendingTransfer[]>(initialPending);
   const [confirmation, setConfirmation] = useState<{ text: string; rebuild: Rebuild } | null>(null);
   const [removing, setRemoving] = useState<string | null>(null);
   const inFlight = useRef(false);
@@ -62,19 +56,11 @@ export default function TransferForm({ squad, allPlayers, basedOnGw, bank, initi
     setErrorMsg("");
     const summary = `${nameOf(outId)} \u2192 ${nameOf(inId)}`;
     try {
-      const res = await fetch("/api/transfers", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ outId, inId, note, basedOnGw }),
-      });
-      const json = await res.json();
-      if (!res.ok) throw new Error(json.error || "Failed to save");
-      const next: PendingTransfer[] = json.overrides?.transfers ?? [];
-      setPending(next);
-      onPendingChange?.(next.length);
+      const r = await saveTransfer(outId, inId, basedOnGw, note);
+      onPendingChange(r.transfers);
       setConfirmation({
-        text: json.duplicate ? `Already saved: ${summary}` : `Saved: ${summary}`,
-        rebuild: json.rebuild ?? "scheduled",
+        text: r.duplicate ? `Already saved: ${summary}` : `Saved: ${summary}`,
+        rebuild: r.rebuild,
       });
       // reset the form so a second click can't save the same swap again
       setOutId("");
@@ -97,19 +83,11 @@ export default function TransferForm({ squad, allPlayers, basedOnGw, bank, initi
     setErrorMsg("");
     setStatus("idle");
     try {
-      const res = await fetch("/api/transfers", {
-        method: "DELETE",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ outId: t.out, inId: t.in }),
-      });
-      const json = await res.json();
-      if (!res.ok) throw new Error(json.error || "Failed to remove");
-      const next: PendingTransfer[] = json.overrides?.transfers ?? [];
-      setPending(next);
-      onPendingChange?.(next.length);
+      const r = await removeTransfer(t.out, t.in);
+      onPendingChange(r.transfers);
       setConfirmation({
         text: `Removed: ${nameOf(t.out)} \u2192 ${nameOf(t.in)}`,
-        rebuild: json.rebuild ?? "scheduled",
+        rebuild: r.rebuild,
       });
     } catch (err) {
       setStatus("error");

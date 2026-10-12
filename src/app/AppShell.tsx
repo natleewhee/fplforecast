@@ -29,6 +29,8 @@ import TransferForm from "./TransferForm";
 import AppTabs from "./AppTabs";
 import { STALE_AFTER_HOURS, describeAge, forecastAgeHours } from "@/lib/forecastAge";
 import Carousel from "./Carousel";
+import type { PendingTransfer } from "@/lib/transfers";
+import type { TransferTools } from "./ReplaceSheet";
 
 function RunningRecordModule({ record }: { record: RunningRecord | null }) {
   if (!record || record.gameweeksScored === 0) {
@@ -456,9 +458,10 @@ export default function AppShell({
   const [forecast, setForecast] = useState<Forecast | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  // How many saved transfers are waiting for the next rebuild; the transfer
-  // form reports changes so the deadline banner stays right after a save.
-  const [pendingOverride, setPendingOverride] = useState<number | null>(null);
+  // Saved transfers waiting for the next rebuild. `null` until one is saved or
+  // removed this visit, when the committed file's list is used. Shared by the
+  // transfer form, the pitch's replace sheet and the deadline banner.
+  const [pendingEdited, setPendingEdited] = useState<PendingTransfer[] | null>(null);
 
   const isGuest = teamId !== OWNER_TEAM_ID;
   // True only while looking at a team that differs from what's saved --
@@ -560,13 +563,28 @@ export default function AppShell({
     return <TeamIdGate onSubmit={loadTeam} loading={loading} error={error} />;
   }
 
+  const committedPending: PendingTransfer[] =
+    overrides && overrides.basedOnGw === forecast.basedOnGameweek ? overrides.transfers : [];
+  const pendingTransfers = pendingEdited ?? committedPending;
+  // Only the app's own team can save transfers (the route enforces it too).
+  const transferTools: TransferTools | undefined = isGuest
+    ? undefined
+    : {
+        basedOnGw: forecast.basedOnGameweek,
+        bank: forecast.squad.bank,
+        pool: forecast.pool ?? [],
+        allPlayers: bootstrap.players,
+        pending: pendingTransfers,
+        onPendingChange: setPendingEdited,
+      };
+
   const liveTab = <LiveTracker lastGameweek={forecast.lastGameweek} teamId={isViewingSharedLink ? teamId : null} />;
   const leaguesTab = <LeaguesPage teamId={isViewingSharedLink ? teamId : null} />;
 
   const squadTab = (
     <>
       <DeadlineChecklist forecast={forecast} chips={chips} />
-      <Pitch forecast={forecast} />
+      <Pitch forecast={forecast} transferTools={transferTools} />
 
       {chips && (
         <div className="flex flex-wrap gap-1.5">
@@ -618,10 +636,8 @@ export default function AppShell({
             allPlayers={bootstrap.players}
             basedOnGw={forecast.basedOnGameweek}
             bank={forecast.squad.bank}
-            initialPending={
-              overrides && overrides.basedOnGw === forecast.basedOnGameweek ? overrides.transfers : []
-            }
-            onPendingChange={setPendingOverride}
+            pending={pendingTransfers}
+            onPendingChange={setPendingEdited}
           />
         </Card>
       )}
@@ -651,12 +667,7 @@ export default function AppShell({
         <DeadlineBanner
           deadline={forecast.deadlineTime}
           gameweek={forecast.targetGameweek}
-          pendingTransfers={
-            isGuest
-              ? 0
-              : (pendingOverride ??
-                (overrides && overrides.basedOnGw === forecast.basedOnGameweek ? overrides.transfers.length : 0))
-          }
+          pendingTransfers={isGuest ? 0 : pendingTransfers.length}
           captain={forecast.captain?.webName ?? null}
         />
         {isViewingSharedLink && (
