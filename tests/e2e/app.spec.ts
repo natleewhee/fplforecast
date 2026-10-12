@@ -168,6 +168,48 @@ test.describe("Squad and Scenarios tabs", () => {
   });
 });
 
+test.describe("Replace a player on the pitch", () => {
+  test("lists legal options, confirms, and saves through the transfers route", async ({ page }) => {
+    let posted: { outId: number; inId: number; basedOnGw: number } | null = null;
+    await page.route("**/api/transfers", async (route) => {
+      const req = route.request();
+      if (req.method() !== "POST") return route.fulfill({ contentType: "application/json", body: "{}" });
+      posted = JSON.parse(req.postData() ?? "{}");
+      return route.fulfill({
+        contentType: "application/json",
+        body: JSON.stringify({
+          ok: true,
+          rebuild: "started",
+          overrides: { basedOnGw: posted!.basedOnGw, transfers: [{ out: posted!.outId, in: posted!.inId }] },
+        }),
+      });
+    });
+    await mockLive(page, { current: "a" });
+    await open(page);
+    await openTab(page, "Squad");
+    const scene = await visibleScene(page);
+    await scene.locator("button[data-flip]").first().click();
+    await page.getByRole("button", { name: /^Replace / }).click();
+
+    const dialog = page.getByRole("dialog");
+    await expect(dialog).toContainText("Replace");
+    const options = dialog.locator("li button");
+    expect(await options.count()).toBeGreaterThan(0);
+
+    await options.first().click();
+    await expect(dialog).toContainText("left");
+    await dialog.getByRole("button", { name: "Save transfer" }).click();
+    await expect(dialog.getByRole("status")).toContainText("Saved");
+    expect(posted).not.toBeNull();
+    expect(posted!.outId).not.toBe(posted!.inId);
+
+    await page.keyboard.press("Escape");
+    // the saved swap now marks the outgoing shirt, and the deadline banner counts it
+    await expect(scene.locator("span[title^='Saved transfer']")).toHaveCount(1);
+    await expect(page.getByText(/transfers? pending/).first()).toBeVisible();
+  });
+});
+
 function latestDeadline(): string {
   const dir = join(__dirname, "..", "..", "data", "forecast");
   const newest = readdirSync(dir)
