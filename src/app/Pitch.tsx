@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useRef, useState, type ReactNode } from "react";
+import { useRef, useState, type ReactNode } from "react";
 import type { Forecast, ForecastPlayer, OpponentLeg } from "@/lib/snapshots";
 import { availabilityFlag } from "@/lib/availability";
 import { fdrColor } from "@/lib/teamColors";
@@ -8,6 +8,7 @@ import PlayerBreakdownSheet from "./PlayerBreakdownSheet";
 import { PitchScene } from "./PitchScene";
 import { FormBars, Halo, meanFdr, RangeBar } from "./Shirt";
 import { FaceToggle, PlayerFace } from "./PlayerFace";
+import ReplaceSheet, { type TransferTools } from "./ReplaceSheet";
 
 function bandLabel(band: { floor: number; ceiling: number; bandProvisional: boolean } | null | undefined) {
   if (!band) return "";
@@ -68,6 +69,7 @@ type Tok = {
   availability?: ForecastPlayer["availability"];
   code?: number | null;
   recentPoints?: (number | null)[];
+  swapTo?: string; // a saved transfer replaces this player with them at the next rebuild
 };
 
 /** Risk icons for a shirt: FPL's doubt flag and this model's minutes risk. */
@@ -119,6 +121,9 @@ function PlayerToken({
   const bandTitle = bandLabel(t.floorCeiling);
   const doubt = availabilityFlag(t.availability);
   const badges = riskBadges(t.availability, t.minutesRisk);
+  if (t.swapTo) {
+    badges.push({ key: "swap", title: `Saved transfer: replaced by ${t.swapTo} at the next rebuild`, node: <span className="font-black text-[var(--accent-2)]">{"\u21C4"}</span> });
+  }
   return (
     <button
       type="button"
@@ -176,21 +181,22 @@ function PlayerToken({
 
 /* ---------- main ---------- */
 
-export default function Pitch({ forecast }: { forecast: Forecast }) {
+export default function Pitch({ forecast, transferTools }: { forecast: Forecast; transferTools?: TransferTools }) {
   const { squad, upcoming } = forecast;
   const byId = new Map(squad.players.map((p) => [p.id, p]));
   const [gwIdx, setGwIdx] = useState(0);
   const [showAllGws, setShowAllGws] = useState(false);
   const [selectedId, setSelectedId] = useState<number | null>(null);
+  const [replacingId, setReplacingId] = useState<number | null>(null);
   const triggerRef = useRef<HTMLButtonElement | null>(null);
-  const openSheet = useCallback((id: number, trigger: HTMLButtonElement) => {
+  const openSheet = (id: number, trigger: HTMLButtonElement) => {
     triggerRef.current = trigger;
     setSelectedId(id);
-  }, []);
-  const closeSheet = useCallback(() => {
+  };
+  const closeSheet = () => {
     setSelectedId(null);
     triggerRef.current?.focus();
-  }, []);
+  };
 
   const active = upcoming[gwIdx] ?? upcoming[0];
   if (!active) return null;
@@ -205,6 +211,10 @@ export default function Pitch({ forecast }: { forecast: Forecast }) {
   // per-player xP / opponents for the shown GW, from that gameweek's own
   // player entry (fixtures/minutes can differ gameweek to gameweek).
   const gwPlayerById = new Map(active.players.map((p) => [p.id, p]));
+  const swapTarget = (id: number): string | undefined => {
+    const t = transferTools?.pending.find((x) => x.out === id);
+    return t ? (transferTools?.allPlayers.find((p) => p.id === t.in)?.webName ?? `#${t.in}`) : undefined;
+  };
   const tok = (id: number): Tok | null => {
     const base = byId.get(id);
     if (!base) return null;
@@ -221,6 +231,7 @@ export default function Pitch({ forecast }: { forecast: Forecast }) {
       breakdown: base.breakdown,
       floorCeiling: base.floorCeiling,
       availability: base.availability,
+      swapTo: swapTarget(id),
       code: base.code,
       recentPoints: base.recentPoints,
     };
@@ -378,6 +389,31 @@ export default function Pitch({ forecast }: { forecast: Forecast }) {
           gameweek={active.gameweek}
           isTargetGw={isTargetGw}
           onClose={closeSheet}
+          footer={
+            transferTools && isTargetGw ? (
+              <button
+                type="button"
+                onClick={() => {
+                  setReplacingId(selectedId);
+                  setSelectedId(null);
+                }}
+                className="inline-flex h-11 w-full items-center justify-center rounded-lg border border-[color-mix(in_srgb,var(--accent)_45%,transparent)] bg-[color-mix(in_srgb,var(--accent)_10%,transparent)] text-sm font-semibold text-[var(--accent)]"
+              >
+                Replace {byId.get(selectedId)!.webName}
+              </button>
+            ) : undefined
+          }
+        />
+      )}
+      {transferTools && replacingId != null && byId.get(replacingId) && (
+        <ReplaceSheet
+          out={byId.get(replacingId)!}
+          squad={squad.players}
+          tools={transferTools}
+          onClose={() => {
+            setReplacingId(null);
+            triggerRef.current?.focus();
+          }}
         />
       )}
     </div>

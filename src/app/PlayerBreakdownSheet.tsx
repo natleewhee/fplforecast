@@ -1,5 +1,6 @@
 "use client";
 
+import type { ReactNode } from "react";
 import type { ForecastPlayer, OpponentLeg, ProjectionComponents } from "@/lib/snapshots";
 import { availabilityFlag } from "@/lib/availability";
 import { OppChip } from "./Pitch";
@@ -47,6 +48,7 @@ export default function PlayerBreakdownSheet({
   gameweek,
   isTargetGw,
   onClose,
+  footer,
 }: {
   player: ForecastPlayer;
   xp: number | null;
@@ -54,6 +56,7 @@ export default function PlayerBreakdownSheet({
   gameweek: number;
   isTargetGw: boolean;
   onClose: () => void;
+  footer?: ReactNode; // an action under the details, e.g. "Replace this player"
 }) {
   const b = player.breakdown;
   const components = isTargetGw && b.components ? b.components : null;
@@ -161,6 +164,7 @@ export default function PlayerBreakdownSheet({
           </>
         )}
       </dl>
+      {footer && <div className="mt-4">{footer}</div>}
     </BottomSheet>
   );
 }
