@@ -5,6 +5,7 @@ import "./globals.css";
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
+  themeColor: "#06090f",
 };
 
 const geistSans = Geist({
@@ -20,6 +21,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "FPL Forecaster",
   description: "Personal FPL squad, captain and transfer decisions.",
+  appleWebApp: { capable: true, title: "FPL", statusBarStyle: "black" },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
