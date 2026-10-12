@@ -1,0 +1,66 @@
+name: Checks
+
+# Runs on every pull request so a broken layout, a typing error or a failing
+# test shows up here before Vercel deploys it.
+on:
+  pull_request:
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+concurrency:
+  group: checks-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  web:
+    name: Types, lint, unit and browser tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm run lint
+      - run: npm run test:unit
+
+      - name: Install the browser
+        run: npx playwright install --with-deps chromium
+
+      - name: Browser smoke tests
+        # Builds the app and replays recorded live payloads at phone width.
+        run: npm run test:e2e
+
+      - name: Keep the failure report
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-results
+          path: test-results/
+          retention-days: 7
+
+  engine:
+    name: Python tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install dependencies and the engine package
+        run: |
+          pip install -r requirements.txt
+          pip install -e .
+
+      - run: python -m pytest -q

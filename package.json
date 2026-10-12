@@ -7,7 +7,11 @@
     "prebuild": "node scripts/compress-deploy-data.mjs",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "typecheck": "tsc --noEmit",
+    "test:unit": "node --experimental-strip-types --no-warnings --test tests/unit/*.test.ts",
+    "test:e2e": "playwright test",
+    "test:fixtures": "node --experimental-strip-types --no-warnings tests/e2e/fixtures/make-live-fixtures.ts"
   },
   "dependencies": {
     "next": "16.3.3",
@@ -15,6 +19,7 @@
     "react-dom": "19.2.8"
   },
   "devDependencies": {
+    "@playwright/test": "^1.56.1",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
