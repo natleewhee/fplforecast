@@ -9,10 +9,20 @@ on:
 
 permissions:
   contents: write
+  issues: write
+
+# One run at a time. A transfer saved in the app dispatches a run; if the daily
+# run (or another save) is already going, this one waits its turn instead of
+# racing it for the final push. A queued run is replaced by a newer queued one,
+# which is fine: each run reads the latest saved transfers when it starts.
+concurrency:
+  group: snapshot
+  cancel-in-progress: false
 
 jobs:
   snapshot:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
 
@@ -64,7 +74,54 @@ jobs:
           git add data/
           if git diff --cached --quiet; then
             echo "No changes to commit"
+            exit 0
+          fi
+          git commit -m "Snapshot FPL data $(date -u +%Y-%m-%d)"
+          # Something else (a merged PR) can land on this branch while the job
+          # runs, which makes a plain push a non-fast-forward rejection even
+          # though every step above succeeded. Only data/ changes here, so
+          # replaying the commit on top of the newer branch is safe; a real
+          # conflict aborts and fails the job (and raises the alert below).
+          for attempt in 1 2 3 4; do
+            if git push; then
+              exit 0
+            fi
+            echo "Push rejected (attempt $attempt); rebasing onto the latest ${GITHUB_REF_NAME}"
+            if ! git pull --rebase origin "${GITHUB_REF_NAME}"; then
+              git rebase --abort || true
+              echo "Rebase conflict; giving up"
+              exit 1
+            fi
+            sleep $((attempt * 3))
+          done
+          echo "Could not push after 4 attempts"
+          exit 1
+
+      - name: Raise an issue if the snapshot failed
+        # The daily run once failed silently for almost two weeks (an
+        # incompatible library release). A failed run now opens one issue, and
+        # adds a comment on each further failure, so GitHub emails you.
+        if: failure()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          title="Daily snapshot is failing"
+          url="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+          body="The snapshot run failed on $(date -u +%Y-%m-%d). The forecast on the site stops updating until it is fixed. Run: ${url}"
+          existing=$(gh issue list --state open --search "\"${title}\" in:title" --json number --jq '.[0].number' || true)
+          if [ -n "${existing}" ]; then
+            gh issue comment "${existing}" --body "${body}" || true
           else
-            git commit -m "Snapshot FPL data $(date -u +%Y-%m-%d)"
-            git push
+            gh issue create --title "${title}" --body "${body}" || true
+          fi
+
+      - name: Close the failure issue once it passes again
+        if: success()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          title="Daily snapshot is failing"
+          existing=$(gh issue list --state open --search "\"${title}\" in:title" --json number --jq '.[0].number' || true)
+          if [ -n "${existing}" ]; then
+            gh issue close "${existing}" --comment "The snapshot is passing again: ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}" || true
           fi
