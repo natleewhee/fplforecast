@@ -11,6 +11,7 @@ type Props = {
   basedOnGw: number;
   bank: number; // £m in the bank
   initialPending: PendingTransfer[];
+  onPendingChange?: (count: number) => void;
 };
 
 type Rebuild = "started" | "scheduled" | "none";
@@ -24,7 +25,7 @@ const REBUILD_TEXT: Record<Rebuild, string> = {
 const fieldClass =
   "mt-1 w-full rounded-lg border border-line bg-[var(--bg-2)] px-3 py-2 text-sm text-ink placeholder:text-ink-faint focus:border-[var(--accent)] focus:outline-none focus:ring-2 focus:ring-[color-mix(in_srgb,var(--accent)_30%,transparent)]";
 
-export default function TransferForm({ squad, allPlayers, basedOnGw, bank, initialPending }: Props) {
+export default function TransferForm({ squad, allPlayers, basedOnGw, bank, initialPending, onPendingChange }: Props) {
   const [outId, setOutId] = useState<number | "">("");
   const [inQuery, setInQuery] = useState("");
   const [inId, setInId] = useState<number | "">("");
@@ -68,7 +69,9 @@ export default function TransferForm({ squad, allPlayers, basedOnGw, bank, initi
       });
       const json = await res.json();
       if (!res.ok) throw new Error(json.error || "Failed to save");
-      setPending(json.overrides?.transfers ?? []);
+      const next: PendingTransfer[] = json.overrides?.transfers ?? [];
+      setPending(next);
+      onPendingChange?.(next.length);
       setConfirmation({
         text: json.duplicate ? `Already saved: ${summary}` : `Saved: ${summary}`,
         rebuild: json.rebuild ?? "scheduled",
@@ -101,7 +104,9 @@ export default function TransferForm({ squad, allPlayers, basedOnGw, bank, initi
       });
       const json = await res.json();
       if (!res.ok) throw new Error(json.error || "Failed to remove");
-      setPending(json.overrides?.transfers ?? []);
+      const next: PendingTransfer[] = json.overrides?.transfers ?? [];
+      setPending(next);
+      onPendingChange?.(next.length);
       setConfirmation({
         text: `Removed: ${nameOf(t.out)} \u2192 ${nameOf(t.in)}`,
         rebuild: json.rebuild ?? "scheduled",

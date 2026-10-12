@@ -20,6 +20,7 @@ import {
 import { Card, Header, Module, Shell } from "./PageChrome";
 import Pitch from "./Pitch";
 import DeadlineChecklist from "./DeadlineChecklist";
+import DeadlineBanner from "./DeadlineBanner";
 import History from "./History";
 import LiveTracker from "./LiveTracker";
 import LeaguesPage from "./LeaguesPage";
@@ -455,6 +456,9 @@ export default function AppShell({
   const [forecast, setForecast] = useState<Forecast | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  // How many saved transfers are waiting for the next rebuild; the transfer
+  // form reports changes so the deadline banner stays right after a save.
+  const [pendingOverride, setPendingOverride] = useState<number | null>(null);
 
   const isGuest = teamId !== OWNER_TEAM_ID;
   // True only while looking at a team that differs from what's saved --
@@ -617,6 +621,7 @@ export default function AppShell({
             initialPending={
               overrides && overrides.basedOnGw === forecast.basedOnGameweek ? overrides.transfers : []
             }
+            onPendingChange={setPendingOverride}
           />
         </Card>
       )}
@@ -643,6 +648,17 @@ export default function AppShell({
           error={error}
         />
         <StaleForecastBanner generatedAt={forecast.generatedAt} />
+        <DeadlineBanner
+          deadline={forecast.deadlineTime}
+          gameweek={forecast.targetGameweek}
+          pendingTransfers={
+            isGuest
+              ? 0
+              : (pendingOverride ??
+                (overrides && overrides.basedOnGw === forecast.basedOnGameweek ? overrides.transfers.length : 0))
+          }
+          captain={forecast.captain?.webName ?? null}
+        />
         {isViewingSharedLink && (
           <SharedLinkBanner
             teamName={forecast.teamName}
