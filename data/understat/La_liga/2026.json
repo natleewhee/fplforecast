@@ -240,6 +240,20 @@
       "xg": 1.6491308845579624
     },
     {
+      "assists": 0.0,
+      "games": 7.0,
+      "goals": 3.0,
+      "key_passes": 4.0,
+      "minutes": 480.0,
+      "name": "Iv\u00e1n Romero",
+      "npxg": 3.265273194760084,
+      "position": "F S",
+      "shots": 18.0,
+      "team": "Levante",
+      "xa": 0.5672102645039558,
+      "xg": 3.265273194760084
+    },
+    {
       "assists": 1.0,
       "games": 7.0,
       "goals": 3.0,
@@ -268,18 +282,18 @@
       "xg": 1.044646069407463
     },
     {
-      "assists": 0.0,
-      "games": 5.0,
+      "assists": 1.0,
+      "games": 6.0,
       "goals": 3.0,
-      "key_passes": 2.0,
-      "minutes": 450.0,
+      "key_passes": 3.0,
+      "minutes": 540.0,
       "name": "Roger Brugu\u00e9",
-      "npxg": 3.12242890894413,
+      "npxg": 3.7840771824121475,
       "position": "F M",
-      "shots": 13.0,
+      "shots": 17.0,
       "team": "Levante",
-      "xa": 0.13142486661672592,
-      "xg": 3.12242890894413
+      "xa": 0.20669429004192352,
+      "xg": 3.7840771824121475
     },
     {
       "assists": 0.0,
@@ -422,20 +436,6 @@
       "xg": 1.7620166093111038
     },
     {
-      "assists": 0.0,
-      "games": 6.0,
-      "goals": 2.0,
-      "key_passes": 3.0,
-      "minutes": 390.0,
-      "name": "Iv\u00e1n Romero",
-      "npxg": 3.1616525687277317,
-      "position": "F S",
-      "shots": 16.0,
-      "team": "Levante",
-      "xa": 0.48009932041168213,
-      "xg": 3.1616525687277317
-    },
-    {
       "assists": 2.0,
       "games": 8.0,
       "goals": 2.0,
@@ -476,6 +476,20 @@
       "team": "Deportivo La Coruna",
       "xa": 1.7907764874398708,
       "xg": 0.9834531368687749
+    },
+    {
+      "assists": 0.0,
+      "games": 7.0,
+      "goals": 2.0,
+      "key_passes": 2.0,
+      "minutes": 617.0,
+      "name": "Adri\u00e1n De la Fuente",
+      "npxg": 0.8161797001957893,
+      "position": "D",
+      "shots": 11.0,
+      "team": "Levante",
+      "xa": 0.5486200302839279,
+      "xg": 0.8161797001957893
     },
     {
       "assists": 2.0,
@@ -534,6 +548,20 @@
       "xg": 2.295195296406746
     },
     {
+      "assists": 1.0,
+      "games": 7.0,
+      "goals": 2.0,
+      "key_passes": 3.0,
+      "minutes": 230.0,
+      "name": "Isaac Romero",
+      "npxg": 0.3947157971560955,
+      "position": "F S",
+      "shots": 7.0,
+      "team": "Sevilla",
+      "xa": 0.3550829794257879,
+      "xg": 0.3947157971560955
+    },
+    {
       "assists": 0.0,
       "games": 7.0,
       "goals": 2.0,
@@ -563,17 +591,17 @@
     },
     {
       "assists": 0.0,
-      "games": 7.0,
+      "games": 8.0,
       "goals": 2.0,
       "key_passes": 7.0,
-      "minutes": 523.0,
+      "minutes": 592.0,
       "name": "Miguel Sierra",
-      "npxg": 0.405436422675848,
+      "npxg": 0.6025067381560802,
       "position": "F M",
-      "shots": 10.0,
+      "shots": 13.0,
       "team": "Sevilla",
       "xa": 0.28454955480992794,
-      "xg": 0.405436422675848
+      "xg": 0.6025067381560802
     },
     {
       "assists": 0.0,
@@ -759,10 +787,10 @@
     },
     {
       "assists": 0.0,
-      "games": 7.0,
+      "games": 8.0,
       "goals": 1.0,
       "key_passes": 3.0,
-      "minutes": 359.0,
+      "minutes": 360.0,
       "name": "Jon Guridi",
       "npxg": 0.10753296501934528,
       "position": "M S",
@@ -842,18 +870,18 @@
       "xg": 0.8211952447891235
     },
     {
-      "assists": 0.0,
-      "games": 4.0,
+      "assists": 1.0,
+      "games": 5.0,
       "goals": 1.0,
-      "key_passes": 1.0,
-      "minutes": 285.0,
+      "key_passes": 4.0,
+      "minutes": 375.0,
       "name": "Youssouf Fofana",
-      "npxg": 0.6650506909936666,
+      "npxg": 1.3384791072458029,
       "position": "M S",
-      "shots": 5.0,
+      "shots": 8.0,
       "team": "Sevilla",
-      "xa": 0.038217879831790924,
-      "xg": 0.6650506909936666
+      "xa": 0.5375887230038643,
+      "xg": 1.3384791072458029
     },
     {
       "assists": 3.0,
@@ -1151,17 +1179,17 @@
     },
     {
       "assists": 0.0,
-      "games": 7.0,
+      "games": 8.0,
       "goals": 1.0,
-      "key_passes": 4.0,
-      "minutes": 630.0,
+      "key_passes": 5.0,
+      "minutes": 720.0,
       "name": "Juan Iglesias",
-      "npxg": 0.4404233656823635,
+      "npxg": 0.5387359894812107,
       "position": "D",
-      "shots": 4.0,
+      "shots": 6.0,
       "team": "Sevilla",
-      "xa": 0.24474288523197174,
-      "xg": 0.4404233656823635
+      "xa": 0.31301841139793396,
+      "xg": 0.5387359894812107
     },
     {
       "assists": 0.0,
@@ -1193,17 +1221,31 @@
     },
     {
       "assists": 1.0,
-      "games": 6.0,
+      "games": 4.0,
       "goals": 1.0,
-      "key_passes": 10.0,
-      "minutes": 515.0,
-      "name": "Jon Ander Olasagasti",
-      "npxg": 0.6628731116652489,
+      "key_passes": 6.0,
+      "minutes": 306.0,
+      "name": "Felix Correia",
+      "npxg": 1.1269430220127106,
       "position": "M",
-      "shots": 6.0,
+      "shots": 4.0,
+      "team": "Sevilla",
+      "xa": 0.8618211597204208,
+      "xg": 1.1269430220127106
+    },
+    {
+      "assists": 1.0,
+      "games": 7.0,
+      "goals": 1.0,
+      "key_passes": 12.0,
+      "minutes": 605.0,
+      "name": "Jon Ander Olasagasti",
+      "npxg": 0.7187615968286991,
+      "position": "M",
+      "shots": 8.0,
       "team": "Levante",
-      "xa": 2.368843726813793,
-      "xg": 0.6628731116652489
+      "xa": 2.503202296793461,
+      "xg": 0.7187615968286991
     },
     {
       "assists": 0.0,
@@ -1260,20 +1302,6 @@
       "team": "Atletico Madrid",
       "xa": 0.0,
       "xg": 0.15240725502371788
-    },
-    {
-      "assists": 0.0,
-      "games": 6.0,
-      "goals": 1.0,
-      "key_passes": 2.0,
-      "minutes": 527.0,
-      "name": "Adri\u00e1n De la Fuente",
-      "npxg": 0.6757432892918587,
-      "position": "D",
-      "shots": 7.0,
-      "team": "Levante",
-      "xa": 0.5486200302839279,
-      "xg": 0.6757432892918587
     },
     {
       "assists": 0.0,
@@ -1400,20 +1428,6 @@
       "team": "Valencia",
       "xa": 0.826531171798706,
       "xg": 0.6848192401230335
-    },
-    {
-      "assists": 1.0,
-      "games": 6.0,
-      "goals": 1.0,
-      "key_passes": 3.0,
-      "minutes": 209.0,
-      "name": "Isaac Romero",
-      "npxg": 0.30561209097504616,
-      "position": "F S",
-      "shots": 5.0,
-      "team": "Sevilla",
-      "xa": 0.3550829794257879,
-      "xg": 0.30561209097504616
     },
     {
       "assists": 0.0,
@@ -1654,6 +1668,20 @@
       "xg": 0.6545253396034241
     },
     {
+      "assists": 2.0,
+      "games": 8.0,
+      "goals": 1.0,
+      "key_passes": 6.0,
+      "minutes": 455.0,
+      "name": "Robbie Ure",
+      "npxg": 1.7013362720608711,
+      "position": "F S",
+      "shots": 12.0,
+      "team": "Sevilla",
+      "xa": 1.2459124587476254,
+      "xg": 1.7013362720608711
+    },
+    {
       "assists": 0.0,
       "games": 2.0,
       "goals": 1.0,
@@ -1738,6 +1766,20 @@
       "xg": 2.612020544707775
     },
     {
+      "assists": 0.0,
+      "games": 3.0,
+      "goals": 1.0,
+      "key_passes": 0.0,
+      "minutes": 128.0,
+      "name": "Ifeanyi Ndukwe",
+      "npxg": 0.5195221900939941,
+      "position": "D S",
+      "shots": 1.0,
+      "team": "Levante",
+      "xa": 0.0,
+      "xg": 0.5195221900939941
+    },
+    {
       "assists": 1.0,
       "games": 8.0,
       "goals": 1.0,
@@ -1795,24 +1837,24 @@
     },
     {
       "assists": 1.0,
-      "games": 6.0,
+      "games": 7.0,
       "goals": 0.0,
-      "key_passes": 1.0,
-      "minutes": 248.0,
+      "key_passes": 2.0,
+      "minutes": 338.0,
       "name": "Jeremy Toljan",
-      "npxg": 0.09411726891994476,
+      "npxg": 0.11881600879132748,
       "position": "D S",
-      "shots": 2.0,
+      "shots": 3.0,
       "team": "Levante",
-      "xa": 0.06217539310455322,
-      "xg": 0.09411726891994476
+      "xa": 0.09075307846069336,
+      "xg": 0.11881600879132748
     },
     {
       "assists": 0.0,
-      "games": 7.0,
+      "games": 8.0,
       "goals": 0.0,
       "key_passes": 0.0,
-      "minutes": 630.0,
+      "minutes": 720.0,
       "name": "Odisseas Vlachodimos",
       "npxg": 0.0,
       "position": "GK",
@@ -2159,10 +2201,10 @@
     },
     {
       "assists": 0.0,
-      "games": 6.0,
+      "games": 7.0,
       "goals": 0.0,
       "key_passes": 0.0,
-      "minutes": 540.0,
+      "minutes": 630.0,
       "name": "Mat Ryan",
       "npxg": 0.0,
       "position": "GK",
@@ -3111,16 +3153,16 @@
     },
     {
       "assists": 0.0,
-      "games": 6.0,
+      "games": 7.0,
       "goals": 0.0,
-      "key_passes": 1.0,
-      "minutes": 527.0,
+      "key_passes": 2.0,
+      "minutes": 617.0,
       "name": "Manuel S\u00e1nchez",
       "npxg": 0.014767159707844257,
       "position": "D",
       "shots": 1.0,
       "team": "Levante",
-      "xa": 0.09552855789661407,
+      "xa": 0.47700826823711395,
       "xg": 0.014767159707844257
     },
     {
@@ -3293,17 +3335,17 @@
     },
     {
       "assists": 0.0,
-      "games": 7.0,
+      "games": 8.0,
       "goals": 0.0,
-      "key_passes": 2.0,
-      "minutes": 630.0,
+      "key_passes": 3.0,
+      "minutes": 720.0,
       "name": "Lucien Agoume",
-      "npxg": 0.1338067650794983,
+      "npxg": 0.1779930181801319,
       "position": "M",
-      "shots": 5.0,
+      "shots": 6.0,
       "team": "Sevilla",
-      "xa": 0.4035385139286518,
-      "xg": 0.1338067650794983
+      "xa": 0.4215893968939781,
+      "xg": 0.1779930181801319
     },
     {
       "assists": 1.0,
@@ -3405,31 +3447,31 @@
     },
     {
       "assists": 1.0,
-      "games": 5.0,
+      "games": 6.0,
       "goals": 0.0,
-      "key_passes": 1.0,
-      "minutes": 178.0,
+      "key_passes": 5.0,
+      "minutes": 267.0,
       "name": "Giorgi Kochorashvili",
       "npxg": 0.14583224058151245,
       "position": "M S",
       "shots": 4.0,
       "team": "Sevilla",
-      "xa": 0.37963664531707764,
+      "xa": 1.1342466473579407,
       "xg": 0.14583224058151245
     },
     {
       "assists": 0.0,
-      "games": 5.0,
+      "games": 6.0,
       "goals": 0.0,
-      "key_passes": 2.0,
-      "minutes": 220.0,
+      "key_passes": 3.0,
+      "minutes": 277.0,
       "name": "V\u00edctor Garc\u00eda",
-      "npxg": 0.3969394564628601,
+      "npxg": 0.4433136060833931,
       "position": "M S",
-      "shots": 1.0,
+      "shots": 2.0,
       "team": "Levante",
-      "xa": 0.49396784976124763,
-      "xg": 0.3969394564628601
+      "xa": 0.5466897487640381,
+      "xg": 0.4433136060833931
     },
     {
       "assists": 0.0,
@@ -3461,16 +3503,16 @@
     },
     {
       "assists": 0.0,
-      "games": 6.0,
+      "games": 7.0,
       "goals": 0.0,
-      "key_passes": 1.0,
-      "minutes": 470.0,
+      "key_passes": 2.0,
+      "minutes": 539.0,
       "name": "Oriol Rey",
       "npxg": 0.027974944561719894,
       "position": "M S",
       "shots": 1.0,
       "team": "Levante",
-      "xa": 0.013106712140142918,
+      "xa": 0.027806862257421017,
       "xg": 0.027974944561719894
     },
     {
@@ -3587,10 +3629,10 @@
     },
     {
       "assists": 0.0,
-      "games": 2.0,
+      "games": 3.0,
       "goals": 0.0,
       "key_passes": 1.0,
-      "minutes": 11.0,
+      "minutes": 32.0,
       "name": "Alfon",
       "npxg": 0.03242520987987518,
       "position": "S",
@@ -3640,20 +3682,6 @@
       "team": "Getafe",
       "xa": 0.0,
       "xg": 0.039699796587228775
-    },
-    {
-      "assists": 1.0,
-      "games": 3.0,
-      "goals": 0.0,
-      "key_passes": 4.0,
-      "minutes": 233.0,
-      "name": "Felix Correia",
-      "npxg": 0.12675312161445618,
-      "position": "M",
-      "shots": 2.0,
-      "team": "Sevilla",
-      "xa": 0.7300010323524475,
-      "xg": 0.12675312161445618
     },
     {
       "assists": 0.0,
@@ -4063,10 +4091,10 @@
     },
     {
       "assists": 0.0,
-      "games": 5.0,
+      "games": 6.0,
       "goals": 0.0,
       "key_passes": 2.0,
-      "minutes": 450.0,
+      "minutes": 540.0,
       "name": "Kike Salas",
       "npxg": 0.23690715804696083,
       "position": "D",
@@ -4385,16 +4413,16 @@
     },
     {
       "assists": 0.0,
-      "games": 7.0,
+      "games": 8.0,
       "goals": 0.0,
-      "key_passes": 9.0,
-      "minutes": 630.0,
+      "key_passes": 12.0,
+      "minutes": 720.0,
       "name": "Gabriel Suazo",
       "npxg": 0.012310294434428215,
       "position": "D",
       "shots": 1.0,
       "team": "Sevilla",
-      "xa": 0.30589259415864944,
+      "xa": 0.48227568715810776,
       "xg": 0.012310294434428215
     },
     {
@@ -5043,16 +5071,16 @@
     },
     {
       "assists": 0.0,
-      "games": 3.0,
+      "games": 4.0,
       "goals": 0.0,
-      "key_passes": 0.0,
-      "minutes": 107.0,
+      "key_passes": 1.0,
+      "minutes": 128.0,
       "name": "Daniel Requena",
       "npxg": 0.0059044258669018745,
       "position": "F S",
       "shots": 1.0,
       "team": "Levante",
-      "xa": 0.0,
+      "xa": 0.028351202607154846,
       "xg": 0.0059044258669018745
     },
     {
@@ -5211,10 +5239,10 @@
     },
     {
       "assists": 0.0,
-      "games": 6.0,
+      "games": 7.0,
       "goals": 0.0,
       "key_passes": 3.0,
-      "minutes": 479.0,
+      "minutes": 569.0,
       "name": "Andr\u00e9s Castr\u00edn",
       "npxg": 0.5589372143149376,
       "position": "D S",
@@ -5295,10 +5323,10 @@
     },
     {
       "assists": 0.0,
-      "games": 3.0,
+      "games": 4.0,
       "goals": 0.0,
       "key_passes": 0.0,
-      "minutes": 61.0,
+      "minutes": 62.0,
       "name": "Paco Cort\u00e9s",
       "npxg": 0.06517872214317322,
       "position": "M S",
@@ -5309,17 +5337,17 @@
     },
     {
       "assists": 0.0,
-      "games": 5.0,
+      "games": 6.0,
       "goals": 0.0,
       "key_passes": 2.0,
-      "minutes": 305.0,
+      "minutes": 306.0,
       "name": "Nacho P\u00e9rez",
-      "npxg": 0.39767053723335266,
+      "npxg": 1.0431585013866425,
       "position": "D S",
-      "shots": 1.0,
+      "shots": 3.0,
       "team": "Levante",
       "xa": 0.10069522261619568,
-      "xg": 0.39767053723335266
+      "xg": 1.0431585013866425
     },
     {
       "assists": 0.0,
@@ -5645,10 +5673,10 @@
     },
     {
       "assists": 0.0,
-      "games": 4.0,
+      "games": 5.0,
       "goals": 0.0,
       "key_passes": 2.0,
-      "minutes": 80.0,
+      "minutes": 97.0,
       "name": "Julio D\u00edaz",
       "npxg": 0.0,
       "position": "M S",
@@ -5673,17 +5701,17 @@
     },
     {
       "assists": 0.0,
-      "games": 2.0,
+      "games": 3.0,
       "goals": 0.0,
       "key_passes": 0.0,
-      "minutes": 70.0,
+      "minutes": 103.0,
       "name": "Petar Ratkov",
-      "npxg": 0.10240906476974487,
+      "npxg": 0.18952000886201859,
       "position": "F S",
-      "shots": 1.0,
+      "shots": 2.0,
       "team": "Levante",
       "xa": 0.0,
-      "xg": 0.10240906476974487
+      "xg": 0.18952000886201859
     },
     {
       "assists": 0.0,
@@ -5743,17 +5771,17 @@
     },
     {
       "assists": 0.0,
-      "games": 4.0,
+      "games": 5.0,
       "goals": 0.0,
-      "key_passes": 2.0,
-      "minutes": 302.0,
+      "key_passes": 3.0,
+      "minutes": 335.0,
       "name": "Thiago Fern\u00e1ndez",
-      "npxg": 0.7133502122014761,
-      "position": "F M",
-      "shots": 6.0,
+      "npxg": 0.7865802105516195,
+      "position": "F M S",
+      "shots": 8.0,
       "team": "Levante",
-      "xa": 0.16317126527428627,
-      "xg": 0.7133502122014761
+      "xa": 0.2396530620753765,
+      "xg": 0.7865802105516195
     },
     {
       "assists": 0.0,
@@ -5838,20 +5866,6 @@
       "team": "Sevilla",
       "xa": 0.0,
       "xg": 0.03408406302332878
-    },
-    {
-      "assists": 1.0,
-      "games": 7.0,
-      "goals": 0.0,
-      "key_passes": 4.0,
-      "minutes": 386.0,
-      "name": "Robbie Ure",
-      "npxg": 0.6076166704297066,
-      "position": "F S",
-      "shots": 7.0,
-      "team": "Sevilla",
-      "xa": 0.24572255834937096,
-      "xg": 0.6076166704297066
     },
     {
       "assists": 0.0,
@@ -6457,20 +6471,6 @@
     },
     {
       "assists": 0.0,
-      "games": 2.0,
-      "goals": 0.0,
-      "key_passes": 0.0,
-      "minutes": 38.0,
-      "name": "Ifeanyi Ndukwe",
-      "npxg": 0.0,
-      "position": "S",
-      "shots": 0.0,
-      "team": "Levante",
-      "xa": 0.0,
-      "xg": 0.0
-    },
-    {
-      "assists": 0.0,
       "games": 4.0,
       "goals": 0.0,
       "key_passes": 0.0,
@@ -6499,13 +6499,13 @@
     },
     {
       "assists": 0.0,
-      "games": 2.0,
+      "games": 3.0,
       "goals": 0.0,
       "key_passes": 0.0,
-      "minutes": 51.0,
+      "minutes": 108.0,
       "name": "Yanis Musuayi",
       "npxg": 0.042716134339571,
-      "position": "S",
+      "position": "F S",
       "shots": 1.0,
       "team": "Levante",
       "xa": 0.0,
