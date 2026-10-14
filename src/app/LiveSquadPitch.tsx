@@ -20,7 +20,7 @@ const STATUS_LABEL: Record<LeagueSquadRow["status"], string> = {
   didNotPlay: "did not play",
 };
 
-function PlayerToken({ row, bench = false }: { row: LeagueSquadRow; bench?: boolean }) {
+function PlayerToken({ row, bench = false, diff = false }: { row: LeagueSquadRow; bench?: boolean; diff?: boolean }) {
   const w = bench ? 42 : 56;
   const showRemaining = row.status === "notStarted" || row.status === "playing";
   const pending = row.status === "notStarted";
@@ -54,6 +54,14 @@ function PlayerToken({ row, bench = false }: { row: LeagueSquadRow; bench?: bool
           glow={row.status === "playing" ? "var(--accent)" : null}
           dim={row.status === "didNotPlay" ? 0.5 : row.status === "offPitch" ? 0.62 : pending ? 0.72 : 1}
         />
+        {diff && (
+          <span
+            className="absolute -left-1 -top-1 flex h-4 items-center rounded-full bg-[var(--warn)] px-1 text-[8px] font-extrabold text-[var(--bg-0)]"
+            title="Differential: only one of you owns this player"
+          >
+            DIFF
+          </span>
+        )}
         {row.isArmband && (
           <span className="armband armband-captain absolute -right-1 -top-1 h-4 w-4 text-[9px]">
             C
@@ -99,7 +107,16 @@ function PlayerToken({ row, bench = false }: { row: LeagueSquadRow; bench?: bool
  * this app's *forecast model* pointed at their squad (that's for the
  * squad's own holder to plan transfers/captaincy with), just "where is
  * their current team, and where's it heading". */
-export default function LiveSquadPitch({ data }: { data: LeagueSquadResponse }) {
+export default function LiveSquadPitch({
+  data,
+  diffIds,
+  heading,
+}: {
+  data: LeagueSquadResponse;
+  /** Players to mark as differentials (a rivalry duel). */
+  diffIds?: Set<number>;
+  heading?: string;
+}) {
   const starters = data.rows.filter((r) => !r.isBench);
   const bench = data.rows.filter((r) => r.isBench);
   const rows = ROWS.map((pos) => starters.filter((r) => r.position === pos)).filter((r) => r.length);
@@ -116,7 +133,7 @@ export default function LiveSquadPitch({ data }: { data: LeagueSquadResponse }) 
           <h2 className="font-mono text-[13px] font-bold tracking-[0.12em] text-ink">
             LIVE · GW{data.gameweek}
           </h2>
-          <p className="eyebrow mt-0.5">their actual team, not a forecast</p>
+          <p className="eyebrow mt-0.5">{heading ?? "their actual team, not a forecast"}</p>
         </div>
         <div className="flex shrink-0 items-end gap-3 text-right">
           <div>
@@ -141,7 +158,7 @@ export default function LiveSquadPitch({ data }: { data: LeagueSquadResponse }) 
           {rows.map((row, i) => (
             <div key={i} className="flex justify-center gap-x-1 gap-y-4">
               {row.map((r) => (
-                <PlayerToken key={r.id} row={r} />
+                <PlayerToken key={r.id} row={r} diff={diffIds?.has(r.id)} />
               ))}
             </div>
           ))}
