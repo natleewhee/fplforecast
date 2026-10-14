@@ -2,6 +2,7 @@
 
 import { Fragment, useCallback, useEffect, useRef, useState } from "react";
 import { Dropdown } from "./Dropdown";
+import DuelCard from "./DuelCard";
 import LiveSquadPitch from "./LiveSquadPitch";
 import type { LeagueEntryRow, LeaguesResponse } from "./api/league/route";
 import type { LeagueSquadResponse } from "./api/league/squad/route";
@@ -207,11 +208,13 @@ function ManagerSquadPreview({
   name,
   viewerTeamId,
   onClose,
+  onDuel,
 }: {
   entryId: number;
   name: string;
   viewerTeamId?: string | null;
   onClose: () => void;
+  onDuel?: () => void;
 }) {
   const [squad, setSquad] = useState<LeagueSquadResponse | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -280,13 +283,24 @@ function ManagerSquadPreview({
         {/* h-11 (44px, adapt.md's minimum touch target -- see Carousel.tsx's
          * own comment) with the visible pill kept small via padding, not
          * button height. */}
-        <button
-          type="button"
-          onClick={onClose}
-          className="inline-flex h-11 shrink-0 items-center rounded-full border border-line px-3 text-[11px] text-ink-soft hover:border-border-strong"
-        >
-          Close
-        </button>
+        <div className="flex shrink-0 gap-2">
+          {onDuel && (
+            <button
+              type="button"
+              onClick={onDuel}
+              className="inline-flex h-11 items-center rounded-full bg-[var(--accent)] px-3 text-[11px] font-bold text-[var(--bg-0)]"
+            >
+              ⚔️ Duel
+            </button>
+          )}
+          <button
+            type="button"
+            onClick={onClose}
+            className="inline-flex h-11 items-center rounded-full border border-line px-3 text-[11px] text-ink-soft hover:border-border-strong"
+          >
+            Close
+          </button>
+        </div>
       </div>
       {error && (
         <div className="flex items-center justify-between gap-2">
@@ -322,6 +336,7 @@ export default function LeaguesPage({ teamId }: { teamId?: string | null } = {})
   const [viewingManager, setViewingManager] = useState<{ entryId: number; name: string } | null>(
     null,
   );
+  const [duel, setDuel] = useState<{ entryId: number; name: string } | null>(null);
   const [selectedId, setSelectedId] = useState<number | null>(() => {
     try {
       const stored = localStorage.getItem(STORAGE_KEY);
@@ -413,13 +428,31 @@ export default function LeaguesPage({ teamId }: { teamId?: string | null } = {})
         gameweek={data.gameweek}
         onSelectManager={(entryId, name) => setViewingManager({ entryId, name })}
       />
-      {viewingManager && (
+      {duel && data.league && (
+        <DuelCard
+          key={duel.entryId}
+          myEntryId={data.league.myEntryId}
+          rivalId={duel.entryId}
+          rivalName={duel.name}
+          teamId={teamId}
+          onClose={() => setDuel(null)}
+        />
+      )}
+      {viewingManager && !duel && (
         <ManagerSquadPreview
           key={viewingManager.entryId}
           entryId={viewingManager.entryId}
           name={viewingManager.name}
           viewerTeamId={teamId}
           onClose={() => setViewingManager(null)}
+          onDuel={
+            data.league && viewingManager.entryId !== data.league.myEntryId
+              ? () => {
+                  setDuel(viewingManager);
+                  setViewingManager(null);
+                }
+              : undefined
+          }
         />
       )}
       {data.league && (

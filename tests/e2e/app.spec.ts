@@ -246,3 +246,76 @@ test("the app can be added to a home screen", async ({ request }) => {
     expect(res.ok(), icon.src).toBeTruthy();
   }
 });
+
+test.describe("Rivalry duel", () => {
+  const squadFor = (entryId: number, ids: number[], pts: number) => {
+    const pos = ["GKP", "DEF", "DEF", "DEF", "DEF", "MID", "MID", "MID", "MID", "FWD", "FWD"] as const;
+    return {
+      entryId,
+      entryName: `Team ${entryId}`,
+      managerName: null,
+      gameweek: 7,
+      totalPoints: pts * 11,
+      totalXp: pts * 11 + 20,
+      chip: null,
+      rows: ids.map((id, i) => ({
+        id,
+        webName: `P${id}`,
+        team: "ARS",
+        code: null,
+        position: pos[i],
+        isBench: false,
+        isCaptain: i === 0,
+        isViceCaptain: false,
+        isArmband: i === 0,
+        status: i < 6 ? "finished" : "notStarted",
+        minutes: i < 6 ? 90 : 0,
+        pointsSoFar: i < 6 ? pts : 0,
+        remainingXp: i < 6 ? 0 : 4,
+        noBakedXp: false,
+        subbedIn: false,
+        subbedOut: false,
+        opponent: "bha (H)",
+      })),
+    };
+  };
+
+  test("picks a mate, shows odds and marks differentials", async ({ page }) => {
+    await mockLive(page, { current: "a" });
+    await page.route(/\/api\/league(\?|$)/, (route) =>
+      route.fulfill({
+        contentType: "application/json",
+        body: JSON.stringify({
+          gameweek: 7,
+          leagues: [{ leagueId: 1, leagueName: "Mates" }],
+          league: {
+            leagueId: 1,
+            leagueName: "Mates",
+            myEntryId: 100,
+            myRank: 1,
+            totalEntries: 2,
+            totalEntriesIsFloor: false,
+            appendedEntryId: null,
+            entries: [
+              { entryId: 100, entryName: "Me FC", playerName: "Nat", rank: 1, lastRank: 1, totalPoints: 100, eventPoints: 40, projectedXp: 60, chip: null, captainName: null, playersPlayed: 6, playersLive: 0, playersToPlay: 5 },
+              { entryId: 200, entryName: "Sam FC", playerName: "Sam", rank: 2, lastRank: 2, totalPoints: 90, eventPoints: 30, projectedXp: 55, chip: null, captainName: null, playersPlayed: 6, playersLive: 0, playersToPlay: 5 },
+            ],
+          },
+        }),
+      }),
+    );
+    await page.route("**/api/league/squad*", (route) => {
+      const id = Number(new URL(route.request().url()).searchParams.get("entryId"));
+      const body = id === 100 ? squadFor(100, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], 5) : squadFor(200, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 99], 3);
+      return route.fulfill({ contentType: "application/json", body: JSON.stringify(body) });
+    });
+    await open(page);
+    await page.getByRole("button", { name: /^Leagues$/ }).first().click();
+    await page.getByRole("button", { name: /Sam FC/ }).click();
+    await page.getByRole("button", { name: /Duel/ }).click();
+    const odds = page.getByTestId("duel-odds");
+    await expect(odds).toContainText("%");
+    await expect(page.getByTestId("duel")).toContainText("Only you own");
+    await expect(page.getByTitle(/Differential/).first()).toBeVisible();
+  });
+});
