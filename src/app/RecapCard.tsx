@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import type { RecapResponse } from "./api/recap/route";
 import { rankMove, regretCopy, tier, verdict, type Recap } from "@/lib/recap";
+import { renderRecapCard } from "./recapCanvas";
 
 function shareLines(r: Recap): string[] {
   const lines = [verdict(r), `GW${r.gameweek}: ${r.points} pts${r.hit ? ` (−${r.hit} hit)` : ""}`];
@@ -14,145 +15,6 @@ function shareLines(r: Recap): string[] {
   if (r.worst) lines.push(`Worst: ${r.worst.name} ${r.worst.points}`);
   for (const a of r.achievements.slice(0, 3)) lines.push(`${a.emoji} ${a.title}`);
   return lines;
-}
-
-function wrap(ctx: CanvasRenderingContext2D, text: string, x: number, y: number, maxW: number, lh: number): number {
-  let line = "";
-  for (const word of text.split(" ")) {
-    const test = line ? `${line} ${word}` : word;
-    if (ctx.measureText(test).width > maxW && line) {
-      ctx.fillText(line, x, y);
-      line = word;
-      y += lh;
-    } else line = test;
-  }
-  ctx.fillText(line, x, y);
-  return y;
-}
-
-/** A shareable PNG of the recap, drawn on a canvas (no dependencies): a
- * floodlit-pitch poster with a banter headline and a trading-card rarity. */
-function drawCard(r: Recap): Promise<Blob | null> {
-  const W = 800;
-  const H = 1000;
-  const canvas = document.createElement("canvas");
-  canvas.width = W;
-  canvas.height = H;
-  const ctx = canvas.getContext("2d");
-  if (!ctx) return Promise.resolve(null);
-  const t = tier(r);
-
-  const bg = ctx.createLinearGradient(0, 0, 0, H);
-  bg.addColorStop(0, "#06100b");
-  bg.addColorStop(1, "#0f2a1a");
-  ctx.fillStyle = bg;
-  ctx.fillRect(0, 0, W, H);
-  // mown stripes + pitch lines
-  for (let i = 0; i < 10; i++) {
-    ctx.fillStyle = i % 2 ? "rgba(61,220,132,0.05)" : "rgba(61,220,132,0.0)";
-    ctx.fillRect(0, 440 + i * 56, W, 56);
-  }
-  ctx.strokeStyle = "rgba(255,255,255,0.10)";
-  ctx.lineWidth = 3;
-  ctx.beginPath();
-  ctx.arc(W / 2, 760, 150, 0, Math.PI * 2);
-  ctx.moveTo(0, 760);
-  ctx.lineTo(W, 760);
-  ctx.stroke();
-  // floodlight glow in the tier colour
-  const glow = ctx.createRadialGradient(W / 2, 0, 20, W / 2, 0, 700);
-  glow.addColorStop(0, `${t.color}55`);
-  glow.addColorStop(1, "rgba(0,0,0,0)");
-  ctx.fillStyle = glow;
-  ctx.fillRect(0, 0, W, H);
-  // card frame
-  ctx.strokeStyle = t.color;
-  ctx.lineWidth = 6;
-  ctx.strokeRect(24, 24, W - 48, H - 48);
-
-  ctx.textBaseline = "alphabetic";
-  ctx.fillStyle = t.color;
-  ctx.font = "800 26px system-ui, sans-serif";
-  ctx.fillText(`GAMEWEEK ${r.gameweek}`, 60, 92);
-  ctx.textAlign = "right";
-  ctx.fillText(t.label, W - 60, 92);
-  ctx.textAlign = "left";
-
-  ctx.fillStyle = "#ffffff";
-  ctx.font = "800 58px system-ui, sans-serif";
-  const endY = wrap(ctx, verdict(r), 60, 175, W - 120, 66);
-
-  ctx.font = "800 190px system-ui, sans-serif";
-  ctx.shadowColor = t.color;
-  ctx.shadowBlur = 40;
-  ctx.fillText(String(r.points), 60, endY + 200);
-  ctx.shadowBlur = 0;
-  ctx.fillStyle = "#9fb3a8";
-  ctx.font = "600 30px system-ui, sans-serif";
-  const sub = [r.averageScore != null ? `avg ${r.averageScore}` : null, r.hit ? `−${r.hit} hit` : null, rankMove(r)]
-    .filter(Boolean)
-    .join("  ·  ");
-  ctx.fillText(sub, 60, endY + 252);
-
-  // stat panels
-  let y = endY + 310;
-  const panel = (label: string, value: string, color = "#ffffff") => {
-    ctx.fillStyle = "rgba(255,255,255,0.06)";
-    ctx.fillRect(60, y, W - 120, 64);
-    ctx.fillStyle = "#9fb3a8";
-    ctx.font = "600 24px system-ui, sans-serif";
-    ctx.fillText(label, 80, y + 41);
-    ctx.fillStyle = color;
-    ctx.font = "700 30px system-ui, sans-serif";
-    ctx.textAlign = "right";
-    ctx.fillText(value, W - 80, y + 42);
-    ctx.textAlign = "left";
-    y += 76;
-  };
-  if (r.captain) panel("Captain", `${r.captain.name} ${r.captain.raw} (×${r.captain.multiplier})`);
-  if (r.best) panel("Best pick", `${r.best.name} ${r.best.points}`, "#3ddc84");
-  if (r.worst) panel("Worst pick", `${r.worst.name} ${r.worst.points}`, "#ff6b6b");
-
-  // achievement stickers
-  let x = 60;
-  y += 54;
-  ctx.font = "700 26px system-ui, sans-serif";
-  for (const a of r.achievements.slice(0, 4)) {
-    const label = `${a.emoji} ${a.title}`;
-    const w = ctx.measureText(label).width + 36;
-    if (x + w > W - 60) {
-      x = 60;
-      y += 58;
-    }
-    ctx.fillStyle = a.good ? "rgba(61,220,132,0.18)" : "rgba(255,107,107,0.18)";
-    ctx.beginPath();
-    ctx.roundRect(x, y - 34, w, 46, 23);
-    ctx.fill();
-    ctx.fillStyle = "#ffffff";
-    ctx.fillText(label, x + 18, y);
-    x += w + 12;
-  }
-
-  // brand lockup: dugout-bench mark + wordmark
-  ctx.save();
-  ctx.translate(60, H - 112);
-  ctx.scale(0.75, 0.75);
-  ctx.strokeStyle = "#3ddc84";
-  ctx.lineWidth = 5;
-  ctx.lineCap = "round";
-  ctx.stroke(new Path2D("M10 50V30c0-4 3-7 7-7h30c4 0 7 3 7 7v20M8 50h48"));
-  ctx.fillStyle = "#f2f5ef";
-  ctx.beginPath();
-  ctx.arc(32, 14, 6, 0, Math.PI * 2);
-  ctx.fill();
-  ctx.restore();
-  ctx.fillStyle = "#f2f5ef";
-  ctx.font = "800 38px system-ui, sans-serif";
-  ctx.fillText("Gaffer", 124, H - 60);
-  const gw = ctx.measureText("Gaffer").width;
-  ctx.fillStyle = "#3ddc84";
-  ctx.fillText("FPL", 124 + gw, H - 60);
-  return new Promise((resolve) => canvas.toBlob(resolve, "image/png"));
 }
 
 export default function RecapCard({ teamId }: { teamId?: string | null }) {
@@ -185,7 +47,7 @@ export default function RecapCard({ teamId }: { teamId?: string | null }) {
   const share = async () => {
     const text = shareLines(recap).join("\n");
     try {
-      const blob = await drawCard(recap);
+      const blob = await renderRecapCard(recap);
       if (blob && navigator.canShare?.({ files: [new File([blob], "recap.png", { type: "image/png" })] })) {
         await navigator.share({ files: [new File([blob], `gw${recap.gameweek}-recap.png`, { type: "image/png" })], text });
         return;

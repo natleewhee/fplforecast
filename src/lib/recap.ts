@@ -11,7 +11,7 @@ export type RecapInputs = {
   rawPoints: Record<number, number>;
   /** element id -> minutes played that gameweek */
   minutes: Record<number, number>;
-  players: Record<number, { name: string; ownedPct: number }>;
+  players: Record<number, { name: string; ownedPct: number; code?: number | null; team?: string }>;
   history: { event: number; points: number; overall_rank: number; event_transfers_cost: number; points_on_bench: number }[];
   transfers: { event: number; element_in: number; element_out: number }[];
   averageScore: number | null;
@@ -27,7 +27,7 @@ export type Recap = {
   rank: number | null;
   rankBefore: number | null;
   captain: { name: string; raw: number; multiplier: number } | null;
-  best: { name: string; points: number } | null;
+  best: { name: string; points: number; code: number | null; team: string | null } | null;
   worst: { name: string; points: number } | null;
   benchPoints: number;
   chip: string | null;
@@ -55,7 +55,14 @@ export function buildRecap(i: RecapInputs): Recap {
   const benchPoints = bench.reduce((s, p) => s + raw(p.element), 0);
 
   const byRaw = [...played].sort((a, b) => raw(b.element) - raw(a.element));
-  const best = byRaw[0] ? { name: name(byRaw[0].element), points: raw(byRaw[0].element) } : null;
+  const best = byRaw[0]
+    ? {
+        name: name(byRaw[0].element),
+        points: raw(byRaw[0].element),
+        code: i.players[byRaw[0].element]?.code ?? null,
+        team: i.players[byRaw[0].element]?.team ?? null,
+      }
+    : null;
   const worstPick = byRaw.length ? byRaw[byRaw.length - 1] : null;
   const worst = worstPick ? { name: name(worstPick.element), points: raw(worstPick.element) } : null;
 
