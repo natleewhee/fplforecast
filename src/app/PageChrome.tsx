@@ -54,14 +54,17 @@ export function Header({ subtitle }: { subtitle: string }) {
     <header className="sticky top-0 z-30 border-b border-line bg-[color-mix(in_srgb,var(--bg-0)_78%,transparent)] backdrop-blur-xl">
       <div className="mx-auto flex max-w-4xl items-center justify-between gap-3 px-4 py-3">
         <div className="flex items-center gap-2.5">
-          <span className="grid h-7 w-7 place-items-center rounded-lg border border-[color-mix(in_srgb,var(--accent)_45%,transparent)] bg-[color-mix(in_srgb,var(--accent)_12%,transparent)]">
-            <span className="h-2 w-2 rounded-full bg-[var(--accent)] pulse" />
+          <span className="grid h-8 w-8 place-items-center rounded-lg border border-[color-mix(in_srgb,var(--accent)_45%,transparent)] bg-[color-mix(in_srgb,var(--accent)_12%,transparent)]">
+            <svg viewBox="0 0 64 64" fill="none" className="h-5 w-5" aria-hidden="true">
+              <path d="M10 50V30c0-4 3-7 7-7h30c4 0 7 3 7 7v20M8 50h48" stroke="var(--accent)" strokeWidth="6" strokeLinecap="round" />
+              <circle cx="32" cy="13" r="6.5" fill="var(--ink)" />
+            </svg>
           </span>
           <div className="leading-tight">
-            <div className="font-mono text-[13px] font-bold tracking-[0.14em] text-ink">
-              FPL·FORECASTER
+            <div className="font-display text-[22px] font-extrabold leading-none tracking-[0.01em] text-ink">
+              Gaffer<span className="text-[var(--accent)]">FPL</span>
             </div>
-            <div className="text-[10px] tracking-wide text-ink-faint">{subtitle}</div>
+            <div className="mt-0.5 text-[10px] tracking-wide text-ink-faint">{subtitle}</div>
           </div>
         </div>
         <span className="hidden h-px flex-1 bg-gradient-to-r from-transparent via-[var(--border-strong)] to-transparent sm:block" />

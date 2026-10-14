@@ -49,7 +49,7 @@ test("reports rank movement and totals", () => {
 
 test("best, worst and captain come from actual points", () => {
   const r = buildRecap(base());
-  assert.deepEqual(r.best, { name: "P9", points: 12 });
+  assert.deepEqual(r.best, { name: "P9", points: 12, code: null, team: null });
   assert.equal(r.worst?.points, 1);
   assert.deepEqual(r.captain, { name: "P10", raw: 3, multiplier: 2 });
 });
@@ -105,4 +105,12 @@ test("captain blank with a rotting bench gets the banter line", () => {
   const b = base();
   b.rawPoints[10] = 1;
   assert.equal(verdict(buildRecap(b)), "Captain blank. Bench cried.");
+});
+
+test("the best pick carries the photo code and club for the card", () => {
+  const b = base();
+  b.players[9] = { name: "P9", ownedPct: 3.2, code: 4242, team: "BHA" };
+  const r = buildRecap(b);
+  assert.equal(r.best?.code, 4242);
+  assert.equal(r.best?.team, "BHA");
 });

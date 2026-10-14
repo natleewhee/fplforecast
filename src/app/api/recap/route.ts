@@ -16,7 +16,8 @@ async function fpl<T>(path: string): Promise<T> {
 
 type Bootstrap = {
   events: { id: number; finished?: boolean; data_checked?: boolean; average_entry_score?: number | null }[];
-  elements: { id: number; web_name: string; selected_by_percent: string }[];
+  elements: { id: number; web_name: string; selected_by_percent: string; code?: number; team: number }[];
+  teams: { id: number; short_name: string }[];
 };
 type Live = { elements: { id: number; stats?: { total_points?: number; minutes?: number } }[] };
 
@@ -47,8 +48,14 @@ export async function GET(request: NextRequest) {
       minutes[el.id] = el.stats?.minutes ?? 0;
     }
     const players: RecapInputs["players"] = {};
+    const teamShort = new Map(bootstrap.teams.map((t) => [t.id, t.short_name]));
     for (const el of bootstrap.elements) {
-      players[el.id] = { name: el.web_name, ownedPct: Number(el.selected_by_percent) || 0 };
+      players[el.id] = {
+        name: el.web_name,
+        ownedPct: Number(el.selected_by_percent) || 0,
+        code: el.code ?? null,
+        team: teamShort.get(el.team),
+      };
     }
 
     const recap = buildRecap({
