@@ -19,9 +19,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "FPL Forecaster",
+  title: "GafferFPL",
   description: "Personal FPL squad, captain and transfer decisions.",
-  appleWebApp: { capable: true, title: "FPL", statusBarStyle: "black" },
+  appleWebApp: { capable: true, title: "GafferFPL", statusBarStyle: "black" },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

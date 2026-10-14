@@ -133,9 +133,25 @@ function drawCard(r: Recap): Promise<Blob | null> {
     x += w + 12;
   }
 
-  ctx.fillStyle = "#6d8478";
-  ctx.font = "600 24px system-ui, sans-serif";
-  ctx.fillText("fplforecast", 60, H - 56);
+  // brand lockup: dugout-bench mark + wordmark
+  ctx.save();
+  ctx.translate(60, H - 112);
+  ctx.scale(0.75, 0.75);
+  ctx.strokeStyle = "#3ddc84";
+  ctx.lineWidth = 5;
+  ctx.lineCap = "round";
+  ctx.stroke(new Path2D("M10 50V30c0-4 3-7 7-7h30c4 0 7 3 7 7v20M8 50h48"));
+  ctx.fillStyle = "#f2f5ef";
+  ctx.beginPath();
+  ctx.arc(32, 14, 6, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.restore();
+  ctx.fillStyle = "#f2f5ef";
+  ctx.font = "800 38px system-ui, sans-serif";
+  ctx.fillText("Gaffer", 124, H - 60);
+  const gw = ctx.measureText("Gaffer").width;
+  ctx.fillStyle = "#3ddc84";
+  ctx.fillText("FPL", 124 + gw, H - 60);
   return new Promise((resolve) => canvas.toBlob(resolve, "image/png"));
 }
 

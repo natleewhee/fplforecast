@@ -247,7 +247,7 @@ function TeamIdBar({
     // there); clipboard everywhere else, including a share-sheet cancel.
     if (navigator.share) {
       try {
-        await navigator.share({ url, title: teamName ? `${teamName} on FPL Forecaster` : "FPL Forecaster" });
+        await navigator.share({ url, title: teamName ? `${teamName} on GafferFPL` : "GafferFPL" });
         return;
       } catch {
         // user cancelled the share sheet, or the browser doesn't actually

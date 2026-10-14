@@ -4,8 +4,8 @@ import type { MetadataRoute } from "next";
  * an app, which is how it gets used on match days. */
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "FPL Forecaster",
-    short_name: "FPL",
+    name: "GafferFPL",
+    short_name: "GafferFPL",
     description: "Personal FPL squad, captain and transfer decisions.",
     start_url: "/",
     display: "standalone",
