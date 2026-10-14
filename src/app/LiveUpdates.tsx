@@ -1,5 +1,6 @@
 "use client";
 
+import { commentate } from "@/lib/commentary";
 import type { TrackerRow } from "@/lib/liveBlend";
 import { sgKickoff } from "@/lib/liveLabels";
 import type { FeedItem } from "./useLiveFx";
@@ -69,8 +70,7 @@ export function LiveFeed({ feed, showEmpty }: { feed: FeedItem[]; showEmpty: boo
         {feed.map((f) => (
           <li key={f.key} className="flex items-baseline justify-between gap-2 text-[11.5px] leading-snug">
             <span className="min-w-0">
-              <span className="font-semibold text-ink">{f.name}</span>
-              <span className="text-ink-soft"> · {f.what.join(", ")}</span>
+              <span className="text-ink">{commentate(f.name, f.what, f.delta, f.key)}</span>
               {f.minutes > 0 && <span className="font-mono text-ink-faint"> · {f.minutes}&prime;</span>}
             </span>
             {f.delta !== 0 && (
