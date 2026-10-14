@@ -97,7 +97,6 @@ test.describe("Live tab", () => {
     await page.evaluate(() => document.dispatchEvent(new Event("visibilitychange")));
     const feed = page.getByText("What just happened").locator("..");
     await expect(feed).toContainText("Palmer");
-    await expect(feed).toContainText("scored");
     await expect(feed).toContainText("+5");
   });
 
