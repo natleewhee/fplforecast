@@ -24,6 +24,7 @@ import DeadlineBanner from "./DeadlineBanner";
 import History from "./History";
 import LiveTracker from "./LiveTracker";
 import LeaguesPage from "./LeaguesPage";
+import RecapCard from "./RecapCard";
 import Scenarios from "./Scenarios";
 import TransferForm from "./TransferForm";
 import AppTabs from "./AppTabs";
@@ -578,7 +579,12 @@ export default function AppShell({
         onPendingChange: setPendingEdited,
       };
 
-  const liveTab = <LiveTracker lastGameweek={forecast.lastGameweek} teamId={isViewingSharedLink ? teamId : null} />;
+  const liveTab = (
+    <>
+      <LiveTracker lastGameweek={forecast.lastGameweek} teamId={isViewingSharedLink ? teamId : null} />
+      <RecapCard teamId={isViewingSharedLink ? teamId : null} />
+    </>
+  );
   const leaguesTab = <LeaguesPage teamId={isViewingSharedLink ? teamId : null} />;
 
   const squadTab = (
