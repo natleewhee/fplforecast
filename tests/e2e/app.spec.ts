@@ -318,3 +318,40 @@ test.describe("Rivalry duel", () => {
     await expect(page.getByTitle(/Differential/).first()).toBeVisible();
   });
 });
+
+test.describe("Gameweek recap", () => {
+  test("shows the card, badges and the regret machine", async ({ page }) => {
+    await mockLive(page, { current: "a" });
+    await page.route("**/api/recap*", (route) =>
+      route.fulfill({
+        contentType: "application/json",
+        body: JSON.stringify({
+          recap: {
+            gameweek: 6,
+            points: 71,
+            hit: 4,
+            averageScore: 48,
+            rank: 90000,
+            rankBefore: 120000,
+            captain: { name: "Haaland", raw: 4, multiplier: 2 },
+            best: { name: "Palmer", points: 14 },
+            worst: { name: "Gabriel", points: 1 },
+            benchPoints: 12,
+            chip: null,
+            achievements: [
+              { id: "bench-regret", emoji: "🪑", title: "Bench regret", detail: "12 points rotted on your bench", good: false },
+            ],
+            regrets: [{ id: "captain", text: "If you'd captained Palmer instead of Haaland", points: 20 }],
+          },
+        }),
+      }),
+    );
+    await open(page);
+    const card = page.getByTestId("recap");
+    await expect(card).toContainText("GW6 recap");
+    await expect(card).toContainText("30,000 places");
+    await expect(page.getByTestId("achievements")).toContainText("Bench regret");
+    await card.getByRole("button", { name: /Regret machine/ }).click();
+    await expect(page.getByTestId("regrets")).toContainText("+20");
+  });
+});
