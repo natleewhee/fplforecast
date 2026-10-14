@@ -1,4 +1,4 @@
-# FPL Forecaster
+# GafferFPL
 
 Personal FPL decision tool. One user, no login, mobile webapp. Full plan lives
 in the Ideaverse vault at `Efforts/Ongoing/FPL Forecaster/FPL Forecaster.md`.
