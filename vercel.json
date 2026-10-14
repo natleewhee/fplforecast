@@ -3,12 +3,14 @@
     "api/solve.py": {
       "includeFiles": "{data/forecast/**,engine/**}",
       "memory": 1024,
-      "maxDuration": 30
+      "maxDuration": 30,
+      "excludeFiles": "{**/*.pyi,**/tests/**,**/pulp/solverdir/cbc/osx/**,**/pulp/solverdir/cbc/win/**}"
     },
     "api/forecast.py": {
       "includeFiles": "{data-deploy/**,engine/**,scripts/**}",
       "memory": 1024,
-      "maxDuration": 30
+      "maxDuration": 30,
+      "excludeFiles": "{**/*.pyi,**/tests/**,**/pulp/solverdir/cbc/osx/**,**/pulp/solverdir/cbc/win/**}"
     }
   }
 }
