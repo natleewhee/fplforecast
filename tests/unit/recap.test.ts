@@ -88,3 +88,21 @@ test("keep-the-sold-player regret only when they outscored the buy", () => {
   assert.equal(r.regrets.find((x) => x.id === "keep-9")?.points, 11);
   assert.ok(regretCopy({ id: "x", text: "If", points: 12 }).includes("replay"));
 });
+
+import { tier, verdict } from "../../src/lib/recap.ts";
+
+test("verdict and tier follow the week", () => {
+  const r = buildRecap(base());
+  assert.equal(typeof verdict(r), "string");
+  assert.ok(verdict(r).length > 0);
+  assert.equal(tier({ points: 80, averageScore: 50 }).id, "legend");
+  assert.equal(tier({ points: 50, averageScore: 50 }).id, "rare");
+  assert.equal(tier({ points: 40, averageScore: 50 }).id, "common");
+  assert.equal(tier({ points: 20, averageScore: 50 }).id, "bruised");
+});
+
+test("captain blank with a rotting bench gets the banter line", () => {
+  const b = base();
+  b.rawPoints[10] = 1;
+  assert.equal(verdict(buildRecap(b)), "Captain blank. Bench cried.");
+});
