@@ -67,6 +67,11 @@ jobs:
       - name: Compute forecast
         run: python scripts/compute_forecast.py
 
+      - name: Drop daily snapshots older than 14 days
+        # Everything reads only the newest file in these folders, so older copies
+        # just grow the repo (about 3.4 MB a day). They stay in git history.
+        run: python scripts/prune_snapshots.py --days 14
+
       - name: Commit snapshot
         run: |
           git config user.name "fpl-snapshotter"
