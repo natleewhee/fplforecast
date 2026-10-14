@@ -182,3 +182,31 @@ export function rankMove(r: Pick<Recap, "rank" | "rankBefore">): string | null {
   if (d === 0) return "Rank unchanged";
   return `${d > 0 ? "▲" : "▼"} ${Math.abs(d).toLocaleString("en-GB")} places`;
 }
+
+/** The headline banter line: the most telling thing about the week. */
+export function verdict(r: Recap): string {
+  const has = (id: string) => r.achievements.some((a) => a.id === id);
+  if (has("captain-blank") && has("bench-regret")) return "Captain blank. Bench cried.";
+  if (has("captain-blank")) return "Your captain went missing.";
+  if (has("hit-failed") && has("bench-regret")) return "Paid for a hit. Benched the points.";
+  if (has("captain-masterclass") && has("big-week")) return "Captain delivered. Absolute scenes.";
+  if (has("big-week")) return "Absolutely flying.";
+  if (has("captain-masterclass")) return "Armband paid off. Take a bow.";
+  if (has("hit-paid")) return "That hit was worth it.";
+  if (has("hit-failed")) return "That hit cost you.";
+  if (has("bench-regret")) return "The bench ate well.";
+  if (r.averageScore != null && r.points < r.averageScore - 10) return "A week to forget.";
+  if (r.averageScore != null && r.points >= r.averageScore) return "Quietly above the crowd.";
+  return "Mid. Moving on.";
+}
+
+export type Tier = { id: "legend" | "rare" | "common" | "bruised"; label: string; color: string };
+
+/** Card rarity from the gap to the average, like a trading card. */
+export function tier(r: Pick<Recap, "points" | "averageScore">): Tier {
+  const gap = r.averageScore == null ? 0 : r.points - r.averageScore;
+  if (gap >= 20) return { id: "legend", label: "LEGENDARY", color: "#f4b740" };
+  if (gap >= 0) return { id: "rare", label: "RARE", color: "#3ddc84" };
+  if (gap >= -15) return { id: "common", label: "COMMON", color: "#9fb3a8" };
+  return { id: "bruised", label: "BRUISED", color: "#ff6b6b" };
+}
