@@ -4,13 +4,13 @@
       "includeFiles": "{data/forecast/**,engine/**}",
       "memory": 1024,
       "maxDuration": 30,
-      "excludeFiles": "{**/*.pyi,**/tests/**,**/pulp/solverdir/cbc/osx/**,**/pulp/solverdir/cbc/win/**,data/backtest/**,data/bootstrap-static/**,data/entity-resolution/**,data/entry-*/**,data/event-live/**,data/fixtures/**,data/history/**,data/history-*/**,data/minutes-model/**,data/overrides/**,data/picks-*/**,data/pool-context/**,data/predictions/**,data/record/**,data/understat/**}"
+      "excludeFiles": "{**/*.pyi,**/tests/**,**/pulp/solverdir/cbc/{osx,win}/**,data/{b*,e*,fi*,h*,m*,o*,p*,r*,u*}/**}"
     },
     "api/forecast.py": {
       "includeFiles": "{data-deploy/**,engine/**,scripts/**}",
       "memory": 1024,
       "maxDuration": 30,
-      "excludeFiles": "{**/*.pyi,**/tests/**,**/pulp/solverdir/cbc/osx/**,**/pulp/solverdir/cbc/win/**,data/**}"
+      "excludeFiles": "{**/*.pyi,**/tests/**,**/pulp/solverdir/cbc/{osx,win}/**,data/**}"
     }
   }
 }
