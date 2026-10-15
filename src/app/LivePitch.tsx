@@ -1,12 +1,13 @@
 "use client";
 
 import { useCallback, useRef, useState } from "react";
-import type { TrackerRow } from "@/lib/liveBlend";
+import type { BenchCoverItem, TrackerRow } from "@/lib/liveBlend";
 import { fdrColor } from "@/lib/teamColors";
 import { eventCounts, parseOpponent, sgKickoff } from "@/lib/liveLabels";
 import { PitchScene, type PitchMood } from "./PitchScene";
 import { Halo } from "./Shirt";
 import { FaceToggle, PlayerFace } from "./PlayerFace";
+import BenchCover from "./BenchCover";
 import { LiveFeed, NextUp } from "./LiveUpdates";
 import LivePlayerSheet, { statusText } from "./LivePlayerSheet";
 import { useLiveFx, type Float } from "./useLiveFx";
@@ -229,11 +230,22 @@ function Token({
   );
 }
 
-export default function LivePitch({ rows, gameweek }: { rows: TrackerRow[]; gameweek: number }) {
+export default function LivePitch({
+  rows,
+  gameweek,
+  cover = [],
+  polledAt = 0,
+}: {
+  rows: TrackerRow[];
+  gameweek: number;
+  cover?: BenchCoverItem[];
+  /** When these rows were fetched (ms), used to date feed entries. */
+  polledAt?: number;
+}) {
   const [selectedId, setSelectedId] = useState<number | null>(null);
   const [heat, setHeat] = useState(false);
   const triggerRef = useRef<HTMLButtonElement | null>(null);
-  const fx = useLiveFx(rows);
+  const fx = useLiveFx(rows, gameweek, polledAt);
   const openSheet = useCallback((id: number, trigger: HTMLButtonElement) => {
     triggerRef.current = trigger;
     setSelectedId(id);
@@ -333,6 +345,8 @@ export default function LivePitch({ rows, gameweek }: { rows: TrackerRow[]; game
           </div>
         </div>
       )}
+
+      <BenchCover cover={cover} rows={rows} />
 
       {selected && <LivePlayerSheet row={selected} gameweek={gameweek} onClose={closeSheet} />}
     </div>

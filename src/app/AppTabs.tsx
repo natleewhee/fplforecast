@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState, type ReactNode, type TouchEvent } from "react";
+import { useEffect, useRef, useState, type ReactNode, type TouchEvent } from "react";
 
 type Tab = { id: string; label: string; content: ReactNode };
 
@@ -14,6 +14,16 @@ export default function AppTabs({ tabs }: { tabs: Tab[] }) {
   const [active, setActive] = useState(0);
   const touchStartX = useRef<number | null>(null);
   const touchDeltaX = useRef(0);
+
+  // Other parts of the page can ask for a tab by id (see goToTab in duelClient).
+  useEffect(() => {
+    const onGoto = (e: Event) => {
+      const i = tabs.findIndex((t) => t.id === (e as CustomEvent<string>).detail);
+      if (i >= 0) setActive(i);
+    };
+    window.addEventListener("gaffer:goto-tab", onGoto);
+    return () => window.removeEventListener("gaffer:goto-tab", onGoto);
+  }, [tabs]);
 
   const onTouchStart = (e: TouchEvent) => {
     touchStartX.current = e.touches[0].clientX;

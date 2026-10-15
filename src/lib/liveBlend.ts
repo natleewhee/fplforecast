@@ -360,6 +360,8 @@ export type TrackerView = {
   armbandId: number | null;
   rows: TrackerRow[];
   estimatedRank: EstimatedRank | null;
+  /** For each starter yet to play: who would come on if they end on zero minutes. */
+  benchCover: BenchCoverItem[];
 };
 
 export type EstimatedRank = {
@@ -527,6 +529,33 @@ export function autosubs(
   return { lineup, subbedIn, subbedOut };
 }
 
+export type BenchCoverItem = {
+  outId: number;
+  /** The bench player FPL's autosub rules would bring on, or null if nobody can. */
+  inId: number | null;
+};
+
+/** "If this starter doesn't play, who covers?" For every starter whose match
+ * hasn't started, replay the autosub rules with that one player ending on
+ * zero minutes and report who (if anyone) takes their place. Bench players
+ * who have not yet played still count as available. */
+export function benchCover(
+  starters: number[],
+  bench: number[],
+  statusById: Record<number, PlayerStatus>,
+  positionById: Record<number, Position>,
+): BenchCoverItem[] {
+  const out: BenchCoverItem[] = [];
+  for (const id of starters) {
+    if (statusById[id] !== "notStarted") continue;
+    const hypothetical = { ...statusById, [id]: "didNotPlay" as PlayerStatus };
+    const { lineup } = autosubs(starters, bench, hypothetical, positionById);
+    const slot = starters.indexOf(id);
+    out.push({ outId: id, inId: lineup[slot] !== id ? lineup[slot] : null });
+  }
+  return out;
+}
+
 /** Is at least one current-gameweek match inside its live window (kickoff to
  * kickoff + 150 min)? The client uses this to start polling at kickoff without
  * waiting for a fresh `matchesLive` from the route, and to stop afterwards. */
@@ -633,5 +662,6 @@ export function buildTracker(payload: LivePayload, prev: LivePayload | null): Tr
     armbandId,
     rows,
     estimatedRank: estimateRank(payload.rankCalibration, projectedTotal, payload.liveAverage),
+    benchCover: benchCover(payload.picks.starters, payload.picks.bench, statusById, positionById),
   };
 }
