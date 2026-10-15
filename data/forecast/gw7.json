@@ -12,7 +12,7 @@
   "deadlineTime": "2026-10-17T10:00:00Z",
   "earlySeason": true,
   "effectiveGap": 6.2,
-  "generatedAt": "2026-10-14T08:32:48.763204+00:00",
+  "generatedAt": "2026-10-15T08:07:51.876888+00:00",
   "history": {
     "gameweeks": [
       {
@@ -543,7 +543,7 @@
         1,
         2
       ],
-      "selectedByPercent": 21.9,
+      "selectedByPercent": 21.8,
       "sellPrice": 7.9,
       "team": "ARS",
       "total": 31.85,
@@ -831,7 +831,7 @@
         1,
         9
       ],
-      "selectedByPercent": 52.3,
+      "selectedByPercent": 52.4,
       "sellPrice": 5.9,
       "team": "ARS",
       "total": 32.7,
@@ -1503,7 +1503,7 @@
         2,
         1
       ],
-      "selectedByPercent": 19.8,
+      "selectedByPercent": 19.7,
       "sellPrice": 6.8,
       "team": "ARS",
       "total": 35.93,
@@ -1983,7 +1983,7 @@
         1,
         1
       ],
-      "selectedByPercent": 3.7,
+      "selectedByPercent": 3.6,
       "sellPrice": 7.1,
       "team": "ARS",
       "total": 12.46,
@@ -3135,7 +3135,7 @@
         6,
         10
       ],
-      "selectedByPercent": 2.5,
+      "selectedByPercent": 2.6,
       "sellPrice": 5.4,
       "team": "AVL",
       "total": 27.05,
@@ -3711,7 +3711,7 @@
         13,
         5
       ],
-      "selectedByPercent": 1.0,
+      "selectedByPercent": 1.1,
       "sellPrice": 5.9,
       "team": "AVL",
       "total": 14.83,
@@ -4095,7 +4095,7 @@
         6,
         9
       ],
-      "selectedByPercent": 2.6,
+      "selectedByPercent": 2.8,
       "sellPrice": 6.6,
       "team": "AVL",
       "total": 22.93,
@@ -4487,19 +4487,19 @@
     },
     {
       "availability": {
-        "chance": 75,
-        "news": "Knee injury - 75% chance of playing",
-        "status": "d"
+        "chance": 100,
+        "news": null,
+        "status": "a"
       },
       "code": 119090,
       "components": {
         "appearance": 0.0,
-        "assists": 0.03,
-        "bonus": 0.05,
+        "assists": 0.04,
+        "bonus": 0.07,
         "cards": -0.02,
         "cleanSheet": 0.0,
         "defensiveContribution": 0.0,
-        "goals": 0.09,
+        "goals": 0.13,
         "goalsConceded": 0.0,
         "saves": 0.0
       },
@@ -4558,13 +4558,13 @@
         ]
       ],
       "perGameweek": [
-        0.16,
-        0.13,
-        0.17,
-        0.15,
-        0.17,
+        0.21,
         0.18,
-        0.15
+        0.23,
+        0.2,
+        0.22,
+        0.24,
+        0.21
       ],
       "position": "MID",
       "price": 5.9,
@@ -4578,7 +4578,7 @@
       "selectedByPercent": 0.0,
       "sellPrice": 5.9,
       "team": "AVL",
-      "total": 1.11,
+      "total": 1.49,
       "webName": "Goretzka"
     },
     {
@@ -4863,7 +4863,7 @@
         null,
         null
       ],
-      "selectedByPercent": 0.2,
+      "selectedByPercent": 0.3,
       "sellPrice": 4.0,
       "team": "AVL",
       "total": 0.44,
@@ -5343,7 +5343,7 @@
         null,
         null
       ],
-      "selectedByPercent": 0.2,
+      "selectedByPercent": 0.1,
       "sellPrice": 4.9,
       "team": "BOU",
       "total": -0.89,
@@ -5732,6 +5732,102 @@
       "team": "BOU",
       "total": 33.13,
       "webName": "Tavernier"
+    },
+    {
+      "availability": {
+        "chance": 75,
+        "news": "Unspecified injury - 75% chance of playing",
+        "status": "d"
+      },
+      "code": 222683,
+      "components": {
+        "appearance": 0.9,
+        "assists": 0.15,
+        "bonus": 0.15,
+        "cards": -0.16,
+        "cleanSheet": 0.13,
+        "defensiveContribution": 0.08,
+        "goals": 0.77,
+        "goalsConceded": 0.0,
+        "saves": 0.0
+      },
+      "elementType": 3,
+      "form": 0.0,
+      "id": 70,
+      "opponents": [
+        [
+          {
+            "fdrRating": 3,
+            "team": "SUN",
+            "wasHome": true
+          }
+        ],
+        [
+          {
+            "fdrRating": 4,
+            "team": "MUN",
+            "wasHome": false
+          }
+        ],
+        [
+          {
+            "fdrRating": 3,
+            "team": "LEE",
+            "wasHome": true
+          }
+        ],
+        [
+          {
+            "fdrRating": 2,
+            "team": "IPS",
+            "wasHome": false
+          }
+        ],
+        [
+          {
+            "fdrRating": 3,
+            "team": "NFO",
+            "wasHome": true
+          }
+        ],
+        [
+          {
+            "fdrRating": 3,
+            "team": "FUL",
+            "wasHome": false
+          }
+        ],
+        [
+          {
+            "fdrRating": 3,
+            "team": "BHA",
+            "wasHome": true
+          }
+        ]
+      ],
+      "perGameweek": [
+        2.03,
+        1.85,
+        1.99,
+        2.07,
+        2.0,
+        1.89,
+        1.96
+      ],
+      "position": "MID",
+      "price": 5.9,
+      "recentPoints": [
+        3,
+        1,
+        8,
+        null,
+        null
+      ],
+      "selectedByPercent": 0.6,
+      "sellPrice": 5.9,
+      "team": "BOU",
+      "total": 13.79,
+      "webName": "Kluivert"
     },
     {
       "availability": {
@@ -6308,6 +6404,102 @@
       "team": "BOU",
       "total": 4.01,
       "webName": "T\u00f3th.A"
+    },
+    {
+      "availability": {
+        "chance": 75,
+        "news": "Calf injury - 75% chance of playing",
+        "status": "d"
+      },
+      "code": 489888,
+      "components": {
+        "appearance": 0.0,
+        "assists": 0.15,
+        "bonus": 0.1,
+        "cards": -0.07,
+        "cleanSheet": 0.0,
+        "defensiveContribution": 0.0,
+        "goals": 0.38,
+        "goalsConceded": 0.0,
+        "saves": 0.0
+      },
+      "elementType": 3,
+      "form": 0.0,
+      "id": 77,
+      "opponents": [
+        [
+          {
+            "fdrRating": 3,
+            "team": "SUN",
+            "wasHome": true
+          }
+        ],
+        [
+          {
+            "fdrRating": 4,
+            "team": "MUN",
+            "wasHome": false
+          }
+        ],
+        [
+          {
+            "fdrRating": 3,
+            "team": "LEE",
+            "wasHome": true
+          }
+        ],
+        [
+          {
+            "fdrRating": 2,
+            "team": "IPS",
+            "wasHome": false
+          }
+        ],
+        [
+          {
+            "fdrRating": 3,
+            "team": "NFO",
+            "wasHome": true
+          }
+        ],
+        [
+          {
+            "fdrRating": 3,
+            "team": "FUL",
+            "wasHome": false
+          }
+        ],
+        [
+          {
+            "fdrRating": 3,
+            "team": "BHA",
+            "wasHome": true
+          }
+        ]
+      ],
+      "perGameweek": [
+        0.55,
+        0.48,
+        0.54,
+        0.59,
+        0.55,
+        0.49,
+        0.54
+      ],
+      "position": "MID",
+      "price": 4.8,
+      "recentPoints": [
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "selectedByPercent": 0.0,
+      "sellPrice": 4.8,
+      "team": "BOU",
+      "total": 3.74,
+      "webName": "Adli"
     },
     {
       "availability": {
@@ -7935,7 +8127,7 @@
         9,
         1
       ],
-      "selectedByPercent": 15.1,
+      "selectedByPercent": 15.0,
       "sellPrice": 6.2,
       "team": "BRE",
       "total": 22.82,
@@ -8895,7 +9087,7 @@
         0,
         1
       ],
-      "selectedByPercent": 8.3,
+      "selectedByPercent": 8.2,
       "sellPrice": 5.6,
       "team": "BRE",
       "total": 15.11,
@@ -9375,7 +9567,7 @@
         6,
         9
       ],
-      "selectedByPercent": 21.9,
+      "selectedByPercent": 22.0,
       "sellPrice": 4.6,
       "team": "BHA",
       "total": 22.92,
@@ -9759,7 +9951,7 @@
         6,
         15
       ],
-      "selectedByPercent": 35.3,
+      "selectedByPercent": 35.7,
       "sellPrice": 5.1,
       "team": "BHA",
       "total": 31.03,
@@ -10151,19 +10343,19 @@
     },
     {
       "availability": {
-        "chance": 50,
-        "news": "Ankle injury - 50% chance of playing",
+        "chance": 75,
+        "news": "Ankle injury - 75% chance of playing",
         "status": "d"
       },
       "code": 532529,
       "components": {
         "appearance": 0.0,
-        "assists": 0.06,
-        "bonus": 0.13,
-        "cards": -0.03,
+        "assists": 0.09,
+        "bonus": 0.2,
+        "cards": -0.04,
         "cleanSheet": 0.0,
         "defensiveContribution": 0.0,
-        "goals": 0.44,
+        "goals": 0.66,
         "goalsConceded": 0.0,
         "saves": 0.0
       },
@@ -10222,13 +10414,13 @@
         ]
       ],
       "perGameweek": [
-        0.61,
-        0.49,
-        0.43,
-        0.61,
-        0.51,
-        0.62,
-        0.56
+        0.91,
+        0.73,
+        0.64,
+        0.91,
+        0.76,
+        0.93,
+        0.83
       ],
       "position": "MID",
       "price": 5.9,
@@ -10242,7 +10434,7 @@
       "selectedByPercent": 0.5,
       "sellPrice": 5.9,
       "team": "BHA",
-      "total": 3.83,
+      "total": 5.71,
       "webName": "Hinshelwood"
     },
     {
@@ -10335,7 +10527,7 @@
         14,
         6
       ],
-      "selectedByPercent": 39.4,
+      "selectedByPercent": 39.8,
       "sellPrice": 6.0,
       "team": "BHA",
       "total": 35.29,
@@ -10919,6 +11111,102 @@
     },
     {
       "availability": {
+        "chance": 100,
+        "news": null,
+        "status": "a"
+      },
+      "code": 222694,
+      "components": {
+        "appearance": 1.0,
+        "assists": 0.06,
+        "bonus": 0.06,
+        "cards": -0.16,
+        "cleanSheet": 0.23,
+        "defensiveContribution": 0.26,
+        "goals": 0.49,
+        "goalsConceded": -0.36,
+        "saves": 0.0
+      },
+      "elementType": 2,
+      "form": 1.5,
+      "id": 328,
+      "opponents": [
+        [
+          {
+            "fdrRating": 2,
+            "team": "CRY",
+            "wasHome": true
+          }
+        ],
+        [
+          {
+            "fdrRating": 4,
+            "team": "LIV",
+            "wasHome": false
+          }
+        ],
+        [
+          {
+            "fdrRating": 5,
+            "team": "MCI",
+            "wasHome": false
+          }
+        ],
+        [
+          {
+            "fdrRating": 3,
+            "team": "BRE",
+            "wasHome": true
+          }
+        ],
+        [
+          {
+            "fdrRating": 2,
+            "team": "HUL",
+            "wasHome": false
+          }
+        ],
+        [
+          {
+            "fdrRating": 3,
+            "team": "NEW",
+            "wasHome": true
+          }
+        ],
+        [
+          {
+            "fdrRating": 3,
+            "team": "BOU",
+            "wasHome": false
+          }
+        ]
+      ],
+      "perGameweek": [
+        1.59,
+        1.14,
+        0.99,
+        1.48,
+        1.33,
+        1.45,
+        1.36
+      ],
+      "position": "DEF",
+      "price": 4.9,
+      "recentPoints": [
+        null,
+        1,
+        1,
+        5,
+        -2
+      ],
+      "selectedByPercent": 0.2,
+      "sellPrice": 4.9,
+      "team": "BHA",
+      "total": 9.34,
+      "webName": "Struijk"
+    },
+    {
+      "availability": {
         "chance": null,
         "news": null,
         "status": "a"
@@ -11007,7 +11295,7 @@
         8,
         8
       ],
-      "selectedByPercent": 4.6,
+      "selectedByPercent": 4.7,
       "sellPrice": 5.1,
       "team": "BHA",
       "total": 24.04,
@@ -11679,7 +11967,7 @@
         2,
         3
       ],
-      "selectedByPercent": 4.7,
+      "selectedByPercent": 4.6,
       "sellPrice": 5.0,
       "team": "CHE",
       "total": 24.65,
@@ -11775,7 +12063,7 @@
         2,
         9
       ],
-      "selectedByPercent": 44.9,
+      "selectedByPercent": 45.1,
       "sellPrice": 7.9,
       "team": "CHE",
       "total": 32.64,
@@ -11871,7 +12159,7 @@
         2,
         18
       ],
-      "selectedByPercent": 0.4,
+      "selectedByPercent": 0.5,
       "sellPrice": 4.9,
       "team": "CHE",
       "total": 12.81,
@@ -13311,7 +13599,7 @@
         null,
         12
       ],
-      "selectedByPercent": 69.6,
+      "selectedByPercent": 69.9,
       "sellPrice": 7.8,
       "team": "CHE",
       "total": 33.36,
@@ -14271,7 +14559,7 @@
         11,
         3
       ],
-      "selectedByPercent": 0.7,
+      "selectedByPercent": 0.8,
       "sellPrice": 4.5,
       "team": "COV",
       "total": 22.38,
@@ -14655,7 +14943,7 @@
         15,
         5
       ],
-      "selectedByPercent": 0.9,
+      "selectedByPercent": 1.0,
       "sellPrice": 4.0,
       "team": "COV",
       "total": 22.67,
@@ -16959,7 +17247,7 @@
         7,
         4
       ],
-      "selectedByPercent": 6.0,
+      "selectedByPercent": 5.9,
       "sellPrice": 4.5,
       "team": "CRY",
       "total": 23.44,
@@ -17439,7 +17727,7 @@
         null,
         null
       ],
-      "selectedByPercent": 6.6,
+      "selectedByPercent": 6.5,
       "sellPrice": 4.4,
       "team": "CRY",
       "total": 5.65,
@@ -21279,7 +21567,7 @@
         2,
         null
       ],
-      "selectedByPercent": 1.4,
+      "selectedByPercent": 1.3,
       "sellPrice": 4.5,
       "team": "FUL",
       "total": 12.73,
@@ -23679,7 +23967,7 @@
         1,
         1
       ],
-      "selectedByPercent": 13.8,
+      "selectedByPercent": 13.7,
       "sellPrice": 4.2,
       "team": "HUL",
       "total": 22.56,
@@ -24159,7 +24447,7 @@
         4,
         6
       ],
-      "selectedByPercent": 7.2,
+      "selectedByPercent": 7.4,
       "sellPrice": 5.2,
       "team": "HUL",
       "total": 17.28,
@@ -25023,7 +25311,7 @@
         6,
         2
       ],
-      "selectedByPercent": 13.5,
+      "selectedByPercent": 13.6,
       "sellPrice": 4.7,
       "team": "HUL",
       "total": 26.14,
@@ -25119,7 +25407,7 @@
         null,
         null
       ],
-      "selectedByPercent": 0.1,
+      "selectedByPercent": 0.0,
       "sellPrice": 4.8,
       "team": "HUL",
       "total": 2.07,
@@ -28383,7 +28671,7 @@
         2,
         2
       ],
-      "selectedByPercent": 0.8,
+      "selectedByPercent": 0.7,
       "sellPrice": 5.5,
       "team": "IPS",
       "total": 22.26,
@@ -28696,7 +28984,7 @@
         "saves": 0.0
       },
       "elementType": 3,
-      "form": 0.7,
+      "form": 0.5,
       "id": 260,
       "opponents": [
         [
@@ -28792,7 +29080,7 @@
         "saves": 0.0
       },
       "elementType": 2,
-      "form": 0.3,
+      "form": 0.5,
       "id": 327,
       "opponents": [
         [
@@ -28888,7 +29176,7 @@
         "saves": 0.0
       },
       "elementType": 2,
-      "form": 7.0,
+      "form": 3.0,
       "id": 330,
       "opponents": [
         [
@@ -28959,7 +29247,7 @@
         5,
         1
       ],
-      "selectedByPercent": 8.9,
+      "selectedByPercent": 9.0,
       "sellPrice": 4.7,
       "team": "LEE",
       "total": 24.92,
@@ -28984,7 +29272,7 @@
         "saves": 0.0
       },
       "elementType": 2,
-      "form": 5.3,
+      "form": 5.0,
       "id": 331,
       "opponents": [
         [
@@ -29080,7 +29368,7 @@
         "saves": 0.0
       },
       "elementType": 2,
-      "form": 5.3,
+      "form": 7.0,
       "id": 332,
       "opponents": [
         [
@@ -29176,7 +29464,7 @@
         "saves": 0.0
       },
       "elementType": 2,
-      "form": 5.0,
+      "form": 4.0,
       "id": 334,
       "opponents": [
         [
@@ -29272,7 +29560,7 @@
         "saves": 0.0
       },
       "elementType": 3,
-      "form": 3.3,
+      "form": 3.5,
       "id": 335,
       "opponents": [
         [
@@ -29368,7 +29656,7 @@
         "saves": 0.0
       },
       "elementType": 3,
-      "form": 4.7,
+      "form": 2.5,
       "id": 336,
       "opponents": [
         [
@@ -29560,7 +29848,7 @@
         "saves": 0.0
       },
       "elementType": 3,
-      "form": 4.3,
+      "form": 3.0,
       "id": 338,
       "opponents": [
         [
@@ -29631,7 +29919,7 @@
         5,
         1
       ],
-      "selectedByPercent": 0.9,
+      "selectedByPercent": 0.8,
       "sellPrice": 5.4,
       "team": "LEE",
       "total": 24.55,
@@ -29656,7 +29944,7 @@
         "saves": 0.0
       },
       "elementType": 3,
-      "form": 0.3,
+      "form": 0.0,
       "id": 339,
       "opponents": [
         [
@@ -29848,7 +30136,7 @@
         "saves": 0.0
       },
       "elementType": 3,
-      "form": 3.0,
+      "form": 1.5,
       "id": 345,
       "opponents": [
         [
@@ -29944,7 +30232,7 @@
         "saves": 0.0
       },
       "elementType": 4,
-      "form": 4.7,
+      "form": 2.0,
       "id": 346,
       "opponents": [
         [
@@ -30136,7 +30424,7 @@
         "saves": 1.2
       },
       "elementType": 1,
-      "form": 5.0,
+      "form": 6.0,
       "id": 385,
       "opponents": [
         [
@@ -30232,7 +30520,7 @@
         "saves": 0.0
       },
       "elementType": 2,
-      "form": 3.0,
+      "form": 3.5,
       "id": 598,
       "opponents": [
         [
@@ -30712,7 +31000,7 @@
         "saves": 0.0
       },
       "elementType": 2,
-      "form": 0.3,
+      "form": 0.0,
       "id": 641,
       "opponents": [
         [
@@ -30808,7 +31096,7 @@
         "saves": 0.0
       },
       "elementType": 3,
-      "form": 0.7,
+      "form": 1.0,
       "id": 648,
       "opponents": [
         [
@@ -32127,7 +32415,7 @@
         2,
         null
       ],
-      "selectedByPercent": 28.0,
+      "selectedByPercent": 27.5,
       "sellPrice": 6.9,
       "team": "LIV",
       "total": 20.68,
@@ -33183,7 +33471,7 @@
         3,
         2
       ],
-      "selectedByPercent": 2.0,
+      "selectedByPercent": 2.1,
       "sellPrice": 8.0,
       "team": "LIV",
       "total": 24.35,
@@ -33279,7 +33567,7 @@
         7,
         3
       ],
-      "selectedByPercent": 3.8,
+      "selectedByPercent": 3.9,
       "sellPrice": 6.9,
       "team": "MCI",
       "total": 24.57,
@@ -34527,7 +34815,7 @@
         17,
         3
       ],
-      "selectedByPercent": 13.7,
+      "selectedByPercent": 13.8,
       "sellPrice": 8.3,
       "team": "MCI",
       "total": 30.28,
@@ -34719,7 +35007,7 @@
         8,
         10
       ],
-      "selectedByPercent": 31.7,
+      "selectedByPercent": 32.2,
       "sellPrice": 7.9,
       "team": "MCI",
       "total": 39.52,
@@ -35007,7 +35295,7 @@
         6,
         6
       ],
-      "selectedByPercent": 75.2,
+      "selectedByPercent": 75.3,
       "sellPrice": 15.6,
       "team": "MCI",
       "total": 51.64,
@@ -36159,7 +36447,7 @@
         4,
         2
       ],
-      "selectedByPercent": 9.2,
+      "selectedByPercent": 9.1,
       "sellPrice": 4.9,
       "team": "MUN",
       "total": 22.08,
@@ -36823,7 +37111,7 @@
         0.44
       ],
       "position": "DEF",
-      "price": 4.4,
+      "price": 4.3,
       "recentPoints": [
         1,
         1,
@@ -36832,7 +37120,7 @@
         null
       ],
       "selectedByPercent": 0.4,
-      "sellPrice": 4.4,
+      "sellPrice": 4.3,
       "team": "MUN",
       "total": 3.29,
       "webName": "Mazraoui"
@@ -37119,7 +37407,7 @@
         2,
         1
       ],
-      "selectedByPercent": 34.7,
+      "selectedByPercent": 34.3,
       "sellPrice": 11.9,
       "team": "MUN",
       "total": 36.72,
@@ -37311,7 +37599,7 @@
         10,
         10
       ],
-      "selectedByPercent": 6.4,
+      "selectedByPercent": 6.5,
       "sellPrice": 7.9,
       "team": "MUN",
       "total": 31.24,
@@ -38200,7 +38488,7 @@
         "saves": 0.0
       },
       "elementType": 3,
-      "form": 2.7,
+      "form": 3.5,
       "id": 405,
       "opponents": [
         [
@@ -38584,7 +38872,7 @@
         "saves": 0.0
       },
       "elementType": 2,
-      "form": 0.3,
+      "form": 0.5,
       "id": 446,
       "opponents": [
         [
@@ -38680,7 +38968,7 @@
         "saves": 0.0
       },
       "elementType": 2,
-      "form": 4.7,
+      "form": 6.0,
       "id": 447,
       "opponents": [
         [
@@ -38776,7 +39064,7 @@
         "saves": 0.0
       },
       "elementType": 2,
-      "form": 0.3,
+      "form": 0.5,
       "id": 448,
       "opponents": [
         [
@@ -38872,7 +39160,7 @@
         "saves": 0.0
       },
       "elementType": 2,
-      "form": 4.3,
+      "form": 6.5,
       "id": 449,
       "opponents": [
         [
@@ -38968,7 +39256,7 @@
         "saves": 0.0
       },
       "elementType": 2,
-      "form": 1.0,
+      "form": 0.0,
       "id": 450,
       "opponents": [
         [
@@ -39064,7 +39352,7 @@
         "saves": 0.0
       },
       "elementType": 3,
-      "form": 4.3,
+      "form": 5.5,
       "id": 453,
       "opponents": [
         [
@@ -39135,7 +39423,7 @@
         9,
         2
       ],
-      "selectedByPercent": 8.2,
+      "selectedByPercent": 8.1,
       "sellPrice": 6.1,
       "team": "NEW",
       "total": 30.61,
@@ -39160,7 +39448,7 @@
         "saves": 0.0
       },
       "elementType": 3,
-      "form": 0.7,
+      "form": 1.0,
       "id": 457,
       "opponents": [
         [
@@ -39352,7 +39640,7 @@
         "saves": 0.0
       },
       "elementType": 3,
-      "form": 1.7,
+      "form": 2.5,
       "id": 459,
       "opponents": [
         [
@@ -39448,7 +39736,7 @@
         "saves": 0.0
       },
       "elementType": 3,
-      "form": 4.0,
+      "form": 5.5,
       "id": 460,
       "opponents": [
         [
@@ -39544,7 +39832,7 @@
         "saves": 0.0
       },
       "elementType": 3,
-      "form": 2.7,
+      "form": 1.0,
       "id": 461,
       "opponents": [
         [
@@ -39640,7 +39928,7 @@
         "saves": 0.0
       },
       "elementType": 3,
-      "form": 1.7,
+      "form": 1.5,
       "id": 462,
       "opponents": [
         [
@@ -39736,7 +40024,7 @@
         "saves": 0.0
       },
       "elementType": 4,
-      "form": 1.3,
+      "form": 1.0,
       "id": 464,
       "opponents": [
         [
@@ -39807,7 +40095,7 @@
         0,
         2
       ],
-      "selectedByPercent": 18.1,
+      "selectedByPercent": 17.9,
       "sellPrice": 6.3,
       "team": "NEW",
       "total": 29.45,
@@ -39832,7 +40120,7 @@
         "saves": 0.0
       },
       "elementType": 4,
-      "form": 0.3,
+      "form": 0.5,
       "id": 465,
       "opponents": [
         [
@@ -39928,7 +40216,7 @@
         "saves": 0.0
       },
       "elementType": 3,
-      "form": 0.7,
+      "form": 0.5,
       "id": 559,
       "opponents": [
         [
@@ -40024,7 +40312,7 @@
         "saves": 0.89
       },
       "elementType": 1,
-      "form": 1.3,
+      "form": 1.5,
       "id": 567,
       "opponents": [
         [
@@ -40095,7 +40383,7 @@
         3,
         0
       ],
-      "selectedByPercent": 1.5,
+      "selectedByPercent": 1.4,
       "sellPrice": 5.0,
       "team": "NEW",
       "total": 21.88,
@@ -40216,7 +40504,7 @@
         "saves": 0.0
       },
       "elementType": 4,
-      "form": 1.7,
+      "form": 2.0,
       "id": 634,
       "opponents": [
         [
@@ -40951,7 +41239,7 @@
         2.43
       ],
       "position": "DEF",
-      "price": 5.4,
+      "price": 5.3,
       "recentPoints": [
         null,
         1,
@@ -40960,7 +41248,7 @@
         1
       ],
       "selectedByPercent": 5.2,
-      "sellPrice": 5.4,
+      "sellPrice": 5.3,
       "team": "NFO",
       "total": 16.97,
       "webName": "Mu\u00f1oz"
@@ -41823,7 +42111,7 @@
         2,
         2
       ],
-      "selectedByPercent": 14.8,
+      "selectedByPercent": 14.7,
       "sellPrice": 8.0,
       "team": "NFO",
       "total": 31.51,
@@ -43359,7 +43647,7 @@
         2,
         7
       ],
-      "selectedByPercent": 1.7,
+      "selectedByPercent": 1.8,
       "sellPrice": 5.3,
       "team": "TOT",
       "total": 25.1,
@@ -43735,7 +44023,7 @@
         0.78
       ],
       "position": "DEF",
-      "price": 5.8,
+      "price": 5.7,
       "recentPoints": [
         null,
         null,
@@ -43744,7 +44032,7 @@
         2
       ],
       "selectedByPercent": 3.3,
-      "sellPrice": 5.8,
+      "sellPrice": 5.7,
       "team": "TOT",
       "total": 5.12,
       "webName": "Senesi"
@@ -45471,7 +45759,7 @@
         0,
         1
       ],
-      "selectedByPercent": 2.3,
+      "selectedByPercent": 2.2,
       "sellPrice": 4.9,
       "team": "SUN",
       "total": 20.45,
@@ -53069,15 +53357,15 @@
         115,
         124,
         138,
-        251,
         272,
-        303,
         385,
         388,
         399,
         411,
         427,
-        508
+        508,
+        539,
+        629
       ],
       "transfersIn": [
         {
@@ -53158,35 +53446,11 @@
             "news": null,
             "status": "a"
           },
-          "id": 251,
-          "position": "GKP",
-          "price": 4.0,
-          "team": "FUL",
-          "webName": "Lecomte"
-        },
-        {
-          "availability": {
-            "chance": null,
-            "news": null,
-            "status": "a"
-          },
           "id": 272,
           "position": "FWD",
           "price": 4.4,
           "team": "FUL",
           "webName": "Kusi-Asare"
-        },
-        {
-          "availability": {
-            "chance": null,
-            "news": null,
-            "status": "a"
-          },
-          "id": 303,
-          "position": "DEF",
-          "price": 3.9,
-          "team": "IPS",
-          "webName": "Kipr\u00e9"
         },
         {
           "availability": {
@@ -53259,6 +53523,30 @@
           "price": 3.9,
           "team": "TOT",
           "webName": "Davies"
+        },
+        {
+          "availability": {
+            "chance": null,
+            "news": null,
+            "status": "a"
+          },
+          "id": 539,
+          "position": "DEF",
+          "price": 3.9,
+          "team": "SUN",
+          "webName": "O'Nien"
+        },
+        {
+          "availability": {
+            "chance": null,
+            "news": null,
+            "status": "a"
+          },
+          "id": 629,
+          "position": "GKP",
+          "price": 4.0,
+          "team": "LEE",
+          "webName": "Zetterer"
         }
       ],
       "transfersOut": [],
@@ -53774,7 +54062,7 @@
         ]
       },
       {
-        "bankAfter": 1.1,
+        "bankAfter": 1.0,
         "feasible": true,
         "ftAfter": 1,
         "ftBefore": 1,
@@ -53784,9 +54072,9 @@
           12,
           15,
           68,
+          115,
           124,
           249,
-          334,
           385,
           388,
           399,
@@ -53818,11 +54106,11 @@
               "news": null,
               "status": "a"
             },
-            "id": 115,
+            "id": 334,
             "position": "DEF",
-            "price": 5.1,
-            "team": "BHA",
-            "webName": "De Cuyper"
+            "price": 5.0,
+            "team": "LEE",
+            "webName": "Muharemovi\u0107"
           }
         ],
         "weekXp": 63.29,
@@ -53995,7 +54283,7 @@
         ]
       },
       {
-        "bankAfter": -0.0,
+        "bankAfter": 1.3,
         "feasible": true,
         "ftAfter": 1,
         "ftBefore": 1,
@@ -54003,19 +54291,19 @@
         "squad": [
           8,
           12,
+          15,
           68,
+          115,
           124,
           249,
-          334,
-          385,
           388,
           399,
           411,
-          427,
           449,
           496,
           533,
-          569
+          569,
+          572
         ],
         "targetGw": 9,
         "transfersIn": [
@@ -54025,11 +54313,11 @@
               "news": null,
               "status": "a"
             },
-            "id": 427,
-            "position": "MID",
-            "price": 7.9,
-            "team": "MUN",
-            "webName": "Mbeumo"
+            "id": 572,
+            "position": "GKP",
+            "price": 4.7,
+            "team": "HUL",
+            "webName": "Tzolakis"
           }
         ],
         "transfersOut": [
@@ -54039,14 +54327,14 @@
               "news": null,
               "status": "a"
             },
-            "id": 15,
-            "position": "MID",
-            "price": 6.8,
-            "team": "ARS",
-            "webName": "\u00d8degaard"
+            "id": 385,
+            "position": "GKP",
+            "price": 5.0,
+            "team": "LEE",
+            "webName": "Trafford"
           }
         ],
-        "weekXp": 63.08,
+        "weekXp": 62.92,
         "xi": [
           {
             "id": 8,
@@ -54077,6 +54365,21 @@
             "team": "ARS",
             "webName": "Saka",
             "xp": 6.15
+          },
+          {
+            "id": 15,
+            "isCaptain": false,
+            "opponents": [
+              {
+                "fdrRating": 4,
+                "team": "LIV",
+                "wasHome": false
+              }
+            ],
+            "position": "MID",
+            "team": "ARS",
+            "webName": "\u00d8degaard",
+            "xp": 4.85
           },
           {
             "id": 68,
@@ -54124,19 +54427,19 @@
             "xp": 4.32
           },
           {
-            "id": 385,
+            "id": 572,
             "isCaptain": false,
             "opponents": [
               {
-                "fdrRating": 3,
-                "team": "BOU",
-                "wasHome": false
+                "fdrRating": 2,
+                "team": "IPS",
+                "wasHome": true
               }
             ],
             "position": "GKP",
-            "team": "LEE",
-            "webName": "Trafford",
-            "xp": 3.82
+            "team": "HUL",
+            "webName": "Tzolakis",
+            "xp": 3.98
           },
           {
             "id": 388,
@@ -54184,21 +54487,6 @@
             "xp": 7.59
           },
           {
-            "id": 427,
-            "isCaptain": false,
-            "opponents": [
-              {
-                "fdrRating": 4,
-                "team": "CHE",
-                "wasHome": false
-              }
-            ],
-            "position": "MID",
-            "team": "MUN",
-            "webName": "Mbeumo",
-            "xp": 5.17
-          },
-          {
             "id": 449,
             "isCaptain": false,
             "opponents": [
@@ -54216,7 +54504,7 @@
         ]
       },
       {
-        "bankAfter": 0.3,
+        "bankAfter": 1.0,
         "feasible": true,
         "ftAfter": 1,
         "ftBefore": 1,
@@ -54224,18 +54512,18 @@
         "squad": [
           8,
           12,
+          15,
           68,
           115,
           124,
           249,
-          334,
           385,
           388,
           399,
           411,
-          427,
           449,
           496,
+          533,
           569
         ],
         "targetGw": 10,
@@ -54246,28 +54534,28 @@
               "news": null,
               "status": "a"
             },
-            "id": 115,
-            "position": "DEF",
-            "price": 5.1,
-            "team": "BHA",
-            "webName": "De Cuyper"
+            "id": 385,
+            "position": "GKP",
+            "price": 5.0,
+            "team": "LEE",
+            "webName": "Trafford"
           }
         ],
         "transfersOut": [
           {
             "availability": {
-              "chance": 100,
+              "chance": null,
               "news": null,
               "status": "a"
             },
-            "id": 533,
-            "position": "DEF",
-            "price": 5.4,
-            "team": "SUN",
-            "webName": "Mukiele"
+            "id": 572,
+            "position": "GKP",
+            "price": 4.7,
+            "team": "HUL",
+            "webName": "Tzolakis"
           }
         ],
-        "weekXp": 65.73,
+        "weekXp": 65.48,
         "xi": [
           {
             "id": 8,
@@ -54298,6 +54586,21 @@
             "team": "ARS",
             "webName": "Saka",
             "xp": 6.91
+          },
+          {
+            "id": 15,
+            "isCaptain": false,
+            "opponents": [
+              {
+                "fdrRating": 2,
+                "team": "HUL",
+                "wasHome": true
+              }
+            ],
+            "position": "MID",
+            "team": "ARS",
+            "webName": "\u00d8degaard",
+            "xp": 5.37
           },
           {
             "id": 68,
@@ -54418,26 +54721,11 @@
             "team": "MCI",
             "webName": "Haaland",
             "xp": 7.06
-          },
-          {
-            "id": 427,
-            "isCaptain": false,
-            "opponents": [
-              {
-                "fdrRating": 3,
-                "team": "AVL",
-                "wasHome": true
-              }
-            ],
-            "position": "MID",
-            "team": "MUN",
-            "webName": "Mbeumo",
-            "xp": 5.62
           }
         ]
       },
       {
-        "bankAfter": 1.4,
+        "bankAfter": 1.0,
         "feasible": true,
         "ftAfter": 1,
         "ftBefore": 1,
@@ -54450,14 +54738,14 @@
           115,
           124,
           249,
-          334,
-          385,
           388,
           399,
           411,
           449,
           496,
-          569
+          533,
+          569,
+          597
         ],
         "targetGw": 11,
         "transfersIn": [
@@ -54467,11 +54755,11 @@
               "news": null,
               "status": "a"
             },
-            "id": 15,
-            "position": "MID",
-            "price": 6.8,
-            "team": "ARS",
-            "webName": "\u00d8degaard"
+            "id": 597,
+            "position": "GKP",
+            "price": 5.0,
+            "team": "AVL",
+            "webName": "Suzuki"
           }
         ],
         "transfersOut": [
@@ -54481,14 +54769,14 @@
               "news": null,
               "status": "a"
             },
-            "id": 427,
-            "position": "MID",
-            "price": 7.9,
-            "team": "MUN",
-            "webName": "Mbeumo"
+            "id": 385,
+            "position": "GKP",
+            "price": 5.0,
+            "team": "LEE",
+            "webName": "Trafford"
           }
         ],
-        "weekXp": 65.34,
+        "weekXp": 65.41,
         "xi": [
           {
             "id": 8,
@@ -54534,6 +54822,21 @@
             "team": "ARS",
             "webName": "\u00d8degaard",
             "xp": 5.22
+          },
+          {
+            "id": 597,
+            "isCaptain": false,
+            "opponents": [
+              {
+                "fdrRating": 3,
+                "team": "SUN",
+                "wasHome": true
+              }
+            ],
+            "position": "GKP",
+            "team": "AVL",
+            "webName": "Suzuki",
+            "xp": 3.8
           },
           {
             "id": 68,
@@ -54594,21 +54897,6 @@
             "team": "EVE",
             "webName": "Barry",
             "xp": 4.27
-          },
-          {
-            "id": 385,
-            "isCaptain": false,
-            "opponents": [
-              {
-                "fdrRating": 4,
-                "team": "CHE",
-                "wasHome": false
-              }
-            ],
-            "position": "GKP",
-            "team": "LEE",
-            "webName": "Trafford",
-            "xp": 3.73
           },
           {
             "id": 388,
