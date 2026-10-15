@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { SwordsIcon } from "./Icons";
 import LiveSquadPitch from "./LiveSquadPitch";
 import type { LeagueSquadResponse } from "./api/league/squad/route";
 import { differentials, oddsLine, sideFrom, simulateDuel } from "@/lib/winOdds";
@@ -93,7 +94,9 @@ export default function DuelCard({
     <section className="space-y-3" data-testid="duel">
       <div className="panel rise space-y-3 p-3">
         <div className="flex items-center justify-between gap-2">
-          <h3 className="eyebrow">⚔️ Duel · you vs {rivalName}</h3>
+          <h3 className="eyebrow flex items-center gap-1.5">
+            <SwordsIcon /> Duel · you vs {rivalName}
+          </h3>
           <button
             type="button"
             onClick={onClose}

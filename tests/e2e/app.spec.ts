@@ -57,6 +57,13 @@ async function open(page: Page) {
   await page.getByRole("button", { name: /^Van Dijk,/ }).waitFor();
 }
 
+/** The recap folds to a bar while matches are live: tap it open if it is closed. */
+async function openRecap(page: Page) {
+  const bar = page.getByTestId("recap").getByRole("button", { name: /recap/i }).first();
+  await bar.waitFor();
+  if ((await bar.getAttribute("aria-expanded")) === "false") await bar.click();
+}
+
 async function openTab(page: Page, name: "Live" | "Squad" | "Scenarios") {
   await page.getByRole("button", { name: new RegExp(`^${name}$`) }).first().click();
   await page.waitForTimeout(700); // the tab pane slides in
@@ -365,6 +372,7 @@ test.describe("Gameweek recap", () => {
     await open(page);
     const card = page.getByTestId("recap");
     await expect(card).toContainText("GW6 recap");
+    await openRecap(page);
     await expect(card).toContainText("30,000 places");
     await expect(page.getByTestId("achievements")).toContainText("Bench regret");
     await card.getByRole("button", { name: /Regret machine/ }).click();
@@ -393,7 +401,8 @@ test.describe("Gameweek recap", () => {
       };
     });
     await open(page);
-    await page.getByTestId("recap").getByRole("button", { name: "Share" }).click();
+    await openRecap(page);
+    await page.getByTestId("recap").getByRole("button", { name: "Share this card" }).click();
     await page.waitForFunction(() => (window as unknown as { __shared?: string }).__shared);
     const shared = await page.evaluate(() => (window as unknown as { __shared: string }).__shared);
     expect(shared).toContain("http://localhost:3123/");
@@ -420,11 +429,97 @@ test.describe("Gameweek recap", () => {
     await open(page);
     const card = page.getByTestId("recap");
     await expect(card).toContainText("GW6 recap");
-    await card.getByRole("button", { name: "GW3" }).click();
+    await openRecap(page);
+    await card.getByRole("button", { name: "GW3", exact: true }).click();
     await expect(card).toContainText("GW3 recap");
-    await expect(card.getByRole("button", { name: "GW3" })).toHaveAttribute("aria-pressed", "true");
-    await card.getByRole("button", { name: "GW6" }).click();
+    await expect(card.getByRole("button", { name: "GW3", exact: true })).toHaveAttribute("aria-pressed", "true");
+    await card.getByRole("button", { name: "GW6", exact: true }).click();
     await expect(card).toContainText("GW6 recap");
     expect(asked).toEqual(["latest", "3"]); // going back to a week already seen is not refetched
   });
 });
+
+test.describe("Recap card look", () => {
+  test("folds to a bar while matches are live, opens on tap, and previews the share image", async ({ page }) => {
+    await mockLive(page, { current: "a" });
+    await open(page);
+    const bar = page.getByTestId("recap").getByRole("button", { name: /GW6 recap/ });
+    await expect(bar).toHaveAttribute("aria-expanded", "false");
+    await expect(page.getByTestId("recap-image")).toHaveCount(0);
+    await bar.click();
+    const img = page.getByTestId("recap-image");
+    await expect(img).toBeVisible();
+    await expect(img).toHaveAttribute("alt", /GW6 recap card: 56 points/);
+    await bar.click();
+    await expect(page.getByTestId("recap-image")).toHaveCount(0);
+  });
+
+  test("the share image has the brand footer and grows with the regret strip", async ({ page }) => {
+    const sizes: Record<string, { w: number; h: number; brandGreen: boolean }> = {};
+    for (const withRegret of [false, true]) {
+      await page.unroute("**/api/recap*");
+      await page.route("**/api/recap*", (route) =>
+        route.fulfill({
+          contentType: "application/json",
+          body: JSON.stringify({
+            recap: {
+              gameweek: 6, points: 56, hit: 0, averageScore: 58, rank: 90000, rankBefore: 120000,
+              captain: { name: "Saka", raw: 2, multiplier: 2 },
+              best: { name: "Verbruggen", points: 9, code: null, team: "BHA" },
+              worst: { name: "Hall", points: 0 }, benchPoints: 3, chip: null, achievements: [],
+              regrets: withRegret ? [{ id: "captain", text: "If you'd captained Verbruggen instead of Saka", points: 14 }] : [],
+            },
+            gameweeks: [5, 6],
+          }),
+        }),
+      );
+      await mockLive(page, { current: "a" });
+      await page.goto("/");
+      await page.getByRole("button", { name: /^Van Dijk,/ }).waitFor();
+      await openRecap(page);
+      const img = page.getByTestId("recap-image");
+      await expect(img).toBeVisible();
+      sizes[String(withRegret)] = await img.evaluate(async (el) => {
+        const i = el as HTMLImageElement;
+        await i.decode();
+        const c = document.createElement("canvas");
+        c.width = i.naturalWidth;
+        c.height = i.naturalHeight;
+        const ctx = c.getContext("2d")!;
+        ctx.drawImage(i, 0, 0);
+        // the brand mark is #3ddc84 green: look for it in the bottom 220px
+        const data = ctx.getImageData(0, c.height - 220, c.width, 220).data;
+        let brandGreen = false;
+        for (let p = 0; p < data.length; p += 4) {
+          if (Math.abs(data[p] - 0x3d) < 12 && Math.abs(data[p + 1] - 0xdc) < 12 && Math.abs(data[p + 2] - 0x84) < 12) {
+            brandGreen = true;
+            break;
+          }
+        }
+        return { w: c.width, h: c.height, brandGreen };
+      });
+    }
+    expect(sizes.false.w).toBe(800);
+    expect(sizes.false.brandGreen).toBe(true);
+    expect(sizes.true.brandGreen).toBe(true);
+    expect(sizes.true.h - sizes.false.h).toBeGreaterThan(100); // the regret strip adds height
+    expect(sizes.true.h - sizes.false.h).toBeLessThan(220);
+  });
+});
+
+test.describe("Team bar", () => {
+  test("is one tidy row until you ask to change team", async ({ page }) => {
+    await mockLive(page, { current: "a" });
+    await open(page);
+    const bar = page.getByTestId("team-bar");
+    await expect(bar).toContainText("Viewing");
+    await expect(bar.getByRole("textbox")).toHaveCount(0);
+    expect((await bar.boundingBox())!.height).toBeLessThan(80); // one row, not two
+    await bar.getByRole("button", { name: "Change team" }).click();
+    await expect(bar.getByRole("textbox", { name: "Team ID" })).toBeVisible();
+    await expect(bar.getByRole("button", { name: "View" })).toBeDisabled(); // nothing typed yet
+    await bar.getByRole("textbox", { name: "Team ID" }).fill("12");
+    await expect(bar.getByRole("button", { name: "View" })).toBeEnabled();
+  });
+});
+

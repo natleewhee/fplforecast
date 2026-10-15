@@ -67,6 +67,20 @@ function wrap(
   });
 }
 
+/** A small crystal ball, drawn as paths so it looks the same on every phone. */
+function drawCrystal(ctx: CanvasRenderingContext2D, x: number, y: number, size: number, color: string) {
+  ctx.save();
+  ctx.translate(x, y);
+  ctx.scale(size / 24, size / 24);
+  ctx.strokeStyle = color;
+  ctx.lineWidth = 2.4;
+  ctx.lineCap = "round";
+  ctx.lineJoin = "round";
+  ctx.stroke(new Path2D("M18.5 10a6.5 6.5 0 1 1-13 0a6.5 6.5 0 0 1 13 0z"));
+  ctx.stroke(new Path2D("M8.5 7.5a4.5 4.5 0 0 1 3-1.8M7 20h10M8.5 16.5 7 20M15.5 16.5 17 20"));
+  ctx.restore();
+}
+
 function fit(ctx: CanvasRenderingContext2D, text: string, maxW: number, size: number, weight: string, fam: string) {
   let s = size;
   ctx.font = `${weight} ${s}px ${fam}`;
@@ -311,7 +325,8 @@ export async function renderRecapCard(r: Recap): Promise<Blob | null> {
     ctx.fillStyle = t.color;
     ctx.font = `700 22px ${fam}`;
     spaced(ctx, 4);
-    ctx.fillText("🔮 REGRET MACHINE", 92, regretTop + 36);
+    drawCrystal(ctx, 92, regretTop + 16, 24, t.color);
+    ctx.fillText("REGRET MACHINE", 126, regretTop + 36);
     spaced(ctx, 0);
     ctx.fillStyle = "#ffffff";
     ctx.font = `600 29px ${fam}`;
