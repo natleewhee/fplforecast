@@ -383,4 +383,32 @@ test.describe("Gameweek recap", () => {
     expect(shared).toContain("http://localhost:3123/");
     expect(shared).not.toMatch(/71|Haaland|Palmer/);
   });
+  test("a week picker switches the card to an earlier gameweek", async ({ page }) => {
+    await mockLive(page, { current: "a" });
+    const recapFor = (gw: number, points: number) => ({
+      gameweek: gw, points, hit: 0, averageScore: 50, rank: 100000, rankBefore: 120000,
+      captain: { name: "Haaland", raw: 6, multiplier: 2 },
+      best: { name: "Palmer", points: 10, code: null, team: "CHE" },
+      worst: { name: "Gabriel", points: 1 }, benchPoints: 3, chip: null, achievements: [], regrets: [],
+    });
+    const asked: string[] = [];
+    await page.route("**/api/recap*", (route) => {
+      const gw = new URL(route.request().url()).searchParams.get("gw");
+      asked.push(gw ?? "latest");
+      const n = gw ? Number(gw) : 6;
+      return route.fulfill({
+        contentType: "application/json",
+        body: JSON.stringify({ recap: recapFor(n, 40 + n), gameweeks: [1, 2, 3, 4, 5, 6] }),
+      });
+    });
+    await open(page);
+    const card = page.getByTestId("recap");
+    await expect(card).toContainText("GW6 recap");
+    await card.getByRole("button", { name: "GW3" }).click();
+    await expect(card).toContainText("GW3 recap");
+    await expect(card.getByRole("button", { name: "GW3" })).toHaveAttribute("aria-pressed", "true");
+    await card.getByRole("button", { name: "GW6" }).click();
+    await expect(card).toContainText("GW6 recap");
+    expect(asked).toEqual(["latest", "3"]); // going back to a week already seen is not refetched
+  });
 });

@@ -21,18 +21,30 @@ type Bootstrap = {
 };
 type Live = { elements: { id: number; stats?: { total_points?: number; minutes?: number } }[] };
 
-export type RecapResponse = { recap: Recap | null };
+export type RecapResponse = {
+  recap: Recap | null;
+  /** Every finished gameweek, ascending, for the week picker. */
+  gameweeks: number[];
+};
 
-/** Recap of the most recent *finished* gameweek for the current team (picks
- * are only public once a gameweek has finished, so this is by design never
- * the gameweek in progress). */
+/** Recap of a *finished* gameweek for the current team: the latest by
+ * default, or `?gw=N` for an earlier one. Picks are only public once a
+ * gameweek has finished, so this is by design never the gameweek in
+ * progress. */
 export async function GET(request: NextRequest) {
   try {
     const teamId = resolveTeamIdFromRequest(request);
     const bootstrap = await fpl<Bootstrap>("/bootstrap-static/");
-    const finished = bootstrap.events.filter((e) => e.finished).map((e) => e.id);
-    if (!finished.length) return NextResponse.json({ recap: null } satisfies RecapResponse);
-    const gameweek = Math.max(...finished);
+    const finished = bootstrap.events
+      .filter((e) => e.finished)
+      .map((e) => e.id)
+      .sort((a, b) => a - b);
+    if (!finished.length) return NextResponse.json({ recap: null, gameweeks: [] } satisfies RecapResponse);
+    const asked = new URL(request.url).searchParams.get("gw");
+    const gameweek = asked == null ? finished[finished.length - 1] : Number(asked);
+    if (!Number.isInteger(gameweek) || !finished.includes(gameweek)) {
+      return NextResponse.json({ error: "gw must be a finished gameweek" }, { status: 400 });
+    }
 
     const [picks, live, history, transfers] = await Promise.all([
       fpl<RecapInputs["picks"]>(`/entry/${teamId}/event/${gameweek}/picks/`),
@@ -68,7 +80,7 @@ export async function GET(request: NextRequest) {
       transfers,
       averageScore: bootstrap.events.find((e) => e.id === gameweek)?.average_entry_score ?? null,
     });
-    return NextResponse.json({ recap } satisfies RecapResponse);
+    return NextResponse.json({ recap, gameweeks: finished } satisfies RecapResponse);
   } catch (err) {
     return NextResponse.json({ error: (err as Error).message }, { status: 502 });
   }

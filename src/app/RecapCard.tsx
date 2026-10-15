@@ -28,28 +28,61 @@ function rememberCaption(id: string) {
 
 export default function RecapCard({ teamId }: { teamId?: string | null }) {
   const [recap, setRecap] = useState<Recap | null>(null);
+  const [gameweeks, setGameweeks] = useState<number[]>([]);
+  const [selected, setSelected] = useState<number | null>(null); // null = latest
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [note, setNote] = useState<string | null>(null);
   const [showRegrets, setShowRegrets] = useState(false);
-  const loaded = useRef(false);
+  const cache = useRef(new Map<number | "latest", Recap>());
+  const chips = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (loaded.current) return;
-    loaded.current = true;
+    const key = selected ?? "latest";
+    const hit = cache.current.get(key);
+    if (hit) {
+      setRecap(hit);
+      setNote(null);
+      return;
+    }
+    let cancelled = false;
+    setLoading(true);
     (async () => {
       try {
-        const qs = teamId ? `?teamId=${teamId}` : "";
+        const params = new URLSearchParams();
+        if (teamId) params.set("teamId", teamId);
+        if (selected != null) params.set("gw", String(selected));
+        const qs = params.toString() ? `?${params.toString()}` : "";
         const res = await fetch(`/api/recap${qs}`);
         const json = await res.json();
         if (!res.ok) throw new Error(json.error || `HTTP ${res.status}`);
-        setRecap((json as RecapResponse).recap);
+        if (cancelled) return;
+        const body = json as RecapResponse;
+        if (body.recap) cache.current.set(key, body.recap);
+        setGameweeks(body.gameweeks ?? []);
+        setRecap(body.recap);
+        setNote(null);
+        setError(null);
       } catch (err) {
-        setError((err as Error).message);
+        if (!cancelled) setError((err as Error).message);
+      } finally {
+        if (!cancelled) setLoading(false);
       }
     })();
-  }, [teamId]);
+    return () => {
+      cancelled = true;
+    };
+  }, [teamId, selected]);
 
-  if (error) return null; // a recap is a nicety; never block the live view
+  // keep the chosen week's chip in view as the picker scrolls
+  useEffect(() => {
+    chips.current?.querySelector<HTMLElement>('[aria-pressed="true"]')?.scrollIntoView({
+      inline: "center",
+      block: "nearest",
+    });
+  }, [recap?.gameweek, gameweeks.length]);
+
+  // a recap is a nicety: with nothing to show, stay out of the live view
   if (!recap) return null;
 
   const move = rankMove(recap);
@@ -79,7 +112,31 @@ export default function RecapCard({ teamId }: { teamId?: string | null }) {
   };
 
   return (
-    <section className="panel rise space-y-3 p-3" data-testid="recap">
+    <section className={`panel rise space-y-3 p-3 transition-opacity ${loading ? "opacity-60" : ""}`} data-testid="recap">
+      {gameweeks.length > 1 && (
+        <div
+          ref={chips}
+          className="-mx-1 flex snap-x gap-1.5 overflow-x-auto px-1 pb-1"
+          role="group"
+          aria-label="Choose a gameweek"
+        >
+          {gameweeks.map((gw) => (
+            <button
+              key={gw}
+              type="button"
+              onClick={() => setSelected(gw === gameweeks[gameweeks.length - 1] ? null : gw)}
+              aria-pressed={gw === recap.gameweek}
+              className={`inline-flex h-11 shrink-0 snap-center items-center rounded-full border px-3.5 text-xs font-bold ${
+                gw === recap.gameweek
+                  ? "border-[var(--accent)] bg-[var(--accent)] text-[var(--bg-0)]"
+                  : "border-line text-ink-soft hover:border-border-strong"
+              }`}
+            >
+              GW{gw}
+            </button>
+          ))}
+        </div>
+      )}
       <div className="flex items-start justify-between gap-3">
         <div>
           <p className="eyebrow">
@@ -104,7 +161,9 @@ export default function RecapCard({ teamId }: { teamId?: string | null }) {
           Share
         </button>
       </div>
-      {note && <p className="text-[11px] text-ink-faint">{note}</p>}
+      {(note || error) && (
+        <p className="text-[11px] text-ink-faint">{note ?? `Couldn't load that week: ${error}`}</p>
+      )}
 
       <dl className="grid grid-cols-2 gap-x-3 gap-y-1 text-[11.5px]">
         {recap.captain && (
