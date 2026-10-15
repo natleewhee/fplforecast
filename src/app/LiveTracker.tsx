@@ -51,7 +51,10 @@ const useOnline = () =>
 export default function LiveTracker({
   lastGameweek,
   teamId,
+  onActive,
 }: {
+  // Told whenever matches go live or stop, so other cards can make way.
+  onActive?: (active: boolean) => void;
   lastGameweek: GameweekReview | null;
   // Set only while viewing a shared link that differs from the saved
   // cookie (AppShell's isViewingSharedLink) -- passed through explicitly
@@ -94,6 +97,10 @@ export default function LiveTracker({
   const active =
     polls.cur != null &&
     (polls.cur.matchesLive || withinMatchWindow(polls.cur.fixtures, now));
+
+  useEffect(() => {
+    onActive?.(active);
+  }, [active, onActive]);
 
   useEffect(() => {
     if (!active) return; // stopped outside match windows (AE6, R8)

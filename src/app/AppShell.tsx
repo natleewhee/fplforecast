@@ -264,47 +264,80 @@ function TeamIdBar({
     }
   };
 
+  const [editing, setEditing] = useState(false);
+
+  // One tidy row by default (whose team this is, plus share), with the team-ID
+  // field only on demand: this bar sits above every tab, so on a phone it
+  // shouldn't cost two rows of screen before any content.
   return (
-    <div className="flex flex-wrap items-center gap-2 px-1 pb-1 pt-3">
-      <input
-        value={draft}
-        onChange={(e) => setDraft(e.target.value.replace(/[^0-9]/g, ""))}
-        placeholder="Switch team ID"
-        inputMode="numeric"
-        className="h-11 w-40 rounded-lg border border-line bg-[var(--bg-2)] px-2.5 text-xs text-ink placeholder:text-ink-faint focus:border-[var(--accent)] focus:outline-none"
-      />
-      {/* h-11 (44px, adapt.md's minimum touch target -- see Carousel.tsx's
-       * own comment) on every tappable control here, padding absorbing the
-       * extra height rather than growing the text. */}
-      <button
-        className="inline-flex h-11 items-center rounded-lg border border-line px-2.5 text-xs font-medium text-ink-soft transition-colors hover:border-border-strong disabled:cursor-not-allowed disabled:opacity-50"
-        disabled={!draft || loading}
-        onClick={() => onChange(draft)}
-      >
-        {loading ? "Loading…" : "View"}
-      </button>
-      <button
-        className="inline-flex h-11 items-center rounded-lg px-2.5 text-xs text-ink-faint underline"
-        onClick={() => {
-          setDraft("");
-          onReset();
-        }}
-      >
-        Switch team
-      </button>
-      <button
-        type="button"
-        onClick={copyLink}
-        className="inline-flex h-11 items-center rounded-lg border border-line px-2.5 text-xs font-medium text-ink-soft transition-colors hover:border-border-strong"
-      >
-        {copied ? "Copied!" : "Copy link"}
-      </button>
-      {!loading && !error && (
-        <span className="chip chip-accent">
-          viewing {teamName ? `${teamName} (${managerName})` : `team ${teamId}`}
+    <div className="space-y-2 px-1 pb-1 pt-3" data-testid="team-bar">
+      <div className="flex items-center gap-2">
+        <span className="min-w-0 flex-1 truncate text-xs text-ink-soft">
+          {error ? (
+            <span className="text-[var(--danger)]">{error}</span>
+          ) : loading ? (
+            "Loading…"
+          ) : (
+            <>
+              <span className="text-ink-faint">Viewing </span>
+              <span className="font-semibold text-ink">
+                {teamName ? `${teamName} (${managerName})` : `team ${teamId}`}
+              </span>
+            </>
+          )}
         </span>
+        {/* h-11 (44px, adapt.md's minimum touch target -- see Carousel.tsx's
+         * own comment) on every tappable control here, padding absorbing the
+         * extra height rather than growing the text. */}
+        <button
+          type="button"
+          onClick={copyLink}
+          className="inline-flex h-11 shrink-0 items-center rounded-full border border-line px-3 text-xs font-medium text-ink-soft transition-colors hover:border-border-strong"
+        >
+          {copied ? "Copied!" : "Copy link"}
+        </button>
+        <button
+          type="button"
+          onClick={() => setEditing((v) => !v)}
+          aria-expanded={editing}
+          className="inline-flex h-11 shrink-0 items-center rounded-full border border-line px-3 text-xs font-medium text-ink-soft transition-colors hover:border-border-strong"
+        >
+          Change team
+        </button>
+      </div>
+      {editing && (
+        <div className="flex flex-wrap items-center gap-2">
+          <input
+            value={draft}
+            onChange={(e) => setDraft(e.target.value.replace(/[^0-9]/g, ""))}
+            placeholder="Team ID"
+            inputMode="numeric"
+            aria-label="Team ID"
+            className="h-11 w-36 rounded-lg border border-line bg-[var(--bg-2)] px-2.5 text-xs text-ink placeholder:text-ink-faint focus:border-[var(--accent)] focus:outline-none"
+          />
+          <button
+            className="inline-flex h-11 items-center rounded-full bg-[var(--accent)] px-4 text-xs font-bold text-[var(--bg-0)] transition-opacity disabled:cursor-not-allowed disabled:opacity-40"
+            disabled={!draft || loading}
+            onClick={() => {
+              onChange(draft);
+              setEditing(false);
+              setDraft("");
+            }}
+          >
+            View
+          </button>
+          <button
+            className="inline-flex h-11 items-center rounded-lg px-2.5 text-xs text-ink-faint underline"
+            onClick={() => {
+              setDraft("");
+              setEditing(false);
+              onReset();
+            }}
+          >
+            Switch team
+          </button>
+        </div>
       )}
-      {error && <span className="text-xs text-[var(--danger)]">{error}</span>}
     </div>
   );
 }
@@ -457,6 +490,9 @@ export default function AppShell({
   // silently overwriting the browser's own saved team.
   const [savedTeamId, setSavedTeamId] = useState<string | null>(null);
   const [forecast, setForecast] = useState<Forecast | null>(null);
+  // Whether matches are live right now (reported by the Live tab), so the
+  // recap card can fold itself away while there's football to watch.
+  const [liveActive, setLiveActive] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   // Saved transfers waiting for the next rebuild. `null` until one is saved or
@@ -581,8 +617,12 @@ export default function AppShell({
 
   const liveTab = (
     <>
-      <LiveTracker lastGameweek={forecast.lastGameweek} teamId={isViewingSharedLink ? teamId : null} />
-      <RecapCard teamId={isViewingSharedLink ? teamId : null} />
+      <LiveTracker
+        lastGameweek={forecast.lastGameweek}
+        teamId={isViewingSharedLink ? teamId : null}
+        onActive={setLiveActive}
+      />
+      <RecapCard teamId={isViewingSharedLink ? teamId : null} collapsed={liveActive} />
     </>
   );
   const leaguesTab = <LeaguesPage teamId={isViewingSharedLink ? teamId : null} />;

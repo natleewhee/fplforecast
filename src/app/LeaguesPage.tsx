@@ -3,6 +3,7 @@
 import { Fragment, useCallback, useEffect, useRef, useState } from "react";
 import { Dropdown } from "./Dropdown";
 import DuelCard from "./DuelCard";
+import { SwordsIcon } from "./Icons";
 import { clearRival, readRival, saveRival, type Rival } from "@/lib/duelClient";
 import LiveSquadPitch from "./LiveSquadPitch";
 import type { LeagueEntryRow, LeaguesResponse } from "./api/league/route";
@@ -289,9 +290,9 @@ function ManagerSquadPreview({
             <button
               type="button"
               onClick={onDuel}
-              className="inline-flex h-11 items-center rounded-full bg-[var(--accent)] px-3 text-[11px] font-bold text-[var(--bg-0)]"
+              className="inline-flex h-11 items-center gap-1.5 rounded-full bg-[var(--accent)] px-3 text-[11px] font-bold text-[var(--bg-0)]"
             >
-              ⚔️ Duel
+              <SwordsIcon /> Duel
             </button>
           )}
           <button

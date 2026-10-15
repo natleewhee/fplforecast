@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import type { RecapResponse } from "./api/recap/route";
 import { rankMove, regretCopy, tier, verdict, type Recap } from "@/lib/recap";
 import { pickCaption } from "@/lib/shareCaption";
+import { ChevronIcon, CrystalIcon } from "./Icons";
 import { renderRecapCard } from "./recapCanvas";
 
 const RECENT_KEY = "gaffer-recent-captions";
@@ -26,16 +27,30 @@ function rememberCaption(id: string) {
   }
 }
 
-export default function RecapCard({ teamId }: { teamId?: string | null }) {
+/** The recap for a finished gameweek: the same collectible card that gets
+ * shared, shown here first, with the achievements and the regret machine
+ * under it. While matches are live it folds to a single bar so it stays out
+ * of the way; tap the bar to open it. */
+export default function RecapCard({
+  teamId,
+  collapsed = false,
+}: {
+  teamId?: string | null;
+  /** Fold to a bar by default (e.g. while matches are live). A tap on the bar overrides this. */
+  collapsed?: boolean;
+}) {
   const [recap, setRecap] = useState<Recap | null>(null);
   const [gameweeks, setGameweeks] = useState<number[]>([]);
   const [selected, setSelected] = useState<number | null>(null); // null = latest
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [note, setNote] = useState<string | null>(null);
   const [showRegrets, setShowRegrets] = useState(false);
+  const [userOpen, setUserOpen] = useState<boolean | null>(null);
+  const [preview, setPreview] = useState<{ url: string; blob: Blob; gw: number } | null>(null);
   const cache = useRef(new Map<number | "latest", Recap>());
   const chips = useRef<HTMLDivElement>(null);
+  const open = userOpen ?? !collapsed;
 
   useEffect(() => {
     const key = selected ?? "latest";
@@ -74,6 +89,22 @@ export default function RecapCard({ teamId }: { teamId?: string | null }) {
     };
   }, [teamId, selected]);
 
+  // Draw the share image once per week and reuse it for the preview and for sharing.
+  useEffect(() => {
+    if (!recap) return;
+    let cancelled = false;
+    let url: string | null = null;
+    renderRecapCard(recap).then((blob) => {
+      if (cancelled || !blob) return;
+      url = URL.createObjectURL(blob);
+      setPreview({ url, blob, gw: recap.gameweek });
+    });
+    return () => {
+      cancelled = true;
+      if (url) URL.revokeObjectURL(url);
+    };
+  }, [recap]);
+
   // Keep the chosen week's chip in view by scrolling the chip row itself.
   // (scrollIntoView would also scroll every ancestor, including the tab
   // carousel, and throw the page sideways.)
@@ -81,21 +112,29 @@ export default function RecapCard({ teamId }: { teamId?: string | null }) {
     const row = chips.current;
     const chip = row?.querySelector<HTMLElement>('[aria-pressed="true"]');
     if (row && chip) row.scrollLeft = chip.offsetLeft - (row.clientWidth - chip.offsetWidth) / 2;
-  }, [recap?.gameweek, gameweeks.length]);
+  }, [recap?.gameweek, gameweeks.length, open]);
 
-  // a recap is a nicety: with nothing to show, stay out of the live view
-  if (!recap) return null;
+  // A recap is a nicety: with nothing to show, stay out of the live view. While
+  // the first one loads, hold a bar's worth of space so nothing jumps.
+  if (!recap) {
+    return loading && !error ? (
+      <div className="panel h-[52px] animate-pulse" aria-hidden="true" data-testid="recap-loading" />
+    ) : null;
+  }
 
   const move = rankMove(recap);
+  const t = tier(recap);
+  const ready = preview && preview.gw === recap.gameweek ? preview : null;
   const share = async () => {
     // The image carries the numbers; the message adds a reaction and the link.
     const caption = pickCaption(recap, readRecent());
     const link = `${window.location.origin}/${teamId ? `?team=${teamId}` : ""}`;
     const text = `${caption.text}\n${link}`;
     try {
-      const blob = await renderRecapCard(recap);
-      if (blob && navigator.canShare?.({ files: [new File([blob], "recap.png", { type: "image/png" })] })) {
-        await navigator.share({ files: [new File([blob], `gw${recap.gameweek}-recap.png`, { type: "image/png" })], text });
+      const blob = ready?.blob ?? (await renderRecapCard(recap));
+      const file = blob ? new File([blob], `gw${recap.gameweek}-recap.png`, { type: "image/png" }) : null;
+      if (file && navigator.canShare?.({ files: [file] })) {
+        await navigator.share({ files: [file], text });
         rememberCaption(caption.id);
         return;
       }
@@ -114,129 +153,111 @@ export default function RecapCard({ teamId }: { teamId?: string | null }) {
 
   return (
     <section className={`panel rise space-y-3 p-3 transition-opacity ${loading ? "opacity-60" : ""}`} data-testid="recap">
-      {gameweeks.length > 1 && (
-        <div
-          ref={chips}
-          className="relative -mx-1 flex snap-x gap-1.5 overflow-x-auto px-1 pb-1"
-          role="group"
-          aria-label="Choose a gameweek"
-        >
-          {gameweeks.map((gw) => (
-            <button
-              key={gw}
-              type="button"
-              onClick={() => setSelected(gw === gameweeks[gameweeks.length - 1] ? null : gw)}
-              aria-pressed={gw === recap.gameweek}
-              className={`inline-flex h-11 shrink-0 snap-center items-center rounded-full border px-3.5 text-xs font-bold ${
-                gw === recap.gameweek
-                  ? "border-[var(--accent)] bg-[var(--accent)] text-[var(--bg-0)]"
-                  : "border-line text-ink-soft hover:border-border-strong"
-              }`}
+      <button
+        type="button"
+        onClick={() => setUserOpen(!open)}
+        aria-expanded={open}
+        className="flex min-h-11 w-full items-center justify-between gap-3 text-left"
+      >
+        <span className="min-w-0">
+          <span className="eyebrow block">
+            GW{recap.gameweek} recap · <span style={{ color: t.color }}>{t.label}</span>
+          </span>
+          <span className="block truncate text-sm font-bold text-ink">
+            <span className="stat text-lg text-[var(--accent)]">{recap.points}</span> pts · {verdict(recap)}
+          </span>
+        </span>
+        <ChevronIcon open={open} className="shrink-0 text-ink-faint" />
+      </button>
+
+      {open && (
+        <>
+          {gameweeks.length > 1 && (
+            <div
+              ref={chips}
+              className="relative -mx-1 flex snap-x gap-1.5 overflow-x-auto px-1 pb-1"
+              role="group"
+              aria-label="Choose a gameweek"
             >
-              GW{gw}
-            </button>
-          ))}
-        </div>
-      )}
-      <div className="flex items-start justify-between gap-3">
-        <div>
-          <p className="eyebrow">
-            GW{recap.gameweek} recap ·{" "}
-            <span style={{ color: tier(recap).color }}>{tier(recap).label}</span>
-          </p>
-          <p className="mb-1 text-base font-bold text-ink">{verdict(recap)}</p>
-          <div className="flex items-baseline gap-2">
-            <span className="stat stat-glow text-4xl leading-none">{recap.points}</span>
-            <span className="text-xs text-ink-soft">
-              pts{recap.hit ? ` (−${recap.hit} hit)` : ""}
-              {recap.averageScore != null ? ` · avg ${recap.averageScore}` : ""}
-            </span>
+              {gameweeks.map((gw) => (
+                <button
+                  key={gw}
+                  type="button"
+                  onClick={() => setSelected(gw === gameweeks[gameweeks.length - 1] ? null : gw)}
+                  aria-pressed={gw === recap.gameweek}
+                  className={`inline-flex h-11 shrink-0 snap-center items-center rounded-full border px-3.5 text-xs font-bold ${
+                    gw === recap.gameweek
+                      ? "border-[var(--accent)] bg-[var(--accent)] text-[var(--bg-0)]"
+                      : "border-line text-ink-soft hover:border-border-strong"
+                  }`}
+                >
+                  GW{gw}
+                </button>
+              ))}
+            </div>
+          )}
+
+          {/* also drawn on the card; kept as text for screen readers */}
+          {move && <p className="sr-only">{move}</p>}
+
+          <div className="mx-auto w-full max-w-[340px]">
+            {ready ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={ready.url}
+                alt={`GW${recap.gameweek} recap card: ${recap.points} points. ${verdict(recap)}`}
+                className="w-full rounded-2xl"
+                data-testid="recap-image"
+              />
+            ) : (
+              <div className="aspect-[800/1300] w-full animate-pulse rounded-2xl bg-white/[0.05]" aria-hidden="true" />
+            )}
           </div>
-          {move && <p className="mt-1 text-xs text-ink-soft">{move}</p>}
-        </div>
-        <button
-          type="button"
-          onClick={share}
-          className="inline-flex h-11 shrink-0 items-center rounded-full bg-[var(--accent)] px-4 text-xs font-bold text-[var(--bg-0)]"
-        >
-          Share
-        </button>
-      </div>
-      {(note || error) && (
-        <p className="text-[11px] text-ink-faint">{note ?? `Couldn't load that week: ${error}`}</p>
-      )}
 
-      <dl className="grid grid-cols-2 gap-x-3 gap-y-1 text-[11.5px]">
-        {recap.captain && (
-          <>
-            <dt className="text-ink-faint">Captain</dt>
-            <dd className="text-right">
-              {recap.captain.name} {recap.captain.raw}
-              <span className="text-ink-faint"> ×{recap.captain.multiplier}</span>
-            </dd>
-          </>
-        )}
-        {recap.best && (
-          <>
-            <dt className="text-ink-faint">Best pick</dt>
-            <dd className="text-right text-[var(--accent)]">
-              {recap.best.name} {recap.best.points}
-            </dd>
-          </>
-        )}
-        {recap.worst && (
-          <>
-            <dt className="text-ink-faint">Worst pick</dt>
-            <dd className="text-right text-[var(--danger)]">
-              {recap.worst.name} {recap.worst.points}
-            </dd>
-          </>
-        )}
-        <dt className="text-ink-faint">Bench</dt>
-        <dd className="text-right">{recap.benchPoints} pts</dd>
-      </dl>
-
-      {recap.achievements.length > 0 && (
-        <ul className="flex flex-wrap gap-1.5" data-testid="achievements">
-          {recap.achievements.map((a) => (
-            <li
-              key={a.id}
-              title={a.detail}
-              className={`chip ${a.good ? "chip-accent" : ""}`}
-            >
-              {a.emoji} {a.title}
-            </li>
-          ))}
-        </ul>
-      )}
-      {recap.achievements.length > 0 && (
-        <ul className="space-y-0.5 text-[10.5px] text-ink-faint">
-          {recap.achievements.map((a) => (
-            <li key={a.id}>
-              {a.emoji} {a.detail}
-            </li>
-          ))}
-        </ul>
-      )}
-
-      {recap.regrets.length > 0 && (
-        <div className="border-t border-line pt-2">
           <button
             type="button"
-            onClick={() => setShowRegrets((v) => !v)}
-            className="inline-flex h-11 items-center text-xs font-semibold text-ink-soft"
-            aria-expanded={showRegrets}
+            onClick={share}
+            className="inline-flex h-11 w-full items-center justify-center rounded-full bg-[var(--accent)] px-4 text-sm font-bold text-[var(--bg-0)]"
           >
-            🔮 Regret machine {showRegrets ? "▾" : "▸"}
+            Share this card
           </button>
-          {showRegrets && (
-            <ul className="space-y-1.5 text-[11.5px]" data-testid="regrets">
-              {recap.regrets.map((r) => (
-                <li key={r.id}>{regretCopy(r)}</li>
+          {(note || error) && (
+            <p className="text-[11px] text-ink-faint">{note ?? `Couldn't load that week: ${error}`}</p>
+          )}
+
+          {recap.achievements.length > 0 && (
+            <ul className="space-y-1.5 text-[11.5px]" data-testid="achievements">
+              {recap.achievements.map((a) => (
+                <li key={a.id} className="flex items-baseline gap-2">
+                  <span className={`chip shrink-0 ${a.good ? "chip-accent" : ""}`}>
+                    {a.emoji} {a.title}
+                  </span>
+                  <span className="text-ink-faint">{a.detail}</span>
+                </li>
               ))}
             </ul>
           )}
-        </div>
+
+          {recap.regrets.length > 0 && (
+            <div className="border-t border-line pt-2">
+              <button
+                type="button"
+                onClick={() => setShowRegrets((v) => !v)}
+                className="inline-flex h-11 items-center gap-1.5 text-xs font-semibold text-ink-soft"
+                aria-expanded={showRegrets}
+              >
+                <CrystalIcon /> Regret machine <ChevronIcon open={showRegrets} width={14} height={14} />
+              </button>
+              {showRegrets && (
+                <ul className="space-y-1.5 text-[11.5px]" data-testid="regrets">
+                  {recap.regrets.map((r) => (
+                    <li key={r.id}>{regretCopy(r)}</li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          )}
+        </>
       )}
     </section>
   );
