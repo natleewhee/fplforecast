@@ -3,6 +3,7 @@
 import { Fragment, useCallback, useEffect, useRef, useState } from "react";
 import { Dropdown } from "./Dropdown";
 import DuelCard from "./DuelCard";
+import { clearRival, readRival, saveRival, type Rival } from "@/lib/duelClient";
 import LiveSquadPitch from "./LiveSquadPitch";
 import type { LeagueEntryRow, LeaguesResponse } from "./api/league/route";
 import type { LeagueSquadResponse } from "./api/league/squad/route";
@@ -337,6 +338,7 @@ export default function LeaguesPage({ teamId }: { teamId?: string | null } = {})
     null,
   );
   const [duel, setDuel] = useState<{ entryId: number; name: string } | null>(null);
+  const [remembered, setRemembered] = useState<Rival | null>(() => readRival());
   const [selectedId, setSelectedId] = useState<number | null>(() => {
     try {
       const stored = localStorage.getItem(STORAGE_KEY);
@@ -435,8 +437,23 @@ export default function LeaguesPage({ teamId }: { teamId?: string | null } = {})
           rivalId={duel.entryId}
           rivalName={duel.name}
           teamId={teamId}
-          onClose={() => setDuel(null)}
+          onClose={() => {
+            setDuel(null);
+            clearRival();
+            setRemembered(null);
+          }}
         />
+      )}
+      {!duel && remembered && data.league && remembered.myEntryId === data.league.myEntryId && (
+        <button
+          type="button"
+          onClick={() => setDuel({ entryId: remembered.entryId, name: remembered.name })}
+          className="flex min-h-11 w-full items-center justify-between rounded-xl border border-[var(--accent)]/50 px-3 py-2 text-left text-xs font-semibold text-[var(--accent)]"
+          data-testid="resume-duel"
+        >
+          <span>Resume duel vs {remembered.name}</span>
+          <span aria-hidden="true">→</span>
+        </button>
       )}
       {viewingManager && !duel && (
         <ManagerSquadPreview
@@ -449,6 +466,8 @@ export default function LeaguesPage({ teamId }: { teamId?: string | null } = {})
             data.league && viewingManager.entryId !== data.league.myEntryId
               ? () => {
                   setDuel(viewingManager);
+                  saveRival({ myEntryId: data.league!.myEntryId, ...viewingManager });
+                  setRemembered(null);
                   setViewingManager(null);
                 }
               : undefined

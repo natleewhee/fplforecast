@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { loadFeed, saveFeed } from "@/lib/feedStore";
 import type { TrackerRow } from "@/lib/liveBlend";
 import { eventCounts, totalEvents, type EventCounts } from "@/lib/liveLabels";
 
@@ -12,7 +13,16 @@ import { eventCounts, totalEvents, type EventCounts } from "@/lib/liveLabels";
 export type Float = { key: string; id: number; delta: number };
 /** One line in the "what just happened" feed: a player, what they did, and the
  * points it moved by (captain-doubled where it applies). */
-export type FeedItem = { key: string; id: number; name: string; what: string[]; delta: number; minutes: number };
+export type FeedItem = {
+  key: string;
+  id: number;
+  name: string;
+  what: string[];
+  delta: number;
+  minutes: number;
+  /** When it was seen (ms since epoch), so old events can be dropped on reload. */
+  at: number;
+};
 type Snap = {
   points: Record<number, number>;
   events: Record<number, number>;
@@ -61,9 +71,17 @@ function whatHappened(before: EventCounts | undefined, now: EventCounts, bonusBe
   return out;
 }
 
-export function useLiveFx(rows: TrackerRow[]): Fx {
+export function useLiveFx(rows: TrackerRow[], gameweek: number, polledAt: number): Fx {
   const [seen, setSeen] = useState<Snap | null>(null);
-  const [fx, setFx] = useState<Fx>({ floats: [], popped: new Set(), goalFlare: 0, seq: 0, feed: [] });
+  // The feed is remembered across a refresh or reopening the app mid-match.
+  const [runId] = useState(() => Date.now().toString(36));
+  const [fx, setFx] = useState<Fx>(() => ({
+    floats: [],
+    popped: new Set(),
+    goalFlare: 0,
+    seq: 0,
+    feed: loadFeed(gameweek, Date.now()),
+  }));
   const [last, setLast] = useState(rows);
 
   // Derived-state-from-props: compare once per new `rows` instead of in an effect.
@@ -85,12 +103,13 @@ export function useLiveFx(rows: TrackerRow[]): Fx {
           const what = whatHappened(seen.counts[r.id], now.counts[r.id], seen.bonus[r.id] ?? 0, now.bonus[r.id]);
           if (what.length) {
             entries.push({
-              key: `${seq}:${r.id}`,
+              key: `${runId}:${seq}:${r.id}`,
               id: r.id,
               name: r.webName,
               what,
               delta: r.pointsSoFar - before,
               minutes: r.minutes,
+              at: polledAt,
             });
           }
         }
@@ -109,6 +128,10 @@ export function useLiveFx(rows: TrackerRow[]): Fx {
   } else if (seen === null) {
     setSeen(snapshot(rows));
   }
+
+  useEffect(() => {
+    saveFeed(gameweek, fx.feed);
+  }, [gameweek, fx.feed]);
 
   // Floats are one-shot: clear them once their animation has played.
   useEffect(() => {

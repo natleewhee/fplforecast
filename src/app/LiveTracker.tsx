@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState, useSyncExternalStore } from "react";
 import {
   buildTracker,
   withinMatchWindow,
@@ -9,6 +9,8 @@ import {
 } from "@/lib/liveBlend";
 import { countdown } from "@/lib/countdown";
 import type { GameweekReview } from "@/lib/snapshots";
+import { staleness } from "@/lib/staleness";
+import DuelMini from "./DuelMini";
 import LivePitch from "./LivePitch";
 
 /* The in-gameweek surface (KTD7): while matches are live it leads the page with
@@ -35,6 +37,17 @@ function hhmm(iso: string | null): string {
 
 type Polls = { cur: LivePayload | null; prev: LivePayload | null };
 
+function subscribeOnline(cb: () => void) {
+  window.addEventListener("online", cb);
+  window.addEventListener("offline", cb);
+  return () => {
+    window.removeEventListener("online", cb);
+    window.removeEventListener("offline", cb);
+  };
+}
+const useOnline = () =>
+  useSyncExternalStore(subscribeOnline, () => navigator.onLine, () => true);
+
 export default function LiveTracker({
   lastGameweek,
   teamId,
@@ -52,6 +65,7 @@ export default function LiveTracker({
   const [error, setError] = useState<string | null>(null);
   const [lastOk, setLastOk] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
+  const online = useOnline();
 
   const tick = useCallback(async () => {
     try {
@@ -84,11 +98,27 @@ export default function LiveTracker({
   useEffect(() => {
     if (!active) return; // stopped outside match windows (AE6, R8)
     const id = setInterval(() => {
+      // Nobody is looking: skip the poll to save battery and data. The wake
+      // handler below catches up the moment the tab is visible again.
+      if (document.visibilityState === "hidden") return;
       setNow(Date.now());
       void tick();
     }, POLL_MS);
     return () => clearInterval(id);
   }, [active, tick]);
+
+  // A light clock so "updated 3 min ago" keeps counting between polls.
+  useEffect(() => {
+    const id = setInterval(() => setNow(Date.now()), 15_000);
+    return () => clearInterval(id);
+  }, []);
+
+  // Back online: don't wait for the next scheduled poll.
+  useEffect(() => {
+    const onOnline = () => void tick();
+    window.addEventListener("online", onOnline);
+    return () => window.removeEventListener("online", onOnline);
+  }, [tick]);
 
   // The interval above has no heartbeat of its own: if a poll is missed while
   // the tab is backgrounded right as a match ends, the tracker can freeze on
@@ -119,7 +149,12 @@ export default function LiveTracker({
   // First load failed outright (no live payload at all) -- still show
   // whatever we have (last result, and the deadline once a payload lands).
   if (!polls.cur || !view) {
-    return <IdleTracker lastGameweek={lastGameweek} nextDeadline={null} now={now} />;
+    return (
+      <>
+        {error && <LoadFailed error={error} online={online} onRetry={() => void tick()} />}
+        <IdleTracker lastGameweek={lastGameweek} nextDeadline={null} now={now} />
+      </>
+    );
   }
 
   const anyStarted = polls.cur.fixtures.some((f) => f.started);
@@ -137,7 +172,15 @@ export default function LiveTracker({
   }
 
   return (
-    <TrackerPanel view={view} payload={polls.cur} active={active} error={error} lastOk={lastOk} />
+    <TrackerPanel
+      view={view}
+      payload={polls.cur}
+      active={active}
+      error={error}
+      lastOk={lastOk}
+      now={now}
+      online={online}
+    />
   );
 }
 
@@ -187,6 +230,25 @@ function IdleTracker({
   );
 }
 
+/** The very first load failed and there is nothing to show: say why, and let
+ * the user retry rather than leaving a silent blank. */
+function LoadFailed({ error, online, onRetry }: { error: string; online: boolean; onRetry: () => void }) {
+  return (
+    <div className="panel rise flex items-center justify-between gap-3 p-4" role="alert" data-testid="live-failed">
+      <p className="text-xs text-[var(--warn)]">
+        {online ? `Couldn't load live data: ${error}` : "You're offline. Live data will load when you're back."}
+      </p>
+      <button
+        type="button"
+        onClick={onRetry}
+        className="inline-flex h-11 shrink-0 items-center rounded-full border border-line px-3 text-[11px] text-ink-soft hover:border-border-strong"
+      >
+        Retry
+      </button>
+    </div>
+  );
+}
+
 function TrackerSkeleton() {
   return (
     <div className="panel rise space-y-3 p-4">
@@ -207,13 +269,24 @@ function TrackerPanel({
   active,
   error,
   lastOk,
+  now,
+  online,
 }: {
   view: TrackerView;
   payload: LivePayload;
   active: boolean;
   error: string | null;
   lastOk: string | null;
+  now: number;
+  online: boolean;
 }) {
+  const fresh = staleness({
+    lastOkMs: lastOk ? Date.parse(lastOk) : null,
+    nowMs: now,
+    active,
+    error,
+    online,
+  });
   const starters = view.rows.filter((r) => !r.isBench || r.subbedIn);
   const currentScore = starters.reduce((sum, r) => sum + r.pointsSoFar, 0);
 
@@ -240,14 +313,23 @@ function TrackerPanel({
             <span className="ml-2 text-ink-faint">final</span>
           )}
         </span>
-        <span className="text-[11px] text-ink-faint">updated {hhmm(lastOk)}</span>
+        <span className="text-[11px] text-ink-faint">
+          {fresh.level === "ok" ? fresh.text : `updated ${hhmm(lastOk)}`}
+        </span>
       </div>
 
-      {error && (
-        <p className="rounded-lg border border-[color-mix(in_srgb,var(--warn)_40%,transparent)] bg-[color-mix(in_srgb,var(--warn)_10%,transparent)] px-3 py-2 text-xs font-medium text-[var(--warn)]">
-          Live data unavailable — last update {hhmm(lastOk)}. Retrying…
+      {fresh.level !== "ok" && (
+        <p
+          role="status"
+          data-testid="live-stale"
+          data-level={fresh.level}
+          className="rounded-lg border border-[color-mix(in_srgb,var(--warn)_40%,transparent)] bg-[color-mix(in_srgb,var(--warn)_10%,transparent)] px-3 py-2 text-xs font-medium text-[var(--warn)]"
+        >
+          {fresh.text}
         </p>
       )}
+
+      <DuelMini refreshKey={lastOk} />
 
       <div className="flex flex-wrap items-end gap-x-6 gap-y-3">
         <div>
@@ -325,7 +407,12 @@ function TrackerPanel({
         </details>
       )}
 
-      <LivePitch rows={view.rows} gameweek={payload.gameweek} />
+      <LivePitch
+        rows={view.rows}
+        gameweek={payload.gameweek}
+        cover={view.benchCover}
+        polledAt={lastOk ? Date.parse(lastOk) : 0}
+      />
     </div>
   );
 }
