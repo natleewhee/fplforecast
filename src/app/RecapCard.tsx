@@ -74,12 +74,13 @@ export default function RecapCard({ teamId }: { teamId?: string | null }) {
     };
   }, [teamId, selected]);
 
-  // keep the chosen week's chip in view as the picker scrolls
+  // Keep the chosen week's chip in view by scrolling the chip row itself.
+  // (scrollIntoView would also scroll every ancestor, including the tab
+  // carousel, and throw the page sideways.)
   useEffect(() => {
-    chips.current?.querySelector<HTMLElement>('[aria-pressed="true"]')?.scrollIntoView({
-      inline: "center",
-      block: "nearest",
-    });
+    const row = chips.current;
+    const chip = row?.querySelector<HTMLElement>('[aria-pressed="true"]');
+    if (row && chip) row.scrollLeft = chip.offsetLeft - (row.clientWidth - chip.offsetWidth) / 2;
   }, [recap?.gameweek, gameweeks.length]);
 
   // a recap is a nicety: with nothing to show, stay out of the live view
@@ -116,7 +117,7 @@ export default function RecapCard({ teamId }: { teamId?: string | null }) {
       {gameweeks.length > 1 && (
         <div
           ref={chips}
-          className="-mx-1 flex snap-x gap-1.5 overflow-x-auto px-1 pb-1"
+          className="relative -mx-1 flex snap-x gap-1.5 overflow-x-auto px-1 pb-1"
           role="group"
           aria-label="Choose a gameweek"
         >

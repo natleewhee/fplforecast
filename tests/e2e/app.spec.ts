@@ -15,6 +15,22 @@ test.beforeEach(async ({ context, page }) => {
   pageErrors = [];
   page.on("pageerror", (e) => pageErrors.push(e.message));
   await context.addCookies([{ name: "fpl_team_id", value: OWNER, url: "http://localhost:3123" }]);
+  // a recap with a week picker, so the Live tab always has its scrolling chip row;
+  // unmocked, CI would reach FPL's real API and tests would depend on its data
+  await page.route("**/api/recap*", (route) =>
+    route.fulfill({
+      contentType: "application/json",
+      body: JSON.stringify({
+        recap: {
+          gameweek: 6, points: 56, hit: 0, averageScore: 58, rank: 90000, rankBefore: 120000,
+          captain: { name: "Saka", raw: 2, multiplier: 2 },
+          best: { name: "Verbruggen", points: 9, code: null, team: "BHA" },
+          worst: { name: "Hall", points: 0 }, benchPoints: 11, chip: null, achievements: [], regrets: [],
+        },
+        gameweeks: [1, 2, 3, 4, 5, 6],
+      }),
+    }),
+  );
   // headshots come from FPL's site: serve a stand-in so photos mode has images
   await page.route("**/resources.premierleague.com/**", (route) =>
     route.fulfill({
