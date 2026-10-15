@@ -3,18 +3,27 @@
 import { useEffect, useRef, useState } from "react";
 import type { RecapResponse } from "./api/recap/route";
 import { rankMove, regretCopy, tier, verdict, type Recap } from "@/lib/recap";
+import { pickCaption } from "@/lib/shareCaption";
 import { renderRecapCard } from "./recapCanvas";
 
-function shareLines(r: Recap): string[] {
-  const lines = [verdict(r), `GW${r.gameweek}: ${r.points} pts${r.hit ? ` (−${r.hit} hit)` : ""}`];
-  if (r.averageScore != null) lines.push(`Average: ${r.averageScore}`);
-  const move = rankMove(r);
-  if (move) lines.push(move);
-  if (r.captain) lines.push(`Captain: ${r.captain.name} ${r.captain.raw} (×${r.captain.multiplier})`);
-  if (r.best) lines.push(`Best: ${r.best.name} ${r.best.points}`);
-  if (r.worst) lines.push(`Worst: ${r.worst.name} ${r.worst.points}`);
-  for (const a of r.achievements.slice(0, 3)) lines.push(`${a.emoji} ${a.title}`);
-  return lines;
+const RECENT_KEY = "gaffer-recent-captions";
+const RECENT_KEEP = 12;
+
+function readRecent(): string[] {
+  try {
+    const raw = JSON.parse(localStorage.getItem(RECENT_KEY) ?? "[]");
+    return Array.isArray(raw) ? raw.filter((x): x is string => typeof x === "string") : [];
+  } catch {
+    return [];
+  }
+}
+
+function rememberCaption(id: string) {
+  try {
+    localStorage.setItem(RECENT_KEY, JSON.stringify([id, ...readRecent().filter((x) => x !== id)].slice(0, RECENT_KEEP)));
+  } catch {
+    // not remembering just means a line may repeat sooner
+  }
 }
 
 export default function RecapCard({ teamId }: { teamId?: string | null }) {
@@ -45,19 +54,25 @@ export default function RecapCard({ teamId }: { teamId?: string | null }) {
 
   const move = rankMove(recap);
   const share = async () => {
-    const text = shareLines(recap).join("\n");
+    // The image carries the numbers; the message adds a reaction and the link.
+    const caption = pickCaption(recap, readRecent());
+    const link = `${window.location.origin}/${teamId ? `?team=${teamId}` : ""}`;
+    const text = `${caption.text}\n${link}`;
     try {
       const blob = await renderRecapCard(recap);
       if (blob && navigator.canShare?.({ files: [new File([blob], "recap.png", { type: "image/png" })] })) {
         await navigator.share({ files: [new File([blob], `gw${recap.gameweek}-recap.png`, { type: "image/png" })], text });
+        rememberCaption(caption.id);
         return;
       }
       if (navigator.share) {
         await navigator.share({ text });
+        rememberCaption(caption.id);
         return;
       }
       await navigator.clipboard.writeText(text);
-      setNote("Copied to clipboard");
+      rememberCaption(caption.id);
+      setNote("Caption and link copied");
     } catch (err) {
       if ((err as DOMException).name !== "AbortError") setNote("Couldn't share from this browser");
     }
