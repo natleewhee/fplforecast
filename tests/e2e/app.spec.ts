@@ -523,3 +523,107 @@ test.describe("Team bar", () => {
   });
 });
 
+
+test.describe("Match day", () => {
+  test("bench cover says who comes on if a starter doesn't play", async ({ page }) => {
+    await mockLive(page, { current: "a" });
+    await open(page);
+    const cover = page.getByTestId("bench-cover");
+    await expect(cover).toBeVisible();
+    await expect(cover).toContainText("Bench cover");
+    await cover.locator("summary").click();
+    await expect(cover.locator("li").first()).toBeVisible();
+  });
+
+  test("the what-just-happened feed survives a refresh", async ({ page }) => {
+    const poll = { current: "a" as "a" | "b" };
+    await mockLive(page, poll);
+    await open(page);
+    poll.current = "b";
+    await page.evaluate(() => document.dispatchEvent(new Event("visibilitychange")));
+    const feed = page.getByText("What just happened").locator("..");
+    await expect(feed).toContainText("Palmer");
+    await page.reload();
+    await page.getByRole("button", { name: /^Van Dijk,/ }).waitFor();
+    await expect(page.getByText("What just happened").locator("..")).toContainText("Palmer");
+  });
+
+  test("says so when live data stops arriving, and recovers", async ({ page }) => {
+    let down = false;
+    await page.route("**/api/live*", (route) =>
+      down
+        ? route.fulfill({ status: 502, contentType: "application/json", body: JSON.stringify({ error: "FPL is down" }) })
+        : route.fulfill({ contentType: "application/json", body: fixture("live-a.json") }),
+    );
+    await open(page);
+    await expect(page.getByTestId("live-stale")).toHaveCount(0);
+    down = true;
+    await page.evaluate(() => document.dispatchEvent(new Event("visibilitychange")));
+    const banner = page.getByTestId("live-stale");
+    await expect(banner).toHaveAttribute("data-level", "error");
+    await expect(banner).toContainText("last update");
+    down = false;
+    await page.evaluate(() => document.dispatchEvent(new Event("visibilitychange")));
+    await expect(page.getByTestId("live-stale")).toHaveCount(0);
+  });
+
+  test("a failed first load shows a message and a retry, not a blank tab", async ({ page }) => {
+    let down = true;
+    await page.route("**/api/live*", (route) =>
+      down
+        ? route.fulfill({ status: 502, contentType: "application/json", body: JSON.stringify({ error: "FPL is down" }) })
+        : route.fulfill({ contentType: "application/json", body: fixture("live-a.json") }),
+    );
+    await page.goto("/");
+    const failed = page.getByTestId("live-failed");
+    await expect(failed).toContainText("FPL is down");
+    down = false;
+    await failed.getByRole("button", { name: "Retry" }).click();
+    await page.getByRole("button", { name: /^Van Dijk,/ }).waitFor();
+    await expect(page.getByTestId("live-failed")).toHaveCount(0);
+  });
+
+  test("your last duel shows on the Live tab and resumes on Leagues", async ({ page }) => {
+    await mockLive(page, { current: "a" });
+    const squad = (entryId: number, pts: number) => ({
+      entryId, entryName: `Team ${entryId}`, managerName: null, gameweek: 7, totalPoints: pts * 6, totalXp: pts * 6 + 12, chip: null,
+      rows: Array.from({ length: 11 }, (_, i) => ({
+        id: entryId * 100 + i, webName: `P${i}`, team: "ARS", code: null,
+        position: (["GKP", "DEF", "DEF", "DEF", "DEF", "MID", "MID", "MID", "MID", "FWD", "FWD"] as const)[i],
+        isBench: false, isCaptain: i === 0, isViceCaptain: false, isArmband: i === 0,
+        status: i < 6 ? "finished" : "notStarted", minutes: i < 6 ? 90 : 0, pointsSoFar: i < 6 ? pts : 0,
+        remainingXp: i < 6 ? 0 : 3, noBakedXp: false, subbedIn: false, subbedOut: false, opponent: "bha (H)",
+      })),
+    });
+    await page.route("**/api/league/squad*", (route) => {
+      const id = Number(new URL(route.request().url()).searchParams.get("entryId"));
+      return route.fulfill({ contentType: "application/json", body: JSON.stringify(squad(id, id === 100 ? 5 : 3)) });
+    });
+    await page.route(/\/api\/league(\?|$)/, (route) =>
+      route.fulfill({
+        contentType: "application/json",
+        body: JSON.stringify({
+          gameweek: 7, leagues: [{ leagueId: 1, leagueName: "Mates" }],
+          league: {
+            leagueId: 1, leagueName: "Mates", myEntryId: 100, myRank: 1, totalEntries: 2, totalEntriesIsFloor: false, appendedEntryId: null,
+            entries: [
+              { entryId: 100, entryName: "Me FC", playerName: "Nat", rank: 1, lastRank: 1, totalPoints: 100, eventPoints: 40, projectedXp: 60, chip: null, captainName: null, playersPlayed: 6, playersLive: 0, playersToPlay: 5 },
+              { entryId: 200, entryName: "Sam FC", playerName: "Sam", rank: 2, lastRank: 2, totalPoints: 90, eventPoints: 30, projectedXp: 55, chip: null, captainName: null, playersPlayed: 6, playersLive: 0, playersToPlay: 5 },
+            ],
+          },
+        }),
+      }),
+    );
+    await page.addInitScript(() => {
+      localStorage.setItem("gaffer-duel-rival", JSON.stringify({ myEntryId: 100, entryId: 200, name: "Sam FC" }));
+    });
+    await open(page);
+    const mini = page.getByTestId("duel-mini");
+    await expect(mini).toContainText("Sam FC");
+    await expect(mini).toContainText("%");
+    await mini.click();
+    await page.waitForTimeout(700);
+    await page.getByTestId("resume-duel").click();
+    await expect(page.getByTestId("duel")).toContainText("you vs Sam FC");
+  });
+});

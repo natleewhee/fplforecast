@@ -40,3 +40,36 @@ test("the second poll's goal shows up in the breakdown and the points", () => {
   assert.equal((after?.pointsSoFar ?? 0) - (before?.pointsSoFar ?? 0), 5);
   assert.ok(after?.breakdown.some((b) => b.identifier === "goals_scored"));
 });
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { benchCover } from "../../src/lib/liveBlend.ts";
+
+test("benchCover: names who comes on if a pending starter doesn't play", () => {
+  // 1 GK, 4 DEF (2-5), 4 MID (6-9), 2 FWD (10-11); bench: GK 12, DEF 13, MID 14, FWD 15
+  const pos: Record<number, any> = { 1: "GKP", 12: "GKP", 13: "DEF", 14: "MID", 15: "FWD" };
+  for (const i of [2, 3, 4, 5]) pos[i] = "DEF";
+  for (const i of [6, 7, 8, 9]) pos[i] = "MID";
+  for (const i of [10, 11]) pos[i] = "FWD";
+  const starters = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+  const status: Record<number, any> = Object.fromEntries([...starters, 12, 13, 14, 15].map((i) => [i, "notStarted"]));
+  const cover = benchCover(starters, [12, 13, 14, 15], status, pos);
+  assert.equal(cover.length, 11);
+  assert.equal(cover.find((c) => c.outId === 1)?.inId, 12); // keeper covered only by the bench keeper
+  assert.equal(cover.find((c) => c.outId === 6)?.inId, 13); // first legal outfield sub in bench order
+});
+
+test("benchCover: no cover when the only legal sub didn't play, and finished starters are skipped", () => {
+  const pos: Record<number, any> = { 1: "GKP", 12: "GKP", 13: "DEF" };
+  for (const i of [2, 3, 4]) pos[i] = "DEF";
+  for (const i of [5, 6, 7, 8, 9]) pos[i] = "MID";
+  for (const i of [10]) pos[i] = "FWD";
+  pos[11] = "MID";
+  const starters = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+  const status: Record<number, any> = Object.fromEntries(starters.map((i) => [i, "notStarted"]));
+  status[12] = "didNotPlay";
+  status[13] = "didNotPlay";
+  status[2] = "finished";
+  const cover = benchCover(starters, [12, 13], status, pos);
+  assert.ok(!cover.some((c) => c.outId === 2)); // already played, nothing to cover
+  assert.equal(cover.find((c) => c.outId === 1)?.inId, null); // bench keeper didn't play
+});

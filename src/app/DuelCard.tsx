@@ -4,17 +4,10 @@ import { useEffect, useMemo, useState } from "react";
 import { SwordsIcon } from "./Icons";
 import LiveSquadPitch from "./LiveSquadPitch";
 import type { LeagueSquadResponse } from "./api/league/squad/route";
+import { loadSquad } from "@/lib/duelClient";
 import { differentials, oddsLine, sideFrom, simulateDuel } from "@/lib/winOdds";
 
 const POLL_MS = 60_000;
-
-async function loadSquad(entryId: number, teamId?: string | null): Promise<LeagueSquadResponse> {
-  const qs = teamId ? `&teamId=${teamId}` : "";
-  const res = await fetch(`/api/league/squad?entryId=${entryId}${qs}`, { cache: "no-store" });
-  const json = await res.json();
-  if (!res.ok) throw new Error(json.error || `HTTP ${res.status}`);
-  return json as LeagueSquadResponse;
-}
 
 function OddsMeter({ win, draw, lose }: { win: number; draw: number; lose: number }) {
   return (
