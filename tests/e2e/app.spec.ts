@@ -354,4 +354,33 @@ test.describe("Gameweek recap", () => {
     await card.getByRole("button", { name: /Regret machine/ }).click();
     await expect(page.getByTestId("regrets")).toContainText("+20");
   });
+  test("sharing sends a caption and the link, not the card's own numbers", async ({ page }) => {
+    await mockLive(page, { current: "a" });
+    await page.route("**/api/recap*", (route) =>
+      route.fulfill({
+        contentType: "application/json",
+        body: JSON.stringify({
+          recap: {
+            gameweek: 6, points: 71, hit: 0, averageScore: 48, rank: 90000, rankBefore: 120000,
+            captain: { name: "Haaland", raw: 9, multiplier: 2 },
+            best: { name: "Palmer", points: 14, code: null, team: "CHE" },
+            worst: { name: "Gabriel", points: 1 }, benchPoints: 3, chip: null,
+            achievements: [], regrets: [],
+          },
+        }),
+      }),
+    );
+    await page.addInitScript(() => {
+      (navigator as unknown as { canShare: () => boolean }).canShare = () => true;
+      (navigator as unknown as { share: (d: { text?: string }) => Promise<void> }).share = async (d) => {
+        (window as unknown as { __shared: string }).__shared = d.text ?? "";
+      };
+    });
+    await open(page);
+    await page.getByTestId("recap").getByRole("button", { name: "Share" }).click();
+    await page.waitForFunction(() => (window as unknown as { __shared?: string }).__shared);
+    const shared = await page.evaluate(() => (window as unknown as { __shared: string }).__shared);
+    expect(shared).toContain("http://localhost:3123/");
+    expect(shared).not.toMatch(/71|Haaland|Palmer/);
+  });
 });
