@@ -15,6 +15,22 @@ test.beforeEach(async ({ context, page }) => {
   pageErrors = [];
   page.on("pageerror", (e) => pageErrors.push(e.message));
   await context.addCookies([{ name: "fpl_team_id", value: OWNER, url: "http://localhost:3123" }]);
+  // a recap with a week picker, so the Live tab always has its scrolling chip row;
+  // unmocked, CI would reach FPL's real API and tests would depend on its data
+  await page.route("**/api/recap*", (route) =>
+    route.fulfill({
+      contentType: "application/json",
+      body: JSON.stringify({
+        recap: {
+          gameweek: 6, points: 56, hit: 0, averageScore: 58, rank: 90000, rankBefore: 120000,
+          captain: { name: "Saka", raw: 2, multiplier: 2 },
+          best: { name: "Verbruggen", points: 9, code: null, team: "BHA" },
+          worst: { name: "Hall", points: 0 }, benchPoints: 11, chip: null, achievements: [], regrets: [],
+        },
+        gameweeks: [1, 2, 3, 4, 5, 6],
+      }),
+    }),
+  );
   // headshots come from FPL's site: serve a stand-in so photos mode has images
   await page.route("**/resources.premierleague.com/**", (route) =>
     route.fulfill({
@@ -382,5 +398,33 @@ test.describe("Gameweek recap", () => {
     const shared = await page.evaluate(() => (window as unknown as { __shared: string }).__shared);
     expect(shared).toContain("http://localhost:3123/");
     expect(shared).not.toMatch(/71|Haaland|Palmer/);
+  });
+  test("a week picker switches the card to an earlier gameweek", async ({ page }) => {
+    await mockLive(page, { current: "a" });
+    const recapFor = (gw: number, points: number) => ({
+      gameweek: gw, points, hit: 0, averageScore: 50, rank: 100000, rankBefore: 120000,
+      captain: { name: "Haaland", raw: 6, multiplier: 2 },
+      best: { name: "Palmer", points: 10, code: null, team: "CHE" },
+      worst: { name: "Gabriel", points: 1 }, benchPoints: 3, chip: null, achievements: [], regrets: [],
+    });
+    const asked: string[] = [];
+    await page.route("**/api/recap*", (route) => {
+      const gw = new URL(route.request().url()).searchParams.get("gw");
+      asked.push(gw ?? "latest");
+      const n = gw ? Number(gw) : 6;
+      return route.fulfill({
+        contentType: "application/json",
+        body: JSON.stringify({ recap: recapFor(n, 40 + n), gameweeks: [1, 2, 3, 4, 5, 6] }),
+      });
+    });
+    await open(page);
+    const card = page.getByTestId("recap");
+    await expect(card).toContainText("GW6 recap");
+    await card.getByRole("button", { name: "GW3" }).click();
+    await expect(card).toContainText("GW3 recap");
+    await expect(card.getByRole("button", { name: "GW3" })).toHaveAttribute("aria-pressed", "true");
+    await card.getByRole("button", { name: "GW6" }).click();
+    await expect(card).toContainText("GW6 recap");
+    expect(asked).toEqual(["latest", "3"]); // going back to a week already seen is not refetched
   });
 });

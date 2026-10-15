@@ -6,7 +6,16 @@ import { rankMove, tier, verdict, type Recap } from "@/lib/recap";
  * a banter ribbon and a stat grid. Plain canvas, no dependencies. */
 
 const W = 800;
-const H = 1200;
+const CHIP_NAMES: Record<string, string> = {
+  bboost: "BENCH BOOST",
+  "3xc": "TRIPLE CAPTAIN",
+  wildcard: "WILDCARD",
+  freehit: "FREE HIT",
+};
+
+const GRID_TOP = 868; // where the stat grid starts
+const ROW_H = 64;
+const REGRET_H = 118;
 
 function displayFamily(): string {
   const raw = getComputedStyle(document.documentElement).getPropertyValue("--font-display-face").trim();
@@ -32,6 +41,32 @@ function spaced(ctx: CanvasRenderingContext2D, px: number) {
   (ctx as unknown as { letterSpacing: string }).letterSpacing = `${px}px`;
 }
 
+/** Wraps text to maxW, at most maxLines (the last line is cut with an ellipsis). */
+function wrap(
+  ctx: CanvasRenderingContext2D,
+  text: string,
+  x: number,
+  y: number,
+  maxW: number,
+  lh: number,
+  maxLines: number,
+) {
+  const lines: string[] = [];
+  let line = "";
+  for (const word of text.split(" ")) {
+    const test = line ? `${line} ${word}` : word;
+    if (ctx.measureText(test).width > maxW && line) {
+      lines.push(line);
+      line = word;
+    } else line = test;
+  }
+  lines.push(line);
+  lines.slice(0, maxLines).forEach((l, i) => {
+    const last = i === maxLines - 1 && lines.length > maxLines;
+    ctx.fillText(last ? `${l.replace(/\s+\S*$/, "")}…` : l, x, y + i * lh);
+  });
+}
+
 function fit(ctx: CanvasRenderingContext2D, text: string, maxW: number, size: number, weight: string, fam: string) {
   let s = size;
   ctx.font = `${weight} ${s}px ${fam}`;
@@ -53,6 +88,24 @@ export async function renderRecapCard(r: Recap): Promise<Blob | null> {
     // fall back to the system face
   }
   const photo = await loadPhoto(r.best?.code);
+
+  // Only things that happened get a cell: a hit or a chip shows up only if used.
+  const cells: [string, string][] = [
+    ["CAPTAIN", r.captain ? `${r.captain.name} ${r.captain.raw}` : "–"],
+    ["WORST", r.worst ? `${r.worst.name} ${r.worst.points}` : "–"],
+    ["BENCH", `${r.benchPoints} pts`],
+    ["AVERAGE", r.averageScore != null ? String(r.averageScore) : "–"],
+  ];
+  if (r.hit > 0) cells.push(["HIT", `−${r.hit}`]);
+  if (r.chip) cells.push(["CHIP", CHIP_NAMES[r.chip] ?? r.chip.toUpperCase()]);
+  const rows = Math.ceil(cells.length / 2);
+  const regret = r.regrets[0] ?? null; // sorted, biggest first
+  const stickers = r.achievements.slice(0, 4);
+  const stickerRows = stickers.length === 0 ? 0 : stickers.length >= 3 ? 2 : 1;
+  const gridEnd = GRID_TOP + (rows - 1) * ROW_H;
+  const regretTop = gridEnd + 36;
+  const stickersTop = regretTop + (regret ? REGRET_H + 30 : 6);
+  const H = stickersTop + (stickerRows ? stickerRows * 54 + 6 : 0) + 130; // 130 = brand footer
 
   const canvas = document.createElement("canvas");
   canvas.width = W;
@@ -233,19 +286,10 @@ export async function renderRecapCard(r: Recap): Promise<Blob | null> {
   ctx.fillText(verdict(r), 92, ribbonY + 53);
 
   // ---- stat grid ----
-  const cells: [string, string][] = [
-    ["CAPTAIN", r.captain ? `${r.captain.name} ${r.captain.raw}` : "–"],
-    ["WORST", r.worst ? `${r.worst.name} ${r.worst.points}` : "–"],
-    ["BENCH", `${r.benchPoints} pts`],
-    ["AVERAGE", r.averageScore != null ? String(r.averageScore) : "–"],
-    ["HIT", r.hit ? `−${r.hit}` : "none"],
-    ["CHIP", r.chip ? r.chip.toUpperCase() : "none"],
-  ];
   const gx = [92, 430];
-  const gy = ribbonY + 128;
   cells.forEach(([label, value], i) => {
     const x = gx[i % 2];
-    const y = gy + Math.floor(i / 2) * 64;
+    const y = GRID_TOP + Math.floor(i / 2) * ROW_H;
     ctx.fillStyle = "#8aa396";
     ctx.font = `600 22px ${fam}`;
     spaced(ctx, 3);
@@ -253,14 +297,37 @@ export async function renderRecapCard(r: Recap): Promise<Blob | null> {
     spaced(ctx, 0);
     ctx.fillStyle = "#ffffff";
     ctx.font = `700 40px ${fam}`;
-    ctx.fillText(value, x + 160, y + 2, 170);
+    ctx.fillText(value, x + 160, y + 2, i % 2 ? 140 : 170);
   });
+
+  // ---- regret machine ----
+  if (regret) {
+    ctx.fillStyle = `${t.color}22`;
+    rr(ctx, 66, regretTop, W - 132, REGRET_H, 24);
+    ctx.fill();
+    ctx.strokeStyle = `${t.color}88`;
+    ctx.lineWidth = 2;
+    ctx.stroke();
+    ctx.fillStyle = t.color;
+    ctx.font = `700 22px ${fam}`;
+    spaced(ctx, 4);
+    ctx.fillText("🔮 REGRET MACHINE", 92, regretTop + 36);
+    spaced(ctx, 0);
+    ctx.fillStyle = "#ffffff";
+    ctx.font = `600 29px ${fam}`;
+    wrap(ctx, regret.text, 92, regretTop + 72, W - 132 - 70 - 150, 32, 2);
+    ctx.textAlign = "right";
+    ctx.fillStyle = t.color;
+    ctx.font = `italic 800 66px ${fam}`;
+    ctx.fillText(`+${regret.points}`, W - 92, regretTop + 82);
+    ctx.textAlign = "left";
+  }
 
   // ---- stickers ----
   let sx = 66;
-  let sy = gy + 2 * 64 + 70;
+  let sy = stickersTop + 34;
   ctx.font = `700 26px ${fam}`;
-  for (const a of r.achievements.slice(0, 4)) {
+  for (const a of stickers) {
     const label = `${a.emoji} ${a.title}`;
     const w = ctx.measureText(label).width + 34;
     if (sx + w > W - 60) {
