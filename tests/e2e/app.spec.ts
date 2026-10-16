@@ -250,6 +250,9 @@ test.describe("Rebuild now", () => {
     await open(page);
     await openTab(page, "Squad");
     const box = page.getByTestId("rebuild").first();
+    // it is the first thing on the Squad tab, not buried under the pitch
+    const scene = await visibleScene(page);
+    expect((await box.boundingBox())!.y).toBeLessThan((await scene.boundingBox())!.y);
     await box.getByRole("button", { name: "Rebuild now" }).click();
     await expect(box).toContainText("Rebuilding the forecast now");
     await expect(box.getByRole("button")).toBeDisabled(); // a short cool-down, so it can't be mashed
