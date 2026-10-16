@@ -1,17 +1,9 @@
 {
-  "basedOnGw": 5,
+  "basedOnGw": 6,
   "transfers": [
     {
-      "out": 165,
-      "in": 569
-    },
-    {
-      "out": 165,
-      "in": 569
-    },
-    {
-      "out": 165,
-      "in": 569
+      "out": 249,
+      "in": 165
     }
   ]
 }
