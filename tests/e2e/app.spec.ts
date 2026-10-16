@@ -229,6 +229,46 @@ test.describe("Replace a player on the pitch", () => {
     // the saved swap now marks the outgoing shirt, and the deadline banner counts it
     await expect(scene.locator("span[title^='Saved transfer']")).toHaveCount(1);
     await expect(page.getByText(/transfers? pending/).first()).toBeVisible();
+
+    // and the pitch previews the incoming player in their place, still eleven on the pitch
+    await expect(page.getByTestId("preview-banner")).toContainText("1 saved transfer");
+    await expect(scene.locator("[data-flip]")).toHaveCount(11);
+    await scene.locator("button[data-flip]", { has: page.locator("span[title^='Saved transfer']") }).click();
+    const sheet = page.getByRole("dialog");
+    await expect(sheet).toContainText("Saved transfer · preview");
+    await sheet.getByRole("button", { name: /^Undo / }).click();
+    await expect(page.getByTestId("preview-banner")).toHaveCount(0);
+  });
+});
+
+test.describe("Rebuild now", () => {
+  test("starts a rebuild and says so", async ({ page }) => {
+    await page.route("**/api/rebuild", (route) =>
+      route.fulfill({ contentType: "application/json", body: JSON.stringify({ ok: true, rebuild: "started" }) }),
+    );
+    await mockLive(page, { current: "a" });
+    await open(page);
+    await openTab(page, "Squad");
+    const box = page.getByTestId("rebuild").first();
+    await box.getByRole("button", { name: "Rebuild now" }).click();
+    await expect(box).toContainText("Rebuilding the forecast now");
+    await expect(box.getByRole("button")).toBeDisabled(); // a short cool-down, so it can't be mashed
+  });
+
+  test("explains why when GitHub won't start one", async ({ page }) => {
+    await page.route("**/api/rebuild", (route) =>
+      route.fulfill({
+        contentType: "application/json",
+        body: JSON.stringify({ ok: true, rebuild: "scheduled", hint: "The app's GitHub token can't start rebuilds." }),
+      }),
+    );
+    await mockLive(page, { current: "a" });
+    await open(page);
+    await openTab(page, "Squad");
+    const box = page.getByTestId("rebuild").first();
+    await box.getByRole("button", { name: "Rebuild now" }).click();
+    await expect(box).toContainText("next daily rebuild");
+    await expect(box).toContainText("token can't start rebuilds");
   });
 });
 
