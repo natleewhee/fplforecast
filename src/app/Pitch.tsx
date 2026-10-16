@@ -9,7 +9,6 @@ import { PitchScene } from "./PitchScene";
 import { FormBars, Halo, meanFdr, RangeBar } from "./Shirt";
 import { FaceToggle, PlayerFace } from "./PlayerFace";
 import PreviewSheet from "./PreviewSheet";
-import RebuildButton from "./RebuildButton";
 import ReplaceSheet, { type TransferTools } from "./ReplaceSheet";
 
 function bandLabel(band: { floor: number; ceiling: number; bandProvisional: boolean } | null | undefined) {
@@ -414,12 +413,6 @@ export default function Pitch({ forecast, transferTools }: { forecast: Forecast;
           under a name is the typical range (white tick = projection) · ✚ doubtful or out, ⏱ minutes
           risk · tap a player for the breakdown
         </p>
-
-        {transferTools && (
-          <div className="mt-3">
-            <RebuildButton builtAt={forecast.generatedAt} />
-          </div>
-        )}
 
         {/* bench */}
         <div className="mt-3">

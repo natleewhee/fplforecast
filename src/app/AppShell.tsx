@@ -24,6 +24,7 @@ import DeadlineBanner from "./DeadlineBanner";
 import History from "./History";
 import LiveTracker from "./LiveTracker";
 import LeaguesPage from "./LeaguesPage";
+import RebuildButton from "./RebuildButton";
 import RecapCard from "./RecapCard";
 import Scenarios from "./Scenarios";
 import TransferForm from "./TransferForm";
@@ -629,6 +630,13 @@ export default function AppShell({
 
   const squadTab = (
     <>
+      {/* First thing on the tab: after saving a transfer this is what you
+       * reach for, so it shouldn't sit below the pitch. Own team only. */}
+      {transferTools && (
+        <div className="panel rise p-3">
+          <RebuildButton builtAt={forecast.generatedAt} />
+        </div>
+      )}
       <DeadlineChecklist forecast={forecast} chips={chips} />
       <Pitch forecast={forecast} transferTools={transferTools} />
 
