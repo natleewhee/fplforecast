@@ -59,7 +59,11 @@ directionally right, not budget-verified.
 
 Requires a `GITHUB_TOKEN` env var in Vercel: a fine-grained personal access
 token scoped to `natleewhee/fplforecast` with **Contents: read and write**
-permission. Optionally set `FPL_REPO_BRANCH` if the app should commit to a
+and **Actions: read and write** permissions. Contents lets the app save a
+transfer; Actions lets it start a forecast rebuild straight away (after a
+saved transfer, and from the "Rebuild now" button on the Squad tab). Without
+Actions the app still saves, but the squad only updates at the daily 03:00 UTC
+rebuild, and the app says so. Optionally set `FPL_REPO_BRANCH` if the app should commit to a
 branch other than `main` (defaults to `main`).
 
 ## Local development

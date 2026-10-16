@@ -1,13 +1,15 @@
 "use client";
 
 import { useRef, useState, type ReactNode } from "react";
-import type { Forecast, ForecastPlayer, OpponentLeg } from "@/lib/snapshots";
+import type { Forecast, ForecastPlayer, OpponentLeg, PoolPlayer } from "@/lib/snapshots";
 import { availabilityFlag } from "@/lib/availability";
 import { fdrColor } from "@/lib/teamColors";
 import PlayerBreakdownSheet from "./PlayerBreakdownSheet";
 import { PitchScene } from "./PitchScene";
 import { FormBars, Halo, meanFdr, RangeBar } from "./Shirt";
 import { FaceToggle, PlayerFace } from "./PlayerFace";
+import PreviewSheet from "./PreviewSheet";
+import RebuildButton from "./RebuildButton";
 import ReplaceSheet, { type TransferTools } from "./ReplaceSheet";
 
 function bandLabel(band: { floor: number; ceiling: number; bandProvisional: boolean } | null | undefined) {
@@ -70,6 +72,8 @@ type Tok = {
   code?: number | null;
   recentPoints?: (number | null)[];
   swapTo?: string; // a saved transfer replaces this player with them at the next rebuild
+  // set on a previewed incoming player: a saved transfer, shown in the outgoing player's place
+  preview?: { replaces: string; outId: number; pool: PoolPlayer };
 };
 
 /** Risk icons for a shirt: FPL's doubt flag and this model's minutes risk. */
@@ -121,7 +125,9 @@ function PlayerToken({
   const bandTitle = bandLabel(t.floorCeiling);
   const doubt = availabilityFlag(t.availability);
   const badges = riskBadges(t.availability, t.minutesRisk);
-  if (t.swapTo) {
+  if (t.preview) {
+    badges.push({ key: "swap", title: `Saved transfer: replaces ${t.preview.replaces} (preview until the next rebuild)`, node: <span className="font-black text-[var(--accent-2)]">{"\u21C4"}</span> });
+  } else if (t.swapTo) {
     badges.push({ key: "swap", title: `Saved transfer: replaced by ${t.swapTo} at the next rebuild`, node: <span className="font-black text-[var(--accent-2)]">{"\u21C4"}</span> });
   }
   return (
@@ -202,11 +208,24 @@ export default function Pitch({ forecast, transferTools }: { forecast: Forecast;
   if (!active) return null;
   const isTargetGw = gwIdx === 0;
 
+  // Saved transfers whose incoming player we have projections for are shown
+  // in the outgoing player's place right away, as a preview. (Replacements
+  // are always the same position, so the formation stays legal.) The model's
+  // own XI and captain choice only changes at the next rebuild.
+  const poolById = new Map((transferTools?.pool ?? []).map((p) => [p.id, p]));
+  const swaps = new Map<number, PoolPlayer>();
+  for (const t of transferTools?.pending ?? []) {
+    const incoming = poolById.get(t.in);
+    const outgoing = byId.get(t.out);
+    if (incoming && outgoing && incoming.position === outgoing.position) swaps.set(t.out, incoming);
+  }
+  const shown = (id: number | null | undefined) => (id == null ? id : (swaps.get(id)?.id ?? id));
+
   // which eleven + captain -- always this app's recommended XI
   const xiIds = active.startingXi;
   const benchIds = active.bench;
-  const captainId = active.captainId;
-  const viceId = active.viceCaptainId;
+  const captainId = shown(active.captainId);
+  const viceId = shown(active.viceCaptainId);
 
   // per-player xP / opponents for the shown GW, from that gameweek's own
   // player entry (fixtures/minutes can differ gameweek to gameweek).
@@ -218,6 +237,22 @@ export default function Pitch({ forecast, transferTools }: { forecast: Forecast;
   const tok = (id: number): Tok | null => {
     const base = byId.get(id);
     if (!base) return null;
+    const swap = swaps.get(id);
+    if (swap) {
+      return {
+        id: swap.id,
+        webName: swap.webName,
+        position: swap.position,
+        team: swap.team,
+        xp: swap.perGameweek[gwIdx] ?? null,
+        provisional: true,
+        opponents: swap.opponents[gwIdx] ?? [],
+        availability: swap.availability,
+        code: swap.code,
+        recentPoints: swap.recentPoints,
+        preview: { replaces: base.webName, outId: id, pool: swap },
+      };
+    }
     const gp = gwPlayerById.get(id);
     return {
       id,
@@ -241,7 +276,19 @@ export default function Pitch({ forecast, transferTools }: { forecast: Forecast;
   const benched = benchIds.map(tok).filter(Boolean) as Tok[];
   const rows = ROWS.map((pos) => xi.filter((p) => p.position === pos)).filter((r) => r.length);
 
-  const headline = active.points;
+  // The headline moves with the preview: each swapped starter's projection
+  // replaces the one they stand in for (doubled for the captain).
+  const previewDelta = xiIds.reduce((sum, id) => {
+    const swap = swaps.get(id);
+    if (!swap) return sum;
+    const was = gwPlayerById.get(id)?.projectedPoints ?? 0;
+    const now = swap.perGameweek[gwIdx] ?? 0;
+    return sum + (now - was) * (id === active.captainId ? 2 : 1);
+  }, 0);
+  const headline = active.points + previewDelta;
+  const pendingCount = transferTools?.pending.length ?? 0;
+  const previewing = swaps.size > 0;
+  const previewTok = [...xi, ...benched].find((t) => t.id === selectedId && t.preview);
 
   return (
     <div className="space-y-4">
@@ -296,9 +343,10 @@ export default function Pitch({ forecast, transferTools }: { forecast: Forecast;
           </div>
           <div className="shrink-0 text-right">
             <div className="stat stat-glow text-2xl leading-none sm:text-3xl">
+              {previewing && previewDelta !== 0 ? "~" : ""}
               {headline.toFixed(0)}
             </div>
-            <div className="eyebrow mt-1">proj pts</div>
+            <div className="eyebrow mt-1">{previewing ? "proj pts (preview)" : "proj pts"}</div>
             {isTargetGw && (
               <details className="mt-0.5">
                 <summary className="cursor-pointer list-none font-mono text-[10px] text-ink-faint hover:text-ink-soft">
@@ -319,6 +367,20 @@ export default function Pitch({ forecast, transferTools }: { forecast: Forecast;
         <div className="mb-2 flex justify-end">
           <FaceToggle />
         </div>
+
+        {pendingCount > 0 && (
+          <div
+            role="status"
+            data-testid="preview-banner"
+            className="mb-2 rounded-lg border border-[color-mix(in_srgb,var(--warn)_40%,transparent)] bg-[color-mix(in_srgb,var(--warn)_8%,transparent)] px-3 py-2 text-[11px] leading-snug text-ink-soft"
+          >
+            <span className="font-semibold text-[var(--warn)]">Preview:</span>{" "}
+            {previewing
+              ? `${pendingCount} saved transfer${pendingCount === 1 ? "" : "s"} shown on the pitch.`
+              : `${pendingCount} saved transfer${pendingCount === 1 ? "" : "s"} waiting.`}{" "}
+            The model re-picks the XI and captain at the next rebuild.
+          </div>
+        )}
 
         {isTargetGw && (
           <div className="mb-2 flex flex-wrap items-center gap-1.5">
@@ -353,6 +415,12 @@ export default function Pitch({ forecast, transferTools }: { forecast: Forecast;
           risk · tap a player for the breakdown
         </p>
 
+        {transferTools && (
+          <div className="mt-3">
+            <RebuildButton builtAt={forecast.generatedAt} />
+          </div>
+        )}
+
         {/* bench */}
         <div className="mt-3">
           <p className="eyebrow mb-1.5">Bench</p>
@@ -381,6 +449,17 @@ export default function Pitch({ forecast, transferTools }: { forecast: Forecast;
         )}
       </div>
 
+      {previewTok?.preview && transferTools && (
+        <PreviewSheet
+          incoming={previewTok.preview.pool}
+          replaces={previewTok.preview.replaces}
+          outId={previewTok.preview.outId}
+          xp={previewTok.xp}
+          gameweek={active.gameweek}
+          onUndone={transferTools.onPendingChange}
+          onClose={closeSheet}
+        />
+      )}
       {selectedId != null && byId.get(selectedId) && (
         <PlayerBreakdownSheet
           player={byId.get(selectedId)!}

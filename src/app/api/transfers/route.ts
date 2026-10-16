@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { resolveTeamId, OWNER_TEAM_ID } from "@/lib/teamId";
 import { sameTransfer, type PendingTransfer } from "@/lib/transfers";
+import { dispatchRebuild } from "@/lib/rebuildDispatch";
 
 const OWNER = "natleewhee";
 const REPO = "fplforecast";
@@ -55,20 +56,12 @@ async function putFile(content: OverridesFile, sha: string | null, message: stri
 type Rebuild = "started" | "scheduled" | "none";
 
 /** Asks GitHub Actions to rebuild the forecast now, so a saved change shows up
- * in minutes instead of at the next 03:00 UTC run. Best effort: the token may
- * lack Actions permission, in which case the daily run picks the change up. */
-async function triggerRebuild(): Promise<Rebuild> {
-  try {
-    const res = await fetch(
-      `https://api.github.com/repos/${OWNER}/${REPO}/actions/workflows/snapshot.yml/dispatches`,
-      { method: "POST", headers: githubHeaders(), body: JSON.stringify({ ref: BRANCH }) },
-    );
-    if (res.status === 204) return "started";
-    console.warn(`rebuild dispatch refused: ${res.status} ${await res.text()}`);
-  } catch (err) {
-    console.warn(`rebuild dispatch failed: ${(err as Error).message}`);
-  }
-  return "scheduled";
+ * in minutes instead of at the next 03:00 UTC run. Best effort: if GitHub
+ * refuses (usually a token without Actions permission), the daily run picks
+ * the change up and the reason is passed back so the app can say why. */
+async function triggerRebuild(): Promise<{ rebuild: Rebuild; hint?: string }> {
+  const r = await dispatchRebuild();
+  return { rebuild: r.rebuild === "started" ? "started" : "scheduled", hint: r.hint };
 }
 
 export async function POST(req: NextRequest) {
@@ -110,9 +103,9 @@ export async function POST(req: NextRequest) {
 
     const updated: OverridesFile = { basedOnGw, transfers };
     await putFile(updated, sha, `Transfer: out ${outId}, in ${inId}${note ? ` (${note})` : ""}`);
-    const rebuild = await triggerRebuild();
+    const { rebuild, hint } = await triggerRebuild();
 
-    return NextResponse.json({ ok: true, rebuild, overrides: updated });
+    return NextResponse.json({ ok: true, rebuild, rebuildHint: hint, overrides: updated });
   } catch (err) {
     return NextResponse.json({ error: (err as Error).message }, { status: 500 });
   }
@@ -145,7 +138,10 @@ export async function DELETE(req: NextRequest) {
     if (remaining.length > 0) {
       const updated: OverridesFile = { basedOnGw: data.basedOnGw, transfers: remaining };
       await putFile(updated, sha, `Remove pending transfer: out ${target!.out}, in ${target!.in}`);
-      return NextResponse.json({ ok: true, rebuild: await triggerRebuild(), overrides: updated });
+      {
+      const { rebuild, hint } = await triggerRebuild();
+      return NextResponse.json({ ok: true, rebuild, rebuildHint: hint, overrides: updated });
+    }
     }
 
     const res = await fetch(`https://api.github.com/repos/${OWNER}/${REPO}/contents/${FILE_PATH}`, {
@@ -154,7 +150,10 @@ export async function DELETE(req: NextRequest) {
       body: JSON.stringify({ message: "Clear pending transfer overrides", sha, branch: BRANCH }),
     });
     if (!res.ok) throw new Error(`GitHub delete failed: ${res.status} ${await res.text()}`);
-    return NextResponse.json({ ok: true, rebuild: await triggerRebuild(), overrides: null });
+    {
+    const { rebuild, hint } = await triggerRebuild();
+    return NextResponse.json({ ok: true, rebuild, rebuildHint: hint, overrides: null });
+  }
   } catch (err) {
     return NextResponse.json({ error: (err as Error).message }, { status: 500 });
   }

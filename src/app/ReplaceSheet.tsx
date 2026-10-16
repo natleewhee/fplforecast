@@ -55,6 +55,7 @@ export default function ReplaceSheet({
   const [status, setStatus] = useState<"idle" | "saving" | "done" | "error">("idle");
   const [message, setMessage] = useState("");
   const [rebuild, setRebuild] = useState<Rebuild>("none");
+  const [hint, setHint] = useState<string | undefined>();
 
   const known = new Map<number, Known>(
     tools.allPlayers.map((p) => [p.id, { id: p.id, team: p.team, position: p.position, priceMillions: p.priceMillions }]),
@@ -80,6 +81,7 @@ export default function ReplaceSheet({
       const r = await saveTransfer(out.id, chosen.id, tools.basedOnGw);
       tools.onPendingChange(r.transfers);
       setRebuild(r.rebuild);
+      setHint(r.rebuildHint);
       setMessage(r.duplicate ? `Already saved: ${out.webName} → ${chosen.webName}` : `Saved: ${out.webName} → ${chosen.webName}`);
       setStatus("done");
     } catch (err) {
@@ -95,6 +97,7 @@ export default function ReplaceSheet({
       const r = await removeTransfer(t.out, t.in);
       tools.onPendingChange(r.transfers);
       setRebuild(r.rebuild);
+      setHint(r.rebuildHint);
       setMessage(`Removed: ${nameOf(t.out)} → ${nameOf(t.in)}`);
       setStatus("done");
     } catch (err) {
@@ -120,6 +123,7 @@ export default function ReplaceSheet({
         <div role="status" className="mt-4 space-y-1 text-sm">
           <p className="font-medium text-[var(--accent)]">{message}</p>
           {REBUILD_TEXT[rebuild] && <p className="text-xs text-ink-soft">{REBUILD_TEXT[rebuild]}</p>}
+          {rebuild === "scheduled" && hint && <p className="text-xs text-[var(--warn)]">{hint}</p>}
         </div>
       </BottomSheet>
     );
