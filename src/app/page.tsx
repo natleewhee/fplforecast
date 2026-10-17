@@ -6,7 +6,7 @@ import {
   loadOverrides,
 } from "@/lib/snapshots";
 import AppShell from "./AppShell";
-import { Card, Header, PositionBadge, Shell } from "./PageChrome";
+import { Header, Panel, PositionBadge, Shell } from "./PageChrome";
 
 export const dynamic = "force-static";
 
@@ -24,12 +24,12 @@ export default function Home() {
         <Header subtitle="no data" />
         <Shell>
           <div className="pt-4">
-            <Card>
+            <Panel>
               <p className="text-sm text-ink-soft">
                 No snapshot data yet. Run the &quot;Snapshot FPL data&quot; GitHub Action (or wait
                 for tonight&apos;s scheduled run), then redeploy.
               </p>
-            </Card>
+            </Panel>
           </div>
         </Shell>
       </>
@@ -73,7 +73,7 @@ export default function Home() {
       <Header subtitle="no forecast yet" />
       <Shell>
         <div className="space-y-4 pt-4">
-          <Card>
+          <Panel>
             <p className="text-sm text-ink-soft">
               Needs a finished gameweek to know your squad. Showing FPL&apos;s own{" "}
               <code className="rounded bg-white/10 px-1 py-0.5 font-mono text-xs text-ink">
@@ -81,9 +81,9 @@ export default function Home() {
               </code>
               , sorted, in the meantime.
             </p>
-          </Card>
+          </Panel>
 
-          <Card className="!p-0 overflow-hidden">
+          <Panel className="!p-0 overflow-hidden">
             {/* table-fixed + colgroup, same as the Leagues table -- an
                unconstrained table can grow past the viewport on a long
                player name with no way to scroll to see it. */}
@@ -122,7 +122,7 @@ export default function Home() {
                 ))}
               </tbody>
             </table>
-          </Card>
+          </Panel>
 
           {footer}
         </div>

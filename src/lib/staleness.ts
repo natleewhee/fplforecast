@@ -1,3 +1,5 @@
+import { ageText } from "./time.ts";
+
 /* How fresh the live numbers are, in words the Live tab can show. Pure so it
  * can be tested without a clock or a network. */
 
@@ -7,15 +9,6 @@ export type Staleness =
 
 /** After this long without a good poll while matches are live, say so. */
 export const STALE_AFTER_MS = 150_000;
-
-export function ageText(ms: number): string {
-  const s = Math.max(0, Math.floor(ms / 1000));
-  if (s < 45) return "just now";
-  const m = Math.round(s / 60);
-  if (m < 60) return `${Math.max(1, m)} min ago`;
-  const h = Math.floor(m / 60);
-  return `${h}h ${m % 60}m ago`;
-}
 
 export function staleness(args: {
   lastOkMs: number | null;

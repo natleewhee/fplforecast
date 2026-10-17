@@ -5,7 +5,6 @@ import type {
   BootstrapSnapshot,
   ChipStatus,
   Forecast,
-  GameweekReview,
   OverridesFile,
   ParCalibration,
   RunningRecord,
@@ -17,7 +16,7 @@ import {
   getUrlTeamId,
   setUrlTeamId,
 } from "@/lib/teamId";
-import { Card, Header, Module, Shell } from "./PageChrome";
+import { Header, Module, Panel, Shell } from "./PageChrome";
 import Pitch from "./Pitch";
 import DeadlineChecklist from "./DeadlineChecklist";
 import DeadlineBanner from "./DeadlineBanner";
@@ -29,7 +28,7 @@ import RecapCard from "./RecapCard";
 import Scenarios from "./Scenarios";
 import TransferForm from "./TransferForm";
 import AppTabs from "./AppTabs";
-import { STALE_AFTER_HOURS, describeAge, forecastAgeHours } from "@/lib/forecastAge";
+import { STALE_AFTER_HOURS, describeAge, forecastAgeHours } from "@/lib/time";
 import Carousel from "./Carousel";
 import type { PendingTransfer } from "@/lib/transfers";
 import type { TransferTools } from "./ReplaceSheet";
@@ -110,66 +109,6 @@ function ParCalibrationModule({ calibration }: { calibration: ParCalibration | n
             <span className="ml-1 font-sans font-normal text-ink-faint">red</span>
           </span>
         </div>
-      </div>
-    </Module>
-  );
-}
-
-function GameweekReviewModule({ review }: { review: GameweekReview | null }) {
-  if (!review || review.xiPoints == null) return null;
-  const mvb = review.modelVsBaseline;
-  const scored = mvb && "model" in mvb;
-  const cap = review.captain;
-  return (
-    <Module
-      label={`GW${review.gameweek} result`}
-      accent={!review.dataChecked ? <span className="chip chip-warn">provisional</span> : null}
-    >
-      <div className="flex items-end gap-4">
-        <div>
-          <div className="stat text-3xl leading-none text-ink">{review.xiPoints}</div>
-          <div className="eyebrow mt-1">points</div>
-        </div>
-        <div className="space-y-0.5 text-xs text-ink-soft">
-          <div className="stat">
-            {review.benchPoints ?? "—"}
-            <span className="ml-1 font-sans font-normal text-ink-faint">bench</span>
-          </div>
-          {review.transfersCost > 0 && (
-            <div className="text-[var(--danger)]">−{review.transfersCost} hit</div>
-          )}
-          {review.overallRank != null && (
-            <div className="font-mono tabular-nums text-ink-faint">
-              OR {review.overallRank.toLocaleString()}
-            </div>
-          )}
-        </div>
-      </div>
-      <div className="flex flex-wrap items-center gap-x-3 gap-y-1 border-t border-line pt-2 text-[11px]">
-        {cap && (
-          <span className="tabular-nums text-ink-soft">
-            <span className="text-ink-faint">C</span>{" "}
-            <span className="font-medium text-ink">{cap.webName}</span> {cap.actual ?? "—"}×
-            {cap.multiplier}
-            {cap.actual != null && <span className="text-ink"> = {cap.actual * cap.multiplier}</span>}
-          </span>
-        )}
-        {scored ? (
-          <span className="tabular-nums text-ink-soft">
-            model <span className="font-semibold text-ink">{mvb.model}</span> · base{" "}
-            <span className="font-semibold text-ink">{mvb.baseline}</span>{" "}
-            <span className={mvb.delta >= 0 ? "text-[var(--accent)]" : "text-[var(--danger)]"}>
-              ({mvb.delta >= 0 ? "+" : ""}
-              {mvb.delta})
-            </span>
-          </span>
-        ) : (
-          <span className="text-ink-faint">
-            {mvb && "status" in mvb && mvb.status === "no_prediction"
-              ? "no prediction logged"
-              : "model vs baseline pending"}
-          </span>
-        )}
       </div>
     </Module>
   );
@@ -619,7 +558,6 @@ export default function AppShell({
   const liveTab = (
     <>
       <LiveTracker
-        lastGameweek={forecast.lastGameweek}
         teamId={isViewingSharedLink ? teamId : null}
         onActive={setLiveActive}
       />
@@ -640,22 +578,9 @@ export default function AppShell({
       <DeadlineChecklist forecast={forecast} chips={chips} />
       <Pitch forecast={forecast} transferTools={transferTools} />
 
-      {chips && (
-        <div className="flex flex-wrap gap-1.5">
-          {chips.map((c) => (
-            <span
-              key={c.name}
-              className={c.remaining > 0 ? "chip chip-accent" : "chip opacity-50 line-through"}
-            >
-              {c.name} {c.remaining > 0 ? `(${c.remaining})` : "used"}
-            </span>
-          ))}
-        </div>
-      )}
 
       <Carousel>
         <CaptainModule forecast={forecast} />
-        <GameweekReviewModule review={forecast.lastGameweek} />
         <RunningRecordModule record={forecast.runningRecord} />
         <ParCalibrationModule calibration={forecast.parCalibration} />
       </Carousel>
@@ -678,13 +603,13 @@ export default function AppShell({
       )}
 
       {isGuest ? (
-        <Card>
+        <Panel>
           <p className="text-xs text-ink-soft">
             Saving a transfer is only available for this app&apos;s own team.
           </p>
-        </Card>
+        </Panel>
       ) : (
-        <Card>
+        <Panel>
           <TransferForm
             squad={forecast.squad.players}
             allPlayers={bootstrap.players}
@@ -693,7 +618,7 @@ export default function AppShell({
             pending={pendingTransfers}
             onPendingChange={setPendingEdited}
           />
-        </Card>
+        </Panel>
       )}
     </>
   );

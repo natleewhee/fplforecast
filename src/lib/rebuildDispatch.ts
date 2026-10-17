@@ -1,10 +1,7 @@
 import { NO_TOKEN_HINT, refusalHint } from "./rebuildHints";
+import { REPO_BRANCH, REPO_NAME, REPO_OWNER } from "./repo";
 
-const OWNER = "natleewhee";
-const REPO = "fplforecast";
 const WORKFLOW = "snapshot.yml";
-const BRANCH = process.env.FPL_REPO_BRANCH || "claude/fpl-forecaster-build-setup-ksd7z0";
-
 export type DispatchResult = {
   /** started: a run was queued. running: one was already going (manual only). scheduled: couldn't start, waits for the daily run. */
   rebuild: "started" | "running" | "scheduled";
@@ -25,7 +22,7 @@ export async function dispatchRebuild(opts: { skipIfRunning?: boolean } = {}): P
     Accept: "application/vnd.github+json",
     "Content-Type": "application/json",
   };
-  const base = `https://api.github.com/repos/${OWNER}/${REPO}/actions/workflows/${WORKFLOW}`;
+  const base = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/actions/workflows/${WORKFLOW}`;
 
   if (opts.skipIfRunning) {
     try {
@@ -43,7 +40,7 @@ export async function dispatchRebuild(opts: { skipIfRunning?: boolean } = {}): P
     const res = await fetch(`${base}/dispatches`, {
       method: "POST",
       headers,
-      body: JSON.stringify({ ref: BRANCH }),
+      body: JSON.stringify({ ref: REPO_BRANCH }),
     });
     if (res.status === 204) return { rebuild: "started" };
     console.warn(`rebuild dispatch refused: ${res.status} ${await res.text()}`);

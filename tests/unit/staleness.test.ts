@@ -1,6 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { ageText, staleness, STALE_AFTER_MS } from "../../src/lib/staleness.ts";
+import { staleness, STALE_AFTER_MS } from "../../src/lib/staleness.ts";
+import { ageText } from "../../src/lib/time.ts";
 
 const base = { lastOkMs: 1_000_000, nowMs: 1_000_000, active: true, error: null, online: true };
 

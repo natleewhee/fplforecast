@@ -73,11 +73,6 @@ export function Header({ subtitle }: { subtitle: string }) {
   );
 }
 
-/** kept so any leftover callers still compile; identical to Panel */
-export function Card({ children, className = "" }: { children: ReactNode; className?: string }) {
-  return <Panel className={className}>{children}</Panel>;
-}
-
 export function Shell({ children }: { children: ReactNode }) {
   return <main className="mx-auto min-h-screen w-full max-w-4xl px-4 pb-16">{children}</main>;
 }

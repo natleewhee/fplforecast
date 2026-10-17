@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { fpl } from "@/lib/fplApi";
 import { loadLatestForecast, type Forecast } from "@/lib/snapshots";
 import {
   buildLivePayload,
@@ -10,21 +11,6 @@ import {
   type FplPicks,
 } from "@/lib/liveBlend";
 import { OWNER_TEAM_ID, resolveTeamIdFromRequest } from "@/lib/teamId";
-
-const FPL = "https://fantasy.premierleague.com/api";
-
-// Cache each upstream FPL fetch for ~40s so client polling at ~60s costs at
-// most a couple of upstream calls per minute regardless of open tabs (KTD5).
-const REVALIDATE = 40;
-
-async function fpl<T>(path: string): Promise<T> {
-  const res = await fetch(`${FPL}${path}`, {
-    next: { revalidate: REVALIDATE },
-    headers: { "User-Agent": "fplforecast-live/1.0" },
-  });
-  if (!res.ok) throw new Error(`FPL ${path} -> ${res.status}`);
-  return (await res.json()) as T;
-}
 
 export async function GET(req: NextRequest) {
   try {

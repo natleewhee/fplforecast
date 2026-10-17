@@ -23,10 +23,6 @@ export function resolveTeamId(cookieJar: { get(name: string): { value: string } 
   return raw;
 }
 
-export function isOwnerTeam(teamId: string): boolean {
-  return teamId === OWNER_TEAM_ID;
-}
-
 function isValidTeamId(raw: string | null | undefined): raw is string {
   if (!raw) return false;
   const parsed = Number(raw);

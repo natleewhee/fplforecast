@@ -2,15 +2,9 @@ import { NextRequest, NextResponse } from "next/server";
 import { resolveTeamId, OWNER_TEAM_ID } from "@/lib/teamId";
 import { sameTransfer, type PendingTransfer } from "@/lib/transfers";
 import { dispatchRebuild } from "@/lib/rebuildDispatch";
+import { REPO_BRANCH, REPO_NAME, REPO_OWNER } from "@/lib/repo";
 
-const OWNER = "natleewhee";
-const REPO = "fplforecast";
 const FILE_PATH = "data/overrides/transfers.json";
-// This repo has never had a "main" branch -- everything lives on
-// claude/fpl-forecaster-build-setup-ksd7z0 (the Vercel production branch),
-// so that's the correct default rather than a generic guess that 404s.
-const BRANCH = process.env.FPL_REPO_BRANCH || "claude/fpl-forecaster-build-setup-ksd7z0";
-
 type OverridesFile = { basedOnGw: number; transfers: PendingTransfer[] };
 
 function githubHeaders() {
@@ -29,7 +23,7 @@ function githubHeaders() {
 
 async function getCurrentFile(): Promise<{ sha: string | null; data: OverridesFile | null }> {
   const res = await fetch(
-    `https://api.github.com/repos/${OWNER}/${REPO}/contents/${FILE_PATH}?ref=${BRANCH}`,
+    `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${FILE_PATH}?ref=${REPO_BRANCH}`,
     { headers: githubHeaders(), cache: "no-store" }
   );
   if (res.status === 404) return { sha: null, data: null };
@@ -40,13 +34,13 @@ async function getCurrentFile(): Promise<{ sha: string | null; data: OverridesFi
 }
 
 async function putFile(content: OverridesFile, sha: string | null, message: string) {
-  const res = await fetch(`https://api.github.com/repos/${OWNER}/${REPO}/contents/${FILE_PATH}`, {
+  const res = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${FILE_PATH}`, {
     method: "PUT",
     headers: githubHeaders(),
     body: JSON.stringify({
       message,
       content: Buffer.from(JSON.stringify(content, null, 2)).toString("base64"),
-      branch: BRANCH,
+      branch: REPO_BRANCH,
       ...(sha ? { sha } : {}),
     }),
   });
@@ -144,10 +138,10 @@ export async function DELETE(req: NextRequest) {
     }
     }
 
-    const res = await fetch(`https://api.github.com/repos/${OWNER}/${REPO}/contents/${FILE_PATH}`, {
+    const res = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${FILE_PATH}`, {
       method: "DELETE",
       headers: githubHeaders(),
-      body: JSON.stringify({ message: "Clear pending transfer overrides", sha, branch: BRANCH }),
+      body: JSON.stringify({ message: "Clear pending transfer overrides", sha, branch: REPO_BRANCH }),
     });
     if (!res.ok) throw new Error(`GitHub delete failed: ${res.status} ${await res.text()}`);
     {

@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { fpl } from "@/lib/fplApi";
 import { loadLatestForecast, type Forecast } from "@/lib/snapshots";
 import {
   buildLivePayload,
@@ -11,20 +12,6 @@ import {
   type FplPicks,
 } from "@/lib/liveBlend";
 import { OWNER_TEAM_ID, resolveTeamIdFromRequest } from "@/lib/teamId";
-
-const FPL = "https://fantasy.premierleague.com/api";
-
-// Same cadence as /api/league itself.
-const REVALIDATE = 40;
-
-async function fpl<T>(path: string): Promise<T> {
-  const res = await fetch(`${FPL}${path}`, {
-    next: { revalidate: REVALIDATE },
-    headers: { "User-Agent": "fplforecast-live/1.0" },
-  });
-  if (!res.ok) throw new Error(`FPL ${path} -> ${res.status}`);
-  return (await res.json()) as T;
-}
 
 type FplEntry = { name?: string; player_first_name?: string; player_last_name?: string };
 

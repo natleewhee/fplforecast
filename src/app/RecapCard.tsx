@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import type { RecapResponse } from "./api/recap/route";
 import { rankMove, regretCopy, tier, verdict, type Recap } from "@/lib/recap";
 import { pickCaption } from "@/lib/shareCaption";
+import { readJson, writeJson } from "@/lib/storage";
 import { ChevronIcon, CrystalIcon } from "./Icons";
 import { renderRecapCard } from "./recapCanvas";
 
@@ -11,20 +12,12 @@ const RECENT_KEY = "gaffer-recent-captions";
 const RECENT_KEEP = 12;
 
 function readRecent(): string[] {
-  try {
-    const raw = JSON.parse(localStorage.getItem(RECENT_KEY) ?? "[]");
-    return Array.isArray(raw) ? raw.filter((x): x is string => typeof x === "string") : [];
-  } catch {
-    return [];
-  }
+  const raw = readJson<unknown>(RECENT_KEY, []);
+  return Array.isArray(raw) ? raw.filter((x): x is string => typeof x === "string") : [];
 }
 
 function rememberCaption(id: string) {
-  try {
-    localStorage.setItem(RECENT_KEY, JSON.stringify([id, ...readRecent().filter((x) => x !== id)].slice(0, RECENT_KEEP)));
-  } catch {
-    // not remembering just means a line may repeat sooner
-  }
+  writeJson(RECENT_KEY, [id, ...readRecent().filter((x) => x !== id)].slice(0, RECENT_KEEP));
 }
 
 /** The recap for a finished gameweek: the same collectible card that gets

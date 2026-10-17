@@ -1,4 +1,5 @@
 import type { FeedItem } from "@/app/useLiveFx";
+import { readJson, writeJson } from "./storage.ts";
 
 /* The "what just happened" feed only fills while the page is open, so a
  * refresh or reopening the app mid-match would wipe it. Keep the last few
@@ -30,17 +31,9 @@ export function pruneFeed(items: unknown, nowMs: number): FeedItem[] {
 }
 
 export function loadFeed(gameweek: number, nowMs: number): FeedItem[] {
-  try {
-    return pruneFeed(JSON.parse(localStorage.getItem(key(gameweek)) ?? "[]"), nowMs);
-  } catch {
-    return [];
-  }
+  return pruneFeed(readJson<unknown>(key(gameweek), []), nowMs);
 }
 
 export function saveFeed(gameweek: number, feed: FeedItem[]): void {
-  try {
-    localStorage.setItem(key(gameweek), JSON.stringify(feed.slice(0, FEED_KEEP)));
-  } catch {
-    // storage unavailable: the feed just won't survive a refresh
-  }
+  writeJson(key(gameweek), feed.slice(0, FEED_KEEP)); // storage unavailable: the feed just won't survive a refresh
 }

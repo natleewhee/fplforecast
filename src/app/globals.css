@@ -153,13 +153,6 @@ option {
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
 }
-.panel-hover {
-  transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
-}
-.panel-hover:hover {
-  border-color: var(--border-strong);
-  transform: translateY(-1px);
-}
 
 h1,
 h2,
@@ -286,10 +279,6 @@ h3 {
 .token:hover {
   transform: translateY(-2px);
   border-color: var(--border-strong);
-}
-.token-captain {
-  border-color: color-mix(in srgb, var(--accent) 60%, transparent);
-  box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent) 40%, transparent), 0 0 24px var(--accent-glow);
 }
 
 /* provisional shimmer */
