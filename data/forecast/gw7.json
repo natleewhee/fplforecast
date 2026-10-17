@@ -12,7 +12,7 @@
   "deadlineTime": "2026-10-17T10:00:00Z",
   "earlySeason": true,
   "effectiveGap": 6.2,
-  "generatedAt": "2026-10-17T07:39:01.006116+00:00",
+  "generatedAt": "2026-10-17T08:47:59.708780+00:00",
   "history": {
     "gameweeks": [
       {
@@ -144,14 +144,14 @@
     },
     "xiPoints": 56
   },
-  "lineupAgreement": 10,
+  "lineupAgreement": 11,
   "marginProvisional": false,
   "nextGw": {
-    "deltaVsBaselineXi": 6.1,
-    "deltaVsNoChange": 12.6,
-    "points": 63.6
+    "deltaVsBaselineXi": 3.4,
+    "deltaVsNoChange": 13.8,
+    "points": 64.9
   },
-  "overridesApplied": 2,
+  "overridesApplied": 3,
   "parBuffer": 4.0,
   "parBufferProvisional": 8.0,
   "parCalibration": {
@@ -543,7 +543,7 @@
         1,
         2
       ],
-      "selectedByPercent": 21.3,
+      "selectedByPercent": 21.2,
       "sellPrice": 7.9,
       "team": "ARS",
       "total": 31.85,
@@ -831,7 +831,7 @@
         1,
         9
       ],
-      "selectedByPercent": 53.1,
+      "selectedByPercent": 53.2,
       "sellPrice": 5.9,
       "team": "ARS",
       "total": 32.7,
@@ -3615,7 +3615,7 @@
         13,
         5
       ],
-      "selectedByPercent": 1.8,
+      "selectedByPercent": 1.9,
       "sellPrice": 5.9,
       "team": "AVL",
       "total": 14.77,
@@ -5151,7 +5151,7 @@
         2,
         -1
       ],
-      "selectedByPercent": 2.8,
+      "selectedByPercent": 2.7,
       "sellPrice": 5.4,
       "team": "BOU",
       "total": 24.91,
@@ -8127,7 +8127,7 @@
         9,
         1
       ],
-      "selectedByPercent": 13.8,
+      "selectedByPercent": 13.7,
       "sellPrice": 6.2,
       "team": "BRE",
       "total": 22.82,
@@ -8895,7 +8895,7 @@
         5,
         4
       ],
-      "selectedByPercent": 9.0,
+      "selectedByPercent": 8.9,
       "sellPrice": 7.8,
       "team": "BRE",
       "total": 26.71,
@@ -9087,7 +9087,7 @@
         0,
         1
       ],
-      "selectedByPercent": 7.7,
+      "selectedByPercent": 7.6,
       "sellPrice": 5.5,
       "team": "BRE",
       "total": 15.13,
@@ -9951,7 +9951,7 @@
         6,
         15
       ],
-      "selectedByPercent": 39.0,
+      "selectedByPercent": 39.4,
       "sellPrice": 5.2,
       "team": "BHA",
       "total": 31.03,
@@ -10527,7 +10527,7 @@
         14,
         6
       ],
-      "selectedByPercent": 43.2,
+      "selectedByPercent": 43.5,
       "sellPrice": 6.1,
       "team": "BHA",
       "total": 35.29,
@@ -12063,7 +12063,7 @@
         2,
         9
       ],
-      "selectedByPercent": 46.7,
+      "selectedByPercent": 46.9,
       "sellPrice": 7.9,
       "team": "CHE",
       "total": 32.64,
@@ -12159,7 +12159,7 @@
         2,
         18
       ],
-      "selectedByPercent": 0.7,
+      "selectedByPercent": 0.8,
       "sellPrice": 4.9,
       "team": "CHE",
       "total": 12.81,
@@ -12927,7 +12927,7 @@
         2,
         8
       ],
-      "selectedByPercent": 25.9,
+      "selectedByPercent": 26.0,
       "sellPrice": 9.7,
       "team": "CHE",
       "total": 34.8,
@@ -13503,7 +13503,7 @@
         null,
         12
       ],
-      "selectedByPercent": 71.9,
+      "selectedByPercent": 72.1,
       "sellPrice": 7.8,
       "team": "CHE",
       "total": 33.36,
@@ -14751,7 +14751,7 @@
         null,
         6
       ],
-      "selectedByPercent": 7.4,
+      "selectedByPercent": 7.5,
       "sellPrice": 3.9,
       "team": "COV",
       "total": 15.31,
@@ -19935,7 +19935,7 @@
         5,
         null
       ],
-      "selectedByPercent": 2.9,
+      "selectedByPercent": 2.8,
       "sellPrice": 4.6,
       "team": "EVE",
       "total": 8.91,
@@ -22623,7 +22623,7 @@
         null,
         7
       ],
-      "selectedByPercent": 0.3,
+      "selectedByPercent": 0.4,
       "sellPrice": 4.3,
       "team": "FUL",
       "total": 11.74,
@@ -24447,7 +24447,7 @@
         4,
         6
       ],
-      "selectedByPercent": 8.6,
+      "selectedByPercent": 8.7,
       "sellPrice": 5.2,
       "team": "HUL",
       "total": 17.28,
@@ -26751,7 +26751,7 @@
         2,
         1
       ],
-      "selectedByPercent": 7.6,
+      "selectedByPercent": 7.5,
       "sellPrice": 4.0,
       "team": "IPS",
       "total": 19.38,
@@ -28959,7 +28959,7 @@
         5,
         1
       ],
-      "selectedByPercent": 9.4,
+      "selectedByPercent": 9.5,
       "sellPrice": 4.7,
       "team": "LEE",
       "total": 24.92,
@@ -32223,7 +32223,7 @@
         3,
         null
       ],
-      "selectedByPercent": 6.7,
+      "selectedByPercent": 6.6,
       "sellPrice": 7.1,
       "team": "LIV",
       "total": 6.79,
@@ -32319,7 +32319,7 @@
         2,
         null
       ],
-      "selectedByPercent": 23.0,
+      "selectedByPercent": 22.6,
       "sellPrice": 6.8,
       "team": "LIV",
       "total": 6.9,
@@ -33087,7 +33087,7 @@
         8,
         null
       ],
-      "selectedByPercent": 12.3,
+      "selectedByPercent": 12.2,
       "sellPrice": 9.0,
       "team": "LIV",
       "total": 8.71,
@@ -33759,7 +33759,7 @@
         2,
         9
       ],
-      "selectedByPercent": 7.7,
+      "selectedByPercent": 7.8,
       "sellPrice": 5.5,
       "team": "MCI",
       "total": 25.36,
@@ -34047,7 +34047,7 @@
         4,
         6
       ],
-      "selectedByPercent": 17.9,
+      "selectedByPercent": 18.0,
       "sellPrice": 6.0,
       "team": "MCI",
       "total": 33.62,
@@ -34143,7 +34143,7 @@
         1,
         6
       ],
-      "selectedByPercent": 1.0,
+      "selectedByPercent": 1.1,
       "sellPrice": 5.9,
       "team": "MCI",
       "total": 16.71,
@@ -34335,7 +34335,7 @@
         4,
         4
       ],
-      "selectedByPercent": 28.8,
+      "selectedByPercent": 28.9,
       "sellPrice": 5.8,
       "team": "MCI",
       "total": 28.91,
@@ -34815,7 +34815,7 @@
         17,
         3
       ],
-      "selectedByPercent": 14.5,
+      "selectedByPercent": 14.6,
       "sellPrice": 8.3,
       "team": "MCI",
       "total": 30.28,
@@ -35007,7 +35007,7 @@
         8,
         10
       ],
-      "selectedByPercent": 36.0,
+      "selectedByPercent": 36.4,
       "sellPrice": 7.9,
       "team": "MCI",
       "total": 39.52,
@@ -35295,7 +35295,7 @@
         6,
         6
       ],
-      "selectedByPercent": 76.2,
+      "selectedByPercent": 76.3,
       "sellPrice": 15.7,
       "team": "MCI",
       "total": 51.64,
@@ -37215,7 +37215,7 @@
         2,
         3
       ],
-      "selectedByPercent": 6.1,
+      "selectedByPercent": 6.0,
       "sellPrice": 4.3,
       "team": "MUN",
       "total": 11.34,
@@ -37407,7 +37407,7 @@
         2,
         1
       ],
-      "selectedByPercent": 31.6,
+      "selectedByPercent": 31.3,
       "sellPrice": 11.8,
       "team": "MUN",
       "total": 36.72,
@@ -39999,7 +39999,7 @@
         0,
         2
       ],
-      "selectedByPercent": 16.0,
+      "selectedByPercent": 15.9,
       "sellPrice": 6.2,
       "team": "NEW",
       "total": 29.45,
@@ -42111,7 +42111,7 @@
         2,
         2
       ],
-      "selectedByPercent": 12.9,
+      "selectedByPercent": 12.7,
       "sellPrice": 8.0,
       "team": "NFO",
       "total": 23.63,
@@ -42591,7 +42591,7 @@
         1,
         1
       ],
-      "selectedByPercent": 0.4,
+      "selectedByPercent": 0.3,
       "sellPrice": 4.8,
       "team": "NFO",
       "total": 5.93,
@@ -43455,7 +43455,7 @@
         2,
         1
       ],
-      "selectedByPercent": 2.1,
+      "selectedByPercent": 2.0,
       "sellPrice": 7.0,
       "team": "TOT",
       "total": 22.74,
@@ -47295,7 +47295,7 @@
         17,
         null
       ],
-      "selectedByPercent": 5.4,
+      "selectedByPercent": 5.5,
       "sellPrice": 5.7,
       "team": "SUN",
       "total": 23.42,
@@ -47391,7 +47391,7 @@
         1,
         2
       ],
-      "selectedByPercent": 1.2,
+      "selectedByPercent": 1.1,
       "sellPrice": 5.5,
       "team": "SUN",
       "total": 10.02,
@@ -47806,38 +47806,26 @@
           ],
           "hitCost": 0,
           "horizonGws": 1,
-          "netPoints": 69.34,
-          "points": 69.34,
+          "netPoints": 69.49,
+          "points": 69.49,
           "squad": [
             8,
             12,
-            15,
+            31,
+            68,
             109,
             115,
             124,
             165,
-            268,
-            334,
             388,
             399,
             411,
             449,
+            453,
             496,
             569
           ],
           "transfersIn": [
-            {
-              "availability": {
-                "chance": null,
-                "news": null,
-                "status": "a"
-              },
-              "id": 15,
-              "position": "MID",
-              "price": 6.8,
-              "team": "ARS",
-              "webName": "\u00d8degaard"
-            },
             {
               "availability": {
                 "chance": null,
@@ -47861,21 +47849,21 @@
               "price": 7.9,
               "team": "MCI",
               "webName": "Cherki"
-            }
-          ],
-          "transfersOut": [
+            },
             {
               "availability": {
-                "chance": 100,
+                "chance": null,
                 "news": null,
                 "status": "a"
               },
-              "id": 31,
-              "position": "DEF",
-              "price": 4.6,
-              "team": "ARS",
-              "webName": "Konsa"
-            },
+              "id": 453,
+              "position": "MID",
+              "price": 6.1,
+              "team": "NEW",
+              "webName": "Barnes"
+            }
+          ],
+          "transfersOut": [
             {
               "availability": {
                 "chance": null,
@@ -47890,15 +47878,27 @@
             },
             {
               "availability": {
-                "chance": 25,
-                "news": "Hamstring injury - 25% chance of playing",
-                "status": "d"
+                "chance": null,
+                "news": null,
+                "status": "a"
               },
-              "id": 368,
+              "id": 268,
               "position": "MID",
-              "price": 6.8,
-              "team": "LIV",
-              "webName": "Szoboszlai"
+              "price": 5.6,
+              "team": "FUL",
+              "webName": "King"
+            },
+            {
+              "availability": {
+                "chance": null,
+                "news": null,
+                "status": "a"
+              },
+              "id": 334,
+              "position": "DEF",
+              "price": 5.0,
+              "team": "LEE",
+              "webName": "Muharemovi\u0107"
             }
           ],
           "weeks": [
@@ -47935,7 +47935,258 @@
                   "xp": 6.6
                 },
                 {
-                  "id": 15,
+                  "id": 68,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 3,
+                      "team": "SUN",
+                      "wasHome": true
+                    }
+                  ],
+                  "position": "MID",
+                  "team": "BOU",
+                  "webName": "Tavernier",
+                  "xp": 4.85
+                },
+                {
+                  "id": 109,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 2,
+                      "team": "CRY",
+                      "wasHome": true
+                    }
+                  ],
+                  "position": "GKP",
+                  "team": "BHA",
+                  "webName": "Verbruggen",
+                  "xp": 3.59
+                },
+                {
+                  "id": 115,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 2,
+                      "team": "CRY",
+                      "wasHome": true
+                    }
+                  ],
+                  "position": "DEF",
+                  "team": "BHA",
+                  "webName": "De Cuyper",
+                  "xp": 5.21
+                },
+                {
+                  "id": 124,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 2,
+                      "team": "CRY",
+                      "wasHome": true
+                    }
+                  ],
+                  "position": "MID",
+                  "team": "BHA",
+                  "webName": "Gro\u00df",
+                  "xp": 5.4
+                },
+                {
+                  "id": 165,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 3,
+                      "team": "EVE",
+                      "wasHome": false
+                    }
+                  ],
+                  "position": "FWD",
+                  "team": "CHE",
+                  "webName": "Jo\u00e3o Pedro",
+                  "xp": 4.37
+                },
+                {
+                  "id": 388,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 2,
+                      "team": "IPS",
+                      "wasHome": true
+                    }
+                  ],
+                  "position": "DEF",
+                  "team": "MCI",
+                  "webName": "Gu\u00e9hi",
+                  "xp": 5.64
+                },
+                {
+                  "id": 399,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 2,
+                      "team": "IPS",
+                      "wasHome": true
+                    }
+                  ],
+                  "position": "MID",
+                  "team": "MCI",
+                  "webName": "Cherki",
+                  "xp": 6.65
+                },
+                {
+                  "id": 411,
+                  "isCaptain": true,
+                  "opponents": [
+                    {
+                      "fdrRating": 2,
+                      "team": "IPS",
+                      "wasHome": true
+                    }
+                  ],
+                  "position": "FWD",
+                  "team": "MCI",
+                  "webName": "Haaland",
+                  "xp": 8.85
+                },
+                {
+                  "id": 453,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 3,
+                      "team": "AVL",
+                      "wasHome": true
+                    }
+                  ],
+                  "position": "MID",
+                  "team": "NEW",
+                  "webName": "Barnes",
+                  "xp": 4.63
+                }
+              ],
+              "targetGw": 7,
+              "totalXp": 69.49
+            }
+          ],
+          "xiByGw": [
+            [
+              8,
+              12,
+              68,
+              109,
+              115,
+              124,
+              165,
+              388,
+              399,
+              411,
+              453
+            ]
+          ]
+        },
+        {
+          "captainByGw": [
+            411
+          ],
+          "hitCost": 0,
+          "horizonGws": 1,
+          "netPoints": 69.02,
+          "points": 69.02,
+          "squad": [
+            8,
+            12,
+            31,
+            68,
+            109,
+            115,
+            124,
+            165,
+            268,
+            388,
+            399,
+            411,
+            449,
+            496,
+            569
+          ],
+          "transfersIn": [
+            {
+              "availability": {
+                "chance": null,
+                "news": null,
+                "status": "a"
+              },
+              "id": 388,
+              "position": "DEF",
+              "price": 6.0,
+              "team": "MCI",
+              "webName": "Gu\u00e9hi"
+            },
+            {
+              "availability": {
+                "chance": null,
+                "news": null,
+                "status": "a"
+              },
+              "id": 399,
+              "position": "MID",
+              "price": 7.9,
+              "team": "MCI",
+              "webName": "Cherki"
+            }
+          ],
+          "transfersOut": [
+            {
+              "availability": {
+                "chance": null,
+                "news": null,
+                "status": "a"
+              },
+              "id": 40,
+              "position": "MID",
+              "price": 7.9,
+              "team": "CHE",
+              "webName": "Rogers"
+            },
+            {
+              "availability": {
+                "chance": null,
+                "news": null,
+                "status": "a"
+              },
+              "id": 334,
+              "position": "DEF",
+              "price": 5.0,
+              "team": "LEE",
+              "webName": "Muharemovi\u0107"
+            }
+          ],
+          "weeks": [
+            {
+              "players": [
+                {
+                  "id": 8,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 3,
+                      "team": "NFO",
+                      "wasHome": false
+                    }
+                  ],
+                  "position": "DEF",
+                  "team": "ARS",
+                  "webName": "Calafiori",
+                  "xp": 4.85
+                },
+                {
+                  "id": 12,
                   "isCaptain": false,
                   "opponents": [
                     {
@@ -47946,8 +48197,23 @@
                   ],
                   "position": "MID",
                   "team": "ARS",
-                  "webName": "\u00d8degaard",
-                  "xp": 5.17
+                  "webName": "Saka",
+                  "xp": 6.6
+                },
+                {
+                  "id": 68,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 3,
+                      "team": "SUN",
+                      "wasHome": true
+                    }
+                  ],
+                  "position": "MID",
+                  "team": "BOU",
+                  "webName": "Tavernier",
+                  "xp": 4.85
                 },
                 {
                   "id": 109,
@@ -48071,14 +48337,14 @@
                 }
               ],
               "targetGw": 7,
-              "totalXp": 69.34
+              "totalXp": 69.02
             }
           ],
           "xiByGw": [
             [
               8,
               12,
-              15,
+              68,
               109,
               115,
               124,
@@ -48096,279 +48362,13 @@
           ],
           "hitCost": 0,
           "horizonGws": 1,
-          "netPoints": 68.18,
-          "points": 68.18,
+          "netPoints": 67.25,
+          "points": 67.25,
           "squad": [
             8,
             12,
             31,
-            40,
-            109,
-            115,
-            124,
-            165,
-            268,
-            334,
-            388,
-            399,
-            411,
-            496,
-            569
-          ],
-          "transfersIn": [
-            {
-              "availability": {
-                "chance": null,
-                "news": null,
-                "status": "a"
-              },
-              "id": 388,
-              "position": "DEF",
-              "price": 6.0,
-              "team": "MCI",
-              "webName": "Gu\u00e9hi"
-            },
-            {
-              "availability": {
-                "chance": null,
-                "news": null,
-                "status": "a"
-              },
-              "id": 399,
-              "position": "MID",
-              "price": 7.9,
-              "team": "MCI",
-              "webName": "Cherki"
-            }
-          ],
-          "transfersOut": [
-            {
-              "availability": {
-                "chance": 25,
-                "news": "Hamstring injury - 25% chance of playing",
-                "status": "d"
-              },
-              "id": 368,
-              "position": "MID",
-              "price": 6.8,
-              "team": "LIV",
-              "webName": "Szoboszlai"
-            },
-            {
-              "availability": {
-                "chance": null,
-                "news": null,
-                "status": "a"
-              },
-              "id": 449,
-              "position": "DEF",
-              "price": 5.3,
-              "team": "NEW",
-              "webName": "Hall"
-            }
-          ],
-          "weeks": [
-            {
-              "players": [
-                {
-                  "id": 8,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 3,
-                      "team": "NFO",
-                      "wasHome": false
-                    }
-                  ],
-                  "position": "DEF",
-                  "team": "ARS",
-                  "webName": "Calafiori",
-                  "xp": 4.85
-                },
-                {
-                  "id": 12,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 3,
-                      "team": "NFO",
-                      "wasHome": false
-                    }
-                  ],
-                  "position": "MID",
-                  "team": "ARS",
-                  "webName": "Saka",
-                  "xp": 6.6
-                },
-                {
-                  "id": 109,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 2,
-                      "team": "CRY",
-                      "wasHome": true
-                    }
-                  ],
-                  "position": "GKP",
-                  "team": "BHA",
-                  "webName": "Verbruggen",
-                  "xp": 3.59
-                },
-                {
-                  "id": 115,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 2,
-                      "team": "CRY",
-                      "wasHome": true
-                    }
-                  ],
-                  "position": "DEF",
-                  "team": "BHA",
-                  "webName": "De Cuyper",
-                  "xp": 5.21
-                },
-                {
-                  "id": 124,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 2,
-                      "team": "CRY",
-                      "wasHome": true
-                    }
-                  ],
-                  "position": "MID",
-                  "team": "BHA",
-                  "webName": "Gro\u00df",
-                  "xp": 5.4
-                },
-                {
-                  "id": 40,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 3,
-                      "team": "EVE",
-                      "wasHome": false
-                    }
-                  ],
-                  "position": "MID",
-                  "team": "CHE",
-                  "webName": "Rogers",
-                  "xp": 4.3
-                },
-                {
-                  "id": 165,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 3,
-                      "team": "EVE",
-                      "wasHome": false
-                    }
-                  ],
-                  "position": "FWD",
-                  "team": "CHE",
-                  "webName": "Jo\u00e3o Pedro",
-                  "xp": 4.37
-                },
-                {
-                  "id": 268,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 2,
-                      "team": "HUL",
-                      "wasHome": true
-                    }
-                  ],
-                  "position": "MID",
-                  "team": "FUL",
-                  "webName": "King",
-                  "xp": 3.87
-                },
-                {
-                  "id": 388,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 2,
-                      "team": "IPS",
-                      "wasHome": true
-                    }
-                  ],
-                  "position": "DEF",
-                  "team": "MCI",
-                  "webName": "Gu\u00e9hi",
-                  "xp": 5.64
-                },
-                {
-                  "id": 399,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 2,
-                      "team": "IPS",
-                      "wasHome": true
-                    }
-                  ],
-                  "position": "MID",
-                  "team": "MCI",
-                  "webName": "Cherki",
-                  "xp": 6.65
-                },
-                {
-                  "id": 411,
-                  "isCaptain": true,
-                  "opponents": [
-                    {
-                      "fdrRating": 2,
-                      "team": "IPS",
-                      "wasHome": true
-                    }
-                  ],
-                  "position": "FWD",
-                  "team": "MCI",
-                  "webName": "Haaland",
-                  "xp": 8.85
-                }
-              ],
-              "targetGw": 7,
-              "totalXp": 68.18
-            }
-          ],
-          "xiByGw": [
-            [
-              8,
-              12,
-              109,
-              115,
-              124,
-              40,
-              165,
-              268,
-              388,
-              399,
-              411
-            ]
-          ]
-        },
-        {
-          "captainByGw": [
-            411
-          ],
-          "hitCost": 0,
-          "horizonGws": 1,
-          "netPoints": 66.7,
-          "points": 66.7,
-          "squad": [
-            8,
-            12,
-            31,
-            40,
+            68,
             109,
             115,
             124,
@@ -48398,15 +48398,15 @@
           "transfersOut": [
             {
               "availability": {
-                "chance": 25,
-                "news": "Hamstring injury - 25% chance of playing",
-                "status": "d"
+                "chance": null,
+                "news": null,
+                "status": "a"
               },
-              "id": 368,
+              "id": 40,
               "position": "MID",
-              "price": 6.8,
-              "team": "LIV",
-              "webName": "Szoboszlai"
+              "price": 7.9,
+              "team": "CHE",
+              "webName": "Rogers"
             }
           ],
           "weeks": [
@@ -48441,6 +48441,21 @@
                   "team": "ARS",
                   "webName": "Saka",
                   "xp": 6.6
+                },
+                {
+                  "id": 68,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 3,
+                      "team": "SUN",
+                      "wasHome": true
+                    }
+                  ],
+                  "position": "MID",
+                  "team": "BOU",
+                  "webName": "Tavernier",
+                  "xp": 4.85
                 },
                 {
                   "id": 109,
@@ -48486,21 +48501,6 @@
                   "team": "BHA",
                   "webName": "Gro\u00df",
                   "xp": 5.4
-                },
-                {
-                  "id": 40,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 3,
-                      "team": "EVE",
-                      "wasHome": false
-                    }
-                  ],
-                  "position": "MID",
-                  "team": "CHE",
-                  "webName": "Rogers",
-                  "xp": 4.3
                 },
                 {
                   "id": 165,
@@ -48579,17 +48579,17 @@
                 }
               ],
               "targetGw": 7,
-              "totalXp": 66.7
+              "totalXp": 67.25
             }
           ],
           "xiByGw": [
             [
               8,
               12,
+              68,
               109,
               115,
               124,
-              40,
               165,
               268,
               399,
@@ -48608,24 +48608,24 @@
           ],
           "hitCost": 0,
           "horizonGws": 3,
-          "netPoints": 193.52,
-          "points": 193.52,
+          "netPoints": 194.58,
+          "points": 194.58,
           "squad": [
             8,
             12,
-            15,
+            31,
+            40,
+            68,
             109,
             115,
             124,
             165,
-            268,
-            334,
+            272,
             388,
             399,
             411,
             449,
-            496,
-            569
+            496
           ],
           "transfersIn": [
             {
@@ -48634,11 +48634,11 @@
                 "news": null,
                 "status": "a"
               },
-              "id": 15,
-              "position": "MID",
-              "price": 6.8,
-              "team": "ARS",
-              "webName": "\u00d8degaard"
+              "id": 272,
+              "position": "FWD",
+              "price": 4.4,
+              "team": "FUL",
+              "webName": "Kusi-Asare"
             },
             {
               "availability": {
@@ -48651,654 +48651,6 @@
               "price": 6.0,
               "team": "MCI",
               "webName": "Gu\u00e9hi"
-            },
-            {
-              "availability": {
-                "chance": null,
-                "news": null,
-                "status": "a"
-              },
-              "id": 399,
-              "position": "MID",
-              "price": 7.9,
-              "team": "MCI",
-              "webName": "Cherki"
-            }
-          ],
-          "transfersOut": [
-            {
-              "availability": {
-                "chance": 100,
-                "news": null,
-                "status": "a"
-              },
-              "id": 31,
-              "position": "DEF",
-              "price": 4.6,
-              "team": "ARS",
-              "webName": "Konsa"
-            },
-            {
-              "availability": {
-                "chance": null,
-                "news": null,
-                "status": "a"
-              },
-              "id": 40,
-              "position": "MID",
-              "price": 7.9,
-              "team": "CHE",
-              "webName": "Rogers"
-            },
-            {
-              "availability": {
-                "chance": 25,
-                "news": "Hamstring injury - 25% chance of playing",
-                "status": "d"
-              },
-              "id": 368,
-              "position": "MID",
-              "price": 6.8,
-              "team": "LIV",
-              "webName": "Szoboszlai"
-            }
-          ],
-          "weeks": [
-            {
-              "players": [
-                {
-                  "id": 8,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 3,
-                      "team": "NFO",
-                      "wasHome": false
-                    }
-                  ],
-                  "position": "DEF",
-                  "team": "ARS",
-                  "webName": "Calafiori",
-                  "xp": 4.85
-                },
-                {
-                  "id": 12,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 3,
-                      "team": "NFO",
-                      "wasHome": false
-                    }
-                  ],
-                  "position": "MID",
-                  "team": "ARS",
-                  "webName": "Saka",
-                  "xp": 6.6
-                },
-                {
-                  "id": 15,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 3,
-                      "team": "NFO",
-                      "wasHome": false
-                    }
-                  ],
-                  "position": "MID",
-                  "team": "ARS",
-                  "webName": "\u00d8degaard",
-                  "xp": 5.17
-                },
-                {
-                  "id": 109,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 2,
-                      "team": "CRY",
-                      "wasHome": true
-                    }
-                  ],
-                  "position": "GKP",
-                  "team": "BHA",
-                  "webName": "Verbruggen",
-                  "xp": 3.59
-                },
-                {
-                  "id": 115,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 2,
-                      "team": "CRY",
-                      "wasHome": true
-                    }
-                  ],
-                  "position": "DEF",
-                  "team": "BHA",
-                  "webName": "De Cuyper",
-                  "xp": 5.21
-                },
-                {
-                  "id": 124,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 2,
-                      "team": "CRY",
-                      "wasHome": true
-                    }
-                  ],
-                  "position": "MID",
-                  "team": "BHA",
-                  "webName": "Gro\u00df",
-                  "xp": 5.4
-                },
-                {
-                  "id": 165,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 3,
-                      "team": "EVE",
-                      "wasHome": false
-                    }
-                  ],
-                  "position": "FWD",
-                  "team": "CHE",
-                  "webName": "Jo\u00e3o Pedro",
-                  "xp": 4.37
-                },
-                {
-                  "id": 388,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 2,
-                      "team": "IPS",
-                      "wasHome": true
-                    }
-                  ],
-                  "position": "DEF",
-                  "team": "MCI",
-                  "webName": "Gu\u00e9hi",
-                  "xp": 5.64
-                },
-                {
-                  "id": 399,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 2,
-                      "team": "IPS",
-                      "wasHome": true
-                    }
-                  ],
-                  "position": "MID",
-                  "team": "MCI",
-                  "webName": "Cherki",
-                  "xp": 6.65
-                },
-                {
-                  "id": 411,
-                  "isCaptain": true,
-                  "opponents": [
-                    {
-                      "fdrRating": 2,
-                      "team": "IPS",
-                      "wasHome": true
-                    }
-                  ],
-                  "position": "FWD",
-                  "team": "MCI",
-                  "webName": "Haaland",
-                  "xp": 8.85
-                },
-                {
-                  "id": 449,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 3,
-                      "team": "AVL",
-                      "wasHome": true
-                    }
-                  ],
-                  "position": "DEF",
-                  "team": "NEW",
-                  "webName": "Hall",
-                  "xp": 4.16
-                }
-              ],
-              "targetGw": 7,
-              "totalXp": 69.34
-            },
-            {
-              "players": [
-                {
-                  "id": 8,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 3,
-                      "team": "EVE",
-                      "wasHome": true
-                    }
-                  ],
-                  "position": "DEF",
-                  "team": "ARS",
-                  "webName": "Calafiori",
-                  "xp": 5.31
-                },
-                {
-                  "id": 12,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 3,
-                      "team": "EVE",
-                      "wasHome": true
-                    }
-                  ],
-                  "position": "MID",
-                  "team": "ARS",
-                  "webName": "Saka",
-                  "xp": 6.84
-                },
-                {
-                  "id": 15,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 3,
-                      "team": "EVE",
-                      "wasHome": true
-                    }
-                  ],
-                  "position": "MID",
-                  "team": "ARS",
-                  "webName": "\u00d8degaard",
-                  "xp": 5.35
-                },
-                {
-                  "id": 109,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 4,
-                      "team": "LIV",
-                      "wasHome": false
-                    }
-                  ],
-                  "position": "GKP",
-                  "team": "BHA",
-                  "webName": "Verbruggen",
-                  "xp": 3.07
-                },
-                {
-                  "id": 124,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 4,
-                      "team": "LIV",
-                      "wasHome": false
-                    }
-                  ],
-                  "position": "MID",
-                  "team": "BHA",
-                  "webName": "Gro\u00df",
-                  "xp": 4.74
-                },
-                {
-                  "id": 165,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 2,
-                      "team": "TOT",
-                      "wasHome": true
-                    }
-                  ],
-                  "position": "FWD",
-                  "team": "CHE",
-                  "webName": "Jo\u00e3o Pedro",
-                  "xp": 5.13
-                },
-                {
-                  "id": 268,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 2,
-                      "team": "COV",
-                      "wasHome": false
-                    }
-                  ],
-                  "position": "MID",
-                  "team": "FUL",
-                  "webName": "King",
-                  "xp": 3.87
-                },
-                {
-                  "id": 388,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 3,
-                      "team": "AVL",
-                      "wasHome": false
-                    }
-                  ],
-                  "position": "DEF",
-                  "team": "MCI",
-                  "webName": "Gu\u00e9hi",
-                  "xp": 4.47
-                },
-                {
-                  "id": 399,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 3,
-                      "team": "AVL",
-                      "wasHome": false
-                    }
-                  ],
-                  "position": "MID",
-                  "team": "MCI",
-                  "webName": "Cherki",
-                  "xp": 5.45
-                },
-                {
-                  "id": 411,
-                  "isCaptain": true,
-                  "opponents": [
-                    {
-                      "fdrRating": 3,
-                      "team": "AVL",
-                      "wasHome": false
-                    }
-                  ],
-                  "position": "FWD",
-                  "team": "MCI",
-                  "webName": "Haaland",
-                  "xp": 7.13
-                },
-                {
-                  "id": 449,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 3,
-                      "team": "CRY",
-                      "wasHome": false
-                    }
-                  ],
-                  "position": "DEF",
-                  "team": "NEW",
-                  "webName": "Hall",
-                  "xp": 4.07
-                }
-              ],
-              "targetGw": 8,
-              "totalXp": 62.56
-            },
-            {
-              "players": [
-                {
-                  "id": 8,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 4,
-                      "team": "LIV",
-                      "wasHome": false
-                    }
-                  ],
-                  "position": "DEF",
-                  "team": "ARS",
-                  "webName": "Calafiori",
-                  "xp": 4.14
-                },
-                {
-                  "id": 12,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 4,
-                      "team": "LIV",
-                      "wasHome": false
-                    }
-                  ],
-                  "position": "MID",
-                  "team": "ARS",
-                  "webName": "Saka",
-                  "xp": 6.15
-                },
-                {
-                  "id": 15,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 4,
-                      "team": "LIV",
-                      "wasHome": false
-                    }
-                  ],
-                  "position": "MID",
-                  "team": "ARS",
-                  "webName": "\u00d8degaard",
-                  "xp": 4.85
-                },
-                {
-                  "id": 124,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 5,
-                      "team": "MCI",
-                      "wasHome": false
-                    }
-                  ],
-                  "position": "MID",
-                  "team": "BHA",
-                  "webName": "Gro\u00df",
-                  "xp": 4.44
-                },
-                {
-                  "id": 165,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 4,
-                      "team": "MUN",
-                      "wasHome": true
-                    }
-                  ],
-                  "position": "FWD",
-                  "team": "CHE",
-                  "webName": "Jo\u00e3o Pedro",
-                  "xp": 4.9
-                },
-                {
-                  "id": 268,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 3,
-                      "team": "AVL",
-                      "wasHome": false
-                    }
-                  ],
-                  "position": "MID",
-                  "team": "FUL",
-                  "webName": "King",
-                  "xp": 3.72
-                },
-                {
-                  "id": 388,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 3,
-                      "team": "BHA",
-                      "wasHome": true
-                    }
-                  ],
-                  "position": "DEF",
-                  "team": "MCI",
-                  "webName": "Gu\u00e9hi",
-                  "xp": 4.8
-                },
-                {
-                  "id": 399,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 3,
-                      "team": "BHA",
-                      "wasHome": true
-                    }
-                  ],
-                  "position": "MID",
-                  "team": "MCI",
-                  "webName": "Cherki",
-                  "xp": 5.77
-                },
-                {
-                  "id": 411,
-                  "isCaptain": true,
-                  "opponents": [
-                    {
-                      "fdrRating": 3,
-                      "team": "BHA",
-                      "wasHome": true
-                    }
-                  ],
-                  "position": "FWD",
-                  "team": "MCI",
-                  "webName": "Haaland",
-                  "xp": 7.59
-                },
-                {
-                  "id": 449,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 3,
-                      "team": "EVE",
-                      "wasHome": true
-                    }
-                  ],
-                  "position": "DEF",
-                  "team": "NEW",
-                  "webName": "Hall",
-                  "xp": 4.51
-                },
-                {
-                  "id": 496,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 2,
-                      "team": "CRY",
-                      "wasHome": true
-                    }
-                  ],
-                  "position": "GKP",
-                  "team": "TOT",
-                  "webName": "Kinsky",
-                  "xp": 3.16
-                }
-              ],
-              "targetGw": 9,
-              "totalXp": 61.62
-            }
-          ],
-          "xiByGw": [
-            [
-              8,
-              12,
-              15,
-              109,
-              115,
-              124,
-              165,
-              388,
-              399,
-              411,
-              449
-            ],
-            [
-              8,
-              12,
-              15,
-              109,
-              124,
-              165,
-              268,
-              388,
-              399,
-              411,
-              449
-            ],
-            [
-              8,
-              12,
-              15,
-              124,
-              165,
-              268,
-              388,
-              399,
-              411,
-              449,
-              496
-            ]
-          ]
-        },
-        {
-          "captainByGw": [
-            411,
-            411,
-            411
-          ],
-          "hitCost": 0,
-          "horizonGws": 3,
-          "netPoints": 191.14,
-          "points": 191.14,
-          "squad": [
-            8,
-            12,
-            31,
-            40,
-            68,
-            109,
-            115,
-            124,
-            165,
-            334,
-            399,
-            411,
-            449,
-            496,
-            569
-          ],
-          "transfersIn": [
-            {
-              "availability": {
-                "chance": null,
-                "news": null,
-                "status": "a"
-              },
-              "id": 68,
-              "position": "MID",
-              "price": 6.1,
-              "team": "BOU",
-              "webName": "Tavernier"
             },
             {
               "availability": {
@@ -49328,15 +48680,27 @@
             },
             {
               "availability": {
-                "chance": 25,
-                "news": "Hamstring injury - 25% chance of playing",
-                "status": "d"
+                "chance": null,
+                "news": null,
+                "status": "a"
               },
-              "id": 368,
-              "position": "MID",
-              "price": 6.8,
-              "team": "LIV",
-              "webName": "Szoboszlai"
+              "id": 334,
+              "position": "DEF",
+              "price": 5.0,
+              "team": "LEE",
+              "webName": "Muharemovi\u0107"
+            },
+            {
+              "availability": {
+                "chance": null,
+                "news": null,
+                "status": "a"
+              },
+              "id": 569,
+              "position": "FWD",
+              "price": 6.1,
+              "team": "FUL",
+              "webName": "Gonzalo"
             }
           ],
           "weeks": [
@@ -49463,6 +48827,642 @@
                   "xp": 4.37
                 },
                 {
+                  "id": 388,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 2,
+                      "team": "IPS",
+                      "wasHome": true
+                    }
+                  ],
+                  "position": "DEF",
+                  "team": "MCI",
+                  "webName": "Gu\u00e9hi",
+                  "xp": 5.64
+                },
+                {
+                  "id": 399,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 2,
+                      "team": "IPS",
+                      "wasHome": true
+                    }
+                  ],
+                  "position": "MID",
+                  "team": "MCI",
+                  "webName": "Cherki",
+                  "xp": 6.65
+                },
+                {
+                  "id": 411,
+                  "isCaptain": true,
+                  "opponents": [
+                    {
+                      "fdrRating": 2,
+                      "team": "IPS",
+                      "wasHome": true
+                    }
+                  ],
+                  "position": "FWD",
+                  "team": "MCI",
+                  "webName": "Haaland",
+                  "xp": 8.85
+                }
+              ],
+              "targetGw": 7,
+              "totalXp": 69.16
+            },
+            {
+              "players": [
+                {
+                  "id": 8,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 3,
+                      "team": "EVE",
+                      "wasHome": true
+                    }
+                  ],
+                  "position": "DEF",
+                  "team": "ARS",
+                  "webName": "Calafiori",
+                  "xp": 5.31
+                },
+                {
+                  "id": 12,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 3,
+                      "team": "EVE",
+                      "wasHome": true
+                    }
+                  ],
+                  "position": "MID",
+                  "team": "ARS",
+                  "webName": "Saka",
+                  "xp": 6.84
+                },
+                {
+                  "id": 68,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 4,
+                      "team": "MUN",
+                      "wasHome": false
+                    }
+                  ],
+                  "position": "MID",
+                  "team": "BOU",
+                  "webName": "Tavernier",
+                  "xp": 4.49
+                },
+                {
+                  "id": 109,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 4,
+                      "team": "LIV",
+                      "wasHome": false
+                    }
+                  ],
+                  "position": "GKP",
+                  "team": "BHA",
+                  "webName": "Verbruggen",
+                  "xp": 3.07
+                },
+                {
+                  "id": 124,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 4,
+                      "team": "LIV",
+                      "wasHome": false
+                    }
+                  ],
+                  "position": "MID",
+                  "team": "BHA",
+                  "webName": "Gro\u00df",
+                  "xp": 4.74
+                },
+                {
+                  "id": 40,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 2,
+                      "team": "TOT",
+                      "wasHome": true
+                    }
+                  ],
+                  "position": "MID",
+                  "team": "CHE",
+                  "webName": "Rogers",
+                  "xp": 4.99
+                },
+                {
+                  "id": 165,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 2,
+                      "team": "TOT",
+                      "wasHome": true
+                    }
+                  ],
+                  "position": "FWD",
+                  "team": "CHE",
+                  "webName": "Jo\u00e3o Pedro",
+                  "xp": 5.13
+                },
+                {
+                  "id": 388,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 3,
+                      "team": "AVL",
+                      "wasHome": false
+                    }
+                  ],
+                  "position": "DEF",
+                  "team": "MCI",
+                  "webName": "Gu\u00e9hi",
+                  "xp": 4.47
+                },
+                {
+                  "id": 399,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 3,
+                      "team": "AVL",
+                      "wasHome": false
+                    }
+                  ],
+                  "position": "MID",
+                  "team": "MCI",
+                  "webName": "Cherki",
+                  "xp": 5.45
+                },
+                {
+                  "id": 411,
+                  "isCaptain": true,
+                  "opponents": [
+                    {
+                      "fdrRating": 3,
+                      "team": "AVL",
+                      "wasHome": false
+                    }
+                  ],
+                  "position": "FWD",
+                  "team": "MCI",
+                  "webName": "Haaland",
+                  "xp": 7.13
+                },
+                {
+                  "id": 449,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 3,
+                      "team": "CRY",
+                      "wasHome": false
+                    }
+                  ],
+                  "position": "DEF",
+                  "team": "NEW",
+                  "webName": "Hall",
+                  "xp": 4.07
+                }
+              ],
+              "targetGw": 8,
+              "totalXp": 62.82
+            },
+            {
+              "players": [
+                {
+                  "id": 8,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 4,
+                      "team": "LIV",
+                      "wasHome": false
+                    }
+                  ],
+                  "position": "DEF",
+                  "team": "ARS",
+                  "webName": "Calafiori",
+                  "xp": 4.14
+                },
+                {
+                  "id": 12,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 4,
+                      "team": "LIV",
+                      "wasHome": false
+                    }
+                  ],
+                  "position": "MID",
+                  "team": "ARS",
+                  "webName": "Saka",
+                  "xp": 6.15
+                },
+                {
+                  "id": 68,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 3,
+                      "team": "LEE",
+                      "wasHome": true
+                    }
+                  ],
+                  "position": "MID",
+                  "team": "BOU",
+                  "webName": "Tavernier",
+                  "xp": 4.78
+                },
+                {
+                  "id": 124,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 5,
+                      "team": "MCI",
+                      "wasHome": false
+                    }
+                  ],
+                  "position": "MID",
+                  "team": "BHA",
+                  "webName": "Gro\u00df",
+                  "xp": 4.44
+                },
+                {
+                  "id": 40,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 4,
+                      "team": "MUN",
+                      "wasHome": true
+                    }
+                  ],
+                  "position": "MID",
+                  "team": "CHE",
+                  "webName": "Rogers",
+                  "xp": 4.77
+                },
+                {
+                  "id": 165,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 4,
+                      "team": "MUN",
+                      "wasHome": true
+                    }
+                  ],
+                  "position": "FWD",
+                  "team": "CHE",
+                  "webName": "Jo\u00e3o Pedro",
+                  "xp": 4.9
+                },
+                {
+                  "id": 388,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 3,
+                      "team": "BHA",
+                      "wasHome": true
+                    }
+                  ],
+                  "position": "DEF",
+                  "team": "MCI",
+                  "webName": "Gu\u00e9hi",
+                  "xp": 4.8
+                },
+                {
+                  "id": 399,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 3,
+                      "team": "BHA",
+                      "wasHome": true
+                    }
+                  ],
+                  "position": "MID",
+                  "team": "MCI",
+                  "webName": "Cherki",
+                  "xp": 5.77
+                },
+                {
+                  "id": 411,
+                  "isCaptain": true,
+                  "opponents": [
+                    {
+                      "fdrRating": 3,
+                      "team": "BHA",
+                      "wasHome": true
+                    }
+                  ],
+                  "position": "FWD",
+                  "team": "MCI",
+                  "webName": "Haaland",
+                  "xp": 7.59
+                },
+                {
+                  "id": 449,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 3,
+                      "team": "EVE",
+                      "wasHome": true
+                    }
+                  ],
+                  "position": "DEF",
+                  "team": "NEW",
+                  "webName": "Hall",
+                  "xp": 4.51
+                },
+                {
+                  "id": 496,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 2,
+                      "team": "CRY",
+                      "wasHome": true
+                    }
+                  ],
+                  "position": "GKP",
+                  "team": "TOT",
+                  "webName": "Kinsky",
+                  "xp": 3.16
+                }
+              ],
+              "targetGw": 9,
+              "totalXp": 62.6
+            }
+          ],
+          "xiByGw": [
+            [
+              8,
+              12,
+              68,
+              109,
+              115,
+              124,
+              40,
+              165,
+              388,
+              399,
+              411
+            ],
+            [
+              8,
+              12,
+              68,
+              109,
+              124,
+              40,
+              165,
+              388,
+              399,
+              411,
+              449
+            ],
+            [
+              8,
+              12,
+              68,
+              124,
+              40,
+              165,
+              388,
+              399,
+              411,
+              449,
+              496
+            ]
+          ]
+        },
+        {
+          "captainByGw": [
+            411,
+            411,
+            411
+          ],
+          "hitCost": 0,
+          "horizonGws": 3,
+          "netPoints": 192.3,
+          "points": 192.3,
+          "squad": [
+            8,
+            12,
+            31,
+            68,
+            109,
+            115,
+            124,
+            165,
+            268,
+            388,
+            399,
+            411,
+            449,
+            496,
+            569
+          ],
+          "transfersIn": [
+            {
+              "availability": {
+                "chance": null,
+                "news": null,
+                "status": "a"
+              },
+              "id": 388,
+              "position": "DEF",
+              "price": 6.0,
+              "team": "MCI",
+              "webName": "Gu\u00e9hi"
+            },
+            {
+              "availability": {
+                "chance": null,
+                "news": null,
+                "status": "a"
+              },
+              "id": 399,
+              "position": "MID",
+              "price": 7.9,
+              "team": "MCI",
+              "webName": "Cherki"
+            }
+          ],
+          "transfersOut": [
+            {
+              "availability": {
+                "chance": null,
+                "news": null,
+                "status": "a"
+              },
+              "id": 40,
+              "position": "MID",
+              "price": 7.9,
+              "team": "CHE",
+              "webName": "Rogers"
+            },
+            {
+              "availability": {
+                "chance": null,
+                "news": null,
+                "status": "a"
+              },
+              "id": 334,
+              "position": "DEF",
+              "price": 5.0,
+              "team": "LEE",
+              "webName": "Muharemovi\u0107"
+            }
+          ],
+          "weeks": [
+            {
+              "players": [
+                {
+                  "id": 8,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 3,
+                      "team": "NFO",
+                      "wasHome": false
+                    }
+                  ],
+                  "position": "DEF",
+                  "team": "ARS",
+                  "webName": "Calafiori",
+                  "xp": 4.85
+                },
+                {
+                  "id": 12,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 3,
+                      "team": "NFO",
+                      "wasHome": false
+                    }
+                  ],
+                  "position": "MID",
+                  "team": "ARS",
+                  "webName": "Saka",
+                  "xp": 6.6
+                },
+                {
+                  "id": 68,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 3,
+                      "team": "SUN",
+                      "wasHome": true
+                    }
+                  ],
+                  "position": "MID",
+                  "team": "BOU",
+                  "webName": "Tavernier",
+                  "xp": 4.85
+                },
+                {
+                  "id": 109,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 2,
+                      "team": "CRY",
+                      "wasHome": true
+                    }
+                  ],
+                  "position": "GKP",
+                  "team": "BHA",
+                  "webName": "Verbruggen",
+                  "xp": 3.59
+                },
+                {
+                  "id": 115,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 2,
+                      "team": "CRY",
+                      "wasHome": true
+                    }
+                  ],
+                  "position": "DEF",
+                  "team": "BHA",
+                  "webName": "De Cuyper",
+                  "xp": 5.21
+                },
+                {
+                  "id": 124,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 2,
+                      "team": "CRY",
+                      "wasHome": true
+                    }
+                  ],
+                  "position": "MID",
+                  "team": "BHA",
+                  "webName": "Gro\u00df",
+                  "xp": 5.4
+                },
+                {
+                  "id": 165,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 3,
+                      "team": "EVE",
+                      "wasHome": false
+                    }
+                  ],
+                  "position": "FWD",
+                  "team": "CHE",
+                  "webName": "Jo\u00e3o Pedro",
+                  "xp": 4.37
+                },
+                {
+                  "id": 388,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 2,
+                      "team": "IPS",
+                      "wasHome": true
+                    }
+                  ],
+                  "position": "DEF",
+                  "team": "MCI",
+                  "webName": "Gu\u00e9hi",
+                  "xp": 5.64
+                },
+                {
                   "id": 399,
                   "isCaptain": false,
                   "opponents": [
@@ -49509,7 +49509,7 @@
                 }
               ],
               "targetGw": 7,
-              "totalXp": 67.68
+              "totalXp": 69.02
             },
             {
               "players": [
@@ -49604,21 +49604,6 @@
                   "xp": 4.74
                 },
                 {
-                  "id": 40,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 2,
-                      "team": "TOT",
-                      "wasHome": true
-                    }
-                  ],
-                  "position": "MID",
-                  "team": "CHE",
-                  "webName": "Rogers",
-                  "xp": 4.99
-                },
-                {
                   "id": 165,
                   "isCaptain": false,
                   "opponents": [
@@ -49632,6 +49617,21 @@
                   "team": "CHE",
                   "webName": "Jo\u00e3o Pedro",
                   "xp": 5.13
+                },
+                {
+                  "id": 388,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 3,
+                      "team": "AVL",
+                      "wasHome": false
+                    }
+                  ],
+                  "position": "DEF",
+                  "team": "MCI",
+                  "webName": "Gu\u00e9hi",
+                  "xp": 4.47
                 },
                 {
                   "id": 399,
@@ -49680,7 +49680,7 @@
                 }
               ],
               "targetGw": 8,
-              "totalXp": 62.25
+              "totalXp": 61.73
             },
             {
               "players": [
@@ -49730,21 +49730,6 @@
                   "xp": 4.78
                 },
                 {
-                  "id": 115,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 5,
-                      "team": "MCI",
-                      "wasHome": false
-                    }
-                  ],
-                  "position": "DEF",
-                  "team": "BHA",
-                  "webName": "De Cuyper",
-                  "xp": 3.41
-                },
-                {
                   "id": 124,
                   "isCaptain": false,
                   "opponents": [
@@ -49760,21 +49745,6 @@
                   "xp": 4.44
                 },
                 {
-                  "id": 40,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 4,
-                      "team": "MUN",
-                      "wasHome": true
-                    }
-                  ],
-                  "position": "MID",
-                  "team": "CHE",
-                  "webName": "Rogers",
-                  "xp": 4.77
-                },
-                {
                   "id": 165,
                   "isCaptain": false,
                   "opponents": [
@@ -49788,6 +49758,36 @@
                   "team": "CHE",
                   "webName": "Jo\u00e3o Pedro",
                   "xp": 4.9
+                },
+                {
+                  "id": 268,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 3,
+                      "team": "AVL",
+                      "wasHome": false
+                    }
+                  ],
+                  "position": "MID",
+                  "team": "FUL",
+                  "webName": "King",
+                  "xp": 3.72
+                },
+                {
+                  "id": 388,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 3,
+                      "team": "BHA",
+                      "wasHome": true
+                    }
+                  ],
+                  "position": "DEF",
+                  "team": "MCI",
+                  "webName": "Gu\u00e9hi",
+                  "xp": 4.8
                 },
                 {
                   "id": 399,
@@ -49851,7 +49851,7 @@
                 }
               ],
               "targetGw": 9,
-              "totalXp": 61.21
+              "totalXp": 61.55
             }
           ],
           "xiByGw": [
@@ -49862,8 +49862,8 @@
               109,
               115,
               124,
-              40,
               165,
+              388,
               399,
               411,
               449
@@ -49875,8 +49875,8 @@
               68,
               109,
               124,
-              40,
               165,
+              388,
               399,
               411,
               449
@@ -49885,10 +49885,10 @@
               8,
               12,
               68,
-              115,
               124,
-              40,
               165,
+              268,
+              388,
               399,
               411,
               449,
@@ -49904,13 +49904,13 @@
           ],
           "hitCost": 0,
           "horizonGws": 3,
-          "netPoints": 188.48,
-          "points": 188.48,
+          "netPoints": 188.54,
+          "points": 188.54,
           "squad": [
             8,
             12,
             31,
-            40,
+            68,
             109,
             115,
             124,
@@ -49940,15 +49940,15 @@
           "transfersOut": [
             {
               "availability": {
-                "chance": 25,
-                "news": "Hamstring injury - 25% chance of playing",
-                "status": "d"
+                "chance": null,
+                "news": null,
+                "status": "a"
               },
-              "id": 368,
+              "id": 40,
               "position": "MID",
-              "price": 6.8,
-              "team": "LIV",
-              "webName": "Szoboszlai"
+              "price": 7.9,
+              "team": "CHE",
+              "webName": "Rogers"
             }
           ],
           "weeks": [
@@ -49983,6 +49983,21 @@
                   "team": "ARS",
                   "webName": "Saka",
                   "xp": 6.6
+                },
+                {
+                  "id": 68,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 3,
+                      "team": "SUN",
+                      "wasHome": true
+                    }
+                  ],
+                  "position": "MID",
+                  "team": "BOU",
+                  "webName": "Tavernier",
+                  "xp": 4.85
                 },
                 {
                   "id": 109,
@@ -50028,21 +50043,6 @@
                   "team": "BHA",
                   "webName": "Gro\u00df",
                   "xp": 5.4
-                },
-                {
-                  "id": 40,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 3,
-                      "team": "EVE",
-                      "wasHome": false
-                    }
-                  ],
-                  "position": "MID",
-                  "team": "CHE",
-                  "webName": "Rogers",
-                  "xp": 4.3
                 },
                 {
                   "id": 165,
@@ -50121,7 +50121,7 @@
                 }
               ],
               "targetGw": 7,
-              "totalXp": 66.7
+              "totalXp": 67.25
             },
             {
               "players": [
@@ -50171,6 +50171,21 @@
                   "xp": 3.9
                 },
                 {
+                  "id": 68,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 4,
+                      "team": "MUN",
+                      "wasHome": false
+                    }
+                  ],
+                  "position": "MID",
+                  "team": "BOU",
+                  "webName": "Tavernier",
+                  "xp": 4.49
+                },
+                {
                   "id": 109,
                   "isCaptain": false,
                   "opponents": [
@@ -50199,21 +50214,6 @@
                   "team": "BHA",
                   "webName": "Gro\u00df",
                   "xp": 4.74
-                },
-                {
-                  "id": 40,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 2,
-                      "team": "TOT",
-                      "wasHome": true
-                    }
-                  ],
-                  "position": "MID",
-                  "team": "CHE",
-                  "webName": "Rogers",
-                  "xp": 4.99
                 },
                 {
                   "id": 165,
@@ -50292,7 +50292,7 @@
                 }
               ],
               "targetGw": 8,
-              "totalXp": 61.63
+              "totalXp": 61.13
             },
             {
               "players": [
@@ -50327,6 +50327,21 @@
                   "xp": 6.15
                 },
                 {
+                  "id": 68,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 3,
+                      "team": "LEE",
+                      "wasHome": true
+                    }
+                  ],
+                  "position": "MID",
+                  "team": "BOU",
+                  "webName": "Tavernier",
+                  "xp": 4.78
+                },
+                {
                   "id": 115,
                   "isCaptain": false,
                   "opponents": [
@@ -50355,21 +50370,6 @@
                   "team": "BHA",
                   "webName": "Gro\u00df",
                   "xp": 4.44
-                },
-                {
-                  "id": 40,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 4,
-                      "team": "MUN",
-                      "wasHome": true
-                    }
-                  ],
-                  "position": "MID",
-                  "team": "CHE",
-                  "webName": "Rogers",
-                  "xp": 4.77
                 },
                 {
                   "id": 165,
@@ -50463,17 +50463,17 @@
                 }
               ],
               "targetGw": 9,
-              "totalXp": 60.15
+              "totalXp": 60.16
             }
           ],
           "xiByGw": [
             [
               8,
               12,
+              68,
               109,
               115,
               124,
-              40,
               165,
               268,
               399,
@@ -50484,9 +50484,9 @@
               8,
               12,
               31,
+              68,
               109,
               124,
-              40,
               165,
               268,
               399,
@@ -50496,9 +50496,9 @@
             [
               8,
               12,
+              68,
               115,
               124,
-              40,
               165,
               268,
               399,
@@ -50520,24 +50520,24 @@
           ],
           "hitCost": 0,
           "horizonGws": 5,
-          "netPoints": 321.58,
-          "points": 321.58,
+          "netPoints": 323.55,
+          "points": 323.55,
           "squad": [
             8,
             12,
-            15,
+            31,
+            40,
+            68,
             109,
             115,
             124,
             165,
-            268,
-            334,
+            272,
             388,
             399,
             411,
             449,
-            496,
-            569
+            496
           ],
           "transfersIn": [
             {
@@ -50546,11 +50546,11 @@
                 "news": null,
                 "status": "a"
               },
-              "id": 15,
-              "position": "MID",
-              "price": 6.8,
-              "team": "ARS",
-              "webName": "\u00d8degaard"
+              "id": 272,
+              "position": "FWD",
+              "price": 4.4,
+              "team": "FUL",
+              "webName": "Kusi-Asare"
             },
             {
               "availability": {
@@ -50580,1024 +50580,6 @@
           "transfersOut": [
             {
               "availability": {
-                "chance": 100,
-                "news": null,
-                "status": "a"
-              },
-              "id": 31,
-              "position": "DEF",
-              "price": 4.6,
-              "team": "ARS",
-              "webName": "Konsa"
-            },
-            {
-              "availability": {
-                "chance": null,
-                "news": null,
-                "status": "a"
-              },
-              "id": 40,
-              "position": "MID",
-              "price": 7.9,
-              "team": "CHE",
-              "webName": "Rogers"
-            },
-            {
-              "availability": {
-                "chance": 25,
-                "news": "Hamstring injury - 25% chance of playing",
-                "status": "d"
-              },
-              "id": 368,
-              "position": "MID",
-              "price": 6.8,
-              "team": "LIV",
-              "webName": "Szoboszlai"
-            }
-          ],
-          "weeks": [
-            {
-              "players": [
-                {
-                  "id": 8,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 3,
-                      "team": "NFO",
-                      "wasHome": false
-                    }
-                  ],
-                  "position": "DEF",
-                  "team": "ARS",
-                  "webName": "Calafiori",
-                  "xp": 4.85
-                },
-                {
-                  "id": 12,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 3,
-                      "team": "NFO",
-                      "wasHome": false
-                    }
-                  ],
-                  "position": "MID",
-                  "team": "ARS",
-                  "webName": "Saka",
-                  "xp": 6.6
-                },
-                {
-                  "id": 15,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 3,
-                      "team": "NFO",
-                      "wasHome": false
-                    }
-                  ],
-                  "position": "MID",
-                  "team": "ARS",
-                  "webName": "\u00d8degaard",
-                  "xp": 5.17
-                },
-                {
-                  "id": 109,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 2,
-                      "team": "CRY",
-                      "wasHome": true
-                    }
-                  ],
-                  "position": "GKP",
-                  "team": "BHA",
-                  "webName": "Verbruggen",
-                  "xp": 3.59
-                },
-                {
-                  "id": 115,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 2,
-                      "team": "CRY",
-                      "wasHome": true
-                    }
-                  ],
-                  "position": "DEF",
-                  "team": "BHA",
-                  "webName": "De Cuyper",
-                  "xp": 5.21
-                },
-                {
-                  "id": 124,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 2,
-                      "team": "CRY",
-                      "wasHome": true
-                    }
-                  ],
-                  "position": "MID",
-                  "team": "BHA",
-                  "webName": "Gro\u00df",
-                  "xp": 5.4
-                },
-                {
-                  "id": 165,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 3,
-                      "team": "EVE",
-                      "wasHome": false
-                    }
-                  ],
-                  "position": "FWD",
-                  "team": "CHE",
-                  "webName": "Jo\u00e3o Pedro",
-                  "xp": 4.37
-                },
-                {
-                  "id": 388,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 2,
-                      "team": "IPS",
-                      "wasHome": true
-                    }
-                  ],
-                  "position": "DEF",
-                  "team": "MCI",
-                  "webName": "Gu\u00e9hi",
-                  "xp": 5.64
-                },
-                {
-                  "id": 399,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 2,
-                      "team": "IPS",
-                      "wasHome": true
-                    }
-                  ],
-                  "position": "MID",
-                  "team": "MCI",
-                  "webName": "Cherki",
-                  "xp": 6.65
-                },
-                {
-                  "id": 411,
-                  "isCaptain": true,
-                  "opponents": [
-                    {
-                      "fdrRating": 2,
-                      "team": "IPS",
-                      "wasHome": true
-                    }
-                  ],
-                  "position": "FWD",
-                  "team": "MCI",
-                  "webName": "Haaland",
-                  "xp": 8.85
-                },
-                {
-                  "id": 449,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 3,
-                      "team": "AVL",
-                      "wasHome": true
-                    }
-                  ],
-                  "position": "DEF",
-                  "team": "NEW",
-                  "webName": "Hall",
-                  "xp": 4.16
-                }
-              ],
-              "targetGw": 7,
-              "totalXp": 69.34
-            },
-            {
-              "players": [
-                {
-                  "id": 8,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 3,
-                      "team": "EVE",
-                      "wasHome": true
-                    }
-                  ],
-                  "position": "DEF",
-                  "team": "ARS",
-                  "webName": "Calafiori",
-                  "xp": 5.31
-                },
-                {
-                  "id": 12,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 3,
-                      "team": "EVE",
-                      "wasHome": true
-                    }
-                  ],
-                  "position": "MID",
-                  "team": "ARS",
-                  "webName": "Saka",
-                  "xp": 6.84
-                },
-                {
-                  "id": 15,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 3,
-                      "team": "EVE",
-                      "wasHome": true
-                    }
-                  ],
-                  "position": "MID",
-                  "team": "ARS",
-                  "webName": "\u00d8degaard",
-                  "xp": 5.35
-                },
-                {
-                  "id": 109,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 4,
-                      "team": "LIV",
-                      "wasHome": false
-                    }
-                  ],
-                  "position": "GKP",
-                  "team": "BHA",
-                  "webName": "Verbruggen",
-                  "xp": 3.07
-                },
-                {
-                  "id": 124,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 4,
-                      "team": "LIV",
-                      "wasHome": false
-                    }
-                  ],
-                  "position": "MID",
-                  "team": "BHA",
-                  "webName": "Gro\u00df",
-                  "xp": 4.74
-                },
-                {
-                  "id": 165,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 2,
-                      "team": "TOT",
-                      "wasHome": true
-                    }
-                  ],
-                  "position": "FWD",
-                  "team": "CHE",
-                  "webName": "Jo\u00e3o Pedro",
-                  "xp": 5.13
-                },
-                {
-                  "id": 268,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 2,
-                      "team": "COV",
-                      "wasHome": false
-                    }
-                  ],
-                  "position": "MID",
-                  "team": "FUL",
-                  "webName": "King",
-                  "xp": 3.87
-                },
-                {
-                  "id": 388,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 3,
-                      "team": "AVL",
-                      "wasHome": false
-                    }
-                  ],
-                  "position": "DEF",
-                  "team": "MCI",
-                  "webName": "Gu\u00e9hi",
-                  "xp": 4.47
-                },
-                {
-                  "id": 399,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 3,
-                      "team": "AVL",
-                      "wasHome": false
-                    }
-                  ],
-                  "position": "MID",
-                  "team": "MCI",
-                  "webName": "Cherki",
-                  "xp": 5.45
-                },
-                {
-                  "id": 411,
-                  "isCaptain": true,
-                  "opponents": [
-                    {
-                      "fdrRating": 3,
-                      "team": "AVL",
-                      "wasHome": false
-                    }
-                  ],
-                  "position": "FWD",
-                  "team": "MCI",
-                  "webName": "Haaland",
-                  "xp": 7.13
-                },
-                {
-                  "id": 449,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 3,
-                      "team": "CRY",
-                      "wasHome": false
-                    }
-                  ],
-                  "position": "DEF",
-                  "team": "NEW",
-                  "webName": "Hall",
-                  "xp": 4.07
-                }
-              ],
-              "targetGw": 8,
-              "totalXp": 62.56
-            },
-            {
-              "players": [
-                {
-                  "id": 8,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 4,
-                      "team": "LIV",
-                      "wasHome": false
-                    }
-                  ],
-                  "position": "DEF",
-                  "team": "ARS",
-                  "webName": "Calafiori",
-                  "xp": 4.14
-                },
-                {
-                  "id": 12,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 4,
-                      "team": "LIV",
-                      "wasHome": false
-                    }
-                  ],
-                  "position": "MID",
-                  "team": "ARS",
-                  "webName": "Saka",
-                  "xp": 6.15
-                },
-                {
-                  "id": 15,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 4,
-                      "team": "LIV",
-                      "wasHome": false
-                    }
-                  ],
-                  "position": "MID",
-                  "team": "ARS",
-                  "webName": "\u00d8degaard",
-                  "xp": 4.85
-                },
-                {
-                  "id": 124,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 5,
-                      "team": "MCI",
-                      "wasHome": false
-                    }
-                  ],
-                  "position": "MID",
-                  "team": "BHA",
-                  "webName": "Gro\u00df",
-                  "xp": 4.44
-                },
-                {
-                  "id": 165,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 4,
-                      "team": "MUN",
-                      "wasHome": true
-                    }
-                  ],
-                  "position": "FWD",
-                  "team": "CHE",
-                  "webName": "Jo\u00e3o Pedro",
-                  "xp": 4.9
-                },
-                {
-                  "id": 268,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 3,
-                      "team": "AVL",
-                      "wasHome": false
-                    }
-                  ],
-                  "position": "MID",
-                  "team": "FUL",
-                  "webName": "King",
-                  "xp": 3.72
-                },
-                {
-                  "id": 388,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 3,
-                      "team": "BHA",
-                      "wasHome": true
-                    }
-                  ],
-                  "position": "DEF",
-                  "team": "MCI",
-                  "webName": "Gu\u00e9hi",
-                  "xp": 4.8
-                },
-                {
-                  "id": 399,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 3,
-                      "team": "BHA",
-                      "wasHome": true
-                    }
-                  ],
-                  "position": "MID",
-                  "team": "MCI",
-                  "webName": "Cherki",
-                  "xp": 5.77
-                },
-                {
-                  "id": 411,
-                  "isCaptain": true,
-                  "opponents": [
-                    {
-                      "fdrRating": 3,
-                      "team": "BHA",
-                      "wasHome": true
-                    }
-                  ],
-                  "position": "FWD",
-                  "team": "MCI",
-                  "webName": "Haaland",
-                  "xp": 7.59
-                },
-                {
-                  "id": 449,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 3,
-                      "team": "EVE",
-                      "wasHome": true
-                    }
-                  ],
-                  "position": "DEF",
-                  "team": "NEW",
-                  "webName": "Hall",
-                  "xp": 4.51
-                },
-                {
-                  "id": 496,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 2,
-                      "team": "CRY",
-                      "wasHome": true
-                    }
-                  ],
-                  "position": "GKP",
-                  "team": "TOT",
-                  "webName": "Kinsky",
-                  "xp": 3.16
-                }
-              ],
-              "targetGw": 9,
-              "totalXp": 61.62
-            },
-            {
-              "players": [
-                {
-                  "id": 8,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 2,
-                      "team": "HUL",
-                      "wasHome": true
-                    }
-                  ],
-                  "position": "DEF",
-                  "team": "ARS",
-                  "webName": "Calafiori",
-                  "xp": 5.09
-                },
-                {
-                  "id": 12,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 2,
-                      "team": "HUL",
-                      "wasHome": true
-                    }
-                  ],
-                  "position": "MID",
-                  "team": "ARS",
-                  "webName": "Saka",
-                  "xp": 6.91
-                },
-                {
-                  "id": 15,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 2,
-                      "team": "HUL",
-                      "wasHome": true
-                    }
-                  ],
-                  "position": "MID",
-                  "team": "ARS",
-                  "webName": "\u00d8degaard",
-                  "xp": 5.37
-                },
-                {
-                  "id": 109,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 3,
-                      "team": "BRE",
-                      "wasHome": true
-                    }
-                  ],
-                  "position": "GKP",
-                  "team": "BHA",
-                  "webName": "Verbruggen",
-                  "xp": 3.38
-                },
-                {
-                  "id": 115,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 3,
-                      "team": "BRE",
-                      "wasHome": true
-                    }
-                  ],
-                  "position": "DEF",
-                  "team": "BHA",
-                  "webName": "De Cuyper",
-                  "xp": 4.88
-                },
-                {
-                  "id": 124,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 3,
-                      "team": "BRE",
-                      "wasHome": true
-                    }
-                  ],
-                  "position": "MID",
-                  "team": "BHA",
-                  "webName": "Gro\u00df",
-                  "xp": 5.35
-                },
-                {
-                  "id": 165,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 3,
-                      "team": "SUN",
-                      "wasHome": false
-                    }
-                  ],
-                  "position": "FWD",
-                  "team": "CHE",
-                  "webName": "Jo\u00e3o Pedro",
-                  "xp": 4.59
-                },
-                {
-                  "id": 388,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 3,
-                      "team": "NFO",
-                      "wasHome": false
-                    }
-                  ],
-                  "position": "DEF",
-                  "team": "MCI",
-                  "webName": "Gu\u00e9hi",
-                  "xp": 4.72
-                },
-                {
-                  "id": 399,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 3,
-                      "team": "NFO",
-                      "wasHome": false
-                    }
-                  ],
-                  "position": "MID",
-                  "team": "MCI",
-                  "webName": "Cherki",
-                  "xp": 5.44
-                },
-                {
-                  "id": 411,
-                  "isCaptain": true,
-                  "opponents": [
-                    {
-                      "fdrRating": 3,
-                      "team": "NFO",
-                      "wasHome": false
-                    }
-                  ],
-                  "position": "FWD",
-                  "team": "MCI",
-                  "webName": "Haaland",
-                  "xp": 7.06
-                },
-                {
-                  "id": 449,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 3,
-                      "team": "FUL",
-                      "wasHome": false
-                    }
-                  ],
-                  "position": "DEF",
-                  "team": "NEW",
-                  "webName": "Hall",
-                  "xp": 4.04
-                }
-              ],
-              "targetGw": 10,
-              "totalXp": 63.89
-            },
-            {
-              "players": [
-                {
-                  "id": 8,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 3,
-                      "team": "NEW",
-                      "wasHome": false
-                    }
-                  ],
-                  "position": "DEF",
-                  "team": "ARS",
-                  "webName": "Calafiori",
-                  "xp": 4.53
-                },
-                {
-                  "id": 12,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 3,
-                      "team": "NEW",
-                      "wasHome": false
-                    }
-                  ],
-                  "position": "MID",
-                  "team": "ARS",
-                  "webName": "Saka",
-                  "xp": 6.72
-                },
-                {
-                  "id": 15,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 3,
-                      "team": "NEW",
-                      "wasHome": false
-                    }
-                  ],
-                  "position": "MID",
-                  "team": "ARS",
-                  "webName": "\u00d8degaard",
-                  "xp": 5.22
-                },
-                {
-                  "id": 109,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 2,
-                      "team": "HUL",
-                      "wasHome": false
-                    }
-                  ],
-                  "position": "GKP",
-                  "team": "BHA",
-                  "webName": "Verbruggen",
-                  "xp": 3.3
-                },
-                {
-                  "id": 115,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 2,
-                      "team": "HUL",
-                      "wasHome": false
-                    }
-                  ],
-                  "position": "DEF",
-                  "team": "BHA",
-                  "webName": "De Cuyper",
-                  "xp": 4.37
-                },
-                {
-                  "id": 124,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 2,
-                      "team": "HUL",
-                      "wasHome": false
-                    }
-                  ],
-                  "position": "MID",
-                  "team": "BHA",
-                  "webName": "Gro\u00df",
-                  "xp": 4.88
-                },
-                {
-                  "id": 165,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 3,
-                      "team": "LEE",
-                      "wasHome": true
-                    }
-                  ],
-                  "position": "FWD",
-                  "team": "CHE",
-                  "webName": "Jo\u00e3o Pedro",
-                  "xp": 4.86
-                },
-                {
-                  "id": 388,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 2,
-                      "team": "FUL",
-                      "wasHome": true
-                    }
-                  ],
-                  "position": "DEF",
-                  "team": "MCI",
-                  "webName": "Gu\u00e9hi",
-                  "xp": 5.21
-                },
-                {
-                  "id": 399,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 2,
-                      "team": "FUL",
-                      "wasHome": true
-                    }
-                  ],
-                  "position": "MID",
-                  "team": "MCI",
-                  "webName": "Cherki",
-                  "xp": 5.97
-                },
-                {
-                  "id": 411,
-                  "isCaptain": true,
-                  "opponents": [
-                    {
-                      "fdrRating": 2,
-                      "team": "FUL",
-                      "wasHome": true
-                    }
-                  ],
-                  "position": "FWD",
-                  "team": "MCI",
-                  "webName": "Haaland",
-                  "xp": 7.82
-                },
-                {
-                  "id": 449,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 4,
-                      "team": "ARS",
-                      "wasHome": true
-                    }
-                  ],
-                  "position": "DEF",
-                  "team": "NEW",
-                  "webName": "Hall",
-                  "xp": 3.47
-                }
-              ],
-              "targetGw": 11,
-              "totalXp": 64.17
-            }
-          ],
-          "xiByGw": [
-            [
-              8,
-              12,
-              15,
-              109,
-              115,
-              124,
-              165,
-              388,
-              399,
-              411,
-              449
-            ],
-            [
-              8,
-              12,
-              15,
-              109,
-              124,
-              165,
-              268,
-              388,
-              399,
-              411,
-              449
-            ],
-            [
-              8,
-              12,
-              15,
-              124,
-              165,
-              268,
-              388,
-              399,
-              411,
-              449,
-              496
-            ],
-            [
-              8,
-              12,
-              15,
-              109,
-              115,
-              124,
-              165,
-              388,
-              399,
-              411,
-              449
-            ],
-            [
-              8,
-              12,
-              15,
-              109,
-              115,
-              124,
-              165,
-              388,
-              399,
-              411,
-              449
-            ]
-          ]
-        },
-        {
-          "captainByGw": [
-            411,
-            411,
-            411,
-            411,
-            411
-          ],
-          "hitCost": 0,
-          "horizonGws": 5,
-          "netPoints": 317.69,
-          "points": 317.69,
-          "squad": [
-            8,
-            12,
-            31,
-            40,
-            68,
-            109,
-            115,
-            124,
-            165,
-            334,
-            399,
-            411,
-            449,
-            496,
-            569
-          ],
-          "transfersIn": [
-            {
-              "availability": {
-                "chance": null,
-                "news": null,
-                "status": "a"
-              },
-              "id": 68,
-              "position": "MID",
-              "price": 6.1,
-              "team": "BOU",
-              "webName": "Tavernier"
-            },
-            {
-              "availability": {
-                "chance": null,
-                "news": null,
-                "status": "a"
-              },
-              "id": 399,
-              "position": "MID",
-              "price": 7.9,
-              "team": "MCI",
-              "webName": "Cherki"
-            }
-          ],
-          "transfersOut": [
-            {
-              "availability": {
                 "chance": null,
                 "news": null,
                 "status": "a"
@@ -51610,15 +50592,27 @@
             },
             {
               "availability": {
-                "chance": 25,
-                "news": "Hamstring injury - 25% chance of playing",
-                "status": "d"
+                "chance": null,
+                "news": null,
+                "status": "a"
               },
-              "id": 368,
-              "position": "MID",
-              "price": 6.8,
-              "team": "LIV",
-              "webName": "Szoboszlai"
+              "id": 334,
+              "position": "DEF",
+              "price": 5.0,
+              "team": "LEE",
+              "webName": "Muharemovi\u0107"
+            },
+            {
+              "availability": {
+                "chance": null,
+                "news": null,
+                "status": "a"
+              },
+              "id": 569,
+              "position": "FWD",
+              "price": 6.1,
+              "team": "FUL",
+              "webName": "Gonzalo"
             }
           ],
           "weeks": [
@@ -51745,6 +50739,21 @@
                   "xp": 4.37
                 },
                 {
+                  "id": 388,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 2,
+                      "team": "IPS",
+                      "wasHome": true
+                    }
+                  ],
+                  "position": "DEF",
+                  "team": "MCI",
+                  "webName": "Gu\u00e9hi",
+                  "xp": 5.64
+                },
+                {
                   "id": 399,
                   "isCaptain": false,
                   "opponents": [
@@ -51773,25 +50782,10 @@
                   "team": "MCI",
                   "webName": "Haaland",
                   "xp": 8.85
-                },
-                {
-                  "id": 449,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 3,
-                      "team": "AVL",
-                      "wasHome": true
-                    }
-                  ],
-                  "position": "DEF",
-                  "team": "NEW",
-                  "webName": "Hall",
-                  "xp": 4.16
                 }
               ],
               "targetGw": 7,
-              "totalXp": 67.68
+              "totalXp": 69.16
             },
             {
               "players": [
@@ -51824,21 +50818,6 @@
                   "team": "ARS",
                   "webName": "Saka",
                   "xp": 6.84
-                },
-                {
-                  "id": 31,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 3,
-                      "team": "EVE",
-                      "wasHome": true
-                    }
-                  ],
-                  "position": "DEF",
-                  "team": "ARS",
-                  "webName": "Konsa",
-                  "xp": 3.9
                 },
                 {
                   "id": 68,
@@ -51916,6 +50895,21 @@
                   "xp": 5.13
                 },
                 {
+                  "id": 388,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 3,
+                      "team": "AVL",
+                      "wasHome": false
+                    }
+                  ],
+                  "position": "DEF",
+                  "team": "MCI",
+                  "webName": "Gu\u00e9hi",
+                  "xp": 4.47
+                },
+                {
                   "id": 399,
                   "isCaptain": false,
                   "opponents": [
@@ -51962,7 +50956,7 @@
                 }
               ],
               "targetGw": 8,
-              "totalXp": 62.25
+              "totalXp": 62.82
             },
             {
               "players": [
@@ -52012,21 +51006,6 @@
                   "xp": 4.78
                 },
                 {
-                  "id": 115,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 5,
-                      "team": "MCI",
-                      "wasHome": false
-                    }
-                  ],
-                  "position": "DEF",
-                  "team": "BHA",
-                  "webName": "De Cuyper",
-                  "xp": 3.41
-                },
-                {
                   "id": 124,
                   "isCaptain": false,
                   "opponents": [
@@ -52070,6 +51049,21 @@
                   "team": "CHE",
                   "webName": "Jo\u00e3o Pedro",
                   "xp": 4.9
+                },
+                {
+                  "id": 388,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 3,
+                      "team": "BHA",
+                      "wasHome": true
+                    }
+                  ],
+                  "position": "DEF",
+                  "team": "MCI",
+                  "webName": "Gu\u00e9hi",
+                  "xp": 4.8
                 },
                 {
                   "id": 399,
@@ -52133,7 +51127,7 @@
                 }
               ],
               "targetGw": 9,
-              "totalXp": 61.21
+              "totalXp": 62.6
             },
             {
               "players": [
@@ -52258,6 +51252,21 @@
                   "xp": 4.59
                 },
                 {
+                  "id": 388,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 3,
+                      "team": "NFO",
+                      "wasHome": false
+                    }
+                  ],
+                  "position": "DEF",
+                  "team": "MCI",
+                  "webName": "Gu\u00e9hi",
+                  "xp": 4.72
+                },
+                {
                   "id": 399,
                   "isCaptain": false,
                   "opponents": [
@@ -52286,25 +51295,10 @@
                   "team": "MCI",
                   "webName": "Haaland",
                   "xp": 7.06
-                },
-                {
-                  "id": 449,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 3,
-                      "team": "FUL",
-                      "wasHome": false
-                    }
-                  ],
-                  "position": "DEF",
-                  "team": "NEW",
-                  "webName": "Hall",
-                  "xp": 4.04
                 }
               ],
               "targetGw": 10,
-              "totalXp": 63.24
+              "totalXp": 63.92
             },
             {
               "players": [
@@ -52429,6 +51423,1012 @@
                   "xp": 4.86
                 },
                 {
+                  "id": 388,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 2,
+                      "team": "FUL",
+                      "wasHome": true
+                    }
+                  ],
+                  "position": "DEF",
+                  "team": "MCI",
+                  "webName": "Gu\u00e9hi",
+                  "xp": 5.21
+                },
+                {
+                  "id": 399,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 2,
+                      "team": "FUL",
+                      "wasHome": true
+                    }
+                  ],
+                  "position": "MID",
+                  "team": "MCI",
+                  "webName": "Cherki",
+                  "xp": 5.97
+                },
+                {
+                  "id": 411,
+                  "isCaptain": true,
+                  "opponents": [
+                    {
+                      "fdrRating": 2,
+                      "team": "FUL",
+                      "wasHome": true
+                    }
+                  ],
+                  "position": "FWD",
+                  "team": "MCI",
+                  "webName": "Haaland",
+                  "xp": 7.82
+                }
+              ],
+              "targetGw": 11,
+              "totalXp": 65.05
+            }
+          ],
+          "xiByGw": [
+            [
+              8,
+              12,
+              68,
+              109,
+              115,
+              124,
+              40,
+              165,
+              388,
+              399,
+              411
+            ],
+            [
+              8,
+              12,
+              68,
+              109,
+              124,
+              40,
+              165,
+              388,
+              399,
+              411,
+              449
+            ],
+            [
+              8,
+              12,
+              68,
+              124,
+              40,
+              165,
+              388,
+              399,
+              411,
+              449,
+              496
+            ],
+            [
+              8,
+              12,
+              68,
+              109,
+              115,
+              124,
+              40,
+              165,
+              388,
+              399,
+              411
+            ],
+            [
+              8,
+              12,
+              68,
+              109,
+              115,
+              124,
+              40,
+              165,
+              388,
+              399,
+              411
+            ]
+          ]
+        },
+        {
+          "captainByGw": [
+            411,
+            411,
+            411,
+            411,
+            411
+          ],
+          "hitCost": 0,
+          "horizonGws": 5,
+          "netPoints": 319.51,
+          "points": 319.51,
+          "squad": [
+            8,
+            12,
+            31,
+            68,
+            109,
+            115,
+            124,
+            165,
+            268,
+            388,
+            399,
+            411,
+            449,
+            496,
+            569
+          ],
+          "transfersIn": [
+            {
+              "availability": {
+                "chance": null,
+                "news": null,
+                "status": "a"
+              },
+              "id": 388,
+              "position": "DEF",
+              "price": 6.0,
+              "team": "MCI",
+              "webName": "Gu\u00e9hi"
+            },
+            {
+              "availability": {
+                "chance": null,
+                "news": null,
+                "status": "a"
+              },
+              "id": 399,
+              "position": "MID",
+              "price": 7.9,
+              "team": "MCI",
+              "webName": "Cherki"
+            }
+          ],
+          "transfersOut": [
+            {
+              "availability": {
+                "chance": null,
+                "news": null,
+                "status": "a"
+              },
+              "id": 40,
+              "position": "MID",
+              "price": 7.9,
+              "team": "CHE",
+              "webName": "Rogers"
+            },
+            {
+              "availability": {
+                "chance": null,
+                "news": null,
+                "status": "a"
+              },
+              "id": 334,
+              "position": "DEF",
+              "price": 5.0,
+              "team": "LEE",
+              "webName": "Muharemovi\u0107"
+            }
+          ],
+          "weeks": [
+            {
+              "players": [
+                {
+                  "id": 8,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 3,
+                      "team": "NFO",
+                      "wasHome": false
+                    }
+                  ],
+                  "position": "DEF",
+                  "team": "ARS",
+                  "webName": "Calafiori",
+                  "xp": 4.85
+                },
+                {
+                  "id": 12,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 3,
+                      "team": "NFO",
+                      "wasHome": false
+                    }
+                  ],
+                  "position": "MID",
+                  "team": "ARS",
+                  "webName": "Saka",
+                  "xp": 6.6
+                },
+                {
+                  "id": 68,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 3,
+                      "team": "SUN",
+                      "wasHome": true
+                    }
+                  ],
+                  "position": "MID",
+                  "team": "BOU",
+                  "webName": "Tavernier",
+                  "xp": 4.85
+                },
+                {
+                  "id": 109,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 2,
+                      "team": "CRY",
+                      "wasHome": true
+                    }
+                  ],
+                  "position": "GKP",
+                  "team": "BHA",
+                  "webName": "Verbruggen",
+                  "xp": 3.59
+                },
+                {
+                  "id": 115,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 2,
+                      "team": "CRY",
+                      "wasHome": true
+                    }
+                  ],
+                  "position": "DEF",
+                  "team": "BHA",
+                  "webName": "De Cuyper",
+                  "xp": 5.21
+                },
+                {
+                  "id": 124,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 2,
+                      "team": "CRY",
+                      "wasHome": true
+                    }
+                  ],
+                  "position": "MID",
+                  "team": "BHA",
+                  "webName": "Gro\u00df",
+                  "xp": 5.4
+                },
+                {
+                  "id": 165,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 3,
+                      "team": "EVE",
+                      "wasHome": false
+                    }
+                  ],
+                  "position": "FWD",
+                  "team": "CHE",
+                  "webName": "Jo\u00e3o Pedro",
+                  "xp": 4.37
+                },
+                {
+                  "id": 388,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 2,
+                      "team": "IPS",
+                      "wasHome": true
+                    }
+                  ],
+                  "position": "DEF",
+                  "team": "MCI",
+                  "webName": "Gu\u00e9hi",
+                  "xp": 5.64
+                },
+                {
+                  "id": 399,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 2,
+                      "team": "IPS",
+                      "wasHome": true
+                    }
+                  ],
+                  "position": "MID",
+                  "team": "MCI",
+                  "webName": "Cherki",
+                  "xp": 6.65
+                },
+                {
+                  "id": 411,
+                  "isCaptain": true,
+                  "opponents": [
+                    {
+                      "fdrRating": 2,
+                      "team": "IPS",
+                      "wasHome": true
+                    }
+                  ],
+                  "position": "FWD",
+                  "team": "MCI",
+                  "webName": "Haaland",
+                  "xp": 8.85
+                },
+                {
+                  "id": 449,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 3,
+                      "team": "AVL",
+                      "wasHome": true
+                    }
+                  ],
+                  "position": "DEF",
+                  "team": "NEW",
+                  "webName": "Hall",
+                  "xp": 4.16
+                }
+              ],
+              "targetGw": 7,
+              "totalXp": 69.02
+            },
+            {
+              "players": [
+                {
+                  "id": 8,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 3,
+                      "team": "EVE",
+                      "wasHome": true
+                    }
+                  ],
+                  "position": "DEF",
+                  "team": "ARS",
+                  "webName": "Calafiori",
+                  "xp": 5.31
+                },
+                {
+                  "id": 12,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 3,
+                      "team": "EVE",
+                      "wasHome": true
+                    }
+                  ],
+                  "position": "MID",
+                  "team": "ARS",
+                  "webName": "Saka",
+                  "xp": 6.84
+                },
+                {
+                  "id": 31,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 3,
+                      "team": "EVE",
+                      "wasHome": true
+                    }
+                  ],
+                  "position": "DEF",
+                  "team": "ARS",
+                  "webName": "Konsa",
+                  "xp": 3.9
+                },
+                {
+                  "id": 68,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 4,
+                      "team": "MUN",
+                      "wasHome": false
+                    }
+                  ],
+                  "position": "MID",
+                  "team": "BOU",
+                  "webName": "Tavernier",
+                  "xp": 4.49
+                },
+                {
+                  "id": 109,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 4,
+                      "team": "LIV",
+                      "wasHome": false
+                    }
+                  ],
+                  "position": "GKP",
+                  "team": "BHA",
+                  "webName": "Verbruggen",
+                  "xp": 3.07
+                },
+                {
+                  "id": 124,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 4,
+                      "team": "LIV",
+                      "wasHome": false
+                    }
+                  ],
+                  "position": "MID",
+                  "team": "BHA",
+                  "webName": "Gro\u00df",
+                  "xp": 4.74
+                },
+                {
+                  "id": 165,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 2,
+                      "team": "TOT",
+                      "wasHome": true
+                    }
+                  ],
+                  "position": "FWD",
+                  "team": "CHE",
+                  "webName": "Jo\u00e3o Pedro",
+                  "xp": 5.13
+                },
+                {
+                  "id": 388,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 3,
+                      "team": "AVL",
+                      "wasHome": false
+                    }
+                  ],
+                  "position": "DEF",
+                  "team": "MCI",
+                  "webName": "Gu\u00e9hi",
+                  "xp": 4.47
+                },
+                {
+                  "id": 399,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 3,
+                      "team": "AVL",
+                      "wasHome": false
+                    }
+                  ],
+                  "position": "MID",
+                  "team": "MCI",
+                  "webName": "Cherki",
+                  "xp": 5.45
+                },
+                {
+                  "id": 411,
+                  "isCaptain": true,
+                  "opponents": [
+                    {
+                      "fdrRating": 3,
+                      "team": "AVL",
+                      "wasHome": false
+                    }
+                  ],
+                  "position": "FWD",
+                  "team": "MCI",
+                  "webName": "Haaland",
+                  "xp": 7.13
+                },
+                {
+                  "id": 449,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 3,
+                      "team": "CRY",
+                      "wasHome": false
+                    }
+                  ],
+                  "position": "DEF",
+                  "team": "NEW",
+                  "webName": "Hall",
+                  "xp": 4.07
+                }
+              ],
+              "targetGw": 8,
+              "totalXp": 61.73
+            },
+            {
+              "players": [
+                {
+                  "id": 8,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 4,
+                      "team": "LIV",
+                      "wasHome": false
+                    }
+                  ],
+                  "position": "DEF",
+                  "team": "ARS",
+                  "webName": "Calafiori",
+                  "xp": 4.14
+                },
+                {
+                  "id": 12,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 4,
+                      "team": "LIV",
+                      "wasHome": false
+                    }
+                  ],
+                  "position": "MID",
+                  "team": "ARS",
+                  "webName": "Saka",
+                  "xp": 6.15
+                },
+                {
+                  "id": 68,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 3,
+                      "team": "LEE",
+                      "wasHome": true
+                    }
+                  ],
+                  "position": "MID",
+                  "team": "BOU",
+                  "webName": "Tavernier",
+                  "xp": 4.78
+                },
+                {
+                  "id": 124,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 5,
+                      "team": "MCI",
+                      "wasHome": false
+                    }
+                  ],
+                  "position": "MID",
+                  "team": "BHA",
+                  "webName": "Gro\u00df",
+                  "xp": 4.44
+                },
+                {
+                  "id": 165,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 4,
+                      "team": "MUN",
+                      "wasHome": true
+                    }
+                  ],
+                  "position": "FWD",
+                  "team": "CHE",
+                  "webName": "Jo\u00e3o Pedro",
+                  "xp": 4.9
+                },
+                {
+                  "id": 268,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 3,
+                      "team": "AVL",
+                      "wasHome": false
+                    }
+                  ],
+                  "position": "MID",
+                  "team": "FUL",
+                  "webName": "King",
+                  "xp": 3.72
+                },
+                {
+                  "id": 388,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 3,
+                      "team": "BHA",
+                      "wasHome": true
+                    }
+                  ],
+                  "position": "DEF",
+                  "team": "MCI",
+                  "webName": "Gu\u00e9hi",
+                  "xp": 4.8
+                },
+                {
+                  "id": 399,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 3,
+                      "team": "BHA",
+                      "wasHome": true
+                    }
+                  ],
+                  "position": "MID",
+                  "team": "MCI",
+                  "webName": "Cherki",
+                  "xp": 5.77
+                },
+                {
+                  "id": 411,
+                  "isCaptain": true,
+                  "opponents": [
+                    {
+                      "fdrRating": 3,
+                      "team": "BHA",
+                      "wasHome": true
+                    }
+                  ],
+                  "position": "FWD",
+                  "team": "MCI",
+                  "webName": "Haaland",
+                  "xp": 7.59
+                },
+                {
+                  "id": 449,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 3,
+                      "team": "EVE",
+                      "wasHome": true
+                    }
+                  ],
+                  "position": "DEF",
+                  "team": "NEW",
+                  "webName": "Hall",
+                  "xp": 4.51
+                },
+                {
+                  "id": 496,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 2,
+                      "team": "CRY",
+                      "wasHome": true
+                    }
+                  ],
+                  "position": "GKP",
+                  "team": "TOT",
+                  "webName": "Kinsky",
+                  "xp": 3.16
+                }
+              ],
+              "targetGw": 9,
+              "totalXp": 61.55
+            },
+            {
+              "players": [
+                {
+                  "id": 8,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 2,
+                      "team": "HUL",
+                      "wasHome": true
+                    }
+                  ],
+                  "position": "DEF",
+                  "team": "ARS",
+                  "webName": "Calafiori",
+                  "xp": 5.09
+                },
+                {
+                  "id": 12,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 2,
+                      "team": "HUL",
+                      "wasHome": true
+                    }
+                  ],
+                  "position": "MID",
+                  "team": "ARS",
+                  "webName": "Saka",
+                  "xp": 6.91
+                },
+                {
+                  "id": 68,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 2,
+                      "team": "IPS",
+                      "wasHome": false
+                    }
+                  ],
+                  "position": "MID",
+                  "team": "BOU",
+                  "webName": "Tavernier",
+                  "xp": 4.94
+                },
+                {
+                  "id": 109,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 3,
+                      "team": "BRE",
+                      "wasHome": true
+                    }
+                  ],
+                  "position": "GKP",
+                  "team": "BHA",
+                  "webName": "Verbruggen",
+                  "xp": 3.38
+                },
+                {
+                  "id": 115,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 3,
+                      "team": "BRE",
+                      "wasHome": true
+                    }
+                  ],
+                  "position": "DEF",
+                  "team": "BHA",
+                  "webName": "De Cuyper",
+                  "xp": 4.88
+                },
+                {
+                  "id": 124,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 3,
+                      "team": "BRE",
+                      "wasHome": true
+                    }
+                  ],
+                  "position": "MID",
+                  "team": "BHA",
+                  "webName": "Gro\u00df",
+                  "xp": 5.35
+                },
+                {
+                  "id": 165,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 3,
+                      "team": "SUN",
+                      "wasHome": false
+                    }
+                  ],
+                  "position": "FWD",
+                  "team": "CHE",
+                  "webName": "Jo\u00e3o Pedro",
+                  "xp": 4.59
+                },
+                {
+                  "id": 388,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 3,
+                      "team": "NFO",
+                      "wasHome": false
+                    }
+                  ],
+                  "position": "DEF",
+                  "team": "MCI",
+                  "webName": "Gu\u00e9hi",
+                  "xp": 4.72
+                },
+                {
+                  "id": 399,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 3,
+                      "team": "NFO",
+                      "wasHome": false
+                    }
+                  ],
+                  "position": "MID",
+                  "team": "MCI",
+                  "webName": "Cherki",
+                  "xp": 5.44
+                },
+                {
+                  "id": 411,
+                  "isCaptain": true,
+                  "opponents": [
+                    {
+                      "fdrRating": 3,
+                      "team": "NFO",
+                      "wasHome": false
+                    }
+                  ],
+                  "position": "FWD",
+                  "team": "MCI",
+                  "webName": "Haaland",
+                  "xp": 7.06
+                },
+                {
+                  "id": 449,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 3,
+                      "team": "FUL",
+                      "wasHome": false
+                    }
+                  ],
+                  "position": "DEF",
+                  "team": "NEW",
+                  "webName": "Hall",
+                  "xp": 4.04
+                }
+              ],
+              "targetGw": 10,
+              "totalXp": 63.46
+            },
+            {
+              "players": [
+                {
+                  "id": 8,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 3,
+                      "team": "NEW",
+                      "wasHome": false
+                    }
+                  ],
+                  "position": "DEF",
+                  "team": "ARS",
+                  "webName": "Calafiori",
+                  "xp": 4.53
+                },
+                {
+                  "id": 12,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 3,
+                      "team": "NEW",
+                      "wasHome": false
+                    }
+                  ],
+                  "position": "MID",
+                  "team": "ARS",
+                  "webName": "Saka",
+                  "xp": 6.72
+                },
+                {
+                  "id": 68,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 3,
+                      "team": "NFO",
+                      "wasHome": true
+                    }
+                  ],
+                  "position": "MID",
+                  "team": "BOU",
+                  "webName": "Tavernier",
+                  "xp": 4.8
+                },
+                {
+                  "id": 109,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 2,
+                      "team": "HUL",
+                      "wasHome": false
+                    }
+                  ],
+                  "position": "GKP",
+                  "team": "BHA",
+                  "webName": "Verbruggen",
+                  "xp": 3.3
+                },
+                {
+                  "id": 115,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 2,
+                      "team": "HUL",
+                      "wasHome": false
+                    }
+                  ],
+                  "position": "DEF",
+                  "team": "BHA",
+                  "webName": "De Cuyper",
+                  "xp": 4.37
+                },
+                {
+                  "id": 124,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 2,
+                      "team": "HUL",
+                      "wasHome": false
+                    }
+                  ],
+                  "position": "MID",
+                  "team": "BHA",
+                  "webName": "Gro\u00df",
+                  "xp": 4.88
+                },
+                {
+                  "id": 165,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 3,
+                      "team": "LEE",
+                      "wasHome": true
+                    }
+                  ],
+                  "position": "FWD",
+                  "team": "CHE",
+                  "webName": "Jo\u00e3o Pedro",
+                  "xp": 4.86
+                },
+                {
+                  "id": 388,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 2,
+                      "team": "FUL",
+                      "wasHome": true
+                    }
+                  ],
+                  "position": "DEF",
+                  "team": "MCI",
+                  "webName": "Gu\u00e9hi",
+                  "xp": 5.21
+                },
+                {
                   "id": 399,
                   "isCaptain": false,
                   "opponents": [
@@ -52475,7 +52475,7 @@
                 }
               ],
               "targetGw": 11,
-              "totalXp": 63.31
+              "totalXp": 63.75
             }
           ],
           "xiByGw": [
@@ -52486,8 +52486,8 @@
               109,
               115,
               124,
-              40,
               165,
+              388,
               399,
               411,
               449
@@ -52499,8 +52499,8 @@
               68,
               109,
               124,
-              40,
               165,
+              388,
               399,
               411,
               449
@@ -52509,10 +52509,10 @@
               8,
               12,
               68,
-              115,
               124,
-              40,
               165,
+              268,
+              388,
               399,
               411,
               449,
@@ -52525,8 +52525,8 @@
               109,
               115,
               124,
-              40,
               165,
+              388,
               399,
               411,
               449
@@ -52538,8 +52538,8 @@
               109,
               115,
               124,
-              40,
               165,
+              388,
               399,
               411,
               449
@@ -52556,20 +52556,20 @@
           ],
           "hitCost": 0,
           "horizonGws": 5,
-          "netPoints": 312.58,
-          "points": 312.58,
+          "netPoints": 313.56,
+          "points": 313.56,
           "squad": [
             8,
             12,
             31,
             40,
+            68,
             109,
             115,
             124,
             165,
             268,
-            334,
-            399,
+            388,
             411,
             449,
             496,
@@ -52582,25 +52582,25 @@
                 "news": null,
                 "status": "a"
               },
-              "id": 399,
-              "position": "MID",
-              "price": 7.9,
+              "id": 388,
+              "position": "DEF",
+              "price": 6.0,
               "team": "MCI",
-              "webName": "Cherki"
+              "webName": "Gu\u00e9hi"
             }
           ],
           "transfersOut": [
             {
               "availability": {
-                "chance": 25,
-                "news": "Hamstring injury - 25% chance of playing",
-                "status": "d"
+                "chance": null,
+                "news": null,
+                "status": "a"
               },
-              "id": 368,
-              "position": "MID",
-              "price": 6.8,
-              "team": "LIV",
-              "webName": "Szoboszlai"
+              "id": 334,
+              "position": "DEF",
+              "price": 5.0,
+              "team": "LEE",
+              "webName": "Muharemovi\u0107"
             }
           ],
           "weeks": [
@@ -52635,6 +52635,21 @@
                   "team": "ARS",
                   "webName": "Saka",
                   "xp": 6.6
+                },
+                {
+                  "id": 68,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 3,
+                      "team": "SUN",
+                      "wasHome": true
+                    }
+                  ],
+                  "position": "MID",
+                  "team": "BOU",
+                  "webName": "Tavernier",
+                  "xp": 4.85
                 },
                 {
                   "id": 109,
@@ -52712,22 +52727,7 @@
                   "xp": 4.37
                 },
                 {
-                  "id": 268,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 2,
-                      "team": "HUL",
-                      "wasHome": true
-                    }
-                  ],
-                  "position": "MID",
-                  "team": "FUL",
-                  "webName": "King",
-                  "xp": 3.87
-                },
-                {
-                  "id": 399,
+                  "id": 388,
                   "isCaptain": false,
                   "opponents": [
                     {
@@ -52736,10 +52736,10 @@
                       "wasHome": true
                     }
                   ],
-                  "position": "MID",
+                  "position": "DEF",
                   "team": "MCI",
-                  "webName": "Cherki",
-                  "xp": 6.65
+                  "webName": "Gu\u00e9hi",
+                  "xp": 5.64
                 },
                 {
                   "id": 411,
@@ -52773,7 +52773,7 @@
                 }
               ],
               "targetGw": 7,
-              "totalXp": 66.7
+              "totalXp": 66.67
             },
             {
               "players": [
@@ -52821,6 +52821,21 @@
                   "team": "ARS",
                   "webName": "Konsa",
                   "xp": 3.9
+                },
+                {
+                  "id": 68,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 4,
+                      "team": "MUN",
+                      "wasHome": false
+                    }
+                  ],
+                  "position": "MID",
+                  "team": "BOU",
+                  "webName": "Tavernier",
+                  "xp": 4.49
                 },
                 {
                   "id": 109,
@@ -52883,22 +52898,7 @@
                   "xp": 5.13
                 },
                 {
-                  "id": 268,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 2,
-                      "team": "COV",
-                      "wasHome": false
-                    }
-                  ],
-                  "position": "MID",
-                  "team": "FUL",
-                  "webName": "King",
-                  "xp": 3.87
-                },
-                {
-                  "id": 399,
+                  "id": 388,
                   "isCaptain": false,
                   "opponents": [
                     {
@@ -52907,10 +52907,10 @@
                       "wasHome": false
                     }
                   ],
-                  "position": "MID",
+                  "position": "DEF",
                   "team": "MCI",
-                  "webName": "Cherki",
-                  "xp": 5.45
+                  "webName": "Gu\u00e9hi",
+                  "xp": 4.47
                 },
                 {
                   "id": 411,
@@ -52944,7 +52944,7 @@
                 }
               ],
               "targetGw": 8,
-              "totalXp": 61.63
+              "totalXp": 61.27
             },
             {
               "players": [
@@ -52979,19 +52979,19 @@
                   "xp": 6.15
                 },
                 {
-                  "id": 115,
+                  "id": 68,
                   "isCaptain": false,
                   "opponents": [
                     {
-                      "fdrRating": 5,
-                      "team": "MCI",
-                      "wasHome": false
+                      "fdrRating": 3,
+                      "team": "LEE",
+                      "wasHome": true
                     }
                   ],
-                  "position": "DEF",
-                  "team": "BHA",
-                  "webName": "De Cuyper",
-                  "xp": 3.41
+                  "position": "MID",
+                  "team": "BOU",
+                  "webName": "Tavernier",
+                  "xp": 4.78
                 },
                 {
                   "id": 124,
@@ -53054,7 +53054,7 @@
                   "xp": 3.72
                 },
                 {
-                  "id": 399,
+                  "id": 388,
                   "isCaptain": false,
                   "opponents": [
                     {
@@ -53063,10 +53063,10 @@
                       "wasHome": true
                     }
                   ],
-                  "position": "MID",
+                  "position": "DEF",
                   "team": "MCI",
-                  "webName": "Cherki",
-                  "xp": 5.77
+                  "webName": "Gu\u00e9hi",
+                  "xp": 4.8
                 },
                 {
                   "id": 411,
@@ -53115,7 +53115,7 @@
                 }
               ],
               "targetGw": 9,
-              "totalXp": 60.15
+              "totalXp": 60.55
             },
             {
               "players": [
@@ -53148,6 +53148,21 @@
                   "team": "ARS",
                   "webName": "Saka",
                   "xp": 6.91
+                },
+                {
+                  "id": 68,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 2,
+                      "team": "IPS",
+                      "wasHome": false
+                    }
+                  ],
+                  "position": "MID",
+                  "team": "BOU",
+                  "webName": "Tavernier",
+                  "xp": 4.94
                 },
                 {
                   "id": 109,
@@ -53225,22 +53240,7 @@
                   "xp": 4.59
                 },
                 {
-                  "id": 268,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 3,
-                      "team": "NEW",
-                      "wasHome": true
-                    }
-                  ],
-                  "position": "MID",
-                  "team": "FUL",
-                  "webName": "King",
-                  "xp": 4.0
-                },
-                {
-                  "id": 399,
+                  "id": 388,
                   "isCaptain": false,
                   "opponents": [
                     {
@@ -53249,10 +53249,10 @@
                       "wasHome": false
                     }
                   ],
-                  "position": "MID",
+                  "position": "DEF",
                   "team": "MCI",
-                  "webName": "Cherki",
-                  "xp": 5.44
+                  "webName": "Gu\u00e9hi",
+                  "xp": 4.72
                 },
                 {
                   "id": 411,
@@ -53286,7 +53286,7 @@
                 }
               ],
               "targetGw": 10,
-              "totalXp": 62.3
+              "totalXp": 62.52
             },
             {
               "players": [
@@ -53319,6 +53319,21 @@
                   "team": "ARS",
                   "webName": "Saka",
                   "xp": 6.72
+                },
+                {
+                  "id": 68,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 3,
+                      "team": "NFO",
+                      "wasHome": true
+                    }
+                  ],
+                  "position": "MID",
+                  "team": "BOU",
+                  "webName": "Tavernier",
+                  "xp": 4.8
                 },
                 {
                   "id": 109,
@@ -53396,22 +53411,7 @@
                   "xp": 4.86
                 },
                 {
-                  "id": 268,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 5,
-                      "team": "MCI",
-                      "wasHome": false
-                    }
-                  ],
-                  "position": "MID",
-                  "team": "FUL",
-                  "webName": "King",
-                  "xp": 3.29
-                },
-                {
-                  "id": 399,
+                  "id": 388,
                   "isCaptain": false,
                   "opponents": [
                     {
@@ -53420,10 +53420,10 @@
                       "wasHome": true
                     }
                   ],
-                  "position": "MID",
+                  "position": "DEF",
                   "team": "MCI",
-                  "webName": "Cherki",
-                  "xp": 5.97
+                  "webName": "Gu\u00e9hi",
+                  "xp": 5.21
                 },
                 {
                   "id": 411,
@@ -53457,20 +53457,20 @@
                 }
               ],
               "targetGw": 11,
-              "totalXp": 61.8
+              "totalXp": 62.55
             }
           ],
           "xiByGw": [
             [
               8,
               12,
+              68,
               109,
               115,
               124,
               40,
               165,
-              268,
-              399,
+              388,
               411,
               449
             ],
@@ -53478,24 +53478,24 @@
               8,
               12,
               31,
+              68,
               109,
               124,
               40,
               165,
-              268,
-              399,
+              388,
               411,
               449
             ],
             [
               8,
               12,
-              115,
+              68,
               124,
               40,
               165,
               268,
-              399,
+              388,
               411,
               449,
               496
@@ -53503,26 +53503,26 @@
             [
               8,
               12,
+              68,
               109,
               115,
               124,
               40,
               165,
-              268,
-              399,
+              388,
               411,
               449
             ],
             [
               8,
               12,
+              68,
               109,
               115,
               124,
               40,
               165,
-              268,
-              399,
+              388,
               411,
               449
             ]
@@ -53937,7 +53937,7 @@
     },
     "plan": [
       {
-        "bankAfter": 0.3,
+        "bankAfter": 0.9,
         "feasible": true,
         "ftAfter": 1,
         "ftBefore": 5,
@@ -53946,15 +53946,15 @@
           8,
           12,
           15,
-          109,
+          68,
           115,
           124,
-          249,
+          138,
           334,
+          385,
           388,
           399,
           411,
-          427,
           449,
           496,
           569
@@ -53979,11 +53979,23 @@
               "news": null,
               "status": "a"
             },
-            "id": 249,
+            "id": 138,
             "position": "FWD",
             "price": 5.7,
-            "team": "EVE",
-            "webName": "Barry"
+            "team": "BHA",
+            "webName": "Kostoulas"
+          },
+          {
+            "availability": {
+              "chance": null,
+              "news": null,
+              "status": "a"
+            },
+            "id": 385,
+            "position": "GKP",
+            "price": 5.0,
+            "team": "LEE",
+            "webName": "Trafford"
           },
           {
             "availability": {
@@ -54008,18 +54020,6 @@
             "price": 7.9,
             "team": "MCI",
             "webName": "Cherki"
-          },
-          {
-            "availability": {
-              "chance": null,
-              "news": null,
-              "status": "a"
-            },
-            "id": 427,
-            "position": "MID",
-            "price": 7.8,
-            "team": "MUN",
-            "webName": "Mbeumo"
           }
         ],
         "transfersOut": [
@@ -54049,6 +54049,18 @@
           },
           {
             "availability": {
+              "chance": null,
+              "news": null,
+              "status": "a"
+            },
+            "id": 109,
+            "position": "GKP",
+            "price": 4.6,
+            "team": "BHA",
+            "webName": "Verbruggen"
+          },
+          {
+            "availability": {
               "chance": 100,
               "news": null,
               "status": "a"
@@ -54070,21 +54082,9 @@
             "price": 5.6,
             "team": "FUL",
             "webName": "King"
-          },
-          {
-            "availability": {
-              "chance": 25,
-              "news": "Hamstring injury - 25% chance of playing",
-              "status": "d"
-            },
-            "id": 368,
-            "position": "MID",
-            "price": 6.8,
-            "team": "LIV",
-            "webName": "Szoboszlai"
           }
         ],
-        "weekXp": 70.53,
+        "weekXp": 70.59,
         "xi": [
           {
             "id": 8,
@@ -54132,19 +54132,19 @@
             "xp": 5.17
           },
           {
-            "id": 109,
+            "id": 68,
             "isCaptain": false,
             "opponents": [
               {
-                "fdrRating": 2,
-                "team": "CRY",
+                "fdrRating": 3,
+                "team": "SUN",
                 "wasHome": true
               }
             ],
-            "position": "GKP",
-            "team": "BHA",
-            "webName": "Verbruggen",
-            "xp": 3.59
+            "position": "MID",
+            "team": "BOU",
+            "webName": "Tavernier",
+            "xp": 4.85
           },
           {
             "id": 115,
@@ -54177,19 +54177,34 @@
             "xp": 5.4
           },
           {
-            "id": 249,
+            "id": 138,
             "isCaptain": false,
             "opponents": [
               {
-                "fdrRating": 4,
-                "team": "CHE",
+                "fdrRating": 2,
+                "team": "CRY",
                 "wasHome": true
               }
             ],
             "position": "FWD",
-            "team": "EVE",
-            "webName": "Barry",
-            "xp": 4.56
+            "team": "BHA",
+            "webName": "Kostoulas",
+            "xp": 4.61
+          },
+          {
+            "id": 385,
+            "isCaptain": false,
+            "opponents": [
+              {
+                "fdrRating": 4,
+                "team": "MUN",
+                "wasHome": true
+              }
+            ],
+            "position": "GKP",
+            "team": "LEE",
+            "webName": "Trafford",
+            "xp": 3.91
           },
           {
             "id": 388,
@@ -54235,26 +54250,11 @@
             "team": "MCI",
             "webName": "Haaland",
             "xp": 8.85
-          },
-          {
-            "id": 427,
-            "isCaptain": false,
-            "opponents": [
-              {
-                "fdrRating": 3,
-                "team": "LEE",
-                "wasHome": false
-              }
-            ],
-            "position": "MID",
-            "team": "MUN",
-            "webName": "Mbeumo",
-            "xp": 5.16
           }
         ]
       },
       {
-        "bankAfter": 0.2,
+        "bankAfter": 1.0,
         "feasible": true,
         "ftAfter": 1,
         "ftBefore": 1,
@@ -54263,18 +54263,18 @@
           8,
           12,
           15,
+          68,
           115,
           124,
-          249,
+          138,
           334,
+          385,
           388,
-          399,
           411,
           427,
           449,
           496,
-          569,
-          572
+          569
         ],
         "targetGw": 8,
         "transfersIn": [
@@ -54284,11 +54284,11 @@
               "news": null,
               "status": "a"
             },
-            "id": 572,
-            "position": "GKP",
-            "price": 4.7,
-            "team": "HUL",
-            "webName": "Tzolakis"
+            "id": 427,
+            "position": "MID",
+            "price": 7.8,
+            "team": "MUN",
+            "webName": "Mbeumo"
           }
         ],
         "transfersOut": [
@@ -54298,14 +54298,14 @@
               "news": null,
               "status": "a"
             },
-            "id": 109,
-            "position": "GKP",
-            "price": 4.6,
-            "team": "BHA",
-            "webName": "Verbruggen"
+            "id": 399,
+            "position": "MID",
+            "price": 7.9,
+            "team": "MCI",
+            "webName": "Cherki"
           }
         ],
-        "weekXp": 63.8,
+        "weekXp": 63.34,
         "xi": [
           {
             "id": 8,
@@ -54353,19 +54353,19 @@
             "xp": 5.35
           },
           {
-            "id": 115,
+            "id": 68,
             "isCaptain": false,
             "opponents": [
               {
                 "fdrRating": 4,
-                "team": "LIV",
+                "team": "MUN",
                 "wasHome": false
               }
             ],
-            "position": "DEF",
-            "team": "BHA",
-            "webName": "De Cuyper",
-            "xp": 3.84
+            "position": "MID",
+            "team": "BOU",
+            "webName": "Tavernier",
+            "xp": 4.49
           },
           {
             "id": 124,
@@ -54383,19 +54383,34 @@
             "xp": 4.74
           },
           {
-            "id": 572,
+            "id": 138,
+            "isCaptain": false,
+            "opponents": [
+              {
+                "fdrRating": 4,
+                "team": "LIV",
+                "wasHome": false
+              }
+            ],
+            "position": "FWD",
+            "team": "BHA",
+            "webName": "Kostoulas",
+            "xp": 4.08
+          },
+          {
+            "id": 385,
             "isCaptain": false,
             "opponents": [
               {
                 "fdrRating": 3,
-                "team": "BRE",
-                "wasHome": true
+                "team": "SUN",
+                "wasHome": false
               }
             ],
             "position": "GKP",
-            "team": "HUL",
-            "webName": "Tzolakis",
-            "xp": 3.71
+            "team": "LEE",
+            "webName": "Trafford",
+            "xp": 3.97
           },
           {
             "id": 388,
@@ -54411,21 +54426,6 @@
             "team": "MCI",
             "webName": "Gu\u00e9hi",
             "xp": 4.47
-          },
-          {
-            "id": 399,
-            "isCaptain": false,
-            "opponents": [
-              {
-                "fdrRating": 3,
-                "team": "AVL",
-                "wasHome": false
-              }
-            ],
-            "position": "MID",
-            "team": "MCI",
-            "webName": "Cherki",
-            "xp": 5.45
           },
           {
             "id": 411,
@@ -54475,7 +54475,7 @@
         ]
       },
       {
-        "bankAfter": 0.2,
+        "bankAfter": 0.9,
         "feasible": true,
         "ftAfter": 1,
         "ftBefore": 1,
@@ -54486,16 +54486,16 @@
           15,
           68,
           115,
-          249,
+          124,
+          138,
           334,
+          385,
           388,
           399,
           411,
-          427,
           449,
           496,
-          569,
-          572
+          569
         ],
         "targetGw": 9,
         "transfersIn": [
@@ -54505,11 +54505,11 @@
               "news": null,
               "status": "a"
             },
-            "id": 68,
+            "id": 399,
             "position": "MID",
-            "price": 6.1,
-            "team": "BOU",
-            "webName": "Tavernier"
+            "price": 7.9,
+            "team": "MCI",
+            "webName": "Cherki"
           }
         ],
         "transfersOut": [
@@ -54519,14 +54519,14 @@
               "news": null,
               "status": "a"
             },
-            "id": 124,
+            "id": 427,
             "position": "MID",
-            "price": 6.1,
-            "team": "BHA",
-            "webName": "Gro\u00df"
+            "price": 7.8,
+            "team": "MUN",
+            "webName": "Mbeumo"
           }
         ],
-        "weekXp": 63.65,
+        "weekXp": 62.23,
         "xi": [
           {
             "id": 8,
@@ -54589,34 +54589,49 @@
             "xp": 4.78
           },
           {
-            "id": 249,
+            "id": 124,
             "isCaptain": false,
             "opponents": [
               {
-                "fdrRating": 3,
-                "team": "NEW",
+                "fdrRating": 5,
+                "team": "MCI",
+                "wasHome": false
+              }
+            ],
+            "position": "MID",
+            "team": "BHA",
+            "webName": "Gro\u00df",
+            "xp": 4.44
+          },
+          {
+            "id": 138,
+            "isCaptain": false,
+            "opponents": [
+              {
+                "fdrRating": 5,
+                "team": "MCI",
                 "wasHome": false
               }
             ],
             "position": "FWD",
-            "team": "EVE",
-            "webName": "Barry",
-            "xp": 4.32
+            "team": "BHA",
+            "webName": "Kostoulas",
+            "xp": 3.79
           },
           {
-            "id": 572,
+            "id": 385,
             "isCaptain": false,
             "opponents": [
               {
-                "fdrRating": 2,
-                "team": "IPS",
-                "wasHome": true
+                "fdrRating": 3,
+                "team": "BOU",
+                "wasHome": false
               }
             ],
             "position": "GKP",
-            "team": "HUL",
-            "webName": "Tzolakis",
-            "xp": 3.98
+            "team": "LEE",
+            "webName": "Trafford",
+            "xp": 3.82
           },
           {
             "id": 388,
@@ -54664,21 +54679,6 @@
             "xp": 7.59
           },
           {
-            "id": 427,
-            "isCaptain": false,
-            "opponents": [
-              {
-                "fdrRating": 4,
-                "team": "CHE",
-                "wasHome": false
-              }
-            ],
-            "position": "MID",
-            "team": "MUN",
-            "webName": "Mbeumo",
-            "xp": 5.17
-          },
-          {
             "id": 449,
             "isCaptain": false,
             "opponents": [
@@ -54696,7 +54696,7 @@
         ]
       },
       {
-        "bankAfter": 0.2,
+        "bankAfter": 0.0,
         "feasible": true,
         "ftAfter": 1,
         "ftBefore": 1,
@@ -54705,18 +54705,18 @@
           8,
           12,
           15,
+          68,
           115,
           124,
-          249,
+          138,
+          229,
           334,
+          385,
           388,
           399,
           411,
-          427,
-          449,
           496,
-          569,
-          572
+          569
         ],
         "targetGw": 10,
         "transfersIn": [
@@ -54726,11 +54726,11 @@
               "news": null,
               "status": "a"
             },
-            "id": 124,
-            "position": "MID",
-            "price": 6.1,
-            "team": "BHA",
-            "webName": "Gro\u00df"
+            "id": 229,
+            "position": "DEF",
+            "price": 6.2,
+            "team": "EVE",
+            "webName": "Tarkowski"
           }
         ],
         "transfersOut": [
@@ -54740,14 +54740,14 @@
               "news": null,
               "status": "a"
             },
-            "id": 68,
-            "position": "MID",
-            "price": 6.1,
-            "team": "BOU",
-            "webName": "Tavernier"
+            "id": 449,
+            "position": "DEF",
+            "price": 5.3,
+            "team": "NEW",
+            "webName": "Hall"
           }
         ],
-        "weekXp": 65.63,
+        "weekXp": 65.66,
         "xi": [
           {
             "id": 8,
@@ -54795,6 +54795,21 @@
             "xp": 5.37
           },
           {
+            "id": 68,
+            "isCaptain": false,
+            "opponents": [
+              {
+                "fdrRating": 2,
+                "team": "IPS",
+                "wasHome": false
+              }
+            ],
+            "position": "MID",
+            "team": "BOU",
+            "webName": "Tavernier",
+            "xp": 4.94
+          },
+          {
             "id": 115,
             "isCaptain": false,
             "opponents": [
@@ -54825,7 +54840,7 @@
             "xp": 5.35
           },
           {
-            "id": 249,
+            "id": 229,
             "isCaptain": false,
             "opponents": [
               {
@@ -54834,25 +54849,25 @@
                 "wasHome": true
               }
             ],
-            "position": "FWD",
+            "position": "DEF",
             "team": "EVE",
-            "webName": "Barry",
-            "xp": 4.71
+            "webName": "Tarkowski",
+            "xp": 4.89
           },
           {
-            "id": 572,
+            "id": 385,
             "isCaptain": false,
             "opponents": [
               {
-                "fdrRating": 5,
-                "team": "ARS",
-                "wasHome": false
+                "fdrRating": 2,
+                "team": "TOT",
+                "wasHome": true
               }
             ],
             "position": "GKP",
-            "team": "HUL",
-            "webName": "Tzolakis",
-            "xp": 3.42
+            "team": "LEE",
+            "webName": "Trafford",
+            "xp": 3.95
           },
           {
             "id": 388,
@@ -54898,26 +54913,11 @@
             "team": "MCI",
             "webName": "Haaland",
             "xp": 7.06
-          },
-          {
-            "id": 427,
-            "isCaptain": false,
-            "opponents": [
-              {
-                "fdrRating": 3,
-                "team": "AVL",
-                "wasHome": true
-              }
-            ],
-            "position": "MID",
-            "team": "MUN",
-            "webName": "Mbeumo",
-            "xp": 5.62
           }
         ]
       },
       {
-        "bankAfter": 0.6,
+        "bankAfter": 1.3,
         "feasible": true,
         "ftAfter": 1,
         "ftBefore": 1,
@@ -54926,18 +54926,18 @@
           8,
           12,
           15,
+          68,
           112,
           115,
           124,
-          249,
+          138,
           334,
+          385,
           388,
           399,
           411,
-          427,
           496,
-          569,
-          572
+          569
         ],
         "targetGw": 11,
         "transfersIn": [
@@ -54961,11 +54961,11 @@
               "news": null,
               "status": "a"
             },
-            "id": 449,
+            "id": 229,
             "position": "DEF",
-            "price": 5.3,
-            "team": "NEW",
-            "webName": "Hall"
+            "price": 6.2,
+            "team": "EVE",
+            "webName": "Tarkowski"
           }
         ],
         "weekXp": 65.35,
@@ -55016,6 +55016,21 @@
             "xp": 5.22
           },
           {
+            "id": 68,
+            "isCaptain": false,
+            "opponents": [
+              {
+                "fdrRating": 3,
+                "team": "NFO",
+                "wasHome": true
+              }
+            ],
+            "position": "MID",
+            "team": "BOU",
+            "webName": "Tavernier",
+            "xp": 4.8
+          },
+          {
             "id": 115,
             "isCaptain": false,
             "opponents": [
@@ -55046,19 +55061,19 @@
             "xp": 4.88
           },
           {
-            "id": 572,
+            "id": 385,
             "isCaptain": false,
             "opponents": [
               {
-                "fdrRating": 3,
-                "team": "BHA",
-                "wasHome": true
+                "fdrRating": 4,
+                "team": "CHE",
+                "wasHome": false
               }
             ],
             "position": "GKP",
-            "team": "HUL",
-            "webName": "Tzolakis",
-            "xp": 3.68
+            "team": "LEE",
+            "webName": "Trafford",
+            "xp": 3.73
           },
           {
             "id": 388,
@@ -55106,21 +55121,6 @@
             "xp": 7.82
           },
           {
-            "id": 427,
-            "isCaptain": false,
-            "opponents": [
-              {
-                "fdrRating": 4,
-                "team": "LIV",
-                "wasHome": false
-              }
-            ],
-            "position": "MID",
-            "team": "MUN",
-            "webName": "Mbeumo",
-            "xp": 4.85
-          },
-          {
             "id": 112,
             "isCaptain": false,
             "opponents": [
@@ -55158,16 +55158,16 @@
       124,
       40,
       12,
+      68,
       268,
-      368,
       411,
       165
     ],
     "bench": [
       496,
+      569,
       31,
-      334,
-      368
+      334
     ],
     "players": [
       {
@@ -55849,7 +55849,7 @@
         "projectedPoints": 3.6,
         "provisional": true,
         "rateSource": "understat:La_liga",
-        "rationale": "3.6 proj \u2014 vHUL (FDR 2)",
+        "rationale": "3.6 proj, under the 3.6 XI cut \u2014 vHUL (FDR 2)",
         "recentPoints": [
           2,
           2,
@@ -55857,7 +55857,7 @@
           2,
           2
         ],
-        "role": "start",
+        "role": "bench",
         "sellPrice": 6.1,
         "team": "FUL",
         "webName": "Gonzalo",
@@ -56096,80 +56096,80 @@
       },
       {
         "availability": {
-          "chance": 25,
-          "news": "Hamstring injury - 25% chance of playing",
-          "status": "d"
+          "chance": null,
+          "news": null,
+          "status": "a"
         },
         "breakdown": {
-          "availabilityMultiplier": 0.25,
+          "availabilityMultiplier": 1.0,
           "components": {
-            "appearance": 0.4,
-            "assists": 0.13,
-            "bonus": 0.06,
-            "cards": -0.04,
-            "cleanSheet": 0.04,
-            "defensiveContribution": 0.09,
-            "goals": 0.3,
+            "appearance": 2.0,
+            "assists": 0.5,
+            "bonus": 0.78,
+            "cards": -0.35,
+            "cleanSheet": 0.29,
+            "defensiveContribution": 0.29,
+            "goals": 1.35,
             "goalsConceded": 0.0,
             "saves": 0.0
           },
-          "expectedMinutes": 77.4,
+          "expectedMinutes": 83.8,
           "minutesRisk": false,
           "opponents": [
             {
-              "attackAdjust": 1.217,
-              "cleanSheetProb": 0.215,
+              "attackAdjust": 1.121,
+              "cleanSheetProb": 0.29,
               "fdrRating": 3,
-              "lambdaAgainst": 1.54,
-              "lambdaFor": 1.76,
-              "team": "BRE",
-              "wasHome": false
+              "lambdaAgainst": 1.24,
+              "lambdaFor": 1.63,
+              "team": "SUN",
+              "wasHome": true
             }
           ],
-          "points": 0.98,
+          "points": 4.85,
           "provisional": false,
           "rateSource": "history"
         },
-        "code": 424876,
+        "code": 201658,
         "elementType": 3,
         "floorCeiling": {
           "bandProvisional": false,
-          "ceiling": 3.13,
-          "floor": 0.0
+          "ceiling": 7.0,
+          "floor": 2.7
         },
-        "id": 368,
+        "id": 68,
         "isCaptain": false,
         "isViceCaptain": false,
         "minutesRisk": false,
         "opponents": [
           {
-            "attackAdjust": 1.217,
-            "cleanSheetProb": 0.215,
+            "attackAdjust": 1.121,
+            "cleanSheetProb": 0.29,
             "fdrRating": 3,
-            "lambdaAgainst": 1.54,
-            "lambdaFor": 1.76,
-            "team": "BRE",
-            "wasHome": false
+            "lambdaAgainst": 1.24,
+            "lambdaFor": 1.63,
+            "team": "SUN",
+            "wasHome": true
           }
         ],
         "position": "MID",
-        "price": 6.8,
-        "projectedPoints": 0.98,
+        "price": 6.1,
+        "projectedPoints": 4.85,
         "provisional": false,
         "rateSource": "history",
-        "rationale": "1.0 proj, under the 3.6 XI cut \u2014 @BRE (FDR 3)",
+        "rationale": "4.8 proj \u2014 vSUN (FDR 3)",
         "recentPoints": [
-          4,
-          3,
-          3,
+          1,
+          10,
+          8,
           2,
-          null
+          1
         ],
-        "role": "bench",
-        "sellPrice": 6.8,
-        "team": "LIV",
-        "webName": "Szoboszlai",
-        "windowPoints": 4.9
+        "role": "start",
+        "sellPrice": 6.1,
+        "team": "BOU",
+        "webName": "Tavernier",
+        "windowPoints": 23.86
       },
       {
         "availability": {
@@ -56333,18 +56333,18 @@
       449,
       12,
       124,
+      68,
       40,
       268,
       411,
-      165,
-      569
+      165
     ],
-    "windowPoints": 315.85,
+    "windowPoints": 334.81,
     "yourBench": [
       496,
+      569,
       31,
-      334,
-      368
+      334
     ],
     "yourCaptainId": 411,
     "yourXi": [
@@ -56354,11 +56354,11 @@
       449,
       12,
       124,
+      68,
       40,
       268,
       411,
-      165,
-      569
+      165
     ]
   },
   "squadComponents": {
@@ -56450,17 +56450,6 @@
       "goalsConceded": -0.55,
       "saves": 0.0
     },
-    "368": {
-      "appearance": 0.4,
-      "assists": 0.13,
-      "bonus": 0.06,
-      "cards": -0.04,
-      "cleanSheet": 0.04,
-      "defensiveContribution": 0.09,
-      "goals": 0.3,
-      "goalsConceded": 0.0,
-      "saves": 0.0
-    },
     "40": {
       "appearance": 2.0,
       "assists": 0.5,
@@ -56516,6 +56505,17 @@
       "goalsConceded": 0.0,
       "saves": 0.0
     },
+    "68": {
+      "appearance": 2.0,
+      "assists": 0.5,
+      "bonus": 0.78,
+      "cards": -0.35,
+      "cleanSheet": 0.29,
+      "defensiveContribution": 0.29,
+      "goals": 1.35,
+      "goalsConceded": 0.0,
+      "saves": 0.0
+    },
     "8": {
       "appearance": 2.0,
       "assists": 0.28,
@@ -56533,9 +56533,9 @@
     {
       "bench": [
         496,
+        569,
         31,
-        334,
-        368
+        334
       ],
       "captainId": 411,
       "gameweek": 7,
@@ -56697,16 +56697,16 @@
           "provisional": false
         },
         {
-          "id": 368,
+          "id": 68,
           "minutesRisk": false,
           "opponents": [
             {
               "fdrRating": 3,
-              "team": "BRE",
-              "wasHome": false
+              "team": "SUN",
+              "wasHome": true
             }
           ],
-          "projectedPoints": 0.98,
+          "projectedPoints": 4.85,
           "provisional": false
         },
         {
@@ -56736,7 +56736,7 @@
           "provisional": true
         }
       ],
-      "points": 63.6,
+      "points": 64.9,
       "startingXi": [
         109,
         115,
@@ -56744,20 +56744,20 @@
         449,
         12,
         124,
+        68,
         40,
         268,
         411,
-        165,
-        569
+        165
       ],
       "viceCaptainId": 12
     },
     {
       "bench": [
         496,
+        115,
         569,
-        334,
-        368
+        334
       ],
       "captainId": 411,
       "gameweek": 8,
@@ -56919,16 +56919,16 @@
           "provisional": false
         },
         {
-          "id": 368,
+          "id": 68,
           "minutesRisk": false,
           "opponents": [
             {
-              "fdrRating": 3,
-              "team": "BHA",
-              "wasHome": true
+              "fdrRating": 4,
+              "team": "MUN",
+              "wasHome": false
             }
           ],
-          "projectedPoints": 1.03,
+          "projectedPoints": 4.49,
           "provisional": false
         },
         {
@@ -56958,16 +56958,16 @@
           "provisional": true
         }
       ],
-      "points": 60.0,
+      "points": 60.7,
       "startingXi": [
         109,
         8,
         449,
         31,
-        115,
         12,
         40,
         124,
+        68,
         268,
         411,
         165
@@ -56977,9 +56977,9 @@
     {
       "bench": [
         109,
+        569,
         334,
-        31,
-        368
+        31
       ],
       "captainId": 411,
       "gameweek": 9,
@@ -57141,16 +57141,16 @@
           "provisional": false
         },
         {
-          "id": 368,
+          "id": 68,
           "minutesRisk": false,
           "opponents": [
             {
-              "fdrRating": 4,
-              "team": "ARS",
+              "fdrRating": 3,
+              "team": "LEE",
               "wasHome": true
             }
           ],
-          "projectedPoints": 0.85,
+          "projectedPoints": 4.78,
           "provisional": false
         },
         {
@@ -57180,28 +57180,28 @@
           "provisional": true
         }
       ],
-      "points": 57.9,
+      "points": 59.2,
       "startingXi": [
         496,
         449,
         8,
         115,
         12,
+        68,
         40,
         124,
         268,
         411,
-        165,
-        569
+        165
       ],
       "viceCaptainId": 12
     },
     {
       "bench": [
         496,
+        569,
         31,
-        334,
-        368
+        334
       ],
       "captainId": 411,
       "gameweek": 10,
@@ -57363,16 +57363,16 @@
           "provisional": false
         },
         {
-          "id": 368,
+          "id": 68,
           "minutesRisk": false,
           "opponents": [
             {
-              "fdrRating": 3,
-              "team": "CRY",
+              "fdrRating": 2,
+              "team": "IPS",
               "wasHome": false
             }
           ],
-          "projectedPoints": 0.99,
+          "projectedPoints": 4.94,
           "provisional": false
         },
         {
@@ -57402,7 +57402,7 @@
           "provisional": true
         }
       ],
-      "points": 60.6,
+      "points": 61.8,
       "startingXi": [
         109,
         8,
@@ -57410,20 +57410,20 @@
         449,
         12,
         124,
+        68,
         40,
         268,
         411,
-        165,
-        569
+        165
       ],
       "viceCaptainId": 12
     },
     {
       "bench": [
         496,
+        31,
         569,
-        334,
-        368
+        334
       ],
       "captainId": 411,
       "gameweek": 11,
@@ -57585,16 +57585,16 @@
           "provisional": false
         },
         {
-          "id": 368,
+          "id": 68,
           "minutesRisk": false,
           "opponents": [
             {
-              "fdrRating": 4,
-              "team": "MUN",
+              "fdrRating": 3,
+              "team": "NFO",
               "wasHome": true
             }
           ],
-          "projectedPoints": 1.05,
+          "projectedPoints": 4.8,
           "provisional": false
         },
         {
@@ -57624,15 +57624,15 @@
           "provisional": true
         }
       ],
-      "points": 59.1,
+      "points": 60.6,
       "startingXi": [
         109,
         8,
         115,
         449,
-        31,
         12,
         124,
+        68,
         40,
         268,
         411,
@@ -57648,7 +57648,7 @@
   },
   "xiFloorCeiling": {
     "bandProvisional": false,
-    "ceiling": 71.79,
-    "floor": 55.51
+    "ceiling": 73.03,
+    "floor": 56.77
   }
 }
