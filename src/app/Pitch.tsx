@@ -36,8 +36,6 @@ const RING_FULL = 11; // xP that fills the ring
 
 /* ---------- pitch furniture ---------- */
 
-export { FieldMarkings } from "./PitchScene";
-
 export function OppChip({ opponents }: { opponents: OpponentLeg[] }) {
   if (!opponents.length) return <span className="text-[9px] text-ink-faint">— blank —</span>;
   return (

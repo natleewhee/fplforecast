@@ -7,8 +7,7 @@ import {
   type LivePayload,
   type TrackerView,
 } from "@/lib/liveBlend";
-import { countdown } from "@/lib/countdown";
-import type { GameweekReview } from "@/lib/snapshots";
+import { clockTime } from "@/lib/time";
 import { staleness } from "@/lib/staleness";
 import DuelMini from "./DuelMini";
 import LivePitch from "./LivePitch";
@@ -27,14 +26,6 @@ const BAND_CLASS: Record<TrackerView["band"], string> = {
   red: "chip chip-danger",
 };
 
-function hhmm(iso: string | null): string {
-  if (!iso) return "—";
-  const d = new Date(iso);
-  return Number.isNaN(d.getTime())
-    ? "—"
-    : d.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
-}
-
 type Polls = { cur: LivePayload | null; prev: LivePayload | null };
 
 function subscribeOnline(cb: () => void) {
@@ -49,13 +40,11 @@ const useOnline = () =>
   useSyncExternalStore(subscribeOnline, () => navigator.onLine, () => true);
 
 export default function LiveTracker({
-  lastGameweek,
   teamId,
   onActive,
 }: {
   // Told whenever matches go live or stop, so other cards can make way.
   onActive?: (active: boolean) => void;
-  lastGameweek: GameweekReview | null;
   // Set only while viewing a shared link that differs from the saved
   // cookie (AppShell's isViewingSharedLink) -- passed through explicitly
   // so this tab follows the URL's team, not whatever's saved, per the
@@ -156,12 +145,7 @@ export default function LiveTracker({
   // First load failed outright (no live payload at all) -- still show
   // whatever we have (last result, and the deadline once a payload lands).
   if (!polls.cur || !view) {
-    return (
-      <>
-        {error && <LoadFailed error={error} online={online} onRetry={() => void tick()} />}
-        <IdleTracker lastGameweek={lastGameweek} nextDeadline={null} now={now} />
-      </>
-    );
+    return error ? <LoadFailed error={error} online={online} onRetry={() => void tick()} /> : null;
   }
 
   const anyStarted = polls.cur.fixtures.some((f) => f.started);
@@ -173,9 +157,7 @@ export default function LiveTracker({
   // of nothing so the tab always has content, and hand the *planning* lead
   // back to the Squad/Scenarios tabs rather than a frozen live score.
   if (!active && (!anyStarted || polls.cur.dataChecked)) {
-    return (
-      <IdleTracker lastGameweek={lastGameweek} nextDeadline={polls.cur.nextDeadline} now={now} />
-    );
+    return null;
   }
 
   return (
@@ -188,52 +170,6 @@ export default function LiveTracker({
       now={now}
       online={online}
     />
-  );
-}
-
-/** What the Live tab shows outside a live window: last gameweek's final
- * result (if we have one) and a countdown to the next deadline (once the
- * live payload has told us when that is) -- so the tab always has something
- * to say rather than rendering nothing between gameweeks. */
-function IdleTracker({
-  lastGameweek,
-  nextDeadline,
-  now,
-}: {
-  lastGameweek: GameweekReview | null;
-  nextDeadline: string | null;
-  now: number;
-}) {
-  if (!lastGameweek && !nextDeadline) return null; // genuinely nothing to say yet
-
-  return (
-    <div className="panel rise space-y-3 p-4">
-      {nextDeadline && (
-        <div className="flex items-center justify-between">
-          <p className="eyebrow">Next deadline</p>
-          <p className="stat text-sm text-ink">{countdown(nextDeadline, now)}</p>
-        </div>
-      )}
-      {lastGameweek && lastGameweek.xiPoints != null && (
-        <div
-          className={`flex items-end gap-4 ${nextDeadline ? "border-t border-line pt-3" : ""}`}
-        >
-          <div>
-            <div className="stat text-3xl leading-none text-ink">{lastGameweek.xiPoints}</div>
-            <div className="eyebrow mt-1">GW{lastGameweek.gameweek} final</div>
-          </div>
-          <div className="space-y-0.5 text-xs text-ink-soft">
-            <div className="stat">
-              {lastGameweek.benchPoints ?? "—"}
-              <span className="ml-1 font-sans font-normal text-ink-faint">bench</span>
-            </div>
-            {lastGameweek.transfersCost > 0 && (
-              <div className="text-[var(--danger)]">−{lastGameweek.transfersCost} hit</div>
-            )}
-          </div>
-        </div>
-      )}
-    </div>
   );
 }
 
@@ -321,7 +257,7 @@ function TrackerPanel({
           )}
         </span>
         <span className="text-[11px] text-ink-faint">
-          {fresh.level === "ok" ? fresh.text : `updated ${hhmm(lastOk)}`}
+          {fresh.level === "ok" ? fresh.text : `updated ${clockTime(lastOk)}`}
         </span>
       </div>
 

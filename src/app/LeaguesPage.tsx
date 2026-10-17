@@ -5,6 +5,7 @@ import { Dropdown } from "./Dropdown";
 import DuelCard from "./DuelCard";
 import { SwordsIcon } from "./Icons";
 import { clearRival, readRival, saveRival, type Rival } from "@/lib/duelClient";
+import { readItem, writeItem } from "@/lib/storage";
 import LiveSquadPitch from "./LiveSquadPitch";
 import type { LeagueEntryRow, LeaguesResponse } from "./api/league/route";
 import type { LeagueSquadResponse } from "./api/league/squad/route";
@@ -341,12 +342,8 @@ export default function LeaguesPage({ teamId }: { teamId?: string | null } = {})
   const [duel, setDuel] = useState<{ entryId: number; name: string } | null>(null);
   const [remembered, setRemembered] = useState<Rival | null>(() => readRival());
   const [selectedId, setSelectedId] = useState<number | null>(() => {
-    try {
-      const stored = localStorage.getItem(STORAGE_KEY);
-      return stored ? Number(stored) : null;
-    } catch {
-      return null; // localStorage unavailable (private mode, etc) -- fall back to server default
-    }
+    const stored = readItem(STORAGE_KEY);
+    return stored ? Number(stored) : null; // none (or no storage): the server's default league
   });
 
   // Guards against a stale response landing after the user has already
@@ -396,11 +393,7 @@ export default function LeaguesPage({ teamId }: { teamId?: string | null } = {})
   const handleSelect = (leagueId: number) => {
     setSelectedId(leagueId);
     setLoading(true);
-    try {
-      localStorage.setItem(STORAGE_KEY, String(leagueId));
-    } catch {
-      // ignore -- selection just won't persist across visits
-    }
+    writeItem(STORAGE_KEY, String(leagueId)); // no storage: it just won't persist across visits
   };
 
   if (loading) {

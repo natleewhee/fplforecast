@@ -1,6 +1,7 @@
 "use client";
 
 import { useSyncExternalStore } from "react";
+import { readItem, writeItem } from "./storage";
 
 /* Whether pitch tokens show a player's photo or their shirt. One choice for
  * every pitch, remembered on this device; photos are the default. */
@@ -10,11 +11,7 @@ const KEY = "fpl-face-mode";
 const listeners = new Set<() => void>();
 
 function read(): FaceMode {
-  try {
-    return window.localStorage.getItem(KEY) === "shirt" ? "shirt" : "photo";
-  } catch {
-    return "photo";
-  }
+  return readItem(KEY) === "shirt" ? "shirt" : "photo";
 }
 
 function subscribe(cb: () => void) {
@@ -31,10 +28,6 @@ export function useFaceMode(): FaceMode {
 }
 
 export function setFaceMode(mode: FaceMode) {
-  try {
-    window.localStorage.setItem(KEY, mode);
-  } catch {
-    /* blocked storage: the choice just lasts until reload */
-  }
+  writeItem(KEY, mode); // blocked storage: the choice just lasts until reload
   listeners.forEach((l) => l());
 }

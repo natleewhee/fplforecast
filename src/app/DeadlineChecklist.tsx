@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import type { ChipStatus, Forecast } from "@/lib/snapshots";
 import { availabilityFlag } from "@/lib/availability";
-import { countdown } from "@/lib/countdown";
+import { countdown } from "@/lib/time";
 
 type RowStatus = "ok" | "amber" | "red" | "info";
 
@@ -118,7 +118,13 @@ export default function DeadlineChecklist({
         edge ? ` -- ${edge.label} (+${edge.points.toFixed(1)})` : ""
       }`;
 
-  const chipNames = (chips ?? []).filter((c) => c.remaining > 0).map((c) => c.name);
+  const chipsAvailable = (chips ?? [])
+    .filter((c) => c.remaining > 0)
+    .map((c) => (c.remaining > 1 ? `${c.name} ×${c.remaining}` : c.name));
+  const chipsUsed = (chips ?? []).filter((c) => c.remaining === 0).map((c) => c.name);
+  const chipsDetail = `${chipsAvailable.length ? chipsAvailable.join(", ") : "None remaining"}${
+    chipsUsed.length ? ` (used: ${chipsUsed.join(", ")})` : ""
+  }`;
 
   return (
     <div className="panel rise space-y-1 p-3 sm:p-4">
@@ -143,7 +149,7 @@ export default function DeadlineChecklist({
           <ChecklistRow
             status="info"
             label="Chips available"
-            detail={chipNames.length ? chipNames.join(", ") : "None remaining"}
+            detail={chipsDetail}
           />
         )}
       </div>

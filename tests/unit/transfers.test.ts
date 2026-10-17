@@ -1,7 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { dedupeTransfers, sameTransfer } from "../../src/lib/transfers.ts";
-import { countdown } from "../../src/lib/countdown.ts";
+import { countdown } from "../../src/lib/time.ts";
 
 test("a repeated out/in pair is dropped, the first is kept", () => {
   const list = [{ out: 1, in: 2 }, { out: 1, in: 2, note: "again" }, { out: 3, in: 4 }];

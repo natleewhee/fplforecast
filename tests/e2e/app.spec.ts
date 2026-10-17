@@ -670,3 +670,23 @@ test.describe("Match day", () => {
     await expect(page.getByTestId("duel")).toContainText("you vs Sam FC");
   });
 });
+
+test.describe("Screens say things once", () => {
+  test("the last gameweek's result lives in the recap, not also on the Squad and Live tabs", async ({ page }) => {
+    await mockLive(page, { current: "a" });
+    await open(page);
+    await expect(page.getByText(/GW\d+ result/)).toHaveCount(0);
+    await expect(page.getByText(/GW\d+ final/)).toHaveCount(0);
+    await expect(page.getByTestId("recap")).toContainText("GW6 recap");
+    await openTab(page, "Squad");
+    await expect(page.getByText(/GW\d+ result/)).toHaveCount(0);
+  });
+
+  test("chips are listed once on the Squad tab, in the deadline checklist", async ({ page }) => {
+    await mockLive(page, { current: "a" });
+    await open(page);
+    await openTab(page, "Squad");
+    await expect(page.getByText("Chips available")).toHaveCount(1);
+  });
+});
+

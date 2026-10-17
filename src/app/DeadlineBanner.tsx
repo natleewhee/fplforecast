@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { countdown } from "@/lib/countdown";
+import { countdown } from "@/lib/time";
 
 /* A one-line reminder under the team bar, on every tab, while a deadline is
  * ahead: how long is left, when it is in Singapore time, whether a transfer is

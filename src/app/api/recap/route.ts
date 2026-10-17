@@ -1,18 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import { buildRecap, type Recap, type RecapInputs } from "@/lib/recap";
+import { fpl as fplFetch } from "@/lib/fplApi";
 import { resolveTeamIdFromRequest } from "@/lib/teamId";
 
-const FPL = "https://fantasy.premierleague.com/api";
 const REVALIDATE = 300; // a finished gameweek barely changes
-
-async function fpl<T>(path: string): Promise<T> {
-  const res = await fetch(`${FPL}${path}`, {
-    next: { revalidate: REVALIDATE },
-    headers: { "User-Agent": "fplforecast-live/1.0" },
-  });
-  if (!res.ok) throw new Error(`FPL ${path} -> ${res.status}`);
-  return (await res.json()) as T;
-}
+const fpl = <T,>(path: string) => fplFetch<T>(path, REVALIDATE);
 
 type Bootstrap = {
   events: { id: number; finished?: boolean; data_checked?: boolean; average_entry_score?: number | null }[];
