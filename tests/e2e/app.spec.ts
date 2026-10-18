@@ -692,3 +692,25 @@ test.describe("Screens say things once", () => {
   });
 });
 
+
+test.describe("Owner-only routes", () => {
+  // These hit the real routes (no page mocks). With no OWNER_SECRET set, or no
+  // unlock cookie, they must refuse before doing anything.
+  for (const [method, url] of [
+    ["post", "/api/rebuild"],
+    ["post", "/api/transfers"],
+    ["delete", "/api/transfers"],
+  ] as const) {
+    test(`${method.toUpperCase()} ${url} is locked without the owner key`, async ({ request }) => {
+      const res = await request[method](url, { data: { outId: 1, inId: 2, basedOnGw: 1 } });
+      expect(res.status()).toBe(401);
+      expect((await res.json()).locked).toBe(true);
+    });
+  }
+
+  test("a wrong key does not unlock", async ({ request }) => {
+    const res = await request.post("/api/owner", { data: { secret: "nope" } });
+    expect(res.status()).toBe(401);
+    expect((await (await request.get("/api/owner")).json()).owner).toBe(false);
+  });
+});
