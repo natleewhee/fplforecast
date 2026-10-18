@@ -31,6 +31,8 @@ export type LivePicks = {
   bench: number[]; // in autosub order (bench GK first)
   captainId: number | null;
   viceCaptainId: number | null;
+  /** FPL's active chip for the gameweek ("bboost", "3xc", ...), if any. */
+  chip?: string | null;
 };
 
 export type Position = "GKP" | "DEF" | "MID" | "FWD";
@@ -105,6 +107,18 @@ export type FplLive = { elements: FplLiveElement[] };
  * match that had ended reading as live. */
 export function isFixtureOver(f: { finished?: boolean; finished_provisional?: boolean } | undefined): boolean {
   return Boolean(f?.finished || f?.finished_provisional);
+}
+
+/** FPL's `started` flag can lag the real kickoff by minutes (the fixtures
+ * endpoint is cached and updated by hand), so a kickoff time in the past or
+ * minutes already on the clock also count as started. */
+export function hasStarted(
+  f: { started?: boolean; kickoff_time?: string | null } | undefined,
+  nowIso: string,
+): boolean {
+  if (!f) return false;
+  if (f.started) return true;
+  return f.kickoff_time != null && Date.parse(f.kickoff_time) <= Date.parse(nowIso);
 }
 
 export type FplFixture = {
@@ -228,7 +242,7 @@ export function buildLivePayload(args: {
       points: el.stats?.total_points ?? 0,
       minutes: el.stats?.minutes ?? 0,
       goalsConceded: el.stats?.goals_conceded ?? 0,
-      fixtureStarted: Boolean(f?.started),
+      fixtureStarted: hasStarted(f, now) || (el.stats?.minutes ?? 0) > 0,
       fixtureFinished: isFixtureOver(f),
       bonusPending: Boolean(f?.finished_provisional && !f?.finished),
       breakdown: explainBreakdown(el.explain),
@@ -276,7 +290,7 @@ export function buildLivePayload(args: {
   });
 
   const event = bootstrap.events.find((e) => e.id === gameweek);
-  const matchesLive = gwFixtures.some((f) => f.started && !isFixtureOver(f));
+  const matchesLive = gwFixtures.some((f) => hasStarted(f, now) && !isFixtureOver(f));
 
   const nowMs = Date.parse(now);
   const nextDeadline =
@@ -297,11 +311,12 @@ export function buildLivePayload(args: {
       bench,
       captainId: captain?.element ?? null,
       viceCaptainId: vice?.element ?? null,
+      chip: picks.active_chip ?? null,
     },
     squad,
     fixtures: gwFixtures.map((f) => ({
       kickoffTime: f.kickoff_time ?? null,
-      started: Boolean(f.started),
+      started: hasStarted(f, now),
       finished: isFixtureOver(f),
     })),
     componentXpByElement: components,
@@ -362,6 +377,8 @@ export type TrackerView = {
   estimatedRank: EstimatedRank | null;
   /** For each starter yet to play: who would come on if they end on zero minutes. */
   benchCover: BenchCoverItem[];
+  /** Bench Boost is active: the bench counts towards the score. */
+  benchBoost: boolean;
 };
 
 export type EstimatedRank = {
@@ -581,12 +598,15 @@ export function buildTracker(payload: LivePayload, prev: LivePayload | null): Tr
     projById[sp.id] = playerProjection(el, payload.componentXpByElement[String(sp.id)] ?? {}, status);
   }
 
-  const { lineup, subbedIn, subbedOut } = autosubs(
-    payload.picks.starters,
-    payload.picks.bench,
-    statusById,
-    positionById,
-  );
+  // Bench Boost: all fifteen count and nobody is subbed.
+  const benchBoost = payload.picks.chip === "bboost";
+  const { lineup, subbedIn, subbedOut } = benchBoost
+    ? {
+        lineup: [...payload.picks.starters, ...payload.picks.bench],
+        subbedIn: new Set<number>(),
+        subbedOut: new Set<number>(),
+      }
+    : autosubs(payload.picks.starters, payload.picks.bench, statusById, positionById);
   const inLineup = new Set(lineup);
   const benchSet = new Set(payload.picks.bench);
 
@@ -662,6 +682,7 @@ export function buildTracker(payload: LivePayload, prev: LivePayload | null): Tr
     armbandId,
     rows,
     estimatedRank: estimateRank(payload.rankCalibration, projectedTotal, payload.liveAverage),
-    benchCover: benchCover(payload.picks.starters, payload.picks.bench, statusById, positionById),
+    benchCover: benchBoost ? [] : benchCover(payload.picks.starters, payload.picks.bench, statusById, positionById),
+    benchBoost,
   };
 }

@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { buildTracker, isFixtureOver, type LivePayload } from "../../src/lib/liveBlend.ts";
+import { buildTracker, hasStarted, isFixtureOver, type LivePayload } from "../../src/lib/liveBlend.ts";
 
 const here = dirname(fileURLToPath(import.meta.url));
 const load = (name: string): LivePayload =>
@@ -72,4 +72,22 @@ test("benchCover: no cover when the only legal sub didn't play, and finished sta
   const cover = benchCover(starters, [12, 13], status, pos);
   assert.ok(!cover.some((c) => c.outId === 2)); // already played, nothing to cover
   assert.equal(cover.find((c) => c.outId === 1)?.inId, null); // bench keeper didn't play
+});
+
+test("hasStarted trusts a past kickoff when FPL's started flag lags", () => {
+  const now = "2026-10-18T15:35:00Z";
+  assert.equal(hasStarted({ started: false, kickoff_time: "2026-10-18T15:30:00Z" }, now), true);
+  assert.equal(hasStarted({ started: false, kickoff_time: "2026-10-18T16:30:00Z" }, now), false);
+  assert.equal(hasStarted({ started: true, kickoff_time: null }, now), true);
+  assert.equal(hasStarted(undefined, now), false);
+});
+
+test("Bench Boost counts the bench in the projected total and never subs", () => {
+  const base = load("live-a.json");
+  const off = buildTracker(base, null);
+  const on = buildTracker({ ...base, picks: { ...base.picks, chip: "bboost" } }, null);
+  assert.equal(on.benchBoost, true);
+  assert.equal(off.benchBoost, false);
+  assert.ok(on.projectedTotal >= off.projectedTotal);
+  assert.equal(on.rows.some((r) => r.subbedIn || r.subbedOut), false);
 });

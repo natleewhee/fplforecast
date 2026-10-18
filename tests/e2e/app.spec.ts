@@ -683,6 +683,8 @@ test.describe("Screens say things once", () => {
   });
 
   test("chips are listed once on the Squad tab, in the deadline checklist", async ({ page }) => {
+    // The checklist only appears in the last 24h before the deadline.
+    await page.clock.install({ time: Date.parse(latestDeadline()) - 5 * 3_600_000 });
     await mockLive(page, { current: "a" });
     await open(page);
     await openTab(page, "Squad");
