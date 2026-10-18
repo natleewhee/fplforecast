@@ -125,8 +125,9 @@ export async function GET(request: NextRequest) {
 
     // The effective (post-autosub) XI, same definition as /api/league's own
     // played/live/toPlay split -- see that route's own comment for why
-    // `!isBench` alone is wrong once a sub has fired.
-    const effectiveXi = rows.filter((r) => (!r.isBench && !r.subbedOut) || r.subbedIn);
+    // `!isBench` alone is wrong once a sub has fired, and wrong on Bench Boost.
+    const inLineup = new Set(tracker.rows.filter((r) => r.inLineup).map((r) => r.id));
+    const effectiveXi = rows.filter((r) => inLineup.has(r.id));
     const totalPoints = effectiveXi.reduce((sum, r) => sum + r.pointsSoFar, 0);
     const totalXp = effectiveXi.reduce((sum, r) => sum + r.pointsSoFar + r.remainingXp, 0);
 

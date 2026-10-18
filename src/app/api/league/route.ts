@@ -282,9 +282,8 @@ async function fetchLeague(
         const picks = await fpl<FplPicks>(`/entry/${row.entry}/event/${gameweek}/picks/`);
         const payload = buildLivePayload({ bootstrap, live, fixtures, picks, inputs, gameweek, now });
         // Autosubs are computed the same way as your own tracker, but a
-        // league entry's bench-boost/wildcard/free-hit chip use this
-        // gameweek (if any) isn't visible from the picks endpoint alone,
-        // so this can read slightly off for an entry playing a chip.
+        // league entry's chip is read from the picks (Bench Boost counts
+        // the bench, Triple Captain triples the armband).
         const tracker = buildTracker(payload, null);
         projectedXp = tracker.projectedTotal;
         chip = picks.active_chip ? CHIP_LABEL[picks.active_chip] ?? picks.active_chip : null;
@@ -298,7 +297,7 @@ async function fetchLeague(
         // counts a subbed-off starter's now-empty slot while dropping their
         // replacement entirely, silently mis-tallying any entry that had a
         // sub fire this gameweek.
-        const lineupRows = tracker.rows.filter((r) => (!r.isBench && !r.subbedOut) || r.subbedIn);
+        const lineupRows = tracker.rows.filter((r) => r.inLineup);
         playersPlayed = lineupRows.filter(
           (r) => r.status === "finished" || r.status === "offPitch" || r.status === "didNotPlay",
         ).length;

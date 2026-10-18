@@ -91,3 +91,21 @@ test("Bench Boost counts the bench in the projected total and never subs", () =>
   assert.ok(on.projectedTotal >= off.projectedTotal);
   assert.equal(on.rows.some((r) => r.subbedIn || r.subbedOut), false);
 });
+
+test("Triple Captain triples the armband player in rows and total", () => {
+  const base = load("live-a.json");
+  const off = buildTracker(base, null);
+  const on = buildTracker({ ...base, picks: { ...base.picks, chip: "3xc" } }, null);
+  const a = off.rows.find((r) => r.isArmband)!;
+  const b = on.rows.find((r) => r.isArmband)!;
+  assert.equal(b.contribution, (a.contribution / 2) * 3);
+  assert.ok(Math.abs(on.projectedTotal - off.projectedTotal - a.contribution / 2) < 1e-9);
+});
+
+test("Bench Boost puts every player in the lineup; otherwise only the post-autosub XI", () => {
+  const base = load("live-a.json");
+  const off = buildTracker(base, null);
+  const on = buildTracker({ ...base, picks: { ...base.picks, chip: "bboost" } }, null);
+  assert.equal(on.rows.every((r) => r.inLineup), true);
+  assert.equal(off.rows.filter((r) => r.inLineup).length, 11);
+});
