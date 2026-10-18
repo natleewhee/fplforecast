@@ -1,7 +1,13 @@
 # GafferFPL
 
-Personal FPL decision tool. One user, no login, mobile webapp. Full plan lives
-in the Ideaverse vault at `Efforts/Ongoing/FPL Forecaster/FPL Forecaster.md`.
+FPL decision tool for one manager at a time, as a mobile webapp. It gives a
+quick view of the current week: the planning view (captain, transfer, chips,
+doubts) before the deadline, and the live view (score, projection, what is
+still to come) after it. It is built for the owner's own team (`OWNER_TEAM_ID`);
+anyone can look up their own team by ID for the planning and live views, but
+only the owner can save transfers or start a rebuild. There are no league
+features by design (see `BACKLOG.md`). Full plan lives in the Ideaverse vault
+at `Efforts/Ongoing/FPL Forecaster/FPL Forecaster.md`.
 
 ## How it fits together
 
@@ -29,7 +35,11 @@ in the Ideaverse vault at `Efforts/Ongoing/FPL Forecaster/FPL Forecaster.md`.
 - `scripts/backtest.py` — leakage-guarded replay over the three archived
   seasons (`data/backtest/<run-id>.json`, gitignored). Run on demand, not in
   the daily Action.
-- `src/` — Next.js static app that reads the committed `data/` and renders it.
+- `src/` — Next.js app. The Squad and Scenarios tabs render the committed
+  `data/`; the Live tab and the league/recap views call FPL's public API live
+  through `src/app/api/*` (live, league, recap, photo) and blend it with the
+  forecast (`src/lib/liveBlend.ts`). A guest's forecast is computed on demand
+  (`/api/forecast`).
 - Each snapshot commit triggers a fresh Vercel deploy.
 
 ## Status
@@ -48,6 +58,17 @@ the multi-season archive (it is within-season for now); budget / selling-price
 arithmetic for transfers (see below); a minutes term inside the backtest;
 per-season tuning of the baseline component weights.
 
+## Live scoring
+
+`src/lib/liveBlend.ts` builds the Live tab: autosubs, captain (x2, x3 on Triple
+Captain), Bench Boost (all 15 count), double gameweeks (fixtures kept per
+club), and the transfer hit (shown net, with the gross figure beside it).
+Autosubs are provisional until the gameweek is data-checked, and the app says
+so. To check the maths against FPL, capture finished gameweeks with
+`node scripts/capture-reconcile.mjs <teamId> <gameweek>` (a normal week, a
+week with a hit, a double gameweek); `tests/unit/reconcile.test.ts` then
+asserts the computed score equals FPL's own.
+
 ## Transfers
 
 `/api/transfers` (used by the form on the page) commits a manual override to
@@ -56,6 +77,11 @@ redeploy. It does **not** validate budget or selling-price arithmetic — the
 plan doc calls that out as the single largest silent-corruption surface in
 the project, and it's deferred rather than gotten wrong. Treat the result as
 directionally right, not budget-verified.
+
+Both write routes (`/api/transfers`, `/api/rebuild`) are owner-only. They
+need an `OWNER_SECRET` env var in Vercel; the first time you save a transfer or
+press "Rebuild now" in a browser, the app asks for that key and remembers it in
+an httpOnly cookie. With `OWNER_SECRET` unset, both routes refuse everyone.
 
 Requires a `GITHUB_TOKEN` env var in Vercel: a fine-grained personal access
 token scoped to `natleewhee/fplforecast` with **Contents: read and write**
@@ -86,5 +112,6 @@ running the snapshotter.
 ## Deploying
 
 Import the repo into Vercel, framework preset Next.js. Add `GITHUB_TOKEN`
-(see Transfers above) to the project's environment variables for the
-transfer form to work — everything else runs without env vars.
+and `OWNER_SECRET` (see Transfers above) to the project's environment variables
+for the transfer form and "Rebuild now" to work — everything else runs without
+env vars.

@@ -2,6 +2,25 @@
 
 Deferred, agreed-on work not yet scheduled into a PR.
 
+## Direction (decided)
+
+A tool for one manager making decisions about their own team: a planning view
+before the deadline, a live view after it. Not a league product. Decided
+against: league routes/invite links/league recaps, saving transfers for guests,
+a deadline reminder push, and more share-card variants.
+
+Still open from the last review:
+- [ ] Capture real finished gameweeks for the reconciliation test (a normal
+  week, a week with a hit, a double gameweek). That also settles whether FPL's
+  `points` is gross or net of the hit.
+- [ ] Whether the par line (the gameweek average) is net or gross of hits;
+  until known, the band compares the gross projection.
+- [ ] Blank and postponed fixtures: a postponed match drops out of the
+  gameweek's fixtures, so bench cover can promise a sub FPL won't make.
+- [ ] A stale or failed FPL response shows the last good data with its age;
+  the season-rollover case (no current gameweek) is not handled specially.
+- [ ] Tests for the API routes that call FPL (live, recap, league).
+
 ## Design/quality skills to run next (from the impeccable/taste-skill/ui-ux-pro-max/compound-engineering review)
 
 Evaluated four external skill/plugin repos against fplforecast's current state (already run: impeccable's `detect` audit, `animate`, `colorize`, `typeset`, `layout`, `delight`, `critique`).
@@ -27,4 +46,4 @@ Gaps worth knowing about, ranked by value or built where the fix was genuinely s
 - [x] **A live overall-rank estimate** -- done (personal rank-calibration fit, surfaced in the live tracker).
 - [ ] **Price-change tracking (risers/fallers)** — LiveFPL/Scout both track this hourly. `bootstrap-static` already has `transfers_in_event`/`transfers_out_event`/`cost_change_event` per player (same snapshot as ownership above), so the raw signal exists — but turning net-transfer momentum into a "likely to rise/fall tonight" call needs a threshold model tuned against real price-change history, not a trivial display change.
 - [ ] **A visible "why" for the model's numbers** — Scout's stats hub lets managers explore the underlying xG/xA/BPS data themselves. fplforecast's engine already ingests Understat data (`scripts/ingest_understat.py`) and computes a per-player component breakdown (`squadComponents` — appearance/goals/assists/bonus/etc., already used by the live tracker's blend), but that breakdown is never shown for the *forecast* number itself, only for live in-match points. Could reuse the same breakdown UI to make "why does the model rate this player" inspectable, not just trust-the-number.
-- **Skipped, deliberately**: forums/community discussion, captaincy polls, article-driven pundit advice. This is a single-manager personal tool, not a media site — a social/content layer is out of scope, not a gap.
+- **Skipped, deliberately**: forums/community discussion, captaincy polls, article-driven pundit advice. This is a single-manager tool, not a media site — a social/content layer is out of scope, not a gap.
