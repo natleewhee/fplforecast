@@ -352,6 +352,7 @@ export type TrackerRow = {
   expectedXp: number; // the model's full-match xP before kickoff (x2 for the armband), the bar to beat
   isBench: boolean;
   isArmband: boolean;
+  inLineup: boolean; // counts towards the score: the post-autosub XI, or all 15 on Bench Boost
   isViceCaptain: boolean; // the named vice (the armband passes to them only if the captain doesn't play)
   subbedIn: boolean;
   subbedOut: boolean;
@@ -627,10 +628,13 @@ export function buildTracker(payload: LivePayload, prev: LivePayload | null): Tr
     armbandId = viceCaptainId;
   }
 
+  // Triple Captain triples the armband; otherwise it doubles.
+  const armbandMult = payload.picks.chip === "3xc" ? 3 : 2;
+
   let projectedTotal = 0;
   for (const id of lineup) {
     const contribution = projById[id]?.contribution ?? 0;
-    projectedTotal += id === armbandId ? contribution * 2 : contribution;
+    projectedTotal += id === armbandId ? contribution * armbandMult : contribution;
   }
 
   const par = payload.liveAverage + payload.parMargin;
@@ -644,7 +648,7 @@ export function buildTracker(payload: LivePayload, prev: LivePayload | null): Tr
 
   const rows: TrackerRow[] = payload.squad.map((sp) => {
     const proj = projById[sp.id];
-    const multiplier = sp.id === armbandId ? 2 : 1;
+    const multiplier = sp.id === armbandId ? armbandMult : 1;
     return {
       id: sp.id,
       webName: sp.webName,
@@ -657,6 +661,7 @@ export function buildTracker(payload: LivePayload, prev: LivePayload | null): Tr
       contribution: proj.contribution * multiplier,
       expectedXp: remainingXp(payload.componentXpByElement[String(sp.id)] ?? {}, 1, false) * multiplier,
       isBench: benchSet.has(sp.id),
+      inLineup: inLineup.has(sp.id),
       isArmband: sp.id === armbandId,
       isViceCaptain: sp.id === viceCaptainId,
       subbedIn: subbedIn.has(sp.id),
