@@ -159,3 +159,63 @@ test("the transfer hit is carried to the tracker view, outside the projection", 
   assert.equal(without.hit, 0);
   assert.equal(withHit.projectedTotal, without.projectedTotal);
 });
+
+// Blank gameweek: club 1 has no fixture; club 2 (ARS) plays and has finished.
+function blankPayload(opts: { captainBlank: boolean; omitFromLive?: boolean; noFixtures?: boolean }) {
+  const el = (id: number, team: number, type: number, name: string) => ({ id, team, element_type: type, web_name: name, code: id });
+  const pick = (element: number, position: number, extra = {}) => ({
+    element, position, multiplier: 1, is_captain: false, is_vice_captain: false, ...extra,
+  });
+  const gk = [el(1, 2, 1, "G1"), el(2, 2, 1, "G2")];
+  const outfield = Array.from({ length: 13 }, (_, i) => el(10 + i, i === 0 ? 1 : 2, i < 4 ? 2 : i < 9 ? 3 : 4, `P${i}`));
+  const squad = [...gk, ...outfield]; // 2 GK, 4 DEF, 5 MID, 4 FWD
+  // Starting XI: GK, 4 DEF, 4 MID, 2 FWD. Bench: GK, MID, FWD, FWD.
+  const order = [1, 10, 11, 12, 13, 14, 15, 16, 17, 19, 20, 2, 18, 21, 22];
+  const picks = order.map((id, i) =>
+    pick(id, i + 1, id === 10 ? { is_captain: opts.captainBlank } : id === 11 ? { is_vice_captain: opts.captainBlank } : {}),
+  );
+  const fixture = {
+    event: 9, id: 1, team_h: 2, team_a: 3, kickoff_time: "2026-10-17T14:00:00Z",
+    started: true, finished: true, finished_provisional: true, team_h_difficulty: 3, team_a_difficulty: 3,
+  };
+  return buildLivePayload({
+    bootstrap: {
+      events: [{ id: 9, is_current: true, deadline_time: "2026-10-17T10:00:00Z" }],
+      elements: squad,
+      teams: [{ id: 1, short_name: "BLK" }, { id: 2, short_name: "ARS" }, { id: 3, short_name: "LIV" }],
+    } as never,
+    live: {
+      elements: squad
+        .filter((e) => !(opts.omitFromLive && e.team === 1))
+        .map((e) => ({ id: e.id, stats: { total_points: e.team === 1 ? 0 : 2, minutes: e.team === 1 ? 0 : 90, goals_conceded: 0 } })),
+    },
+    fixtures: (opts.noFixtures ? [] : [fixture]) as never,
+    picks: { picks },
+    inputs: { componentXpByElement: {}, parMargin: 0, marginProvisional: false, parBuffer: 4, parBufferProvisional: 8, rankCalibration: null },
+    gameweek: 9,
+    now: "2026-10-19T12:00:00Z",
+  });
+}
+
+test("a starter whose club has no match is 'did not play' and a bench player covers", () => {
+  const view = buildTracker(blankPayload({ captainBlank: false }), null);
+  const blank = view.rows.find((r) => r.id === 10)!;
+  assert.equal(blank.status, "didNotPlay");
+  assert.equal(blank.subbedOut, true);
+  assert.equal(view.rows.filter((r) => r.subbedIn).length, 1);
+});
+
+test("a blank captain passes the armband to the vice-captain", () => {
+  const view = buildTracker(blankPayload({ captainBlank: true }), null);
+  assert.equal(view.armbandId, 11);
+});
+
+test("the blank rule holds even if FPL's live feed omits the player", () => {
+  const view = buildTracker(blankPayload({ captainBlank: false, omitFromLive: true }), null);
+  assert.equal(view.rows.find((r) => r.id === 10)!.status, "didNotPlay");
+});
+
+test("with no fixtures loaded at all nobody is blanked", () => {
+  const view = buildTracker(blankPayload({ captainBlank: false, noFixtures: true }), null);
+  assert.equal(view.rows.find((r) => r.id === 10)!.status, "notStarted");
+});
