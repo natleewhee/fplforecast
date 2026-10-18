@@ -53,7 +53,7 @@ async function mockLive(page: Page, poll: { current: "a" | "b" }) {
 
 /** Opens the app and waits for the Live tab's pitch (it appears after the first poll). */
 async function open(page: Page) {
-  await page.goto("/");
+  await page.goto("/?tab=live"); // the app opens on Squad before the deadline; most tests start on Live
   await page.getByRole("button", { name: /^Van Dijk,/ }).waitFor();
 }
 
@@ -683,7 +683,6 @@ test.describe("Screens say things once", () => {
   });
 
   test("chips are listed once on the Squad tab, in the deadline checklist", async ({ page }) => {
-    // The checklist only appears in the last 24h before the deadline.
     await page.clock.install({ time: Date.parse(latestDeadline()) - 5 * 3_600_000 });
     await mockLive(page, { current: "a" });
     await open(page);
@@ -692,3 +691,31 @@ test.describe("Screens say things once", () => {
   });
 });
 
+
+test.describe("Opens on the right view for the week", () => {
+  const activeTab = (page: Page) => page.locator(".segment button[data-active='true']");
+
+  test("before the deadline it opens on Squad with the week's decisions", async ({ page }) => {
+    await page.clock.install({ time: Date.parse(latestDeadline()) - 3 * 24 * 3_600_000 });
+    await mockLive(page, { current: "a" });
+    await page.goto("/");
+    await expect(activeTab(page)).toHaveText("Squad");
+    await expect(page.getByText("THIS WEEK’S DECISIONS")).toBeVisible();
+  });
+
+  test("it flips to Live by itself when the deadline passes", async ({ page }) => {
+    await page.clock.install({ time: Date.parse(latestDeadline()) - 60_000 });
+    await mockLive(page, { current: "a" });
+    await page.goto("/");
+    await expect(activeTab(page)).toHaveText("Squad");
+    await page.clock.fastForward(120_000);
+    await expect(activeTab(page)).toHaveText("Live");
+  });
+
+  test("after the deadline it opens on Live", async ({ page }) => {
+    await page.clock.install({ time: Date.parse(latestDeadline()) + 3_600_000 });
+    await mockLive(page, { current: "a" });
+    await page.goto("/");
+    await expect(activeTab(page)).toHaveText("Live");
+  });
+});

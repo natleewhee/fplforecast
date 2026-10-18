@@ -658,6 +658,7 @@ export default function AppShell({
         )}
         <div className="pt-1">
           <AppTabs
+            deadline={forecast.deadlineTime}
             tabs={[
               { id: "live", label: "Live", content: liveTab },
               { id: "squad", label: "Squad", content: squadTab },
