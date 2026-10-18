@@ -10,10 +10,37 @@ const SWIPE_THRESHOLD_PX = 60;
  * where swipe isn't a thing) plus horizontal touch-drag between panes on
  * mobile. Renders all panes at once (translated off-screen, not unmounted)
  * so each tab's own state/polling isn't reset by switching tabs. */
-export default function AppTabs({ tabs }: { tabs: Tab[] }) {
+export default function AppTabs({ tabs, deadline }: { tabs: Tab[]; deadline?: string | null }) {
   const [active, setActive] = useState(0);
   const touchStartX = useRef<number | null>(null);
   const touchDeltaX = useRef(0);
+
+  // Which tab opens: ?tab=<id> if given, else the planning view (Squad) while the
+  // deadline is still ahead and the live view once it has passed. It also flips
+  // to Live by itself when the deadline passes while the page is open. Decided
+  // after mount, since "now" differs between the server render and the browser.
+  useEffect(() => {
+    const idx = (id: string | null) => tabs.findIndex((t) => t.id === id);
+    const deadlineMs = deadline ? Date.parse(deadline) : NaN;
+    const fromQuery = idx(new URLSearchParams(window.location.search).get("tab"));
+    const before = Number.isFinite(deadlineMs) && Date.now() < deadlineMs;
+    const start = fromQuery >= 0 ? fromQuery : idx(before ? "squad" : "live");
+    const startTimer = setTimeout(() => {
+      if (start >= 0) setActive(start);
+    }, 0);
+    const wait = deadlineMs - Date.now();
+    const flipTimer =
+      before && wait <= 2 ** 31 - 1
+        ? setTimeout(() => {
+            setActive((a) => (tabs[a]?.id === "squad" && idx("live") >= 0 ? idx("live") : a));
+          }, wait)
+        : undefined;
+    return () => {
+      clearTimeout(startTimer);
+      clearTimeout(flipTimer);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- once per page load
+  }, []);
 
   // Other parts of the page can ask for a tab by id (see goToTab in duelClient).
   useEffect(() => {

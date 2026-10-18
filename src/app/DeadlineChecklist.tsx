@@ -38,8 +38,7 @@ function ChecklistRow({
   );
 }
 
-/** A "ready for the deadline?" summary, shown only in the last 24h before
- * targetGameweek's deadline -- pulls together decisions otherwise spread
+/** The Squad tab's quick view before targetGameweek's deadline -- pulls together decisions otherwise spread
  * across the Squad and Scenarios tabs (captain, injury risk, bench order,
  * whether to use a transfer, chips) into one glance. Reflects the last
  * daily forecast build, not real-time news -- see the "as of" line. */
@@ -63,11 +62,11 @@ export default function DeadlineChecklist({
   const hoursLeft = diffMs / (60 * 60 * 1000);
   // Hidden once the deadline has passed (picks then reflect last gameweek's
   // squad until it finishes, per docs/solutions/snapshot-picks-window.md --
-  // showing "ready for the deadline?" against stale data would mislead) and
-  // outside the 24h window Nat chose when this was planned.
-  if (hoursLeft <= 0 || hoursLeft > 24) return null;
+  // showing "ready for the deadline?" against stale data would mislead). It
+  // shows for the whole planning week now, as the Squad tab's quick view.
+  if (hoursLeft <= 0) return null;
 
-  const countdownStatus: RowStatus = hoursLeft < 3 ? "red" : "amber";
+  const countdownStatus: RowStatus = hoursLeft < 3 ? "red" : hoursLeft < 24 ? "amber" : "info";
 
   const startingIds = new Set(forecast.squad.startingXi);
   const xiPlayers = forecast.squad.players.filter((p) => startingIds.has(p.id));
@@ -130,7 +129,7 @@ export default function DeadlineChecklist({
     <div className="panel rise space-y-1 p-3 sm:p-4">
       <div className="mb-1 flex items-center justify-between gap-2">
         <h2 className="font-mono text-[13px] font-bold tracking-[0.12em] text-ink">
-          BEFORE THE DEADLINE
+          THIS WEEK&rsquo;S DECISIONS
         </h2>
         <span
           className="chip"
