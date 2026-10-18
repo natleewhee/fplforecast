@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { buildRecap, type Recap, type RecapInputs } from "@/lib/recap";
-import { fpl as fplFetch } from "@/lib/fplApi";
+import { fpl as fplFetch, upstreamFailure } from "@/lib/fplApi";
 import { resolveTeamIdFromRequest } from "@/lib/teamId";
 
 const REVALIDATE = 300; // a finished gameweek barely changes
@@ -74,6 +74,7 @@ export async function GET(request: NextRequest) {
     });
     return NextResponse.json({ recap, gameweeks: finished } satisfies RecapResponse);
   } catch (err) {
-    return NextResponse.json({ error: (err as Error).message }, { status: 502 });
+    const { status, body } = upstreamFailure(err);
+    return NextResponse.json(body, { status });
   }
 }

@@ -31,6 +31,17 @@ test("a caller can ask for a longer cache", async () => {
 });
 
 test("a non-2xx response throws, naming the path and status", async () => {
+  stubFetch(500, {});
+  await assert.rejects(() => fpl("/entry/1/"), /FPL \/entry\/1\/ -> 500/);
+});
+
+test("a 503, or a non-JSON 200, is FPL updating rather than a plain failure", async () => {
+  const { FplUpdatingError, upstreamFailure, FPL_UPDATING_TEXT } = await import("../../src/lib/fplApi.ts");
   stubFetch(503, {});
-  await assert.rejects(() => fpl("/entry/1/"), /FPL \/entry\/1\/ -> 503/);
+  await assert.rejects(() => fpl("/bootstrap-static/"), FplUpdatingError);
+  globalThis.fetch = (async () =>
+    new Response("<html>The game is being updated.</html>", { status: 200 })) as typeof fetch;
+  await assert.rejects(() => fpl("/bootstrap-static/"), FplUpdatingError);
+  assert.deepEqual(upstreamFailure(new FplUpdatingError("/x")), { status: 503, body: { error: FPL_UPDATING_TEXT, updating: true } });
+  assert.deepEqual(upstreamFailure(new Error("boom")), { status: 502, body: { error: "boom" } });
 });

@@ -9,6 +9,7 @@ import {
 } from "@/lib/liveBlend";
 import { clockTime } from "@/lib/time";
 import { staleness } from "@/lib/staleness";
+import { FPL_UPDATING_TEXT } from "@/lib/fplApi";
 import DuelMini from "./DuelMini";
 import LivePitch from "./LivePitch";
 
@@ -64,7 +65,7 @@ export default function LiveTracker({
       const qs = teamId ? `?teamId=${teamId}` : "";
       const res = await fetch(`/api/live${qs}`, { cache: "no-store" });
       const json = await res.json();
-      if (!res.ok) throw new Error(json.error || `HTTP ${res.status}`);
+      if (!res.ok) throw new Error(json.updating ? FPL_UPDATING_TEXT : json.error || `HTTP ${res.status}`);
       setPolls((p) => ({ cur: json as LivePayload, prev: p.cur }));
       setError(null);
       setLastOk(new Date().toISOString());
@@ -179,7 +180,11 @@ function LoadFailed({ error, online, onRetry }: { error: string; online: boolean
   return (
     <div className="panel rise flex items-center justify-between gap-3 p-4" role="alert" data-testid="live-failed">
       <p className="text-xs text-[var(--warn)]">
-        {online ? `Couldn't load live data: ${error}` : "You're offline. Live data will load when you're back."}
+        {!online
+          ? "You're offline. Live data will load when you're back."
+          : error === FPL_UPDATING_TEXT
+            ? "FPL is updating for the new season. Live data comes back when it's done."
+            : `Couldn't load live data: ${error}`}
       </p>
       <button
         type="button"
