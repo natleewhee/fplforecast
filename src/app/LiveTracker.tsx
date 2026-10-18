@@ -230,7 +230,7 @@ function TrackerPanel({
     error,
     online,
   });
-  const starters = view.rows.filter((r) => !r.isBench || r.subbedIn);
+  const starters = view.rows.filter((r) => !r.isBench || r.subbedIn || view.benchBoost);
   const currentScore = starters.reduce((sum, r) => sum + r.pointsSoFar, 0);
 
   // Safety score: score above this and you're in the clear (green) --
