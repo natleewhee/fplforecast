@@ -16,7 +16,7 @@ export async function POST(req: NextRequest) {
   const res = NextResponse.json({ ok: true });
   res.cookies.set(OWNER_COOKIE, secret, {
     httpOnly: true,
-    secure: true,
+    secure: process.env.NODE_ENV === "production", // plain-http dev (a phone on the LAN) would drop a secure cookie
     sameSite: "strict",
     path: "/",
     maxAge: 60 * 60 * 24 * 180,
