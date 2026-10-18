@@ -517,8 +517,7 @@ test.describe("Recap card look", () => {
         }),
       );
       await mockLive(page, { current: "a" });
-      await page.goto("/");
-      await page.getByRole("button", { name: /^Van Dijk,/ }).waitFor();
+      await open(page);
       await openRecap(page);
       const img = page.getByTestId("recap-image");
       await expect(img).toBeVisible();
@@ -617,7 +616,7 @@ test.describe("Match day", () => {
         ? route.fulfill({ status: 502, contentType: "application/json", body: JSON.stringify({ error: "FPL is down" }) })
         : route.fulfill({ contentType: "application/json", body: fixture("live-a.json") }),
     );
-    await page.goto("/");
+    await page.goto("/?tab=live");
     const failed = page.getByTestId("live-failed");
     await expect(failed).toContainText("FPL is down");
     down = false;
@@ -691,9 +690,8 @@ test.describe("Screens say things once", () => {
   });
 });
 
-
 test.describe("Opens on the right view for the week", () => {
-  const activeTab = (page: Page) => page.locator(".segment button[data-active='true']");
+  const activeTab = (page: Page) => page.locator(".sticky .segment button[data-active='true']");
 
   test("before the deadline it opens on Squad with the week's decisions", async ({ page }) => {
     await page.clock.install({ time: Date.parse(latestDeadline()) - 3 * 24 * 3_600_000 });
@@ -717,5 +715,27 @@ test.describe("Opens on the right view for the week", () => {
     await mockLive(page, { current: "a" });
     await page.goto("/");
     await expect(activeTab(page)).toHaveText("Live");
+  });
+});
+
+test.describe("Owner-only routes", () => {
+  // These hit the real routes (no page mocks). With no OWNER_SECRET set, or no
+  // unlock cookie, they must refuse before doing anything.
+  for (const [method, url] of [
+    ["post", "/api/rebuild"],
+    ["post", "/api/transfers"],
+    ["delete", "/api/transfers"],
+  ] as const) {
+    test(`${method.toUpperCase()} ${url} is locked without the owner key`, async ({ request }) => {
+      const res = await request[method](url, { data: { outId: 1, inId: 2, basedOnGw: 1 } });
+      expect(res.status()).toBe(401);
+      expect((await res.json()).locked).toBe(true);
+    });
+  }
+
+  test("a wrong key does not unlock", async ({ request }) => {
+    const res = await request.post("/api/owner", { data: { secret: "nope" } });
+    expect(res.status()).toBe(401);
+    expect((await (await request.get("/api/owner")).json()).owner).toBe(false);
   });
 });

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { resolveTeamId, OWNER_TEAM_ID } from "@/lib/teamId";
+import { LOCKED_BODY, isOwnerRequest } from "@/lib/ownerAuth";
 import { sameTransfer, type PendingTransfer } from "@/lib/transfers";
 import { dispatchRebuild } from "@/lib/rebuildDispatch";
 import { REPO_BRANCH, REPO_NAME, REPO_OWNER } from "@/lib/repo";
@@ -59,16 +59,9 @@ async function triggerRebuild(): Promise<{ rebuild: Rebuild; hint?: string }> {
 }
 
 export async function POST(req: NextRequest) {
-  const teamId = resolveTeamId(req.cookies);
-  if (teamId !== OWNER_TEAM_ID) {
-    // This route writes straight to this repo (a git commit + redeploy) --
-    // never on behalf of a guest looking up someone else's team, however
-    // that out/in pair got into the request body.
-    return NextResponse.json(
-      { error: "Saving a transfer is only available for this app's own team." },
-      { status: 403 },
-    );
-  }
+  // This route writes straight to this repo (a git commit + redeploy), so
+  // it needs the owner key -- see ownerAuth.ts.
+  if (!isOwnerRequest(req)) return NextResponse.json(LOCKED_BODY, { status: 401 });
   try {
     const body = await req.json();
     const outId = Number(body.outId);
@@ -106,13 +99,7 @@ export async function POST(req: NextRequest) {
 }
 
 export async function DELETE(req: NextRequest) {
-  const teamId = resolveTeamId(req.cookies);
-  if (teamId !== OWNER_TEAM_ID) {
-    return NextResponse.json(
-      { error: "Clearing transfers is only available for this app's own team." },
-      { status: 403 },
-    );
-  }
+  if (!isOwnerRequest(req)) return NextResponse.json(LOCKED_BODY, { status: 401 });
   try {
     // With { outId, inId } remove just that transfer; with no body clear them all.
     const body = await req.json().catch(() => null);
