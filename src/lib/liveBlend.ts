@@ -270,6 +270,28 @@ export function buildLivePayload(args: {
     };
   }
 
+  // A player whose club has no match this gameweek (a blank, or a match
+  // postponed out of it) scores nothing and counts as having not played, so
+  // autosubs and the vice-captain's armband can apply. Keyed on the club, not
+  // on FPL's live feed, which may leave such a player out. Skipped when no
+  // fixtures loaded at all, so a failed fixtures fetch doesn't blank every club.
+  if (gwFixtures.length > 0) {
+    for (const p of picks.picks) {
+      const team = elementById.get(p.element)?.team;
+      if (team == null || (fixturesByTeam.get(team) ?? []).length > 0) continue;
+      const existing = liveByElement[p.element];
+      liveByElement[p.element] = {
+        points: existing?.points ?? 0,
+        minutes: 0,
+        goalsConceded: 0,
+        fixtureStarted: true,
+        fixtureFinished: true,
+        bonusPending: false,
+        breakdown: existing?.breakdown ?? [],
+      };
+    }
+  }
+
   const sorted = [...picks.picks].sort((a, b) => a.position - b.position);
   const starters = sorted.filter((p) => p.position <= 11).map((p) => p.element);
   const bench = sorted.filter((p) => p.position >= 12).map((p) => p.element);
