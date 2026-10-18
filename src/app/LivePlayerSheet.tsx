@@ -54,9 +54,9 @@ export default function LivePlayerSheet({
             ) : null}
             {statusText(row)}
           </p>
-          {row.otherOpponents.length > 0 && (
+          {(row.otherOpponents?.length ?? 0) > 0 && (
             <p className="mt-0.5 text-[11px] text-ink-faint">
-              Double gameweek · also {row.otherOpponents.join(", ")}
+              Double gameweek · also {row.otherOpponents!.join(", ")}
             </p>
           )}
         </div>
