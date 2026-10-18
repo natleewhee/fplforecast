@@ -276,14 +276,16 @@ function TrackerPanel({
 
       <div className="flex flex-wrap items-end gap-x-6 gap-y-3">
         <div>
-          <div className="stat text-4xl leading-none">{currentScore.toFixed(0)}</div>
-          <div className="eyebrow mt-1">current score</div>
+          <div className="stat text-4xl leading-none">{(currentScore - view.hit).toFixed(0)}</div>
+          <div className="eyebrow mt-1">
+            current score{view.hit > 0 ? ` · ${currentScore.toFixed(0)} − ${view.hit} hit` : ""}
+          </div>
         </div>
         <div>
           <div className="stat stat-glow text-4xl leading-none">
-            {view.projectedTotal.toFixed(1)}
+            {(view.projectedTotal - view.hit).toFixed(1)}
           </div>
-          <div className="eyebrow mt-1">projected GW total</div>
+          <div className="eyebrow mt-1">projected GW total{view.hit > 0 ? " · net of hit" : ""}</div>
         </div>
         {view.estimatedRank && (
           <div>
@@ -294,6 +296,12 @@ function TrackerPanel({
           </div>
         )}
       </div>
+
+      {!payload.dataChecked && view.rows.some((r) => r.subbedIn || r.subbedOut) && (
+        <p className="text-[11px] text-ink-faint" data-testid="autosub-note">
+          Auto-subs shown here are provisional: FPL confirms them when the gameweek ends.
+        </p>
+      )}
 
       <div className="flex flex-wrap items-center gap-2">
         <span className={BAND_CLASS[view.band]}>{bandStatus[view.band]}</span>

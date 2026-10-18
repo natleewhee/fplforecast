@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { buildTracker, hasStarted, isFixtureOver, type LivePayload } from "../../src/lib/liveBlend.ts";
+import { buildLivePayload, buildTracker, hasStarted, isFixtureOver, type LivePayload } from "../../src/lib/liveBlend.ts";
 
 const here = dirname(fileURLToPath(import.meta.url));
 const load = (name: string): LivePayload =>
@@ -108,4 +108,54 @@ test("Bench Boost puts every player in the lineup; otherwise only the post-autos
   const on = buildTracker({ ...base, picks: { ...base.picks, chip: "bboost" } }, null);
   assert.equal(on.rows.every((r) => r.inLineup), true);
   assert.equal(off.rows.filter((r) => r.inLineup).length, 11);
+});
+
+// A minimal double gameweek: club 1 (player 10) plays ARS on Sat (over) and LIV on Tue (not started).
+function dgwPayload(over: { first: boolean; second: boolean }, hit = 0) {
+  const fx = (id: number, h: number, a: number, kickoff: string, done: boolean) => ({
+    event: 9, id, team_h: h, team_a: a, kickoff_time: kickoff,
+    started: done, finished: done, finished_provisional: done,
+    team_h_difficulty: 3, team_a_difficulty: 3,
+  });
+  return buildLivePayload({
+    bootstrap: {
+      events: [{ id: 9, is_current: true, deadline_time: "2026-10-17T10:00:00Z" }],
+      elements: [{ id: 10, team: 1, element_type: 3, web_name: "Dbl", code: 1 }],
+      teams: [{ id: 1, short_name: "AAA" }, { id: 2, short_name: "ARS" }, { id: 3, short_name: "LIV" }],
+    } as never,
+    live: { elements: [{ id: 10, stats: { total_points: 7, minutes: 90, goals_conceded: 0 } }] },
+    fixtures: [
+      fx(2, 1, 3, "2026-10-21T19:00:00Z", over.second),
+      fx(1, 2, 1, "2026-10-18T14:00:00Z", over.first),
+    ] as never,
+    picks: {
+      picks: [{ element: 10, position: 1, multiplier: 1, is_captain: false, is_vice_captain: false }],
+      entry_history: { event_transfers_cost: hit },
+    },
+    inputs: { componentXpByElement: { "10": { appearance: 2 } }, parMargin: 0, marginProvisional: false, parBuffer: 4, parBufferProvisional: 8, rankCalibration: null },
+    gameweek: 9,
+    now: "2026-10-19T12:00:00Z",
+  });
+}
+
+test("double gameweek: between the matches the player waits for the second, keeping the points banked", () => {
+  const view = buildTracker(dgwPayload({ first: true, second: false }), null);
+  const row = view.rows[0];
+  assert.equal(row.status, "notStarted");
+  assert.equal(row.pointsSoFar, 7);
+  assert.equal(row.opponent, "LIV (H)");
+  assert.deepEqual(row.otherOpponents, ["ARS (A)"]);
+});
+
+test("double gameweek: finished only once both matches are over", () => {
+  const view = buildTracker(dgwPayload({ first: true, second: true }), null);
+  assert.equal(view.rows[0].status, "finished");
+});
+
+test("the transfer hit is carried to the tracker view, outside the projection", () => {
+  const withHit = buildTracker(dgwPayload({ first: true, second: true }, 4), null);
+  const without = buildTracker(dgwPayload({ first: true, second: true }, 0), null);
+  assert.equal(withHit.hit, 4);
+  assert.equal(without.hit, 0);
+  assert.equal(withHit.projectedTotal, without.projectedTotal);
 });
