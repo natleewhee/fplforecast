@@ -54,6 +54,11 @@ export default function LivePlayerSheet({
             ) : null}
             {statusText(row)}
           </p>
+          {row.otherOpponents.length > 0 && (
+            <p className="mt-0.5 text-[11px] text-ink-faint">
+              Double gameweek · also {row.otherOpponents.join(", ")}
+            </p>
+          )}
         </div>
         <div className="shrink-0 text-right">
           <div className="stat stat-glow text-3xl leading-none">{row.pointsSoFar.toFixed(0)}</div>

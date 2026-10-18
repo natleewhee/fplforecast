@@ -33,6 +33,8 @@ export type LivePicks = {
   viceCaptainId: number | null;
   /** FPL's active chip for the gameweek ("bboost", "3xc", ...), if any. */
   chip?: string | null;
+  /** Points paid for extra transfers this gameweek (FPL's event_transfers_cost). */
+  hit?: number;
 };
 
 export type Position = "GKP" | "DEF" | "MID" | "FWD";
@@ -49,6 +51,8 @@ export type LiveSquadPlayer = {
   isCaptain: boolean;
   isViceCaptain: boolean;
   opponent: string | null; // "CHE (H)" for this gameweek, null if no fixture
+  /** The club's other opponents this gameweek (a double gameweek), "ARS (A)" style. */
+  otherOpponents: string[];
   hasComponents: boolean; // false when the snapshot has no baked xP for this pick
   kickoffTime: string | null; // this gameweek's own fixture kickoff, for a not-yet-started player
   fdrRating: number | null; // FPL's 1 (easiest) .. 5 (hardest) for this gameweek's opponent
@@ -121,6 +125,15 @@ export function hasStarted(
   return f.kickoff_time != null && Date.parse(f.kickoff_time) <= Date.parse(nowIso);
 }
 
+/** The fixture a club's players are in right now: the first one not yet over
+ * (so between the two matches of a double gameweek it is the second), else
+ * the last. */
+export function currentFixture<T extends { finished?: boolean; finished_provisional?: boolean }>(
+  list: T[],
+): T | undefined {
+  return list.find((f) => !isFixtureOver(f)) ?? list[list.length - 1];
+}
+
 export type FplFixture = {
   event: number | null;
   started?: boolean;
@@ -133,7 +146,11 @@ export type FplFixture = {
   team_a_difficulty?: number | null;
 };
 type FplPick = { element: number; position: number; multiplier: number; is_captain: boolean; is_vice_captain: boolean };
-export type FplPicks = { picks: FplPick[]; active_chip?: string | null };
+export type FplPicks = {
+  picks: FplPick[];
+  active_chip?: string | null;
+  entry_history?: { event_transfers_cost?: number } | null;
+};
 
 const POSITION_BY_ELEMENT_TYPE: Record<number, Position> = { 1: "GKP", 2: "DEF", 3: "MID", 4: "FWD" };
 
@@ -227,24 +244,28 @@ export function buildLivePayload(args: {
   const teamName = new Map(bootstrap.teams.map((t) => [t.id, t.short_name]));
   const gwFixtures = fixtures.filter((f) => f.event === gameweek);
 
-  // fixture state per club
-  const fixtureByTeam = new Map<number, FplFixture>();
-  for (const f of gwFixtures) {
-    fixtureByTeam.set(f.team_h, f);
-    fixtureByTeam.set(f.team_a, f);
+  // Fixtures per club, in kickoff order -- a double gameweek gives a club two.
+  const fixturesByTeam = new Map<number, FplFixture[]>();
+  for (const f of [...gwFixtures].sort(
+    (a, b) => Date.parse(a.kickoff_time ?? "") - Date.parse(b.kickoff_time ?? "") || 0,
+  )) {
+    for (const team of [f.team_h, f.team_a]) fixturesByTeam.set(team, [...(fixturesByTeam.get(team) ?? []), f]);
   }
 
   const liveByElement: Record<number, LiveElement> = {};
   for (const el of live.elements) {
     const teamId = elementById.get(el.id)?.team ?? -1;
-    const f = fixtureByTeam.get(teamId);
+    const list = fixturesByTeam.get(teamId) ?? [];
+    const f = currentFixture(list);
     liveByElement[el.id] = {
       points: el.stats?.total_points ?? 0,
       minutes: el.stats?.minutes ?? 0,
       goalsConceded: el.stats?.goals_conceded ?? 0,
-      fixtureStarted: hasStarted(f, now) || (el.stats?.minutes ?? 0) > 0,
+      // Minutes already on the clock also mean "started", but only for a single
+      // fixture: in a double gameweek they may belong to the first match.
+      fixtureStarted: hasStarted(f, now) || (list.length <= 1 && (el.stats?.minutes ?? 0) > 0),
       fixtureFinished: isFixtureOver(f),
-      bonusPending: Boolean(f?.finished_provisional && !f?.finished),
+      bonusPending: list.some((x) => Boolean(x.finished_provisional && !x.finished)),
       breakdown: explainBreakdown(el.explain),
     };
   }
@@ -259,7 +280,8 @@ export function buildLivePayload(args: {
   const squad: LiveSquadPlayer[] = sorted.map((p) => {
     const meta = elementById.get(p.element);
     const teamId = meta?.team ?? -1;
-    const f = fixtureByTeam.get(teamId);
+    const list = fixturesByTeam.get(teamId) ?? [];
+    const f = currentFixture(list);
     let opponent: string | null = null;
     let fdrRating: number | null = null;
     if (f) {
@@ -281,6 +303,12 @@ export function buildLivePayload(args: {
       isCaptain: p.is_captain,
       isViceCaptain: p.is_vice_captain,
       opponent,
+      otherOpponents: list
+        .filter((x) => x !== f)
+        .map((x) => {
+          const h = x.team_h === teamId;
+          return `${teamName.get(h ? x.team_a : x.team_h) ?? "???"} (${h ? "H" : "A"})`;
+        }),
       hasComponents: Boolean(components[String(p.element)]),
       kickoffTime: f?.kickoff_time ?? null,
       fdrRating,
@@ -312,6 +340,7 @@ export function buildLivePayload(args: {
       captainId: captain?.element ?? null,
       viceCaptainId: vice?.element ?? null,
       chip: picks.active_chip ?? null,
+      hit: picks.entry_history?.event_transfers_cost ?? 0,
     },
     squad,
     fixtures: gwFixtures.map((f) => ({
@@ -344,6 +373,7 @@ export type TrackerRow = {
   webName: string;
   position: Position;
   opponent: string | null;
+  otherOpponents: string[];
   status: PlayerStatus;
   minutes: number;
   pointsSoFar: number;
@@ -380,6 +410,8 @@ export type TrackerView = {
   benchCover: BenchCoverItem[];
   /** Bench Boost is active: the bench counts towards the score. */
   benchBoost: boolean;
+  /** Points paid for transfers this gameweek: shown against the score, not in the projection. */
+  hit: number;
 };
 
 export type EstimatedRank = {
@@ -470,7 +502,10 @@ export function playerProjection(
   switch (status) {
     case "notStarted": {
       const remaining = remainingXp(components, 1, false);
-      return { pointsSoFar: 0, remainingXp: remaining, contribution: remaining };
+      // Banked points are 0 before a single match, but not between the two
+      // matches of a double gameweek.
+      const banked = el?.points ?? 0;
+      return { pointsSoFar: banked, remainingXp: remaining, contribution: banked + remaining };
     }
     case "playing": {
       const pointsSoFar = el?.points ?? 0;
@@ -654,6 +689,7 @@ export function buildTracker(payload: LivePayload, prev: LivePayload | null): Tr
       webName: sp.webName,
       position: sp.position,
       opponent: sp.opponent,
+      otherOpponents: sp.otherOpponents,
       status: statusById[sp.id],
       minutes: payload.liveByElement[sp.id]?.minutes ?? 0,
       pointsSoFar: proj.pointsSoFar * multiplier,
@@ -689,5 +725,6 @@ export function buildTracker(payload: LivePayload, prev: LivePayload | null): Tr
     estimatedRank: estimateRank(payload.rankCalibration, projectedTotal, payload.liveAverage),
     benchCover: benchBoost ? [] : benchCover(payload.picks.starters, payload.picks.bench, statusById, positionById),
     benchBoost,
+    hit: payload.picks.hit ?? 0,
   };
 }
