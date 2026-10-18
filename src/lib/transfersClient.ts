@@ -20,8 +20,25 @@ export type TransferResult = {
   duplicate: boolean;
 };
 
+/** Fetches an owner-only route. If the server says editing is locked, asks
+ * for the owner key once, unlocks this browser and retries. */
+async function ownerFetch(url: string, init: RequestInit): Promise<Response> {
+  const res = await fetch(url, init);
+  if (res.status !== 401) return res;
+  const locked = await res.clone().json().then((j) => Boolean(j?.locked)).catch(() => false);
+  if (!locked) return res;
+  const secret = typeof window !== "undefined" ? window.prompt("Owner key to unlock editing:") : null;
+  if (!secret) return res;
+  const unlock = await fetch("/api/owner", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ secret }),
+  });
+  return unlock.ok ? fetch(url, init) : unlock;
+}
+
 async function call(method: "POST" | "DELETE", body: unknown): Promise<TransferResult> {
-  const res = await fetch("/api/transfers", {
+  const res = await ownerFetch("/api/transfers", {
     method,
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(body),
@@ -43,7 +60,7 @@ export const removeTransfer = (outId: number, inId: number) => call("DELETE", { 
 
 /** The "Rebuild now" button's call. */
 export async function rebuildNow(): Promise<{ rebuild: Rebuild; hint?: string }> {
-  const res = await fetch("/api/rebuild", { method: "POST" });
+  const res = await ownerFetch("/api/rebuild", { method: "POST" });
   const json = await res.json();
   if (!res.ok) throw new Error(json.error || "Couldn't start a rebuild");
   return { rebuild: json.rebuild ?? "scheduled", hint: json.hint };
