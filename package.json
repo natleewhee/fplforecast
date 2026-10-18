@@ -9,7 +9,7 @@
     "start": "next start",
     "lint": "eslint",
     "typecheck": "next typegen && tsc --noEmit",
-    "test:unit": "node --experimental-strip-types --no-warnings --test tests/unit/*.test.ts",
+    "test:unit": "node --import ./tests/unit/register-alias.mjs --experimental-strip-types --no-warnings --test tests/unit/*.test.ts",
     "test:e2e": "playwright test",
     "test:fixtures": "node --experimental-strip-types --no-warnings tests/e2e/fixtures/make-live-fixtures.ts"
   },

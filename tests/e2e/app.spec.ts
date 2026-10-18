@@ -625,6 +625,19 @@ test.describe("Match day", () => {
     await expect(page.getByTestId("live-failed")).toHaveCount(0);
   });
 
+  test("while FPL is updating for a new season the tab says so, not 'something broke'", async ({ page }) => {
+    await page.route("**/api/live*", (route) =>
+      route.fulfill({
+        status: 503,
+        contentType: "application/json",
+        body: JSON.stringify({ error: "FPL is updating for the new season", updating: true }),
+      }),
+    );
+    await page.goto("/?tab=live");
+    await expect(page.getByTestId("live-failed")).toContainText("FPL is updating for the new season");
+    await expect(page.getByTestId("live-failed")).not.toContainText("Couldn't load");
+  });
+
   test("your last duel shows on the Live tab and resumes on Leagues", async ({ page }) => {
     await mockLive(page, { current: "a" });
     const squad = (entryId: number, pts: number) => ({

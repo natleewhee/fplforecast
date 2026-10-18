@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { fpl } from "@/lib/fplApi";
+import { fpl, upstreamFailure } from "@/lib/fplApi";
 import { loadLatestForecast, type Forecast } from "@/lib/snapshots";
 import {
   buildLivePayload,
@@ -55,6 +55,7 @@ export async function GET(req: NextRequest) {
     });
     return NextResponse.json(payload);
   } catch (err) {
-    return NextResponse.json({ error: (err as Error).message }, { status: 502 });
+    const { status, body } = upstreamFailure(err);
+    return NextResponse.json(body, { status });
   }
 }
