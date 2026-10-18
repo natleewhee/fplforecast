@@ -3,14 +3,9 @@
 import { PitchScene, type PitchMood } from "./PitchScene";
 import { FaceToggle, PlayerFace } from "./PlayerFace";
 import type { LeagueSquadResponse, LeagueSquadRow } from "./api/league/squad/route";
+import { ArmbandBadge, POSITION_DOT } from "./tokenParts";
 
 const ROWS = ["GKP", "DEF", "MID", "FWD"] as const;
-const POSITION_DOT: Record<string, string> = {
-  GKP: "var(--gkp)",
-  DEF: "var(--def)",
-  MID: "var(--mid)",
-  FWD: "var(--fwd)",
-};
 
 const STATUS_LABEL: Record<LeagueSquadRow["status"], string> = {
   notStarted: "to play",
@@ -62,14 +57,8 @@ function PlayerToken({ row, bench = false, diff = false }: { row: LeagueSquadRow
             DIFF
           </span>
         )}
-        {row.isArmband && (
-          <span className="armband armband-captain absolute -right-1 -top-1 h-4 w-4 text-[9px]">
-            C
-          </span>
-        )}
-        {!row.isArmband && row.isCaptain && (
-          <span className="armband absolute -right-1 -top-1 h-4 w-4 text-[9px] opacity-50">C</span>
-        )}
+        {row.isArmband && <ArmbandBadge role="captain" pop={false} />}
+        {!row.isArmband && row.isCaptain && <ArmbandBadge role="faded" pop={false} />}
       </div>
       <span className="mt-1 flex max-w-full items-center gap-1">
         <span

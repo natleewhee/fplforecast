@@ -11,6 +11,7 @@ import BenchCover from "./BenchCover";
 import { LiveFeed, NextUp } from "./LiveUpdates";
 import LivePlayerSheet, { statusText } from "./LivePlayerSheet";
 import { useLiveFx, type Float } from "./useLiveFx";
+import { ArmbandBadge } from "./tokenParts";
 
 /* The Live tab's floodlit night pitch: the eleven who count right now (an
  * auto-subbed-in bench player replaces whoever didn't play), each as a token
@@ -175,14 +176,7 @@ function Token({
           badgeClass={popped ? "fx-pop" : ""}
         />
         {(row.isArmband || row.isViceCaptain) && (
-          <span
-            key={row.isArmband ? "c" : "v"}
-            className={`armband fx-pop absolute -right-1 -top-1 h-4 w-4 text-[9px] ${
-              row.isArmband ? "armband-captain" : "armband-vice"
-            }`}
-          >
-            {row.isArmband ? "C" : "V"}
-          </span>
+          <ArmbandBadge key={row.isArmband ? "c" : "v"} role={row.isArmband ? "captain" : "vice"} />
         )}
         {(row.subbedIn || row.subbedOut) && (
           <span

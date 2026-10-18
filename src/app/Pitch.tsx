@@ -10,6 +10,7 @@ import { FormBars, Halo, meanFdr, RangeBar } from "./Shirt";
 import { FaceToggle, PlayerFace } from "./PlayerFace";
 import PreviewSheet from "./PreviewSheet";
 import ReplaceSheet, { type TransferTools } from "./ReplaceSheet";
+import { ArmbandBadge, POSITION_DOT } from "./tokenParts";
 
 function bandLabel(band: { floor: number; ceiling: number; bandProvisional: boolean } | null | undefined) {
   if (!band) return "";
@@ -24,12 +25,6 @@ function bandLabel(band: { floor: number; ceiling: number; bandProvisional: bool
 const MODEL_CAPTION =
   "This app's recommended XI and captain: scoring history, form and ICT, plus fixture difficulty and minutes risk.";
 
-const POSITION_DOT: Record<string, string> = {
-  GKP: "var(--gkp)",
-  DEF: "var(--def)",
-  MID: "var(--mid)",
-  FWD: "var(--fwd)",
-};
 const ROWS = ["GKP", "DEF", "MID", "FWD"];
 const fmtDelta = (n: number) => `${n >= 0 ? "+" : ""}${n.toFixed(1)}`;
 const RING_FULL = 11; // xP that fills the ring
@@ -154,14 +149,7 @@ function PlayerToken({
           badges={badges}
         />
         {(isCaptain || isVice) && (
-          <span
-            key={isCaptain ? "c" : "v"}
-            className={`armband fx-pop absolute -right-1 -top-1 h-4 w-4 text-[9px] ${
-              isCaptain ? "armband-captain" : "armband-vice"
-            }`}
-          >
-            {isCaptain ? "C" : "V"}
-          </span>
+          <ArmbandBadge key={isCaptain ? "c" : "v"} role={isCaptain ? "captain" : "vice"} />
         )}
       </div>
       <span className="mt-1 flex max-w-full items-center gap-1">
