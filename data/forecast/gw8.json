@@ -7,12 +7,12 @@
   },
   "captainEdge": {
     "label": "coin-flip",
-    "points": 0.46
+    "points": 0.47
   },
   "deadlineTime": "2026-10-23T17:30:00Z",
   "earlySeason": false,
   "effectiveGap": 5.0,
-  "generatedAt": "2026-10-18T17:07:36.602824+00:00",
+  "generatedAt": "2026-10-19T08:39:13.611475+00:00",
   "history": {
     "gameweeks": [
       {
@@ -112,11 +112,11 @@
         "gameweek": 7,
         "hit": 0,
         "modelVsBaseline": null,
-        "overallRank": 699277,
-        "points": 38,
-        "rank": 2504355,
+        "overallRank": 281546,
+        "points": 88,
+        "rank": 94164,
         "teamValue": 102.0,
-        "totalPoints": 454,
+        "totalPoints": 504,
         "transfers": 3
       }
     ],
@@ -159,9 +159,9 @@
   "lineupAgreement": 10,
   "marginProvisional": false,
   "nextGw": {
-    "deltaVsBaselineXi": 2.6,
+    "deltaVsBaselineXi": 2.7,
     "deltaVsNoChange": 11.4,
-    "points": 60.6
+    "points": 60.7
   },
   "overridesApplied": 3,
   "parBuffer": 4.0,
@@ -187,7 +187,7 @@
       "components": {
         "appearance": 2.0,
         "assists": 0.0,
-        "bonus": 0.38,
+        "bonus": 0.43,
         "cards": -0.02,
         "cleanSheet": 1.91,
         "defensiveContribution": 0.0,
@@ -196,7 +196,7 @@
         "saves": 0.38
       },
       "elementType": 1,
-      "form": 3.7,
+      "form": 4.3,
       "id": 1,
       "opponents": [
         [
@@ -250,13 +250,13 @@
         ]
       ],
       "perGameweek": [
-        4.28,
-        3.54,
-        4.07,
-        3.67,
-        3.6,
-        3.75,
-        3.85
+        4.33,
+        3.58,
+        4.12,
+        3.71,
+        3.64,
+        3.79,
+        3.89
       ],
       "position": "GKP",
       "price": 6.1,
@@ -267,10 +267,10 @@
         1,
         3
       ],
-      "selectedByPercent": 43.9,
+      "selectedByPercent": 44.0,
       "sellPrice": 6.1,
       "team": "ARS",
-      "total": 26.76,
+      "total": 27.06,
       "webName": "Raya"
     },
     {
@@ -475,7 +475,7 @@
       "components": {
         "appearance": 2.0,
         "assists": 0.15,
-        "bonus": 0.36,
+        "bonus": 0.33,
         "cards": -0.24,
         "cleanSheet": 1.91,
         "defensiveContribution": 0.72,
@@ -484,7 +484,7 @@
         "saves": 0.0
       },
       "elementType": 2,
-      "form": 4.0,
+      "form": 3.7,
       "id": 4,
       "opponents": [
         [
@@ -538,13 +538,13 @@
         ]
       ],
       "perGameweek": [
-        5.24,
-        4.12,
-        5.0,
-        4.44,
-        4.18,
-        4.53,
-        4.73
+        5.21,
+        4.1,
+        4.98,
+        4.41,
+        4.16,
+        4.5,
+        4.7
       ],
       "position": "DEF",
       "price": 7.9,
@@ -558,7 +558,7 @@
       "selectedByPercent": 21.1,
       "sellPrice": 7.9,
       "team": "ARS",
-      "total": 32.24,
+      "total": 32.06,
       "webName": "Gabriel"
     },
     {
@@ -638,7 +638,7 @@
         0.5,
         0.66,
         0.58,
-        0.51,
+        0.5,
         0.59,
         0.63
       ],
@@ -654,7 +654,7 @@
       "selectedByPercent": 0.7,
       "sellPrice": 6.5,
       "team": "ARS",
-      "total": 4.15,
+      "total": 4.14,
       "webName": "J.Timber"
     },
     {
@@ -762,7 +762,7 @@
       "code": 466075,
       "components": {
         "appearance": 2.0,
-        "assists": 0.3,
+        "assists": 0.31,
         "bonus": 0.32,
         "cards": -0.12,
         "cleanSheet": 1.91,
@@ -826,13 +826,13 @@
         ]
       ],
       "perGameweek": [
-        5.25,
-        4.09,
-        5.03,
-        4.47,
-        4.13,
-        4.54,
-        4.77
+        5.26,
+        4.1,
+        5.04,
+        4.48,
+        4.14,
+        4.55,
+        4.78
       ],
       "position": "DEF",
       "price": 6.0,
@@ -843,10 +843,10 @@
         1,
         9
       ],
-      "selectedByPercent": 53.4,
+      "selectedByPercent": 53.5,
       "sellPrice": 6.0,
       "team": "ARS",
-      "total": 32.28,
+      "total": 32.35,
       "webName": "Calafiori"
     },
     {
@@ -1050,12 +1050,12 @@
       "code": 223340,
       "components": {
         "appearance": 2.0,
-        "assists": 0.77,
-        "bonus": 0.61,
+        "assists": 0.78,
+        "bonus": 0.6,
         "cards": -0.08,
         "cleanSheet": 0.48,
         "defensiveContribution": 0.21,
-        "goals": 2.77,
+        "goals": 2.76,
         "goalsConceded": 0.0,
         "saves": 0.0
       },
@@ -1114,11 +1114,11 @@
         ]
       ],
       "perGameweek": [
-        6.76,
+        6.75,
         6.08,
         6.82,
         6.63,
-        5.98,
+        5.97,
         6.56,
         6.84
       ],
@@ -1131,10 +1131,10 @@
         2,
         2
       ],
-      "selectedByPercent": 16.9,
+      "selectedByPercent": 16.8,
       "sellPrice": 9.6,
       "team": "ARS",
-      "total": 45.67,
+      "total": 45.65,
       "webName": "Saka"
     },
     {
@@ -1146,17 +1146,17 @@
       "code": 204480,
       "components": {
         "appearance": 2.0,
-        "assists": 0.55,
-        "bonus": 0.36,
+        "assists": 0.56,
+        "bonus": 0.44,
         "cards": -0.17,
         "cleanSheet": 0.48,
         "defensiveContribution": 0.53,
-        "goals": 0.5,
+        "goals": 0.49,
         "goalsConceded": 0.0,
         "saves": 0.0
       },
       "elementType": 3,
-      "form": 3.7,
+      "form": 5.7,
       "id": 13,
       "opponents": [
         [
@@ -1210,13 +1210,13 @@
         ]
       ],
       "perGameweek": [
-        4.26,
-        3.92,
-        4.24,
-        4.11,
-        3.9,
-        4.1,
-        4.21
+        4.32,
+        3.99,
+        4.31,
+        4.18,
+        3.97,
+        4.17,
+        4.27
       ],
       "position": "MID",
       "price": 7.3,
@@ -1230,7 +1230,7 @@
       "selectedByPercent": 10.9,
       "sellPrice": 7.3,
       "team": "ARS",
-      "total": 28.74,
+      "total": 29.21,
       "webName": "Rice"
     },
     {
@@ -1343,7 +1343,7 @@
         "cards": -0.15,
         "cleanSheet": 0.48,
         "defensiveContribution": 0.08,
-        "goals": 1.44,
+        "goals": 1.43,
         "goalsConceded": 0.0,
         "saves": 0.0
       },
@@ -1402,13 +1402,13 @@
         ]
       ],
       "perGameweek": [
-        5.29,
-        4.8,
+        5.28,
+        4.79,
         5.31,
-        5.16,
-        4.74,
-        5.12,
-        5.31
+        5.15,
+        4.73,
+        5.11,
+        5.3
       ],
       "position": "MID",
       "price": 6.8,
@@ -1419,10 +1419,10 @@
         2,
         1
       ],
-      "selectedByPercent": 19.0,
+      "selectedByPercent": 18.8,
       "sellPrice": 6.8,
       "team": "ARS",
-      "total": 35.73,
+      "total": 35.67,
       "webName": "\u00d8degaard"
     },
     {
@@ -1436,15 +1436,15 @@
         "appearance": 0.6,
         "assists": 0.32,
         "bonus": 0.15,
-        "cards": -0.08,
+        "cards": -0.07,
         "cleanSheet": 0.1,
-        "defensiveContribution": 0.06,
+        "defensiveContribution": 0.05,
         "goals": 0.59,
         "goalsConceded": 0.0,
         "saves": 0.0
       },
       "elementType": 3,
-      "form": 0.7,
+      "form": 2.3,
       "id": 16,
       "opponents": [
         [
@@ -1499,12 +1499,12 @@
       ],
       "perGameweek": [
         1.74,
-        1.58,
+        1.57,
         1.76,
-        1.72,
+        1.71,
         1.55,
-        1.7,
-        1.77
+        1.69,
+        1.76
       ],
       "position": "MID",
       "price": 6.2,
@@ -1518,7 +1518,7 @@
       "selectedByPercent": 0.2,
       "sellPrice": 6.2,
       "team": "ARS",
-      "total": 11.82,
+      "total": 11.78,
       "webName": "Madueke"
     },
     {
@@ -1535,7 +1535,7 @@
         "cards": -0.15,
         "cleanSheet": 0.0,
         "defensiveContribution": 0.03,
-        "goals": 0.74,
+        "goals": 0.75,
         "goalsConceded": 0.0,
         "saves": 0.0
       },
@@ -1595,12 +1595,12 @@
       ],
       "perGameweek": [
         2.04,
-        1.9,
-        2.07,
+        1.91,
+        2.08,
         2.05,
         1.87,
-        2.02,
-        2.09
+        2.03,
+        2.1
       ],
       "position": "MID",
       "price": 5.7,
@@ -1614,7 +1614,7 @@
       "selectedByPercent": 0.4,
       "sellPrice": 5.7,
       "team": "ARS",
-      "total": 14.04,
+      "total": 14.08,
       "webName": "Merino"
     },
     {
@@ -1699,7 +1699,7 @@
         1.44
       ],
       "position": "MID",
-      "price": 5.3,
+      "price": 5.2,
       "recentPoints": [
         1,
         1,
@@ -1708,7 +1708,7 @@
         null
       ],
       "selectedByPercent": 0.5,
-      "sellPrice": 5.3,
+      "sellPrice": 5.2,
       "team": "ARS",
       "total": 9.76,
       "webName": "Zubimendi"
@@ -1786,7 +1786,7 @@
         ]
       ],
       "perGameweek": [
-        2.59,
+        2.58,
         2.27,
         2.66,
         2.61,
@@ -1806,7 +1806,7 @@
       "selectedByPercent": 0.1,
       "sellPrice": 5.3,
       "team": "ARS",
-      "total": 17.58,
+      "total": 17.57,
       "webName": "Dowman"
     },
     {
@@ -1978,13 +1978,13 @@
         ]
       ],
       "perGameweek": [
-        4.21,
+        4.22,
         3.93,
-        4.28,
-        4.23,
-        3.86,
+        4.29,
+        4.24,
+        3.87,
         4.18,
-        4.32
+        4.33
       ],
       "position": "FWD",
       "price": 7.5,
@@ -1995,10 +1995,10 @@
         2,
         2
       ],
-      "selectedByPercent": 6.4,
+      "selectedByPercent": 6.3,
       "sellPrice": 7.5,
       "team": "ARS",
-      "total": 29.01,
+      "total": 29.06,
       "webName": "Havertz"
     },
     {
@@ -2011,16 +2011,16 @@
       "components": {
         "appearance": 1.8,
         "assists": 0.08,
-        "bonus": 0.15,
+        "bonus": 0.17,
         "cards": -0.06,
         "cleanSheet": 1.53,
-        "defensiveContribution": 0.36,
-        "goals": 0.38,
+        "defensiveContribution": 0.35,
+        "goals": 0.37,
         "goalsConceded": -0.33,
         "saves": 0.0
       },
       "elementType": 2,
-      "form": 4.3,
+      "form": 4.7,
       "id": 31,
       "opponents": [
         [
@@ -2074,13 +2074,13 @@
         ]
       ],
       "perGameweek": [
-        3.89,
-        3.01,
-        3.69,
-        3.23,
-        3.07,
-        3.31,
-        3.46
+        3.91,
+        3.03,
+        3.7,
+        3.24,
+        3.08,
+        3.32,
+        3.47
       ],
       "position": "DEF",
       "price": 4.6,
@@ -2091,10 +2091,10 @@
         1,
         4
       ],
-      "selectedByPercent": 17.5,
+      "selectedByPercent": 17.6,
       "sellPrice": 4.6,
       "team": "ARS",
-      "total": 23.66,
+      "total": 23.75,
       "webName": "Konsa"
     },
     {
@@ -2174,7 +2174,7 @@
         2.05,
         2.2,
         2.18,
-        2.03,
+        2.02,
         2.16,
         2.22
       ],
@@ -2190,7 +2190,7 @@
       "selectedByPercent": 2.4,
       "sellPrice": 6.7,
       "team": "ARS",
-      "total": 15.01,
+      "total": 15.0,
       "webName": "Bruno G."
     },
     {
@@ -2303,7 +2303,7 @@
         "cards": -0.34,
         "cleanSheet": 0.35,
         "defensiveContribution": 0.27,
-        "goals": 0.24,
+        "goals": 0.23,
         "goalsConceded": -0.75,
         "saves": 0.0
       },
@@ -3035,12 +3035,12 @@
       ],
       "perGameweek": [
         3.5,
-        4.04,
+        4.03,
         3.72,
         4.04,
         4.1,
-        3.89,
-        4.04
+        3.88,
+        4.03
       ],
       "position": "MID",
       "price": 5.4,
@@ -3054,7 +3054,7 @@
       "selectedByPercent": 2.8,
       "sellPrice": 5.4,
       "team": "AVL",
-      "total": 27.33,
+      "total": 27.3,
       "webName": "McGinn"
     },
     {
@@ -3131,12 +3131,12 @@
       ],
       "perGameweek": [
         2.7,
-        3.06,
-        2.85,
+        3.05,
+        2.84,
         3.05,
         3.1,
         2.95,
-        3.06
+        3.05
       ],
       "position": "MID",
       "price": 5.0,
@@ -3150,7 +3150,7 @@
       "selectedByPercent": 0.2,
       "sellPrice": 5.0,
       "team": "AVL",
-      "total": 20.77,
+      "total": 20.74,
       "webName": "Barkley"
     },
     {
@@ -3229,7 +3229,7 @@
         2.93,
         3.2,
         3.03,
-        3.23,
+        3.22,
         3.21,
         3.17,
         3.21
@@ -3246,7 +3246,7 @@
       "selectedByPercent": 0.3,
       "sellPrice": 5.0,
       "team": "AVL",
-      "total": 21.98,
+      "total": 21.97,
       "webName": "Kamara"
     },
     {
@@ -3422,7 +3422,7 @@
         1.24,
         1.17,
         1.24,
-        1.25,
+        1.24,
         1.22,
         1.24
       ],
@@ -3438,7 +3438,7 @@
       "selectedByPercent": 0.9,
       "sellPrice": 4.5,
       "team": "AVL",
-      "total": 8.49,
+      "total": 8.48,
       "webName": "George Hemmings"
     },
     {
@@ -3627,7 +3627,7 @@
         13,
         5
       ],
-      "selectedByPercent": 2.5,
+      "selectedByPercent": 2.6,
       "sellPrice": 6.0,
       "team": "AVL",
       "total": 11.67,
@@ -3723,7 +3723,7 @@
         4,
         2
       ],
-      "selectedByPercent": 0.0,
+      "selectedByPercent": 0.1,
       "sellPrice": 5.5,
       "team": "AVL",
       "total": 7.85,
@@ -4096,7 +4096,7 @@
         0.26,
         0.28,
         0.24,
-        0.26
+        0.27
       ],
       "position": "FWD",
       "price": 5.4,
@@ -4110,7 +4110,7 @@
       "selectedByPercent": 0.2,
       "sellPrice": 5.4,
       "team": "AVL",
-      "total": 1.74,
+      "total": 1.75,
       "webName": "Madjo"
     },
     {
@@ -4129,7 +4129,7 @@
         "defensiveContribution": 0.0,
         "goals": 0.0,
         "goalsConceded": -0.7,
-        "saves": 1.09
+        "saves": 1.08
       },
       "elementType": 1,
       "form": 4.0,
@@ -4990,7 +4990,7 @@
         "bonus": 0.08,
         "cards": -0.16,
         "cleanSheet": 0.69,
-        "defensiveContribution": 1.08,
+        "defensiveContribution": 1.09,
         "goals": 0.15,
         "goalsConceded": -0.88,
         "saves": 0.0
@@ -5050,10 +5050,10 @@
         ]
       ],
       "perGameweek": [
-        3.22,
-        3.79,
+        3.23,
+        3.8,
         3.72,
-        3.82,
+        3.83,
         3.48,
         3.45,
         3.66
@@ -5070,7 +5070,7 @@
       "selectedByPercent": 0.8,
       "sellPrice": 5.5,
       "team": "BOU",
-      "total": 25.14,
+      "total": 25.17,
       "webName": "Hill"
     },
     {
@@ -5278,7 +5278,7 @@
         "bonus": 0.07,
         "cards": -0.34,
         "cleanSheet": 0.69,
-        "defensiveContribution": 0.13,
+        "defensiveContribution": 0.14,
         "goals": 0.18,
         "goalsConceded": -0.79,
         "saves": 0.0
@@ -5338,13 +5338,13 @@
         ]
       ],
       "perGameweek": [
-        2.07,
+        2.06,
         2.6,
-        2.52,
+        2.51,
         2.63,
-        2.31,
+        2.3,
         2.27,
-        2.48
+        2.47
       ],
       "position": "DEF",
       "price": 4.5,
@@ -5358,7 +5358,7 @@
       "selectedByPercent": 0.1,
       "sellPrice": 4.5,
       "team": "BOU",
-      "total": 16.88,
+      "total": 16.84,
       "webName": "Smith"
     },
     {
@@ -5530,13 +5530,13 @@
         ]
       ],
       "perGameweek": [
-        3.5,
-        3.74,
-        3.86,
-        3.76,
-        3.56,
-        3.68,
-        3.65
+        3.49,
+        3.73,
+        3.85,
+        3.75,
+        3.55,
+        3.67,
+        3.64
       ],
       "position": "MID",
       "price": 6.3,
@@ -5550,7 +5550,7 @@
       "selectedByPercent": 1.5,
       "sellPrice": 6.3,
       "team": "BOU",
-      "total": 25.75,
+      "total": 25.68,
       "webName": "Rayan"
     },
     {
@@ -5627,15 +5627,15 @@
       ],
       "perGameweek": [
         4.66,
-        4.97,
+        4.96,
         5.14,
-        4.99,
+        4.98,
         4.74,
         4.89,
         4.85
       ],
       "position": "MID",
-      "price": 6.1,
+      "price": 6.2,
       "recentPoints": [
         1,
         10,
@@ -5643,10 +5643,10 @@
         2,
         1
       ],
-      "selectedByPercent": 8.1,
-      "sellPrice": 6.1,
+      "selectedByPercent": 8.6,
+      "sellPrice": 6.2,
       "team": "BOU",
-      "total": 34.24,
+      "total": 34.22,
       "webName": "Tavernier"
     },
     {
@@ -5663,7 +5663,7 @@
         "cards": -0.2,
         "cleanSheet": 0.1,
         "defensiveContribution": 0.11,
-        "goals": 0.92,
+        "goals": 0.91,
         "goalsConceded": 0.0,
         "saves": 0.0
       },
@@ -5722,13 +5722,13 @@
         ]
       ],
       "perGameweek": [
-        2.5,
+        2.49,
         2.69,
         2.8,
         2.7,
-        2.55,
-        2.65,
-        2.62
+        2.54,
+        2.64,
+        2.61
       ],
       "position": "MID",
       "price": 5.9,
@@ -5742,7 +5742,7 @@
       "selectedByPercent": 0.6,
       "sellPrice": 5.9,
       "team": "BOU",
-      "total": 18.51,
+      "total": 18.47,
       "webName": "Kluivert"
     },
     {
@@ -5821,8 +5821,8 @@
         1.61,
         1.67,
         1.71,
-        1.68,
-        1.63,
+        1.67,
+        1.62,
         1.66,
         1.65
       ],
@@ -5838,7 +5838,7 @@
       "selectedByPercent": 0.2,
       "sellPrice": 5.0,
       "team": "BOU",
-      "total": 11.61,
+      "total": 11.59,
       "webName": "Cook"
     },
     {
@@ -5917,8 +5917,8 @@
         1.64,
         1.73,
         1.81,
-        1.74,
-        1.66,
+        1.73,
+        1.65,
         1.72,
         1.69
       ],
@@ -5934,7 +5934,7 @@
       "selectedByPercent": 0.1,
       "sellPrice": 4.8,
       "team": "BOU",
-      "total": 11.99,
+      "total": 11.97,
       "webName": "Gannon-Doak"
     },
     {
@@ -5950,7 +5950,7 @@
         "bonus": 0.13,
         "cards": -0.2,
         "cleanSheet": 0.14,
-        "defensiveContribution": 0.5,
+        "defensiveContribution": 0.49,
         "goals": 0.25,
         "goalsConceded": 0.0,
         "saves": 0.0
@@ -6015,8 +6015,8 @@
         2.88,
         2.86,
         2.78,
-        2.81,
-        2.82
+        2.8,
+        2.81
       ],
       "position": "MID",
       "price": 5.0,
@@ -6030,7 +6030,7 @@
       "selectedByPercent": 0.3,
       "sellPrice": 5.0,
       "team": "BOU",
-      "total": 19.74,
+      "total": 19.72,
       "webName": "Adams"
     },
     {
@@ -6207,8 +6207,8 @@
         2.75,
         2.67,
         2.54,
-        2.62,
-        2.59
+        2.63,
+        2.6
       ],
       "position": "MID",
       "price": 5.0,
@@ -6222,7 +6222,7 @@
       "selectedByPercent": 0.0,
       "sellPrice": 5.0,
       "team": "BOU",
-      "total": 18.33,
+      "total": 18.35,
       "webName": "Christie"
     },
     {
@@ -6303,7 +6303,7 @@
         0.61,
         0.58,
         0.55,
-        0.58,
+        0.57,
         0.56
       ],
       "position": "MID",
@@ -6318,7 +6318,7 @@
       "selectedByPercent": 0.0,
       "sellPrice": 4.9,
       "team": "BOU",
-      "total": 4.0,
+      "total": 3.99,
       "webName": "T\u00f3th.A"
     },
     {
@@ -6397,7 +6397,7 @@
         0.66,
         0.74,
         0.81,
-        0.75,
+        0.74,
         0.67,
         0.73,
         0.7
@@ -6414,7 +6414,7 @@
       "selectedByPercent": 0.0,
       "sellPrice": 4.8,
       "team": "BOU",
-      "total": 5.06,
+      "total": 5.05,
       "webName": "Adli"
     },
     {
@@ -6491,12 +6491,12 @@
       ],
       "perGameweek": [
         3.87,
+        4.08,
+        4.26,
         4.09,
-        4.27,
-        4.1,
-        3.91,
-        4.07,
-        3.99
+        3.9,
+        4.06,
+        3.98
       ],
       "position": "FWD",
       "price": 6.1,
@@ -6507,10 +6507,10 @@
         2,
         7
       ],
-      "selectedByPercent": 4.0,
+      "selectedByPercent": 4.2,
       "sellPrice": 6.1,
       "team": "BOU",
-      "total": 28.3,
+      "total": 28.24,
       "webName": "Evanilson"
     },
     {
@@ -7012,7 +7012,7 @@
         "saves": 1.21
       },
       "elementType": 1,
-      "form": 3.3,
+      "form": 2.0,
       "id": 82,
       "opponents": [
         [
@@ -7069,7 +7069,7 @@
         3.29,
         3.5,
         3.2,
-        3.58,
+        3.59,
         3.25,
         3.21,
         3.15
@@ -7086,7 +7086,7 @@
       "selectedByPercent": 6.0,
       "sellPrice": 5.0,
       "team": "BRE",
-      "total": 23.18,
+      "total": 23.19,
       "webName": "Kelleher"
     },
     {
@@ -7300,7 +7300,7 @@
         "saves": 0.0
       },
       "elementType": 2,
-      "form": 0.3,
+      "form": 0.5,
       "id": 85,
       "opponents": [
         [
@@ -7396,7 +7396,7 @@
         "saves": 0.0
       },
       "elementType": 3,
-      "form": 4.7,
+      "form": 5.5,
       "id": 86,
       "opponents": [
         [
@@ -7452,8 +7452,8 @@
       "perGameweek": [
         3.63,
         3.97,
-        3.67,
-        3.86,
+        3.66,
+        3.85,
         3.71,
         3.31,
         3.49
@@ -7467,10 +7467,10 @@
         3,
         2
       ],
-      "selectedByPercent": 1.6,
+      "selectedByPercent": 1.7,
       "sellPrice": 5.5,
       "team": "BRE",
-      "total": 25.64,
+      "total": 25.62,
       "webName": "Lewis-Potter"
     },
     {
@@ -7492,7 +7492,7 @@
         "saves": 0.0
       },
       "elementType": 2,
-      "form": 5.3,
+      "form": 4.5,
       "id": 87,
       "opponents": [
         [
@@ -7563,7 +7563,7 @@
         7,
         6
       ],
-      "selectedByPercent": 3.9,
+      "selectedByPercent": 4.0,
       "sellPrice": 4.5,
       "team": "BRE",
       "total": 23.07,
@@ -7588,7 +7588,7 @@
         "saves": 0.0
       },
       "elementType": 2,
-      "form": 2.3,
+      "form": 0.5,
       "id": 88,
       "opponents": [
         [
@@ -7744,7 +7744,7 @@
         0.17,
         0.07,
         0.0,
-        -0.0
+        -0.01
       ],
       "position": "DEF",
       "price": 4.4,
@@ -7758,7 +7758,7 @@
       "selectedByPercent": 0.2,
       "sellPrice": 4.4,
       "team": "BRE",
-      "total": 0.52,
+      "total": 0.51,
       "webName": "Henry"
     },
     {
@@ -7972,7 +7972,7 @@
         "saves": 0.0
       },
       "elementType": 2,
-      "form": 5.0,
+      "form": 0.5,
       "id": 93,
       "opponents": [
         [
@@ -8062,13 +8062,13 @@
         "bonus": 0.63,
         "cards": -0.1,
         "cleanSheet": 0.16,
-        "defensiveContribution": 0.14,
+        "defensiveContribution": 0.13,
         "goals": 1.36,
         "goalsConceded": 0.0,
         "saves": 0.0
       },
       "elementType": 3,
-      "form": 3.3,
+      "form": 0.5,
       "id": 94,
       "opponents": [
         [
@@ -8219,10 +8219,10 @@
       ],
       "perGameweek": [
         1.85,
-        2.02,
-        1.89,
+        2.01,
+        1.88,
         1.93,
-        1.91,
+        1.9,
         1.68,
         1.79
       ],
@@ -8238,7 +8238,7 @@
       "selectedByPercent": 0.4,
       "sellPrice": 6.2,
       "team": "BRE",
-      "total": 13.07,
+      "total": 13.04,
       "webName": "O.Dango"
     },
     {
@@ -8254,13 +8254,13 @@
         "bonus": 0.35,
         "cards": -0.07,
         "cleanSheet": 0.12,
-        "defensiveContribution": 0.38,
+        "defensiveContribution": 0.37,
         "goals": 0.36,
         "goalsConceded": 0.0,
         "saves": 0.0
       },
       "elementType": 3,
-      "form": 1.3,
+      "form": 0.5,
       "id": 96,
       "opponents": [
         [
@@ -8348,7 +8348,7 @@
         "appearance": 0.2,
         "assists": 0.23,
         "bonus": 0.06,
-        "cards": -0.07,
+        "cards": -0.06,
         "cleanSheet": 0.0,
         "defensiveContribution": 0.07,
         "goals": 0.18,
@@ -8356,7 +8356,7 @@
         "saves": 0.0
       },
       "elementType": 3,
-      "form": 0.7,
+      "form": 1.0,
       "id": 97,
       "opponents": [
         [
@@ -8452,7 +8452,7 @@
         "saves": 0.0
       },
       "elementType": 3,
-      "form": 2.0,
+      "form": 0.0,
       "id": 100,
       "opponents": [
         [
@@ -8548,7 +8548,7 @@
         "saves": 0.0
       },
       "elementType": 3,
-      "form": 5.7,
+      "form": 3.5,
       "id": 105,
       "opponents": [
         [
@@ -8644,7 +8644,7 @@
         "saves": 0.0
       },
       "elementType": 4,
-      "form": 4.3,
+      "form": 4.0,
       "id": 106,
       "opponents": [
         [
@@ -8715,7 +8715,7 @@
         5,
         4
       ],
-      "selectedByPercent": 8.9,
+      "selectedByPercent": 8.8,
       "sellPrice": 7.8,
       "team": "BRE",
       "total": 26.31,
@@ -8836,7 +8836,7 @@
         "saves": 0.0
       },
       "elementType": 3,
-      "form": 0.7,
+      "form": 1.0,
       "id": 565,
       "opponents": [
         [
@@ -9374,7 +9374,7 @@
         2.96,
         3.37,
         3.29,
-        3.3,
+        3.31,
         3.27,
         3.37
       ],
@@ -9390,7 +9390,7 @@
       "selectedByPercent": 22.5,
       "sellPrice": 4.6,
       "team": "BHA",
-      "total": 22.61,
+      "total": 22.62,
       "webName": "Verbruggen"
     },
     {
@@ -9594,8 +9594,8 @@
       "code": 204120,
       "components": {
         "appearance": 2.0,
-        "assists": 0.22,
-        "bonus": 0.2,
+        "assists": 0.21,
+        "bonus": 0.17,
         "cards": -0.26,
         "cleanSheet": 0.57,
         "defensiveContribution": 0.41,
@@ -9604,7 +9604,7 @@
         "saves": 0.0
       },
       "elementType": 2,
-      "form": 7.3,
+      "form": 7.0,
       "id": 114,
       "opponents": [
         [
@@ -9658,13 +9658,13 @@
         ]
       ],
       "perGameweek": [
-        2.35,
-        2.1,
-        3.04,
-        2.84,
-        2.94,
-        2.83,
-        2.99
+        2.32,
+        2.07,
+        3.01,
+        2.81,
+        2.91,
+        2.8,
+        2.96
       ],
       "position": "DEF",
       "price": 4.5,
@@ -9678,7 +9678,7 @@
       "selectedByPercent": 0.4,
       "sellPrice": 4.5,
       "team": "BHA",
-      "total": 19.09,
+      "total": 18.88,
       "webName": "Boscagli"
     },
     {
@@ -9690,7 +9690,7 @@
       "code": 465730,
       "components": {
         "appearance": 2.0,
-        "assists": 0.38,
+        "assists": 0.37,
         "bonus": 0.81,
         "cards": -0.23,
         "cleanSheet": 0.57,
@@ -9754,13 +9754,13 @@
         ]
       ],
       "perGameweek": [
-        3.78,
+        3.77,
         3.35,
-        4.8,
-        4.3,
+        4.79,
+        4.29,
         4.73,
-        4.44,
-        4.53
+        4.43,
+        4.52
       ],
       "position": "DEF",
       "price": 5.2,
@@ -9771,10 +9771,10 @@
         6,
         15
       ],
-      "selectedByPercent": 40.3,
+      "selectedByPercent": 40.5,
       "sellPrice": 5.2,
       "team": "BHA",
-      "total": 29.93,
+      "total": 29.88,
       "webName": "De Cuyper"
     },
     {
@@ -10237,9 +10237,9 @@
         1.05,
         0.91,
         1.31,
-        1.09,
+        1.08,
         1.34,
-        1.2,
+        1.19,
         1.14
       ],
       "position": "MID",
@@ -10254,7 +10254,7 @@
       "selectedByPercent": 0.6,
       "sellPrice": 5.9,
       "team": "BHA",
-      "total": 8.04,
+      "total": 8.02,
       "webName": "Hinshelwood"
     },
     {
@@ -10271,7 +10271,7 @@
         "cards": -0.28,
         "cleanSheet": 0.14,
         "defensiveContribution": 0.18,
-        "goals": 1.16,
+        "goals": 1.15,
         "goalsConceded": 0.0,
         "saves": 0.0
       },
@@ -10334,7 +10334,7 @@
         4.38,
         5.29,
         4.82,
-        5.33,
+        5.32,
         5.03,
         4.95
       ],
@@ -10347,10 +10347,10 @@
         14,
         6
       ],
-      "selectedByPercent": 44.5,
+      "selectedByPercent": 44.9,
       "sellPrice": 6.1,
       "team": "BHA",
-      "total": 34.48,
+      "total": 34.47,
       "webName": "Gro\u00df"
     },
     {
@@ -10620,9 +10620,9 @@
       "perGameweek": [
         3.77,
         3.55,
-        4.23,
+        4.22,
         3.89,
-        4.25,
+        4.24,
         4.04,
         3.99
       ],
@@ -10635,10 +10635,10 @@
         8,
         5
       ],
-      "selectedByPercent": 3.6,
+      "selectedByPercent": 3.7,
       "sellPrice": 5.0,
       "team": "BHA",
-      "total": 27.72,
+      "total": 27.7,
       "webName": "Gomez"
     },
     {
@@ -10655,7 +10655,7 @@
         "cards": -0.16,
         "cleanSheet": 0.11,
         "defensiveContribution": 0.18,
-        "goals": 0.69,
+        "goals": 0.7,
         "goalsConceded": 0.0,
         "saves": 0.0
       },
@@ -10714,13 +10714,13 @@
         ]
       ],
       "perGameweek": [
-        2.77,
+        2.78,
         2.61,
-        3.12,
-        2.87,
         3.13,
+        2.87,
+        3.14,
         2.98,
-        2.94
+        2.95
       ],
       "position": "MID",
       "price": 5.4,
@@ -10734,7 +10734,7 @@
       "selectedByPercent": 0.4,
       "sellPrice": 5.4,
       "team": "BHA",
-      "total": 20.42,
+      "total": 20.46,
       "webName": "Ayari"
     },
     {
@@ -10923,7 +10923,7 @@
         10,
         1
       ],
-      "selectedByPercent": 9.3,
+      "selectedByPercent": 9.5,
       "sellPrice": 5.7,
       "team": "BHA",
       "total": 30.56,
@@ -11035,11 +11035,11 @@
       "components": {
         "appearance": 2.0,
         "assists": 0.06,
-        "bonus": 0.21,
+        "bonus": 0.2,
         "cards": -0.05,
         "cleanSheet": 0.57,
         "defensiveContribution": 0.48,
-        "goals": 0.48,
+        "goals": 0.49,
         "goalsConceded": -0.73,
         "saves": 0.0
       },
@@ -11100,11 +11100,11 @@
       "perGameweek": [
         3.03,
         2.76,
-        3.73,
+        3.74,
         3.48,
         3.65,
         3.51,
-        3.64
+        3.65
       ],
       "position": "DEF",
       "price": 5.1,
@@ -11115,10 +11115,10 @@
         8,
         8
       ],
-      "selectedByPercent": 5.2,
+      "selectedByPercent": 5.3,
       "sellPrice": 5.1,
       "team": "BHA",
-      "total": 23.8,
+      "total": 23.82,
       "webName": "Vuskovic"
     },
     {
@@ -11388,9 +11388,9 @@
       "perGameweek": [
         2.71,
         2.54,
-        3.06,
+        3.05,
         2.79,
-        3.08,
+        3.07,
         2.91,
         2.87
       ],
@@ -11403,10 +11403,10 @@
         1,
         1
       ],
-      "selectedByPercent": 3.6,
+      "selectedByPercent": 3.5,
       "sellPrice": 4.5,
       "team": "BHA",
-      "total": 19.96,
+      "total": 19.94,
       "webName": "Yalcouy\u00e9"
     },
     {
@@ -11484,7 +11484,7 @@
       "perGameweek": [
         0.22,
         0.19,
-        0.3,
+        0.29,
         0.26,
         0.29,
         0.27,
@@ -11502,7 +11502,7 @@
       "selectedByPercent": 0.1,
       "sellPrice": 4.5,
       "team": "BHA",
-      "total": 1.8,
+      "total": 1.79,
       "webName": "Hadjam"
     },
     {
@@ -11716,7 +11716,7 @@
         "saves": 0.0
       },
       "elementType": 3,
-      "form": 4.3,
+      "form": 5.5,
       "id": 40,
       "opponents": [
         [
@@ -11771,7 +11771,7 @@
       ],
       "perGameweek": [
         4.96,
-        4.74,
+        4.73,
         4.47,
         4.73,
         4.42,
@@ -11787,10 +11787,10 @@
         2,
         9
       ],
-      "selectedByPercent": 47.5,
+      "selectedByPercent": 47.7,
       "sellPrice": 7.9,
       "team": "CHE",
-      "total": 32.58,
+      "total": 32.57,
       "webName": "Rogers"
     },
     {
@@ -11812,7 +11812,7 @@
         "saves": 0.0
       },
       "elementType": 3,
-      "form": 7.7,
+      "form": 10.5,
       "id": 101,
       "opponents": [
         [
@@ -11883,7 +11883,7 @@
         2,
         18
       ],
-      "selectedByPercent": 0.9,
+      "selectedByPercent": 1.0,
       "sellPrice": 4.9,
       "team": "CHE",
       "total": 12.93,
@@ -11908,7 +11908,7 @@
         "saves": 0.0
       },
       "elementType": 4,
-      "form": 1.3,
+      "form": 1.0,
       "id": 136,
       "opponents": [
         [
@@ -12004,7 +12004,7 @@
         "saves": 0.0
       },
       "elementType": 2,
-      "form": 0.3,
+      "form": 0.5,
       "id": 144,
       "opponents": [
         [
@@ -12100,7 +12100,7 @@
         "saves": 0.0
       },
       "elementType": 2,
-      "form": 1.3,
+      "form": 0.0,
       "id": 145,
       "opponents": [
         [
@@ -12196,7 +12196,7 @@
         "saves": 0.0
       },
       "elementType": 2,
-      "form": 3.7,
+      "form": 5.5,
       "id": 148,
       "opponents": [
         [
@@ -12292,7 +12292,7 @@
         "saves": 0.0
       },
       "elementType": 2,
-      "form": 3.0,
+      "form": 4.0,
       "id": 149,
       "opponents": [
         [
@@ -12388,7 +12388,7 @@
         "saves": 0.0
       },
       "elementType": 2,
-      "form": 3.0,
+      "form": 4.5,
       "id": 151,
       "opponents": [
         [
@@ -12475,7 +12475,7 @@
       "components": {
         "appearance": 0.2,
         "assists": 0.08,
-        "bonus": 0.03,
+        "bonus": 0.02,
         "cards": -0.03,
         "cleanSheet": 0.0,
         "defensiveContribution": 0.06,
@@ -12484,7 +12484,7 @@
         "saves": 0.0
       },
       "elementType": 2,
-      "form": 0.7,
+      "form": 1.0,
       "id": 152,
       "opponents": [
         [
@@ -12538,12 +12538,12 @@
         ]
       ],
       "perGameweek": [
-        0.28,
+        0.27,
         0.26,
         0.25,
         0.27,
         0.24,
-        0.28,
+        0.27,
         0.22
       ],
       "position": "DEF",
@@ -12558,7 +12558,7 @@
       "selectedByPercent": 0.5,
       "sellPrice": 5.3,
       "team": "CHE",
-      "total": 1.8,
+      "total": 1.78,
       "webName": "Palestra"
     },
     {
@@ -12575,12 +12575,12 @@
         "cards": -0.21,
         "cleanSheet": 0.24,
         "defensiveContribution": 0.13,
-        "goals": 1.94,
+        "goals": 1.93,
         "goalsConceded": 0.0,
         "saves": 0.0
       },
       "elementType": 3,
-      "form": 4.0,
+      "form": 5.0,
       "id": 154,
       "opponents": [
         [
@@ -12651,7 +12651,7 @@
         2,
         8
       ],
-      "selectedByPercent": 26.1,
+      "selectedByPercent": 26.2,
       "sellPrice": 9.7,
       "team": "CHE",
       "total": 34.45,
@@ -12676,7 +12676,7 @@
         "saves": 0.0
       },
       "elementType": 3,
-      "form": 7.3,
+      "form": 10.0,
       "id": 156,
       "opponents": [
         [
@@ -12731,12 +12731,12 @@
       ],
       "perGameweek": [
         4.23,
-        4.07,
+        4.06,
         3.88,
-        4.08,
+        4.07,
         3.83,
         4.14,
-        3.84
+        3.83
       ],
       "position": "MID",
       "price": 6.5,
@@ -12747,10 +12747,10 @@
         2,
         5
       ],
-      "selectedByPercent": 1.8,
+      "selectedByPercent": 2.1,
       "sellPrice": 6.5,
       "team": "CHE",
-      "total": 28.07,
+      "total": 28.04,
       "webName": "Neto"
     },
     {
@@ -12772,7 +12772,7 @@
         "saves": 0.0
       },
       "elementType": 3,
-      "form": 0.7,
+      "form": 0.5,
       "id": 157,
       "opponents": [
         [
@@ -12829,7 +12829,7 @@
         1.62,
         1.55,
         1.45,
-        1.54,
+        1.53,
         1.44,
         1.56,
         1.47
@@ -12846,7 +12846,7 @@
       "selectedByPercent": 0.7,
       "sellPrice": 6.3,
       "team": "CHE",
-      "total": 10.63,
+      "total": 10.62,
       "webName": "Est\u00eav\u00e3o"
     },
     {
@@ -12868,7 +12868,7 @@
         "saves": 0.0
       },
       "elementType": 3,
-      "form": 1.7,
+      "form": 2.5,
       "id": 159,
       "opponents": [
         [
@@ -12964,7 +12964,7 @@
         "saves": 0.0
       },
       "elementType": 3,
-      "form": 0.7,
+      "form": 1.0,
       "id": 161,
       "opponents": [
         [
@@ -13020,7 +13020,7 @@
       "perGameweek": [
         2.38,
         2.29,
-        2.2,
+        2.19,
         2.29,
         2.17,
         2.33,
@@ -13038,7 +13038,7 @@
       "selectedByPercent": 0.2,
       "sellPrice": 5.0,
       "team": "CHE",
-      "total": 15.84,
+      "total": 15.83,
       "webName": "Lavia"
     },
     {
@@ -13060,7 +13060,7 @@
         "saves": 0.0
       },
       "elementType": 3,
-      "form": 0.7,
+      "form": 0.5,
       "id": 164,
       "opponents": [
         [
@@ -13156,7 +13156,7 @@
         "saves": 0.0
       },
       "elementType": 4,
-      "form": 4.7,
+      "form": 7.0,
       "id": 165,
       "opponents": [
         [
@@ -13219,7 +13219,7 @@
         4.59
       ],
       "position": "FWD",
-      "price": 7.8,
+      "price": 7.9,
       "recentPoints": [
         9,
         1,
@@ -13227,8 +13227,8 @@
         null,
         12
       ],
-      "selectedByPercent": 72.4,
-      "sellPrice": 7.8,
+      "selectedByPercent": 72.6,
+      "sellPrice": 7.9,
       "team": "CHE",
       "total": 33.27,
       "webName": "Jo\u00e3o Pedro"
@@ -13348,7 +13348,7 @@
         "saves": 0.0
       },
       "elementType": 2,
-      "form": 3.7,
+      "form": 4.0,
       "id": 200,
       "opponents": [
         [
@@ -13444,7 +13444,7 @@
         "saves": 0.1
       },
       "elementType": 1,
-      "form": 0.3,
+      "form": 0.5,
       "id": 560,
       "opponents": [
         [
@@ -13636,7 +13636,7 @@
         "saves": 0.0
       },
       "elementType": 3,
-      "form": 0.7,
+      "form": 0.0,
       "id": 568,
       "opponents": [
         [
@@ -13693,7 +13693,7 @@
         1.1,
         1.07,
         1.04,
-        1.08,
+        1.07,
         1.03,
         1.09,
         1.03
@@ -13710,7 +13710,7 @@
       "selectedByPercent": 0.1,
       "sellPrice": 5.4,
       "team": "CHE",
-      "total": 7.44,
+      "total": 7.43,
       "webName": "Barco"
     },
     {
@@ -13732,7 +13732,7 @@
         "saves": 0.0
       },
       "elementType": 2,
-      "form": 2.0,
+      "form": 2.5,
       "id": 583,
       "opponents": [
         [
@@ -13828,7 +13828,7 @@
         "saves": 0.0
       },
       "elementType": 3,
-      "form": 0.3,
+      "form": 0.0,
       "id": 662,
       "opponents": [
         [
@@ -14571,7 +14571,7 @@
         15,
         5
       ],
-      "selectedByPercent": 1.4,
+      "selectedByPercent": 1.5,
       "sellPrice": 4.0,
       "team": "COV",
       "total": 22.45,
@@ -14878,7 +14878,7 @@
         "bonus": 0.03,
         "cards": -0.05,
         "cleanSheet": 0.25,
-        "defensiveContribution": 0.04,
+        "defensiveContribution": 0.05,
         "goals": 0.88,
         "goalsConceded": 0.0,
         "saves": 0.0
@@ -14942,7 +14942,7 @@
         3.52,
         3.2,
         3.51,
-        3.26,
+        3.25,
         3.8,
         3.24
       ],
@@ -14955,10 +14955,10 @@
         5,
         7
       ],
-      "selectedByPercent": 0.2,
+      "selectedByPercent": 0.3,
       "sellPrice": 4.9,
       "team": "COV",
-      "total": 24.04,
+      "total": 24.03,
       "webName": "Rudoni"
     },
     {
@@ -15232,7 +15232,7 @@
         2.07,
         1.96,
         2.19,
-        1.95
+        1.96
       ],
       "position": "MID",
       "price": 5.3,
@@ -15246,7 +15246,7 @@
       "selectedByPercent": 0.1,
       "sellPrice": 5.3,
       "team": "COV",
-      "total": 14.25,
+      "total": 14.26,
       "webName": "Mason-Clark"
     },
     {
@@ -15519,7 +15519,7 @@
         1.01,
         1.13,
         1.05,
-        1.24,
+        1.23,
         1.06
       ],
       "position": "MID",
@@ -15534,7 +15534,7 @@
       "selectedByPercent": 0.1,
       "sellPrice": 5.3,
       "team": "COV",
-      "total": 7.74,
+      "total": 7.73,
       "webName": "Tchaouna"
     },
     {
@@ -16203,7 +16203,7 @@
         null,
         null
       ],
-      "selectedByPercent": 0.9,
+      "selectedByPercent": 1.0,
       "sellPrice": 4.0,
       "team": "COV",
       "total": 0.27,
@@ -16587,7 +16587,7 @@
         null,
         null
       ],
-      "selectedByPercent": 0.0,
+      "selectedByPercent": 0.1,
       "sellPrice": 4.4,
       "team": "CRY",
       "total": 7.63,
@@ -17067,7 +17067,7 @@
         7,
         4
       ],
-      "selectedByPercent": 5.8,
+      "selectedByPercent": 5.7,
       "sellPrice": 4.5,
       "team": "CRY",
       "total": 23.18,
@@ -17278,7 +17278,7 @@
         "bonus": 0.26,
         "cards": -0.17,
         "cleanSheet": 0.2,
-        "defensiveContribution": 0.41,
+        "defensiveContribution": 0.4,
         "goals": 0.31,
         "goalsConceded": 0.0,
         "saves": 0.0
@@ -17342,9 +17342,9 @@
         3.42,
         3.35,
         3.44,
-        3.46,
+        3.45,
         3.32,
-        3.35
+        3.34
       ],
       "position": "MID",
       "price": 5.4,
@@ -17358,7 +17358,7 @@
       "selectedByPercent": 0.7,
       "sellPrice": 5.4,
       "team": "CRY",
-      "total": 23.84,
+      "total": 23.82,
       "webName": "Wharton"
     },
     {
@@ -17434,9 +17434,9 @@
         ]
       ],
       "perGameweek": [
-        3.43,
+        3.42,
         3.3,
-        3.22,
+        3.21,
         3.32,
         3.32,
         3.18,
@@ -17454,7 +17454,7 @@
       "selectedByPercent": 0.3,
       "sellPrice": 5.5,
       "team": "CRY",
-      "total": 22.97,
+      "total": 22.95,
       "webName": "Yeremy"
     },
     {
@@ -17532,7 +17532,7 @@
       "perGameweek": [
         0.84,
         0.81,
-        0.8,
+        0.79,
         0.81,
         0.81,
         0.79,
@@ -17550,7 +17550,7 @@
       "selectedByPercent": 6.2,
       "sellPrice": 4.4,
       "team": "CRY",
-      "total": 5.65,
+      "total": 5.64,
       "webName": "Hughes"
     },
     {
@@ -17628,11 +17628,11 @@
       "perGameweek": [
         1.95,
         1.88,
-        1.84,
+        1.83,
         1.88,
         1.88,
         1.82,
-        1.83
+        1.82
       ],
       "position": "MID",
       "price": 4.8,
@@ -17646,7 +17646,7 @@
       "selectedByPercent": 0.1,
       "sellPrice": 4.8,
       "team": "CRY",
-      "total": 13.08,
+      "total": 13.06,
       "webName": "Lerma"
     },
     {
@@ -17722,7 +17722,7 @@
         ]
       ],
       "perGameweek": [
-        3.41,
+        3.4,
         3.32,
         3.24,
         3.34,
@@ -17742,7 +17742,7 @@
       "selectedByPercent": 0.7,
       "sellPrice": 5.0,
       "team": "CRY",
-      "total": 23.1,
+      "total": 23.09,
       "webName": "Kamada"
     },
     {
@@ -18211,7 +18211,7 @@
         3.13
       ],
       "position": "FWD",
-      "price": 5.5,
+      "price": 5.4,
       "recentPoints": [
         2,
         4,
@@ -18220,7 +18220,7 @@
         1
       ],
       "selectedByPercent": 0.5,
-      "sellPrice": 5.5,
+      "sellPrice": 5.4,
       "team": "CRY",
       "total": 22.8,
       "webName": "Nketiah"
@@ -18299,12 +18299,12 @@
       ],
       "perGameweek": [
         0.98,
-        0.95,
+        0.94,
         0.92,
         0.94,
         0.94,
         0.92,
-        0.92
+        0.91
       ],
       "position": "MID",
       "price": 5.3,
@@ -18318,7 +18318,7 @@
       "selectedByPercent": 0.1,
       "sellPrice": 5.3,
       "team": "CRY",
-      "total": 6.57,
+      "total": 6.55,
       "webName": "McNeil"
     },
     {
@@ -18398,7 +18398,7 @@
         -0.03,
         -0.03,
         -0.03,
-        -0.03,
+        -0.02,
         -0.04,
         -0.03
       ],
@@ -18414,7 +18414,7 @@
       "selectedByPercent": 1.6,
       "sellPrice": 4.0,
       "team": "CRY",
-      "total": -0.22,
+      "total": -0.21,
       "webName": "Matthews"
     },
     {
@@ -18490,7 +18490,7 @@
         ]
       ],
       "perGameweek": [
-        3.42,
+        3.41,
         3.3,
         3.1,
         3.47,
@@ -18510,7 +18510,7 @@
       "selectedByPercent": 0.3,
       "sellPrice": 5.0,
       "team": "CRY",
-      "total": 22.94,
+      "total": 22.93,
       "webName": "Khalaili"
     },
     {
@@ -18718,7 +18718,7 @@
         "bonus": 0.03,
         "cards": -0.05,
         "cleanSheet": 0.2,
-        "defensiveContribution": 0.13,
+        "defensiveContribution": 0.14,
         "goals": 0.32,
         "goalsConceded": 0.0,
         "saves": 0.0
@@ -18907,7 +18907,7 @@
       "components": {
         "appearance": 0.0,
         "assists": 0.05,
-        "bonus": 0.07,
+        "bonus": 0.06,
         "cards": -0.11,
         "cleanSheet": 0.0,
         "defensiveContribution": 0.0,
@@ -19071,7 +19071,7 @@
         3.5,
         3.16,
         3.17,
-        3.16,
+        3.15,
         3.42
       ],
       "position": "MID",
@@ -19086,7 +19086,7 @@
       "selectedByPercent": 0.1,
       "sellPrice": 5.9,
       "team": "EVE",
-      "total": 22.27,
+      "total": 22.26,
       "webName": "Johnson"
     },
     {
@@ -19563,7 +19563,7 @@
         8,
         3
       ],
-      "selectedByPercent": 2.5,
+      "selectedByPercent": 2.4,
       "sellPrice": 5.5,
       "team": "EVE",
       "total": 24.31,
@@ -19651,7 +19651,7 @@
         0.78
       ],
       "position": "DEF",
-      "price": 4.8,
+      "price": 4.7,
       "recentPoints": [
         null,
         null,
@@ -19660,7 +19660,7 @@
         1
       ],
       "selectedByPercent": 0.7,
-      "sellPrice": 4.8,
+      "sellPrice": 4.7,
       "team": "EVE",
       "total": 4.27,
       "webName": "Keane"
@@ -19931,9 +19931,9 @@
       ],
       "perGameweek": [
         3.69,
-        4.18,
-        4.51,
         4.17,
+        4.51,
+        4.16,
         4.17,
         4.16,
         4.43
@@ -19950,7 +19950,7 @@
       "selectedByPercent": 6.1,
       "sellPrice": 6.6,
       "team": "EVE",
-      "total": 29.31,
+      "total": 29.29,
       "webName": "Dewsbury-Hall"
     },
     {
@@ -20125,10 +20125,10 @@
         3.08,
         3.35,
         3.59,
+        3.35,
         3.36,
-        3.36,
-        3.36,
-        3.55
+        3.35,
+        3.54
       ],
       "position": "MID",
       "price": 6.0,
@@ -20142,7 +20142,7 @@
       "selectedByPercent": 0.2,
       "sellPrice": 6.0,
       "team": "EVE",
-      "total": 23.65,
+      "total": 23.62,
       "webName": "Garner"
     },
     {
@@ -20315,7 +20315,7 @@
       ],
       "perGameweek": [
         0.83,
-        1.04,
+        1.03,
         1.13,
         1.02,
         1.03,
@@ -20334,7 +20334,7 @@
       "selectedByPercent": 0.1,
       "sellPrice": 4.9,
       "team": "EVE",
-      "total": 7.17,
+      "total": 7.16,
       "webName": "Alcaraz"
     },
     {
@@ -20608,7 +20608,7 @@
         1.42,
         1.42,
         1.42,
-        1.52
+        1.51
       ],
       "position": "MID",
       "price": 4.9,
@@ -20622,7 +20622,7 @@
       "selectedByPercent": 0.0,
       "sellPrice": 4.9,
       "team": "EVE",
-      "total": 9.99,
+      "total": 9.98,
       "webName": "R\u00f6hl"
     },
     {
@@ -20811,7 +20811,7 @@
         6,
         6
       ],
-      "selectedByPercent": 8.6,
+      "selectedByPercent": 8.5,
       "sellPrice": 5.7,
       "team": "EVE",
       "total": 29.64,
@@ -21475,7 +21475,7 @@
         -0.21
       ],
       "position": "DEF",
-      "price": 4.5,
+      "price": 4.4,
       "recentPoints": [
         null,
         null,
@@ -21484,7 +21484,7 @@
         null
       ],
       "selectedByPercent": 0.0,
-      "sellPrice": 4.5,
+      "sellPrice": 4.4,
       "team": "FUL",
       "total": -1.72,
       "webName": "J.Cuenca"
@@ -21851,7 +21851,7 @@
       ],
       "perGameweek": [
         3.87,
-        3.75,
+        3.74,
         3.96,
         3.41,
         4.01,
@@ -21867,10 +21867,10 @@
         5,
         4
       ],
-      "selectedByPercent": 0.9,
+      "selectedByPercent": 1.0,
       "sellPrice": 5.4,
       "team": "FUL",
-      "total": 26.56,
+      "total": 26.55,
       "webName": "Iwobi"
     },
     {
@@ -21951,7 +21951,7 @@
         1.43,
         1.18,
         1.44,
-        1.38,
+        1.37,
         1.27
       ],
       "position": "MID",
@@ -21966,7 +21966,7 @@
       "selectedByPercent": 0.2,
       "sellPrice": 5.3,
       "team": "FUL",
-      "total": 9.4,
+      "total": 9.39,
       "webName": "Smith Rowe"
     },
     {
@@ -22042,10 +22042,10 @@
         ]
       ],
       "perGameweek": [
-        1.46,
+        1.45,
         1.41,
         1.52,
-        1.27,
+        1.26,
         1.53,
         1.46,
         1.35
@@ -22062,7 +22062,7 @@
       "selectedByPercent": 0.0,
       "sellPrice": 5.3,
       "team": "FUL",
-      "total": 10.0,
+      "total": 9.98,
       "webName": "Kevin"
     },
     {
@@ -22139,7 +22139,7 @@
       ],
       "perGameweek": [
         3.78,
-        3.64,
+        3.63,
         3.91,
         3.23,
         3.95,
@@ -22158,7 +22158,7 @@
       "selectedByPercent": 0.3,
       "sellPrice": 5.5,
       "team": "FUL",
-      "total": 25.84,
+      "total": 25.83,
       "webName": "Bobb"
     },
     {
@@ -22236,7 +22236,7 @@
       "perGameweek": [
         2.56,
         2.48,
-        2.6,
+        2.59,
         2.3,
         2.63,
         2.54,
@@ -22254,7 +22254,7 @@
       "selectedByPercent": 0.3,
       "sellPrice": 4.9,
       "team": "FUL",
-      "total": 17.6,
+      "total": 17.59,
       "webName": "Berge"
     },
     {
@@ -22334,7 +22334,7 @@
         0.43,
         0.52,
         0.3,
-        0.53,
+        0.52,
         0.47,
         0.37
       ],
@@ -22350,7 +22350,7 @@
       "selectedByPercent": 0.0,
       "sellPrice": 4.9,
       "team": "FUL",
-      "total": 3.08,
+      "total": 3.07,
       "webName": "Cairney"
     },
     {
@@ -22430,7 +22430,7 @@
         3.7,
         3.99,
         3.28,
-        4.04,
+        4.03,
         3.84,
         3.63
       ],
@@ -22446,7 +22446,7 @@
       "selectedByPercent": 4.8,
       "sellPrice": 5.6,
       "team": "FUL",
-      "total": 26.33,
+      "total": 26.32,
       "webName": "King"
     },
     {
@@ -22463,7 +22463,7 @@
         "cards": -0.19,
         "cleanSheet": 0.0,
         "defensiveContribution": 0.0,
-        "goals": 0.26,
+        "goals": 0.25,
         "goalsConceded": 0.0,
         "saves": 0.0
       },
@@ -22827,7 +22827,7 @@
         2,
         2
       ],
-      "selectedByPercent": 7.1,
+      "selectedByPercent": 7.0,
       "sellPrice": 6.1,
       "team": "FUL",
       "total": 25.57,
@@ -22938,7 +22938,7 @@
       "code": 463210,
       "components": {
         "appearance": 1.8,
-        "assists": 0.15,
+        "assists": 0.14,
         "bonus": 0.05,
         "cards": -0.05,
         "cleanSheet": 0.18,
@@ -23007,7 +23007,7 @@
         2.55,
         2.31,
         2.58,
-        2.51,
+        2.5,
         2.48
       ],
       "position": "MID",
@@ -23022,7 +23022,7 @@
       "selectedByPercent": 0.1,
       "sellPrice": 5.0,
       "team": "FUL",
-      "total": 17.42,
+      "total": 17.41,
       "webName": "Charles"
     },
     {
@@ -23485,8 +23485,8 @@
         1.08,
         1.16,
         0.92,
-        1.07,
-        1.04,
+        1.06,
+        1.03,
         1.07,
         1.04
       ],
@@ -23502,7 +23502,7 @@
       "selectedByPercent": 0.0,
       "sellPrice": 5.0,
       "team": "HUL",
-      "total": 7.38,
+      "total": 7.36,
       "webName": "Iroegbunam"
     },
     {
@@ -23787,7 +23787,7 @@
         1,
         1
       ],
-      "selectedByPercent": 13.6,
+      "selectedByPercent": 13.5,
       "sellPrice": 4.2,
       "team": "HUL",
       "total": 22.81,
@@ -24253,7 +24253,7 @@
         2.51,
         2.7,
         2.14,
-        2.48,
+        2.47,
         2.43,
         2.52,
         2.42
@@ -24267,10 +24267,10 @@
         4,
         6
       ],
-      "selectedByPercent": 9.0,
+      "selectedByPercent": 9.1,
       "sellPrice": 5.2,
       "team": "HUL",
-      "total": 17.2,
+      "total": 17.19,
       "webName": "Belloumi"
     },
     {
@@ -24827,9 +24827,9 @@
       ],
       "perGameweek": [
         2.75,
-        2.96,
+        2.97,
         2.29,
-        2.7,
+        2.71,
         2.62,
         2.72,
         2.65
@@ -24846,7 +24846,7 @@
       "selectedByPercent": 1.7,
       "sellPrice": 5.5,
       "team": "HUL",
-      "total": 18.69,
+      "total": 18.71,
       "webName": "McBurnie"
     },
     {
@@ -24922,7 +24922,7 @@
         ]
       ],
       "perGameweek": [
-        1.27,
+        1.26,
         1.4,
         0.99,
         1.24,
@@ -24942,7 +24942,7 @@
       "selectedByPercent": 0.0,
       "sellPrice": 5.0,
       "team": "HUL",
-      "total": 8.56,
+      "total": 8.55,
       "webName": "Gelhardt"
     },
     {
@@ -25022,7 +25022,7 @@
         0.55,
         0.46,
         0.52,
-        0.51,
+        0.5,
         0.52,
         0.51
       ],
@@ -25038,7 +25038,7 @@
       "selectedByPercent": 0.0,
       "sellPrice": 4.9,
       "team": "HUL",
-      "total": 3.59,
+      "total": 3.58,
       "webName": "Morita"
     },
     {
@@ -25603,7 +25603,7 @@
         0.42
       ],
       "position": "DEF",
-      "price": 4.0,
+      "price": 3.9,
       "recentPoints": [
         null,
         1,
@@ -25612,7 +25612,7 @@
         null
       ],
       "selectedByPercent": 0.2,
-      "sellPrice": 4.0,
+      "sellPrice": 3.9,
       "team": "HUL",
       "total": 3.01,
       "webName": "Norton-Cuffy"
@@ -25694,7 +25694,7 @@
         2.58,
         2.1,
         2.39,
-        2.34,
+        2.35,
         2.43,
         2.34
       ],
@@ -25710,7 +25710,7 @@
       "selectedByPercent": 0.0,
       "sellPrice": 5.5,
       "team": "HUL",
-      "total": 16.6,
+      "total": 16.61,
       "webName": "Thomas"
     },
     {
@@ -25984,7 +25984,7 @@
         2.76,
         2.81,
         2.78,
-        2.73
+        2.72
       ],
       "position": "MID",
       "price": 4.9,
@@ -25998,7 +25998,7 @@
       "selectedByPercent": 0.1,
       "sellPrice": 4.9,
       "team": "IPS",
-      "total": 19.46,
+      "total": 19.45,
       "webName": "Luki\u0107"
     },
     {
@@ -26459,7 +26459,7 @@
       ],
       "perGameweek": [
         3.13,
-        2.69,
+        2.68,
         2.97,
         2.7,
         2.88,
@@ -26478,7 +26478,7 @@
       "selectedByPercent": 2.6,
       "sellPrice": 4.0,
       "team": "IPS",
-      "total": 20.05,
+      "total": 20.04,
       "webName": "O'Shea"
     },
     {
@@ -27036,11 +27036,11 @@
       "perGameweek": [
         0.08,
         0.06,
-        0.09,
-        0.08,
         0.08,
         0.07,
-        0.07
+        0.08,
+        0.07,
+        0.06
       ],
       "position": "MID",
       "price": 4.4,
@@ -27054,7 +27054,7 @@
       "selectedByPercent": 0.0,
       "sellPrice": 4.4,
       "team": "IPS",
-      "total": 0.53,
+      "total": 0.5,
       "webName": "Taylor"
     },
     {
@@ -27226,13 +27226,13 @@
         ]
       ],
       "perGameweek": [
-        2.29,
+        2.28,
         2.14,
         2.29,
         2.21,
         2.26,
         2.23,
-        2.18
+        2.17
       ],
       "position": "MID",
       "price": 5.4,
@@ -27246,7 +27246,7 @@
       "selectedByPercent": 0.1,
       "sellPrice": 5.4,
       "team": "IPS",
-      "total": 15.6,
+      "total": 15.58,
       "webName": "Fatawu"
     },
     {
@@ -27423,7 +27423,7 @@
         1.17,
         1.13,
         1.16,
-        1.14,
+        1.13,
         1.11
       ],
       "position": "MID",
@@ -27438,7 +27438,7 @@
       "selectedByPercent": 0.1,
       "sellPrice": 5.4,
       "team": "IPS",
-      "total": 7.96,
+      "total": 7.95,
       "webName": "Philogene"
     },
     {
@@ -28028,7 +28028,7 @@
         "appearance": 0.8,
         "assists": 0.1,
         "bonus": 0.04,
-        "cards": -0.1,
+        "cards": -0.09,
         "cleanSheet": 0.04,
         "defensiveContribution": 0.28,
         "goals": 0.17,
@@ -28779,7 +28779,7 @@
         5,
         1
       ],
-      "selectedByPercent": 9.8,
+      "selectedByPercent": 9.9,
       "sellPrice": 4.7,
       "team": "LEE",
       "total": 25.36,
@@ -28955,12 +28955,12 @@
       ],
       "perGameweek": [
         3.9,
-        3.55,
-        3.97,
-        3.24,
+        3.56,
+        3.98,
+        3.25,
         4.17,
-        2.77,
-        4.36
+        2.78,
+        4.37
       ],
       "position": "DEF",
       "price": 4.5,
@@ -28974,7 +28974,7 @@
       "selectedByPercent": 2.0,
       "sellPrice": 4.5,
       "team": "LEE",
-      "total": 25.96,
+      "total": 26.01,
       "webName": "Justin"
     },
     {
@@ -29051,7 +29051,7 @@
       ],
       "perGameweek": [
         3.46,
-        3.13,
+        3.14,
         3.51,
         2.85,
         3.7,
@@ -29070,7 +29070,7 @@
       "selectedByPercent": 4.8,
       "sellPrice": 5.0,
       "team": "LEE",
-      "total": 22.97,
+      "total": 22.98,
       "webName": "Muharemovi\u0107"
     },
     {
@@ -29149,7 +29149,7 @@
         4.26,
         4.24,
         4.5,
-        4.17,
+        4.16,
         4.52,
         3.86,
         4.72
@@ -29166,7 +29166,7 @@
       "selectedByPercent": 2.3,
       "sellPrice": 6.0,
       "team": "LEE",
-      "total": 30.27,
+      "total": 30.26,
       "webName": "Stach"
     },
     {
@@ -29343,7 +29343,7 @@
         1.55,
         1.45,
         1.54,
-        1.34,
+        1.33,
         1.62
       ],
       "position": "MID",
@@ -29358,7 +29358,7 @@
       "selectedByPercent": 0.4,
       "sellPrice": 5.3,
       "team": "LEE",
-      "total": 10.4,
+      "total": 10.39,
       "webName": "Aaronson"
     },
     {
@@ -29532,7 +29532,7 @@
       "perGameweek": [
         0.69,
         0.71,
-        0.8,
+        0.79,
         0.7,
         0.79,
         0.59,
@@ -29550,7 +29550,7 @@
       "selectedByPercent": 0.1,
       "sellPrice": 4.8,
       "team": "LEE",
-      "total": 5.14,
+      "total": 5.13,
       "webName": "Longstaff"
     },
     {
@@ -29632,7 +29632,7 @@
         0.59,
         0.65,
         0.52,
-        0.71
+        0.7
       ],
       "position": "MID",
       "price": 4.9,
@@ -29646,7 +29646,7 @@
       "selectedByPercent": 0.1,
       "sellPrice": 4.9,
       "team": "LEE",
-      "total": 4.32,
+      "total": 4.31,
       "webName": "James"
     },
     {
@@ -29759,7 +29759,7 @@
         "cards": -0.25,
         "cleanSheet": 0.21,
         "defensiveContribution": 0.31,
-        "goals": 0.63,
+        "goals": 0.62,
         "goalsConceded": 0.0,
         "saves": 0.0
       },
@@ -29819,12 +29819,12 @@
       ],
       "perGameweek": [
         2.98,
-        2.97,
+        2.96,
         3.17,
         2.9,
-        3.19,
+        3.18,
         2.66,
-        3.35
+        3.34
       ],
       "position": "MID",
       "price": 4.9,
@@ -29838,7 +29838,7 @@
       "selectedByPercent": 0.3,
       "sellPrice": 4.9,
       "team": "LEE",
-      "total": 21.22,
+      "total": 21.19,
       "webName": "Tanaka"
     },
     {
@@ -29917,7 +29917,7 @@
         4.06,
         4.15,
         4.52,
-        4.09,
+        4.08,
         4.5,
         3.6,
         4.83
@@ -29931,10 +29931,10 @@
         2,
         2
       ],
-      "selectedByPercent": 22.8,
+      "selectedByPercent": 23.0,
       "sellPrice": 6.0,
       "team": "LEE",
-      "total": 29.75,
+      "total": 29.74,
       "webName": "Calvert-Lewin"
     },
     {
@@ -30106,10 +30106,10 @@
         ]
       ],
       "perGameweek": [
-        3.95,
+        3.96,
         3.8,
         3.93,
-        3.7,
+        3.71,
         4.03,
         3.64,
         4.08
@@ -30126,7 +30126,7 @@
       "selectedByPercent": 5.8,
       "sellPrice": 5.0,
       "team": "LEE",
-      "total": 27.13,
+      "total": 27.15,
       "webName": "Trafford"
     },
     {
@@ -30396,7 +30396,7 @@
       "perGameweek": [
         0.13,
         0.14,
-        0.17,
+        0.16,
         0.13,
         0.16,
         0.1,
@@ -30414,7 +30414,7 @@
       "selectedByPercent": 0.1,
       "sellPrice": 4.5,
       "team": "LEE",
-      "total": 1.02,
+      "total": 1.01,
       "webName": "Cresswell"
     },
     {
@@ -30891,7 +30891,7 @@
         8,
         1
       ],
-      "selectedByPercent": 4.3,
+      "selectedByPercent": 4.2,
       "sellPrice": 5.5,
       "team": "LIV",
       "total": 25.02,
@@ -31267,7 +31267,7 @@
         3.13
       ],
       "position": "DEF",
-      "price": 6.5,
+      "price": 6.4,
       "recentPoints": [
         1,
         6,
@@ -31276,7 +31276,7 @@
         0
       ],
       "selectedByPercent": 15.4,
-      "sellPrice": 6.5,
+      "sellPrice": 6.4,
       "team": "LIV",
       "total": 25.07,
       "webName": "Virgil"
@@ -31356,7 +31356,7 @@
       "perGameweek": [
         2.5,
         2.14,
-        2.56,
+        2.55,
         2.61,
         2.63,
         2.96,
@@ -31374,7 +31374,7 @@
       "selectedByPercent": 2.0,
       "sellPrice": 5.3,
       "team": "LIV",
-      "total": 17.53,
+      "total": 17.52,
       "webName": "Kerkez"
     },
     {
@@ -31453,7 +31453,7 @@
         0.29,
         0.16,
         0.28,
-        0.31,
+        0.3,
         0.27,
         0.35,
         0.21
@@ -31470,7 +31470,7 @@
       "selectedByPercent": 0.0,
       "sellPrice": 4.9,
       "team": "LIV",
-      "total": 1.87,
+      "total": 1.86,
       "webName": "Gomez"
     },
     {
@@ -31659,7 +31659,7 @@
         6,
         3
       ],
-      "selectedByPercent": 4.0,
+      "selectedByPercent": 4.1,
       "sellPrice": 5.0,
       "team": "LIV",
       "total": 22.77,
@@ -32123,12 +32123,12 @@
       ],
       "perGameweek": [
         2.43,
-        1.57,
-        2.22,
-        2.5,
+        1.56,
+        2.21,
+        2.49,
         1.96,
         2.5,
-        2.21
+        2.2
       ],
       "position": "MID",
       "price": 5.3,
@@ -32142,7 +32142,7 @@
       "selectedByPercent": 0.0,
       "sellPrice": 5.3,
       "team": "LIV",
-      "total": 15.39,
+      "total": 15.35,
       "webName": "Chiesa"
     },
     {
@@ -32347,7 +32347,7 @@
       "components": {
         "appearance": 0.0,
         "assists": 0.19,
-        "bonus": 0.07,
+        "bonus": 0.06,
         "cards": -0.18,
         "cleanSheet": 0.0,
         "defensiveContribution": 0.0,
@@ -32411,7 +32411,7 @@
       ],
       "perGameweek": [
         0.46,
-        0.26,
+        0.25,
         0.41,
         0.48,
         0.35,
@@ -32430,7 +32430,7 @@
       "selectedByPercent": 0.1,
       "sellPrice": 4.9,
       "team": "LIV",
-      "total": 2.85,
+      "total": 2.84,
       "webName": "Endo"
     },
     {
@@ -32619,7 +32619,7 @@
         1,
         2
       ],
-      "selectedByPercent": 0.9,
+      "selectedByPercent": 1.0,
       "sellPrice": 6.5,
       "team": "LIV",
       "total": 17.74,
@@ -32811,7 +32811,7 @@
         8,
         null
       ],
-      "selectedByPercent": 12.5,
+      "selectedByPercent": 12.7,
       "sellPrice": 9.0,
       "team": "LIV",
       "total": 35.06,
@@ -33082,13 +33082,13 @@
         ]
       ],
       "perGameweek": [
-        2.64,
+        2.63,
         2.27,
-        2.68,
-        2.74,
+        2.67,
         2.73,
-        3.06,
-        2.3
+        2.72,
+        3.05,
+        2.29
       ],
       "position": "DEF",
       "price": 5.4,
@@ -33102,7 +33102,7 @@
       "selectedByPercent": 3.2,
       "sellPrice": 5.4,
       "team": "LIV",
-      "total": 18.42,
+      "total": 18.36,
       "webName": "Araujo"
     },
     {
@@ -33274,7 +33274,7 @@
         ]
       ],
       "perGameweek": [
-        3.48,
+        3.47,
         3.67,
         3.49,
         3.8,
@@ -33294,7 +33294,7 @@
       "selectedByPercent": 4.0,
       "sellPrice": 6.9,
       "team": "MCI",
-      "total": 24.51,
+      "total": 24.5,
       "webName": "Enzo"
     },
     {
@@ -33372,7 +33372,7 @@
       "perGameweek": [
         3.53,
         3.7,
-        3.54,
+        3.53,
         3.81,
         2.98,
         3.75,
@@ -33387,10 +33387,10 @@
         5,
         1
       ],
-      "selectedByPercent": 5.5,
+      "selectedByPercent": 5.4,
       "sellPrice": 5.8,
       "team": "MCI",
-      "total": 24.85,
+      "total": 24.84,
       "webName": "Ndiaye"
     },
     {
@@ -33483,7 +33483,7 @@
         2,
         9
       ],
-      "selectedByPercent": 7.8,
+      "selectedByPercent": 7.7,
       "sellPrice": 5.5,
       "team": "MCI",
       "total": 24.82,
@@ -33675,7 +33675,7 @@
         1,
         5
       ],
-      "selectedByPercent": 9.4,
+      "selectedByPercent": 9.3,
       "sellPrice": 6.3,
       "team": "MCI",
       "total": 18.92,
@@ -34059,7 +34059,7 @@
         4,
         4
       ],
-      "selectedByPercent": 28.7,
+      "selectedByPercent": 28.5,
       "sellPrice": 5.8,
       "team": "MCI",
       "total": 27.48,
@@ -34539,7 +34539,7 @@
         17,
         3
       ],
-      "selectedByPercent": 14.2,
+      "selectedByPercent": 14.0,
       "sellPrice": 8.3,
       "team": "MCI",
       "total": 22.1,
@@ -34624,7 +34624,7 @@
         3.41,
         2.3,
         3.32,
-        3.09
+        3.08
       ],
       "position": "MID",
       "price": 6.8,
@@ -34635,10 +34635,10 @@
         null,
         null
       ],
-      "selectedByPercent": 1.5,
+      "selectedByPercent": 1.6,
       "sellPrice": 6.8,
       "team": "MCI",
-      "total": 21.51,
+      "total": 21.5,
       "webName": "Foden"
     },
     {
@@ -34731,7 +34731,7 @@
         8,
         10
       ],
-      "selectedByPercent": 37.1,
+      "selectedByPercent": 37.2,
       "sellPrice": 8.0,
       "team": "MCI",
       "total": 38.33,
@@ -34827,7 +34827,7 @@
         1,
         12
       ],
-      "selectedByPercent": 2.0,
+      "selectedByPercent": 2.1,
       "sellPrice": 7.4,
       "team": "MCI",
       "total": 12.94,
@@ -35019,7 +35019,7 @@
         6,
         6
       ],
-      "selectedByPercent": 76.6,
+      "selectedByPercent": 76.8,
       "sellPrice": 15.7,
       "team": "MCI",
       "total": 50.62,
@@ -35101,10 +35101,10 @@
         4.19,
         4.34,
         4.22,
-        4.47,
+        4.46,
         3.72,
         4.41,
-        4.2
+        4.19
       ],
       "position": "MID",
       "price": 6.3,
@@ -35118,7 +35118,7 @@
       "selectedByPercent": 3.9,
       "sellPrice": 6.3,
       "team": "MCI",
-      "total": 29.55,
+      "total": 29.53,
       "webName": "Anderson"
     },
     {
@@ -35491,7 +35491,7 @@
         0.25
       ],
       "position": "DEF",
-      "price": 4.0,
+      "price": 3.9,
       "recentPoints": [
         1,
         null,
@@ -35500,7 +35500,7 @@
         null
       ],
       "selectedByPercent": 0.2,
-      "sellPrice": 4.0,
+      "sellPrice": 3.9,
       "team": "MCI",
       "total": 1.8,
       "webName": "Braithwaite"
@@ -35581,7 +35581,7 @@
         0.59,
         0.62,
         0.58,
-        0.64,
+        0.63,
         0.48,
         0.62,
         0.59
@@ -35598,7 +35598,7 @@
       "selectedByPercent": 0.0,
       "sellPrice": 6.0,
       "team": "MCI",
-      "total": 4.12,
+      "total": 4.11,
       "webName": "Allan"
     },
     {
@@ -35683,7 +35683,7 @@
         -0.01
       ],
       "position": "MID",
-      "price": 4.5,
+      "price": 4.4,
       "recentPoints": [
         null,
         null,
@@ -35692,7 +35692,7 @@
         null
       ],
       "selectedByPercent": 0.0,
-      "sellPrice": 4.5,
+      "sellPrice": 4.4,
       "team": "MCI",
       "total": -0.08,
       "webName": "Samba"
@@ -35773,7 +35773,7 @@
         3.8,
         3.54,
         3.74,
-        3.42,
+        3.41,
         3.75,
         3.58,
         3.86
@@ -35787,10 +35787,10 @@
         4,
         3
       ],
-      "selectedByPercent": 1.3,
+      "selectedByPercent": 1.4,
       "sellPrice": 5.7,
       "team": "MUN",
-      "total": 25.69,
+      "total": 25.68,
       "webName": "Tielemans"
     },
     {
@@ -36061,7 +36061,7 @@
         0.13,
         0.16,
         0.13,
-        0.16,
+        0.17,
         0.14,
         0.15,
         0.12
@@ -36078,7 +36078,7 @@
       "selectedByPercent": 0.0,
       "sellPrice": 4.5,
       "team": "MUN",
-      "total": 0.99,
+      "total": 1.0,
       "webName": "Darlow"
     },
     {
@@ -36171,7 +36171,7 @@
         4,
         2
       ],
-      "selectedByPercent": 8.8,
+      "selectedByPercent": 8.7,
       "sellPrice": 4.9,
       "team": "MUN",
       "total": 22.31,
@@ -36250,7 +36250,7 @@
         ]
       ],
       "perGameweek": [
-        0.08,
+        0.07,
         -0.06,
         0.05,
         -0.11,
@@ -36270,7 +36270,7 @@
       "selectedByPercent": 0.0,
       "sellPrice": 4.9,
       "team": "MUN",
-      "total": 0.08,
+      "total": 0.07,
       "webName": "De Ligt"
     },
     {
@@ -37050,7 +37050,7 @@
       "code": 141746,
       "components": {
         "appearance": 2.0,
-        "assists": 0.81,
+        "assists": 0.8,
         "bonus": 0.52,
         "cards": -0.2,
         "cleanSheet": 0.24,
@@ -37116,11 +37116,11 @@
       "perGameweek": [
         5.53,
         5.0,
-        5.41,
+        5.4,
         4.7,
         5.43,
         5.08,
-        5.66
+        5.65
       ],
       "position": "MID",
       "price": 11.8,
@@ -37131,10 +37131,10 @@
         2,
         1
       ],
-      "selectedByPercent": 30.3,
+      "selectedByPercent": 29.8,
       "sellPrice": 11.8,
       "team": "MUN",
-      "total": 36.81,
+      "total": 36.79,
       "webName": "B.Fernandes"
     },
     {
@@ -37151,7 +37151,7 @@
         "cards": -0.16,
         "cleanSheet": 0.24,
         "defensiveContribution": 0.05,
-        "goals": 2.54,
+        "goals": 2.55,
         "goalsConceded": 0.0,
         "saves": 0.0
       },
@@ -37210,13 +37210,13 @@
         ]
       ],
       "perGameweek": [
-        5.79,
-        5.2,
-        5.65,
-        4.87,
-        5.68,
-        5.29,
-        5.92
+        5.8,
+        5.21,
+        5.66,
+        4.88,
+        5.69,
+        5.3,
+        5.93
       ],
       "position": "MID",
       "price": 7.8,
@@ -37227,10 +37227,10 @@
         2,
         8
       ],
-      "selectedByPercent": 19.7,
+      "selectedByPercent": 19.9,
       "sellPrice": 7.8,
       "team": "MUN",
-      "total": 38.4,
+      "total": 38.47,
       "webName": "Mbeumo"
     },
     {
@@ -37312,7 +37312,7 @@
         4.17,
         4.63,
         4.4,
-        4.79
+        4.78
       ],
       "position": "MID",
       "price": 7.9,
@@ -37323,10 +37323,10 @@
         10,
         10
       ],
-      "selectedByPercent": 6.8,
+      "selectedByPercent": 6.7,
       "sellPrice": 7.9,
       "team": "MUN",
-      "total": 31.66,
+      "total": 31.65,
       "webName": "Cunha"
     },
     {
@@ -37406,7 +37406,7 @@
         2.79,
         2.97,
         2.68,
-        2.98,
+        2.97,
         2.82,
         3.08
       ],
@@ -37419,10 +37419,10 @@
         2,
         1
       ],
-      "selectedByPercent": 1.3,
+      "selectedByPercent": 1.2,
       "sellPrice": 6.9,
       "team": "MUN",
-      "total": 20.34,
+      "total": 20.33,
       "webName": "Rashford"
     },
     {
@@ -37500,7 +37500,7 @@
       "perGameweek": [
         0.88,
         0.78,
-        0.86,
+        0.85,
         0.72,
         0.86,
         0.8,
@@ -37518,7 +37518,7 @@
       "selectedByPercent": 0.0,
       "sellPrice": 5.4,
       "team": "MUN",
-      "total": 5.8,
+      "total": 5.79,
       "webName": "Mount"
     },
     {
@@ -37535,7 +37535,7 @@
         "cards": -0.08,
         "cleanSheet": 0.0,
         "defensiveContribution": 0.06,
-        "goals": 0.44,
+        "goals": 0.45,
         "goalsConceded": 0.0,
         "saves": 0.0
       },
@@ -37627,7 +37627,7 @@
       "components": {
         "appearance": 1.5,
         "assists": 0.28,
-        "bonus": 0.22,
+        "bonus": 0.21,
         "cards": -0.08,
         "cleanSheet": 0.18,
         "defensiveContribution": 0.8,
@@ -37690,12 +37690,12 @@
         ]
       ],
       "perGameweek": [
-        3.28,
+        3.27,
         3.1,
         3.24,
         3.02,
         3.24,
-        3.13,
+        3.12,
         3.32
       ],
       "position": "MID",
@@ -37710,7 +37710,7 @@
       "selectedByPercent": 1.3,
       "sellPrice": 5.5,
       "team": "MUN",
-      "total": 22.33,
+      "total": 22.31,
       "webName": "Mainoo"
     },
     {
@@ -37786,11 +37786,11 @@
         ]
       ],
       "perGameweek": [
-        0.34,
+        0.33,
         0.28,
         0.32,
         0.25,
-        0.33,
+        0.32,
         0.29,
         0.35
       ],
@@ -37806,7 +37806,7 @@
       "selectedByPercent": 0.0,
       "sellPrice": 4.9,
       "team": "MUN",
-      "total": 2.16,
+      "total": 2.14,
       "webName": "J.Fletcher"
     },
     {
@@ -37888,7 +37888,7 @@
         0.18,
         0.23,
         0.21,
-        0.25
+        0.24
       ],
       "position": "MID",
       "price": 4.9,
@@ -37902,7 +37902,7 @@
       "selectedByPercent": 0.1,
       "sellPrice": 4.9,
       "team": "MUN",
-      "total": 1.54,
+      "total": 1.53,
       "webName": "Lacey"
     },
     {
@@ -37980,7 +37980,7 @@
       "perGameweek": [
         0.05,
         0.04,
-        0.05,
+        0.04,
         0.03,
         0.05,
         0.04,
@@ -37998,7 +37998,7 @@
       "selectedByPercent": 0.2,
       "sellPrice": 4.4,
       "team": "MUN",
-      "total": 0.31,
+      "total": 0.3,
       "webName": "Bendito Mantato"
     },
     {
@@ -38558,7 +38558,7 @@
         3.82,
         3.36,
         2.88,
-        2.98,
+        2.97,
         3.46,
         3.89
       ],
@@ -38571,10 +38571,10 @@
         4,
         0
       ],
-      "selectedByPercent": 2.0,
+      "selectedByPercent": 1.9,
       "sellPrice": 5.0,
       "team": "NEW",
-      "total": 23.78,
+      "total": 23.77,
       "webName": "Thiaw"
     },
     {
@@ -38655,7 +38655,7 @@
         0.36,
         0.21,
         0.28,
-        0.41,
+        0.4,
         0.47
       ],
       "position": "DEF",
@@ -38670,7 +38670,7 @@
       "selectedByPercent": 0.2,
       "sellPrice": 4.9,
       "team": "NEW",
-      "total": 2.53,
+      "total": 2.52,
       "webName": "Sch\u00e4r"
     },
     {
@@ -39038,9 +39038,9 @@
         4.48,
         4.38,
         3.82,
-        4.25,
+        4.24,
         4.6,
-        4.68
+        4.67
       ],
       "position": "MID",
       "price": 6.1,
@@ -39051,10 +39051,10 @@
         9,
         2
       ],
-      "selectedByPercent": 7.9,
+      "selectedByPercent": 7.8,
       "sellPrice": 6.1,
       "team": "NEW",
-      "total": 30.59,
+      "total": 30.57,
       "webName": "Barnes"
     },
     {
@@ -39228,9 +39228,9 @@
       "perGameweek": [
         0.65,
         0.66,
-        0.66,
-        0.53,
-        0.64,
+        0.65,
+        0.52,
+        0.63,
         0.71,
         0.71
       ],
@@ -39246,7 +39246,7 @@
       "selectedByPercent": 0.0,
       "sellPrice": 5.4,
       "team": "NEW",
-      "total": 4.56,
+      "total": 4.53,
       "webName": "Joelinton"
     },
     {
@@ -39323,8 +39323,8 @@
       ],
       "perGameweek": [
         3.18,
-        3.25,
-        3.18,
+        3.24,
+        3.17,
         2.94,
         3.1,
         3.26,
@@ -39342,7 +39342,7 @@
       "selectedByPercent": 0.1,
       "sellPrice": 5.5,
       "team": "NEW",
-      "total": 22.23,
+      "total": 22.21,
       "webName": "L.Miley"
     },
     {
@@ -39418,13 +39418,13 @@
         ]
       ],
       "perGameweek": [
-        3.27,
+        3.26,
         3.33,
         3.27,
         2.86,
-        3.18,
+        3.17,
         3.43,
-        3.48
+        3.47
       ],
       "position": "MID",
       "price": 5.0,
@@ -39438,7 +39438,7 @@
       "selectedByPercent": 0.6,
       "sellPrice": 5.0,
       "team": "NEW",
-      "total": 22.82,
+      "total": 22.79,
       "webName": "Willock"
     },
     {
@@ -39611,9 +39611,9 @@
       ],
       "perGameweek": [
         1.43,
-        1.47,
+        1.46,
         1.43,
-        1.37,
+        1.36,
         1.4,
         1.45,
         1.48
@@ -39630,7 +39630,7 @@
       "selectedByPercent": 0.1,
       "sellPrice": 4.8,
       "team": "NEW",
-      "total": 10.03,
+      "total": 10.01,
       "webName": "Steur"
     },
     {
@@ -39715,7 +39715,7 @@
         4.49
       ],
       "position": "FWD",
-      "price": 6.2,
+      "price": 6.1,
       "recentPoints": [
         8,
         1,
@@ -39723,8 +39723,8 @@
         0,
         2
       ],
-      "selectedByPercent": 14.9,
-      "sellPrice": 6.2,
+      "selectedByPercent": 14.5,
+      "sellPrice": 6.1,
       "team": "NEW",
       "total": 29.3,
       "webName": "Wissa"
@@ -39997,7 +39997,7 @@
         3.13,
         3.36,
         3.12,
-        2.97,
+        2.96,
         2.96,
         3.14,
         3.37
@@ -40014,7 +40014,7 @@
       "selectedByPercent": 1.4,
       "sellPrice": 5.0,
       "team": "NEW",
-      "total": 22.05,
+      "total": 22.04,
       "webName": "Horn\u00ed\u010dek"
     },
     {
@@ -40700,10 +40700,10 @@
         "appearance": 1.8,
         "assists": 0.2,
         "bonus": 0.21,
-        "cards": -0.36,
+        "cards": -0.35,
         "cleanSheet": 0.0,
         "defensiveContribution": 0.0,
-        "goals": 1.6,
+        "goals": 1.62,
         "goalsConceded": 0.0,
         "saves": 0.0
       },
@@ -40762,13 +40762,13 @@
         ]
       ],
       "perGameweek": [
-        3.46,
-        3.14,
-        2.91,
-        3.18,
-        3.35,
-        3.01,
-        3.28
+        3.48,
+        3.15,
+        2.92,
+        3.2,
+        3.37,
+        3.03,
+        3.3
       ],
       "position": "FWD",
       "price": 5.5,
@@ -40782,7 +40782,7 @@
       "selectedByPercent": 1.9,
       "sellPrice": 5.5,
       "team": "NFO",
-      "total": 22.33,
+      "total": 22.45,
       "webName": "Delap"
     },
     {
@@ -40799,12 +40799,12 @@
         "cards": -0.1,
         "cleanSheet": 0.61,
         "defensiveContribution": 0.3,
-        "goals": 0.75,
+        "goals": 0.74,
         "goalsConceded": -0.52,
         "saves": 0.0
       },
       "elementType": 2,
-      "form": 3.0,
+      "form": 1.7,
       "id": 201,
       "opponents": [
         [
@@ -40861,9 +40861,9 @@
         2.81,
         2.33,
         2.06,
-        2.44,
+        2.43,
         2.53,
-        2.38,
+        2.37,
         2.57
       ],
       "position": "DEF",
@@ -40875,10 +40875,10 @@
         2,
         1
       ],
-      "selectedByPercent": 4.9,
+      "selectedByPercent": 4.8,
       "sellPrice": 5.3,
       "team": "NFO",
-      "total": 17.12,
+      "total": 17.1,
       "webName": "Mu\u00f1oz"
     },
     {
@@ -40897,10 +40897,10 @@
         "defensiveContribution": 0.0,
         "goals": 0.0,
         "goalsConceded": -0.68,
-        "saves": 0.83
+        "saves": 0.82
       },
       "elementType": 1,
-      "form": 3.3,
+      "form": 2.0,
       "id": 467,
       "opponents": [
         [
@@ -40954,12 +40954,12 @@
         ]
       ],
       "perGameweek": [
-        3.22,
+        3.21,
         2.96,
-        2.86,
-        3.03,
-        3.03,
-        3.06,
+        2.85,
+        3.02,
+        3.02,
+        3.05,
         3.09
       ],
       "position": "GKP",
@@ -40974,7 +40974,7 @@
       "selectedByPercent": 1.4,
       "sellPrice": 5.0,
       "team": "NFO",
-      "total": 21.25,
+      "total": 21.2,
       "webName": "Sels"
     },
     {
@@ -41086,13 +41086,13 @@
         "bonus": 0.19,
         "cards": -0.12,
         "cleanSheet": 1.02,
-        "defensiveContribution": 0.33,
-        "goals": 0.53,
+        "defensiveContribution": 0.34,
+        "goals": 0.52,
         "goalsConceded": -0.68,
         "saves": 0.0
       },
       "elementType": 2,
-      "form": 2.7,
+      "form": 2.0,
       "id": 469,
       "opponents": [
         [
@@ -41147,7 +41147,7 @@
       ],
       "perGameweek": [
         3.62,
-        3.01,
+        3.0,
         2.68,
         3.15,
         3.23,
@@ -41166,7 +41166,7 @@
       "selectedByPercent": 6.3,
       "sellPrice": 5.0,
       "team": "NFO",
-      "total": 22.12,
+      "total": 22.11,
       "webName": "N.Williams"
     },
     {
@@ -41274,17 +41274,17 @@
       "code": 575476,
       "components": {
         "appearance": 2.0,
-        "assists": 0.16,
-        "bonus": 0.14,
+        "assists": 0.17,
+        "bonus": 0.07,
         "cards": -0.26,
         "cleanSheet": 1.02,
-        "defensiveContribution": 0.98,
-        "goals": 0.55,
+        "defensiveContribution": 0.99,
+        "goals": 0.56,
         "goalsConceded": -0.67,
         "saves": 0.0
       },
       "elementType": 2,
-      "form": 5.0,
+      "form": 2.7,
       "id": 472,
       "opponents": [
         [
@@ -41338,13 +41338,13 @@
         ]
       ],
       "perGameweek": [
-        3.92,
-        3.34,
-        3.04,
-        3.48,
-        3.54,
-        3.47,
-        3.63
+        3.87,
+        3.29,
+        2.98,
+        3.43,
+        3.49,
+        3.41,
+        3.58
       ],
       "position": "DEF",
       "price": 5.5,
@@ -41358,7 +41358,7 @@
       "selectedByPercent": 2.0,
       "sellPrice": 5.5,
       "team": "NFO",
-      "total": 24.42,
+      "total": 24.05,
       "webName": "Murillo"
     },
     {
@@ -41371,7 +41371,7 @@
       "components": {
         "appearance": 1.4,
         "assists": 0.23,
-        "bonus": 0.13,
+        "bonus": 0.12,
         "cards": -0.32,
         "cleanSheet": 0.61,
         "defensiveContribution": 0.45,
@@ -41438,7 +41438,7 @@
         1.73,
         1.53,
         1.82,
-        1.86,
+        1.85,
         1.82,
         1.92
       ],
@@ -41454,7 +41454,7 @@
       "selectedByPercent": 1.8,
       "sellPrice": 4.3,
       "team": "NFO",
-      "total": 12.78,
+      "total": 12.77,
       "webName": "Aina"
     },
     {
@@ -41476,7 +41476,7 @@
         "saves": 0.0
       },
       "elementType": 2,
-      "form": 2.3,
+      "form": 1.0,
       "id": 474,
       "opponents": [
         [
@@ -41821,13 +41821,13 @@
         3.73,
         3.39,
         3.17,
-        3.45,
+        3.44,
         3.59,
         3.3,
         3.55
       ],
       "position": "MID",
-      "price": 8.0,
+      "price": 7.9,
       "recentPoints": [
         13,
         3,
@@ -41835,10 +41835,10 @@
         2,
         2
       ],
-      "selectedByPercent": 11.9,
-      "sellPrice": 8.0,
+      "selectedByPercent": 11.7,
+      "sellPrice": 7.9,
       "team": "NFO",
-      "total": 24.18,
+      "total": 24.17,
       "webName": "Gibbs-White"
     },
     {
@@ -41850,7 +41850,7 @@
       "code": 209046,
       "components": {
         "appearance": 0.4,
-        "assists": 0.15,
+        "assists": 0.16,
         "bonus": 0.13,
         "cards": -0.04,
         "cleanSheet": 0.0,
@@ -41860,7 +41860,7 @@
         "saves": 0.0
       },
       "elementType": 3,
-      "form": 0.3,
+      "form": 0.7,
       "id": 482,
       "opponents": [
         [
@@ -41918,7 +41918,7 @@
         0.91,
         0.85,
         0.92,
-        0.96,
+        0.97,
         0.88,
         0.95
       ],
@@ -41934,7 +41934,7 @@
       "selectedByPercent": 0.1,
       "sellPrice": 5.8,
       "team": "NFO",
-      "total": 6.46,
+      "total": 6.47,
       "webName": "Hudson-Odoi"
     },
     {
@@ -41946,12 +41946,12 @@
       "code": 456512,
       "components": {
         "appearance": 1.6,
-        "assists": 0.43,
+        "assists": 0.42,
         "bonus": 0.27,
         "cards": -0.14,
         "cleanSheet": 0.15,
         "defensiveContribution": 0.04,
-        "goals": 1.15,
+        "goals": 1.16,
         "goalsConceded": 0.0,
         "saves": 0.0
       },
@@ -42010,13 +42010,13 @@
         ]
       ],
       "perGameweek": [
-        3.5,
-        3.17,
+        3.51,
+        3.18,
         2.95,
-        3.22,
-        3.37,
+        3.23,
+        3.38,
         3.08,
-        3.32
+        3.33
       ],
       "position": "MID",
       "price": 5.5,
@@ -42030,7 +42030,7 @@
       "selectedByPercent": 0.6,
       "sellPrice": 5.5,
       "team": "NFO",
-      "total": 22.61,
+      "total": 22.66,
       "webName": "Ndoye"
     },
     {
@@ -42047,12 +42047,12 @@
         "cards": -0.28,
         "cleanSheet": 0.25,
         "defensiveContribution": 0.57,
-        "goals": 0.9,
+        "goals": 0.89,
         "goalsConceded": 0.0,
         "saves": 0.0
       },
       "elementType": 3,
-      "form": 3.0,
+      "form": 2.7,
       "id": 486,
       "opponents": [
         [
@@ -42106,13 +42106,13 @@
         ]
       ],
       "perGameweek": [
-        4.0,
-        3.67,
-        3.46,
+        3.99,
+        3.66,
+        3.45,
         3.72,
-        3.86,
-        3.6,
-        3.82
+        3.85,
+        3.59,
+        3.81
       ],
       "position": "MID",
       "price": 5.5,
@@ -42126,7 +42126,7 @@
       "selectedByPercent": 0.1,
       "sellPrice": 5.5,
       "team": "NFO",
-      "total": 26.13,
+      "total": 26.07,
       "webName": "McAtee"
     },
     {
@@ -42244,7 +42244,7 @@
         "saves": 0.0
       },
       "elementType": 3,
-      "form": 0.7,
+      "form": 1.0,
       "id": 488,
       "opponents": [
         [
@@ -42332,7 +42332,7 @@
         "appearance": 0.0,
         "assists": 0.24,
         "bonus": 0.13,
-        "cards": -0.33,
+        "cards": -0.32,
         "cleanSheet": 0.0,
         "defensiveContribution": 0.0,
         "goals": 0.74,
@@ -42436,7 +42436,7 @@
         "saves": 0.0
       },
       "elementType": 4,
-      "form": 0.7,
+      "form": 1.0,
       "id": 490,
       "opponents": [
         [
@@ -42491,15 +42491,15 @@
       ],
       "perGameweek": [
         1.92,
-        1.75,
-        1.63,
+        1.76,
+        1.64,
         1.78,
-        1.86,
+        1.87,
         1.69,
         1.83
       ],
       "position": "FWD",
-      "price": 5.8,
+      "price": 5.7,
       "recentPoints": [
         null,
         1,
@@ -42508,9 +42508,9 @@
         1
       ],
       "selectedByPercent": 0.8,
-      "sellPrice": 5.8,
+      "sellPrice": 5.7,
       "team": "NFO",
-      "total": 12.46,
+      "total": 12.49,
       "webName": "Wood"
     },
     {
@@ -42524,7 +42524,7 @@
         "appearance": 0.2,
         "assists": 0.04,
         "bonus": 0.07,
-        "cards": -0.06,
+        "cards": -0.05,
         "cleanSheet": 0.0,
         "defensiveContribution": 0.02,
         "goals": 0.72,
@@ -42586,12 +42586,12 @@
         ]
       ],
       "perGameweek": [
-        1.0,
-        0.86,
+        0.99,
+        0.85,
         0.76,
-        0.88,
+        0.87,
         0.95,
-        0.81,
+        0.8,
         0.92
       ],
       "position": "FWD",
@@ -42606,7 +42606,7 @@
       "selectedByPercent": 0.0,
       "sellPrice": 5.4,
       "team": "NFO",
-      "total": 6.18,
+      "total": 6.14,
       "webName": "Kalimuendo"
     },
     {
@@ -42622,13 +42622,13 @@
         "bonus": 0.03,
         "cards": -0.13,
         "cleanSheet": 0.25,
-        "defensiveContribution": 0.23,
-        "goals": 0.29,
+        "defensiveContribution": 0.24,
+        "goals": 0.28,
         "goalsConceded": 0.0,
         "saves": 0.0
       },
       "elementType": 3,
-      "form": 2.3,
+      "form": 2.7,
       "id": 558,
       "opponents": [
         [
@@ -42687,7 +42687,7 @@
         2.58,
         2.7,
         2.74,
-        2.67,
+        2.66,
         2.74
       ],
       "position": "MID",
@@ -42702,7 +42702,7 @@
       "selectedByPercent": 0.1,
       "sellPrice": 5.0,
       "team": "NFO",
-      "total": 18.92,
+      "total": 18.91,
       "webName": "Schlager"
     },
     {
@@ -42718,13 +42718,13 @@
         "bonus": 0.04,
         "cards": -0.04,
         "cleanSheet": 0.61,
-        "defensiveContribution": 0.1,
+        "defensiveContribution": 0.11,
         "goals": 0.22,
         "goalsConceded": -0.34,
         "saves": 0.0
       },
       "elementType": 2,
-      "form": 3.0,
+      "form": 1.7,
       "id": 581,
       "opponents": [
         [
@@ -42778,12 +42778,12 @@
         ]
       ],
       "perGameweek": [
-        2.05,
+        2.06,
         1.75,
         1.59,
         1.82,
         1.85,
-        1.82,
+        1.83,
         1.9
       ],
       "position": "DEF",
@@ -42798,7 +42798,7 @@
       "selectedByPercent": 0.5,
       "sellPrice": 5.4,
       "team": "NFO",
-      "total": 12.78,
+      "total": 12.8,
       "webName": "Diomande"
     },
     {
@@ -43547,7 +43547,7 @@
       ],
       "perGameweek": [
         0.25,
-        0.18,
+        0.19,
         0.21,
         0.18,
         0.19,
@@ -43566,7 +43566,7 @@
       "selectedByPercent": 16.6,
       "sellPrice": 4.0,
       "team": "TOT",
-      "total": 1.43,
+      "total": 1.44,
       "webName": "Dubravka"
     },
     {
@@ -43851,7 +43851,7 @@
         1,
         1
       ],
-      "selectedByPercent": 3.7,
+      "selectedByPercent": 3.6,
       "sellPrice": 5.0,
       "team": "TOT",
       "total": 19.86,
@@ -44512,7 +44512,7 @@
         1.16,
         1.0,
         1.07,
-        0.9
+        0.89
       ],
       "position": "MID",
       "price": 6.2,
@@ -44526,7 +44526,7 @@
       "selectedByPercent": 0.4,
       "sellPrice": 6.2,
       "team": "TOT",
-      "total": 7.19,
+      "total": 7.18,
       "webName": "Maddison"
     },
     {
@@ -44896,7 +44896,7 @@
         0.05,
         0.04,
         0.04,
-        0.03
+        0.02
       ],
       "position": "MID",
       "price": 4.4,
@@ -44910,7 +44910,7 @@
       "selectedByPercent": 0.9,
       "sellPrice": 4.4,
       "team": "TOT",
-      "total": 0.27,
+      "total": 0.26,
       "webName": "Olusesi"
     },
     {
@@ -45183,7 +45183,7 @@
         0.14,
         0.2,
         0.14,
-        0.17,
+        0.16,
         0.1
       ],
       "position": "MID",
@@ -45198,7 +45198,7 @@
       "selectedByPercent": 0.1,
       "sellPrice": 4.5,
       "team": "TOT",
-      "total": 1.05,
+      "total": 1.04,
       "webName": "Williams-Barnett"
     },
     {
@@ -45988,7 +45988,7 @@
         "saves": 0.0
       },
       "elementType": 3,
-      "form": 3.0,
+      "form": 3.7,
       "id": 542,
       "opponents": [
         [
@@ -46042,7 +46042,7 @@
         ]
       ],
       "perGameweek": [
-        4.31,
+        4.32,
         4.2,
         4.3,
         4.04,
@@ -46062,7 +46062,7 @@
       "selectedByPercent": 3.0,
       "sellPrice": 5.7,
       "team": "SUN",
-      "total": 29.24,
+      "total": 29.25,
       "webName": "E.Le F\u00e9e"
     },
     {
@@ -46170,11 +46170,11 @@
       "code": 84450,
       "components": {
         "appearance": 2.0,
-        "assists": 0.48,
+        "assists": 0.47,
         "bonus": 0.52,
         "cards": -0.28,
         "cleanSheet": 0.27,
-        "defensiveContribution": 0.71,
+        "defensiveContribution": 0.7,
         "goals": 0.27,
         "goalsConceded": 0.0,
         "saves": 0.0
@@ -46234,12 +46234,12 @@
         ]
       ],
       "perGameweek": [
-        3.97,
-        3.9,
-        3.92,
+        3.96,
+        3.89,
+        3.91,
         3.8,
-        4.03,
-        3.68,
+        4.02,
+        3.67,
         3.8
       ],
       "position": "MID",
@@ -46254,7 +46254,7 @@
       "selectedByPercent": 3.2,
       "sellPrice": 5.4,
       "team": "SUN",
-      "total": 27.1,
+      "total": 27.05,
       "webName": "Xhaka"
     },
     {
@@ -46621,7 +46621,7 @@
         0.35,
         0.34,
         0.35,
-        0.34,
+        0.33,
         0.36,
         0.32,
         0.34
@@ -46638,7 +46638,7 @@
       "selectedByPercent": 0.0,
       "sellPrice": 4.9,
       "team": "SUN",
-      "total": 2.4,
+      "total": 2.39,
       "webName": "Jocelin.T"
     },
     {
@@ -46719,7 +46719,7 @@
         2.61,
         2.5,
         2.71,
-        2.4,
+        2.39,
         2.51
       ],
       "position": "MID",
@@ -46734,7 +46734,7 @@
       "selectedByPercent": 0.1,
       "sellPrice": 5.0,
       "team": "SUN",
-      "total": 17.97,
+      "total": 17.96,
       "webName": "N.Angulo"
     },
     {
@@ -47002,7 +47002,7 @@
         ]
       ],
       "perGameweek": [
-        0.72,
+        0.73,
         0.67,
         0.62,
         0.59,
@@ -47022,7 +47022,7 @@
       "selectedByPercent": 0.0,
       "sellPrice": 4.5,
       "team": "SUN",
-      "total": 4.35,
+      "total": 4.36,
       "webName": "Methalie"
     },
     {
@@ -47312,12 +47312,102 @@
       "team": "SUN",
       "total": 2.14,
       "webName": "J.Angulo"
+    },
+    {
+      "availability": {
+        "chance": null,
+        "news": null,
+        "status": "a"
+      },
+      "code": 604211,
+      "components": {
+        "appearance": 0.9,
+        "assists": 0.15,
+        "bonus": 0.1,
+        "cards": -0.1,
+        "cleanSheet": 0.09,
+        "defensiveContribution": 0.16,
+        "goals": 0.36,
+        "goalsConceded": 0.0,
+        "saves": 0.0
+      },
+      "elementType": 3,
+      "form": 1.0,
+      "id": 668,
+      "opponents": [
+        [
+          {
+            "fdrRating": 3,
+            "team": "LEE",
+            "wasHome": true
+          }
+        ],
+        [
+          {
+            "fdrRating": 2,
+            "team": "COV",
+            "wasHome": false
+          }
+        ],
+        [
+          {
+            "fdrRating": 4,
+            "team": "CHE",
+            "wasHome": true
+          }
+        ],
+        [
+          {
+            "fdrRating": 3,
+            "team": "AVL",
+            "wasHome": false
+          }
+        ],
+        [
+          {
+            "fdrRating": 2,
+            "team": "TOT",
+            "wasHome": true
+          }
+        ],
+        [
+          {
+            "fdrRating": 4,
+            "team": "LIV",
+            "wasHome": false
+          }
+        ],
+        [
+          {
+            "fdrRating": 3,
+            "team": "NEW",
+            "wasHome": false
+          }
+        ]
+      ],
+      "perGameweek": [
+        1.66,
+        1.63,
+        1.65,
+        1.58,
+        1.71,
+        1.51,
+        1.59
+      ],
+      "position": "MID",
+      "price": 5.0,
+      "recentPoints": [],
+      "selectedByPercent": 0.0,
+      "sellPrice": 5.0,
+      "team": "SUN",
+      "total": 11.33,
+      "webName": "Tutierov"
     }
   ],
   "rankCalibration": {
     "intercept": 13.764204185958882,
     "lastKnownEvent": 7,
-    "lastKnownRank": 699277,
+    "lastKnownRank": 281546,
     "sampleSize": 6,
     "slope": -0.018879384282449122
   },
@@ -47338,15 +47428,14 @@
           ],
           "hitCost": 0,
           "horizonGws": 1,
-          "netPoints": 63.54,
-          "points": 63.54,
+          "netPoints": 63.56,
+          "points": 63.56,
           "squad": [
             8,
             12,
             31,
             40,
             68,
-            109,
             124,
             165,
             173,
@@ -47355,6 +47444,7 @@
             411,
             427,
             449,
+            496,
             569
           ],
           "transfersIn": [
@@ -47402,6 +47492,18 @@
                 "news": null,
                 "status": "a"
               },
+              "id": 109,
+              "position": "GKP",
+              "price": 4.6,
+              "team": "BHA",
+              "webName": "Verbruggen"
+            },
+            {
+              "availability": {
+                "chance": null,
+                "news": null,
+                "status": "a"
+              },
               "id": 115,
               "position": "DEF",
               "price": 5.2,
@@ -47419,18 +47521,6 @@
               "price": 5.6,
               "team": "FUL",
               "webName": "King"
-            },
-            {
-              "availability": {
-                "chance": null,
-                "news": null,
-                "status": "a"
-              },
-              "id": 496,
-              "position": "GKP",
-              "price": 4.5,
-              "team": "TOT",
-              "webName": "Kinsky"
             }
           ],
           "weeks": [
@@ -47449,7 +47539,7 @@
                   "position": "DEF",
                   "team": "ARS",
                   "webName": "Calafiori",
-                  "xp": 5.25
+                  "xp": 5.26
                 },
                 {
                   "id": 12,
@@ -47464,7 +47554,7 @@
                   "position": "MID",
                   "team": "ARS",
                   "webName": "Saka",
-                  "xp": 6.76
+                  "xp": 6.75
                 },
                 {
                   "id": 68,
@@ -47554,7 +47644,7 @@
                   "position": "GKP",
                   "team": "LEE",
                   "webName": "Trafford",
-                  "xp": 3.95
+                  "xp": 3.96
                 },
                 {
                   "id": 411,
@@ -47584,7 +47674,7 @@
                   "position": "MID",
                   "team": "MUN",
                   "webName": "Mbeumo",
-                  "xp": 5.79
+                  "xp": 5.8
                 },
                 {
                   "id": 449,
@@ -47603,7 +47693,7 @@
                 }
               ],
               "targetGw": 8,
-              "totalXp": 63.54
+              "totalXp": 63.56
             }
           ],
           "xiByGw": [
@@ -47628,15 +47718,15 @@
           ],
           "hitCost": 0,
           "horizonGws": 1,
-          "netPoints": 62.64,
-          "points": 62.64,
+          "netPoints": 62.65,
+          "points": 62.65,
           "squad": [
             8,
             12,
-            31,
             40,
             68,
             109,
+            115,
             124,
             165,
             173,
@@ -47676,15 +47766,15 @@
           "transfersOut": [
             {
               "availability": {
-                "chance": null,
+                "chance": 100,
                 "news": null,
                 "status": "a"
               },
-              "id": 115,
+              "id": 31,
               "position": "DEF",
-              "price": 5.2,
-              "team": "BHA",
-              "webName": "De Cuyper"
+              "price": 4.6,
+              "team": "ARS",
+              "webName": "Konsa"
             },
             {
               "availability": {
@@ -47715,7 +47805,7 @@
                   "position": "DEF",
                   "team": "ARS",
                   "webName": "Calafiori",
-                  "xp": 5.25
+                  "xp": 5.26
                 },
                 {
                   "id": 12,
@@ -47730,7 +47820,7 @@
                   "position": "MID",
                   "team": "ARS",
                   "webName": "Saka",
-                  "xp": 6.76
+                  "xp": 6.75
                 },
                 {
                   "id": 68,
@@ -47850,7 +47940,7 @@
                   "position": "MID",
                   "team": "MUN",
                   "webName": "Mbeumo",
-                  "xp": 5.79
+                  "xp": 5.8
                 },
                 {
                   "id": 449,
@@ -47869,7 +47959,7 @@
                 }
               ],
               "targetGw": 8,
-              "totalXp": 62.64
+              "totalXp": 62.65
             }
           ],
           "xiByGw": [
@@ -47894,8 +47984,8 @@
           ],
           "hitCost": 0,
           "horizonGws": 1,
-          "netPoints": 61.77,
-          "points": 61.77,
+          "netPoints": 61.8,
+          "points": 61.8,
           "squad": [
             8,
             12,
@@ -47936,7 +48026,7 @@
               },
               "id": 68,
               "position": "MID",
-              "price": 6.1,
+              "price": 6.2,
               "team": "BOU",
               "webName": "Tavernier"
             }
@@ -47957,7 +48047,7 @@
                   "position": "DEF",
                   "team": "ARS",
                   "webName": "Calafiori",
-                  "xp": 5.25
+                  "xp": 5.26
                 },
                 {
                   "id": 12,
@@ -47972,7 +48062,7 @@
                   "position": "MID",
                   "team": "ARS",
                   "webName": "Saka",
-                  "xp": 6.76
+                  "xp": 6.75
                 },
                 {
                   "id": 31,
@@ -47987,7 +48077,7 @@
                   "position": "DEF",
                   "team": "ARS",
                   "webName": "Konsa",
-                  "xp": 3.89
+                  "xp": 3.91
                 },
                 {
                   "id": 109,
@@ -48092,7 +48182,7 @@
                   "position": "MID",
                   "team": "MUN",
                   "webName": "Mbeumo",
-                  "xp": 5.79
+                  "xp": 5.8
                 },
                 {
                   "id": 449,
@@ -48111,7 +48201,7 @@
                 }
               ],
               "targetGw": 8,
-              "totalXp": 61.77
+              "totalXp": 61.8
             }
           ],
           "xiByGw": [
@@ -48140,8 +48230,8 @@
           ],
           "hitCost": 0,
           "horizonGws": 3,
-          "netPoints": 189.95,
-          "points": 189.95,
+          "netPoints": 189.98,
+          "points": 189.98,
           "squad": [
             8,
             12,
@@ -48251,7 +48341,7 @@
                   "position": "DEF",
                   "team": "ARS",
                   "webName": "Calafiori",
-                  "xp": 5.25
+                  "xp": 5.26
                 },
                 {
                   "id": 12,
@@ -48266,7 +48356,7 @@
                   "position": "MID",
                   "team": "ARS",
                   "webName": "Saka",
-                  "xp": 6.76
+                  "xp": 6.75
                 },
                 {
                   "id": 68,
@@ -48386,7 +48476,7 @@
                   "position": "MID",
                   "team": "MUN",
                   "webName": "Mbeumo",
-                  "xp": 5.79
+                  "xp": 5.8
                 },
                 {
                   "id": 449,
@@ -48405,7 +48495,7 @@
                 }
               ],
               "targetGw": 8,
-              "totalXp": 63.13
+              "totalXp": 63.14
             },
             {
               "players": [
@@ -48422,7 +48512,7 @@
                   "position": "DEF",
                   "team": "ARS",
                   "webName": "Calafiori",
-                  "xp": 4.09
+                  "xp": 4.1
                 },
                 {
                   "id": 12,
@@ -48452,7 +48542,7 @@
                   "position": "MID",
                   "team": "BOU",
                   "webName": "Tavernier",
-                  "xp": 4.97
+                  "xp": 4.96
                 },
                 {
                   "id": 124,
@@ -48542,7 +48632,7 @@
                   "position": "MID",
                   "team": "MUN",
                   "webName": "Mbeumo",
-                  "xp": 5.2
+                  "xp": 5.21
                 },
                 {
                   "id": 449,
@@ -48576,7 +48666,7 @@
                 }
               ],
               "targetGw": 9,
-              "totalXp": 62.45
+              "totalXp": 62.46
             },
             {
               "players": [
@@ -48593,7 +48683,7 @@
                   "position": "DEF",
                   "team": "ARS",
                   "webName": "Calafiori",
-                  "xp": 5.03
+                  "xp": 5.04
                 },
                 {
                   "id": 12,
@@ -48653,7 +48743,7 @@
                   "position": "DEF",
                   "team": "BHA",
                   "webName": "De Cuyper",
-                  "xp": 4.8
+                  "xp": 4.79
                 },
                 {
                   "id": 124,
@@ -48728,7 +48818,7 @@
                   "position": "MID",
                   "team": "MUN",
                   "webName": "Mbeumo",
-                  "xp": 5.65
+                  "xp": 5.66
                 },
                 {
                   "id": 449,
@@ -48747,7 +48837,7 @@
                 }
               ],
               "targetGw": 10,
-              "totalXp": 64.37
+              "totalXp": 64.38
             }
           ],
           "xiByGw": [
@@ -48813,8 +48903,8 @@
             124,
             165,
             173,
-            399,
             411,
+            427,
             449,
             496,
             569
@@ -48838,11 +48928,11 @@
                 "news": null,
                 "status": "a"
               },
-              "id": 399,
+              "id": 427,
               "position": "MID",
-              "price": 8.0,
-              "team": "MCI",
-              "webName": "Cherki"
+              "price": 7.8,
+              "team": "MUN",
+              "webName": "Mbeumo"
             }
           ],
           "transfersOut": [
@@ -48887,7 +48977,7 @@
                   "position": "DEF",
                   "team": "ARS",
                   "webName": "Calafiori",
-                  "xp": 5.25
+                  "xp": 5.26
                 },
                 {
                   "id": 12,
@@ -48902,7 +48992,7 @@
                   "position": "MID",
                   "team": "ARS",
                   "webName": "Saka",
-                  "xp": 6.76
+                  "xp": 6.75
                 },
                 {
                   "id": 68,
@@ -48995,21 +49085,6 @@
                   "xp": 3.95
                 },
                 {
-                  "id": 399,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 3,
-                      "team": "AVL",
-                      "wasHome": false
-                    }
-                  ],
-                  "position": "MID",
-                  "team": "MCI",
-                  "webName": "Cherki",
-                  "xp": 5.45
-                },
-                {
                   "id": 411,
                   "isCaptain": true,
                   "opponents": [
@@ -49023,6 +49098,21 @@
                   "team": "MCI",
                   "webName": "Haaland",
                   "xp": 7.22
+                },
+                {
+                  "id": 427,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 3,
+                      "team": "BOU",
+                      "wasHome": true
+                    }
+                  ],
+                  "position": "MID",
+                  "team": "MUN",
+                  "webName": "Mbeumo",
+                  "xp": 5.8
                 },
                 {
                   "id": 449,
@@ -49041,7 +49131,7 @@
                 }
               ],
               "targetGw": 8,
-              "totalXp": 62.3
+              "totalXp": 62.65
             },
             {
               "players": [
@@ -49058,7 +49148,7 @@
                   "position": "DEF",
                   "team": "ARS",
                   "webName": "Calafiori",
-                  "xp": 4.09
+                  "xp": 4.1
                 },
                 {
                   "id": 12,
@@ -49088,7 +49178,7 @@
                   "position": "MID",
                   "team": "BOU",
                   "webName": "Tavernier",
-                  "xp": 4.97
+                  "xp": 4.96
                 },
                 {
                   "id": 124,
@@ -49118,7 +49208,7 @@
                   "position": "MID",
                   "team": "CHE",
                   "webName": "Rogers",
-                  "xp": 4.74
+                  "xp": 4.73
                 },
                 {
                   "id": 165,
@@ -49151,21 +49241,6 @@
                   "xp": 4.11
                 },
                 {
-                  "id": 399,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 3,
-                      "team": "BHA",
-                      "wasHome": true
-                    }
-                  ],
-                  "position": "MID",
-                  "team": "MCI",
-                  "webName": "Cherki",
-                  "xp": 5.77
-                },
-                {
                   "id": 411,
                   "isCaptain": true,
                   "opponents": [
@@ -49179,6 +49254,21 @@
                   "team": "MCI",
                   "webName": "Haaland",
                   "xp": 7.69
+                },
+                {
+                  "id": 427,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 4,
+                      "team": "CHE",
+                      "wasHome": false
+                    }
+                  ],
+                  "position": "MID",
+                  "team": "MUN",
+                  "webName": "Mbeumo",
+                  "xp": 5.21
                 },
                 {
                   "id": 449,
@@ -49212,7 +49302,7 @@
                 }
               ],
               "targetGw": 9,
-              "totalXp": 61.99
+              "totalXp": 61.42
             },
             {
               "players": [
@@ -49229,7 +49319,7 @@
                   "position": "DEF",
                   "team": "ARS",
                   "webName": "Calafiori",
-                  "xp": 5.03
+                  "xp": 5.04
                 },
                 {
                   "id": 12,
@@ -49289,7 +49379,7 @@
                   "position": "DEF",
                   "team": "BHA",
                   "webName": "De Cuyper",
-                  "xp": 4.8
+                  "xp": 4.79
                 },
                 {
                   "id": 124,
@@ -49337,21 +49427,6 @@
                   "xp": 4.54
                 },
                 {
-                  "id": 399,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 3,
-                      "team": "NFO",
-                      "wasHome": false
-                    }
-                  ],
-                  "position": "MID",
-                  "team": "MCI",
-                  "webName": "Cherki",
-                  "xp": 5.44
-                },
-                {
                   "id": 411,
                   "isCaptain": true,
                   "opponents": [
@@ -49365,6 +49440,21 @@
                   "team": "MCI",
                   "webName": "Haaland",
                   "xp": 7.15
+                },
+                {
+                  "id": 427,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 3,
+                      "team": "AVL",
+                      "wasHome": true
+                    }
+                  ],
+                  "position": "MID",
+                  "team": "MUN",
+                  "webName": "Mbeumo",
+                  "xp": 5.66
                 },
                 {
                   "id": 449,
@@ -49383,7 +49473,7 @@
                 }
               ],
               "targetGw": 10,
-              "totalXp": 63.19
+              "totalXp": 63.41
             }
           ],
           "xiByGw": [
@@ -49396,8 +49486,8 @@
               40,
               165,
               173,
-              399,
               411,
+              427,
               449
             ],
             [
@@ -49408,8 +49498,8 @@
               40,
               165,
               173,
-              399,
               411,
+              427,
               449,
               496
             ],
@@ -49422,8 +49512,8 @@
               124,
               40,
               165,
-              399,
               411,
+              427,
               449
             ]
           ]
@@ -49436,8 +49526,8 @@
           ],
           "hitCost": 0,
           "horizonGws": 3,
-          "netPoints": 184.09,
-          "points": 184.09,
+          "netPoints": 184.1,
+          "points": 184.1,
           "squad": [
             8,
             12,
@@ -49499,7 +49589,7 @@
                   "position": "DEF",
                   "team": "ARS",
                   "webName": "Calafiori",
-                  "xp": 5.25
+                  "xp": 5.26
                 },
                 {
                   "id": 12,
@@ -49514,7 +49604,7 @@
                   "position": "MID",
                   "team": "ARS",
                   "webName": "Saka",
-                  "xp": 6.76
+                  "xp": 6.75
                 },
                 {
                   "id": 31,
@@ -49529,7 +49619,7 @@
                   "position": "DEF",
                   "team": "ARS",
                   "webName": "Konsa",
-                  "xp": 3.89
+                  "xp": 3.91
                 },
                 {
                   "id": 68,
@@ -49653,7 +49743,7 @@
                 }
               ],
               "targetGw": 8,
-              "totalXp": 61.18
+              "totalXp": 61.2
             },
             {
               "players": [
@@ -49670,7 +49760,7 @@
                   "position": "DEF",
                   "team": "ARS",
                   "webName": "Calafiori",
-                  "xp": 4.09
+                  "xp": 4.1
                 },
                 {
                   "id": 12,
@@ -49700,7 +49790,7 @@
                   "position": "MID",
                   "team": "BOU",
                   "webName": "Tavernier",
-                  "xp": 4.97
+                  "xp": 4.96
                 },
                 {
                   "id": 124,
@@ -49730,7 +49820,7 @@
                   "position": "MID",
                   "team": "CHE",
                   "webName": "Rogers",
-                  "xp": 4.74
+                  "xp": 4.73
                 },
                 {
                   "id": 165,
@@ -49824,7 +49914,7 @@
                 }
               ],
               "targetGw": 9,
-              "totalXp": 60.52
+              "totalXp": 60.51
             },
             {
               "players": [
@@ -49841,7 +49931,7 @@
                   "position": "DEF",
                   "team": "ARS",
                   "webName": "Calafiori",
-                  "xp": 5.03
+                  "xp": 5.04
                 },
                 {
                   "id": 12,
@@ -49901,7 +49991,7 @@
                   "position": "DEF",
                   "team": "BHA",
                   "webName": "De Cuyper",
-                  "xp": 4.8
+                  "xp": 4.79
                 },
                 {
                   "id": 124,
@@ -49949,6 +50039,21 @@
                   "xp": 4.54
                 },
                 {
+                  "id": 268,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 3,
+                      "team": "NEW",
+                      "wasHome": true
+                    }
+                  ],
+                  "position": "MID",
+                  "team": "FUL",
+                  "webName": "King",
+                  "xp": 3.99
+                },
+                {
                   "id": 388,
                   "isCaptain": false,
                   "opponents": [
@@ -49977,21 +50082,6 @@
                   "team": "MCI",
                   "webName": "Haaland",
                   "xp": 7.15
-                },
-                {
-                  "id": 449,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 3,
-                      "team": "FUL",
-                      "wasHome": false
-                    }
-                  ],
-                  "position": "DEF",
-                  "team": "NEW",
-                  "webName": "Hall",
-                  "xp": 3.99
                 }
               ],
               "targetGw": 10,
@@ -50034,9 +50124,9 @@
               124,
               40,
               165,
+              268,
               388,
-              411,
-              449
+              411
             ]
           ]
         }
@@ -50052,8 +50142,8 @@
           ],
           "hitCost": 0,
           "horizonGws": 5,
-          "netPoints": 312.03,
-          "points": 312.03,
+          "netPoints": 312.06,
+          "points": 312.06,
           "squad": [
             8,
             12,
@@ -50163,7 +50253,7 @@
                   "position": "DEF",
                   "team": "ARS",
                   "webName": "Calafiori",
-                  "xp": 5.25
+                  "xp": 5.26
                 },
                 {
                   "id": 12,
@@ -50178,7 +50268,7 @@
                   "position": "MID",
                   "team": "ARS",
                   "webName": "Saka",
-                  "xp": 6.76
+                  "xp": 6.75
                 },
                 {
                   "id": 68,
@@ -50298,7 +50388,7 @@
                   "position": "MID",
                   "team": "MUN",
                   "webName": "Mbeumo",
-                  "xp": 5.79
+                  "xp": 5.8
                 },
                 {
                   "id": 449,
@@ -50317,7 +50407,7 @@
                 }
               ],
               "targetGw": 8,
-              "totalXp": 63.13
+              "totalXp": 63.14
             },
             {
               "players": [
@@ -50334,7 +50424,7 @@
                   "position": "DEF",
                   "team": "ARS",
                   "webName": "Calafiori",
-                  "xp": 4.09
+                  "xp": 4.1
                 },
                 {
                   "id": 12,
@@ -50364,7 +50454,7 @@
                   "position": "MID",
                   "team": "BOU",
                   "webName": "Tavernier",
-                  "xp": 4.97
+                  "xp": 4.96
                 },
                 {
                   "id": 124,
@@ -50454,7 +50544,7 @@
                   "position": "MID",
                   "team": "MUN",
                   "webName": "Mbeumo",
-                  "xp": 5.2
+                  "xp": 5.21
                 },
                 {
                   "id": 449,
@@ -50488,7 +50578,7 @@
                 }
               ],
               "targetGw": 9,
-              "totalXp": 62.45
+              "totalXp": 62.46
             },
             {
               "players": [
@@ -50505,7 +50595,7 @@
                   "position": "DEF",
                   "team": "ARS",
                   "webName": "Calafiori",
-                  "xp": 5.03
+                  "xp": 5.04
                 },
                 {
                   "id": 12,
@@ -50565,7 +50655,7 @@
                   "position": "DEF",
                   "team": "BHA",
                   "webName": "De Cuyper",
-                  "xp": 4.8
+                  "xp": 4.79
                 },
                 {
                   "id": 124,
@@ -50640,7 +50730,7 @@
                   "position": "MID",
                   "team": "MUN",
                   "webName": "Mbeumo",
-                  "xp": 5.65
+                  "xp": 5.66
                 },
                 {
                   "id": 449,
@@ -50659,7 +50749,7 @@
                 }
               ],
               "targetGw": 10,
-              "totalXp": 64.37
+              "totalXp": 64.38
             },
             {
               "players": [
@@ -50676,7 +50766,7 @@
                   "position": "DEF",
                   "team": "ARS",
                   "webName": "Calafiori",
-                  "xp": 4.47
+                  "xp": 4.48
                 },
                 {
                   "id": 12,
@@ -50706,7 +50796,7 @@
                   "position": "MID",
                   "team": "BOU",
                   "webName": "Tavernier",
-                  "xp": 4.99
+                  "xp": 4.98
                 },
                 {
                   "id": 109,
@@ -50736,7 +50826,7 @@
                   "position": "DEF",
                   "team": "BHA",
                   "webName": "De Cuyper",
-                  "xp": 4.3
+                  "xp": 4.29
                 },
                 {
                   "id": 124,
@@ -50826,7 +50916,7 @@
                   "position": "MID",
                   "team": "MUN",
                   "webName": "Mbeumo",
-                  "xp": 4.87
+                  "xp": 4.88
                 }
               ],
               "targetGw": 11,
@@ -50847,7 +50937,7 @@
                   "position": "DEF",
                   "team": "ARS",
                   "webName": "Calafiori",
-                  "xp": 4.13
+                  "xp": 4.14
                 },
                 {
                   "id": 12,
@@ -50862,7 +50952,7 @@
                   "position": "MID",
                   "team": "ARS",
                   "webName": "Saka",
-                  "xp": 5.98
+                  "xp": 5.97
                 },
                 {
                   "id": 68,
@@ -50892,7 +50982,7 @@
                   "position": "GKP",
                   "team": "BHA",
                   "webName": "Verbruggen",
-                  "xp": 3.3
+                  "xp": 3.31
                 },
                 {
                   "id": 115,
@@ -50922,7 +51012,7 @@
                   "position": "MID",
                   "team": "BHA",
                   "webName": "Gro\u00df",
-                  "xp": 5.33
+                  "xp": 5.32
                 },
                 {
                   "id": 165,
@@ -50997,7 +51087,7 @@
                   "position": "MID",
                   "team": "MUN",
                   "webName": "Mbeumo",
-                  "xp": 5.68
+                  "xp": 5.69
                 }
               ],
               "targetGw": 12,
@@ -51082,8 +51172,8 @@
           ],
           "hitCost": 0,
           "horizonGws": 5,
-          "netPoints": 308.33,
-          "points": 308.33,
+          "netPoints": 308.35,
+          "points": 308.35,
           "squad": [
             8,
             12,
@@ -51169,7 +51259,7 @@
                   "position": "DEF",
                   "team": "ARS",
                   "webName": "Calafiori",
-                  "xp": 5.25
+                  "xp": 5.26
                 },
                 {
                   "id": 12,
@@ -51184,7 +51274,7 @@
                   "position": "MID",
                   "team": "ARS",
                   "webName": "Saka",
-                  "xp": 6.76
+                  "xp": 6.75
                 },
                 {
                   "id": 68,
@@ -51304,7 +51394,7 @@
                   "position": "MID",
                   "team": "MUN",
                   "webName": "Mbeumo",
-                  "xp": 5.79
+                  "xp": 5.8
                 },
                 {
                   "id": 449,
@@ -51323,7 +51413,7 @@
                 }
               ],
               "targetGw": 8,
-              "totalXp": 62.64
+              "totalXp": 62.65
             },
             {
               "players": [
@@ -51340,7 +51430,7 @@
                   "position": "DEF",
                   "team": "ARS",
                   "webName": "Calafiori",
-                  "xp": 4.09
+                  "xp": 4.1
                 },
                 {
                   "id": 12,
@@ -51370,7 +51460,7 @@
                   "position": "MID",
                   "team": "BOU",
                   "webName": "Tavernier",
-                  "xp": 4.97
+                  "xp": 4.96
                 },
                 {
                   "id": 124,
@@ -51400,7 +51490,7 @@
                   "position": "MID",
                   "team": "CHE",
                   "webName": "Rogers",
-                  "xp": 4.74
+                  "xp": 4.73
                 },
                 {
                   "id": 165,
@@ -51460,7 +51550,7 @@
                   "position": "MID",
                   "team": "MUN",
                   "webName": "Mbeumo",
-                  "xp": 5.2
+                  "xp": 5.21
                 },
                 {
                   "id": 449,
@@ -51511,7 +51601,7 @@
                   "position": "DEF",
                   "team": "ARS",
                   "webName": "Calafiori",
-                  "xp": 5.03
+                  "xp": 5.04
                 },
                 {
                   "id": 12,
@@ -51571,7 +51661,7 @@
                   "position": "DEF",
                   "team": "BHA",
                   "webName": "De Cuyper",
-                  "xp": 4.8
+                  "xp": 4.79
                 },
                 {
                   "id": 124,
@@ -51646,7 +51736,7 @@
                   "position": "MID",
                   "team": "MUN",
                   "webName": "Mbeumo",
-                  "xp": 5.65
+                  "xp": 5.66
                 },
                 {
                   "id": 449,
@@ -51665,7 +51755,7 @@
                 }
               ],
               "targetGw": 10,
-              "totalXp": 63.4
+              "totalXp": 63.41
             },
             {
               "players": [
@@ -51682,7 +51772,7 @@
                   "position": "DEF",
                   "team": "ARS",
                   "webName": "Calafiori",
-                  "xp": 4.47
+                  "xp": 4.48
                 },
                 {
                   "id": 12,
@@ -51712,7 +51802,7 @@
                   "position": "MID",
                   "team": "BOU",
                   "webName": "Tavernier",
-                  "xp": 4.99
+                  "xp": 4.98
                 },
                 {
                   "id": 109,
@@ -51742,7 +51832,7 @@
                   "position": "DEF",
                   "team": "BHA",
                   "webName": "De Cuyper",
-                  "xp": 4.3
+                  "xp": 4.29
                 },
                 {
                   "id": 124,
@@ -51832,7 +51922,7 @@
                   "position": "MID",
                   "team": "MUN",
                   "webName": "Mbeumo",
-                  "xp": 4.87
+                  "xp": 4.88
                 }
               ],
               "targetGw": 11,
@@ -51853,7 +51943,7 @@
                   "position": "DEF",
                   "team": "ARS",
                   "webName": "Calafiori",
-                  "xp": 4.13
+                  "xp": 4.14
                 },
                 {
                   "id": 12,
@@ -51868,7 +51958,7 @@
                   "position": "MID",
                   "team": "ARS",
                   "webName": "Saka",
-                  "xp": 5.98
+                  "xp": 5.97
                 },
                 {
                   "id": 68,
@@ -51898,7 +51988,7 @@
                   "position": "GKP",
                   "team": "BHA",
                   "webName": "Verbruggen",
-                  "xp": 3.3
+                  "xp": 3.31
                 },
                 {
                   "id": 115,
@@ -51928,7 +52018,7 @@
                   "position": "MID",
                   "team": "BHA",
                   "webName": "Gro\u00df",
-                  "xp": 5.33
+                  "xp": 5.32
                 },
                 {
                   "id": 40,
@@ -52003,7 +52093,7 @@
                   "position": "MID",
                   "team": "MUN",
                   "webName": "Mbeumo",
-                  "xp": 5.68
+                  "xp": 5.69
                 }
               ],
               "targetGw": 12,
@@ -52088,8 +52178,8 @@
           ],
           "hitCost": 0,
           "horizonGws": 5,
-          "netPoints": 302.99,
-          "points": 302.99,
+          "netPoints": 302.95,
+          "points": 302.95,
           "squad": [
             8,
             12,
@@ -52151,7 +52241,7 @@
                   "position": "DEF",
                   "team": "ARS",
                   "webName": "Calafiori",
-                  "xp": 5.25
+                  "xp": 5.26
                 },
                 {
                   "id": 12,
@@ -52166,7 +52256,7 @@
                   "position": "MID",
                   "team": "ARS",
                   "webName": "Saka",
-                  "xp": 6.76
+                  "xp": 6.75
                 },
                 {
                   "id": 68,
@@ -52322,7 +52412,7 @@
                   "position": "DEF",
                   "team": "ARS",
                   "webName": "Calafiori",
-                  "xp": 4.09
+                  "xp": 4.1
                 },
                 {
                   "id": 12,
@@ -52352,7 +52442,7 @@
                   "position": "MID",
                   "team": "BOU",
                   "webName": "Tavernier",
-                  "xp": 4.97
+                  "xp": 4.96
                 },
                 {
                   "id": 124,
@@ -52382,7 +52472,7 @@
                   "position": "MID",
                   "team": "CHE",
                   "webName": "Rogers",
-                  "xp": 4.74
+                  "xp": 4.73
                 },
                 {
                   "id": 165,
@@ -52476,7 +52566,7 @@
                 }
               ],
               "targetGw": 9,
-              "totalXp": 60.52
+              "totalXp": 60.51
             },
             {
               "players": [
@@ -52493,7 +52583,7 @@
                   "position": "DEF",
                   "team": "ARS",
                   "webName": "Calafiori",
-                  "xp": 5.03
+                  "xp": 5.04
                 },
                 {
                   "id": 12,
@@ -52553,7 +52643,7 @@
                   "position": "DEF",
                   "team": "BHA",
                   "webName": "De Cuyper",
-                  "xp": 4.8
+                  "xp": 4.79
                 },
                 {
                   "id": 124,
@@ -52664,7 +52754,7 @@
                   "position": "DEF",
                   "team": "ARS",
                   "webName": "Calafiori",
-                  "xp": 4.47
+                  "xp": 4.48
                 },
                 {
                   "id": 12,
@@ -52694,7 +52784,7 @@
                   "position": "MID",
                   "team": "BOU",
                   "webName": "Tavernier",
-                  "xp": 4.99
+                  "xp": 4.98
                 },
                 {
                   "id": 109,
@@ -52724,7 +52814,7 @@
                   "position": "DEF",
                   "team": "BHA",
                   "webName": "De Cuyper",
-                  "xp": 4.3
+                  "xp": 4.29
                 },
                 {
                   "id": 124,
@@ -52818,7 +52908,7 @@
                 }
               ],
               "targetGw": 11,
-              "totalXp": 62.44
+              "totalXp": 62.43
             },
             {
               "players": [
@@ -52835,7 +52925,7 @@
                   "position": "DEF",
                   "team": "ARS",
                   "webName": "Calafiori",
-                  "xp": 4.13
+                  "xp": 4.14
                 },
                 {
                   "id": 12,
@@ -52850,7 +52940,7 @@
                   "position": "MID",
                   "team": "ARS",
                   "webName": "Saka",
-                  "xp": 5.98
+                  "xp": 5.97
                 },
                 {
                   "id": 68,
@@ -52880,7 +52970,7 @@
                   "position": "GKP",
                   "team": "BHA",
                   "webName": "Verbruggen",
-                  "xp": 3.3
+                  "xp": 3.31
                 },
                 {
                   "id": 115,
@@ -52910,7 +53000,7 @@
                   "position": "MID",
                   "team": "BHA",
                   "webName": "Gro\u00df",
-                  "xp": 5.33
+                  "xp": 5.32
                 },
                 {
                   "id": 40,
@@ -52955,7 +53045,7 @@
                   "position": "MID",
                   "team": "FUL",
                   "webName": "King",
-                  "xp": 4.04
+                  "xp": 4.03
                 },
                 {
                   "id": 334,
@@ -52989,7 +53079,7 @@
                 }
               ],
               "targetGw": 12,
-              "totalXp": 56.5
+              "totalXp": 56.48
             }
           ],
           "xiByGw": [
@@ -53072,24 +53162,24 @@
       ],
       "hitCost": 0,
       "horizonGws": 1,
-      "netPoints": 65.64,
-      "points": 65.64,
+      "netPoints": 65.65,
+      "points": 65.65,
       "squad": [
         8,
         12,
         15,
         50,
-        58,
         165,
         173,
-        177,
+        176,
         379,
         385,
         388,
         399,
         411,
         427,
-        508
+        476,
+        497
       ],
       "transfersIn": [
         {
@@ -53142,25 +53232,13 @@
         },
         {
           "availability": {
-            "chance": null,
-            "news": null,
-            "status": "a"
-          },
-          "id": 58,
-          "position": "GKP",
-          "price": 4.0,
-          "team": "BOU",
-          "webName": "Forster"
-        },
-        {
-          "availability": {
             "chance": 100,
             "news": null,
             "status": "a"
           },
           "id": 165,
           "position": "FWD",
-          "price": 7.8,
+          "price": 7.9,
           "team": "CHE",
           "webName": "Jo\u00e3o Pedro"
         },
@@ -53178,15 +53256,15 @@
         },
         {
           "availability": {
-            "chance": 75,
-            "news": "Hamstring injury - 75% chance of playing",
-            "status": "d"
+            "chance": null,
+            "news": null,
+            "status": "a"
           },
-          "id": 177,
+          "id": 176,
           "position": "DEF",
-          "price": 3.9,
+          "price": 4.0,
           "team": "COV",
-          "webName": "Kesler-Hayden"
+          "webName": "Dasilva"
         },
         {
           "availability": {
@@ -53266,11 +53344,23 @@
             "news": null,
             "status": "a"
           },
-          "id": 508,
+          "id": 476,
           "position": "DEF",
           "price": 3.9,
+          "team": "NFO",
+          "webName": "O.Richards"
+        },
+        {
+          "availability": {
+            "chance": null,
+            "news": null,
+            "status": "a"
+          },
+          "id": 497,
+          "position": "GKP",
+          "price": 4.0,
           "team": "TOT",
-          "webName": "Davies"
+          "webName": "Dubravka"
         }
       ],
       "transfersOut": [],
@@ -53290,7 +53380,7 @@
               "position": "DEF",
               "team": "ARS",
               "webName": "Calafiori",
-              "xp": 5.25
+              "xp": 5.26
             },
             {
               "id": 12,
@@ -53305,7 +53395,7 @@
               "position": "MID",
               "team": "ARS",
               "webName": "Saka",
-              "xp": 6.76
+              "xp": 6.75
             },
             {
               "id": 15,
@@ -53320,7 +53410,7 @@
               "position": "MID",
               "team": "ARS",
               "webName": "\u00d8degaard",
-              "xp": 5.29
+              "xp": 5.28
             },
             {
               "id": 165,
@@ -53365,7 +53455,7 @@
               "position": "GKP",
               "team": "LEE",
               "webName": "Trafford",
-              "xp": 3.95
+              "xp": 3.96
             },
             {
               "id": 379,
@@ -53440,11 +53530,11 @@
               "position": "MID",
               "team": "MUN",
               "webName": "Mbeumo",
-              "xp": 5.79
+              "xp": 5.8
             }
           ],
           "targetGw": 8,
-          "totalXp": 65.64
+          "totalXp": 65.65
         }
       ],
       "xiByGw": [
@@ -53469,7 +53559,7 @@
     },
     "plan": [
       {
-        "bankAfter": 0.3,
+        "bankAfter": 0.4,
         "feasible": true,
         "ftAfter": 1,
         "ftBefore": 3,
@@ -53480,7 +53570,6 @@
           31,
           40,
           68,
-          109,
           124,
           165,
           173,
@@ -53489,6 +53578,7 @@
           411,
           427,
           449,
+          496,
           569
         ],
         "targetGw": 8,
@@ -53537,6 +53627,18 @@
               "news": null,
               "status": "a"
             },
+            "id": 109,
+            "position": "GKP",
+            "price": 4.6,
+            "team": "BHA",
+            "webName": "Verbruggen"
+          },
+          {
+            "availability": {
+              "chance": null,
+              "news": null,
+              "status": "a"
+            },
             "id": 115,
             "position": "DEF",
             "price": 5.2,
@@ -53554,21 +53656,9 @@
             "price": 5.6,
             "team": "FUL",
             "webName": "King"
-          },
-          {
-            "availability": {
-              "chance": null,
-              "news": null,
-              "status": "a"
-            },
-            "id": 496,
-            "position": "GKP",
-            "price": 4.5,
-            "team": "TOT",
-            "webName": "Kinsky"
           }
         ],
-        "weekXp": 63.54,
+        "weekXp": 63.56,
         "xi": [
           {
             "id": 8,
@@ -53583,7 +53673,7 @@
             "position": "DEF",
             "team": "ARS",
             "webName": "Calafiori",
-            "xp": 5.25
+            "xp": 5.26
           },
           {
             "id": 12,
@@ -53598,7 +53688,7 @@
             "position": "MID",
             "team": "ARS",
             "webName": "Saka",
-            "xp": 6.76
+            "xp": 6.75
           },
           {
             "id": 68,
@@ -53688,7 +53778,7 @@
             "position": "GKP",
             "team": "LEE",
             "webName": "Trafford",
-            "xp": 3.95
+            "xp": 3.96
           },
           {
             "id": 411,
@@ -53718,7 +53808,7 @@
             "position": "MID",
             "team": "MUN",
             "webName": "Mbeumo",
-            "xp": 5.79
+            "xp": 5.8
           },
           {
             "id": 449,
@@ -53738,7 +53828,7 @@
         ]
       },
       {
-        "bankAfter": 0.2,
+        "bankAfter": 0.3,
         "feasible": true,
         "ftAfter": 1,
         "ftBefore": 1,
@@ -53748,7 +53838,6 @@
           12,
           31,
           68,
-          109,
           124,
           165,
           173,
@@ -53758,6 +53847,7 @@
           411,
           427,
           449,
+          496,
           569
         ],
         "targetGw": 9,
@@ -53789,7 +53879,7 @@
             "webName": "Rogers"
           }
         ],
-        "weekXp": 63.09,
+        "weekXp": 63.1,
         "xi": [
           {
             "id": 8,
@@ -53804,7 +53894,7 @@
             "position": "DEF",
             "team": "ARS",
             "webName": "Calafiori",
-            "xp": 4.09
+            "xp": 4.1
           },
           {
             "id": 12,
@@ -53834,7 +53924,7 @@
             "position": "MID",
             "team": "BOU",
             "webName": "Tavernier",
-            "xp": 4.97
+            "xp": 4.96
           },
           {
             "id": 124,
@@ -53939,7 +54029,7 @@
             "position": "MID",
             "team": "MUN",
             "webName": "Mbeumo",
-            "xp": 5.2
+            "xp": 5.21
           },
           {
             "id": 449,
@@ -53959,7 +54049,7 @@
         ]
       },
       {
-        "bankAfter": 0.0,
+        "bankAfter": 0.1,
         "feasible": true,
         "ftAfter": 1,
         "ftBefore": 1,
@@ -53969,7 +54059,6 @@
           12,
           31,
           68,
-          109,
           115,
           124,
           165,
@@ -53979,6 +54068,7 @@
           411,
           427,
           449,
+          496,
           569
         ],
         "targetGw": 10,
@@ -54010,7 +54100,7 @@
             "webName": "Muharemovi\u0107"
           }
         ],
-        "weekXp": 64.93,
+        "weekXp": 64.94,
         "xi": [
           {
             "id": 8,
@@ -54025,7 +54115,7 @@
             "position": "DEF",
             "team": "ARS",
             "webName": "Calafiori",
-            "xp": 5.03
+            "xp": 5.04
           },
           {
             "id": 12,
@@ -54070,7 +54160,7 @@
             "position": "DEF",
             "team": "BHA",
             "webName": "De Cuyper",
-            "xp": 4.8
+            "xp": 4.79
           },
           {
             "id": 124,
@@ -54160,7 +54250,7 @@
             "position": "MID",
             "team": "MUN",
             "webName": "Mbeumo",
-            "xp": 5.65
+            "xp": 5.66
           },
           {
             "id": 449,
@@ -54180,7 +54270,7 @@
         ]
       },
       {
-        "bankAfter": 0.0,
+        "bankAfter": 0.1,
         "feasible": true,
         "ftAfter": 1,
         "ftBefore": 1,
@@ -54189,7 +54279,6 @@
           12,
           31,
           68,
-          109,
           115,
           124,
           165,
@@ -54200,6 +54289,7 @@
           411,
           427,
           449,
+          496,
           569
         ],
         "targetGw": 11,
@@ -54261,7 +54351,7 @@
             "position": "MID",
             "team": "BOU",
             "webName": "Tavernier",
-            "xp": 4.99
+            "xp": 4.98
           },
           {
             "id": 115,
@@ -54276,7 +54366,7 @@
             "position": "DEF",
             "team": "BHA",
             "webName": "De Cuyper",
-            "xp": 4.3
+            "xp": 4.29
           },
           {
             "id": 124,
@@ -54336,7 +54426,7 @@
             "position": "GKP",
             "team": "LEE",
             "webName": "Trafford",
-            "xp": 3.7
+            "xp": 3.71
           },
           {
             "id": 388,
@@ -54396,12 +54486,12 @@
             "position": "MID",
             "team": "MUN",
             "webName": "Mbeumo",
-            "xp": 4.87
+            "xp": 4.88
           }
         ]
       },
       {
-        "bankAfter": 0.6,
+        "bankAfter": 0.7,
         "feasible": true,
         "ftAfter": 1,
         "ftBefore": 1,
@@ -54410,7 +54500,6 @@
           12,
           31,
           68,
-          109,
           115,
           124,
           165,
@@ -54420,6 +54509,7 @@
           411,
           427,
           449,
+          496,
           533,
           569
         ],
@@ -54452,7 +54542,7 @@
             "webName": "Gu\u00e9hi"
           }
         ],
-        "weekXp": 58.88,
+        "weekXp": 58.86,
         "xi": [
           {
             "id": 12,
@@ -54467,7 +54557,7 @@
             "position": "MID",
             "team": "ARS",
             "webName": "Saka",
-            "xp": 5.98
+            "xp": 5.97
           },
           {
             "id": 68,
@@ -54512,7 +54602,7 @@
             "position": "MID",
             "team": "BHA",
             "webName": "Gro\u00df",
-            "xp": 5.33
+            "xp": 5.32
           },
           {
             "id": 165,
@@ -54587,7 +54677,7 @@
             "position": "MID",
             "team": "MUN",
             "webName": "Mbeumo",
-            "xp": 5.68
+            "xp": 5.69
           },
           {
             "id": 449,
@@ -54729,7 +54819,7 @@
         "sellPrice": 4.6,
         "team": "BHA",
         "webName": "Verbruggen",
-        "windowPoints": 15.97
+        "windowPoints": 15.98
       },
       {
         "availability": {
@@ -54741,7 +54831,7 @@
           "availabilityMultiplier": 1.0,
           "components": {
             "appearance": 2.0,
-            "assists": 0.3,
+            "assists": 0.31,
             "bonus": 0.32,
             "cards": -0.12,
             "cleanSheet": 1.91,
@@ -54763,7 +54853,7 @@
               "wasHome": true
             }
           ],
-          "points": 5.25,
+          "points": 5.26,
           "provisional": false,
           "rateSource": "history"
         },
@@ -54771,8 +54861,8 @@
         "elementType": 2,
         "floorCeiling": {
           "bandProvisional": false,
-          "ceiling": 7.55,
-          "floor": 2.95
+          "ceiling": 7.56,
+          "floor": 2.96
         },
         "id": 8,
         "isCaptain": false,
@@ -54791,10 +54881,10 @@
         ],
         "position": "DEF",
         "price": 6.0,
-        "projectedPoints": 5.25,
+        "projectedPoints": 5.26,
         "provisional": false,
         "rateSource": "history",
-        "rationale": "5.2 proj \u2014 vEVE (FDR 3)",
+        "rationale": "5.3 proj \u2014 vEVE (FDR 3)",
         "recentPoints": [
           11,
           2,
@@ -54806,7 +54896,7 @@
         "sellPrice": 6.0,
         "team": "ARS",
         "webName": "Calafiori",
-        "windowPoints": 22.97
+        "windowPoints": 23.02
       },
       {
         "availability": {
@@ -54896,11 +54986,11 @@
           "components": {
             "appearance": 1.8,
             "assists": 0.08,
-            "bonus": 0.15,
+            "bonus": 0.17,
             "cards": -0.06,
             "cleanSheet": 1.53,
-            "defensiveContribution": 0.36,
-            "goals": 0.38,
+            "defensiveContribution": 0.35,
+            "goals": 0.37,
             "goalsConceded": -0.33,
             "saves": 0.0
           },
@@ -54917,7 +55007,7 @@
               "wasHome": true
             }
           ],
-          "points": 3.89,
+          "points": 3.91,
           "provisional": false,
           "rateSource": "history"
         },
@@ -54925,8 +55015,8 @@
         "elementType": 2,
         "floorCeiling": {
           "bandProvisional": false,
-          "ceiling": 6.19,
-          "floor": 1.59
+          "ceiling": 6.21,
+          "floor": 1.61
         },
         "id": 31,
         "isCaptain": false,
@@ -54945,7 +55035,7 @@
         ],
         "position": "DEF",
         "price": 4.6,
-        "projectedPoints": 3.89,
+        "projectedPoints": 3.91,
         "provisional": false,
         "rateSource": "history",
         "rationale": "3.9 proj \u2014 vEVE (FDR 3)",
@@ -54960,7 +55050,7 @@
         "sellPrice": 4.6,
         "team": "ARS",
         "webName": "Konsa",
-        "windowPoints": 16.89
+        "windowPoints": 16.96
       },
       {
         "availability": {
@@ -55037,7 +55127,7 @@
         "sellPrice": 7.9,
         "team": "CHE",
         "webName": "Rogers",
-        "windowPoints": 23.32
+        "windowPoints": 23.31
       },
       {
         "availability": {
@@ -55049,12 +55139,12 @@
           "availabilityMultiplier": 1.0,
           "components": {
             "appearance": 2.0,
-            "assists": 0.77,
-            "bonus": 0.61,
+            "assists": 0.78,
+            "bonus": 0.6,
             "cards": -0.08,
             "cleanSheet": 0.48,
             "defensiveContribution": 0.21,
-            "goals": 2.77,
+            "goals": 2.76,
             "goalsConceded": 0.0,
             "saves": 0.0
           },
@@ -55071,7 +55161,7 @@
               "wasHome": true
             }
           ],
-          "points": 6.76,
+          "points": 6.75,
           "provisional": false,
           "rateSource": "history"
         },
@@ -55079,8 +55169,8 @@
         "elementType": 3,
         "floorCeiling": {
           "bandProvisional": false,
-          "ceiling": 8.91,
-          "floor": 4.61
+          "ceiling": 8.9,
+          "floor": 4.6
         },
         "id": 12,
         "isCaptain": false,
@@ -55099,7 +55189,7 @@
         ],
         "position": "MID",
         "price": 9.6,
-        "projectedPoints": 6.76,
+        "projectedPoints": 6.75,
         "provisional": false,
         "rateSource": "history",
         "rationale": "6.8 proj \u2014 next best after Haaland",
@@ -55114,7 +55204,7 @@
         "sellPrice": 9.6,
         "team": "ARS",
         "webName": "Saka",
-        "windowPoints": 32.27
+        "windowPoints": 32.25
       },
       {
         "availability": {
@@ -55191,7 +55281,7 @@
         "sellPrice": 5.6,
         "team": "FUL",
         "webName": "King",
-        "windowPoints": 18.86
+        "windowPoints": 18.85
       },
       {
         "availability": {
@@ -55208,7 +55298,7 @@
             "cards": -0.28,
             "cleanSheet": 0.14,
             "defensiveContribution": 0.18,
-            "goals": 1.16,
+            "goals": 1.15,
             "goalsConceded": 0.0,
             "saves": 0.0
           },
@@ -55268,7 +55358,7 @@
         "sellPrice": 6.1,
         "team": "BHA",
         "webName": "Gro\u00df",
-        "windowPoints": 24.5
+        "windowPoints": 24.49
       },
       {
         "availability": {
@@ -55483,7 +55573,7 @@
           }
         ],
         "position": "FWD",
-        "price": 7.8,
+        "price": 7.9,
         "projectedPoints": 5.08,
         "provisional": false,
         "rateSource": "history",
@@ -55496,7 +55586,7 @@
           12
         ],
         "role": "start",
-        "sellPrice": 7.8,
+        "sellPrice": 7.9,
         "team": "CHE",
         "webName": "Jo\u00e3o Pedro",
         "windowPoints": 23.79
@@ -55637,7 +55727,7 @@
           }
         ],
         "position": "MID",
-        "price": 6.1,
+        "price": 6.2,
         "projectedPoints": 4.66,
         "provisional": false,
         "rateSource": "history",
@@ -55650,10 +55740,10 @@
           1
         ],
         "role": "start",
-        "sellPrice": 6.1,
+        "sellPrice": 6.2,
         "team": "BOU",
         "webName": "Tavernier",
-        "windowPoints": 24.5
+        "windowPoints": 24.48
       },
       {
         "availability": {
@@ -55665,7 +55755,7 @@
           "availabilityMultiplier": 1.0,
           "components": {
             "appearance": 2.0,
-            "assists": 0.38,
+            "assists": 0.37,
             "bonus": 0.81,
             "cards": -0.23,
             "cleanSheet": 0.57,
@@ -55687,7 +55777,7 @@
               "wasHome": false
             }
           ],
-          "points": 3.78,
+          "points": 3.77,
           "provisional": false,
           "rateSource": "history"
         },
@@ -55695,8 +55785,8 @@
         "elementType": 2,
         "floorCeiling": {
           "bandProvisional": false,
-          "ceiling": 6.08,
-          "floor": 1.48
+          "ceiling": 6.07,
+          "floor": 1.47
         },
         "id": 115,
         "isCaptain": false,
@@ -55715,7 +55805,7 @@
         ],
         "position": "DEF",
         "price": 5.2,
-        "projectedPoints": 3.78,
+        "projectedPoints": 3.77,
         "provisional": false,
         "rateSource": "history",
         "rationale": "3.8 proj, under the 3.0 XI cut \u2014 @LIV (FDR 4)",
@@ -55730,7 +55820,7 @@
         "sellPrice": 5.2,
         "team": "BHA",
         "webName": "De Cuyper",
-        "windowPoints": 20.96
+        "windowPoints": 20.93
       },
       {
         "availability": {
@@ -55807,7 +55897,7 @@
         "sellPrice": 5.0,
         "team": "LEE",
         "webName": "Muharemovi\u0107",
-        "windowPoints": 16.65
+        "windowPoints": 16.66
       }
     ],
     "startingXi": [
@@ -55823,7 +55913,7 @@
       411,
       165
     ],
-    "windowPoints": 329.38,
+    "windowPoints": 329.42,
     "yourBench": [
       496,
       115,
@@ -55859,7 +55949,7 @@
     },
     "115": {
       "appearance": 2.0,
-      "assists": 0.38,
+      "assists": 0.37,
       "bonus": 0.81,
       "cards": -0.23,
       "cleanSheet": 0.57,
@@ -55870,12 +55960,12 @@
     },
     "12": {
       "appearance": 2.0,
-      "assists": 0.77,
-      "bonus": 0.61,
+      "assists": 0.78,
+      "bonus": 0.6,
       "cards": -0.08,
       "cleanSheet": 0.48,
       "defensiveContribution": 0.21,
-      "goals": 2.77,
+      "goals": 2.76,
       "goalsConceded": 0.0,
       "saves": 0.0
     },
@@ -55886,7 +55976,7 @@
       "cards": -0.28,
       "cleanSheet": 0.14,
       "defensiveContribution": 0.18,
-      "goals": 1.16,
+      "goals": 1.15,
       "goalsConceded": 0.0,
       "saves": 0.0
     },
@@ -55915,11 +56005,11 @@
     "31": {
       "appearance": 1.8,
       "assists": 0.08,
-      "bonus": 0.15,
+      "bonus": 0.17,
       "cards": -0.06,
       "cleanSheet": 1.53,
-      "defensiveContribution": 0.36,
-      "goals": 0.38,
+      "defensiveContribution": 0.35,
+      "goals": 0.37,
       "goalsConceded": -0.33,
       "saves": 0.0
     },
@@ -56002,7 +56092,7 @@
     },
     "8": {
       "appearance": 2.0,
-      "assists": 0.3,
+      "assists": 0.31,
       "bonus": 0.32,
       "cards": -0.12,
       "cleanSheet": 1.91,
@@ -56047,7 +56137,7 @@
               "wasHome": true
             }
           ],
-          "projectedPoints": 5.25,
+          "projectedPoints": 5.26,
           "provisional": false
         },
         {
@@ -56073,7 +56163,7 @@
               "wasHome": true
             }
           ],
-          "projectedPoints": 3.89,
+          "projectedPoints": 3.91,
           "provisional": false
         },
         {
@@ -56099,7 +56189,7 @@
               "wasHome": true
             }
           ],
-          "projectedPoints": 6.76,
+          "projectedPoints": 6.75,
           "provisional": false
         },
         {
@@ -56203,7 +56293,7 @@
               "wasHome": false
             }
           ],
-          "projectedPoints": 3.78,
+          "projectedPoints": 3.77,
           "provisional": false
         },
         {
@@ -56220,7 +56310,7 @@
           "provisional": true
         }
       ],
-      "points": 60.6,
+      "points": 60.7,
       "startingXi": [
         109,
         8,
@@ -56269,7 +56359,7 @@
               "wasHome": false
             }
           ],
-          "projectedPoints": 4.09,
+          "projectedPoints": 4.1,
           "provisional": false
         },
         {
@@ -56295,7 +56385,7 @@
               "wasHome": false
             }
           ],
-          "projectedPoints": 3.01,
+          "projectedPoints": 3.03,
           "provisional": false
         },
         {
@@ -56308,7 +56398,7 @@
               "wasHome": true
             }
           ],
-          "projectedPoints": 4.74,
+          "projectedPoints": 4.73,
           "provisional": false
         },
         {
@@ -56412,7 +56502,7 @@
               "wasHome": true
             }
           ],
-          "projectedPoints": 4.97,
+          "projectedPoints": 4.96,
           "provisional": false
         },
         {
@@ -56438,11 +56528,11 @@
               "wasHome": false
             }
           ],
-          "projectedPoints": 3.13,
+          "projectedPoints": 3.14,
           "provisional": true
         }
       ],
-      "points": 59.2,
+      "points": 59.1,
       "startingXi": [
         496,
         449,
@@ -56491,7 +56581,7 @@
               "wasHome": true
             }
           ],
-          "projectedPoints": 5.03,
+          "projectedPoints": 5.04,
           "provisional": false
         },
         {
@@ -56517,7 +56607,7 @@
               "wasHome": true
             }
           ],
-          "projectedPoints": 3.69,
+          "projectedPoints": 3.7,
           "provisional": false
         },
         {
@@ -56647,7 +56737,7 @@
               "wasHome": true
             }
           ],
-          "projectedPoints": 4.8,
+          "projectedPoints": 4.79,
           "provisional": false
         },
         {
@@ -56713,7 +56803,7 @@
               "wasHome": false
             }
           ],
-          "projectedPoints": 4.47,
+          "projectedPoints": 4.48,
           "provisional": false
         },
         {
@@ -56739,7 +56829,7 @@
               "wasHome": false
             }
           ],
-          "projectedPoints": 3.23,
+          "projectedPoints": 3.24,
           "provisional": false
         },
         {
@@ -56856,7 +56946,7 @@
               "wasHome": true
             }
           ],
-          "projectedPoints": 4.99,
+          "projectedPoints": 4.98,
           "provisional": false
         },
         {
@@ -56869,7 +56959,7 @@
               "wasHome": false
             }
           ],
-          "projectedPoints": 4.3,
+          "projectedPoints": 4.29,
           "provisional": false
         },
         {
@@ -56922,7 +57012,7 @@
               "wasHome": true
             }
           ],
-          "projectedPoints": 3.3,
+          "projectedPoints": 3.31,
           "provisional": false
         },
         {
@@ -56935,7 +57025,7 @@
               "wasHome": true
             }
           ],
-          "projectedPoints": 4.13,
+          "projectedPoints": 4.14,
           "provisional": false
         },
         {
@@ -56961,7 +57051,7 @@
               "wasHome": true
             }
           ],
-          "projectedPoints": 3.07,
+          "projectedPoints": 3.08,
           "provisional": false
         },
         {
@@ -56987,7 +57077,7 @@
               "wasHome": true
             }
           ],
-          "projectedPoints": 5.98,
+          "projectedPoints": 5.97,
           "provisional": false
         },
         {
@@ -57000,7 +57090,7 @@
               "wasHome": true
             }
           ],
-          "projectedPoints": 4.04,
+          "projectedPoints": 4.03,
           "provisional": false
         },
         {
@@ -57013,7 +57103,7 @@
               "wasHome": true
             }
           ],
-          "projectedPoints": 5.33,
+          "projectedPoints": 5.32,
           "provisional": false
         },
         {
@@ -57132,7 +57222,7 @@
   },
   "xiFloorCeiling": {
     "bandProvisional": false,
-    "ceiling": 68.77,
-    "floor": 52.51
+    "ceiling": 68.79,
+    "floor": 52.53
   }
 }
