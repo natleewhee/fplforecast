@@ -59,17 +59,17 @@
     },
     {
       "assists": 0.0,
-      "games": 9.0,
+      "games": 10.0,
       "goals": 7.0,
-      "key_passes": 2.0,
-      "minutes": 679.0,
+      "key_passes": 3.0,
+      "minutes": 769.0,
       "name": "Ante Budimir",
-      "npxg": 2.945024073123932,
+      "npxg": 3.1231499761343002,
       "position": "F S",
-      "shots": 24.0,
+      "shots": 27.0,
       "team": "Osasuna",
-      "xa": 0.17657123506069183,
-      "xg": 5.918134555220604
+      "xa": 0.21103483065962791,
+      "xg": 6.096260458230972
     },
     {
       "assists": 1.0,
@@ -366,6 +366,20 @@
       "xg": 2.5691824816167355
     },
     {
+      "assists": 1.0,
+      "games": 8.0,
+      "goals": 3.0,
+      "key_passes": 4.0,
+      "minutes": 302.0,
+      "name": "Isaac Romero",
+      "npxg": 0.4598163776099682,
+      "position": "F S",
+      "shots": 9.0,
+      "team": "Sevilla",
+      "xa": 0.3781778961420059,
+      "xg": 0.4598163776099682
+    },
+    {
       "assists": 0.0,
       "games": 9.0,
       "goals": 3.0,
@@ -590,6 +604,20 @@
       "xg": 2.3718416467309
     },
     {
+      "assists": 1.0,
+      "games": 6.0,
+      "goals": 2.0,
+      "key_passes": 7.0,
+      "minutes": 469.0,
+      "name": "Felix Correia",
+      "npxg": 1.4116868153214455,
+      "position": "M",
+      "shots": 8.0,
+      "team": "Sevilla",
+      "xa": 0.9230305254459381,
+      "xg": 1.4116868153214455
+    },
+    {
       "assists": 2.0,
       "games": 10.0,
       "goals": 2.0,
@@ -686,20 +714,6 @@
       "team": "Real Madrid",
       "xa": 4.848865482956171,
       "xg": 2.236281603574753
-    },
-    {
-      "assists": 1.0,
-      "games": 7.0,
-      "goals": 2.0,
-      "key_passes": 3.0,
-      "minutes": 230.0,
-      "name": "Isaac Romero",
-      "npxg": 0.3947157971560955,
-      "position": "F S",
-      "shots": 7.0,
-      "team": "Sevilla",
-      "xa": 0.3550829794257879,
-      "xg": 0.3947157971560955
     },
     {
       "assists": 0.0,
@@ -955,10 +969,10 @@
     },
     {
       "assists": 0.0,
-      "games": 6.0,
+      "games": 7.0,
       "goals": 1.0,
       "key_passes": 4.0,
-      "minutes": 234.0,
+      "minutes": 244.0,
       "name": "Kike Barja",
       "npxg": 0.8258503377437592,
       "position": "M S",
@@ -1038,18 +1052,18 @@
       "xg": 0.8211952447891235
     },
     {
-      "assists": 1.0,
-      "games": 6.0,
+      "assists": 3.0,
+      "games": 7.0,
       "goals": 1.0,
-      "key_passes": 5.0,
-      "minutes": 465.0,
+      "key_passes": 7.0,
+      "minutes": 555.0,
       "name": "Youssouf Fofana",
-      "npxg": 1.7282329257577658,
+      "npxg": 1.7590369936078787,
       "position": "M S",
-      "shots": 10.0,
+      "shots": 11.0,
       "team": "Sevilla",
-      "xa": 0.9882924929261208,
-      "xg": 1.7282329257577658
+      "xa": 1.1251374259591103,
+      "xg": 1.7590369936078787
     },
     {
       "assists": 3.0,
@@ -1207,17 +1221,17 @@
     },
     {
       "assists": 1.0,
-      "games": 9.0,
+      "games": 10.0,
       "goals": 1.0,
       "key_passes": 3.0,
-      "minutes": 437.0,
+      "minutes": 463.0,
       "name": "Raul Garc\u00eda",
-      "npxg": 1.593015255406499,
+      "npxg": 1.70295768417418,
       "position": "F M S",
-      "shots": 13.0,
+      "shots": 15.0,
       "team": "Osasuna",
       "xa": 0.6938959956169128,
-      "xg": 1.593015255406499
+      "xg": 1.70295768417418
     },
     {
       "assists": 0.0,
@@ -1291,17 +1305,17 @@
     },
     {
       "assists": 0.0,
-      "games": 7.0,
+      "games": 8.0,
       "goals": 1.0,
-      "key_passes": 2.0,
-      "minutes": 227.0,
+      "key_passes": 3.0,
+      "minutes": 299.0,
       "name": "Chidera Ejuke",
-      "npxg": 0.3909448962658644,
-      "position": "F S",
-      "shots": 3.0,
+      "npxg": 0.5021293517202139,
+      "position": "F M S",
+      "shots": 5.0,
       "team": "Sevilla",
-      "xa": 0.08501488156616688,
-      "xg": 0.3909448962658644
+      "xa": 0.1550815049558878,
+      "xg": 0.5021293517202139
     },
     {
       "assists": 0.0,
@@ -1347,17 +1361,17 @@
     },
     {
       "assists": 0.0,
-      "games": 9.0,
+      "games": 10.0,
       "goals": 1.0,
-      "key_passes": 6.0,
-      "minutes": 795.0,
+      "key_passes": 7.0,
+      "minutes": 885.0,
       "name": "Juan Iglesias",
-      "npxg": 0.5539014991372824,
+      "npxg": 0.6151108648627996,
       "position": "D",
-      "shots": 7.0,
+      "shots": 8.0,
       "team": "Sevilla",
-      "xa": 0.3908960446715355,
-      "xg": 0.5539014991372824
+      "xa": 0.46912743896245956,
+      "xg": 0.6151108648627996
     },
     {
       "assists": 0.0,
@@ -1400,20 +1414,6 @@
       "team": "Alaves",
       "xa": 0.11448746547102928,
       "xg": 0.08876005001366138
-    },
-    {
-      "assists": 1.0,
-      "games": 5.0,
-      "goals": 1.0,
-      "key_passes": 6.0,
-      "minutes": 382.0,
-      "name": "Felix Correia",
-      "npxg": 1.204820655286312,
-      "position": "M",
-      "shots": 5.0,
-      "team": "Sevilla",
-      "xa": 0.8618211597204208,
-      "xg": 1.204820655286312
     },
     {
       "assists": 0.0,
@@ -1599,17 +1599,17 @@
     },
     {
       "assists": 0.0,
-      "games": 3.0,
+      "games": 4.0,
       "goals": 1.0,
       "key_passes": 1.0,
-      "minutes": 52.0,
+      "minutes": 70.0,
       "name": "Manu Bueno",
-      "npxg": 0.11855290085077286,
+      "npxg": 0.14458094350993633,
       "position": "S",
-      "shots": 2.0,
+      "shots": 3.0,
       "team": "Sevilla",
       "xa": 0.021573210135102272,
-      "xg": 0.11855290085077286
+      "xg": 0.14458094350993633
     },
     {
       "assists": 1.0,
@@ -1697,10 +1697,10 @@
     },
     {
       "assists": 0.0,
-      "games": 7.0,
+      "games": 8.0,
       "goals": 1.0,
       "key_passes": 1.0,
-      "minutes": 346.0,
+      "minutes": 356.0,
       "name": "Asier Osambela",
       "npxg": 0.7782383412122726,
       "position": "D M S",
@@ -1753,17 +1753,17 @@
     },
     {
       "assists": 1.0,
-      "games": 4.0,
+      "games": 5.0,
       "goals": 1.0,
-      "key_passes": 4.0,
-      "minutes": 231.0,
+      "key_passes": 5.0,
+      "minutes": 295.0,
       "name": "Lucas Stassin",
-      "npxg": 0.8664955049753189,
+      "npxg": 0.9262327142059803,
       "position": "F S",
-      "shots": 7.0,
+      "shots": 8.0,
       "team": "Sevilla",
-      "xa": 0.17439308017492294,
-      "xg": 0.8664955049753189
+      "xa": 0.21685625985264778,
+      "xg": 0.9262327142059803
     },
     {
       "assists": 1.0,
@@ -1991,17 +1991,17 @@
     },
     {
       "assists": 2.0,
-      "games": 9.0,
+      "games": 10.0,
       "goals": 1.0,
       "key_passes": 6.0,
-      "minutes": 514.0,
+      "minutes": 540.0,
       "name": "Robbie Ure",
-      "npxg": 2.1520400419831276,
+      "npxg": 2.230620265007019,
       "position": "F S",
-      "shots": 13.0,
+      "shots": 14.0,
       "team": "Sevilla",
       "xa": 1.2459124587476254,
-      "xg": 2.1520400419831276
+      "xg": 2.230620265007019
     },
     {
       "assists": 0.0,
@@ -2187,10 +2187,10 @@
     },
     {
       "assists": 0.0,
-      "games": 9.0,
+      "games": 10.0,
       "goals": 0.0,
       "key_passes": 0.0,
-      "minutes": 810.0,
+      "minutes": 900.0,
       "name": "Odisseas Vlachodimos",
       "npxg": 0.0,
       "position": "GK",
@@ -2369,31 +2369,31 @@
     },
     {
       "assists": 1.0,
-      "games": 9.0,
+      "games": 10.0,
       "goals": 0.0,
-      "key_passes": 16.0,
-      "minutes": 548.0,
+      "key_passes": 17.0,
+      "minutes": 612.0,
       "name": "Rub\u00e9n Garc\u00eda",
       "npxg": 0.5210025981068611,
       "position": "F M S",
       "shots": 10.0,
       "team": "Osasuna",
-      "xa": 1.8351466655731201,
+      "xa": 2.156897157430649,
       "xg": 0.5210025981068611
     },
     {
       "assists": 1.0,
-      "games": 6.0,
+      "games": 7.0,
       "goals": 0.0,
-      "key_passes": 7.0,
-      "minutes": 410.0,
+      "key_passes": 8.0,
+      "minutes": 490.0,
       "name": "Moi G\u00f3mez",
-      "npxg": 0.0,
+      "npxg": 0.03489554673433304,
       "position": "M S",
-      "shots": 0.0,
+      "shots": 1.0,
       "team": "Osasuna",
-      "xa": 0.891073651611805,
-      "xg": 0.0
+      "xa": 0.9311081171035767,
+      "xg": 0.03489554673433304
     },
     {
       "assists": 0.0,
@@ -2747,10 +2747,10 @@
     },
     {
       "assists": 0.0,
-      "games": 4.0,
+      "games": 5.0,
       "goals": 0.0,
       "key_passes": 0.0,
-      "minutes": 360.0,
+      "minutes": 450.0,
       "name": "Aitor Fern\u00e1ndez",
       "npxg": 0.0,
       "position": "GK",
@@ -2901,10 +2901,10 @@
     },
     {
       "assists": 0.0,
-      "games": 2.0,
+      "games": 3.0,
       "goals": 0.0,
       "key_passes": 2.0,
-      "minutes": 104.0,
+      "minutes": 184.0,
       "name": "Valentin Rosier",
       "npxg": 0.01155208982527256,
       "position": "D S",
@@ -3307,17 +3307,17 @@
     },
     {
       "assists": 0.0,
-      "games": 7.0,
+      "games": 8.0,
       "goals": 0.0,
       "key_passes": 1.0,
-      "minutes": 330.0,
+      "minutes": 410.0,
       "name": "Lucas Torr\u00f3",
-      "npxg": 0.07704240456223488,
+      "npxg": 0.12549328804016113,
       "position": "M S",
-      "shots": 2.0,
+      "shots": 3.0,
       "team": "Osasuna",
       "xa": 0.02215198427438736,
-      "xg": 0.07704240456223488
+      "xg": 0.12549328804016113
     },
     {
       "assists": 0.0,
@@ -3461,17 +3461,17 @@
     },
     {
       "assists": 1.0,
-      "games": 8.0,
+      "games": 9.0,
       "goals": 0.0,
       "key_passes": 3.0,
-      "minutes": 720.0,
+      "minutes": 810.0,
       "name": "Alejandro Catena",
-      "npxg": 0.12321075797080994,
+      "npxg": 0.15767435356974602,
       "position": "D",
-      "shots": 1.0,
+      "shots": 2.0,
       "team": "Osasuna",
       "xa": 0.528141382150352,
-      "xg": 0.12321075797080994
+      "xg": 0.15767435356974602
     },
     {
       "assists": 0.0,
@@ -3503,16 +3503,16 @@
     },
     {
       "assists": 0.0,
-      "games": 2.0,
+      "games": 3.0,
       "goals": 0.0,
-      "key_passes": 1.0,
-      "minutes": 64.0,
+      "key_passes": 3.0,
+      "minutes": 82.0,
       "name": "Ruben Vargas",
       "npxg": 0.1546863690018654,
       "position": "M S",
       "shots": 2.0,
       "team": "Sevilla",
-      "xa": 0.08456030488014221,
+      "xa": 0.2235013246536255,
       "xg": 0.1546863690018654
     },
     {
@@ -3545,10 +3545,10 @@
     },
     {
       "assists": 0.0,
-      "games": 9.0,
+      "games": 10.0,
       "goals": 0.0,
       "key_passes": 3.0,
-      "minutes": 652.0,
+      "minutes": 742.0,
       "name": "Jon Moncayola",
       "npxg": 0.06914367526769638,
       "position": "M S",
@@ -3657,10 +3657,10 @@
     },
     {
       "assists": 0.0,
-      "games": 9.0,
+      "games": 10.0,
       "goals": 0.0,
       "key_passes": 3.0,
-      "minutes": 810.0,
+      "minutes": 900.0,
       "name": "Lucien Agoume",
       "npxg": 0.2625533230602741,
       "position": "M",
@@ -3769,16 +3769,16 @@
     },
     {
       "assists": 0.0,
-      "games": 6.0,
+      "games": 7.0,
       "goals": 0.0,
-      "key_passes": 3.0,
-      "minutes": 175.0,
+      "key_passes": 5.0,
+      "minutes": 201.0,
       "name": "Raul Moro",
       "npxg": 0.4045467972755432,
       "position": "M S",
       "shots": 5.0,
       "team": "Osasuna",
-      "xa": 0.6888908073306084,
+      "xa": 0.8056005984544754,
       "xg": 0.4045467972755432
     },
     {
@@ -4105,10 +4105,10 @@
     },
     {
       "assists": 0.0,
-      "games": 4.0,
+      "games": 5.0,
       "goals": 0.0,
       "key_passes": 1.0,
-      "minutes": 70.0,
+      "minutes": 73.0,
       "name": "Jos\u00e9 \u00c1ngel Carmona",
       "npxg": 0.046601951122283936,
       "position": "S",
@@ -4371,17 +4371,17 @@
     },
     {
       "assists": 0.0,
-      "games": 7.0,
+      "games": 8.0,
       "goals": 0.0,
-      "key_passes": 2.0,
-      "minutes": 630.0,
+      "key_passes": 3.0,
+      "minutes": 720.0,
       "name": "Kike Salas",
-      "npxg": 0.28800176829099655,
+      "npxg": 0.4138155058026314,
       "position": "D",
-      "shots": 7.0,
+      "shots": 9.0,
       "team": "Sevilla",
-      "xa": 0.11623192578554153,
-      "xg": 0.28800176829099655
+      "xa": 0.17596913501620293,
+      "xg": 0.4138155058026314
     },
     {
       "assists": 0.0,
@@ -4651,17 +4651,17 @@
     },
     {
       "assists": 0.0,
-      "games": 9.0,
+      "games": 10.0,
       "goals": 0.0,
       "key_passes": 15.0,
-      "minutes": 810.0,
+      "minutes": 900.0,
       "name": "Gabriel Suazo",
-      "npxg": 0.012310294434428215,
+      "npxg": 0.04386069439351559,
       "position": "D",
-      "shots": 1.0,
+      "shots": 2.0,
       "team": "Sevilla",
       "xa": 0.6673541590571404,
-      "xg": 0.012310294434428215
+      "xg": 0.04386069439351559
     },
     {
       "assists": 0.0,
@@ -5001,10 +5001,10 @@
     },
     {
       "assists": 0.0,
-      "games": 9.0,
+      "games": 10.0,
       "goals": 0.0,
       "key_passes": 3.0,
-      "minutes": 649.0,
+      "minutes": 659.0,
       "name": "I\u00f1igo Arguibide",
       "npxg": 0.18618852272629738,
       "position": "D S",
@@ -5085,10 +5085,10 @@
     },
     {
       "assists": 0.0,
-      "games": 9.0,
+      "games": 10.0,
       "goals": 0.0,
       "key_passes": 4.0,
-      "minutes": 705.0,
+      "minutes": 795.0,
       "name": "Abel Bretones",
       "npxg": 0.03493967931717634,
       "position": "D S",
@@ -5169,17 +5169,17 @@
     },
     {
       "assists": 0.0,
-      "games": 4.0,
+      "games": 5.0,
       "goals": 0.0,
       "key_passes": 1.0,
-      "minutes": 296.0,
+      "minutes": 386.0,
       "name": "Enzo Boyomo",
-      "npxg": 0.010561215691268444,
+      "npxg": 0.33231170754879713,
       "position": "D S",
-      "shots": 1.0,
+      "shots": 2.0,
       "team": "Osasuna",
       "xa": 0.07004812359809875,
-      "xg": 0.010561215691268444
+      "xg": 0.33231170754879713
     },
     {
       "assists": 1.0,
@@ -5449,17 +5449,17 @@
     },
     {
       "assists": 0.0,
-      "games": 8.0,
+      "games": 9.0,
       "goals": 0.0,
       "key_passes": 3.0,
-      "minutes": 659.0,
+      "minutes": 749.0,
       "name": "Andr\u00e9s Castr\u00edn",
-      "npxg": 0.5589372143149376,
+      "npxg": 0.6404135376214981,
       "position": "D S",
-      "shots": 2.0,
+      "shots": 4.0,
       "team": "Sevilla",
       "xa": 0.131232850253582,
-      "xg": 0.5589372143149376
+      "xg": 0.6404135376214981
     },
     {
       "assists": 0.0,
@@ -6583,17 +6583,17 @@
     },
     {
       "assists": 0.0,
-      "games": 9.0,
+      "games": 10.0,
       "goals": 0.0,
       "key_passes": 4.0,
-      "minutes": 334.0,
+      "minutes": 398.0,
       "name": "Jonathan Dubasin",
-      "npxg": 2.085733959451318,
+      "npxg": 2.115651162341237,
       "position": "F M S",
-      "shots": 9.0,
+      "shots": 10.0,
       "team": "Osasuna",
       "xa": 0.1903580892831087,
-      "xg": 2.085733959451318
+      "xg": 2.115651162341237
     },
     {
       "assists": 0.0,
