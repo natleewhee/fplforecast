@@ -1,6 +1,6 @@
 {
-  "bootstrapDate": "2026-10-16",
-  "generatedAt": "2026-10-16T08:00:35.175401+00:00",
+  "bootstrapDate": "2026-10-30",
+  "generatedAt": "2026-10-30T09:46:33.692549+00:00",
   "resolved": {
     "1": {
       "bySeason": {
@@ -3397,6 +3397,19 @@
       },
       "webName": "Wright"
     },
+    "668": {
+      "bySeason": {
+        "2025-26": 775
+      },
+      "webName": "Tutierov"
+    },
+    "669": {
+      "bySeason": {
+        "2023-24": 847,
+        "2025-26": 803
+      },
+      "webName": "Sharman-Lowe"
+    },
     "67": {
       "bySeason": {
         "2025-26": 807
@@ -3650,13 +3663,13 @@
       "webName": "Milambo"
     }
   },
-  "resolvedCount": 515,
+  "resolvedCount": 517,
   "seasonsAttempted": [
     "2025-26",
     "2024-25",
     "2023-24"
   ],
-  "totalPlayers": 667,
+  "totalPlayers": 669,
   "unresolved": [
     {
       "ambiguousIn": [],
