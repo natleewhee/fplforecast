@@ -12,7 +12,7 @@
   "deadlineTime": "2026-11-06T18:30:00Z",
   "earlySeason": false,
   "effectiveGap": 5.0,
-  "generatedAt": "2026-11-01T10:16:04.295712+00:00",
+  "generatedAt": "2026-11-01T15:37:42.533260+00:00",
   "history": {
     "gameweeks": [
       {
@@ -188,12 +188,12 @@
     },
     "xiPoints": 65
   },
-  "lineupAgreement": 8,
+  "lineupAgreement": 9,
   "marginProvisional": false,
   "nextGw": {
-    "deltaVsBaselineXi": 1.3,
-    "deltaVsNoChange": 2.5,
-    "points": 57.0
+    "deltaVsBaselineXi": 0.9,
+    "deltaVsNoChange": 2.2,
+    "points": 57.8
   },
   "overridesApplied": 1,
   "parBuffer": 4.0,
@@ -787,20 +787,20 @@
     },
     {
       "availability": {
-        "chance": 75,
-        "news": "Hip injury - 75% chance of playing",
-        "status": "d"
+        "chance": 100,
+        "news": null,
+        "status": "a"
       },
       "code": 466075,
       "components": {
-        "appearance": 1.35,
-        "assists": 0.19,
-        "bonus": 0.15,
-        "cards": -0.08,
-        "cleanSheet": 1.08,
-        "defensiveContribution": 0.07,
-        "goals": 0.71,
-        "goalsConceded": -0.25,
+        "appearance": 1.8,
+        "assists": 0.25,
+        "bonus": 0.2,
+        "cards": -0.11,
+        "cleanSheet": 1.44,
+        "defensiveContribution": 0.1,
+        "goals": 0.95,
+        "goalsConceded": -0.34,
         "saves": 0.0
       },
       "elementType": 2,
@@ -858,13 +858,13 @@
         ]
       ],
       "perGameweek": [
-        3.22,
-        2.83,
-        2.63,
-        2.89,
-        2.99,
-        3.24,
-        3.22
+        4.3,
+        3.78,
+        3.51,
+        3.85,
+        3.99,
+        4.31,
+        4.29
       ],
       "position": "DEF",
       "price": 5.9,
@@ -878,7 +878,7 @@
       "selectedByPercent": 47.8,
       "sellPrice": 5.9,
       "team": "ARS",
-      "total": 21.02,
+      "total": 28.03,
       "webName": "Calafiori"
     },
     {
@@ -1171,19 +1171,19 @@
     },
     {
       "availability": {
-        "chance": 75,
-        "news": "Unspecified injury - 75% chance of playing",
-        "status": "d"
+        "chance": 100,
+        "news": null,
+        "status": "a"
       },
       "code": 204480,
       "components": {
-        "appearance": 1.5,
-        "assists": 0.58,
-        "bonus": 0.44,
-        "cards": -0.12,
-        "cleanSheet": 0.34,
-        "defensiveContribution": 0.31,
-        "goals": 0.39,
+        "appearance": 2.0,
+        "assists": 0.78,
+        "bonus": 0.58,
+        "cards": -0.16,
+        "cleanSheet": 0.45,
+        "defensiveContribution": 0.42,
+        "goals": 0.52,
         "goalsConceded": 0.0,
         "saves": 0.0
       },
@@ -1242,13 +1242,13 @@
         ]
       ],
       "perGameweek": [
-        3.44,
-        3.33,
-        3.18,
-        3.34,
-        3.4,
-        3.54,
-        3.52
+        4.58,
+        4.44,
+        4.24,
+        4.45,
+        4.54,
+        4.71,
+        4.69
       ],
       "position": "MID",
       "price": 7.4,
@@ -1262,7 +1262,7 @@
       "selectedByPercent": 11.8,
       "sellPrice": 7.4,
       "team": "ARS",
-      "total": 23.75,
+      "total": 31.65,
       "webName": "Rice"
     },
     {
@@ -1459,19 +1459,19 @@
     },
     {
       "availability": {
-        "chance": 50,
-        "news": "Ankle injury - 50% chance of playing",
-        "status": "d"
+        "chance": 100,
+        "news": null,
+        "status": "a"
       },
       "code": 248857,
       "components": {
-        "appearance": 0.5,
-        "assists": 0.23,
-        "bonus": 0.09,
-        "cards": -0.07,
-        "cleanSheet": 0.09,
-        "defensiveContribution": 0.02,
-        "goals": 0.41,
+        "appearance": 1.0,
+        "assists": 0.46,
+        "bonus": 0.18,
+        "cards": -0.15,
+        "cleanSheet": 0.18,
+        "defensiveContribution": 0.04,
+        "goals": 0.81,
         "goalsConceded": 0.0,
         "saves": 0.0
       },
@@ -1530,13 +1530,13 @@
         ]
       ],
       "perGameweek": [
-        1.26,
-        1.23,
-        1.14,
-        1.23,
-        1.27,
-        1.34,
-        1.33
+        2.53,
+        2.46,
+        2.27,
+        2.46,
+        2.53,
+        2.68,
+        2.66
       ],
       "position": "MID",
       "price": 6.2,
@@ -1550,7 +1550,7 @@
       "selectedByPercent": 0.4,
       "sellPrice": 6.2,
       "team": "ARS",
-      "total": 8.8,
+      "total": 17.59,
       "webName": "Madueke"
     },
     {
@@ -2027,7 +2027,7 @@
         9,
         14
       ],
-      "selectedByPercent": 21.9,
+      "selectedByPercent": 22.0,
       "sellPrice": 4.7,
       "team": "ARS",
       "total": 31.85,
@@ -2131,19 +2131,19 @@
     },
     {
       "availability": {
-        "chance": 75,
-        "news": "Hamstring injury - 75% chance of playing",
-        "status": "d"
+        "chance": 100,
+        "news": null,
+        "status": "a"
       },
       "code": 439509,
       "components": {
-        "appearance": 0.6,
-        "assists": 0.12,
-        "bonus": 0.09,
-        "cards": -0.08,
-        "cleanSheet": 0.13,
+        "appearance": 0.8,
+        "assists": 0.16,
+        "bonus": 0.12,
+        "cards": -0.11,
+        "cleanSheet": 0.18,
         "defensiveContribution": 0.02,
-        "goals": 0.15,
+        "goals": 0.21,
         "goalsConceded": 0.0,
         "saves": 0.0
       },
@@ -2202,13 +2202,13 @@
         ]
       ],
       "perGameweek": [
-        1.04,
-        1.0,
-        0.95,
-        1.0,
-        1.02,
-        1.06,
-        1.06
+        1.38,
+        1.33,
+        1.27,
+        1.33,
+        1.36,
+        1.42,
+        1.41
       ],
       "position": "MID",
       "price": 6.1,
@@ -2222,7 +2222,7 @@
       "selectedByPercent": 3.8,
       "sellPrice": 6.1,
       "team": "ARS",
-      "total": 7.13,
+      "total": 9.5,
       "webName": "Tzolis"
     },
     {
@@ -3563,7 +3563,7 @@
         11,
         1
       ],
-      "selectedByPercent": 6.4,
+      "selectedByPercent": 6.5,
       "sellPrice": 6.1,
       "team": "AVL",
       "total": 25.71,
@@ -3947,7 +3947,7 @@
         2,
         13
       ],
-      "selectedByPercent": 24.1,
+      "selectedByPercent": 24.3,
       "sellPrice": 7.0,
       "team": "AVL",
       "total": 25.05,
@@ -4907,7 +4907,7 @@
         7,
         11
       ],
-      "selectedByPercent": 2.3,
+      "selectedByPercent": 2.4,
       "sellPrice": 5.5,
       "team": "BOU",
       "total": 27.78,
@@ -5483,7 +5483,7 @@
         10,
         10
       ],
-      "selectedByPercent": 26.2,
+      "selectedByPercent": 26.3,
       "sellPrice": 6.6,
       "team": "BOU",
       "total": 37.55,
@@ -6347,7 +6347,7 @@
         12,
         6
       ],
-      "selectedByPercent": 15.8,
+      "selectedByPercent": 16.0,
       "sellPrice": 6.4,
       "team": "BOU",
       "total": 31.59,
@@ -7307,7 +7307,7 @@
         9,
         2
       ],
-      "selectedByPercent": 2.0,
+      "selectedByPercent": 1.9,
       "sellPrice": 5.5,
       "team": "BRE",
       "total": 23.14,
@@ -9611,7 +9611,7 @@
         6,
         1
       ],
-      "selectedByPercent": 44.1,
+      "selectedByPercent": 44.2,
       "sellPrice": 5.4,
       "team": "BHA",
       "total": 29.2,
@@ -10955,7 +10955,7 @@
         12,
         2
       ],
-      "selectedByPercent": 10.3,
+      "selectedByPercent": 10.2,
       "sellPrice": 5.8,
       "team": "BHA",
       "total": 33.58,
@@ -12491,7 +12491,7 @@
         2,
         -1
       ],
-      "selectedByPercent": 27.6,
+      "selectedByPercent": 27.7,
       "sellPrice": 9.8,
       "team": "CHE",
       "total": 30.1,
@@ -20837,7 +20837,7 @@
         6,
         8
       ],
-      "selectedByPercent": 4.5,
+      "selectedByPercent": 4.4,
       "sellPrice": 4.5,
       "team": "FUL",
       "total": 23.87,
@@ -25733,7 +25733,7 @@
         2,
         1
       ],
-      "selectedByPercent": 0.3,
+      "selectedByPercent": 0.4,
       "sellPrice": 3.9,
       "team": "HUL",
       "total": 5.92,
@@ -34853,7 +34853,7 @@
         null,
         0
       ],
-      "selectedByPercent": 36.6,
+      "selectedByPercent": 36.5,
       "sellPrice": 7.9,
       "team": "MCI",
       "total": 28.08,
@@ -36293,7 +36293,7 @@
         3,
         1
       ],
-      "selectedByPercent": 7.7,
+      "selectedByPercent": 7.6,
       "sellPrice": 4.8,
       "team": "MUN",
       "total": 22.21,
@@ -42245,7 +42245,7 @@
         3,
         2
       ],
-      "selectedByPercent": 0.6,
+      "selectedByPercent": 0.5,
       "sellPrice": 5.5,
       "team": "NFO",
       "total": 23.22,
@@ -43205,7 +43205,7 @@
         4,
         7
       ],
-      "selectedByPercent": 10.0,
+      "selectedByPercent": 10.1,
       "sellPrice": 5.0,
       "team": "TOT",
       "total": 26.16,
@@ -43973,7 +43973,7 @@
         5,
         6
       ],
-      "selectedByPercent": 2.3,
+      "selectedByPercent": 2.4,
       "sellPrice": 4.3,
       "team": "TOT",
       "total": 17.17,
@@ -44549,7 +44549,7 @@
         6,
         3
       ],
-      "selectedByPercent": 1.5,
+      "selectedByPercent": 1.6,
       "sellPrice": 6.5,
       "team": "TOT",
       "total": 20.79,
@@ -47808,9 +47808,9 @@
           "transfersOut": [
             {
               "availability": {
-                "chance": 75,
-                "news": "Hip injury - 75% chance of playing",
-                "status": "d"
+                "chance": 100,
+                "news": null,
+                "status": "a"
               },
               "id": 8,
               "position": "DEF",
@@ -48038,18 +48038,18 @@
           ],
           "hitCost": 0,
           "horizonGws": 1,
-          "netPoints": 60.81,
-          "points": 60.81,
+          "netPoints": 60.83,
+          "points": 60.83,
           "squad": [
             4,
-            15,
+            8,
             31,
+            40,
             68,
             109,
-            115,
             124,
+            138,
             154,
-            166,
             268,
             334,
             411,
@@ -48076,25 +48076,25 @@
                 "news": null,
                 "status": "a"
               },
-              "id": 15,
-              "position": "MID",
-              "price": 6.7,
-              "team": "ARS",
-              "webName": "\u00d8degaard"
+              "id": 138,
+              "position": "FWD",
+              "price": 5.8,
+              "team": "BHA",
+              "webName": "Kostoulas"
             }
           ],
           "transfersOut": [
             {
               "availability": {
-                "chance": 75,
-                "news": "Hip injury - 75% chance of playing",
-                "status": "d"
+                "chance": null,
+                "news": null,
+                "status": "a"
               },
-              "id": 8,
+              "id": 115,
               "position": "DEF",
-              "price": 5.9,
-              "team": "ARS",
-              "webName": "Calafiori"
+              "price": 5.4,
+              "team": "BHA",
+              "webName": "De Cuyper"
             },
             {
               "availability": {
@@ -48102,11 +48102,11 @@
                 "news": null,
                 "status": "a"
               },
-              "id": 40,
-              "position": "MID",
-              "price": 8.1,
-              "team": "CHE",
-              "webName": "Rogers"
+              "id": 166,
+              "position": "FWD",
+              "price": 7.0,
+              "team": "AVL",
+              "webName": "N.Jackson"
             }
           ],
           "weeks": [
@@ -48128,7 +48128,7 @@
                   "xp": 5.97
                 },
                 {
-                  "id": 15,
+                  "id": 8,
                   "isCaptain": false,
                   "opponents": [
                     {
@@ -48137,10 +48137,10 @@
                       "wasHome": true
                     }
                   ],
-                  "position": "MID",
+                  "position": "DEF",
                   "team": "ARS",
-                  "webName": "\u00d8degaard",
-                  "xp": 5.29
+                  "webName": "Calafiori",
+                  "xp": 4.3
                 },
                 {
                   "id": 31,
@@ -48188,21 +48188,6 @@
                   "xp": 3.53
                 },
                 {
-                  "id": 115,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 3,
-                      "team": "BRE",
-                      "wasHome": true
-                    }
-                  ],
-                  "position": "DEF",
-                  "team": "BHA",
-                  "webName": "De Cuyper",
-                  "xp": 4.16
-                },
-                {
                   "id": 124,
                   "isCaptain": false,
                   "opponents": [
@@ -48216,6 +48201,36 @@
                   "team": "BHA",
                   "webName": "Gro\u00df",
                   "xp": 5.07
+                },
+                {
+                  "id": 138,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 3,
+                      "team": "BRE",
+                      "wasHome": true
+                    }
+                  ],
+                  "position": "FWD",
+                  "team": "BHA",
+                  "webName": "Kostoulas",
+                  "xp": 4.93
+                },
+                {
+                  "id": 40,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 3,
+                      "team": "SUN",
+                      "wasHome": false
+                    }
+                  ],
+                  "position": "MID",
+                  "team": "CHE",
+                  "webName": "Rogers",
+                  "xp": 3.9
                 },
                 {
                   "id": 154,
@@ -48248,21 +48263,6 @@
                   "xp": 3.81
                 },
                 {
-                  "id": 569,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 3,
-                      "team": "NEW",
-                      "wasHome": true
-                    }
-                  ],
-                  "position": "FWD",
-                  "team": "FUL",
-                  "webName": "Gonzalo",
-                  "xp": 3.66
-                },
-                {
                   "id": 411,
                   "isCaptain": true,
                   "opponents": [
@@ -48279,21 +48279,21 @@
                 }
               ],
               "targetGw": 10,
-              "totalXp": 60.81
+              "totalXp": 60.83
             }
           ],
           "xiByGw": [
             [
               4,
-              15,
+              8,
               31,
               68,
               109,
-              115,
               124,
+              138,
+              40,
               154,
               268,
-              569,
               411
             ]
           ]
@@ -48304,8 +48304,8 @@
           ],
           "hitCost": 0,
           "horizonGws": 1,
-          "netPoints": 58.47,
-          "points": 58.47,
+          "netPoints": 59.23,
+          "points": 59.23,
           "squad": [
             8,
             15,
@@ -48354,6 +48354,21 @@
           "weeks": [
             {
               "players": [
+                {
+                  "id": 8,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 2,
+                      "team": "HUL",
+                      "wasHome": true
+                    }
+                  ],
+                  "position": "DEF",
+                  "team": "ARS",
+                  "webName": "Calafiori",
+                  "xp": 4.3
+                },
                 {
                   "id": 15,
                   "isCaptain": false,
@@ -48490,21 +48505,6 @@
                   "xp": 3.66
                 },
                 {
-                  "id": 334,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 2,
-                      "team": "TOT",
-                      "wasHome": true
-                    }
-                  ],
-                  "position": "DEF",
-                  "team": "LEE",
-                  "webName": "Muharemovi\u0107",
-                  "xp": 3.54
-                },
-                {
                   "id": 411,
                   "isCaptain": true,
                   "opponents": [
@@ -48521,11 +48521,12 @@
                 }
               ],
               "targetGw": 10,
-              "totalXp": 58.47
+              "totalXp": 59.23
             }
           ],
           "xiByGw": [
             [
+              8,
               15,
               31,
               68,
@@ -48535,7 +48536,6 @@
               40,
               154,
               569,
-              334,
               411
             ]
           ]
@@ -48610,9 +48610,9 @@
           "transfersOut": [
             {
               "availability": {
-                "chance": 75,
-                "news": "Hip injury - 75% chance of playing",
-                "status": "d"
+                "chance": 100,
+                "news": null,
+                "status": "a"
               },
               "id": 8,
               "position": "DEF",
@@ -49210,10 +49210,10 @@
           ],
           "hitCost": 0,
           "horizonGws": 3,
-          "netPoints": 174.87,
-          "points": 174.87,
+          "netPoints": 174.99,
+          "points": 174.99,
           "squad": [
-            4,
+            8,
             15,
             31,
             68,
@@ -49224,24 +49224,12 @@
             166,
             268,
             334,
+            379,
             411,
             449,
-            496,
-            569
+            496
           ],
           "transfersIn": [
-            {
-              "availability": {
-                "chance": null,
-                "news": null,
-                "status": "a"
-              },
-              "id": 4,
-              "position": "DEF",
-              "price": 8.0,
-              "team": "ARS",
-              "webName": "Gabriel"
-            },
             {
               "availability": {
                 "chance": null,
@@ -49253,21 +49241,21 @@
               "price": 6.7,
               "team": "ARS",
               "webName": "\u00d8degaard"
+            },
+            {
+              "availability": {
+                "chance": 100,
+                "news": null,
+                "status": "a"
+              },
+              "id": 379,
+              "position": "FWD",
+              "price": 9.2,
+              "team": "LIV",
+              "webName": "Isak"
             }
           ],
           "transfersOut": [
-            {
-              "availability": {
-                "chance": 75,
-                "news": "Hip injury - 75% chance of playing",
-                "status": "d"
-              },
-              "id": 8,
-              "position": "DEF",
-              "price": 5.9,
-              "team": "ARS",
-              "webName": "Calafiori"
-            },
             {
               "availability": {
                 "chance": null,
@@ -49279,13 +49267,25 @@
               "price": 8.1,
               "team": "CHE",
               "webName": "Rogers"
+            },
+            {
+              "availability": {
+                "chance": null,
+                "news": null,
+                "status": "a"
+              },
+              "id": 569,
+              "position": "FWD",
+              "price": 6.0,
+              "team": "FUL",
+              "webName": "Gonzalo"
             }
           ],
           "weeks": [
             {
               "players": [
                 {
-                  "id": 4,
+                  "id": 8,
                   "isCaptain": false,
                   "opponents": [
                     {
@@ -49296,8 +49296,8 @@
                   ],
                   "position": "DEF",
                   "team": "ARS",
-                  "webName": "Gabriel",
-                  "xp": 5.97
+                  "webName": "Calafiori",
+                  "xp": 4.3
                 },
                 {
                   "id": 15,
@@ -49420,19 +49420,19 @@
                   "xp": 3.81
                 },
                 {
-                  "id": 569,
+                  "id": 379,
                   "isCaptain": false,
                   "opponents": [
                     {
                       "fdrRating": 3,
-                      "team": "NEW",
-                      "wasHome": true
+                      "team": "CRY",
+                      "wasHome": false
                     }
                   ],
                   "position": "FWD",
-                  "team": "FUL",
-                  "webName": "Gonzalo",
-                  "xp": 3.66
+                  "team": "LIV",
+                  "webName": "Isak",
+                  "xp": 5.09
                 },
                 {
                   "id": 411,
@@ -49451,12 +49451,12 @@
                 }
               ],
               "targetGw": 10,
-              "totalXp": 60.81
+              "totalXp": 60.57
             },
             {
               "players": [
                 {
-                  "id": 4,
+                  "id": 8,
                   "isCaptain": false,
                   "opponents": [
                     {
@@ -49467,8 +49467,8 @@
                   ],
                   "position": "DEF",
                   "team": "ARS",
-                  "webName": "Gabriel",
-                  "xp": 5.33
+                  "webName": "Calafiori",
+                  "xp": 3.78
                 },
                 {
                   "id": 15,
@@ -49591,19 +49591,19 @@
                   "xp": 4.49
                 },
                 {
-                  "id": 268,
+                  "id": 379,
                   "isCaptain": false,
                   "opponents": [
                     {
-                      "fdrRating": 5,
-                      "team": "MCI",
-                      "wasHome": false
+                      "fdrRating": 4,
+                      "team": "MUN",
+                      "wasHome": true
                     }
                   ],
-                  "position": "MID",
-                  "team": "FUL",
-                  "webName": "King",
-                  "xp": 3.16
+                  "position": "FWD",
+                  "team": "LIV",
+                  "webName": "Isak",
+                  "xp": 5.34
                 },
                 {
                   "id": 411,
@@ -49622,25 +49622,10 @@
                 }
               ],
               "targetGw": 11,
-              "totalXp": 59.2
+              "totalXp": 59.83
             },
             {
               "players": [
-                {
-                  "id": 4,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 4,
-                      "team": "MCI",
-                      "wasHome": true
-                    }
-                  ],
-                  "position": "DEF",
-                  "team": "ARS",
-                  "webName": "Gabriel",
-                  "xp": 5.04
-                },
                 {
                   "id": 15,
                   "isCaptain": false,
@@ -49777,6 +49762,21 @@
                   "xp": 3.86
                 },
                 {
+                  "id": 379,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 3,
+                      "team": "EVE",
+                      "wasHome": false
+                    }
+                  ],
+                  "position": "FWD",
+                  "team": "LIV",
+                  "webName": "Isak",
+                  "xp": 4.77
+                },
+                {
                   "id": 411,
                   "isCaptain": true,
                   "opponents": [
@@ -49793,12 +49793,12 @@
                 }
               ],
               "targetGw": 12,
-              "totalXp": 54.86
+              "totalXp": 54.59
             }
           ],
           "xiByGw": [
             [
-              4,
+              8,
               15,
               31,
               68,
@@ -49807,11 +49807,11 @@
               124,
               154,
               268,
-              569,
+              379,
               411
             ],
             [
-              4,
+              8,
               15,
               31,
               166,
@@ -49820,11 +49820,10 @@
               115,
               124,
               154,
-              268,
+              379,
               411
             ],
             [
-              4,
               15,
               31,
               68,
@@ -49834,6 +49833,7 @@
               154,
               268,
               334,
+              379,
               411
             ]
           ]
@@ -49846,8 +49846,8 @@
           ],
           "hitCost": 0,
           "horizonGws": 3,
-          "netPoints": 169.89,
-          "points": 169.89,
+          "netPoints": 171.41,
+          "points": 171.41,
           "squad": [
             8,
             15,
@@ -49896,6 +49896,21 @@
           "weeks": [
             {
               "players": [
+                {
+                  "id": 8,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 2,
+                      "team": "HUL",
+                      "wasHome": true
+                    }
+                  ],
+                  "position": "DEF",
+                  "team": "ARS",
+                  "webName": "Calafiori",
+                  "xp": 4.3
+                },
                 {
                   "id": 15,
                   "isCaptain": false,
@@ -50032,21 +50047,6 @@
                   "xp": 3.66
                 },
                 {
-                  "id": 334,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 2,
-                      "team": "TOT",
-                      "wasHome": true
-                    }
-                  ],
-                  "position": "DEF",
-                  "team": "LEE",
-                  "webName": "Muharemovi\u0107",
-                  "xp": 3.54
-                },
-                {
                   "id": 411,
                   "isCaptain": true,
                   "opponents": [
@@ -50063,10 +50063,25 @@
                 }
               ],
               "targetGw": 10,
-              "totalXp": 58.47
+              "totalXp": 59.23
             },
             {
               "players": [
+                {
+                  "id": 8,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 3,
+                      "team": "NEW",
+                      "wasHome": false
+                    }
+                  ],
+                  "position": "DEF",
+                  "team": "ARS",
+                  "webName": "Calafiori",
+                  "xp": 3.78
+                },
                 {
                   "id": 15,
                   "isCaptain": false,
@@ -50216,25 +50231,10 @@
                   "team": "MCI",
                   "webName": "Haaland",
                   "xp": 7.85
-                },
-                {
-                  "id": 449,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 4,
-                      "team": "ARS",
-                      "wasHome": true
-                    }
-                  ],
-                  "position": "DEF",
-                  "team": "NEW",
-                  "webName": "Hall",
-                  "xp": 3.02
                 }
               ],
               "targetGw": 11,
-              "totalXp": 57.81
+              "totalXp": 58.57
             },
             {
               "players": [
@@ -50410,6 +50410,7 @@
           ],
           "xiByGw": [
             [
+              8,
               15,
               31,
               68,
@@ -50419,10 +50420,10 @@
               40,
               154,
               569,
-              334,
               411
             ],
             [
+              8,
               15,
               31,
               166,
@@ -50432,8 +50433,7 @@
               124,
               40,
               154,
-              411,
-              449
+              411
             ],
             [
               15,
@@ -50522,9 +50522,9 @@
           "transfersOut": [
             {
               "availability": {
-                "chance": 75,
-                "news": "Hip injury - 75% chance of playing",
-                "status": "d"
+                "chance": 100,
+                "news": null,
+                "status": "a"
               },
               "id": 8,
               "position": "DEF",
@@ -51540,9 +51540,9 @@
           "transfersOut": [
             {
               "availability": {
-                "chance": 75,
-                "news": "Hip injury - 75% chance of playing",
-                "status": "d"
+                "chance": 100,
+                "news": null,
+                "status": "a"
               },
               "id": 8,
               "position": "DEF",
@@ -52498,8 +52498,8 @@
           ],
           "hitCost": 0,
           "horizonGws": 5,
-          "netPoints": 286.44,
-          "points": 286.44,
+          "netPoints": 288.45,
+          "points": 288.45,
           "squad": [
             8,
             15,
@@ -52548,6 +52548,21 @@
           "weeks": [
             {
               "players": [
+                {
+                  "id": 8,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 2,
+                      "team": "HUL",
+                      "wasHome": true
+                    }
+                  ],
+                  "position": "DEF",
+                  "team": "ARS",
+                  "webName": "Calafiori",
+                  "xp": 4.3
+                },
                 {
                   "id": 15,
                   "isCaptain": false,
@@ -52684,21 +52699,6 @@
                   "xp": 3.66
                 },
                 {
-                  "id": 334,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 2,
-                      "team": "TOT",
-                      "wasHome": true
-                    }
-                  ],
-                  "position": "DEF",
-                  "team": "LEE",
-                  "webName": "Muharemovi\u0107",
-                  "xp": 3.54
-                },
-                {
                   "id": 411,
                   "isCaptain": true,
                   "opponents": [
@@ -52715,10 +52715,25 @@
                 }
               ],
               "targetGw": 10,
-              "totalXp": 58.47
+              "totalXp": 59.23
             },
             {
               "players": [
+                {
+                  "id": 8,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 3,
+                      "team": "NEW",
+                      "wasHome": false
+                    }
+                  ],
+                  "position": "DEF",
+                  "team": "ARS",
+                  "webName": "Calafiori",
+                  "xp": 3.78
+                },
                 {
                   "id": 15,
                   "isCaptain": false,
@@ -52868,25 +52883,10 @@
                   "team": "MCI",
                   "webName": "Haaland",
                   "xp": 7.85
-                },
-                {
-                  "id": 449,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 4,
-                      "team": "ARS",
-                      "wasHome": true
-                    }
-                  ],
-                  "position": "DEF",
-                  "team": "NEW",
-                  "webName": "Hall",
-                  "xp": 3.02
                 }
               ],
               "targetGw": 11,
-              "totalXp": 57.81
+              "totalXp": 58.57
             },
             {
               "players": [
@@ -53062,6 +53062,21 @@
             {
               "players": [
                 {
+                  "id": 8,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 3,
+                      "team": "BRE",
+                      "wasHome": false
+                    }
+                  ],
+                  "position": "DEF",
+                  "team": "ARS",
+                  "webName": "Calafiori",
+                  "xp": 3.85
+                },
+                {
                   "id": 15,
                   "isCaptain": false,
                   "opponents": [
@@ -53182,21 +53197,6 @@
                   "xp": 4.7
                 },
                 {
-                  "id": 569,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 3,
-                      "team": "TOT",
-                      "wasHome": false
-                    }
-                  ],
-                  "position": "FWD",
-                  "team": "FUL",
-                  "webName": "Gonzalo",
-                  "xp": 3.51
-                },
-                {
                   "id": 411,
                   "isCaptain": true,
                   "opponents": [
@@ -53228,10 +53228,25 @@
                 }
               ],
               "targetGw": 13,
-              "totalXp": 58.37
+              "totalXp": 58.71
             },
             {
               "players": [
+                {
+                  "id": 8,
+                  "isCaptain": false,
+                  "opponents": [
+                    {
+                      "fdrRating": 3,
+                      "team": "TOT",
+                      "wasHome": false
+                    }
+                  ],
+                  "position": "DEF",
+                  "team": "ARS",
+                  "webName": "Calafiori",
+                  "xp": 3.99
+                },
                 {
                   "id": 15,
                   "isCaptain": false,
@@ -53323,21 +53338,6 @@
                   "xp": 4.72
                 },
                 {
-                  "id": 40,
-                  "isCaptain": false,
-                  "opponents": [
-                    {
-                      "fdrRating": 4,
-                      "team": "LIV",
-                      "wasHome": true
-                    }
-                  ],
-                  "position": "MID",
-                  "team": "CHE",
-                  "webName": "Rogers",
-                  "xp": 3.84
-                },
-                {
                   "id": 154,
                   "isCaptain": false,
                   "opponents": [
@@ -53399,11 +53399,12 @@
                 }
               ],
               "targetGw": 14,
-              "totalXp": 58.18
+              "totalXp": 58.33
             }
           ],
           "xiByGw": [
             [
+              8,
               15,
               31,
               68,
@@ -53413,7 +53414,19 @@
               40,
               154,
               569,
-              334,
+              411
+            ],
+            [
+              8,
+              15,
+              31,
+              166,
+              68,
+              109,
+              115,
+              124,
+              40,
+              154,
               411
             ],
             [
@@ -53426,23 +53439,11 @@
               124,
               40,
               154,
-              411,
-              449
-            ],
-            [
-              15,
-              31,
-              166,
-              68,
-              109,
-              115,
-              124,
-              40,
-              154,
               334,
               411
             ],
             [
+              8,
               15,
               31,
               68,
@@ -53451,18 +53452,17 @@
               124,
               40,
               154,
-              569,
               411,
               449
             ],
             [
+              8,
               15,
               31,
               68,
               109,
               115,
               124,
-              40,
               154,
               334,
               411,
@@ -53493,12 +53493,12 @@
         124,
         138,
         229,
-        270,
         379,
         385,
         411,
         427,
         443,
+        453,
         606
       ],
       "transfersIn": [
@@ -53600,18 +53600,6 @@
         },
         {
           "availability": {
-            "chance": null,
-            "news": null,
-            "status": "a"
-          },
-          "id": 270,
-          "position": "MID",
-          "price": 4.3,
-          "team": "FUL",
-          "webName": "Reed"
-        },
-        {
-          "availability": {
             "chance": 100,
             "news": null,
             "status": "a"
@@ -53669,6 +53657,18 @@
           "price": 4.5,
           "team": "NEW",
           "webName": "Gillespie"
+        },
+        {
+          "availability": {
+            "chance": null,
+            "news": null,
+            "status": "a"
+          },
+          "id": 453,
+          "position": "MID",
+          "price": 6.1,
+          "team": "NEW",
+          "webName": "Barnes"
         },
         {
           "availability": {
@@ -53943,9 +53943,9 @@
         "transfersOut": [
           {
             "availability": {
-              "chance": 75,
-              "news": "Hip injury - 75% chance of playing",
-              "status": "d"
+              "chance": 100,
+              "news": null,
+              "status": "a"
             },
             "id": 8,
             "position": "DEF",
@@ -55059,9 +55059,9 @@
     ],
     "bench": [
       496,
+      334,
       449,
-      166,
-      8
+      166
     ],
     "players": [
       {
@@ -55143,21 +55143,21 @@
       },
       {
         "availability": {
-          "chance": 75,
-          "news": "Hip injury - 75% chance of playing",
-          "status": "d"
+          "chance": 100,
+          "news": null,
+          "status": "a"
         },
         "breakdown": {
-          "availabilityMultiplier": 0.75,
+          "availabilityMultiplier": 1.0,
           "components": {
-            "appearance": 1.35,
-            "assists": 0.19,
-            "bonus": 0.15,
-            "cards": -0.08,
-            "cleanSheet": 1.08,
-            "defensiveContribution": 0.07,
-            "goals": 0.71,
-            "goalsConceded": -0.25,
+            "appearance": 1.8,
+            "assists": 0.25,
+            "bonus": 0.2,
+            "cards": -0.11,
+            "cleanSheet": 1.44,
+            "defensiveContribution": 0.1,
+            "goals": 0.95,
+            "goalsConceded": -0.34,
             "saves": 0.0
           },
           "expectedMinutes": 75.6,
@@ -55173,7 +55173,7 @@
               "wasHome": true
             }
           ],
-          "points": 3.22,
+          "points": 4.3,
           "provisional": false,
           "rateSource": "history"
         },
@@ -55181,8 +55181,8 @@
         "elementType": 2,
         "floorCeiling": {
           "bandProvisional": false,
-          "ceiling": 5.53,
-          "floor": 0.91
+          "ceiling": 6.61,
+          "floor": 1.99
         },
         "id": 8,
         "isCaptain": false,
@@ -55201,10 +55201,10 @@
         ],
         "position": "DEF",
         "price": 5.9,
-        "projectedPoints": 3.22,
+        "projectedPoints": 4.3,
         "provisional": false,
         "rateSource": "history",
-        "rationale": "3.2 proj, under the 3.5 XI cut \u2014 vHUL (FDR 2)",
+        "rationale": "4.3 proj \u2014 vHUL (FDR 2)",
         "recentPoints": [
           6,
           1,
@@ -55212,11 +55212,11 @@
           6,
           1
         ],
-        "role": "bench",
+        "role": "start",
         "sellPrice": 5.9,
         "team": "ARS",
         "webName": "Calafiori",
-        "windowPoints": 14.56
+        "windowPoints": 19.43
       },
       {
         "availability": {
@@ -55435,7 +55435,7 @@
         "projectedPoints": 3.54,
         "provisional": true,
         "rateSource": "understat:EPL",
-        "rationale": "3.5 proj \u2014 vTOT (FDR 2)",
+        "rationale": "3.5 proj, under the 3.5 XI cut \u2014 vTOT (FDR 2)",
         "recentPoints": [
           7,
           6,
@@ -55443,7 +55443,7 @@
           5,
           9
         ],
-        "role": "start",
+        "role": "bench",
         "sellPrice": 5.1,
         "team": "LEE",
         "webName": "Muharemovi\u0107",
@@ -56223,8 +56223,8 @@
     "startingXi": [
       109,
       31,
+      8,
       115,
-      334,
       68,
       124,
       154,
@@ -56233,7 +56233,7 @@
       411,
       569
     ],
-    "windowPoints": 306.39,
+    "windowPoints": 311.26,
     "yourBench": [
       496,
       166,
@@ -56411,14 +56411,14 @@
       "saves": 0.0
     },
     "8": {
-      "appearance": 1.35,
-      "assists": 0.19,
-      "bonus": 0.15,
-      "cards": -0.08,
-      "cleanSheet": 1.08,
-      "defensiveContribution": 0.07,
-      "goals": 0.71,
-      "goalsConceded": -0.25,
+      "appearance": 1.8,
+      "assists": 0.25,
+      "bonus": 0.2,
+      "cards": -0.11,
+      "cleanSheet": 1.44,
+      "defensiveContribution": 0.1,
+      "goals": 0.95,
+      "goalsConceded": -0.34,
       "saves": 0.0
     }
   },
@@ -56427,9 +56427,9 @@
     {
       "bench": [
         496,
+        334,
         449,
-        166,
-        8
+        166
       ],
       "captainId": 411,
       "gameweek": 10,
@@ -56457,7 +56457,7 @@
               "wasHome": true
             }
           ],
-          "projectedPoints": 3.22,
+          "projectedPoints": 4.3,
           "provisional": false
         },
         {
@@ -56630,12 +56630,12 @@
           "provisional": false
         }
       ],
-      "points": 57.0,
+      "points": 57.8,
       "startingXi": [
         109,
         31,
+        8,
         115,
-        334,
         68,
         124,
         154,
@@ -56650,8 +56650,8 @@
       "bench": [
         496,
         569,
-        334,
-        8
+        449,
+        334
       ],
       "captainId": 411,
       "gameweek": 11,
@@ -56679,7 +56679,7 @@
               "wasHome": false
             }
           ],
-          "projectedPoints": 2.83,
+          "projectedPoints": 3.78,
           "provisional": false
         },
         {
@@ -56852,12 +56852,12 @@
           "provisional": false
         }
       ],
-      "points": 55.8,
+      "points": 56.6,
       "startingXi": [
         109,
         31,
         115,
-        449,
+        8,
         68,
         124,
         154,
@@ -56872,8 +56872,8 @@
       "bench": [
         496,
         569,
-        449,
-        8
+        8,
+        449
       ],
       "captainId": 411,
       "gameweek": 12,
@@ -56901,7 +56901,7 @@
               "wasHome": true
             }
           ],
-          "projectedPoints": 2.63,
+          "projectedPoints": 3.51,
           "provisional": false
         },
         {
@@ -57093,8 +57093,8 @@
     {
       "bench": [
         496,
+        569,
         166,
-        8,
         334
       ],
       "captainId": 411,
@@ -57123,7 +57123,7 @@
               "wasHome": false
             }
           ],
-          "projectedPoints": 2.89,
+          "projectedPoints": 3.85,
           "provisional": false
         },
         {
@@ -57296,10 +57296,11 @@
           "provisional": false
         }
       ],
-      "points": 56.9,
+      "points": 57.2,
       "startingXi": [
         109,
         31,
+        8,
         115,
         449,
         68,
@@ -57307,17 +57308,16 @@
         154,
         40,
         268,
-        411,
-        569
+        411
       ],
       "viceCaptainId": 68
     },
     {
       "bench": [
         496,
+        166,
         268,
-        569,
-        8
+        569
       ],
       "captainId": 411,
       "gameweek": 14,
@@ -57345,7 +57345,7 @@
               "wasHome": false
             }
           ],
-          "projectedPoints": 2.99,
+          "projectedPoints": 3.99,
           "provisional": false
         },
         {
@@ -57518,19 +57518,19 @@
           "provisional": false
         }
       ],
-      "points": 56.6,
+      "points": 56.9,
       "startingXi": [
         109,
         31,
         449,
+        8,
         115,
         334,
         68,
         124,
         154,
         40,
-        411,
-        166
+        411
       ],
       "viceCaptainId": 68
     }
@@ -57542,7 +57542,7 @@
   },
   "xiFloorCeiling": {
     "bandProvisional": false,
-    "ceiling": 65.0,
-    "floor": 48.98
+    "ceiling": 65.76,
+    "floor": 49.74
   }
 }
