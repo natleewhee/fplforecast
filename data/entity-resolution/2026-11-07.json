@@ -1,6 +1,6 @@
 {
-  "bootstrapDate": "2026-10-24",
-  "generatedAt": "2026-10-24T07:59:03.426176+00:00",
+  "bootstrapDate": "2026-11-07",
+  "generatedAt": "2026-11-07T09:47:36.338816+00:00",
   "resolved": {
     "1": {
       "bySeason": {
@@ -3403,6 +3403,13 @@
       },
       "webName": "Tutierov"
     },
+    "669": {
+      "bySeason": {
+        "2023-24": 847,
+        "2025-26": 803
+      },
+      "webName": "Sharman-Lowe"
+    },
     "67": {
       "bySeason": {
         "2025-26": 807
@@ -3656,13 +3663,13 @@
       "webName": "Milambo"
     }
   },
-  "resolvedCount": 516,
+  "resolvedCount": 517,
   "seasonsAttempted": [
     "2025-26",
     "2024-25",
     "2023-24"
   ],
-  "totalPlayers": 668,
+  "totalPlayers": 670,
   "unresolved": [
     {
       "ambiguousIn": [],
@@ -3859,6 +3866,13 @@
       "matchedSeasons": [],
       "normalizedName": "mahdi nicoll-jazuli",
       "webName": "Nicoll-Jazuli"
+    },
+    {
+      "ambiguousIn": [],
+      "currentId": 670,
+      "matchedSeasons": [],
+      "normalizedName": "olutayo subuloye",
+      "webName": "Subuloye"
     },
     {
       "ambiguousIn": [],
@@ -4729,5 +4743,5 @@
       "webName": "J.Angulo"
     }
   ],
-  "unresolvedCount": 152
+  "unresolvedCount": 153
 }
