@@ -1,6 +1,6 @@
 {
-  "bootstrapDate": "2026-10-25",
-  "generatedAt": "2026-10-25T08:14:47.364144+00:00",
+  "bootstrapDate": "2026-11-08",
+  "generatedAt": "2026-11-08T09:59:45.234521+00:00",
   "resolved": {
     "1": {
       "bySeason": {
@@ -3669,7 +3669,7 @@
     "2024-25",
     "2023-24"
   ],
-  "totalPlayers": 669,
+  "totalPlayers": 671,
   "unresolved": [
     {
       "ambiguousIn": [],
@@ -3866,6 +3866,13 @@
       "matchedSeasons": [],
       "normalizedName": "mahdi nicoll-jazuli",
       "webName": "Nicoll-Jazuli"
+    },
+    {
+      "ambiguousIn": [],
+      "currentId": 670,
+      "matchedSeasons": [],
+      "normalizedName": "olutayo subuloye",
+      "webName": "Subuloye"
     },
     {
       "ambiguousIn": [],
@@ -4702,6 +4709,13 @@
     },
     {
       "ambiguousIn": [],
+      "currentId": 671,
+      "matchedSeasons": [],
+      "normalizedName": "luca gunter",
+      "webName": "Gunter"
+    },
+    {
+      "ambiguousIn": [],
       "currentId": 541,
       "matchedSeasons": [],
       "normalizedName": "thomas meunier",
@@ -4736,5 +4750,5 @@
       "webName": "J.Angulo"
     }
   ],
-  "unresolvedCount": 152
+  "unresolvedCount": 154
 }
