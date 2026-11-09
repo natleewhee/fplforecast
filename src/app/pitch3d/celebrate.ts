@@ -6,7 +6,7 @@ export type CelebrationEvent = {
   key: string;
   id: number;
   kind: "goal";
-  /** How many polls had been compared when it arrived: 0 would be the first poll after load. */
+  /** Which poll comparison produced it: 1 is the second poll after load (the first only seeds the baseline). */
   poll: number;
 };
 
@@ -30,7 +30,7 @@ export type CelebrationVerdict = "play" | "queue" | "drop";
 
 export function decideCelebration(ev: CelebrationEvent, c: CelebrationContext): CelebrationVerdict {
   if (c.handled.has(ev.key)) return "drop";
-  if (ev.poll < 1) return "drop"; // the first poll would replay the whole day's goals
+  if (ev.poll < 1) return "drop"; // defensive: the first poll has nothing to compare with and would replay the day's goals
   if (c.reducedMotion || c.tabHidden || !c.onScreen || !c.onPitch) return "drop";
   if (c.selectedId != null) return "drop";
   if (c.busy) return "queue";

@@ -229,8 +229,8 @@ export default function Pitch3D({
         busy: celebrating !== null,
       });
       if (fresh) handled.current.add(ev.key);
-      // the stage refuses if it is busy after all (two goals in one poll): keep the later one pending
-      if (verdict === "queue" || (verdict === "play" && !stageRef.current?.celebrate(ev.id, ev.kind))) pending.current = ev;
+      // the stage may be busy after all (two goals in one poll): keep the later one pending. Any other refusal drops it.
+      if (verdict === "queue" || (verdict === "play" && stageRef.current?.celebrate(ev.id, ev.kind) === "busy")) pending.current = ev;
     };
     // a pending event goes first once the stage is free, as long as nothing else has become a reason not to
     if (celebrating === null && pending.current) {

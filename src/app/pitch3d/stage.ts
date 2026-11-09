@@ -351,9 +351,9 @@ export type StageHandle = {
   /** Tapping a player: the camera glides to him and he celebrates; null glides back. */
   setSelected(id: number | null): void;
   /** A live event: the player plays that moment where he stands, with no selection and no camera move.
-   * Returns false (and does nothing) if reduced motion is on, someone is selected, a moment is already
-   * playing, or he is not a starter on the pitch. */
-  celebrate(id: number, kind: MomentKind): boolean;
+   * "busy": a moment is already playing (the caller may queue one). "refused": reduced motion, someone
+   * is selected, or he is not a starter free to move (the caller should drop it). */
+  celebrate(id: number, kind: MomentKind): "played" | "busy" | "refused";
   /** The ball going round the XI while nobody is selected; the players stay on their spots. */
   setAmbient(on: boolean): void;
   dispose(): void;
@@ -526,7 +526,7 @@ function setup(renderer: THREE.WebGLRenderer, canvas: HTMLCanvasElement, opts: S
   }
   /** Advance the passing by dt. Returns true while it is running. */
   function stepPassing(dt: number): boolean {
-    if (!ambient || selected != null || figures.length === 0) {
+    if (!ambient || selected != null || celebrating !== null || figures.length === 0 || figures.some((f) => f.anim.current)) {
       if (pass || settling.length || ball?.visible) stopPassing();
       return false;
     }
@@ -979,6 +979,12 @@ function setup(renderer: THREE.WebGLRenderer, canvas: HTMLCanvasElement, opts: S
           goTo(focusShot(f.homeX, f.homeZ, f.scale));
         }
       }
+      // a rebuild may have dropped the player who was celebrating: never stay "celebrating" with nobody doing it
+      const now = figures.find((x) => x.anim.current)?.anim.current?.kind ?? null;
+      if (now !== celebrating) {
+        celebrating = now;
+        report();
+      }
       draw();
     },
     setAmbient(on) {
@@ -987,14 +993,15 @@ function setup(renderer: THREE.WebGLRenderer, canvas: HTMLCanvasElement, opts: S
       draw();
     },
     celebrate(id, kind) {
-      if (reduceMotion || selected != null || celebrating !== null || disposed) return false;
+      if (reduceMotion || selected != null || disposed) return "refused";
+      if (celebrating !== null) return "busy";
       const f = figures.find((x) => x.def.id === id);
-      if (!f || f.def.bench || f.anim.current || f.anim.slide || f.anim.pop != null) return false;
+      if (!f || f.def.bench || f.anim.current || f.anim.slide || f.anim.pop != null) return "refused";
       stopPassing(); // the ball is put down; he takes the moment where he stands
       f.anim.queue = [kind];
       startNext(f, 0);
       draw();
-      return true;
+      return "played";
     },
     setSelected(id) {
       if (id === selected) return;

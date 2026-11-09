@@ -884,6 +884,54 @@ test.describe("3D pitch moves", () => {
     await expect(pitch).not.toHaveAttribute("data-celebrating", /.+/, { timeout: 8000 }); // and it ends
   });
 
+  test("the ball stays put during a live celebration and the passing resumes after it", async ({ page }) => {
+    await page.addInitScript(() => {
+      try { localStorage.setItem("fpl-pitch-passing", "on"); } catch {}
+    });
+    const poll = { current: "a" as "a" | "b" };
+    await page.unroute("**/api/live*");
+    await mockLive(page, poll);
+    await page.goto("/?tab=live");
+    const pitch = page.getByTestId("pitch3d").first();
+    await pitch.locator('button[aria-label^="Palmer"]').waitFor();
+    await expect(pitch).toHaveAttribute("data-passes", /[1-9]/, { timeout: 15000 });
+    poll.current = "b";
+    await page.evaluate(() => document.dispatchEvent(new Event("visibilitychange")));
+    await expect(pitch).toHaveAttribute("data-celebrating", "goal", { timeout: 10000 });
+    await page.waitForTimeout(700); // a pass already in flight lands
+    const at = await pitch.getAttribute("data-passes");
+    await page.waitForTimeout(1800);
+    await expect(pitch).toHaveAttribute("data-celebrating", "goal"); // still mid-celebration
+    expect(await pitch.getAttribute("data-passes")).toBe(at);
+    await expect(pitch).not.toHaveAttribute("data-celebrating", /.+/, { timeout: 8000 });
+    await expect.poll(async () => await pitch.getAttribute("data-passes"), { timeout: 15000 }).not.toBe(at);
+  });
+
+  test("if the scorer leaves the lineup mid-celebration the pitch does not stay celebrating", async ({ page }) => {
+    const poll = { current: "a" as "a" | "b" | "c" };
+    await page.unroute("**/api/live*");
+    await page.route("**/api/live*", (route) => {
+      if (route.request().url().includes("squad=1")) return route.fulfill({ status: 503, body: "{}" });
+      const d = JSON.parse(fixture(`live-${poll.current === "c" ? "b" : poll.current}.json`));
+      if (poll.current === "c") {
+        // Palmer (7) swaps places with the last sub (15): he is no longer one of the eleven
+        const { starters, bench } = d.picks as { starters: number[]; bench: number[] };
+        starters[starters.indexOf(7)] = 15;
+        bench[bench.indexOf(15)] = 7;
+      }
+      return route.fulfill({ contentType: "application/json", body: JSON.stringify(d) });
+    });
+    await page.goto("/?tab=live");
+    const pitch = page.getByTestId("pitch3d").first();
+    await pitch.locator('button[aria-label^="Palmer"]').waitFor();
+    poll.current = "b";
+    await page.evaluate(() => document.dispatchEvent(new Event("visibilitychange")));
+    await expect(pitch).toHaveAttribute("data-celebrating", "goal", { timeout: 10000 });
+    poll.current = "c";
+    await page.evaluate(() => document.dispatchEvent(new Event("visibilitychange")));
+    await expect(pitch).not.toHaveAttribute("data-celebrating", /.+/, { timeout: 2500 });
+  });
+
   test("the first poll alone never celebrates, even with goals already in it", async ({ page }) => {
     const poll = { current: "b" as "a" | "b" };
     await page.unroute("**/api/live*");
