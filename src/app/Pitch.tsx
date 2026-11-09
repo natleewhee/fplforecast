@@ -8,11 +8,10 @@ import PlayerBreakdownSheet from "./PlayerBreakdownSheet";
 import { PitchScene } from "./PitchScene";
 import { FormBars, Halo, meanFdr, RangeBar } from "./Shirt";
 import { FaceToggle, PlayerFace } from "./PlayerFace";
-import Pitch3D, { type Pitch3DPlayer } from "./pitch3d/Pitch3D";
+import Pitch3D, { ViewSwitch, type Pitch3DPlayer } from "./pitch3d/Pitch3D";
 import PreviewSheet from "./PreviewSheet";
 import ReplaceSheet, { type TransferTools } from "./ReplaceSheet";
 import { setPitchView, usePitchView } from "@/lib/pitchView";
-import type { PitchKits, PitchLooks } from "@/lib/appearance";
 import { ArmbandBadge, POSITION_DOT } from "./tokenParts";
 
 function bandLabel(band: { floor: number; ceiling: number; bandProvisional: boolean } | null | undefined) {
@@ -193,35 +192,7 @@ function tokLabel(t: Tok): { ariaLabel: string; title: string; badges: ReturnTyp
   };
 }
 
-function ViewSwitch({ view, onChange }: { view: "3d" | "2d"; onChange: (v: "3d" | "2d") => void }) {
-  return (
-    <div className="inline-flex overflow-hidden rounded-lg border border-line text-[11px] font-semibold" role="group" aria-label="Pitch view">
-      {(["3d", "2d"] as const).map((v) => (
-        <button
-          key={v}
-          type="button"
-          aria-pressed={view === v}
-          onClick={() => onChange(v)}
-          className={`h-8 px-3 transition ${view === v ? "bg-[color-mix(in_srgb,var(--accent)_16%,transparent)] text-[var(--accent)]" : "text-ink-faint hover:text-ink-soft"}`}
-        >
-          {v.toUpperCase()}
-        </button>
-      ))}
-    </div>
-  );
-}
-
-export default function Pitch({
-  forecast,
-  transferTools,
-  looks,
-  kits,
-}: {
-  forecast: Forecast;
-  transferTools?: TransferTools;
-  looks?: PitchLooks;
-  kits?: PitchKits;
-}) {
+export default function Pitch({ forecast, transferTools }: { forecast: Forecast; transferTools?: TransferTools }) {
   const savedView = usePitchView();
   const [no3d, setNo3d] = useState(false);
   const view = no3d ? "2d" : savedView;
@@ -333,8 +304,9 @@ export default function Pitch({
     position: t.position,
     team: t.team,
     code: t.code,
-    xp: t.xp,
-    provisional: t.provisional,
+    sub: t.xp != null ? t.xp.toFixed(1) : "\u2014",
+    subTone: t.provisional ? "warn" : "accent",
+    role: t.id === captainId ? "C" : t.id === viceId ? "V" : null,
     ...tokLabel(t),
   });
 
@@ -445,11 +417,7 @@ export default function Pitch({
             <Pitch3D
               xi={xi.map(to3d)}
               bench={benched.map(to3d)}
-              captainId={captainId}
-              viceId={viceId}
               selectedId={selectedId}
-              looks={looks}
-              kits={kits}
               onSelect={openSheet}
               onUnavailable={() => setNo3d(true)}
             />

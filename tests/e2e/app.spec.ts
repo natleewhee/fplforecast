@@ -778,7 +778,7 @@ test.describe("3D Squad pitch", () => {
 
   test("shows all fifteen players with the captain marked, and a tap opens the breakdown", async ({ page }) => {
     await page.goto("/?tab=squad");
-    const pitch = page.getByTestId("pitch3d");
+    const pitch = page.getByTestId("pitch3d").first(); // the Squad tab's pitch is the first on the page
     await expect(pitch.locator("canvas")).toBeVisible();
     await expect(pitch.locator("[data-tag]")).toHaveCount(15);
     await expect(pitch.getByText("C", { exact: true })).toHaveCount(1);
@@ -788,11 +788,26 @@ test.describe("3D Squad pitch", () => {
 
   test("the 2D switch shows the flat pitch and the choice is remembered", async ({ page }) => {
     await page.goto("/?tab=squad");
-    await expect(page.getByTestId("pitch3d")).toBeVisible();
+    await expect(page.getByTestId("pitch3d").first()).toBeVisible();
     await page.evaluate(() => localStorage.removeItem("fpl-pitch-view"));
-    await page.getByRole("group", { name: "Pitch view" }).getByRole("button", { name: "2D" }).click();
+    await page.getByRole("group", { name: "Pitch view" }).first().getByRole("button", { name: "2D" }).click();
     await expect(page.getByTestId("pitch3d")).toHaveCount(0);
     await expect(page.locator(".floodlit-pitch").first()).toBeVisible();
     expect(await page.evaluate(() => localStorage.getItem("fpl-pitch-view"))).toBe("2d");
+  });
+
+  test("the Live tab draws the same pitch in 3D with live points", async ({ page }) => {
+    await mockLive(page, { current: "a" });
+    await page.goto("/?tab=live");
+    const pitch = page.getByTestId("pitch3d").first();
+    await expect(pitch.locator("canvas")).toBeVisible();
+    await expect(pitch.locator("button[data-tag]").first()).toBeVisible();
+    await page.getByRole("button", { name: /^Van Dijk,/ }).click();
+    await expect(page.getByRole("dialog")).toBeVisible();
+  });
+
+  test("the Scenarios tab has the same 2D/3D switch", async ({ page }) => {
+    await page.goto("/?tab=scenarios");
+    await expect(page.getByRole("group", { name: "Pitch view" }).first()).toBeVisible();
   });
 });
