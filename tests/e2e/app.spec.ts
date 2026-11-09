@@ -35,6 +35,11 @@ test.beforeEach(async ({ context, page }) => {
       }),
     }),
   );
+  // live data comes from FPL's real API, which CI can reach: serve "no data" unless a test mocks it, so the
+  // Squad tab never depends on what the real squad happens to be today
+  await page.route("**/api/live*", (route) =>
+    route.fulfill({ status: 503, contentType: "application/json", body: JSON.stringify({ error: "no live data in tests" }) }),
+  );
   // headshots come from FPL's site: serve a stand-in so photos mode has images
   await page.route("**/resources.premierleague.com/**", (route) =>
     route.fulfill({
@@ -48,11 +53,30 @@ test.afterEach(() => {
   expect(pageErrors, "no uncaught page errors").toEqual([]);
 });
 
+/** The committed forecast's squad and pool, read from disk, so the test follows whatever build is checked in. */
+function forecastSquad() {
+  const dir = join(__dirname, "..", "..", "data", "forecast");
+  const latest = readdirSync(dir)
+    .map((f) => /^gw(\d+)\.json$/.exec(f))
+    .filter((m): m is RegExpExecArray => !!m)
+    .sort((a, b) => Number(b[1]) - Number(a[1]))[0][0];
+  const f = JSON.parse(readFileSync(join(dir, latest), "utf8"));
+  const byId = new Map<number, { id: number; webName: string; position: string }>(f.pool.map((p: { id: number; webName: string; position: string }) => [p.id, p]));
+  return { basedOn: f.basedOnGameweek as number, squad: f.squad.players as { id: number; webName: string; position: string }[], pool: [...byId.values()], startingXi: f.upcoming[0].startingXi as number[] };
+}
+
+
 /** Replays /api/live from a fixture; `poll.current` can be switched mid-test. */
 async function mockLive(page: Page, poll: { current: "a" | "b" }) {
-  await page.route("**/api/live*", (route) =>
-    route.fulfill({ contentType: "application/json", body: fixture(`live-${poll.current}.json`) }),
-  );
+  await page.route("**/api/live*", (route) => {
+    // The Squad tab also asks for the live squad (squad=1). The fixture is some other team, so say "no change":
+    // the Squad pitch is then the forecast as built, which is what the tests that use this helper expect.
+    if (route.request().url().includes("squad=1")) {
+      const { squad, basedOn } = forecastSquad();
+      return route.fulfill({ contentType: "application/json", body: JSON.stringify({ gameweek: basedOn + 1, chip: null, squad: squad.map((p) => ({ id: p.id, position: p.position })) }) });
+    }
+    return route.fulfill({ contentType: "application/json", body: fixture(`live-${poll.current}.json`) });
+  });
 }
 
 /** The 3D pitch on the Squad tab. The Live tab's pitch is also in the page (off to the side), so
@@ -1105,5 +1129,99 @@ test.describe("Ball going round the pitch", () => {
       await expect(pitch).not.toHaveAttribute("data-passes", /.+/);
       await expect(page.getByRole("button", { name: /^Passing/ })).toHaveCount(0);
     });
+  });
+});
+
+test.describe("Squad correction from your live squad", () => {
+  test.beforeEach(async ({ page }) => {
+    await page.addInitScript(() => {
+      try {
+        localStorage.setItem("fpl-pitch-view", "2d");
+      } catch {}
+    });
+  });
+
+  test("a transfer made in FPL since the last build shows on the Squad pitch, with a banner naming it", async ({ page }) => {
+    const { squad, pool, basedOn } = forecastSquad();
+    const leaver = squad.find((p) => p.position === "DEF")!;
+    const joiner = pool.find((p) => p.position === "DEF" && !squad.some((s) => s.id === p.id))!;
+    const live = squad.map((p) => ({ id: p.id === leaver.id ? joiner.id : p.id, position: p.position }));
+    await page.route("**/api/live*", (route) =>
+      route.request().url().includes("squad=1")
+        ? route.fulfill({ contentType: "application/json", body: JSON.stringify({ gameweek: basedOn + 1, chip: null, squad: live }) })
+        : route.fulfill({ status: 503, contentType: "application/json", body: "{}" }),
+    );
+    await page.goto("/?tab=squad");
+    const banner = page.getByTestId("squad-sync-banner");
+    await expect(banner).toBeVisible();
+    await expect(banner).toContainText(`${leaver.webName} \u2192 ${joiner.webName}`);
+  });
+
+  test("nothing changed: no banner", async ({ page }) => {
+    const { squad, basedOn } = forecastSquad();
+    await page.route("**/api/live*", (route) =>
+      route.request().url().includes("squad=1")
+        ? route.fulfill({ contentType: "application/json", body: JSON.stringify({ gameweek: basedOn + 1, chip: null, squad: squad.map((p) => ({ id: p.id, position: p.position })) }) })
+        : route.fulfill({ status: 503, contentType: "application/json", body: "{}" }),
+    );
+    await page.goto("/?tab=squad");
+    await expect(page.getByText(/MODEL · GW/)).toBeVisible();
+    await expect(page.getByTestId("squad-sync-banner")).toHaveCount(0);
+  });
+
+  test("a live squad for the same gameweek the model was built from is not used (it would undo saved transfers)", async ({ page }) => {
+    const { squad, pool, basedOn } = forecastSquad();
+    const leaver = squad.find((p) => p.position === "DEF")!;
+    const joiner = pool.find((p) => p.position === "DEF" && !squad.some((s) => s.id === p.id))!;
+    const live = squad.map((p) => ({ id: p.id === leaver.id ? joiner.id : p.id, position: p.position }));
+    await page.route("**/api/live*", (route) =>
+      route.request().url().includes("squad=1")
+        ? route.fulfill({ contentType: "application/json", body: JSON.stringify({ gameweek: basedOn, chip: null, squad: live }) })
+        : route.fulfill({ status: 503, contentType: "application/json", body: "{}" }),
+    );
+    await page.goto("/?tab=squad");
+    await expect(page.getByText(/MODEL · GW/)).toBeVisible();
+    await expect(page.getByTestId("squad-sync-banner")).toHaveCount(0);
+  });
+
+  test("a Free Hit squad is not mistaken for your squad", async ({ page }) => {
+    const { squad, pool, basedOn } = forecastSquad();
+    const leaver = squad.find((p) => p.position === "DEF")!;
+    const joiner = pool.find((p) => p.position === "DEF" && !squad.some((s) => s.id === p.id))!;
+    const live = squad.map((p) => ({ id: p.id === leaver.id ? joiner.id : p.id, position: p.position }));
+    await page.route("**/api/live*", (route) =>
+      route.request().url().includes("squad=1")
+        ? route.fulfill({ contentType: "application/json", body: JSON.stringify({ gameweek: basedOn + 1, chip: "freehit", squad: live }) })
+        : route.fulfill({ status: 503, contentType: "application/json", body: "{}" }),
+    );
+    await page.goto("/?tab=squad");
+    await expect(page.getByText(/MODEL · GW/)).toBeVisible();
+    await expect(page.getByTestId("squad-sync-banner")).toHaveCount(0);
+  });
+
+  test("live data unavailable: the pitch is left as the model built it", async ({ page }) => {
+    await page.goto("/?tab=squad");
+    await expect(page.getByText(/MODEL · GW/)).toBeVisible();
+    await expect(page.getByTestId("squad-sync-banner")).toHaveCount(0);
+  });
+
+  test("the incoming player opens a sheet that says he is already in your FPL squad, with no undo", async ({ page }) => {
+    const { squad, pool, startingXi, basedOn } = forecastSquad();
+    const leaver = squad.find((p) => p.position === "DEF" && startingXi.includes(p.id))!;
+    const joiner = pool.find((p) => p.position === "DEF" && !squad.some((s) => s.id === p.id))!;
+    const live = squad.map((p) => ({ id: p.id === leaver.id ? joiner.id : p.id, position: p.position }));
+    await page.route("**/api/live*", (route) =>
+      route.request().url().includes("squad=1")
+        ? route.fulfill({ contentType: "application/json", body: JSON.stringify({ gameweek: basedOn + 1, chip: null, squad: live }) })
+        : route.fulfill({ status: 503, contentType: "application/json", body: "{}" }),
+    );
+    await page.goto("/?tab=squad");
+    await page.getByTestId("squad-sync-banner").waitFor();
+    const scene = page.locator(".floodlit-pitch").filter({ has: page.locator("button[data-flip]") }).first();
+    await scene.locator("button[data-flip]", { hasText: joiner.webName }).first().click();
+    const sheet = page.getByRole("dialog");
+    await expect(sheet).toContainText("In your FPL squad now");
+    await expect(sheet).toContainText(leaver.webName);
+    await expect(sheet.getByRole("button", { name: /^Undo/ })).toHaveCount(0);
   });
 });

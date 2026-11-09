@@ -16,6 +16,8 @@ export default function PreviewSheet({
   gameweek,
   onUndone,
   onClose,
+  applied = false,
+  peek = false,
 }: {
   incoming: PoolPlayer;
   replaces: string;
@@ -24,6 +26,10 @@ export default function PreviewSheet({
   gameweek: number;
   onUndone: (next: PendingTransfer[]) => void;
   onClose: () => void;
+  /** A transfer already made in FPL (read from the live squad), not a saved one: nothing to undo. */
+  applied?: boolean;
+  /** Open as a short card first (used with the 3D pitch). */
+  peek?: boolean;
 }) {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -42,11 +48,13 @@ export default function PreviewSheet({
   };
 
   return (
-    <BottomSheet label={`${incoming.webName} saved transfer preview`} onClose={onClose}>
-      <p className="eyebrow">Saved transfer · preview</p>
+    <BottomSheet label={applied ? `${incoming.webName} in your FPL squad` : `${incoming.webName} saved transfer preview`} onClose={onClose} peek={peek}>
+      <p className="eyebrow">{applied ? "In your FPL squad now" : "Saved transfer · preview"}</p>
       <h3 className="text-lg font-semibold text-ink">{incoming.webName}</h3>
       <p className="mt-1 text-xs text-ink-soft">
-        Replaces {replaces}. This is a preview: the model re-picks the XI and captain at the next rebuild.
+        {applied
+          ? `Replaces ${replaces}, a transfer already made in FPL after the last model build. The model re-picks the XI and captain at the next rebuild.`
+          : `Replaces ${replaces}. This is a preview: the model re-picks the XI and captain at the next rebuild.`}
       </p>
       <dl className="mt-3 grid grid-cols-2 gap-x-3 gap-y-1.5 border-t border-line pt-3 text-[11px]">
         <dt className="text-ink-faint">GW{gameweek} projection</dt>
@@ -56,6 +64,7 @@ export default function PreviewSheet({
         <dt className="text-ink-faint">Form</dt>
         <dd className="text-right font-mono text-ink">{incoming.form.toFixed(1)}</dd>
       </dl>
+      {!applied && (
       <button
         type="button"
         onClick={undo}
@@ -64,6 +73,7 @@ export default function PreviewSheet({
       >
         {busy ? "Removing…" : `Undo ${replaces} → ${incoming.webName}`}
       </button>
+      )}
       {error && <p className="mt-2 text-xs text-[var(--danger)]">{error}</p>}
     </BottomSheet>
   );

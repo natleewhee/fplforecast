@@ -245,17 +245,21 @@ export default function Pitch3D({
       </div>
     );
 
-  // Floating tags carry the whole surname and the number, nothing else: the icons are in the player's card.
+  // Floating tags carry the whole surname on one line, and the number with the player's icons
+  // (goals, assists, clean sheet, cards, bonus) on the next, so a good game shows at a glance.
   const floating = (p: Pitch3DPlayer) =>
     tagEl(
       p,
-      "pointer-events-auto absolute left-0 top-0 flex max-w-[6.5rem] flex-col items-center rounded-md border border-white/15 bg-[rgba(8,16,24,0.82)] px-1.5 py-px leading-tight text-ink will-change-transform focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--accent)]",
+      "pointer-events-auto absolute left-0 top-0 flex max-w-[9rem] flex-col items-center rounded-md border border-white/15 bg-[rgba(8,16,24,0.82)] px-1.5 py-px leading-tight text-ink will-change-transform focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--accent)]",
       <>
         <span className="flex max-w-full items-center gap-1">
           {roleBadge(p)}
           <span className="min-w-0 truncate text-[11px] font-bold text-white">{p.webName}</span>
         </span>
-        <span className={`max-w-full truncate font-mono text-[10.5px] font-semibold ${subColor(p)}`}>{p.sub}</span>
+        <span className="flex max-w-full items-center justify-center gap-1">
+          <span className={`font-mono text-[10.5px] font-semibold ${subColor(p)}`}>{p.sub}</span>
+          {badges(p, "text-[10px] leading-none")}
+        </span>
       </>,
     );
 

@@ -15,6 +15,20 @@ import { OWNER_TEAM_ID, resolveTeamIdFromRequest } from "@/lib/teamId";
 export async function GET(req: NextRequest) {
   try {
     const teamId = resolveTeamIdFromRequest(req);
+    if (req.nextUrl.searchParams.get("squad") === "1") {
+      // Just who is in the squad this gameweek (the Squad tab uses it to show transfers made since the last
+      // build). No forecast, scoring or fixtures: for a guest those would cost a full model run.
+      const bootstrap = await fpl<FplBootstrap>("/bootstrap-static/");
+      const gameweek = liveGameweek(bootstrap);
+      const picks = await fpl<FplPicks>(`/entry/${teamId}/event/${gameweek}/picks/`);
+      const positions: Record<number, string> = { 1: "GKP", 2: "DEF", 3: "MID", 4: "FWD" };
+      const typeOf = new Map(bootstrap.elements.map((e) => [e.id, e.element_type]));
+      return NextResponse.json({
+        gameweek,
+        chip: picks.active_chip ?? null,
+        squad: picks.picks.map((p) => ({ id: p.element, position: positions[typeOf.get(p.element) ?? 0] ?? "MID" })),
+      });
+    }
     let forecast: Forecast | null;
     if (teamId === OWNER_TEAM_ID) {
       forecast = loadLatestForecast();

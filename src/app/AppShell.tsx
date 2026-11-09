@@ -20,6 +20,7 @@ import { Header, Module, Panel, Shell } from "./PageChrome";
 import Pitch from "./Pitch";
 import { PitchDataProvider } from "./pitch3d/Pitch3D";
 import type { PitchKits, PitchLooks } from "@/lib/appearance";
+import { usableLiveSquad, type LiveSquadFeed } from "@/lib/squadSync";
 import DeadlineChecklist from "./DeadlineChecklist";
 import DeadlineBanner from "./DeadlineBanner";
 import History from "./History";
@@ -543,6 +544,38 @@ export default function AppShell({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // Your squad as FPL has it now. The forecast starts from the squad you held when the last gameweek
+  // finished, so a transfer made since then is missing from it; the Squad pitch uses this to show it.
+  const [liveFeed, setLiveFeed] = useState<{ teamId: string; builtAt: string; feed: LiveSquadFeed } | null>(null);
+  const forecastBuiltAt = forecast?.generatedAt;
+  useEffect(() => {
+    if (!teamId || !forecastBuiltAt) return;
+    let stale = false;
+    // `squad=1` asks for just the squad (a light request); the browser tests also use it to tell this call from the Live tab's
+    const qs = teamId !== savedTeamId ? `?squad=1&teamId=${teamId}` : "?squad=1";
+    fetch(`/api/live${qs}`, { cache: "no-store" })
+      .then((res) => (res.ok ? res.json() : null))
+      .then((json: { gameweek?: number; chip?: string | null; squad?: { id: number; position: string }[] } | null) => {
+        if (stale) return;
+        setLiveFeed(
+          json?.squad && typeof json.gameweek === "number"
+            ? { teamId, builtAt: forecastBuiltAt, feed: { gameweek: json.gameweek, chip: json.chip ?? null, squad: json.squad } }
+            : null,
+        );
+      })
+      .catch(() => {
+        if (!stale) setLiveFeed(null);
+      });
+    return () => {
+      stale = true;
+    };
+  }, [teamId, savedTeamId, forecastBuiltAt]);
+  // only ever compared with the team and forecast it was fetched for
+  const liveSquad =
+    forecast && liveFeed && liveFeed.teamId === teamId && liveFeed.builtAt === forecast.generatedAt
+      ? usableLiveSquad(liveFeed.feed, forecast.basedOnGameweek)
+      : null;
+
   if (!teamId || !forecast) {
     return <TeamIdGate onSubmit={loadTeam} loading={loading} error={error} />;
   }
@@ -583,7 +616,7 @@ export default function AppShell({
         </div>
       )}
       <DeadlineChecklist forecast={forecast} chips={chips} />
-      <Pitch forecast={forecast} transferTools={transferTools} />
+      <Pitch forecast={forecast} transferTools={transferTools} liveSquad={liveSquad} />
 
 
       <Carousel>
