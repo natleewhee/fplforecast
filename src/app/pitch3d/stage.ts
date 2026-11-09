@@ -350,6 +350,10 @@ export type StageHandle = {
   setPlayers(defs: FigureDef[]): void;
   /** Tapping a player: the camera glides to him and he celebrates; null glides back. */
   setSelected(id: number | null): void;
+  /** A live event: the player plays that moment where he stands, with no selection and no camera move.
+   * Returns false (and does nothing) if reduced motion is on, someone is selected, a moment is already
+   * playing, or he is not a starter on the pitch. */
+  celebrate(id: number, kind: MomentKind): boolean;
   /** The ball going round the XI while nobody is selected; the players stay on their spots. */
   setAmbient(on: boolean): void;
   dispose(): void;
@@ -982,8 +986,26 @@ function setup(renderer: THREE.WebGLRenderer, canvas: HTMLCanvasElement, opts: S
       if (!ambient) stopPassing();
       draw();
     },
+    celebrate(id, kind) {
+      if (reduceMotion || selected != null || celebrating !== null || disposed) return false;
+      const f = figures.find((x) => x.def.id === id);
+      if (!f || f.def.bench || f.anim.current || f.anim.slide || f.anim.pop != null) return false;
+      stopPassing(); // the ball is put down; he takes the moment where he stands
+      f.anim.queue = [kind];
+      startNext(f, 0);
+      draw();
+      return true;
+    },
     setSelected(id) {
       if (id === selected) return;
+      // a live celebration in progress ends at once: the tap takes over the stage
+      for (const f of figures) {
+        if (f.anim.current || f.anim.queue.length) {
+          f.anim.queue = [];
+          f.anim.current = null;
+          restPose(f);
+        }
+      }
       const prev = figures.find((f) => f.def.id === selected);
       if (prev) {
         prev.anim.queue = [];

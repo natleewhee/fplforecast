@@ -870,6 +870,31 @@ test.describe("3D pitch moves", () => {
     await expect(pitch).not.toHaveAttribute("data-focus", /.+/);
   });
 
+  test("a goal that arrives in a later poll makes the scorer celebrate without any tap", async ({ page }) => {
+    const poll = { current: "a" as "a" | "b" };
+    await page.unroute("**/api/live*");
+    await mockLive(page, poll);
+    await page.goto("/?tab=live");
+    const pitch = page.getByTestId("pitch3d").first();
+    await pitch.locator('button[aria-label^="Palmer"]').waitFor();
+    poll.current = "b"; // Palmer scores
+    await page.evaluate(() => document.dispatchEvent(new Event("visibilitychange")));
+    await expect(pitch).toHaveAttribute("data-celebrating", "goal", { timeout: 10000 });
+    await expect(pitch).not.toHaveAttribute("data-focus", /.+/); // nobody selected, camera untouched
+    await expect(pitch).not.toHaveAttribute("data-celebrating", /.+/, { timeout: 8000 }); // and it ends
+  });
+
+  test("the first poll alone never celebrates, even with goals already in it", async ({ page }) => {
+    const poll = { current: "b" as "a" | "b" };
+    await page.unroute("**/api/live*");
+    await mockLive(page, poll);
+    await page.goto("/?tab=live");
+    const pitch = page.getByTestId("pitch3d").first();
+    await pitch.locator('button[aria-label^="Palmer"]').waitFor();
+    await page.waitForTimeout(2500);
+    await expect(pitch).not.toHaveAttribute("data-celebrating", /.+/);
+  });
+
   test("a clean sheet gets its own celebration", async ({ page }) => {
     await page.goto("/?tab=live");
     const pitch = page.getByTestId("pitch3d").first();

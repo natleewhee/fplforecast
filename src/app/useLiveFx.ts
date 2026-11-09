@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { loadFeed, saveFeed } from "@/lib/feedStore";
 import type { TrackerRow } from "@/lib/liveBlend";
+import type { CelebrationEvent } from "./pitch3d/celebrate";
 import { eventCounts, totalEvents, type EventCounts } from "@/lib/liveLabels";
 
 /* Spots what changed between one poll and the next so the pitch can react:
@@ -30,7 +31,15 @@ type Snap = {
   bonus: Record<number, number>;
   goals: number;
 };
-type Fx = { floats: Float[]; popped: Set<number>; goalFlare: number; seq: number; feed: FeedItem[] };
+type Fx = {
+  floats: Float[];
+  popped: Set<number>;
+  goalFlare: number;
+  seq: number;
+  feed: FeedItem[];
+  /** Goals that arrived in the latest poll (never on the first one), for the 3D pitch to celebrate. */
+  goals: CelebrationEvent[];
+};
 
 const FEED_MAX = 8;
 
@@ -80,6 +89,7 @@ export function useLiveFx(rows: TrackerRow[], gameweek: number, polledAt: number
     popped: new Set(),
     goalFlare: 0,
     seq: 0,
+    goals: [],
     feed: loadFeed(gameweek, Date.now()),
   }));
   const [last, setLast] = useState(rows);
@@ -93,12 +103,16 @@ export function useLiveFx(rows: TrackerRow[], gameweek: number, polledAt: number
       const floats: Float[] = [];
       const popped = new Set<number>();
       const entries: FeedItem[] = [];
+      const goals: CelebrationEvent[] = [];
       for (const r of rows) {
         const before = seen.points[r.id];
         if (before != null && Math.abs(r.pointsSoFar - before) >= 1) {
           floats.push({ key: `${seq}:${r.id}`, id: r.id, delta: r.pointsSoFar - before });
         }
         if ((seen.events[r.id] ?? 0) < now.events[r.id]) popped.add(r.id);
+        if (before != null && now.counts[r.id].goals > (seen.counts[r.id]?.goals ?? 0)) {
+          goals.push({ key: `${runId}:${seq}:${r.id}:goal`, id: r.id, kind: "goal", poll: seq });
+        }
         if (before != null) {
           const what = whatHappened(seen.counts[r.id], now.counts[r.id], seen.bonus[r.id] ?? 0, now.bonus[r.id]);
           if (what.length) {
@@ -114,11 +128,12 @@ export function useLiveFx(rows: TrackerRow[], gameweek: number, polledAt: number
           }
         }
       }
-      if (floats.length || popped.size || entries.length) {
+      if (floats.length || popped.size || entries.length || goals.length) {
         setFx((f) => ({
           floats,
           popped,
           seq,
+          goals,
           feed: [...entries, ...f.feed].slice(0, FEED_MAX),
           goalFlare: now.goals > seen.goals ? f.goalFlare + 1 : f.goalFlare,
         }));

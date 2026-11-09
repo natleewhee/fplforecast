@@ -3,6 +3,7 @@
 import { createContext, useContext, useEffect, useRef, useState, type ReactNode } from "react";
 import { lookFor, type PitchKits, type PitchLooks, type Position } from "@/lib/appearance";
 import { setPitchAmbient, setPitchView, usePitchAmbient, usePrefersReducedMotion, type PitchView } from "@/lib/pitchView";
+import { decideCelebration, type CelebrationEvent } from "./celebrate";
 import { formationSpots } from "./spots";
 import type { FigureDef, StageHandle, StageState } from "./stage";
 
@@ -110,6 +111,7 @@ export default function Pitch3D({
   selectedId = null,
   onSelect,
   onUnavailable,
+  goals,
 }: {
   xi: Pitch3DPlayer[];
   bench: Pitch3DPlayer[];
@@ -118,6 +120,8 @@ export default function Pitch3D({
   onSelect?: (id: number, trigger: HTMLButtonElement) => void;
   /** Called if this device cannot run WebGL, so the parent can show the 2D pitch. */
   onUnavailable: () => void;
+  /** Live goals from the latest poll: a starter who scored celebrates on his own (see celebrate.ts for the rules). */
+  goals?: CelebrationEvent[];
 }) {
   const data = useContext(PitchDataContext);
   const rootRef = useRef<HTMLDivElement>(null);
@@ -205,6 +209,41 @@ export default function Pitch3D({
   useEffect(() => {
     if (ready) stageRef.current?.setAmbient(passing);
   }, [ready, passing]);
+
+  // A new live goal makes the scorer celebrate where he stands. The rules are in decideCelebration;
+  // this only keeps the bookkeeping: events already dealt with, and the one pending event if busy.
+  const reduced = usePrefersReducedMotion();
+  const handled = useRef(new Set<string>());
+  const pending = useRef<CelebrationEvent | null>(null);
+  const xiIds = xi.map((p) => p.id).join(",");
+  const celebrating = state.celebrating;
+  useEffect(() => {
+    const run = (ev: CelebrationEvent, fresh: boolean) => {
+      const verdict = decideCelebration(ev, {
+        handled: fresh ? handled.current : new Set(),
+        reducedMotion: reduced,
+        tabHidden: typeof document !== "undefined" && document.hidden,
+        onScreen: visible && ready,
+        onPitch: xiIds.split(",").includes(String(ev.id)),
+        selectedId,
+        busy: celebrating !== null,
+      });
+      if (fresh) handled.current.add(ev.key);
+      // the stage refuses if it is busy after all (two goals in one poll): keep the later one pending
+      if (verdict === "queue" || (verdict === "play" && !stageRef.current?.celebrate(ev.id, ev.kind))) pending.current = ev;
+    };
+    // a pending event goes first once the stage is free, as long as nothing else has become a reason not to
+    if (celebrating === null && pending.current) {
+      const ev = pending.current;
+      pending.current = null;
+      run(ev, false);
+    }
+    for (const ev of goals ?? []) if (!handled.current.has(ev.key)) run(ev, true);
+  }, [goals, celebrating, reduced, visible, ready, selectedId, xiIds]);
+  // a tap or a leave-the-page ends the wait: nothing queued should fire later out of context
+  useEffect(() => {
+    if (selectedId != null || !visible) pending.current = null;
+  }, [selectedId, visible]);
 
   // Bring the pitch up under the sticky bar when a player is tapped, so it sits clear of the card that
   // opens below. Straight up or down only: scrolling an element into view can also push the page sideways.
