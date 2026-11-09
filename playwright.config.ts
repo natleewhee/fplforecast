@@ -9,7 +9,8 @@ import { defineConfig, devices } from "@playwright/test";
  * CHROMIUM_PATH points at an already-installed Chromium (used in sandboxes);
  * otherwise Playwright's own browser is used (`npx playwright install chromium`). */
 
-const PORT = 3123;
+// PW_PORT lets several checkouts run the browser tests side by side (each needs its own port)
+const PORT = Number(process.env.PW_PORT ?? 3123);
 
 export default defineConfig({
   testDir: "tests/e2e",
