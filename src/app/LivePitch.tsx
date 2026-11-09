@@ -261,7 +261,9 @@ export default function LivePitch({
   // the sub order is fixed by the squad: a sub who has come on keeps his number, so the others are not renumbered
   const benchSlots = rows.filter((r) => r.isBench && r.position !== "GKP");
   const lines = ROWS.map((pos) => onPitch.filter((r) => r.position === pos)).filter((l) => l.length);
-  const toPlay = onPitch.filter((r) => r.status === "notStarted" || r.status === "playing").length;
+  // Everyone who counts towards the score: 11 normally, all 15 on Bench Boost.
+  const counting = rows.filter((r) => r.inLineup);
+  const toPlay = counting.filter((r) => r.status === "notStarted" || r.status === "playing").length;
   const selected = selectedId != null ? rows.find((r) => r.id === selectedId) : undefined;
 
   // Where the gameweek total is coming from (captain doubling included).
@@ -337,7 +339,7 @@ export default function LivePitch({
           />
           <p className="mt-2 text-[10.5px] leading-snug text-ink-faint">
             Number = points so far (with minutes while playing, or the kickoff time) · icons = goals, assists, clean sheet, cards, bonus · faded = yet to play, off or did not play ·{" "}
-            {toPlay} of 11 still to play · C captain, V vice · tap a player for the breakdown · times in SGT
+            {toPlay} of {counting.length} still to play · C captain, V vice · tap a player for the breakdown · times in SGT
           </p>
         </>
       ) : (
@@ -364,7 +366,7 @@ export default function LivePitch({
 
       <p className="mt-2 text-[10.5px] leading-snug text-ink-faint">
         The shirt outline fills with minutes played and glows while playing · dashed = yet to start ·{" "}
-        {toPlay} of 11 still to play · ★ bonus not added yet · the bar under a name is points against the model&rsquo;s expected
+        {toPlay} of {counting.length} still to play · ★ bonus not added yet · the bar under a name is points against the model&rsquo;s expected
         (white tick) · tap a player for the breakdown · times in SGT
       </p>
 

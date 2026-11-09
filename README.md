@@ -5,9 +5,10 @@ quick view of the current week: the planning view (captain, transfer, chips,
 doubts) before the deadline, and the live view (score, projection, what is
 still to come) after it. It is built for the owner's own team (`OWNER_TEAM_ID`);
 anyone can look up their own team by ID for the planning and live views, but
-only the owner can save transfers or start a rebuild. There are no league
-features by design (see `BACKLOG.md`). Full plan lives in the Ideaverse vault
-at `Efforts/Ongoing/FPL Forecaster/FPL Forecaster.md`.
+only the owner can save transfers or start a rebuild. There is no league
+product direction (see `BACKLOG.md`); the Leagues tab and `/api/league` exist,
+and friends can use the app with only their team ID (guest mode). Full plan
+lives in the Ideaverse vault at `Efforts/Ongoing/FPL Forecaster/FPL Forecaster.md`.
 
 ## How it fits together
 

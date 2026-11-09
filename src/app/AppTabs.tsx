@@ -7,8 +7,8 @@ type Tab = { id: string; label: string; content: ReactNode };
 
 const SWIPE_THRESHOLD_PX = 60;
 
-/** Three-pane swipeable shell: a persistent tab bar (works on desktop too,
- * where swipe isn't a thing) plus horizontal touch-drag between panes on
+/** Four-tab swipeable shell: a persistent tab bar (works on desktop too,
+ * where swipe isn't a thing) plus horizontal touch-drag between tabs on
  * mobile. Renders all panes at once (translated off-screen, not unmounted)
  * so each tab's own state/polling isn't reset by switching tabs. */
 export default function AppTabs({ tabs, deadline }: { tabs: Tab[]; deadline?: string | null }) {

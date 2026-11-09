@@ -90,6 +90,9 @@ test("Bench Boost counts the bench in the projected total and never subs", () =>
   assert.equal(off.benchBoost, false);
   assert.ok(on.projectedTotal >= off.projectedTotal);
   assert.equal(on.rows.some((r) => r.subbedIn || r.subbedOut), false);
+  // The Live tab's "n of N still to play" counts inLineup rows: 15 on Bench Boost, 11 otherwise.
+  assert.equal(on.rows.filter((r) => r.inLineup).length, 15);
+  assert.equal(off.rows.filter((r) => r.inLineup).length, 11);
 });
 
 test("Triple Captain triples the armband player in rows and total", () => {
