@@ -22,6 +22,7 @@ export type TickerRow = {
 
 export type Ticker = { gameweeks: number[]; rows: TickerRow[] };
 
+export const LAST_GAMEWEEK = 38;
 const POSITION_ORDER = ["GKP", "DEF", "MID", "FWD"];
 
 export function cellFor(legs: OpponentLeg[] | undefined | null): TickerCell {
@@ -35,7 +36,8 @@ export function buildTicker(
   swaps: Map<number, PoolPlayer>,
   horizon = 5,
 ): Ticker {
-  const upcoming = forecast.upcoming.slice(0, horizon);
+  // the rolling window can run past the end of the season: there is no gameweek 39
+  const upcoming = forecast.upcoming.filter((u) => u.gameweek <= LAST_GAMEWEEK).slice(0, horizon);
   const first = upcoming[0];
   if (!first) return { gameweeks: [], rows: [] };
   const byId = new Map(forecast.squad.players.map((p) => [p.id, p]));

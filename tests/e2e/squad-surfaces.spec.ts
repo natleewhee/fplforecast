@@ -51,7 +51,11 @@ for (const width of [360, 390]) {
     const ticker = page.getByTestId("fixture-ticker");
     // collapsed by default, with the summary showing
     await expect(ticker).not.toHaveAttribute("open", "");
+    const summaryBox = await ticker.locator("summary").boundingBox();
+    expect(summaryBox!.height, "summary meets the 44px tap rule").toBeGreaterThanOrEqual(43.5);
     await ticker.locator("summary").click();
+    const btnBox = await ticker.getByRole("button").first().boundingBox();
+    expect(btnBox!.height, "row meets the 44px tap rule").toBeGreaterThanOrEqual(43.5);
     await expect(ticker.locator("[data-row=starter]")).toHaveCount(11);
     await expect(ticker.locator("[data-row=sub]")).toHaveCount(4);
     // every cell says who the opponent is in text
@@ -111,7 +115,10 @@ test("guest: a blank and a double gameweek render, and tapping a row opens the p
   // the shortlist works from the guest payload and shows the double
   await expect(page.getByTestId("captain-shortlist").locator("li")).toHaveCount(3);
   // tap a row: the existing player sheet opens
-  await ticker.getByRole("rowheader", { name: new RegExp(`^${doubleName}, show breakdown`) }).click();
+  const row = ticker.getByRole("button", { name: new RegExp(`^${doubleName}, show breakdown`) });
+  await row.click();
   await expect(page.getByRole("dialog")).toBeVisible();
+  await page.keyboard.press("Escape");
+  await expect(row).toBeFocused();
   await page.screenshot({ path: test.info().outputPath("ticker-guest-360.png") });
 });

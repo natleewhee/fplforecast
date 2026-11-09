@@ -30,13 +30,17 @@ export type CaptainShortlist = {
   edge: { label: string; points: number; viceName: string } | null;
 };
 
+/** A difference smaller than this is noise, not a reason to call a player a differential or a safe pick. */
+export const MIN_OWNERSHIP_GAP = 5; // percentage points
+export const MIN_FLOOR_GAP = 0.5; // points
+
 const f1 = (n: number) => n.toFixed(1);
 const pct = (n: number) => `${n < 10 ? n.toFixed(1) : n.toFixed(0)}%`;
 
 /** Why the second candidate might be worth a look instead of the pick, or null if the numbers say nothing. */
 export function secondPickNote(pick: CaptainCandidate, second: CaptainCandidate): CaptainShortlist["secondNote"] {
   if (
-    pick.ownedPct != null && second.ownedPct != null && second.ownedPct < pick.ownedPct &&
+    pick.ownedPct != null && second.ownedPct != null && pick.ownedPct - second.ownedPct >= MIN_OWNERSHIP_GAP &&
     pick.ceiling != null && second.ceiling != null && second.ceiling > pick.ceiling
   ) {
     return {
@@ -44,7 +48,7 @@ export function secondPickNote(pick: CaptainCandidate, second: CaptainCandidate)
       text: `${second.webName} is the differential: ${pct(second.ownedPct)} owned vs ${pct(pick.ownedPct)}, ceiling ${f1(second.ceiling)} vs ${f1(pick.ceiling)}.`,
     };
   }
-  if (pick.floor != null && second.floor != null && second.floor > pick.floor) {
+  if (pick.floor != null && second.floor != null && second.floor - pick.floor >= MIN_FLOOR_GAP) {
     return {
       kind: "safe",
       text: `${second.webName} is the safer pick: floor ${f1(second.floor)} vs ${f1(pick.floor)}${pick.xp > second.xp ? `, for ${f1(pick.xp - second.xp)} fewer expected points` : ""}.`,
@@ -78,6 +82,8 @@ export function buildCaptainShortlist(
     const id = swap?.id ?? slot;
     const xp = swap ? swap.perGameweek[0] : target.players.find((p) => p.id === slot)?.projectedPoints;
     if (xp == null) continue;
+    // the model never gives the armband to a player projected from a prior alone
+    if (!swap && (target.players.find((p) => p.id === slot)?.provisional || base.provisional)) continue;
     const pool = poolById.get(id);
     const legs = swap ? swap.opponents[0] : target.players.find((p) => p.id === slot)?.opponents;
     all.push({
@@ -91,7 +97,8 @@ export function buildCaptainShortlist(
       ownedPct: pool?.selectedByPercent ?? swap?.selectedByPercent ?? null,
       form: pool?.form ?? swap?.form ?? null,
       isDouble: (legs?.length ?? 0) > 1,
-      isModelPick: id === pickId,
+      // only the model's own player carries the label, not someone a saved transfer put in his place
+      isModelPick: id === pickId && !swap,
     });
   }
   all.sort((a, b) => b.xp - a.xp);
@@ -106,7 +113,8 @@ export function buildCaptainShortlist(
   const secondNote = top.length >= 2 && top[0].isModelPick ? secondPickNote(top[0], top[1]) : null;
   const edge =
     forecast.captainEdge && forecast.viceCaptain && !captainSold && !viceSold &&
-    !swaps.has(target.captainId ?? -1) && !swaps.has(target.viceCaptainId ?? -1)
+    !swaps.has(target.captainId ?? -1) && !swaps.has(target.viceCaptainId ?? -1) &&
+    target.startingXi.includes(forecast.viceCaptain.id)
       ? { label: forecast.captainEdge.label, points: forecast.captainEdge.points, viceName: forecast.viceCaptain.webName }
       : null;
   return { gameweek: target.gameweek, candidates: top, secondNote, edge };

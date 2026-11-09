@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import type { Forecast } from "@/lib/snapshots";
 import { buildTicker, type TickerCell, type TickerRow } from "@/lib/fixtureTicker";
 import { resolveSwaps, type PendingSwap } from "@/lib/squadView";
@@ -69,6 +69,7 @@ export default function FixtureTicker({
   pool?: Forecast["pool"];
 }) {
   const [openId, setOpenId] = useState<number | null>(null);
+  const triggerRef = useRef<HTMLButtonElement | null>(null);
   const { swaps } = resolveSwaps(forecast, liveSquad, pending, pool);
   const { gameweeks, rows } = buildTicker(forecast, swaps);
   if (rows.length === 0) return null;
@@ -80,9 +81,12 @@ export default function FixtureTicker({
   const target = forecast.upcoming[0];
 
   return (
-    <details className="panel p-3" data-testid="fixture-ticker">
-      <summary className="flex cursor-pointer list-none items-center justify-between gap-2">
-        <span className="eyebrow">Fixtures &middot; next {gameweeks.length} GW</span>
+    <details className="panel group p-3" data-testid="fixture-ticker">
+      <summary className="-my-3 flex min-h-11 cursor-pointer list-none items-center justify-between gap-2 [&::-webkit-details-marker]:hidden">
+        <span className="flex items-center gap-1.5">
+          <span aria-hidden className="inline-block text-[10px] text-ink-faint transition-transform group-open:rotate-90 motion-reduce:transition-none">&#9656;</span>
+          <span className="eyebrow">Fixtures &middot; next {gameweeks.length} GW</span>
+        </span>
         <span className="text-[10px] text-ink-faint">{note || "no blanks or doubles"}</span>
       </summary>
       <div className="mt-2" role="table" aria-label="Your squad's next fixtures">
@@ -107,9 +111,19 @@ export default function FixtureTicker({
               {r.swappedIn ? (
                 <span role="rowheader"><RowLabel row={r} /></span>
               ) : (
-                <button type="button" role="rowheader" className="min-h-8 min-w-0 text-left" onClick={() => setOpenId(r.id)} aria-label={`${r.webName}, show breakdown`}>
-                  <RowLabel row={r} />
-                </button>
+                <span role="rowheader" className="min-w-0">
+                  <button
+                    type="button"
+                    className="flex min-h-11 w-full min-w-0 items-center text-left"
+                    onClick={(e) => {
+                      triggerRef.current = e.currentTarget;
+                      setOpenId(r.id);
+                    }}
+                    aria-label={`${r.webName}, show breakdown`}
+                  >
+                    <RowLabel row={r} />
+                  </button>
+                </span>
               )}
               {r.cells.map((c, j) => (
                 <span key={j} role="cell" className="min-w-0"><Cell cell={c} gw={gameweeks[j]} /></span>
@@ -129,7 +143,10 @@ export default function FixtureTicker({
           opponents={target.players.find((p) => p.id === opened.id)?.opponents ?? []}
           gameweek={target.gameweek}
           isTargetGw
-          onClose={() => setOpenId(null)}
+          onClose={() => {
+            setOpenId(null);
+            triggerRef.current?.focus();
+          }}
         />
       )}
     </details>

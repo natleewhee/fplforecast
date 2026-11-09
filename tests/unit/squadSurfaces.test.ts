@@ -156,6 +156,43 @@ test("second pick: higher floor is the safe one, only when the numbers say so", 
   assert.match(n!.text, /1\.0 fewer/);
 });
 
+test("second pick: a hair's breadth is not a differential or a safe pick", () => {
+  // 45% vs 46% owned, ceiling a touch higher; floor only 0.2 higher
+  assert.equal(secondPickNote(cand({ ownedPct: 46 }), cand({ ownedPct: 45, ceiling: 10.5, floor: 3.2 })), null);
+  // exactly the minimum gap counts
+  assert.equal(secondPickNote(cand({ ownedPct: 46 }), cand({ ownedPct: 41, ceiling: 10.5 }))?.kind, "differential");
+  assert.equal(secondPickNote(cand({}), cand({ floor: 3.5 }))?.kind, "safe");
+});
+
+test("shortlist: a player projected from a prior alone is never a candidate", () => {
+  const f = {
+    ...forecast,
+    upcoming: upcoming.map((u) => ({ ...u, players: u.players.map((p) => (p.id === 7 ? { ...p, provisional: true } : p)) })),
+  } as Forecast;
+  const s = buildCaptainShortlist(f, new Map(), new Set())!;
+  assert.ok(!s.candidates.some((c) => c.id === 7));
+});
+
+test("shortlist: a replacement a saved transfer put in the captain's place is not labelled the model's pick", () => {
+  const swaps = new Map<number, PoolPlayer>([[7, { ...pool[7], id: 50, webName: "New9", perGameweek: [9, 9] } as PoolPlayer]]);
+  const s = buildCaptainShortlist(forecast, swaps, new Set())!;
+  assert.ok(s.candidates.some((c) => c.id === 50));
+  assert.ok(!s.candidates.some((c) => c.isModelPick));
+  assert.equal(s.edge, null);
+});
+
+test("shortlist: no edge line when the vice is on the bench", () => {
+  const f = { ...forecast, viceCaptain: { id: 2, webName: "P2", points: 2 } } as Forecast;
+  assert.equal(buildCaptainShortlist(f, new Map(), new Set())!.edge, null);
+});
+
+test("ticker: gameweeks past 38 are dropped", () => {
+  const f = { ...forecast, upcoming: [36, 37, 38, 39, 40].map((gw) => ({ ...upcoming[0], gameweek: gw })) } as Forecast;
+  const t = buildTicker(f, new Map());
+  assert.deepEqual(t.gameweeks, [36, 37, 38]);
+  assert.equal(t.rows[0].cells.length, 3);
+});
+
 test("second pick: no claim when nothing supports it, or a number is missing", () => {
   assert.equal(secondPickNote(cand({}), cand({ xp: 6, floor: 2, ceiling: 9, ownedPct: 50 })), null);
   assert.equal(secondPickNote(cand({}), cand({ floor: null, ceiling: null })), null);
