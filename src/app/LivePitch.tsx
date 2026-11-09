@@ -278,7 +278,10 @@ export default function LivePitch({
   const to3d = (r: TrackerRow): Pitch3DPlayer => {
     const t = tone(r);
     const pts = r.pointsSoFar;
+    const events = eventCounts(r.breakdown);
     return {
+      goals: events.goals,
+      cleanSheet: events.cleanSheet > 0,
       id: r.id,
       webName: r.webName,
       position: r.position,

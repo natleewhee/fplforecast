@@ -4,7 +4,7 @@ import { createContext, useContext, useEffect, useRef, useState, type ReactNode 
 import { lookFor, type PitchKits, type PitchLooks, type Position } from "@/lib/appearance";
 import { setPitchView, type PitchView } from "@/lib/pitchView";
 import { benchSeat, formationSpots } from "./spots";
-import type { FigureDef, StageHandle } from "./stage";
+import type { FigureDef, StageHandle, StageState } from "./stage";
 
 /* The 3D pitch used by the Live, Squad and Scenarios tabs: figures in kit
  * colours (height, skin and hair from the appearance data), the bench seated
@@ -13,6 +13,7 @@ import type { FigureDef, StageHandle } from "./stage";
 
 type PitchData = { looks?: PitchLooks; kits?: PitchKits };
 const PitchDataContext = createContext<PitchData>({});
+let focusCount = 0;
 export const PitchDataProvider = PitchDataContext.Provider;
 
 export type Pitch3DPlayer = {
@@ -27,6 +28,9 @@ export type Pitch3DPlayer = {
   role?: "C" | "V" | null;
   /** 0..1: fades a player who has not played yet, or is off. */
   dim?: number;
+  /** What he did this gameweek, so he can celebrate when tapped. */
+  goals?: number;
+  cleanSheet?: boolean;
   ariaLabel: string;
   title: string;
   badges?: { key: string; node: ReactNode; title: string }[];
@@ -52,6 +56,8 @@ function buildDefs(xi: Pitch3DPlayer[], bench: Pitch3DPlayer[], data: PitchData)
       captain: p.role === "C",
       bench: isBench,
       dim: p.dim,
+      goals: p.goals,
+      cleanSheet: p.cleanSheet,
       x: at.x,
       z: at.z,
     };
@@ -105,6 +111,7 @@ export default function Pitch3D({
   const stageRef = useRef<StageHandle | null>(null);
   const [ready, setReady] = useState(false);
   const [visible, setVisible] = useState(false);
+  const [state, setState] = useState<StageState>({ focusId: null, celebrating: null });
   const onSelectRef = useRef(onSelect);
   const onUnavailableRef = useRef(onUnavailable);
   useEffect(() => {
@@ -140,6 +147,7 @@ export default function Pitch3D({
         handle = createStage({
           host: hostRef.current,
           tagLayer: tagsRef.current,
+          onState: setState,
           onPick: (id) => {
             const el = rootRef.current?.querySelector<HTMLButtonElement>(`button[data-tag="${id}"]`);
             if (el) onSelectRef.current?.(id, el);
@@ -164,8 +172,27 @@ export default function Pitch3D({
     if (ready) stageRef.current?.setPlayers(JSON.parse(defsJson) as FigureDef[]);
   }, [ready, defsJson]);
   useEffect(() => {
-    if (ready) stageRef.current?.setSelected(selectedId);
+    if (!ready) return;
+    stageRef.current?.setSelected(selectedId);
   }, [ready, selectedId, defsJson]);
+
+  // bring the pitch up under the sticky bar when a player is tapped, so he stays in view above the sheet.
+  // Only on a new tap, not each time the live numbers refresh.
+  useEffect(() => {
+    if (ready && selectedId != null) hostRef.current?.scrollIntoView({ block: "start", behavior: "smooth" });
+  }, [ready, selectedId]);
+
+  // The sheet that opens on a tap dims everything behind it; let the pitch show through while a player is in focus.
+  useEffect(() => {
+    if (state.focusId == null) return;
+    // Squad, Live and Scenarios each hold a pitch: count, so one letting go does not clear another's
+    focusCount += 1;
+    document.documentElement.setAttribute("data-pitch-focus", "");
+    return () => {
+      focusCount -= 1;
+      if (focusCount <= 0) document.documentElement.removeAttribute("data-pitch-focus");
+    };
+  }, [state.focusId]);
 
   const subColor = (p: Pitch3DPlayer) =>
     p.subTone === "warn" ? "text-[var(--warn)]" : p.subTone === "faint" ? "text-ink-faint" : "text-[var(--accent)]";
@@ -213,8 +240,8 @@ export default function Pitch3D({
     );
 
   return (
-    <div ref={rootRef} data-testid="pitch3d">
-      <div ref={hostRef} className="relative aspect-[4/5] w-full overflow-hidden rounded-xl bg-[#0a1a14]">
+    <div ref={rootRef} data-testid="pitch3d" data-focus={state.focusId ?? undefined} data-celebrating={state.celebrating ?? undefined}>
+      <div ref={hostRef} className="relative aspect-[4/5] w-full scroll-mt-16 overflow-hidden rounded-xl bg-[#0a1a14]">
         <div ref={tagsRef} className="pointer-events-none absolute inset-0">
           {ready && xi.map(floating)}
         </div>

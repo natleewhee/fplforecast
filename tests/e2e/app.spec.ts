@@ -811,3 +811,110 @@ test.describe("3D Squad pitch", () => {
     await expect(page.getByRole("group", { name: "Pitch view" }).first()).toBeVisible();
   });
 });
+
+test.describe("3D pitch moves", () => {
+  test.beforeEach(async ({ page }) => {
+    await page.addInitScript(() => {
+      try { localStorage.setItem("fpl-pitch-view", "3d"); } catch {}
+    });
+    await mockLive(page, { current: "a" });
+  });
+
+  test("tapping a scorer sends the camera in and he celebrates; the sheet opens and Escape glides back", async ({ page }) => {
+    await page.goto("/?tab=live");
+    const pitch = page.getByTestId("pitch3d").first();
+    await pitch.locator('button[aria-label^="Gross"]').waitFor();
+    await pitch.locator('button[aria-label^="Gross"]').click({ force: true });
+    await expect(pitch).toHaveAttribute("data-focus", /\d+/);
+    await expect(pitch).toHaveAttribute("data-celebrating", "goal");
+    await expect(page.getByRole("dialog")).toBeVisible();
+    await expect(pitch).not.toHaveAttribute("data-celebrating", /.+/, { timeout: 8000 }); // the move finishes
+    await page.keyboard.press("Escape");
+    await expect(pitch).not.toHaveAttribute("data-focus", /.+/);
+  });
+
+  test("a clean sheet gets its own celebration", async ({ page }) => {
+    await page.goto("/?tab=live");
+    const pitch = page.getByTestId("pitch3d").first();
+    await pitch.locator('button[aria-label^="Raya"]').waitFor();
+    await pitch.locator('button[aria-label^="Raya"]').click({ force: true });
+    await expect(pitch).toHaveAttribute("data-celebrating", "cleanSheet");
+  });
+
+  test("a player with no goal or clean sheet gets the camera but no celebration", async ({ page }) => {
+    await page.goto("/?tab=live");
+    const pitch = page.getByTestId("pitch3d").first();
+    await pitch.locator('button[aria-label^="Van Dijk"]').waitFor();
+    await pitch.locator('button[aria-label^="Van Dijk"]').click({ force: true });
+    await expect(pitch).toHaveAttribute("data-focus", /\d+/);
+    await page.waitForTimeout(1500);
+    await expect(pitch).not.toHaveAttribute("data-celebrating", /.+/);
+  });
+
+  test.describe("reduced motion", () => {
+    test.use({ reducedMotion: "reduce" });
+    test("the camera still moves to the player but nobody celebrates", async ({ page }) => {
+      await page.goto("/?tab=live");
+      const pitch = page.getByTestId("pitch3d").first();
+      await pitch.locator('button[aria-label^="Gross"]').waitFor();
+      await pitch.locator('button[aria-label^="Gross"]').click({ force: true });
+      await expect(pitch).toHaveAttribute("data-focus", /\d+/);
+      await page.waitForTimeout(1500);
+      await expect(pitch).not.toHaveAttribute("data-celebrating", /.+/);
+    });
+  });
+});
+
+test.describe("Tab transitions", () => {
+  test("switching tabs goes through a view transition and leaves the page clean", async ({ page }) => {
+    await page.addInitScript(() => {
+      const d = document as Document & { startViewTransition?: (cb: () => void) => unknown };
+      const real = d.startViewTransition?.bind(d);
+      (window as unknown as { __vt: number }).__vt = 0;
+      if (real) d.startViewTransition = (cb) => { (window as unknown as { __vt: number }).__vt++; return real(cb); };
+    });
+    await page.goto("/?tab=live");
+    await page.getByRole("button", { name: "Squad", exact: true }).click();
+    await expect(page.getByText(/MODEL · GW/)).toBeVisible();
+    await expect(page.locator("html")).not.toHaveAttribute("data-vt-dir", /.+/);
+    expect(await page.evaluate(() => (window as unknown as { __vt: number }).__vt)).toBeGreaterThanOrEqual(1);
+  });
+
+  test.describe("reduced motion", () => {
+    test.use({ reducedMotion: "reduce" });
+    test("the tab just switches, with no transition", async ({ page }) => {
+      await page.addInitScript(() => {
+        const d = document as Document & { startViewTransition?: (cb: () => void) => unknown };
+        const real = d.startViewTransition?.bind(d);
+        (window as unknown as { __vt: number }).__vt = 0;
+        if (real) d.startViewTransition = (cb) => { (window as unknown as { __vt: number }).__vt++; return real(cb); };
+      });
+      await page.goto("/?tab=live");
+      await page.getByRole("button", { name: "Squad", exact: true }).click();
+      await expect(page.getByText(/MODEL · GW/)).toBeVisible();
+      expect(await page.evaluate(() => (window as unknown as { __vt: number }).__vt)).toBe(0);
+    });
+  });
+});
+
+test.describe("Rolling rank", () => {
+  test("the estimated rank rolls to its new value when a poll changes it", async ({ page }) => {
+    const calibration = (intercept: number) => ({ slope: -0.08, intercept, sampleSize: 6, lastKnownRank: 90000, lastKnownEvent: 9 });
+    let intercept = 11.5;
+    await page.route("**/api/live*", (route) => {
+      const body = JSON.parse(fixture("live-a.json"));
+      body.rankCalibration = calibration(intercept);
+      return route.fulfill({ contentType: "application/json", body: JSON.stringify(body) });
+    });
+    await page.goto("/?tab=live");
+    const rank = page.getByTestId("rolling-number");
+    await expect(rank).toBeVisible();
+    const before = Number(await rank.getAttribute("data-value"));
+    intercept = 10.8; // a better projected rank
+    await page.evaluate(() => document.dispatchEvent(new Event("visibilitychange")));
+    await expect.poll(async () => Number(await rank.getAttribute("data-value"))).toBeLessThan(before);
+    const after = Number(await rank.getAttribute("data-value"));
+    await expect(rank).toHaveText(`~${after.toLocaleString("en-US")}`, { timeout: 4000 }); // it lands on the new number
+  });
+});
+

@@ -12,6 +12,7 @@ import { staleness } from "@/lib/staleness";
 import { FPL_UPDATING_TEXT } from "@/lib/fplApi";
 import DuelMini from "./DuelMini";
 import LivePitch from "./LivePitch";
+import RollingNumber from "./RollingNumber";
 
 /* The in-gameweek surface (KTD7): while matches are live it leads the page with
  * a projected final total, the par band and arrow, and a per-player breakdown,
@@ -295,7 +296,7 @@ function TrackerPanel({
         {view.estimatedRank && (
           <div>
             <div className="stat text-4xl leading-none text-ink">
-              ~{view.estimatedRank.rank.toLocaleString()}
+              <RollingNumber value={view.estimatedRank.rank} prefix="~" lowerIsBetter />
             </div>
             <div className="eyebrow mt-1">est. overall rank</div>
           </div>
