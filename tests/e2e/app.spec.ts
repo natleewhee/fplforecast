@@ -7,6 +7,7 @@ import { join } from "node:path";
  * here reaches FPL. */
 
 const OWNER = "1168513";
+const ORIGIN = `http://localhost:${process.env.PW_PORT ?? 3123}`;
 const fixture = (name: string) => readFileSync(join(__dirname, "fixtures", name), "utf8");
 
 let pageErrors: string[] = [];
@@ -14,7 +15,7 @@ let pageErrors: string[] = [];
 test.beforeEach(async ({ context, page }) => {
   pageErrors = [];
   page.on("pageerror", (e) => pageErrors.push(e.message));
-  await context.addCookies([{ name: "fpl_team_id", value: OWNER, url: "http://localhost:3123" }]);
+  await context.addCookies([{ name: "fpl_team_id", value: OWNER, url: ORIGIN }]);
   // the Squad pitch opens in 3D by default; most tests below drive the flat 2D tokens
   await page.addInitScript(() => {
     try { if (!localStorage.getItem("fpl-pitch-view")) localStorage.setItem("fpl-pitch-view", "2d"); } catch {}
@@ -481,7 +482,7 @@ test.describe("Gameweek recap", () => {
     await page.getByTestId("recap").getByRole("button", { name: "Share this card" }).click();
     await page.waitForFunction(() => (window as unknown as { __shared?: string }).__shared);
     const shared = await page.evaluate(() => (window as unknown as { __shared: string }).__shared);
-    expect(shared).toContain("http://localhost:3123/");
+    expect(shared).toContain(`${ORIGIN}/`);
     expect(shared).not.toMatch(/71|Haaland|Palmer/);
   });
   test("a week picker switches the card to an earlier gameweek", async ({ page }) => {
