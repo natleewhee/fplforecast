@@ -55,6 +55,11 @@ async function mockLive(page: Page, poll: { current: "a" | "b" }) {
   );
 }
 
+/** The 3D pitch on the Squad tab. The Live tab's pitch is also in the page (off to the side), so
+ * "the first pitch" is not reliable once live data arrives. */
+const squadPitch3d = (page: Page) =>
+  page.locator(".panel", { has: page.getByText(/MODEL · GW/) }).first().getByTestId("pitch3d");
+
 /** Opens the app and waits for the Live tab's pitch (it appears after the first poll). */
 async function open(page: Page) {
   await page.goto("/?tab=live"); // the app opens on Squad before the deadline; most tests start on Live
@@ -771,6 +776,7 @@ test.describe("Appearance review page", () => {
 
 test.describe("3D Squad pitch", () => {
   test.beforeEach(async ({ page }) => {
+    await mockLive(page, { current: "a" }); // CI reaches live data, so the Live tab's pitch is in the page too
     await page.addInitScript(() => {
       try { localStorage.setItem("fpl-pitch-view", "3d"); } catch {}
     });
@@ -778,19 +784,19 @@ test.describe("3D Squad pitch", () => {
 
   test("shows all fifteen players with the captain marked, and a tap opens the breakdown", async ({ page }) => {
     await page.goto("/?tab=squad");
-    const pitch = page.getByTestId("pitch3d").first(); // the Squad tab's pitch is the first on the page
+    const pitch = squadPitch3d(page);
     await expect(pitch.locator("canvas")).toBeVisible();
     await expect(pitch.locator("[data-tag]")).toHaveCount(15);
     await expect(pitch.getByText("C", { exact: true })).toHaveCount(1);
-    await pitch.locator("[data-tag]").first().click();
+    await pitch.locator("[data-tag]").first().dispatchEvent("click"); // the tag itself, wherever it sits on screen
     await expect(page.getByRole("dialog")).toBeVisible();
   });
 
   test("the 2D switch shows the flat pitch and the choice is remembered", async ({ page }) => {
     await page.goto("/?tab=squad");
-    await expect(page.getByTestId("pitch3d").first()).toBeVisible();
+    await expect(squadPitch3d(page)).toBeVisible();
     await page.evaluate(() => localStorage.removeItem("fpl-pitch-view"));
-    await page.getByRole("group", { name: "Pitch view" }).first().getByRole("button", { name: "2D" }).click();
+    await squadPitch3d(page).locator("xpath=ancestor::div[contains(@class,'panel')][1]").getByRole("group", { name: "Pitch view" }).getByRole("button", { name: "2D" }).click();
     await expect(page.getByTestId("pitch3d")).toHaveCount(0);
     await expect(page.locator(".floodlit-pitch").first()).toBeVisible();
     expect(await page.evaluate(() => localStorage.getItem("fpl-pitch-view"))).toBe("2d");
@@ -824,7 +830,7 @@ test.describe("3D pitch moves", () => {
     await page.goto("/?tab=live");
     const pitch = page.getByTestId("pitch3d").first();
     await pitch.locator('button[aria-label^="Gross"]').waitFor();
-    await pitch.locator('button[aria-label^="Gross"]').click({ force: true });
+    await pitch.locator('button[aria-label^="Gross"]').dispatchEvent("click");
     await expect(pitch).toHaveAttribute("data-focus", /\d+/);
     await expect(pitch).toHaveAttribute("data-celebrating", "goal");
     await expect(page.getByRole("dialog")).toBeVisible();
@@ -837,7 +843,7 @@ test.describe("3D pitch moves", () => {
     await page.goto("/?tab=live");
     const pitch = page.getByTestId("pitch3d").first();
     await pitch.locator('button[aria-label^="Raya"]').waitFor();
-    await pitch.locator('button[aria-label^="Raya"]').click({ force: true });
+    await pitch.locator('button[aria-label^="Raya"]').dispatchEvent("click");
     await expect(pitch).toHaveAttribute("data-celebrating", "cleanSheet");
   });
 
@@ -845,7 +851,7 @@ test.describe("3D pitch moves", () => {
     await page.goto("/?tab=live");
     const pitch = page.getByTestId("pitch3d").first();
     await pitch.locator('button[aria-label^="Van Dijk"]').waitFor();
-    await pitch.locator('button[aria-label^="Van Dijk"]').click({ force: true });
+    await pitch.locator('button[aria-label^="Van Dijk"]').dispatchEvent("click");
     await expect(pitch).toHaveAttribute("data-focus", /\d+/);
     await page.waitForTimeout(1500);
     await expect(pitch).not.toHaveAttribute("data-celebrating", /.+/);
@@ -857,7 +863,7 @@ test.describe("3D pitch moves", () => {
       await page.goto("/?tab=live");
       const pitch = page.getByTestId("pitch3d").first();
       await pitch.locator('button[aria-label^="Gross"]').waitFor();
-      await pitch.locator('button[aria-label^="Gross"]').click({ force: true });
+      await pitch.locator('button[aria-label^="Gross"]').dispatchEvent("click");
       await expect(pitch).toHaveAttribute("data-focus", /\d+/);
       await page.waitForTimeout(1500);
       await expect(pitch).not.toHaveAttribute("data-celebrating", /.+/);
