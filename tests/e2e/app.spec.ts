@@ -1363,6 +1363,45 @@ test.describe("Squad correction from your live squad", () => {
   });
 });
 
+test.describe("What could still move your rank", () => {
+  const withThreats = (threats: unknown[]) =>
+    JSON.stringify({ ...JSON.parse(fixture("live-a.json")), threats });
+  const mockThreats = (page: Page, threats: unknown[]) =>
+    page.route("**/api/live*", (route) =>
+      route.request().url().includes("squad=1")
+        ? route.fulfill({ status: 503, contentType: "application/json", body: "{}" })
+        : route.fulfill({ contentType: "application/json", body: withThreats(threats) }),
+    );
+  const foden = { id: 900, webName: "Foden", team: "MCI", ownedPct: 41.2, opponent: "TOT (A)", kickoffTime: "2026-10-11T15:30:00Z", components: { goals: 1.5, minutes: 2 } };
+
+  for (const width of [360, 390]) {
+    test(`quotes ownership and kickoff for a popular player you do not own, at ${width}px`, async ({ page }) => {
+      await page.setViewportSize({ width, height: 844 });
+      await mockThreats(page, [foden, { ...foden, id: 901, webName: "Ghost", ownedPct: 0 }, { ...foden, id: 902, webName: "NoGame", opponent: null }]);
+      await page.goto("/?tab=live");
+      const card = page.getByTestId("rank-threats");
+      await expect(card).toBeVisible();
+      await expect(card).toContainText("41% of managers own Foden, he plays Sun 23:30 SGT vs TOT (A), not in your squad");
+      await expect(card).not.toContainText("Ghost");
+      await expect(card).not.toContainText("NoGame");
+      await expect(card.getByRole("heading", { name: /what could move your rank/i })).toBeVisible();
+      const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
+      expect(overflow).toBeLessThanOrEqual(0);
+      await card.scrollIntoViewIfNeeded();
+      await page.screenshot({ path: `test-results/rank-threats-${width}.png` });
+    });
+  }
+
+  test("with no ownership data the not-owned lines disappear and your own still show", async ({ page }) => {
+    await mockThreats(page, []);
+    await page.goto("/?tab=live");
+    const card = page.getByTestId("rank-threats");
+    await expect(card).toBeVisible();
+    await expect(card.locator("[data-kind='missing']")).toHaveCount(0);
+    await expect(card.locator("[data-kind='yours']").first()).toBeVisible();
+  });
+});
+
 /** The committed forecast as /api/forecast would return it for a guest: no model record. */
 function guestForecast() {
   const dir = join(__dirname, "..", "..", "data", "forecast");
