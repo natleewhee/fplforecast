@@ -69,6 +69,22 @@ so. To check the maths against FPL, capture finished gameweeks with
 week with a hit, a double gameweek); `tests/unit/reconcile.test.ts` then
 asserts the computed score equals FPL's own.
 
+## Player appearance (for the 3D pitch)
+
+Every player's height, hair and skin tone live in `data/appearance/`, with the
+club kits in `data/kits.json`. The rules are in `src/lib/appearance.ts`:
+
+- `overrides.json` is checked by hand and always wins ("checked").
+- `players.json` is filled by scripts ("auto"). `python scripts/ingest_heights.py`
+  looks heights up on Wikidata and accepts a match only when the date of birth
+  agrees with FPL's. Run it by hand (new signings, a new season), not nightly.
+- Anyone with neither gets a typical height for their position and a plain
+  neutral look ("guess"), so every player can still be drawn.
+
+`/appearance` lists the players still to check, least certain first, with a Copy
+button that gives a ready-to-edit override line. Kit colours are approximate and
+need updating each summer.
+
 ## Transfers
 
 `/api/transfers` (used by the form on the page) commits a manual override to

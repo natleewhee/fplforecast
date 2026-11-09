@@ -752,3 +752,15 @@ test.describe("Owner-only routes", () => {
     expect((await (await request.get("/api/owner")).json()).owner).toBe(false);
   });
 });
+
+test.describe("Appearance review page", () => {
+  test("lists the players still to check and every club kit, without sideways scroll", async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto("/appearance");
+    await expect(page.getByRole("heading", { name: "Appearance review" })).toBeVisible();
+    await expect(page.getByTestId("kit-list").locator("li")).toHaveCount(20);
+    await expect(page.getByRole("button", { name: /^Copy an override for/ }).first()).toBeVisible();
+    const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
+    expect(overflow).toBeLessThanOrEqual(0);
+  });
+});

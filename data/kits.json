@@ -1,0 +1,27 @@
+{
+  "season": "2026/27",
+  "approximate": true,
+  "note": "Home and goalkeeper kit colours per club, keyed by FPL short_name. Approximate: stripes, trims and the real 2026/27 designs are not modelled. Update each summer.",
+  "clubs": {
+    "ARS": { "shirt": "#e0343b", "shorts": "#f2f2f2", "socks": "#e0343b", "gk": { "shirt": "#e6c229", "shorts": "#1a2733", "socks": "#e6c229" } },
+    "AVL": { "shirt": "#7a1f3d", "shorts": "#f2f2f2", "socks": "#7a1f3d", "gk": { "shirt": "#2fae6b", "shorts": "#143326", "socks": "#2fae6b" } },
+    "BOU": { "shirt": "#d3202c", "shorts": "#15171c", "socks": "#d3202c", "gk": { "shirt": "#3b4a5c", "shorts": "#15171c", "socks": "#3b4a5c" } },
+    "BRE": { "shirt": "#e30613", "shorts": "#15171c", "socks": "#e30613", "gk": { "shirt": "#2fae6b", "shorts": "#143326", "socks": "#2fae6b" } },
+    "BHA": { "shirt": "#2f7de1", "shorts": "#f2f2f2", "socks": "#2f7de1", "gk": { "shirt": "#e6c229", "shorts": "#1a2733", "socks": "#e6c229" } },
+    "CHE": { "shirt": "#2548b8", "shorts": "#2548b8", "socks": "#f2f2f2", "gk": { "shirt": "#ff7a00", "shorts": "#1a2733", "socks": "#ff7a00" } },
+    "COV": { "shirt": "#1e9de3", "shorts": "#1e9de3", "socks": "#1e9de3", "gk": { "shirt": "#e6c229", "shorts": "#1a2733", "socks": "#e6c229" } },
+    "CRY": { "shirt": "#1b458f", "shorts": "#1b458f", "socks": "#1b458f", "gk": { "shirt": "#e6c229", "shorts": "#1a2733", "socks": "#e6c229" } },
+    "EVE": { "shirt": "#1b4fae", "shorts": "#f2f2f2", "socks": "#1b4fae", "gk": { "shirt": "#e6c229", "shorts": "#1a2733", "socks": "#e6c229" } },
+    "FUL": { "shirt": "#f2f2f2", "shorts": "#15171c", "socks": "#f2f2f2", "gk": { "shirt": "#2fae6b", "shorts": "#143326", "socks": "#2fae6b" } },
+    "HUL": { "shirt": "#f5a12d", "shorts": "#15171c", "socks": "#f5a12d", "gk": { "shirt": "#3b4a5c", "shorts": "#15171c", "socks": "#3b4a5c" } },
+    "IPS": { "shirt": "#1c5cc0", "shorts": "#f2f2f2", "socks": "#1c5cc0", "gk": { "shirt": "#e6c229", "shorts": "#1a2733", "socks": "#e6c229" } },
+    "LEE": { "shirt": "#f4f4f4", "shorts": "#f4f4f4", "socks": "#f4f4f4", "gk": { "shirt": "#2fae6b", "shorts": "#143326", "socks": "#2fae6b" } },
+    "LIV": { "shirt": "#c8102e", "shorts": "#c8102e", "socks": "#c8102e", "gk": { "shirt": "#3b4a5c", "shorts": "#15171c", "socks": "#3b4a5c" } },
+    "MCI": { "shirt": "#7fc4f0", "shorts": "#f2f2f2", "socks": "#7fc4f0", "gk": { "shirt": "#e6c229", "shorts": "#1a2733", "socks": "#e6c229" } },
+    "MUN": { "shirt": "#da291c", "shorts": "#f2f2f2", "socks": "#15171c", "gk": { "shirt": "#2fae6b", "shorts": "#143326", "socks": "#2fae6b" } },
+    "NEW": { "shirt": "#e8e8e8", "shorts": "#15171c", "socks": "#15171c", "gk": { "shirt": "#2fae6b", "shorts": "#143326", "socks": "#2fae6b" } },
+    "NFO": { "shirt": "#dd0000", "shorts": "#f2f2f2", "socks": "#dd0000", "gk": { "shirt": "#3b4a5c", "shorts": "#15171c", "socks": "#3b4a5c" } },
+    "TOT": { "shirt": "#f2f2f2", "shorts": "#132257", "socks": "#f2f2f2", "gk": { "shirt": "#2fae6b", "shorts": "#143326", "socks": "#2fae6b" } },
+    "SUN": { "shirt": "#eb172b", "shorts": "#15171c", "socks": "#eb172b", "gk": { "shirt": "#e6c229", "shorts": "#1a2733", "socks": "#e6c229" } }
+  }
+}
