@@ -733,7 +733,28 @@ test.describe("Screens say things once", () => {
     await mockLive(page, { current: "a" });
     await open(page);
     await openTab(page, "Squad");
-    await expect(page.getByText("Chips available")).toHaveCount(1);
+    // scoped to the checklist panel: page-wide text (team bar, manager names) varies by environment
+    const checklist = page.locator(".panel").filter({ has: page.getByRole("heading", { name: /this week.s decisions/i }) });
+    await expect(checklist.getByText("Chips", { exact: true })).toHaveCount(1);
+    // the owner at GW11: wildcard and Bench Boost are spent until GW20, no manager chip
+    await expect(checklist.getByText(/chips? left \(Free Hit, Triple Captain\); use by GW19 \(9 GWs incl\. this one\)/)).toBeVisible();
+    await expect(checklist.getByText(/Wildcard, Bench Boost used, next from GW20/)).toBeVisible();
+    await expect(checklist.getByText(/manager chip/i)).toHaveCount(0);
+  });
+
+  test("a guest's chips come from their own forecast, not the owner's", async ({ page, context }) => {
+    await context.clearCookies();
+    const forecast = JSON.parse(readFileSync(join(__dirname, "..", "..", "data", "forecast", "gw11.json"), "utf8"));
+    forecast.chips = forecast.chips.map((c: { name: string; window: { start: number } }) =>
+      c.name === "bboost" && c.window.start === 1 ? { ...c, used: false, availableNow: true } : c);
+    forecast.teamName = "Guest FC";
+    await page.route("**/api/forecast*", (route) => route.fulfill({ contentType: "application/json", body: JSON.stringify(forecast) }));
+    await page.clock.install({ time: Date.parse(latestDeadline()) - 5 * 3_600_000 });
+    await mockLive(page, { current: "a" });
+    await page.goto("/?team=999111");
+    await expect(page.getByText("Guest FC").first()).toBeVisible();
+    const checklist = page.locator(".panel").filter({ has: page.getByRole("heading", { name: /this week.s decisions/i }) });
+    await expect(checklist.getByText(/3 first-half chips left \(Free Hit, Bench Boost, Triple Captain\)/)).toBeVisible();
   });
 });
 

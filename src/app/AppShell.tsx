@@ -3,7 +3,6 @@
 import { useEffect, useState, type ReactNode } from "react";
 import type {
   BootstrapSnapshot,
-  ChipStatus,
   Forecast,
   OverridesFile,
   ParCalibration,
@@ -373,7 +372,6 @@ function TeamIdGate({
 export default function AppShell({
   initialForecast,
   bootstrap,
-  initialChips,
   initialOverrides,
   pitchLooks,
   pitchKits,
@@ -381,7 +379,6 @@ export default function AppShell({
 }: {
   initialForecast: Forecast;
   bootstrap: BootstrapSnapshot;
-  initialChips: ChipStatus[] | null;
   initialOverrides: OverridesFile | null;
   /** Per-player height, skin and hair, and club kits, for the 3D Squad pitch. */
   pitchLooks?: PitchLooks;
@@ -412,10 +409,9 @@ export default function AppShell({
   // i.e. an unsaved `?team=` link, not a manual switch via TeamIdBar (which
   // always saves immediately, same as before this phase).
   const isViewingSharedLink = teamId != null && teamId !== savedTeamId;
-  // Chip-usage badges and pending-transfer display are owner-only
-  // conveniences (they read this app's own committed history/overrides) --
-  // hidden rather than shown wrong for a guest lookup.
-  const chips = isGuest ? null : initialChips;
+  // Pending-transfer display is an owner-only convenience (it reads this
+  // app's own committed overrides) -- hidden rather than shown wrong for a
+  // guest lookup. Chip status is per team and rides in the forecast itself.
   const overrides = isGuest ? null : initialOverrides;
 
   const loadTeam = async (id: string, opts: { save?: boolean } = {}) => {
@@ -574,7 +570,7 @@ export default function AppShell({
           <RebuildButton builtAt={forecast.generatedAt} />
         </div>
       )}
-      <DeadlineChecklist forecast={forecast} chips={chips} />
+      <DeadlineChecklist forecast={forecast} />
       <Pitch forecast={forecast} transferTools={transferTools} liveSquad={liveSquad} />
       <FixtureTicker forecast={forecast} liveSquad={liveSquad} pending={transferTools?.pending} pool={transferTools?.pool} />
       <CaptainShortlist forecast={forecast} liveSquad={liveSquad} pending={transferTools?.pending} pool={transferTools?.pool} />
@@ -597,7 +593,7 @@ export default function AppShell({
           squad={forecast.squad.players}
           forecastGw={forecast.targetGameweek}
           upcoming={forecast.upcoming}
-          chips={chips}
+          chips={forecast.chips ?? null}
         />
       )}
 

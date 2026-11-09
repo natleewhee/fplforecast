@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Carousel from "./Carousel";
 import type {
-  ChipStatus,
+  ChipWindow,
   ForecastPlayer,
   PlanWeek,
   PoolPlayer,
@@ -15,6 +15,7 @@ import type {
 } from "@/lib/snapshots";
 import { availabilityFlag } from "@/lib/availability";
 import { OppChip, riskBadges } from "./Pitch";
+import { bestWithinWindow, chipState, type ChipState } from "@/lib/chips";
 import { PitchScene } from "./PitchScene";
 import { FormBars, Halo, meanFdr } from "./Shirt";
 import { PlayerFace } from "./PlayerFace";
@@ -692,38 +693,71 @@ function ChipTimingCard({
   upcoming,
   squad,
   chips,
+  forecastGw,
 }: {
   upcoming: UpcomingGameweek[];
   squad: ForecastPlayer[];
-  chips: ChipStatus[] | null;
+  chips: ChipWindow[] | null;
+  forecastGw: number;
 }) {
   if (upcoming.length === 0) return null;
   const squadById = new Map(squad.map((p) => [p.id, p]));
+  const lastForecastGw = upcoming[upcoming.length - 1].gameweek;
 
-  // Chip-usage history may not have loaded -- fail open (assume available)
-  // rather than hiding the recommendation over missing metadata.
-  const bboostRemaining = chips?.find((c) => c.name === "bboost")?.remaining ?? 1;
-  const tcRemaining = chips?.find((c) => c.name === "3xc")?.remaining ?? 1;
-  if (bboostRemaining === 0 && tcRemaining === 0) return null; // both used
+  // Per-team chip windows from the forecast. Unknown is shown as unknown, not
+  // assumed available.
+  const bboost = chipState(chips, "bboost", forecastGw);
+  const tc = chipState(chips, "3xc", forecastGw);
+  const gone = (s: ChipState) => s.kind === "closed" && s.nextFromGw == null;
+  if (gone(bboost) && gone(tc)) return null; // both gone for the season
 
-  const bboostRanked = upcoming
-    .map((gw) => ({
-      gw,
-      benchTotal: gw.bench.reduce((sum, id) => {
-        const p = gw.players.find((pl) => pl.id === id);
-        return sum + (p?.projectedPoints ?? 0);
-      }, 0),
-    }))
-    .sort((a, b) => b.benchTotal - a.benchTotal);
-  const bestBboost = bboostRanked[0];
+  const bboostPick =
+    bboost.kind === "open"
+      ? bestWithinWindow(
+          upcoming
+            .map((gw) => ({
+              gameweek: gw.gameweek,
+              benchTotal: gw.bench.reduce((sum, id) => {
+                const p = gw.players.find((pl) => pl.id === id);
+                return sum + (p?.projectedPoints ?? 0);
+              }, 0),
+            }))
+            .sort((a, b) => b.benchTotal - a.benchTotal),
+          bboost.expiresGw,
+          lastForecastGw,
+        )
+      : null;
 
-  const tcRanked = upcoming
-    .map((gw) => {
-      const cap = gw.captainId != null ? gw.players.find((pl) => pl.id === gw.captainId) : null;
-      return { gw, captainId: gw.captainId, captainPoints: cap?.projectedPoints ?? 0 };
-    })
-    .sort((a, b) => b.captainPoints - a.captainPoints);
-  const bestTc = tcRanked[0];
+  const tcPick =
+    tc.kind === "open"
+      ? bestWithinWindow(
+          upcoming
+            .map((gw) => {
+              const cap = gw.captainId != null ? gw.players.find((pl) => pl.id === gw.captainId) : null;
+              return { gameweek: gw.gameweek, captainId: gw.captainId, captainPoints: cap?.projectedPoints ?? 0 };
+            })
+            .sort((a, b) => b.captainPoints - a.captainPoints),
+          tc.expiresGw,
+          lastForecastGw,
+        )
+      : null;
+
+  const closedText = (s: ChipState) =>
+    s.kind === "unknown"
+      ? "status unknown"
+      : s.kind === "closed"
+        ? `${s.usedNow ? "used" : "not open"}${s.nextFromGw != null ? `, next from GW${s.nextFromGw}` : ""}`
+        : "";
+
+  // The forecast only looks a few GWs ahead; say so when a chip's window runs longer.
+  const beyond = [
+    { label: "Bench Boost", state: bboost, pick: bboostPick },
+    { label: "Triple Captain", state: tc, pick: tcPick },
+  ].flatMap((c) =>
+    c.state.kind === "open" && c.pick && !c.pick.seesAllOfWindow
+      ? [`${c.label} runs to GW${c.state.expiresGw}`]
+      : [],
+  );
 
   return (
     <div className="panel space-y-3 p-3">
@@ -731,34 +765,42 @@ function ChipTimingCard({
       <div className="grid grid-cols-2 gap-3">
         <div>
           <p className="text-[11px] text-ink-faint">Bench Boost</p>
-          {bboostRemaining > 0 ? (
+          {bboostPick && bboost.kind === "open" ? (
             <>
-              <p className="stat text-lg text-ink">GW{bestBboost.gw.gameweek}</p>
-              <p className="text-xs text-ink-soft">+{bestBboost.benchTotal.toFixed(1)} bench pts</p>
+              <p className="stat text-lg text-ink">GW{bboostPick.pick.gameweek}</p>
+              <p className="text-xs text-ink-soft">+{bboostPick.pick.benchTotal.toFixed(1)} bench pts</p>
+              <p className="text-[11px] text-ink-faint">use by GW{bboost.expiresGw}</p>
             </>
           ) : (
-            <p className="mt-1 text-sm text-ink-faint opacity-60">used</p>
+            <p className="mt-1 text-sm text-ink-faint opacity-60">{closedText(bboost)}</p>
           )}
         </div>
         <div>
           <p className="text-[11px] text-ink-faint">Triple Captain</p>
-          {tcRemaining > 0 ? (
+          {tcPick && tc.kind === "open" ? (
             <>
-              <p className="stat text-lg text-ink">GW{bestTc.gw.gameweek}</p>
+              <p className="stat text-lg text-ink">GW{tcPick.pick.gameweek}</p>
               <p className="text-xs text-ink-soft">
-                {bestTc.captainId != null ? squadById.get(bestTc.captainId)?.webName ?? "?" : "—"}
-                , +{bestTc.captainPoints.toFixed(1)} extra
+                {tcPick.pick.captainId != null ? squadById.get(tcPick.pick.captainId)?.webName ?? "?" : "—"}
+                , +{tcPick.pick.captainPoints.toFixed(1)} extra
               </p>
+              <p className="text-[11px] text-ink-faint">use by GW{tc.expiresGw}</p>
             </>
           ) : (
-            <p className="mt-1 text-sm text-ink-faint opacity-60">used</p>
+            <p className="mt-1 text-sm text-ink-faint opacity-60">{closedText(tc)}</p>
           )}
         </div>
       </div>
       <p className="text-[11px] text-ink-faint">
-        Best gameweek in the {upcoming.length}-GW window to hold your squad unchanged and press
-        the button — assumes no transfers between now and then.
+        Best gameweek in the {upcoming.length}-GW window (up to each chip&rsquo;s last gameweek) to
+        hold your squad unchanged and press the button — assumes no transfers between now and then.
       </p>
+      {beyond.length > 0 && (
+        <p className="text-[11px] text-ink-soft" data-testid="chip-beyond-window">
+          {beyond.join("; ")}, but the forecast only looks ahead to GW{lastForecastGw} — a better week
+          may come later.
+        </p>
+      )}
     </div>
   );
 }
@@ -776,7 +818,7 @@ export default function Scenarios({
   squad: ForecastPlayer[];
   forecastGw: number;
   upcoming: UpcomingGameweek[];
-  chips: ChipStatus[] | null;
+  chips: ChipWindow[] | null;
 }) {
   const pitchView = usePitchView();
   const [horizon, setHorizon] = useState<Horizon>("1");
@@ -843,7 +885,7 @@ export default function Scenarios({
         />
       )}
 
-      <ChipTimingCard upcoming={upcoming} squad={squad} chips={chips} />
+      <ChipTimingCard upcoming={upcoming} squad={squad} chips={chips} forecastGw={forecastGw} />
     </section>
   );
 }

@@ -625,6 +625,70 @@ def _plan_week_to_dict(week: PlanWeek, pool_by_id: dict, target_gw: int) -> dict
     }
 
 
+def compute_chip_status(
+    bootstrap_chips: object, history_chips: object, target_gw: int
+) -> list[dict] | None:
+    """One row per chip *window* FPL's bootstrap-static ``chips`` list defines
+    (2026/27: two of each of wildcard / freehit / bboost / 3xc, one for
+    GW1-19 and one for GW20-38 -- read off the data, never assumed), marked
+    against *this team's* played chips (``history_chips``, the FPL
+    ``/entry/<id>/history/`` ``chips`` list of ``{name, event}``).
+
+    Each row: ``{name, window: {start, stop}, used, availableNow,
+    expiresGw}``. ``used``: this team played that chip inside the window
+    (``number`` plays allowed per window, 1 in practice). ``availableNow``:
+    unused and ``target_gw`` falls inside the window; ``expiresGw`` is the
+    window's last gameweek.
+
+    Returns ``None`` ("unknown") when either input isn't the expected shape,
+    so a changed FPL schema shows as unknown instead of a guess."""
+    if not isinstance(bootstrap_chips, list) or not bootstrap_chips:
+        return None
+    if not isinstance(history_chips, list):
+        return None
+    played: list[tuple[str, int]] = []
+    for c in history_chips:
+        if not isinstance(c, dict) or not isinstance(c.get("name"), str) or not isinstance(c.get("event"), int):
+            return None
+        played.append((c["name"].lower(), c["event"]))
+
+    rows = []
+    for c in bootstrap_chips:
+        if not isinstance(c, dict):
+            return None
+        name, start, stop = c.get("name"), c.get("start_event"), c.get("stop_event")
+        number = c.get("number", 1)
+        if (
+            not isinstance(name, str)
+            or not isinstance(start, int)
+            or not isinstance(stop, int)
+            or not isinstance(number, int)
+            or isinstance(start, bool)
+            or isinstance(stop, bool)
+            or start > stop
+        ):
+            return None
+        name = name.lower()
+        plays = sum(1 for n, ev in played if n == name and start <= ev <= stop)
+        used = plays >= max(number, 1)
+        rows.append(
+            {
+                "name": name,
+                "window": {"start": start, "stop": stop},
+                "used": used,
+                "availableNow": (not used) and start <= target_gw <= stop,
+                "expiresGw": stop,
+            }
+        )
+    rows.sort(key=lambda r: (r["window"]["start"], r["name"]))
+    return rows
+
+
+def chip_available_now(chip_status: list[dict] | None, name: str) -> bool:
+    """True only when a known window for ``name`` is open and unused."""
+    return any(r["name"] == name and r["availableNow"] for r in chip_status or [])
+
+
 def build_scenarios(
     pool: list[dict],
     squad_ids: list[int],
@@ -632,6 +696,7 @@ def build_scenarios(
     season_history: dict,
     target_gw: int,
     squad_cards: list[dict] | None = None,
+    bootstrap_chips: list | None = None,
 ) -> dict:
     """The transfer-scenario / chip-optimiser block (2026-09-05 plan): 3
     horizons x 4 pinned transfer counts (k=0..3, KD7/"Solve count"), plus
@@ -650,10 +715,12 @@ def build_scenarios(
     chips = season_history.get("chips") or []
     ft_value, ft_derivation = derive_free_transfers(current, chips, target_gw)
 
-    used_chip_names = {(c.get("name") or "").lower() for c in chips}
+    chip_status = compute_chip_status(bootstrap_chips, season_history.get("chips"), target_gw)
+    # Unknown chip rules/history -> offer neither chip scenario rather than
+    # guess one is available.
     chips_available = {
-        "freeHit": "freehit" not in used_chip_names,
-        "wildcard": "wildcard" not in used_chip_names,
+        "freeHit": chip_available_now(chip_status, "freehit"),
+        "wildcard": chip_available_now(chip_status, "wildcard"),
     }
 
     total_budget = bank + sum(
@@ -1238,7 +1305,15 @@ def build_personal_forecast(
         season_history.get("current") or [], bootstrap.get("events") or []
     )
 
-    scenarios = build_scenarios(pool, squad_ids, bank, season_history, target_gw, squad_cards=players)
+    scenarios = build_scenarios(
+        pool,
+        squad_ids,
+        bank,
+        season_history,
+        target_gw,
+        squad_cards=players,
+        bootstrap_chips=bootstrap.get("chips"),
+    )
 
     forecast = {
         "generatedAt": datetime.now(timezone.utc).isoformat(),
@@ -1299,6 +1374,8 @@ def build_personal_forecast(
         "parBufferProvisional": PAR_BUFFER_PROVISIONAL_POINTS,
         "rankCalibration": rank_calibration_fit,
         "scenarios": scenarios,
+        # Per-team chip windows (None = unknown, see compute_chip_status).
+        "chips": compute_chip_status(bootstrap.get("chips"), season_history.get("chips"), target_gw),
         "history": build_history(season_history),
     }
     return forecast

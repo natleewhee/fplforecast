@@ -9,6 +9,88 @@
     "label": "clear edge",
     "points": 2.11
   },
+  "chips": [
+    {
+      "availableNow": true,
+      "expiresGw": 19,
+      "name": "3xc",
+      "used": false,
+      "window": {
+        "start": 1,
+        "stop": 19
+      }
+    },
+    {
+      "availableNow": false,
+      "expiresGw": 19,
+      "name": "bboost",
+      "used": true,
+      "window": {
+        "start": 1,
+        "stop": 19
+      }
+    },
+    {
+      "availableNow": true,
+      "expiresGw": 19,
+      "name": "freehit",
+      "used": false,
+      "window": {
+        "start": 2,
+        "stop": 19
+      }
+    },
+    {
+      "availableNow": false,
+      "expiresGw": 19,
+      "name": "wildcard",
+      "used": true,
+      "window": {
+        "start": 2,
+        "stop": 19
+      }
+    },
+    {
+      "availableNow": false,
+      "expiresGw": 38,
+      "name": "3xc",
+      "used": false,
+      "window": {
+        "start": 20,
+        "stop": 38
+      }
+    },
+    {
+      "availableNow": false,
+      "expiresGw": 38,
+      "name": "bboost",
+      "used": false,
+      "window": {
+        "start": 20,
+        "stop": 38
+      }
+    },
+    {
+      "availableNow": false,
+      "expiresGw": 38,
+      "name": "freehit",
+      "used": false,
+      "window": {
+        "start": 20,
+        "stop": 38
+      }
+    },
+    {
+      "availableNow": false,
+      "expiresGw": 38,
+      "name": "wildcard",
+      "used": false,
+      "window": {
+        "start": 20,
+        "stop": 38
+      }
+    }
+  ],
   "deadlineTime": "2026-11-21T11:00:00Z",
   "earlySeason": false,
   "effectiveGap": 5.0,
