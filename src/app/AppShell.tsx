@@ -18,6 +18,7 @@ import {
 } from "@/lib/teamId";
 import { Header, Module, Panel, Shell } from "./PageChrome";
 import Pitch from "./Pitch";
+import { PitchDataProvider } from "./pitch3d/Pitch3D";
 import type { PitchKits, PitchLooks } from "@/lib/appearance";
 import DeadlineChecklist from "./DeadlineChecklist";
 import DeadlineBanner from "./DeadlineBanner";
@@ -582,7 +583,7 @@ export default function AppShell({
         </div>
       )}
       <DeadlineChecklist forecast={forecast} chips={chips} />
-      <Pitch forecast={forecast} transferTools={transferTools} looks={pitchLooks} kits={pitchKits} />
+      <Pitch forecast={forecast} transferTools={transferTools} />
 
 
       <Carousel>
@@ -663,15 +664,17 @@ export default function AppShell({
           />
         )}
         <div className="pt-1">
-          <AppTabs
-            deadline={forecast.deadlineTime}
-            tabs={[
-              { id: "live", label: "Live", content: liveTab },
-              { id: "squad", label: "Squad", content: squadTab },
-              { id: "scenarios", label: "Scenarios", content: scenariosTab },
-              { id: "leagues", label: "Leagues", content: leaguesTab },
-            ]}
-          />
+          <PitchDataProvider value={{ looks: pitchLooks, kits: pitchKits }}>
+            <AppTabs
+              deadline={forecast.deadlineTime}
+              tabs={[
+                { id: "live", label: "Live", content: liveTab },
+                { id: "squad", label: "Squad", content: squadTab },
+                { id: "scenarios", label: "Scenarios", content: scenariosTab },
+                { id: "leagues", label: "Leagues", content: leaguesTab },
+              ]}
+            />
+          </PitchDataProvider>
           {!isGuest && footer}
         </div>
       </Shell>

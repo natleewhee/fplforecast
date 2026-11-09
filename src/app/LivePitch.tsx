@@ -12,6 +12,8 @@ import { LiveFeed, NextUp } from "./LiveUpdates";
 import LivePlayerSheet, { statusText } from "./LivePlayerSheet";
 import { useLiveFx, type Float } from "./useLiveFx";
 import { ArmbandBadge } from "./tokenParts";
+import Pitch3D, { ViewSwitch, type Pitch3DPlayer } from "./pitch3d/Pitch3D";
+import { setPitchView, usePitchView } from "@/lib/pitchView";
 
 /* The Live tab's floodlit night pitch: the eleven who count right now (an
  * auto-subbed-in bench player replaces whoever didn't play), each as a token
@@ -238,6 +240,9 @@ export default function LivePitch({
 }) {
   const [selectedId, setSelectedId] = useState<number | null>(null);
   const [heat, setHeat] = useState(false);
+  const savedView = usePitchView();
+  const [no3d, setNo3d] = useState(false);
+  const view = no3d ? "2d" : savedView;
   const triggerRef = useRef<HTMLButtonElement | null>(null);
   const fx = useLiveFx(rows, gameweek, polledAt);
   const openSheet = useCallback((id: number, trigger: HTMLButtonElement) => {
@@ -270,6 +275,27 @@ export default function LivePitch({
   const moodText =
     mood === "live" ? "Floodlights on: your players are in play" : mood === "ft" ? "Full time for your eleven" : "Waiting for kickoff";
 
+  const to3d = (r: TrackerRow): Pitch3DPlayer => {
+    const t = tone(r);
+    const pts = r.pointsSoFar;
+    return {
+      id: r.id,
+      webName: r.webName,
+      position: r.position,
+      team: r.team ?? "",
+      code: r.code,
+      sub: t === "pending" ? shortStatus(r) : `${pts.toFixed(0)} \u00B7 ${shortStatus(r)}`,
+      subTone: t === "live" ? "accent" : t === "done" && pts >= HAUL ? "warn" : t === "done" ? "accent" : "faint",
+      role: r.isArmband ? "C" : r.isViceCaptain ? "V" : null,
+      dim: t === "dnp" ? 0.5 : t === "off" ? 0.62 : t === "pending" ? 0.72 : 1,
+      ariaLabel: `${r.webName}, ${r.position}, ${t === "pending" ? "no points yet" : `${pts.toFixed(0)} points`}, ${statusText(r)}${
+        r.isArmband ? ", captain" : r.isViceCaptain ? ", vice captain" : ""
+      }`,
+      title: `${r.webName} \u2014 ${statusText(r)}`,
+      badges: eventBadgeItems(r).slice(0, 2), // the full set is in the breakdown sheet
+    };
+  };
+
   return (
     <div>
       <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
@@ -277,8 +303,9 @@ export default function LivePitch({
           {moodText}
         </span>
         <div className="flex shrink-0 items-center gap-2">
-          <FaceToggle />
-          <button
+          {view === "2d" && <FaceToggle />}
+          <ViewSwitch view={view} onChange={(v) => { setNo3d(false); setPitchView(v); }} />
+          {view === "2d" && <button
             type="button"
             aria-pressed={heat}
             onClick={() => setHeat((h) => !h)}
@@ -289,11 +316,27 @@ export default function LivePitch({
             }`}
           >
             Heat map
-          </button>
+          </button>}
         </div>
       </div>
       <NextUp rows={onPitch} />
       <LiveFeed feed={fx.feed} showEmpty={mood !== "pre"} />
+      {view === "3d" ? (
+        <>
+          <Pitch3D
+            xi={lines.flat().map(to3d)}
+            bench={benched.map(to3d)}
+            selectedId={selectedId}
+            onSelect={openSheet}
+            onUnavailable={() => setNo3d(true)}
+          />
+          <p className="mt-2 text-[10.5px] leading-snug text-ink-faint">
+            Number = points so far, then minutes, FT or kickoff time · faded = yet to play, off or did not play ·{" "}
+            {toPlay} of 11 still to play · C captain, V vice · tap a player for the breakdown · times in SGT
+          </p>
+        </>
+      ) : (
+        <>
       <PitchScene mood={mood} flare={fx.goalFlare}>
         <div className="space-y-5">
           {lines.map((line, i) => (
@@ -338,6 +381,9 @@ export default function LivePitch({
             ))}
           </div>
         </div>
+      )}
+
+        </>
       )}
 
       <BenchCover cover={cover} rows={rows} />

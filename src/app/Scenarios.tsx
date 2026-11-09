@@ -18,6 +18,8 @@ import { OppChip, riskBadges } from "./Pitch";
 import { PitchScene } from "./PitchScene";
 import { FormBars, Halo, meanFdr } from "./Shirt";
 import { PlayerFace } from "./PlayerFace";
+import Pitch3D, { ViewSwitch, type Pitch3DPlayer } from "./pitch3d/Pitch3D";
+import { usePitchView } from "@/lib/pitchView";
 import { ArmbandBadge } from "./tokenParts";
 
 const HORIZONS = ["1", "3", "5"] as const;
@@ -170,7 +172,29 @@ function XiPitch({
   poolById: Map<number, PoolPlayer>;
   weekIndex: number;
 }) {
+  const savedView = usePitchView();
+  const [no3d, setNo3d] = useState(false);
   const bench = squad.filter((id) => !xi.includes(id));
+  if (savedView === "3d" && !no3d) {
+    const to3d = (p: PoolPlayer): Pitch3DPlayer => {
+      const xp = p.perGameweek[weekIndex];
+      const doubt = availabilityFlag(p.availability);
+      return {
+        id: p.id,
+        webName: p.webName,
+        position: p.position,
+        team: p.team,
+        code: p.code,
+        sub: xp != null ? xp.toFixed(1) : "\u2014",
+        role: p.id === captainId ? "C" : null,
+        ariaLabel: `${p.webName}: ${xp != null ? xp.toFixed(1) : "no"} xP${doubt ? `, ${doubt.label}` : ""}`,
+        title: [p.webName, doubt?.label].filter(Boolean).join(" \u2014 "),
+        badges: riskBadges(p.availability, undefined),
+      };
+    };
+    const byPos = (ids: number[]) => ids.map((id) => poolById.get(id)).filter((p): p is PoolPlayer => !!p);
+    return <Pitch3D xi={byPos(xi).map(to3d)} bench={byPos(bench).map(to3d)} onUnavailable={() => setNo3d(true)} />;
+  }
   const rows = ROWS.map((pos) =>
     xi.map((id) => poolById.get(id)).filter((p): p is PoolPlayer => !!p && p.position === pos)
   ).filter((r) => r.length);
@@ -754,6 +778,7 @@ export default function Scenarios({
   upcoming: UpcomingGameweek[];
   chips: ChipStatus[] | null;
 }) {
+  const pitchView = usePitchView();
   const [horizon, setHorizon] = useState<Horizon>("1");
   const poolById = new Map(pool.map((p) => [p.id, p]));
 
@@ -765,6 +790,7 @@ export default function Scenarios({
     <section className="space-y-4">
       <div className="flex flex-wrap items-center justify-between gap-2 px-1">
         <h2 className="eyebrow">Transfer scenarios</h2>
+        <ViewSwitch view={pitchView} />
         <div className="segment">
           {HORIZONS.map((h) => (
             <button key={h} data-active={horizon === h} onClick={() => setHorizon(h)}>

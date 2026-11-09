@@ -1,6 +1,6 @@
 import * as THREE from "three";
 import { SKIN_STEPS, type HairStyle } from "@/lib/appearance";
-import { BENCH_X, BENCH_Z0, SEAT_Y } from "./spots";
+import { BENCH_Z, SEAT_Y } from "./spots";
 
 /* The 3D Squad pitch: stylised low-poly figures in kit colours on a floodlit
  * pitch, with the bench seated in a dugout at the side. Built from rounded
@@ -24,6 +24,8 @@ export type FigureDef = {
   hair: [HairStyle, string];
   captain: boolean;
   bench: boolean;
+  dim?: number; // 0..1, fades players who have not played or are off
+
   x: number;
   z: number;
 };
@@ -211,7 +213,8 @@ function buildFigure(def: FigureDef): Figure {
   const thigh = keep(bake([P(capsule(0.15, 0.3), skin, { y: -0.22 }), P(capsule(0.16, 0.18), kit.shorts, { y: -0.08 })]));
   const shin = keep(bake([P(capsule(0.115, 0.34), kit.socks, { y: -0.22 }), P(ball(0.14), boot, { y: -0.43, z: 0.07, sx: 1, sy: 0.7, sz: 1.5 })]));
 
-  const mat = new THREE.MeshLambertMaterial({ vertexColors: true });
+  const dim = def.dim ?? 1;
+  const mat = new THREE.MeshLambertMaterial({ vertexColors: true, transparent: dim < 1, opacity: dim });
   const g = new THREE.Group();
   const b = new THREE.Group();
   g.add(b);
@@ -259,7 +262,7 @@ function buildFigure(def: FigureDef): Figure {
   const scale = scaleFor(def.cm);
   g.scale.setScalar(scale);
   g.position.set(def.x, def.bench ? 0.05 : 0.05, def.z);
-  g.rotation.y = def.bench ? -Math.PI / 2 : 0;
+  g.rotation.y = 0;
   return { g, ring, hit, scale, def, owned, mat };
 }
 
@@ -319,27 +322,19 @@ function setup(renderer: THREE.WebGLRenderer, canvas: HTMLCanvasElement, { host,
   apron.position.y = -0.03;
   scene.add(apron);
 
-  // the dugout: seat, back, posts, and a see-through roof so nobody is hidden
+  // the bench: a seat strip behind the far goal line, facing the camera
   {
     const box = (w: number, h: number, d: number) => new THREE.BoxGeometry(w, h, d);
-    const len = 8.2;
     const parts: Part[] = [
-      P(box(1.25, 0.16, len), "#243b52", { x: BENCH_X + 0.15, y: SEAT_Y - 0.08, z: BENCH_Z0 }),
-      P(box(0.12, 1.6, len), "#18283a", { x: BENCH_X + 0.85, y: 0.95, z: BENCH_Z0 }),
+      P(box(14, 0.16, 1.5), "#243b52", { y: SEAT_Y - 0.08, z: BENCH_Z - 0.1 }),
+      P(box(14, 1.5, 0.12), "#18283a", { y: 0.9, z: BENCH_Z - 0.95 }),
+      P(box(14.4, 0.1, 0.3), "#36e0a2", { y: 1.7, z: BENCH_Z - 0.95 }),
     ];
-    for (const zs of [-1, 1])
-      for (const xs of [-0.9, 1.1])
-        parts.push(P(new THREE.CylinderGeometry(0.07, 0.07, 3.8, 10), "#9fb2c4", { x: BENCH_X + 0.2 + xs, y: 1.9, z: BENCH_Z0 + zs * (len / 2 + 0.2) }));
     scene.add(new THREE.Mesh(own(bake(parts)), own(new THREE.MeshLambertMaterial({ vertexColors: true }))));
-    const roof = bake([
-      P(box(3.0, 0.16, len + 0.8), "#2d4863", { x: BENCH_X + 0.2, y: 3.9, z: BENCH_Z0 }),
-      P(box(3.0, 0.06, len + 0.8), "#36e0a2", { x: BENCH_X + 0.2, y: 3.78, z: BENCH_Z0 }),
-    ]);
-    scene.add(new THREE.Mesh(own(roof), own(new THREE.MeshLambertMaterial({ vertexColors: true, transparent: true, opacity: 0.32, depthWrite: false }))));
   }
 
   // the broadcast view: fov is for a stage 0.8 wide per 1 high, widened/narrowed to the real shape
-  const CAM = { pos: [2.2, 19, 33], look: [2.2, 0, -3.5], fov: 50 };
+  const CAM = { pos: [0, 27, 30], look: [0, 0, -5.5], fov: 44 };
   let figures: Figure[] = [];
   let selected: number | null = null;
   let size = { w: 0, h: 0 };
