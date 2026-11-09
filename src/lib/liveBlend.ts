@@ -77,6 +77,21 @@ export type LivePayload = {
   parBufferProvisional: number;
   nextDeadline: string | null; // the next not-yet-passed gameweek deadline, for the idle-state countdown
   rankCalibration: RankCalibration | null;
+  /** Highly-owned players the manager does not hold who still have a match to play (see `pickThreats`). */
+  threats?: LiveThreat[];
+};
+
+/** A popular player outside the manager's fifteen: the upside (or the rank
+ * risk) of a match still to come. Ownership comes from bootstrap, xP from the
+ * forecast pool; both are optional and the card hides what is missing. */
+export type LiveThreat = {
+  id: number;
+  webName: string;
+  team: string | null;
+  ownedPct: number;
+  opponent: string | null; // "CHE (H)"
+  kickoffTime: string | null;
+  components?: Record<string, number>; // baked xP legs, for the same decay maths the squad uses
 };
 
 // Minimal shapes of the FPL responses this module reads.
@@ -91,7 +106,7 @@ type FplEvent = {
 };
 export type FplBootstrap = {
   events: FplEvent[];
-  elements: { id: number; team: number; element_type: number; web_name: string; code?: number }[];
+  elements: { id: number; team: number; element_type: number; web_name: string; code?: number; selected_by_percent?: string | number | null }[];
   teams: { id: number; short_name: string }[];
 };
 type FplExplainStat = { identifier: string; points: number; value: number };
@@ -193,6 +208,8 @@ export type LiveProjectionInputs = {
   parBuffer: number;
   parBufferProvisional: number;
   rankCalibration: RankCalibration | null;
+  /** Baked xP for pool players, used only to price the not-owned threats (not sent whole). */
+  threatComponents?: Record<string, Record<string, number>>;
 };
 
 export function forecastLiveInputs(forecast: Forecast): LiveProjectionInputs {
@@ -203,6 +220,7 @@ export function forecastLiveInputs(forecast: Forecast): LiveProjectionInputs {
     parBuffer: forecast.parBuffer ?? 4,
     parBufferProvisional: forecast.parBufferProvisional ?? 8,
     rankCalibration: forecast.rankCalibration ?? null,
+    threatComponents: poolLiveInputs(forecast).componentXpByElement,
   };
 }
 
@@ -377,7 +395,54 @@ export function buildLivePayload(args: {
     parBufferProvisional: inputs.parBufferProvisional,
     nextDeadline,
     rankCalibration: inputs.rankCalibration,
+    threats: pickThreats({
+      bootstrap,
+      picks,
+      fixturesByTeam,
+      teamName,
+      components: inputs.threatComponents ?? {},
+    }),
   };
+}
+
+const THREAT_MIN_OWNED_PCT = 10;
+const THREAT_MAX = 5;
+
+/** The most-owned players the manager does not hold whose club still has a
+ * match to finish this gameweek. Needs a real ownership figure and a fixture,
+ * so a missing one just drops that player. */
+export function pickThreats(args: {
+  bootstrap: FplBootstrap;
+  picks: FplPicks;
+  fixturesByTeam: Map<number, FplFixture[]>;
+  teamName: Map<number, string>;
+  components: Record<string, Record<string, number>>;
+}): LiveThreat[] {
+  const { bootstrap, picks, fixturesByTeam, teamName, components } = args;
+  const owned = new Set(picks.picks.map((p) => p.element));
+  const out: LiveThreat[] = [];
+  const ranked = bootstrap.elements
+    .map((el) => ({ el, pct: Number(el.selected_by_percent) }))
+    .filter(({ el, pct }) => !owned.has(el.id) && Number.isFinite(pct) && pct >= THREAT_MIN_OWNED_PCT)
+    .sort((a, b) => b.pct - a.pct);
+  for (const { el, pct } of ranked) {
+    const list = fixturesByTeam.get(el.team) ?? [];
+    const f = list.find((x) => !isFixtureOver(x));
+    if (!f) continue; // blank, or every match already over
+    const home = f.team_h === el.team;
+    const opp = teamName.get(home ? f.team_a : f.team_h);
+    out.push({
+      id: el.id,
+      webName: el.web_name,
+      team: teamName.get(el.team) ?? null,
+      ownedPct: pct,
+      opponent: opp ? `${opp} (${home ? "H" : "A"})` : null,
+      kickoffTime: f.kickoff_time ?? null,
+      components: components[String(el.id)],
+    });
+    if (out.length >= THREAT_MAX) break;
+  }
+  return out;
 }
 
 /* ---------- client blend (KTD6) ---------- */
