@@ -67,7 +67,10 @@ def _stub_fpl_get(monkeypatch, gw: int, picks: list[dict], entry_history: dict, 
 
 
 def test_build_forecast_for_team_returns_a_full_forecast_shaped_payload(monkeypatch):
-    gw, picks, entry_history, history = _latest_picks_and_history()
+    gw, picks, entry_history, owner_history = _latest_picks_and_history()
+    # A guest's own chips, deliberately different from the owner's committed
+    # history (wildcard GW4, bboost GW7), so reading the owner's file fails.
+    history = {**owner_history, "chips": [{"name": "freehit", "event": 3}, {"name": "3xc", "event": 9}]}
     _stub_fpl_get(monkeypatch, gw, picks, entry_history, history)
 
     status, payload = forecast_api.build_forecast_for_team(TEAM_ID)
@@ -81,8 +84,11 @@ def test_build_forecast_for_team_returns_a_full_forecast_shaped_payload(monkeypa
     assert "scenarios" in payload and "pool" in payload
     # Chips come from the guest's own history, not the owner's.
     assert isinstance(payload["chips"], list) and len(payload["chips"]) == 8
-    used_names = {r["name"] for r in payload["chips"] if r["used"]}
-    assert used_names == {c["name"] for c in history.get("chips", [])}
+    used = {(r["name"], r["window"]["start"], r["window"]["stop"]) for r in payload["chips"] if r["used"]}
+    assert used == {("freehit", 2, 19), ("3xc", 1, 19)}
+    wc = next(r for r in payload["chips"] if r["name"] == "wildcard" and r["window"]["start"] == 2)
+    assert not wc["used"] and wc["window"]["stop"] == 19
+    assert payload["scenarios"]["chipsAvailable"] == {"freeHit": False, "wildcard": True}
 
 
 def test_build_forecast_for_team_404s_for_an_unknown_team(monkeypatch):

@@ -1,5 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
 import { bestWithinWindow, chipChecklist, chipState } from "../../src/lib/chips.ts";
 
 type W = { name: string; window: { start: number; stop: number }; used: boolean; availableNow: boolean; expiresGw: number };
@@ -25,7 +26,7 @@ test("owner at GW11: first-half Free Hit and Triple Captain, expiring GW19", () 
   const row = chipChecklist(windows(11, OWNER), 11);
   assert.equal(
     row.detail,
-    "2 first-half chips left (Free Hit, Triple Captain); use by GW19 (8 GWs). Wildcard, Bench Boost used, next from GW20.",
+    "2 first-half chips left (Free Hit, Triple Captain); use by GW19 (9 GWs incl. this one). Wildcard, Bench Boost used, next from GW20.",
   );
   assert.equal(row.status, "info");
   assert.ok(!/manager/i.test(row.detail));
@@ -41,7 +42,7 @@ test("GW20 reopens second-half chips, wildcard and Bench Boost included", () => 
   const row = chipChecklist(windows(20, OWNER), 20);
   assert.equal(
     row.detail,
-    "4 second-half chips left (Wildcard, Free Hit, Bench Boost, Triple Captain); use by GW38 (18 GWs).",
+    "4 second-half chips left (Wildcard, Free Hit, Bench Boost, Triple Captain); use by GW38 (19 GWs incl. this one).",
   );
   assert.equal(row.status, "info");
   assert.deepEqual(chipState(windows(20, OWNER), "wildcard", 20), { kind: "open", expiresGw: 38 });
@@ -53,6 +54,24 @@ test("a guest's chips follow their own history", () => {
   assert.match(row.detail, /^2 first-half chips left \(Wildcard, Bench Boost\)/);
   assert.match(row.detail, /Free Hit, Triple Captain used, next from GW20/);
   assert.deepEqual(chipState(windows(26, guest), "wildcard", 26), { kind: "closed", usedNow: true, nextFromGw: null });
+});
+
+test("the nudge counts this week's deadline and turns amber from GW17", () => {
+  assert.match(chipChecklist(windows(16, OWNER), 16).detail, /use by GW19 \(4 GWs incl\. this one\)/);
+  assert.equal(chipChecklist(windows(16, OWNER), 16).status, "info");
+  const gw17 = chipChecklist(windows(17, OWNER), 17);
+  assert.match(gw17.detail, /\(3 GWs incl\. this one\)/);
+  assert.equal(gw17.status, "amber");
+  assert.match(chipChecklist(windows(18, OWNER), 18).detail, /\(2 GWs incl\. this one\)/);
+});
+
+test("the committed forecast's chips (written by the Python pipeline) render the owner's GW11 row", () => {
+  const fc = JSON.parse(readFileSync(new URL("../../data/forecast/gw11.json", import.meta.url), "utf8"));
+  assert.equal(fc.targetGameweek, 11);
+  assert.equal(
+    chipChecklist(fc.chips, fc.targetGameweek).detail,
+    "2 first-half chips left (Free Hit, Triple Captain); use by GW19 (9 GWs incl. this one). Wildcard, Bench Boost used, next from GW20.",
+  );
 });
 
 test("unknown chips are shown as unknown, never guessed", () => {

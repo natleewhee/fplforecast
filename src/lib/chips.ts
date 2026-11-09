@@ -65,10 +65,10 @@ export function chipChecklist(chips: ChipWindow[] | null | undefined, targetGw: 
   const byExpiry = new Map<number, ChipWindow[]>();
   for (const c of open) byExpiry.set(c.expiresGw, [...(byExpiry.get(c.expiresGw) ?? []), c]);
   for (const [expiresGw, group] of [...byExpiry].sort((a, b) => a[0] - b[0])) {
-    const left = expiresGw - targetGw;
+    const left = expiresGw - targetGw + 1; // deadlines left, counting this week
     if (left <= 3) status = "amber";
     const deadline =
-      left <= 0 ? `use this week (last chance, GW${expiresGw})` : `use by GW${expiresGw} (${plural(left, "GW")})`;
+      left <= 1 ? `use this week (last chance, GW${expiresGw})` : `use by GW${expiresGw} (${left} GWs incl. this one)`;
     parts.push(
       `${plural(group.length, `${half(group[0].window.stop)}chip`)} left (${group
         .map((c) => chipLabel(c.name))
