@@ -27,11 +27,13 @@ const differing = [...comps10.keys()].filter(
 const transferredIn = differing.find((id) => !heldIds.has(id))!;
 const squadIds = [...differing.filter((id) => id !== transferredIn).slice(0, 14), transferredIn];
 
+let currentSquad = squadIds;
 const realFetch = globalThis.fetch;
 const seen: string[] = [];
 let forecastReply: () => Response;
 beforeEach(() => {
   seen.length = 0;
+  currentSquad = squadIds;
   forecastReply = () => Response.json({ ...gw11, parMargin: 7, marginProvisional: false });
   globalThis.fetch = (async (input: string | URL | Request) => {
     const url = String(input instanceof Request ? input.url : input);
@@ -40,14 +42,14 @@ beforeEach(() => {
     if (url.includes("/bootstrap-static/")) {
       return Response.json({
         events: [{ id: 10, is_current: true, finished: false, deadline_time: "2026-10-30T10:00:00Z" }],
-        elements: squadIds.map((id, i) => ({
+        elements: currentSquad.map((id, i) => ({
           id, team: 1 + (i % 2), element_type: i === 0 ? 1 : 3, web_name: `P${id}`, code: id,
         })),
         teams: [{ id: 1, short_name: "AAA" }, { id: 2, short_name: "BBB" }],
       });
     }
     if (url.includes("/live/")) {
-      return Response.json({ elements: squadIds.map((id) => ({ id, stats: { total_points: 2, minutes: 45, goals_conceded: 0 } })) });
+      return Response.json({ elements: currentSquad.map((id) => ({ id, stats: { total_points: 2, minutes: 45, goals_conceded: 0 } })) });
     }
     if (url.includes("/fixtures/")) {
       return Response.json([
@@ -57,7 +59,7 @@ beforeEach(() => {
     }
     if (url.includes("/picks/")) {
       return Response.json({
-        picks: squadIds.map((element, i) => ({ element, position: i + 1, multiplier: 1, is_captain: i === 5, is_vice_captain: i === 6 })),
+        picks: currentSquad.map((element, i) => ({ element, position: i + 1, multiplier: 1, is_captain: i === 5, is_vice_captain: i === 6 })),
         entry_history: { event_transfers_cost: 0 },
       });
     }
@@ -138,4 +140,28 @@ test("a failed guest forecast is not cached and the next call tries again", asyn
   forecastReply = () => Response.json(gw11);
   assert.equal((await GET(req("/api/live?teamId=999"))).status, 200);
   assert.equal(seen.filter((u) => u.includes("/api/forecast")).length, 2);
+});
+
+test("the owner's par and rank inputs come from the gw10 file, not next week's gw11", async () => {
+  const { GET } = await import("../../src/app/api/live/route.ts");
+  const json = await (await GET(req("/api/live"))).json();
+  const g10 = gw10 as unknown as { rankCalibration: unknown };
+  const g11 = gw11 as unknown as { rankCalibration: unknown };
+  assert.notDeepEqual(g10.rankCalibration, g11.rankCalibration); // the files really differ
+  assert.deepEqual(json.rankCalibration, g10.rankCalibration);
+});
+
+test("a guest's held player outside the committed pool keeps xP from their own forecast, marked as next week's", async () => {
+  const outOfPool = 99999999;
+  const ownComps = { appearance: 2, goals: 1.5 };
+  currentSquad = [...squadIds.slice(0, 14), outOfPool];
+  forecastReply = () => Response.json({ ...gw11, squadComponents: { [String(outOfPool)]: ownComps } });
+  const { GET } = await import("../../src/app/api/live/route.ts");
+  const json = await (await GET(req("/api/live?teamId=999"))).json();
+  assert.deepEqual(json.componentXpByElement[String(outOfPool)], ownComps);
+  assert.deepEqual(json.provisionalXpIds, [outOfPool]);
+  assert.deepEqual(json.componentXpByElement[String(squadIds[0])], comps10.get(squadIds[0])); // pool players stay on gw10
+  // the owner has no such fallback
+  const owner = await (await GET(req("/api/live"))).json();
+  assert.equal(owner.componentXpByElement[String(outOfPool)], undefined);
 });

@@ -432,7 +432,32 @@ export function loadForecastFor(gw: number): Forecast | null {
   if (!Number.isInteger(gw) || gw < 1) return null;
   const filePath = path.join(DATA_DIR, "forecast", `gw${gw}.json`);
   if (!fs.existsSync(filePath)) return null;
-  return JSON.parse(fs.readFileSync(filePath, "utf-8"));
+  return readForecastCached(filePath);
+}
+
+/** The newest committed forecast built for a gameweek at or before `gw`, or null. */
+export function loadForecastUpTo(gw: number): Forecast | null {
+  const dir = path.join(DATA_DIR, "forecast");
+  if (!fs.existsSync(dir)) return null;
+  const nums = fs
+    .readdirSync(dir)
+    .map((f) => /^gw(\d+)\.json$/.exec(f)?.[1])
+    .filter((n): n is string => n !== undefined)
+    .map(Number)
+    .filter((n) => n <= gw)
+    .sort((a, b) => b - a);
+  return nums.length ? readForecastCached(path.join(dir, `gw${nums[0]}.json`)) : null;
+}
+
+// A forecast file is 1MB+ and /api/live is polled every 60s: parse each once per file version.
+const forecastFileCache = new Map<string, { mtimeMs: number; forecast: Forecast }>();
+function readForecastCached(filePath: string): Forecast {
+  const mtimeMs = fs.statSync(filePath).mtimeMs;
+  const hit = forecastFileCache.get(filePath);
+  if (hit && hit.mtimeMs === mtimeMs) return hit.forecast;
+  const forecast: Forecast = JSON.parse(fs.readFileSync(filePath, "utf-8"));
+  forecastFileCache.set(filePath, { mtimeMs, forecast });
+  return forecast;
 }
 
 export function loadBootstrapSnapshot(): BootstrapSnapshot | null {

@@ -254,7 +254,3 @@ test("a goal conceded in a double only costs the current match's clean sheet", (
   assert.equal(p.remainingXp, 0.5 * perMatch + perMatch - 0.5 * (2 / 2));
 });
 
-test("in the second match of a double the minutes of the first are taken off", () => {
-  const p = playerProjection(el({ legs: 2, legsDone: 1, minutes: 135, points: 7 }), comps, "playing");
-  assert.equal(p.remainingXp, 0.5 * perMatch);
-});

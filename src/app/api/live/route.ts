@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { fpl, upstreamFailure } from "@/lib/fplApi";
-import { guestForecast, liveInputsFor } from "@/lib/liveInputs";
+import { guestForecastInputs, liveInputsFor } from "@/lib/liveInputs";
 import {
   buildLivePayload,
   liveGameweek,
@@ -37,7 +37,7 @@ export async function GET(req: NextRequest) {
     const inputs = liveInputsFor({
       liveGw: gameweek,
       owner,
-      guestForecast: owner ? null : await guestForecast(teamId, new URL(req.url)),
+      guestInputs: owner ? null : await guestForecastInputs(teamId, new URL(req.url)),
     });
     if (!inputs) {
       return NextResponse.json(

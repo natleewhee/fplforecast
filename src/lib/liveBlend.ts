@@ -13,6 +13,9 @@ export type BreakdownItem = { identifier: string; points: number; value: number 
 export type LiveElement = {
   points: number;
   minutes: number;
+  /** Minutes in the CURRENT match only. FPL's `minutes` is summed over a double gameweek, so
+   * status and decay read this one; absent on a single-match payload (then `minutes` is it). */
+  legMinutes?: number;
   goalsConceded: number; // live goals against the player's team, for the CS carve-out (KTD6)
   fixtureStarted: boolean;
   fixtureFinished: boolean;
@@ -80,6 +83,7 @@ export type LivePayload = {
   parBufferProvisional: number;
   nextDeadline: string | null; // the next not-yet-passed gameweek deadline, for the idle-state countdown
   rankCalibration: RankCalibration | null;
+  provisionalXpIds?: number[]; // players whose xP is next week's number (not in this gameweek's forecast pool)
 };
 
 // Minimal shapes of the FPL responses this module reads.
@@ -97,6 +101,7 @@ export type FplBootstrap = {
   elements: { id: number; team: number; element_type: number; web_name: string; code?: number }[];
   teams: { id: number; short_name: string }[];
 };
+type FplExplainEntry = { fixture?: number; stats: FplExplainStat[] };
 type FplExplainStat = { identifier: string; points: number; value: number };
 type FplLiveElement = {
   id: number;
@@ -104,7 +109,7 @@ type FplLiveElement = {
   // one entry per fixture (two for a double gameweek); FPL's own scoring
   // breakdown, already split into named categories with the points each
   // contributed -- the source for the tracker's score breakdown.
-  explain?: { stats: FplExplainStat[] }[];
+  explain?: FplExplainEntry[];
 };
 export type FplLive = { elements: FplLiveElement[] };
 /** The final whistle has gone. FPL sets `finished_provisional` when the match
@@ -138,6 +143,7 @@ export function currentFixture<T extends { finished?: boolean; finished_provisio
 }
 
 export type FplFixture = {
+  id?: number;
   event: number | null;
   started?: boolean;
   finished?: boolean;
@@ -198,6 +204,8 @@ export type LiveProjectionInputs = {
   parBuffer: number;
   parBufferProvisional: number;
   rankCalibration: RankCalibration | null;
+  /** Players whose components are next week's numbers (no entry in this gameweek's forecast). */
+  provisionalXpIds?: number[];
 };
 
 export function forecastLiveInputs(forecast: Forecast): LiveProjectionInputs {
@@ -262,16 +270,21 @@ export function buildLivePayload(args: {
     const teamId = elementById.get(el.id)?.team ?? -1;
     const list = fixturesByTeam.get(teamId) ?? [];
     const f = currentFixture(list);
-    // FPL's goals_conceded is summed over the gameweek; in a double only the
-    // current match's goals decide whether its clean sheet is still alive.
+    // FPL's `minutes` and `goals_conceded` are summed over the gameweek. In a double, read the
+    // current match's own figures off its explain entry (one per fixture, tagged with the fixture id).
     let goalsConceded = el.stats?.goals_conceded ?? 0;
+    let legMinutes: number | undefined;
     if (list.length > 1 && f) {
+      const entry = el.explain?.find((x) => x.fixture === f.id);
+      const stat = (id: string) => entry?.stats.find((x) => x.identifier === id)?.value;
+      legMinutes = stat("minutes") ?? 0;
       const against = f.team_h === teamId ? f.team_a_score : f.team_h_score;
-      if (typeof against === "number") goalsConceded = against;
+      goalsConceded = stat("goals_conceded") ?? (typeof against === "number" ? against : 0);
     }
     liveByElement[el.id] = {
       points: el.stats?.total_points ?? 0,
       minutes: el.stats?.minutes ?? 0,
+      legMinutes,
       goalsConceded,
       legs: list.length || 1,
       legsDone: list.filter((x) => isFixtureOver(x)).length,
@@ -391,6 +404,7 @@ export function buildLivePayload(args: {
     parBufferProvisional: inputs.parBufferProvisional,
     nextDeadline,
     rankCalibration: inputs.rankCalibration,
+    ...(inputs.provisionalXpIds?.length ? { provisionalXpIds: inputs.provisionalXpIds } : {}),
   };
 }
 
@@ -509,20 +523,23 @@ export function playerStatus(
 ): PlayerStatus {
   if (!el || !el.fixtureStarted) return "notStarted";
   if (el.fixtureFinished) return el.minutes > 0 ? "finished" : "didNotPlay";
-  if (el.minutes === 0) return "playing";
+  // In a double, `minutes` is summed over both matches; judge this match on its own.
+  const minutes = el.legMinutes ?? el.minutes;
+  const prevMinutes = prevEl ? prevEl.legMinutes ?? prevEl.minutes : undefined;
+  if (minutes === 0) return "playing";
   // FPL's `finished`/`finished_provisional` flags can lag the final whistle by
   // a poll or two while stats are checked. Minutes cannot legitimately sit at
   // or past 90' for two separate polls without the match being over -- unlike
   // the mid-game plateau below, this needs no minimum poll gap, since the
   // routine ~60s tick cadence would otherwise never clear the (higher) gap
   // threshold used to rule out a false off-pitch read.
-  if (prevEl && prevEl.minutes === el.minutes && el.minutes >= MATCH_MINUTES) return "finished";
+  if (prevEl && prevMinutes === minutes && minutes >= MATCH_MINUTES) return "finished";
   if (
     prevEl &&
     prevIso &&
-    prevEl.minutes === el.minutes &&
-    el.minutes < MATCH_MINUTES &&
-    !(el.minutes >= 44 && el.minutes <= 46) &&
+    prevMinutes === minutes &&
+    minutes < MATCH_MINUTES &&
+    !(minutes >= 44 && minutes <= 46) &&
     Date.parse(nowIso) - Date.parse(prevIso) >= OFF_PITCH_MIN_POLL_GAP_MS
   ) {
     return "offPitch";
@@ -551,8 +568,7 @@ export function playerProjection(
     case "playing": {
       const pointsSoFar = el?.points ?? 0;
       const later = Math.max(0, legs - legsDone - 1); // matches after the one in progress
-      // FPL's minutes run on across a double, so take off the finished matches.
-      const decay = decayFactor(Math.max(0, (el?.minutes ?? 0) - MATCH_MINUTES * legsDone));
+      const decay = decayFactor(el?.legMinutes ?? el?.minutes ?? 0);
       const killed = (el?.goalsConceded ?? 0) > 0;
       let remaining = 0;
       for (const [key, value] of Object.entries(components)) {
