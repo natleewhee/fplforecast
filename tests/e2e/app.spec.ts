@@ -1069,6 +1069,48 @@ test.describe("The short player card and the keyboard", () => {
   });
 });
 
+test.describe("Subs strip", () => {
+  test.beforeEach(async ({ page }) => {
+    await page.addInitScript(() => {
+      try {
+        localStorage.setItem("fpl-pitch-view", "3d");
+        localStorage.setItem("fpl-pitch-passing", "off");
+      } catch {}
+    });
+  });
+
+  test("Live: subs are a dashed strip in sub order, with name, score and icons; none are drawn on the pitch", async ({ page }) => {
+    await mockLive(page, { current: "a" });
+    await page.goto("/?tab=live");
+    const strip = page.getByTestId("subs-strip").first();
+    await strip.waitFor();
+    await expect(strip).toContainText("Subs");
+    const cards = strip.locator("button[data-tag]");
+    await expect(cards).toHaveCount(4);
+    // the goalkeeper is GK, the outfield subs are numbered 1, 2, 3 in the order they would come on
+    await expect(cards.nth(0)).toContainText("Kinsky");
+    await expect(cards.nth(0)).toContainText("GK");
+    await expect(cards.nth(1)).toContainText("Barry");
+    await expect(cards.nth(1)).toContainText("-2"); // his points
+    await expect(cards.nth(1).locator("span[title^='Sub number']")).toHaveText("1");
+    await expect(cards.nth(2).locator("span[title^='Sub number']")).toHaveText("2");
+    await expect(cards.nth(3).locator("span[title^='Sub number']")).toHaveText("3");
+    expect(await cards.first().evaluate((e) => getComputedStyle(e).borderTopStyle)).toBe("dashed");
+    // only the eleven are floating tags on the pitch
+    await expect(page.getByTestId("pitch3d").first().locator("div.pointer-events-none button[data-tag]")).toHaveCount(11);
+  });
+
+  test("Squad: subs show their expected points", async ({ page }) => {
+    await page.goto("/?tab=squad");
+    const pitch = page.locator(".panel", { has: page.getByText(/MODEL · GW/) }).first().getByTestId("pitch3d");
+    const strip = pitch.getByTestId("subs-strip");
+    await strip.waitFor();
+    const cards = strip.locator("button[data-tag]");
+    expect(await cards.count()).toBeGreaterThanOrEqual(3);
+    for (const text of await cards.allInnerTexts()) expect(text).toMatch(/\d+\.\d/); // an xP like 3.4
+  });
+});
+
 test.describe("Ball going round the pitch", () => {
   test.beforeEach(async ({ page }) => {
     await page.addInitScript(() => {

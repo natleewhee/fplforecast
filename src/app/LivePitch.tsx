@@ -258,6 +258,8 @@ export default function LivePitch({
   // bench player who came on for one. Everyone else sits on the bench strip.
   const onPitch = rows.filter((r) => (!r.isBench && !r.subbedOut) || r.subbedIn);
   const benched = rows.filter((r) => !onPitch.includes(r));
+  // the sub order is fixed by the squad: a sub who has come on keeps his number, so the others are not renumbered
+  const benchSlots = rows.filter((r) => r.isBench && r.position !== "GKP");
   const lines = ROWS.map((pos) => onPitch.filter((r) => r.position === pos)).filter((l) => l.length);
   const toPlay = onPitch.filter((r) => r.status === "notStarted" || r.status === "playing").length;
   const selected = selectedId != null ? rows.find((r) => r.id === selectedId) : undefined;
@@ -328,7 +330,7 @@ export default function LivePitch({
         <>
           <Pitch3D
             xi={lines.flat().map(to3d)}
-            bench={benched.map(to3d)}
+            bench={benched.map((r) => ({ ...to3d(r), benchOrder: benchSlots.findIndex((x) => x.id === r.id) + 1 }))}
             selectedId={selectedId}
             onSelect={openSheet}
             onUnavailable={() => setNo3d(true)}
