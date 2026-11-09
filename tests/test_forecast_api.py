@@ -9,6 +9,7 @@ stubbed, since this sandbox has no network access to fantasy.premierleague.com.
 from __future__ import annotations
 
 import json
+from datetime import datetime, timedelta
 from pathlib import Path
 
 import pytest
@@ -67,6 +68,16 @@ def _stub_fpl_get(monkeypatch, gw: int, picks: list[dict], entry_history: dict, 
 
 
 def test_build_forecast_for_team_returns_a_full_forecast_shaped_payload(monkeypatch):
+    # Pin "now" so the target GW is 11 whatever the real date: a day before
+    # GW11's deadline in the committed bootstrap.
+    gw11_deadline = datetime.fromisoformat(cf.deadline_time_for_gw(cf.load_bootstrap(), 11).replace("Z", "+00:00"))
+
+    class _PinnedDatetime(datetime):
+        @classmethod
+        def now(cls, tz=None):
+            return gw11_deadline - timedelta(days=1)
+
+    monkeypatch.setattr(forecast_api, "datetime", _PinnedDatetime)
     gw, picks, entry_history, owner_history = _latest_picks_and_history()
     # A guest's own chips, deliberately different from the owner's committed
     # history (wildcard GW4, bboost GW7), so reading the owner's file fails.
@@ -77,6 +88,7 @@ def test_build_forecast_for_team_returns_a_full_forecast_shaped_payload(monkeypa
 
     assert status == 200
     assert payload["basedOnGameweek"] == gw
+    assert payload["targetGameweek"] == 11
     assert len(payload["squad"]["players"]) == len(picks)
     assert payload["overridesApplied"] == 0  # a guest lookup never has overrides to apply
     assert payload["teamName"] == "Test Team"
