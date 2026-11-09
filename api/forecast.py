@@ -163,6 +163,8 @@ def build_forecast_for_team(team_id: int) -> tuple[int, dict]:
         squad_ids,
         overrides_applied=0,  # a guest has nowhere to persist a transfer override
         season_history=history,
+        # the out-of-sample record is scored on the app owner's squad, not this team's
+        include_model_record=False,
     )
     forecast["teamName"] = entry.get("name")
     forecast["managerName"] = f"{entry.get('player_first_name', '')} {entry.get('player_last_name', '')}".strip()

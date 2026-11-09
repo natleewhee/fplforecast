@@ -280,7 +280,7 @@ def _gw_model_vs_baseline(gw: int) -> dict | None:
     return None
 
 
-def build_history(hist: dict) -> dict | None:
+def build_history(hist: dict, include_model_record: bool = True) -> dict | None:
     """The season-so-far record for the history view: one row per finished
     gameweek (points, bench, rank, hits, team value + the model/baseline row
     if scored) and a summary line per completed past season."""
@@ -291,7 +291,7 @@ def build_history(hist: dict) -> dict | None:
     gameweeks = []
     for e in current:
         gw = e.get("event")
-        gameweeks.append(
+        row = (
             {
                 "gameweek": gw,
                 "points": e.get("points"),
@@ -302,9 +302,12 @@ def build_history(hist: dict) -> dict | None:
                 "transfers": e.get("event_transfers", 0),
                 "hit": e.get("event_transfers_cost", 0),
                 "teamValue": round((e.get("value") or 0) / 10, 1),
-                "modelVsBaseline": _gw_model_vs_baseline(gw) if gw else None,
             }
         )
+        if include_model_record:
+            # the out-of-sample record is the app owner's; a guest's rows omit it
+            row["modelVsBaseline"] = _gw_model_vs_baseline(gw) if gw else None
+        gameweeks.append(row)
     seasons = [
         {
             "season": p.get("season_name"),
@@ -322,6 +325,7 @@ def last_gameweek_review(
     based_on_gw: int,
     picks: list[dict],
     entry_history: dict,
+    include_model_record: bool = True,
 ) -> dict | None:
     """The 'decide -> watch -> learn' card: how the held squad actually did in
     the most recent finished gameweek, plus the model-vs-baseline row once that
@@ -363,7 +367,7 @@ def last_gameweek_review(
             "multiplier": pick.get("multiplier", 2 if flag == "is_captain" else 1),
         }
 
-    return {
+    review = {
         "gameweek": gw,
         "dataChecked": bool(event.get("data_checked")),
         "xiPoints": entry_history.get("points"),  # net of hits, captain doubled
@@ -372,8 +376,10 @@ def last_gameweek_review(
         "overallRank": entry_history.get("overall_rank"),
         "captain": _cap("is_captain"),
         "viceCaptain": _cap("is_vice_captain"),
-        "modelVsBaseline": _gw_model_vs_baseline(gw),
     }
+    if include_model_record:
+        review["modelVsBaseline"] = _gw_model_vs_baseline(gw)
+    return review
 
 
 def _availability_info(el: dict) -> dict:
@@ -1021,6 +1027,7 @@ def build_personal_forecast(
     squad_ids: list[int],
     overrides_applied: int = 0,
     season_history: dict | None = None,
+    include_model_record: bool = True,
 ) -> dict:
     """The team-specific half: given one manager's held squad (and their own
     season history, for the par-score/rank calibration), build the full
@@ -1360,10 +1367,12 @@ def build_personal_forecast(
             else None
         ),
         "captainEdge": captain_edge,
-        "runningRecord": load_running_record(),
-        "parCalibration": load_par_calibration_record(),
+        # The out-of-sample record is scored on the app owner's squad only, so a
+        # guest build (include_model_record=False) gets null, never the owner's numbers.
+        "runningRecord": load_running_record() if include_model_record else None,
+        "parCalibration": load_par_calibration_record() if include_model_record else None,
         "lastGameweek": last_gameweek_review(
-            bootstrap, elements_by_id, based_on_gw, picks, entry_history
+            bootstrap, elements_by_id, based_on_gw, picks, entry_history, include_model_record
         ),
         "upcoming": upcoming,
         "pool": pool,
@@ -1376,7 +1385,7 @@ def build_personal_forecast(
         "scenarios": scenarios,
         # Per-team chip windows (None = unknown, see compute_chip_status).
         "chips": compute_chip_status(bootstrap.get("chips"), season_history.get("chips"), target_gw),
-        "history": build_history(season_history),
+        "history": build_history(season_history, include_model_record),
     }
     return forecast
 
