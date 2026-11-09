@@ -16,6 +16,9 @@ export type LiveElement = {
   goalsConceded: number; // live goals against the player's team, for the CS carve-out (KTD6)
   fixtureStarted: boolean;
   fixtureFinished: boolean;
+  /** Matches this club plays in the gameweek (2 in a double) and how many are already over. Absent = a single match. */
+  legs?: number;
+  legsDone?: number;
   bonusPending?: boolean; // the match is over but FPL hasn't confirmed it yet, so bonus points can still land
   breakdown: BreakdownItem[]; // FPL's own scoring categories, summed across legs (double GW)
 };
@@ -144,6 +147,8 @@ export type FplFixture = {
   team_a: number;
   team_h_difficulty?: number | null;
   team_a_difficulty?: number | null;
+  team_h_score?: number | null;
+  team_a_score?: number | null;
 };
 type FplPick = { element: number; position: number; multiplier: number; is_captain: boolean; is_vice_captain: boolean };
 export type FplPicks = {
@@ -257,10 +262,19 @@ export function buildLivePayload(args: {
     const teamId = elementById.get(el.id)?.team ?? -1;
     const list = fixturesByTeam.get(teamId) ?? [];
     const f = currentFixture(list);
+    // FPL's goals_conceded is summed over the gameweek; in a double only the
+    // current match's goals decide whether its clean sheet is still alive.
+    let goalsConceded = el.stats?.goals_conceded ?? 0;
+    if (list.length > 1 && f) {
+      const against = f.team_h === teamId ? f.team_a_score : f.team_h_score;
+      if (typeof against === "number") goalsConceded = against;
+    }
     liveByElement[el.id] = {
       points: el.stats?.total_points ?? 0,
       minutes: el.stats?.minutes ?? 0,
-      goalsConceded: el.stats?.goals_conceded ?? 0,
+      goalsConceded,
+      legs: list.length || 1,
+      legsDone: list.filter((x) => isFixtureOver(x)).length,
       // Minutes already on the clock also mean "started", but only for a single
       // fixture: in a double gameweek they may belong to the first match.
       fixtureStarted: hasStarted(f, now) || (list.length <= 1 && (el.stats?.minutes ?? 0) > 0),
@@ -516,26 +530,35 @@ export function playerStatus(
   return "playing";
 }
 
+/* Double gameweeks: the engine adds both matches into one component total
+ * (engine/model.py), so the per-match split here is an even one:
+ * components / legs. Per-match components would need an engine change. */
 export function playerProjection(
   el: LiveElement | undefined,
   components: Record<string, number>,
   status: PlayerStatus,
 ): PlayerProjection {
+  const legs = Math.max(1, el?.legs ?? 1);
+  const legsDone = Math.min(legs, Math.max(0, el?.legsDone ?? 0));
   switch (status) {
     case "notStarted": {
-      const remaining = remainingXp(components, 1, false);
-      // Banked points are 0 before a single match, but not between the two
-      // matches of a double gameweek.
+      // Every match still to start counts in full. Between the two matches of
+      // a double only the second is left, on top of the points already banked.
+      const remaining = remainingXp(components, (legs - legsDone) / legs, false);
       const banked = el?.points ?? 0;
       return { pointsSoFar: banked, remainingXp: remaining, contribution: banked + remaining };
     }
     case "playing": {
       const pointsSoFar = el?.points ?? 0;
-      const remaining = remainingXp(
-        components,
-        decayFactor(el?.minutes ?? 0),
-        (el?.goalsConceded ?? 0) > 0,
-      );
+      const later = Math.max(0, legs - legsDone - 1); // matches after the one in progress
+      // FPL's minutes run on across a double, so take off the finished matches.
+      const decay = decayFactor(Math.max(0, (el?.minutes ?? 0) - MATCH_MINUTES * legsDone));
+      const killed = (el?.goalsConceded ?? 0) > 0;
+      let remaining = 0;
+      for (const [key, value] of Object.entries(components)) {
+        const current = key === "cleanSheet" && killed ? 0 : decay;
+        remaining += (value * (later + current)) / legs;
+      }
       return { pointsSoFar, remainingXp: remaining, contribution: pointsSoFar + remaining };
     }
     case "offPitch":

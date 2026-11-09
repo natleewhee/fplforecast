@@ -427,6 +427,14 @@ export function loadLatestForecast(): Forecast | null {
   return JSON.parse(fs.readFileSync(path.join(dir, latest), "utf-8"));
 }
 
+/** The committed forecast built FOR a given gameweek (data/forecast/gw{n}.json), or null if there is none. */
+export function loadForecastFor(gw: number): Forecast | null {
+  if (!Number.isInteger(gw) || gw < 1) return null;
+  const filePath = path.join(DATA_DIR, "forecast", `gw${gw}.json`);
+  if (!fs.existsSync(filePath)) return null;
+  return JSON.parse(fs.readFileSync(filePath, "utf-8"));
+}
+
 export function loadBootstrapSnapshot(): BootstrapSnapshot | null {
   const found = latestFile("bootstrap-static");
   if (!found) return null;
