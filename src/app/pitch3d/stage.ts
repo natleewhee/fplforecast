@@ -1,6 +1,23 @@
 import * as THREE from "three";
 import { SKIN_STEPS, type HairStyle } from "@/lib/appearance";
 import { BENCH_Z, SEAT_Y } from "./spots";
+import {
+  BROADCAST,
+  GLIDE_SECONDS,
+  benchCheerPose,
+  blend,
+  cleanSheetPose,
+  clamp01,
+  ease,
+  focusShot,
+  goalPose,
+  momentSeconds,
+  restingPose,
+  momentsFor,
+  type MomentKind,
+  type Pose,
+  type Shot,
+} from "./moves";
 
 /* The 3D Squad pitch: stylised low-poly figures in kit colours on a floodlit
  * pitch, with the bench seated in a dugout at the side. Built from rounded
@@ -25,6 +42,8 @@ export type FigureDef = {
   captain: boolean;
   bench: boolean;
   dim?: number; // 0..1, fades players who have not played or are off
+  goals?: number; // goals scored: he celebrates when tapped
+  cleanSheet?: boolean; // clean sheet: he puts up the shield when tapped
 
   x: number;
   z: number;
@@ -178,7 +197,30 @@ function pitchTexture() {
 /** Heights about 1.5 times stronger than real, so the differences read on a phone. */
 const scaleFor = (cm: number) => 1 + ((cm - 183) / 183) * 1.5;
 
-type Figure = { g: THREE.Group; ring: THREE.Mesh; hit: THREE.Mesh; scale: number; def: FigureDef; owned: THREE.BufferGeometry[]; mat: THREE.Material };
+type Joints = { body: THREE.Group; armL: THREE.Group; armR: THREE.Group; hipL: THREE.Group; hipR: THREE.Group; kneeL: THREE.Group; kneeR: THREE.Group };
+type Shield = { group: THREE.Group; wall: THREE.Mesh; emblem: THREE.Mesh };
+/** What a figure is doing besides standing: celebrations queued for a tap, a glide to a new spot. */
+type Anim = {
+  queue: MomentKind[];
+  current: { kind: MomentKind; t: number; burst: boolean } | null;
+  slide: { fromX: number; fromZ: number; t: number } | null;
+  pop: number | null; // seconds since he appeared, for a new arrival
+};
+type Figure = {
+  g: THREE.Group;
+  ring: THREE.Mesh;
+  hit: THREE.Mesh;
+  scale: number;
+  def: FigureDef;
+  owned: THREE.BufferGeometry[];
+  disposables: { dispose(): void }[];
+  mat: THREE.Material;
+  joints: Joints;
+  shield: Shield | null;
+  anim: Anim;
+  homeX: number;
+  homeZ: number;
+};
 
 function buildFigure(def: FigureDef): Figure {
   const { kit } = def;
@@ -220,6 +262,9 @@ function buildFigure(def: FigureDef): Figure {
   g.add(b);
   b.add(new THREE.Mesh(body, mat));
 
+  const arms: THREE.Group[] = [];
+  const hips: THREE.Group[] = [];
+  const knees: THREE.Group[] = [];
   for (const side of [-1, 1]) {
     const piv = new THREE.Group();
     piv.position.set(side * 0.58, 1.95, 0);
@@ -227,6 +272,7 @@ function buildFigure(def: FigureDef): Figure {
     // standing: arms hang a little away from the body; seated: hands on knees
     piv.rotation.set(def.bench ? -0.7 : 0, 0, side * (def.bench ? 0.12 : 0.08));
     b.add(piv);
+    arms.push(piv);
 
     const hip = new THREE.Group();
     hip.position.set(side * 0.2, 0.92, 0);
@@ -240,6 +286,8 @@ function buildFigure(def: FigureDef): Figure {
       knee.rotation.x = 1.5;
     }
     b.add(hip);
+    hips.push(hip);
+    knees.push(knee);
   }
   if (def.bench) b.position.y = -0.43;
 
@@ -259,23 +307,69 @@ function buildFigure(def: FigureDef): Figure {
   hit.userData.id = def.id;
   g.add(hit);
 
+  const disposables: { dispose(): void }[] = [];
+  let shield: Shield | null = null;
+  if (def.cleanSheet) {
+    // a glowing wall that rises around him, with a shield badge floating above his head
+    const glow = new THREE.MeshBasicMaterial({ color: 0x7fd8ff, transparent: true, opacity: 0, side: THREE.DoubleSide, depthWrite: false });
+    const wallGeo = new THREE.CylinderGeometry(1.45, 1.45, 3.1, 28, 1, true);
+    const wall = new THREE.Mesh(wallGeo, glow);
+    wall.visible = false;
+    const badge = new THREE.Shape();
+    badge.moveTo(0, 0.5);
+    badge.lineTo(0.42, 0.34);
+    badge.lineTo(0.38, -0.08);
+    badge.quadraticCurveTo(0.3, -0.38, 0, -0.55);
+    badge.quadraticCurveTo(-0.3, -0.38, -0.38, -0.08);
+    badge.lineTo(-0.42, 0.34);
+    badge.closePath();
+    const badgeGeo = new THREE.ExtrudeGeometry(badge, { depth: 0.12, bevelEnabled: false });
+    const badgeMat = new THREE.MeshBasicMaterial({ color: 0xbfeaff, transparent: true, opacity: 0 });
+    const emblem = new THREE.Mesh(badgeGeo, badgeMat);
+    emblem.visible = false;
+    const group = new THREE.Group();
+    group.add(wall, emblem);
+    g.add(group);
+    shield = { group, wall, emblem };
+    disposables.push(glow, wallGeo, badgeGeo, badgeMat);
+  }
+
   const scale = scaleFor(def.cm);
   g.scale.setScalar(scale);
-  g.position.set(def.x, def.bench ? 0.05 : 0.05, def.z);
+  g.position.set(def.x, 0.05, def.z);
   g.rotation.y = 0;
-  return { g, ring, hit, scale, def, owned, mat };
+  return {
+    g,
+    ring,
+    hit,
+    scale,
+    def,
+    owned,
+    disposables,
+    mat,
+    joints: { body: b, armL: arms[0], armR: arms[1], hipL: hips[0], hipR: hips[1], kneeL: knees[0], kneeR: knees[1] },
+    shield,
+    anim: { queue: [], current: null, slide: null, pop: null },
+    homeX: def.x,
+    homeZ: def.z,
+  };
 }
 
 export type StageHandle = {
   setPlayers(defs: FigureDef[]): void;
+  /** Tapping a player: the camera glides to him and he celebrates; null glides back. */
   setSelected(id: number | null): void;
   dispose(): void;
 };
+
+/** What the stage reports for the page (and the tests) to show. */
+export type StageState = { focusId: number | null; celebrating: MomentKind | null };
 
 export type StageOptions = {
   host: HTMLElement; // sized by CSS; the stage fills it
   tagLayer: HTMLElement; // holds one element per player, marked data-tag="<id>"
   onPick(id: number): void;
+  onState?(state: StageState): void;
 };
 
 /** Create the scene on a canvas of its own (so a remount never reuses a lost context).
@@ -297,7 +391,8 @@ export function createStage(opts: StageOptions): StageHandle {
   }
 }
 
-function setup(renderer: THREE.WebGLRenderer, canvas: HTMLCanvasElement, { host, tagLayer, onPick }: StageOptions): StageHandle {
+function setup(renderer: THREE.WebGLRenderer, canvas: HTMLCanvasElement, opts: StageOptions): StageHandle {
+  const { host, tagLayer, onPick } = opts;
   renderer.outputColorSpace = THREE.LinearSRGBColorSpace;
 
   const scene = new THREE.Scene();
@@ -333,23 +428,232 @@ function setup(renderer: THREE.WebGLRenderer, canvas: HTMLCanvasElement, { host,
     scene.add(new THREE.Mesh(own(bake(parts)), own(new THREE.MeshLambertMaterial({ vertexColors: true }))));
   }
 
-  // the broadcast view: fov is for a stage 0.8 wide per 1 high, widened/narrowed to the real shape
-  const CAM = { pos: [0, 27, 30], look: [0, 0, -5.5], fov: 44 };
+  let reduceMotion = false;
+  try {
+    reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  } catch {}
+
+  // The camera: where it is now, and a glide to somewhere else. fov is for a stage 0.8 wide per
+  // 1 high, widened or narrowed to the real shape.
+  const cam: Shot = { pos: [...BROADCAST.pos], look: [...BROADCAST.look], fov: BROADCAST.fov };
+  let glide: { from: Shot; to: Shot; t: number } | null = null;
+  const lookAt = new THREE.Vector3();
+  function applyCamera() {
+    camera.fov = ((2 * Math.atan((Math.tan((cam.fov * Math.PI) / 360) * 0.8) / Math.min(camera.aspect, 1))) * 180) / Math.PI;
+    camera.position.fromArray(cam.pos);
+    camera.lookAt(lookAt.fromArray(cam.look));
+    camera.updateProjectionMatrix();
+    camera.updateMatrixWorld();
+  }
+  function goTo(shot: Shot) {
+    if (reduceMotion) {
+      cam.pos = [...shot.pos];
+      cam.look = [...shot.look];
+      cam.fov = shot.fov;
+      glide = null;
+      applyCamera();
+      draw();
+      return;
+    }
+    glide = { from: { pos: [...cam.pos], look: [...cam.look], fov: cam.fov }, to: shot, t: 0 };
+    draw();
+  }
+
   let figures: Figure[] = [];
   let selected: number | null = null;
   let size = { w: 0, h: 0 };
   let raf = 0;
+  let lastTs = 0;
   let disposed = false;
+  let celebrating: MomentKind | null = null;
+  const report = () => opts.onState?.({ focusId: selected, celebrating });
 
-  function frame() {
+  /* confetti: one Points object, reused */
+  const CONFETTI = 90;
+  let confetti: { pts: THREE.Points; vel: Float32Array; life: Float32Array; pos: Float32Array; col: Float32Array } | null = null;
+  function burst(x: number, y: number, z: number) {
+    if (reduceMotion) return;
+    if (!confetti) {
+      const geo = new THREE.BufferGeometry();
+      const pos = new Float32Array(CONFETTI * 3);
+      const col = new Float32Array(CONFETTI * 3);
+      geo.setAttribute("position", new THREE.BufferAttribute(pos, 3));
+      geo.setAttribute("color", new THREE.BufferAttribute(col, 3));
+      const pts = new THREE.Points(own(geo), own(new THREE.PointsMaterial({ size: 0.4, vertexColors: true, transparent: true, depthWrite: false })));
+      pts.frustumCulled = false;
+      scene.add(pts);
+      confetti = { pts, vel: new Float32Array(CONFETTI * 3), life: new Float32Array(CONFETTI), pos, col };
+    }
+    const palette = [[0.21, 0.88, 0.64], [0.95, 0.73, 0.3], [1, 1, 1], [0.5, 0.77, 0.94]];
+    for (let i = 0; i < CONFETTI; i++) {
+      const a = Math.random() * Math.PI * 2;
+      const sp = 2 + Math.random() * 5;
+      confetti.pos.set([x, y, z], i * 3);
+      confetti.vel.set([Math.cos(a) * sp, 5 + Math.random() * 4, Math.sin(a) * sp], i * 3);
+      confetti.life[i] = 1.6 + Math.random() * 0.8;
+      confetti.col.set(palette[i % palette.length], i * 3);
+    }
+  }
+  function stepConfetti(dt: number): boolean {
+    if (!confetti) return false;
+    let alive = false;
+    for (let i = 0; i < CONFETTI; i++) {
+      if (confetti.life[i] <= 0) {
+        confetti.pos[i * 3 + 1] = -100;
+        continue;
+      }
+      alive = true;
+      confetti.life[i] -= dt;
+      confetti.vel[i * 3 + 1] -= 14 * dt;
+      for (let k = 0; k < 3; k++) confetti.pos[i * 3 + k] += confetti.vel[i * 3 + k] * dt;
+    }
+    confetti.pts.geometry.attributes.position.needsUpdate = true;
+    confetti.pts.geometry.attributes.color.needsUpdate = true;
+    return alive;
+  }
+
+  /** Put a figure's joints in a pose, on top of its resting pose (standing or seated). */
+  function applyPose(f: Figure, pose: Pose, now: number) {
+    const j = f.joints;
+    const seated = f.def.bench;
+    j.body.position.y = (seated ? -0.43 : 0) + pose.bodyY;
+    j.body.rotation.x = pose.bodyRx;
+    const standArm = (side: number) => ({ x: seated ? -0.7 : 0, z: side * (seated ? 0.12 : 0.08) });
+    const L = standArm(-1);
+    const R = standArm(1);
+    j.armL.rotation.set(L.x + pose.armL.x, 0, L.z + pose.armL.z);
+    j.armR.rotation.set(R.x + pose.armR.x, 0, R.z + pose.armR.z);
+    j.hipL.rotation.set((seated ? -1.5 : 0) + pose.hipL.x, 0, pose.hipL.z);
+    j.hipR.rotation.set((seated ? -1.5 : 0) + pose.hipR.x, 0, pose.hipR.z);
+    j.kneeL.rotation.x = (seated ? 1.5 : 0) + pose.kneeLx;
+    j.kneeR.rotation.x = (seated ? 1.5 : 0) + pose.kneeRx;
+    f.g.position.set(f.homeX, 0.05, f.homeZ + pose.dz);
+    f.g.rotation.y = pose.yaw;
+    if (f.shield) {
+      const sh = f.shield;
+      const on = pose.shieldAlpha > 0.01 && pose.shieldRise > 0;
+      sh.wall.visible = sh.emblem.visible = on;
+      if (on) {
+        sh.wall.scale.y = Math.max(0.01, pose.shieldRise);
+        sh.wall.position.y = 1.55 * pose.shieldRise;
+        (sh.wall.material as THREE.MeshBasicMaterial).opacity = 0.3 * pose.shieldAlpha * (0.8 + 0.2 * Math.sin(now * 6));
+        sh.emblem.position.set(0, 3.55 + Math.sin(now * 3) * 0.08, 0);
+        sh.emblem.rotation.y = now * 1.4;
+        sh.emblem.scale.setScalar(pose.shieldRise);
+        (sh.emblem.material as THREE.MeshBasicMaterial).opacity = pose.shieldAlpha;
+      }
+    }
+  }
+  const restPose = (f: Figure) => applyPose(f, restingPose(), 0);
+
+  function startNext(f: Figure, delay = 0) {
+    const kind = f.anim.queue.shift();
+    f.anim.current = kind ? { kind, t: -delay, burst: false } : null;
+    const now = f.anim.current?.kind ?? null;
+    if (now !== celebrating) {
+      celebrating = now;
+      report();
+    }
+  }
+
+  /** Advance every animation by dt. Returns true while anything is still moving. */
+  function update(dt: number, now: number): boolean {
+    let active = false;
+    if (glide) {
+      glide.t += dt;
+      const k = ease(glide.t / GLIDE_SECONDS);
+      for (let i = 0; i < 3; i++) {
+        cam.pos[i] = glide.from.pos[i] + (glide.to.pos[i] - glide.from.pos[i]) * k;
+        cam.look[i] = glide.from.look[i] + (glide.to.look[i] - glide.from.look[i]) * k;
+      }
+      cam.fov = glide.from.fov + (glide.to.fov - glide.from.fov) * k;
+      applyCamera();
+      if (glide.t >= GLIDE_SECONDS) glide = null;
+      else active = true;
+    }
+    for (const f of figures) {
+      const a = f.anim;
+      // arriving or gliding to a new spot (another gameweek's lineup)
+      if (a.pop != null) {
+        a.pop += dt;
+        const k = ease(a.pop / 0.45);
+        f.g.scale.setScalar(Math.max(0.001, f.scale * k));
+        if (a.pop >= 0.45) {
+          a.pop = null;
+          f.g.scale.setScalar(f.scale);
+        } else active = true;
+      }
+      if (a.slide) {
+        a.slide.t += dt;
+        const k = ease(a.slide.t / 0.8);
+        const x = a.slide.fromX + (f.homeX - a.slide.fromX) * k;
+        const z = a.slide.fromZ + (f.homeZ - a.slide.fromZ) * k;
+        f.g.position.set(x, 0.05, z);
+        const phase = a.slide.t * 11;
+        const moving = k < 1;
+        const j = f.joints;
+        if (moving && !f.def.bench) {
+          j.hipL.rotation.x = Math.sin(phase) * 0.6;
+          j.hipR.rotation.x = -Math.sin(phase) * 0.6;
+          j.kneeL.rotation.x = Math.max(0, Math.cos(phase)) * 0.7;
+          j.kneeR.rotation.x = Math.max(0, -Math.cos(phase)) * 0.7;
+        }
+        if (!moving) {
+          a.slide = null;
+          if (!a.current) restPose(f); // back to standing or seated, as he was built
+          f.g.position.set(f.homeX, 0.05, f.homeZ);
+        } else active = true;
+      }
+      if (a.current) {
+        const cur = a.current;
+        cur.t += dt;
+        const len = momentSeconds(cur.kind, f.def.bench);
+        if (cur.t < 0) {
+          active = true; // waiting for the camera to arrive
+        } else if (cur.t >= len) {
+          restPose(f);
+          startNext(f, 0.2);
+          if (!a.current) {
+            // finished: nothing left to play for this player
+            if (celebrating !== null) {
+              celebrating = null;
+              report();
+            }
+          }
+        } else {
+          const raw = cur.kind === "goal" ? (f.def.bench ? benchCheerPose(cur.t) : goalPose(cur.t, f.def.goals ?? 1)) : cleanSheetPose(cur.t);
+          // ease out of the resting pose over the first moments
+          applyPose(f, blend(restingPose(), raw, clamp01(cur.t / 0.15)), now);
+          if (raw.burst && !cur.burst) {
+            cur.burst = true;
+            burst(f.g.position.x, 3 * f.scale, f.g.position.z);
+          }
+          active = true;
+        }
+      }
+    }
+    if (stepConfetti(dt)) active = true;
+    return active;
+  }
+
+  function frame(ts: number) {
     raf = 0;
     if (disposed || !size.w) return;
+    const dt = lastTs ? Math.min(0.05, (ts - lastTs) / 1000) : 1 / 60;
+    lastTs = ts;
+    const keep = update(dt, ts / 1000);
     renderer.render(scene, camera);
     placeTags();
+    if (keep && !document.hidden) raf = requestAnimationFrame(frame);
+    else lastTs = 0;
   }
   const draw = () => {
     if (!raf && !disposed) raf = requestAnimationFrame(frame);
   };
+  const onVisible = () => {
+    if (!document.hidden) draw();
+  };
+  document.addEventListener("visibilitychange", onVisible);
 
   const tmp = new THREE.Vector3();
   const px = (x: number, y: number, z: number): [number, number] => {
@@ -390,11 +694,7 @@ function setup(renderer: THREE.WebGLRenderer, canvas: HTMLCanvasElement, { host,
     renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
     renderer.setSize(w, h, false);
     camera.aspect = w / h;
-    camera.fov = ((2 * Math.atan((Math.tan((CAM.fov * Math.PI) / 360) * 0.8) / Math.min(camera.aspect, 1))) * 180) / Math.PI;
-    camera.position.fromArray(CAM.pos);
-    camera.lookAt(new THREE.Vector3().fromArray(CAM.look));
-    camera.updateProjectionMatrix();
-    camera.updateMatrixWorld();
+    applyCamera();
     draw();
   }
   const ro = new ResizeObserver(resize);
@@ -416,6 +716,7 @@ function setup(renderer: THREE.WebGLRenderer, canvas: HTMLCanvasElement, { host,
     for (const f of figures) {
       scene.remove(f.g);
       f.owned.forEach((g) => g.dispose());
+      f.disposables.forEach((d) => d.dispose());
       f.mat.dispose();
       f.g.traverse((o) => {
         const m = o as THREE.Mesh;
@@ -430,17 +731,64 @@ function setup(renderer: THREE.WebGLRenderer, canvas: HTMLCanvasElement, { host,
 
   return {
     setPlayers(defs) {
+      const before = new Map(figures.map((f) => [f.def.id, { x: f.g.position.x, z: f.g.position.z, homeX: f.homeX, homeZ: f.homeZ, anim: f.anim }]));
       clearFigures();
       figures = defs.map(buildFigure);
       for (const f of figures) {
         f.ring.visible = f.def.id === selected;
+        const prev = before.get(f.def.id);
+        if (prev) {
+          f.anim.queue = prev.anim.queue;
+          f.anim.current = prev.anim.current;
+          // a different lineup (another gameweek): glide from where he stood
+          const moved = Math.abs(prev.homeX - f.homeX) > 0.05 || Math.abs(prev.homeZ - f.homeZ) > 0.05;
+          if (moved && !reduceMotion) {
+            f.anim.slide = { fromX: prev.x, fromZ: prev.z, t: 0 };
+            f.g.position.set(prev.x, 0.05, prev.z);
+          }
+        } else if (before.size > 0 && !reduceMotion) {
+          f.anim.pop = 0;
+          f.g.scale.setScalar(0.001);
+        }
         scene.add(f.g);
+      }
+      if (selected != null) {
+        // the focused player may have moved, or may no longer be in the lineup
+        const f = figures.find((x) => x.def.id === selected);
+        const was = before.get(selected);
+        if (!f) {
+          selected = null;
+          celebrating = null;
+          goTo(BROADCAST);
+          report();
+        } else if (was && (Math.abs(was.homeX - f.homeX) > 0.05 || Math.abs(was.homeZ - f.homeZ) > 0.05)) {
+          goTo(focusShot(f.homeX, f.homeZ, f.scale));
+        }
       }
       draw();
     },
     setSelected(id) {
+      if (id === selected) return;
+      const prev = figures.find((f) => f.def.id === selected);
+      if (prev) {
+        prev.anim.queue = [];
+        prev.anim.current = null;
+        restPose(prev);
+      }
       selected = id;
       for (const f of figures) f.ring.visible = f.def.id === id;
+      celebrating = null;
+      const f = figures.find((x) => x.def.id === id);
+      if (!f) {
+        goTo(BROADCAST);
+      } else {
+        goTo(focusShot(f.homeX, f.homeZ, f.scale));
+        if (!reduceMotion) {
+          f.anim.queue = momentsFor(f.def.goals, f.def.cleanSheet);
+          startNext(f, GLIDE_SECONDS * 0.7);
+        }
+      }
+      report();
       draw();
     },
     dispose() {
@@ -449,6 +797,10 @@ function setup(renderer: THREE.WebGLRenderer, canvas: HTMLCanvasElement, { host,
       ro.disconnect();
       canvas.removeEventListener("click", onClick);
       canvas.removeEventListener("webglcontextrestored", draw);
+      document.removeEventListener("visibilitychange", onVisible);
+      selected = null;
+      celebrating = null;
+      report();
       clearFigures();
       staticOwned.forEach((o) => o.dispose());
       renderer.dispose();

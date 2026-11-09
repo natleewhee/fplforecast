@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useRef, useState, type ReactNode, type TouchEvent } from "react";
+import { useCallback, useEffect, useRef, useState, type ReactNode, type TouchEvent } from "react";
+import { flushSync } from "react-dom";
 
 type Tab = { id: string; label: string; content: ReactNode };
 
@@ -13,6 +14,40 @@ const SWIPE_THRESHOLD_PX = 60;
 export default function AppTabs({ tabs, deadline }: { tabs: Tab[]; deadline?: string | null }) {
   const [active, setActive] = useState(0);
   const touchStartX = useRef<number | null>(null);
+  const activeRef = useRef(0);
+  const vtRun = useRef(0);
+  useEffect(() => {
+    activeRef.current = active;
+  });
+
+  // Switching tabs slides the content pane with the browser's own view transitions (no library).
+  // Browsers without them, and people who ask for reduced motion, get the plain switch.
+  const go = useCallback((next: number | ((a: number) => number)) => {
+    const to = typeof next === "function" ? next(activeRef.current) : next;
+    if (to === activeRef.current) return;
+    const doc = document as Document & { startViewTransition?: (cb: () => void) => { finished: Promise<void> } };
+    let reduce = false;
+    try {
+      reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    } catch {}
+    if (!doc.startViewTransition || reduce) {
+      setActive(to);
+      return;
+    }
+    const root = document.documentElement;
+    root.dataset.vtDir = to > activeRef.current ? "fwd" : "back";
+    // a quick second tap starts a new transition; only the latest one may clear the direction
+    const run = ++vtRun.current;
+    const clear = () => {
+      if (run === vtRun.current) delete root.dataset.vtDir;
+    };
+    try {
+      doc.startViewTransition(() => flushSync(() => setActive(to))).finished.then(clear, clear);
+    } catch {
+      clear();
+      setActive(to);
+    }
+  }, []);
   const touchDeltaX = useRef(0);
 
   // Which tab opens: ?tab=<id> if given, else the planning view (Squad) while the
@@ -46,11 +81,11 @@ export default function AppTabs({ tabs, deadline }: { tabs: Tab[]; deadline?: st
   useEffect(() => {
     const onGoto = (e: Event) => {
       const i = tabs.findIndex((t) => t.id === (e as CustomEvent<string>).detail);
-      if (i >= 0) setActive(i);
+      if (i >= 0) go(i);
     };
     window.addEventListener("gaffer:goto-tab", onGoto);
     return () => window.removeEventListener("gaffer:goto-tab", onGoto);
-  }, [tabs]);
+  }, [tabs, go]);
 
   const onTouchStart = (e: TouchEvent) => {
     touchStartX.current = e.touches[0].clientX;
@@ -62,9 +97,9 @@ export default function AppTabs({ tabs, deadline }: { tabs: Tab[]; deadline?: st
   };
   const onTouchEnd = () => {
     if (touchDeltaX.current < -SWIPE_THRESHOLD_PX && active < tabs.length - 1) {
-      setActive((a) => a + 1);
+      go((a) => a + 1);
     } else if (touchDeltaX.current > SWIPE_THRESHOLD_PX && active > 0) {
-      setActive((a) => a - 1);
+      go((a) => a - 1);
     }
     touchStartX.current = null;
     touchDeltaX.current = 0;
@@ -75,7 +110,7 @@ export default function AppTabs({ tabs, deadline }: { tabs: Tab[]; deadline?: st
       <div className="sticky top-0 z-20 -mx-4 mb-3 border-b border-line bg-[var(--bg-0)]/95 px-4 backdrop-blur">
         <div className="segment w-full">
           {tabs.map((t, i) => (
-            <button key={t.id} data-active={active === i} onClick={() => setActive(i)} className="flex-1">
+            <button key={t.id} data-active={active === i} onClick={() => go(i)} className="flex-1">
               {t.label}
             </button>
           ))}
@@ -94,8 +129,13 @@ export default function AppTabs({ tabs, deadline }: { tabs: Tab[]; deadline?: st
             transform: `translateX(-${(active * 100) / tabs.length}%)`,
           }}
         >
-          {tabs.map((t) => (
-            <div key={t.id} className="shrink-0 space-y-4" style={{ width: `${100 / tabs.length}%` }}>
+          {tabs.map((t, i) => (
+            <div
+              key={t.id}
+              className="shrink-0 space-y-4"
+              // only the open tab is captured for the slide, not every tab side by side
+              style={{ width: `${100 / tabs.length}%`, viewTransitionName: active === i ? "tabpane" : "none" }}
+            >
               {t.content}
             </div>
           ))}
