@@ -1,5 +1,6 @@
 import * as THREE from "three";
 import { SKIN_STEPS, type HairStyle } from "@/lib/appearance";
+import { BENCH_X, BENCH_Z0, SEAT_Y } from "./spots";
 
 /* The 3D Squad pitch: stylised low-poly figures in kit colours on a floodlit
  * pitch, with the bench seated in a dugout at the side. Built from rounded
@@ -27,24 +28,6 @@ export type FigureDef = {
   z: number;
 };
 
-const BENCH_X = 13.3;
-const BENCH_Z0 = -2.85;
-const SEAT_Y = 0.37;
-const BENCH_ZS = [-5.4, -3.7, -2.0, -0.3];
-
-/** Seat positions for the bench, in order. */
-export function benchSeat(i: number): { x: number; z: number } {
-  return { x: BENCH_X, z: BENCH_ZS[i] ?? BENCH_ZS[BENCH_ZS.length - 1] };
-}
-
-/** x/z for each row of the starting XI: keeper at the back, forwards up front. */
-export function formationSpots(rows: number[]): { x: number; z: number }[][] {
-  const zs = rows.length === 4 ? [-13.5, -7.5, -1.5, 6] : rows.map((_, i) => -12 + (i * 19) / Math.max(rows.length - 1, 1));
-  return rows.map((n, r) => {
-    const spacing = n <= 1 ? 0 : Math.min(6.5, 17 / (n - 1));
-    return Array.from({ length: n }, (_, i) => ({ x: (i - (n - 1) / 2) * spacing, z: zs[r] }));
-  });
-}
 
 type Part = { geo: THREE.BufferGeometry; color: string; m: THREE.Matrix4 };
 type PartOpts = { x?: number; y?: number; z?: number; rx?: number; ry?: number; rz?: number; sx?: number; sy?: number; sz?: number };
@@ -287,15 +270,31 @@ export type StageHandle = {
 };
 
 export type StageOptions = {
-  canvas: HTMLCanvasElement;
   host: HTMLElement; // sized by CSS; the stage fills it
   tagLayer: HTMLElement; // holds one element per player, marked data-tag="<id>"
   onPick(id: number): void;
 };
 
-/** Create the scene. Throws if WebGL is unavailable, so the caller can fall back to 2D. */
-export function createStage({ canvas, host, tagLayer, onPick }: StageOptions): StageHandle {
-  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: false, powerPreference: "low-power" });
+/** Create the scene on a canvas of its own (so a remount never reuses a lost context).
+ * Throws if WebGL is unavailable or setup fails, so the caller can fall back to 2D. */
+export function createStage(opts: StageOptions): StageHandle {
+  const canvas = document.createElement("canvas");
+  canvas.className = "absolute inset-0 block h-full w-full";
+  canvas.setAttribute("aria-hidden", "true");
+  opts.host.insertBefore(canvas, opts.host.firstChild);
+  let renderer: THREE.WebGLRenderer | null = null;
+  try {
+    renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: false, powerPreference: "low-power" });
+    return setup(renderer, canvas, opts);
+  } catch (e) {
+    renderer?.dispose();
+    renderer?.forceContextLoss();
+    canvas.remove();
+    throw e;
+  }
+}
+
+function setup(renderer: THREE.WebGLRenderer, canvas: HTMLCanvasElement, { host, tagLayer, onPick }: StageOptions): StageHandle {
   renderer.outputColorSpace = THREE.LinearSRGBColorSpace;
 
   const scene = new THREE.Scene();
@@ -415,6 +414,8 @@ export function createStage({ canvas, host, tagLayer, onPick }: StageOptions): S
     if (hit) onPick(hit.object.userData.id as number);
   };
   canvas.addEventListener("click", onClick);
+  // a phone can drop the GL context in the background; draw again when it returns
+  canvas.addEventListener("webglcontextrestored", draw);
 
   function clearFigures() {
     for (const f of figures) {
@@ -452,9 +453,12 @@ export function createStage({ canvas, host, tagLayer, onPick }: StageOptions): S
       cancelAnimationFrame(raf);
       ro.disconnect();
       canvas.removeEventListener("click", onClick);
+      canvas.removeEventListener("webglcontextrestored", draw);
       clearFigures();
       staticOwned.forEach((o) => o.dispose());
       renderer.dispose();
+      renderer.forceContextLoss();
+      canvas.remove();
     },
   };
 }

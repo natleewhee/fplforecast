@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { lookFor, type PitchKits, type PitchLooks, type Position } from "@/lib/appearance";
+import { benchSeat, formationSpots } from "./spots";
 import type { FigureDef, StageHandle } from "./stage";
 
 /* The 3D Squad pitch: figures in kit colours (height, skin and hair from the
@@ -31,8 +32,6 @@ function buildDefs(
   captainId: number | null | undefined,
   looks: PitchLooks | undefined,
   kits: PitchKits | undefined,
-  spots: (rows: number[]) => { x: number; z: number }[][],
-  seat: (i: number) => { x: number; z: number },
 ): FigureDef[] {
   const def = (p: Pitch3DPlayer, at: { x: number; z: number }, isBench: boolean): FigureDef => {
     const position = (ROW_ORDER as string[]).includes(p.position) ? (p.position as Position) : "MID";
@@ -53,10 +52,10 @@ function buildDefs(
     };
   };
   const rows = ROW_ORDER.map((pos) => xi.filter((p) => p.position === pos)).filter((r) => r.length);
-  const placed = spots(rows.map((r) => r.length));
+  const placed = formationSpots(rows.map((r) => r.length));
   const out: FigureDef[] = [];
   rows.forEach((row, r) => row.forEach((p, i) => out.push(def(p, placed[r][i], false))));
-  bench.forEach((p, i) => out.push(def(p, seat(i), true)));
+  bench.forEach((p, i) => out.push(def(p, benchSeat(i), true)));
   return out;
 }
 
@@ -82,7 +81,6 @@ export default function Pitch3D({
   /** Called once if this device cannot run WebGL, so the parent can show the 2D pitch. */
   onUnavailable: () => void;
 }) {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
   const rootRef = useRef<HTMLDivElement>(null);
   const hostRef = useRef<HTMLDivElement>(null);
   const tagsRef = useRef<HTMLDivElement>(null);
@@ -96,29 +94,16 @@ export default function Pitch3D({
   });
 
   // The figures depend only on this string, so a re-render with the same lineup rebuilds nothing.
-  const [defsJson, setDefsJson] = useState("[]");
-  const defsKey = JSON.stringify([xi.map((p) => [p.id, p.position, p.team, p.code]), bench.map((p) => [p.id, p.position, p.team, p.code]), captainId, looks, kits]);
-  useEffect(() => {
-    let cancelled = false;
-    void import("./stage").then(({ formationSpots, benchSeat }) => {
-      if (cancelled) return;
-      setDefsJson(JSON.stringify(buildDefs(xi, bench, captainId, looks, kits, formationSpots, benchSeat)));
-    });
-    return () => {
-      cancelled = true;
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- defsKey stands for xi, bench, captainId, looks and kits
-  }, [defsKey]);
+  const defsJson = JSON.stringify(buildDefs(xi, bench, captainId, looks, kits));
 
   // create the stage once
   useEffect(() => {
     let cancelled = false;
     let handle: StageHandle | null = null;
     void import("./stage").then(({ createStage }) => {
-      if (cancelled || !canvasRef.current || !hostRef.current || !tagsRef.current) return;
+      if (cancelled || !hostRef.current || !tagsRef.current) return;
       try {
         handle = createStage({
-          canvas: canvasRef.current,
           host: hostRef.current,
           tagLayer: tagsRef.current,
           onPick: (id) => {
@@ -185,7 +170,6 @@ export default function Pitch3D({
   return (
     <div ref={rootRef} data-testid="pitch3d">
       <div ref={hostRef} className="relative aspect-[4/5] w-full overflow-hidden rounded-xl bg-[#0a1a14]">
-        <canvas ref={canvasRef} className="absolute inset-0 block h-full w-full" aria-hidden />
         <div ref={tagsRef} className="pointer-events-none absolute inset-0">
           {ready && xi.map(tag)}
         </div>
