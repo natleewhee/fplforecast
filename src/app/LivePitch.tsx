@@ -336,6 +336,7 @@ export default function LivePitch({
             selectedId={selectedId}
             onSelect={openSheet}
             onUnavailable={() => setNo3d(true)}
+            goals={fx.goals}
           />
           <p className="mt-2 text-[10.5px] leading-snug text-ink-faint">
             Number = points so far (with minutes while playing, or the kickoff time) · icons = goals, assists, clean sheet, cards, bonus · faded = yet to play, off or did not play ·{" "}
