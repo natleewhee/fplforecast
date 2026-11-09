@@ -23,9 +23,12 @@ function Swatch({ colour, label }: { colour: string; label: string }) {
   );
 }
 
+/** A line to paste into overrides.json. Anything still a guess is `null`, which the rules
+ * ignore, so pasting it unedited leaves the guess as a guess; fill in only what you checked. */
 function snippet(r: AppearanceRow): string {
   const { cm, skin, hair } = r.look;
-  return `"${r.code}": { "cm": ${cm.value}, "skin": ${skin.value}, "hair": { "style": "${hair.value.style}", "color": "${hair.value.color}" } }`;
+  const known = <T,>(t: { value: T; state: TraitState }) => (t.state === "default" ? null : t.value);
+  return `"${r.code}": ${JSON.stringify({ cm: known(cm), skin: known(skin), hair: known(hair) })}`;
 }
 
 function PlayerRow({ r }: { r: AppearanceRow }) {
@@ -77,7 +80,9 @@ export default function AppearancePage() {
               placeholder, <span className="chip">auto</span> came from a script, and{" "}
               <span className="chip chip-accent">checked</span> was confirmed by hand. To confirm or correct a player, press Copy, paste
               the line under <code className="font-mono text-xs">players</code> in{" "}
-              <code className="font-mono text-xs">data/appearance/overrides.json</code>, change anything that is wrong and commit it.
+              <code className="font-mono text-xs">data/appearance/overrides.json</code> (a comma between lines), replace every{" "}
+              <code className="font-mono text-xs">null</code> and anything wrong, and commit it. A value you leave as{" "}
+              <code className="font-mono text-xs">null</code> stays a guess.
             </p>
             <dl className="grid grid-cols-2 gap-3 sm:grid-cols-4">
               {[
@@ -86,9 +91,9 @@ export default function AppearancePage() {
                 ["Height found", withHeight],
                 ["Still guessing", stillGuessing],
               ].map(([label, value]) => (
-                <div key={label as string}>
-                  <dd className="stat text-2xl leading-none">{value}</dd>
+                <div key={label as string} className="flex flex-col-reverse">
                   <dt className="eyebrow mt-1">{label}</dt>
+                  <dd className="stat text-2xl leading-none">{value}</dd>
                 </div>
               ))}
             </dl>

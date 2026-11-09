@@ -117,3 +117,53 @@ def test_entities_are_fetched_once_across_players():
     heights.fetch_entities(["Q5"], fake, cache)
     heights.fetch_entities(["Q5"], fake, cache)
     assert fake.calls == ["wbgetentities"]
+
+
+def test_an_exact_birth_date_is_found_even_if_a_preferred_claim_is_year_only():
+    ent = {"claims": {"P569": [
+        {"rank": "preferred", **_time("2000-01-01", precision=9)},
+        {"rank": "normal", **_time("2000-07-21")},
+    ]}}
+    assert heights.parse_dob(ent) == "2000-07-21"
+
+
+def test_progress_is_handed_back_every_fifty_players():
+    fake = FakeWikidata({}, {})
+    players = [
+        {"code": n, "first_name": "A", "second_name": str(n), "known_name": "", "web_name": str(n), "birth_date": "2000-01-01"}
+        for n in range(1, 121)
+    ]
+    saved: list[int] = []
+    heights.run(players, {}, fake, log=lambda _: None, on_progress=lambda d: saved.append(len(d["players"])))
+    assert len(saved) == 2  # after player 50 and player 100
+
+
+def test_a_dropped_connection_is_retried_not_fatal(monkeypatch):
+    import io
+    import json as _json
+    import http.client
+
+    attempts = {"n": 0}
+
+    class Reply(io.BytesIO):
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *exc):
+            return False
+
+    def flaky(req, timeout=0):
+        attempts["n"] += 1
+        if attempts["n"] < 3:
+            raise http.client.RemoteDisconnected("closed")
+        return Reply(_json.dumps({"search": []}).encode())
+
+    monkeypatch.setattr(heights.urllib.request, "urlopen", flaky)
+    monkeypatch.setattr(heights.time, "sleep", lambda _s: None)
+    assert heights.http_fetch({"action": "wbsearchentities"}) == {"search": []}
+    assert attempts["n"] == 3
+
+
+def test_the_user_agent_names_the_project_with_a_url_and_no_personal_details():
+    assert "github.com/natleewhee/fplforecast" in heights.USER_AGENT
+    assert "@" not in heights.USER_AGENT

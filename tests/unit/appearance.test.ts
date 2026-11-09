@@ -41,6 +41,13 @@ test("invalid values are ignored rather than trusted", () => {
   assert.equal(r.cm.value, TYPICAL_CM.MID);
 });
 
+test("null in an override leaves that trait a guess", () => {
+  const r = resolveAppearance("DEF", undefined, { cm: null as never, skin: null as never, hair: null as never });
+  assert.equal(r.cm.state, "default");
+  assert.equal(r.skin.state, "default");
+  assert.equal(r.hair.state, "default");
+});
+
 test("an invalid override falls back to the script's value, not the default", () => {
   const r = resolveAppearance("FWD", { cm: 185 }, { cm: 999 });
   assert.deepEqual(r.cm, { value: 185, state: "auto" });

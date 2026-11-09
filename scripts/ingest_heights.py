@@ -23,6 +23,7 @@ Usage:  python scripts/ingest_heights.py [--limit N] [--only-missing] [--dry-run
 from __future__ import annotations
 
 import argparse
+import http.client
 import json
 import sys
 import time
@@ -38,7 +39,8 @@ DATA_DIR = ROOT / "data"
 OUT_FILE = DATA_DIR / "appearance" / "players.json"
 
 API = "https://www.wikidata.org/w/api.php"
-USER_AGENT = "gafferfpl-appearance/1.0 (personal project)"
+# Wikimedia asks automated clients to say who they are with a URL; no personal details.
+USER_AGENT = "gafferfpl-appearance/1.0 (https://github.com/natleewhee/fplforecast)"
 
 # Wikidata unit items for a height value.
 UNIT_METRE = "Q11573"
@@ -60,7 +62,8 @@ def http_fetch(params: dict, *, retries: int = 4) -> dict:
         except urllib.error.HTTPError as err:
             if err.code not in (429, 500, 502, 503, 504) or attempt == retries - 1:
                 raise
-        except urllib.error.URLError:
+        except (OSError, http.client.HTTPException):
+            # timeouts, dropped connections and half-read replies: try again
             if attempt == retries - 1:
                 raise
         time.sleep(2 ** attempt)
@@ -110,8 +113,13 @@ def _best_claims(claims: list[dict]) -> list[dict]:
 
 
 def parse_dob(entity: dict) -> str | None:
-    """Date of birth as YYYY-MM-DD, or None if missing or not precise to the day."""
-    for claim in _best_claims(entity.get("claims", {}).get("P569", [])):
+    """Date of birth as YYYY-MM-DD, or None if missing or not precise to the day.
+
+    Preferred-rank statements are tried first, then the rest, so a year-only
+    preferred claim does not hide an exact one."""
+    claims = entity.get("claims", {}).get("P569", [])
+    ordered = _best_claims(claims) + [c for c in claims if c not in _best_claims(claims) and c.get("rank") != "deprecated"]
+    for claim in ordered:
         value = claim.get("mainsnak", {}).get("datavalue", {}).get("value", {})
         time_str = value.get("time", "")  # "+1995-09-15T00:00:00Z"
         if value.get("precision", 0) >= 11 and len(time_str) >= 11:
@@ -177,8 +185,14 @@ def run(
     sleep: Callable[[float], None] = time.sleep,
     pause: float = 0.0,
     log: Callable[[str], None] = print,
+    on_progress: Callable[[dict], None] | None = None,
 ) -> dict:
-    """Return the updated players.json content and print a match report."""
+    """Return the updated players.json content and print a match report.
+
+    ``on_progress`` is called with the work so far every 50 players, so a crash
+    part-way through does not lose everything already looked up. A player who
+    stops matching keeps the height an earlier run found; change one by hand in
+    overrides.json."""
     out = json.loads(json.dumps(existing)) if existing else {}
     out.setdefault("players", {})
     out.setdefault("meta", {})
@@ -205,6 +219,8 @@ def run(
             sleep(pause)
         if i % 50 == 0:
             log(f"  {i}/{len(todo)} looked up")
+            if on_progress:
+                on_progress(out)
 
     total = len(todo)
     out["meta"]["heights"] = {
@@ -236,6 +252,10 @@ def main() -> int:
 
     elements = latest_bootstrap()["elements"]
     existing = json.loads(OUT_FILE.read_text()) if OUT_FILE.exists() else {}
+    def save(data: dict) -> None:
+        OUT_FILE.parent.mkdir(parents=True, exist_ok=True)
+        OUT_FILE.write_text(json.dumps(data, indent=2, ensure_ascii=False, sort_keys=True) + "\n")
+
     result = run(
         elements,
         existing,
@@ -243,12 +263,12 @@ def main() -> int:
         only_missing=args.only_missing,
         limit=args.limit,
         pause=args.pause,
+        on_progress=None if args.dry_run else save,
     )
     if args.dry_run:
         print("Dry run: nothing written.")
         return 0
-    OUT_FILE.parent.mkdir(parents=True, exist_ok=True)
-    OUT_FILE.write_text(json.dumps(result, indent=2, ensure_ascii=False, sort_keys=True) + "\n")
+    save(result)
     print(f"Wrote {OUT_FILE.relative_to(ROOT)}")
     return 0
 
