@@ -94,3 +94,20 @@ export function kitFor(table: KitTable, club: string, position: Position): Kit |
   if (!c) return null;
   return position === "GKP" ? c.gk : { shirt: c.shirt, shorts: c.shorts, socks: c.socks };
 }
+
+/** What the 3D pitch needs for one player. `guess` means nothing about him is filled in
+ * yet (height, skin and hair are all position defaults), so the pitch can say so. */
+export type PitchLook = { cm: number; skin: number; hair: [HairStyle, string]; guess: boolean };
+export type PitchLooks = Record<string, PitchLook>;
+export type PitchKits = Record<string, ClubKits>;
+
+export function toPitchLook(r: Resolved): PitchLook {
+  const guess = r.cm.state === "default" && r.skin.state === "default" && r.hair.state === "default";
+  return { cm: r.cm.value, skin: r.skin.value, hair: [r.hair.value.style, r.hair.value.color], guess };
+}
+
+/** The look for a player code, or the position default when the table has no entry. */
+export function lookFor(looks: PitchLooks | undefined, code: number | null | undefined, position: Position): PitchLook {
+  const hit = code != null ? looks?.[String(code)] : undefined;
+  return hit ?? toPitchLook(resolveAppearance(position));
+}

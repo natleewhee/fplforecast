@@ -8,8 +8,11 @@ import PlayerBreakdownSheet from "./PlayerBreakdownSheet";
 import { PitchScene } from "./PitchScene";
 import { FormBars, Halo, meanFdr, RangeBar } from "./Shirt";
 import { FaceToggle, PlayerFace } from "./PlayerFace";
+import Pitch3D, { type Pitch3DPlayer } from "./pitch3d/Pitch3D";
 import PreviewSheet from "./PreviewSheet";
 import ReplaceSheet, { type TransferTools } from "./ReplaceSheet";
+import { setPitchView, usePitchView } from "@/lib/pitchView";
+import type { PitchKits, PitchLooks } from "@/lib/appearance";
 import { ArmbandBadge, POSITION_DOT } from "./tokenParts";
 
 function bandLabel(band: { floor: number; ceiling: number; bandProvisional: boolean } | null | undefined) {
@@ -172,7 +175,56 @@ function PlayerToken({
 
 /* ---------- main ---------- */
 
-export default function Pitch({ forecast, transferTools }: { forecast: Forecast; transferTools?: TransferTools }) {
+function tokLabel(t: Tok): { ariaLabel: string; title: string; badges: ReturnType<typeof riskBadges> } {
+  const bandTitle = bandLabel(t.floorCeiling);
+  const doubt = availabilityFlag(t.availability);
+  const badges = riskBadges(t.availability, t.minutesRisk);
+  if (t.preview || t.swapTo) {
+    badges.push({
+      key: "swap",
+      title: t.preview ? `Saved transfer: replaces ${t.preview.replaces}` : `Saved transfer: replaced by ${t.swapTo} at the next rebuild`,
+      node: <span className="font-black text-[var(--accent-2)]">{"\u21C4"}</span>,
+    });
+  }
+  return {
+    ariaLabel: `${t.webName}: ${t.xp != null ? t.xp.toFixed(1) : "no"} xP${bandTitle ? `, typical range ${bandTitle}` : ""}${doubt ? `, ${doubt.label}` : ""}, show breakdown`,
+    title: [t.webName, bandTitle && `typical range ${bandTitle}`, doubt?.label].filter(Boolean).join(" \u2014 "),
+    badges,
+  };
+}
+
+function ViewSwitch({ view, onChange }: { view: "3d" | "2d"; onChange: (v: "3d" | "2d") => void }) {
+  return (
+    <div className="inline-flex overflow-hidden rounded-lg border border-line text-[11px] font-semibold" role="group" aria-label="Pitch view">
+      {(["3d", "2d"] as const).map((v) => (
+        <button
+          key={v}
+          type="button"
+          aria-pressed={view === v}
+          onClick={() => onChange(v)}
+          className={`h-8 px-3 transition ${view === v ? "bg-[color-mix(in_srgb,var(--accent)_16%,transparent)] text-[var(--accent)]" : "text-ink-faint hover:text-ink-soft"}`}
+        >
+          {v.toUpperCase()}
+        </button>
+      ))}
+    </div>
+  );
+}
+
+export default function Pitch({
+  forecast,
+  transferTools,
+  looks,
+  kits,
+}: {
+  forecast: Forecast;
+  transferTools?: TransferTools;
+  looks?: PitchLooks;
+  kits?: PitchKits;
+}) {
+  const savedView = usePitchView();
+  const [no3d, setNo3d] = useState(false);
+  const view = no3d ? "2d" : savedView;
   const { squad, upcoming } = forecast;
   const byId = new Map(squad.players.map((p) => [p.id, p]));
   const [gwIdx, setGwIdx] = useState(0);
@@ -275,6 +327,17 @@ export default function Pitch({ forecast, transferTools }: { forecast: Forecast;
   const previewing = swaps.size > 0;
   const previewTok = [...xi, ...benched].find((t) => t.id === selectedId && t.preview);
 
+  const to3d = (t: Tok): Pitch3DPlayer => ({
+    id: t.id,
+    webName: t.webName,
+    position: t.position,
+    team: t.team,
+    code: t.code,
+    xp: t.xp,
+    provisional: t.provisional,
+    ...tokLabel(t),
+  });
+
   return (
     <div className="space-y-4">
       {/* ===== the pitch ===== */}
@@ -349,9 +412,11 @@ export default function Pitch({ forecast, transferTools }: { forecast: Forecast;
           </div>
         </div>
 
-        <div className="mb-2 flex justify-end">
-          <FaceToggle />
+        <div className="mb-2 flex items-center justify-end gap-2">
+          {view === "2d" && <FaceToggle />}
+          <ViewSwitch view={view} onChange={(v) => { setNo3d(false); setPitchView(v); }} />
         </div>
+        {no3d && <p className="mb-2 text-[10.5px] text-ink-faint">3D isn&rsquo;t available on this device, so you&rsquo;re seeing the 2D pitch.</p>}
 
         {pendingCount > 0 && (
           <div
@@ -375,7 +440,26 @@ export default function Pitch({ forecast, transferTools }: { forecast: Forecast;
           </div>
         )}
 
-        {/* broadcast pitch */}
+        {view === "3d" ? (
+          <>
+            <Pitch3D
+              xi={xi.map(to3d)}
+              bench={benched.map(to3d)}
+              captainId={captainId}
+              viceId={viceId}
+              selectedId={selectedId}
+              looks={looks}
+              kits={kits}
+              onSelect={openSheet}
+              onUnavailable={() => setNo3d(true)}
+            />
+            <p className="mt-2 text-[10.5px] leading-snug text-ink-faint">
+              Number = expected points · taller players are drawn taller, skin and hair are approximate ·
+              the bench sits in the dugout on the right · C captain, V vice · tap a player for the breakdown
+            </p>
+          </>
+        ) : (
+          <>
         <PitchScene>
           <div className="space-y-5">
             {rows.map((row, i) => (
@@ -409,6 +493,9 @@ export default function Pitch({ forecast, transferTools }: { forecast: Forecast;
             ))}
           </div>
         </div>
+
+          </>
+        )}
 
         {isTargetGw && (
           <details className="mt-3 border-t border-line pt-3">

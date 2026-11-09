@@ -18,6 +18,7 @@ import {
 } from "@/lib/teamId";
 import { Header, Module, Panel, Shell } from "./PageChrome";
 import Pitch from "./Pitch";
+import type { PitchKits, PitchLooks } from "@/lib/appearance";
 import DeadlineChecklist from "./DeadlineChecklist";
 import DeadlineBanner from "./DeadlineBanner";
 import History from "./History";
@@ -413,12 +414,17 @@ export default function AppShell({
   bootstrap,
   initialChips,
   initialOverrides,
+  pitchLooks,
+  pitchKits,
   footer,
 }: {
   initialForecast: Forecast;
   bootstrap: BootstrapSnapshot;
   initialChips: ChipStatus[] | null;
   initialOverrides: OverridesFile | null;
+  /** Per-player height, skin and hair, and club kits, for the 3D Squad pitch. */
+  pitchLooks?: PitchLooks;
+  pitchKits?: PitchKits;
   footer: ReactNode;
 }) {
   // `null` means "no team ID cookie yet" -- shown as a prompt, never
@@ -576,7 +582,7 @@ export default function AppShell({
         </div>
       )}
       <DeadlineChecklist forecast={forecast} chips={chips} />
-      <Pitch forecast={forecast} transferTools={transferTools} />
+      <Pitch forecast={forecast} transferTools={transferTools} looks={pitchLooks} kits={pitchKits} />
 
 
       <Carousel>

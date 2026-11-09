@@ -5,6 +5,7 @@ import {
   loadChipStatus,
   loadOverrides,
 } from "@/lib/snapshots";
+import { loadPitchData } from "@/lib/appearanceData";
 import AppShell from "./AppShell";
 import { Header, Panel, PositionBadge, Shell } from "./PageChrome";
 
@@ -17,6 +18,7 @@ export default function Home() {
   const forecast = loadLatestForecast();
   const chips = loadChipStatus();
   const overrides = loadOverrides();
+  const pitchData = loadPitchData();
 
   if (!bootstrap) {
     return (
@@ -58,6 +60,8 @@ export default function Home() {
         bootstrap={bootstrap}
         initialChips={chips}
         initialOverrides={overrides}
+        pitchLooks={pitchData.looks}
+        pitchKits={pitchData.kits}
         footer={footer}
       />
     );
