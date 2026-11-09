@@ -1010,11 +1010,38 @@ test.describe("3D pitch layout and the player card", () => {
     await pitch.locator('button[aria-label^="Gross"]').waitFor();
     await pitch.locator('button[aria-label^="Gross"]').dispatchEvent("click");
     await page.waitForTimeout(1500);
-    const states = await pitch.locator("div.pointer-events-none button[data-tag]").evaluateAll((els) =>
-      els.map((e) => (e as HTMLElement).style.visibility),
+    const off = await pitch.locator("div.pointer-events-none button[data-tag]").evaluateAll((els) =>
+      els.map((e) => e.hasAttribute("data-pitch-off")),
     );
-    expect(states).toContain("visible");
-    expect(states).toContain("hidden");
+    expect(off).toContain(false); // the player in frame
+    expect(off).toContain(true); // players out of frame are made invisible, not parked far away
+    // they stay reachable by keyboard
+    const stillFocusable = await pitch.locator("button[data-pitch-off]").first().evaluate((e) => (e as HTMLButtonElement).tabIndex >= 0 && getComputedStyle(e).display !== "none");
+    expect(stillFocusable).toBe(true);
+  });
+});
+
+test.describe("The short player card and the keyboard", () => {
+  test.beforeEach(async ({ page }) => {
+    await page.addInitScript(() => {
+      try {
+        localStorage.setItem("fpl-pitch-view", "3d");
+        localStorage.setItem("fpl-pitch-passing", "off");
+      } catch {}
+    });
+  });
+
+  test("on the Squad pitch the Replace action sits beside Show all, and the clipped preview cannot be tabbed into", async ({ page }) => {
+    await page.goto("/?tab=squad");
+    const pitch = page.locator(".panel", { has: page.getByText(/MODEL · GW/) }).first().getByTestId("pitch3d");
+    await pitch.locator("button[data-tag]").first().waitFor();
+    await pitch.locator("button[data-tag]").first().dispatchEvent("click");
+    const card = page.getByRole("dialog");
+    await expect(card).toHaveAttribute("aria-modal", "false");
+    // one copy in the clipped, inert preview and one in the button row: the row's is the last
+    await expect(card.getByRole("button", { name: /^Replace / }).last()).toBeVisible();
+    await expect(card.getByRole("button", { name: "Show all" })).toBeVisible();
+    expect(await card.locator("[inert]").count(), "the clipped preview is inert").toBe(1);
   });
 });
 
@@ -1049,8 +1076,10 @@ test.describe("Ball going round the pitch", () => {
     await toggle.click();
     await expect(toggle).toHaveText("Passing off");
     expect(await page.evaluate(() => localStorage.getItem("fpl-pitch-passing"))).toBe("off");
+    await page.waitForTimeout(800); // a pass in flight lands
+    const at = await pitch.getAttribute("data-passes");
     await page.waitForTimeout(2500);
-    await expect(pitch).not.toHaveAttribute("data-passes", /.+/);
+    expect(await pitch.getAttribute("data-passes")).toBe(at);
   });
 
   test("it stops while a player is selected", async ({ page }) => {
@@ -1068,13 +1097,13 @@ test.describe("Ball going round the pitch", () => {
 
   test.describe("reduced motion", () => {
     test.use({ reducedMotion: "reduce" });
-    test("nobody passes", async ({ page }) => {
+    test("nobody passes, and there is no passing switch to show", async ({ page }) => {
       await page.goto("/?tab=live");
       const pitch = page.getByTestId("pitch3d").first();
       await pitch.locator("button[data-tag]").first().waitFor();
       await page.waitForTimeout(3000);
       await expect(pitch).not.toHaveAttribute("data-passes", /.+/);
+      await expect(page.getByRole("button", { name: /^Passing/ })).toHaveCount(0);
     });
   });
 });
-

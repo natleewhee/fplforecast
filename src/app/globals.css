@@ -520,3 +520,8 @@ html[data-vt-dir="back"]::view-transition-new(tabpane) { animation: vt-in-left 2
 @keyframes vt-in-right { from { transform: translateX(28px); opacity: 0; } }
 @keyframes vt-out-right { to { transform: translateX(28px); opacity: 0; } }
 @keyframes vt-in-left { from { transform: translateX(-28px); opacity: 0; } }
+
+/* 3D pitch: the tag of a player outside the close-up is invisible and inert, but stays in the tab
+   order and shows again when it gets keyboard focus. */
+[data-pitch-off] { opacity: 0; pointer-events: none; }
+[data-pitch-off]:focus-visible { opacity: 1; }

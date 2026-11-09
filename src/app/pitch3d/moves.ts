@@ -171,14 +171,15 @@ export function cleanSheetPose(t: number): Pose {
   } else if (t < DUST_END) {
     // dusting his hands: palms rubbing together in front of him
     const rub = Math.sin((t - BUILD_END) * 20);
+    const bring = lerp(0.2, 0.55, ease((t - BUILD_END) / 0.15)); // hands come together, not a jump
     p.bodyRx = 0.05;
-    p.armL = { x: -1.0 + 0.18 * rub, z: 0.55 };
-    p.armR = { x: -1.0 - 0.18 * rub, z: -0.55 };
+    p.armL = { x: -1.0 + 0.18 * rub * ease((t - BUILD_END) / 0.15), z: bring };
+    p.armR = { x: -1.0 - 0.18 * rub * ease((t - BUILD_END) / 0.15), z: -bring };
   } else {
     // arms folded across the chest, a slow nod
-    const fold = ease((t - DUST_END) / 0.25);
-    p.armL = { x: -1.1 * fold, z: 0.95 * fold };
-    p.armR = { x: -1.1 * fold, z: -0.95 * fold };
+    const fold = ease((t - DUST_END) / 0.25); // from where the hands were, to folded
+    p.armL = { x: lerp(-1.0, -1.1, fold), z: lerp(0.55, 0.95, fold) };
+    p.armR = { x: lerp(-1.0, -1.1, fold), z: -lerp(0.55, 0.95, fold) };
     p.bodyRx = 0.09 * Math.sin((t - DUST_END) * 5);
   }
   p.wallFade = t < FOLD_END ? 1 : clamp01(1 - (t - FOLD_END) / CRUMBLE);

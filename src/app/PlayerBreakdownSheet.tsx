@@ -74,7 +74,10 @@ export default function PlayerBreakdownSheet({
   const source = sourceLabel(b.rateSource);
 
   return (
-    <BottomSheet label={`${player.webName} xP breakdown`} onClose={onClose} peek={peek}>
+    <BottomSheet label={`${player.webName} xP breakdown`} onClose={onClose}
+      peek={peek}
+      peekAction={footer ? <div className="min-w-0 flex-1 [&>button]:h-10 [&>button]:text-sm">{footer}</div> : undefined}
+    >
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">
           <p className="eyebrow">

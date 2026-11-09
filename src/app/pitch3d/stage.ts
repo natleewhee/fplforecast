@@ -357,13 +357,14 @@ export type StageHandle = {
 };
 
 /** What the stage reports for the page (and the tests) to show. */
-export type StageState = { focusId: number | null; celebrating: MomentKind | null; passes: number };
+export type StageState = { focusId: number | null; celebrating: MomentKind | null };
 
 export type StageOptions = {
   host: HTMLElement; // sized by CSS; the stage fills it
   tagLayer: HTMLElement; // holds one element per player, marked data-tag="<id>"
   onPick(id: number): void;
   onState?(state: StageState): void;
+  onPass?(count: number): void; // how many passes so far; kept apart from onState so a pass does not re-render the page
   ambient?: boolean; // start with the passing on (default true)
 };
 
@@ -462,13 +463,21 @@ function setup(renderer: THREE.WebGLRenderer, canvas: HTMLCanvasElement, opts: S
   let ambientOnly = false;
   let disposed = false;
   let celebrating: MomentKind | null = null;
-  const report = () => opts.onState?.({ focusId: selected, celebrating, passes });
+  let reported = { focusId: null as number | null, celebrating: null as MomentKind | null };
+  const report = () => {
+    // the page re-renders on this, so only say so when something it shows has changed
+    if (reported.focusId === selected && reported.celebrating === celebrating) return;
+    reported = { focusId: selected, celebrating };
+    opts.onState?.({ focusId: selected, celebrating });
+  };
 
   /* ambient passing: the ball goes round the starting eleven, who stay where they are. */
   let ambient = opts.ambient !== false && !reduceMotion;
   let passes = 0;
   type Pass = { from: Figure; to: Figure; phase: "hold" | "fly"; t: number; legT: number; dur: number; last: number | null };
   let pass: Pass | null = null;
+  // a kicker's leg keeps swinging through and settles for a moment after the ball has gone
+  let settling: { f: Figure; t: number }[] = [];
   let ball: THREE.Mesh | null = null;
   const spotOf = (f: Figure): Spot => ({ id: f.def.id, x: f.homeX, z: f.homeZ });
   function ensureBall(): THREE.Mesh {
@@ -486,35 +495,47 @@ function setup(renderer: THREE.WebGLRenderer, canvas: HTMLCanvasElement, opts: S
     scene.add(ball);
     return ball;
   }
+  const legReset = (f: Figure) => {
+    f.joints.hipR.rotation.x = 0;
+    f.joints.kneeR.rotation.x = 0;
+  };
   /** Stand everyone square again and put the ball away (when a player is picked, or passing is switched off). */
   function stopPassing() {
-    if (pass) {
-      pass.from.joints.hipR.rotation.x = 0;
-      pass.from.joints.kneeR.rotation.x = 0;
-    }
+    if (pass) legReset(pass.from);
+    for (const s of settling) legReset(s.f);
+    settling = [];
     pass = null;
     if (ball) ball.visible = false;
     for (const f of figures) {
-      if (f.anim.yaw !== 0 && !f.def.bench && !f.anim.current && !f.anim.slide) {
-        f.anim.yaw = 0;
-        f.g.rotation.y = 0;
-      }
+      if (f.def.bench) continue;
+      f.anim.yaw = 0;
+      if (!f.anim.current && !f.anim.slide) f.g.rotation.y = 0;
     }
   }
   const xi = () => figures.filter((f) => !f.def.bench && !f.anim.slide && f.anim.pop == null);
-  function startPass(from: Figure, last: number | null, hold = 0): boolean {
+  /** `wait` is extra time he keeps the ball before the usual wind-up (a receiver holds it a moment first). */
+  function startPass(from: Figure, last: number | null, wait = 0): boolean {
     const pool = xi();
     if (pool.length < 3) return false;
     const to = nextReceiver(pool.map(spotOf), from.def.id, last, Math.random);
     const target = to && pool.find((f) => f.def.id === to.id);
     if (!target) return false;
-    pass = { from, to: target, phase: "hold", t: hold, legT: 0, dur: passSeconds(Math.hypot(from.homeX - target.homeX, from.homeZ - target.homeZ)), last };
+    settling = settling.filter((s) => s.f !== from);
+    pass = {
+      from,
+      to: target,
+      phase: "hold",
+      t: -wait,
+      legT: -wait,
+      dur: passSeconds(Math.hypot(from.homeX - target.homeX, from.homeZ - target.homeZ)),
+      last,
+    };
     return true;
   }
   /** Advance the passing by dt. Returns true while it is running. */
   function stepPassing(dt: number): boolean {
     if (!ambient || selected != null || figures.length === 0) {
-      if (pass || ball?.visible) stopPassing();
+      if (pass || settling.length || ball?.visible) stopPassing();
       return false;
     }
     if (!pass) {
@@ -530,18 +551,16 @@ function setup(renderer: THREE.WebGLRenderer, canvas: HTMLCanvasElement, opts: S
     const endX = cur.to.homeX - Math.sin(dir) * 0.8;
     const endZ = cur.to.homeZ - Math.cos(dir) * 0.8;
     cur.t += dt;
-    cur.legT += dt;
-    // the kicking leg draws back, swings through, and settles
-    const leg = kickLeg(cur.legT);
-    cur.from.joints.hipR.rotation.x = leg.hip;
-    cur.from.joints.kneeR.rotation.x = leg.knee;
     if (cur.phase === "hold") {
+      cur.legT = cur.t; // the wind-up runs with the hold, so the foot meets the ball as it is released
       b.position.set(startX, BALL_REST_Y, startZ);
       if (cur.t >= KICK_AT) {
         cur.phase = "fly";
         cur.t = 0;
+        cur.legT = KICK_AT;
       }
     } else {
+      cur.legT += dt;
       const p = cur.t / cur.dur;
       const at = ballAt({ x: startX, z: startZ }, { x: endX, z: endZ }, p);
       b.position.set(at.x, at.y, at.z);
@@ -549,19 +568,36 @@ function setup(renderer: THREE.WebGLRenderer, canvas: HTMLCanvasElement, opts: S
       if (p >= 1) {
         const next = cur.to;
         passes += 1;
-        report();
-        cur.from.joints.hipR.rotation.x = 0;
-        cur.from.joints.kneeR.rotation.x = 0;
+        opts.onPass?.(passes);
+        settling.push({ f: cur.from, t: cur.legT });
         pass = null;
         startPass(next, cur.from.def.id, HOLD_SECONDS - KICK_AT);
       }
     }
+    const leg = kickLeg(cur.legT);
+    cur.from.joints.hipR.rotation.x = leg.hip;
+    cur.from.joints.kneeR.rotation.x = leg.knee;
+    // legs of men who have just kicked finish their swing
+    for (const s of settling) {
+      s.t += dt;
+      const l = kickLeg(s.t);
+      s.f.joints.hipR.rotation.x = l.hip;
+      s.f.joints.kneeR.rotation.x = l.knee;
+    }
+    settling = settling.filter((s) => {
+      if (s.t > KICK_AT + 0.5) {
+        legReset(s.f);
+        return false;
+      }
+      return true;
+    });
     // he who has the ball looks at the man he is passing to; the receiver watches it come
+    const now = pass ?? cur;
     for (const f of figures) {
       if (f.def.bench || f.anim.current || f.anim.slide) continue;
       let want = 0;
-      if (f === cur.from) want = facing(spotOf(f), spotOf(cur.to));
-      else if (f === cur.to && cur.phase === "fly") want = facing(spotOf(f), { x: b.position.x, z: b.position.z });
+      if (f === now.from) want = facing(spotOf(f), spotOf(now.to));
+      else if (f === now.to && now.phase === "fly") want = facing(spotOf(f), { x: b.position.x, z: b.position.z });
       f.anim.yaw += (want - f.anim.yaw) * Math.min(1, 9 * dt);
       f.g.rotation.y = f.anim.yaw;
     }
@@ -797,8 +833,8 @@ function setup(renderer: THREE.WebGLRenderer, canvas: HTMLCanvasElement, opts: S
       const el = tagLayer.querySelector<HTMLElement>(`[data-tag="${f.def.id}"]`);
       if (!el) continue;
       const [x, y, inFrame] = px(f.g.position.x, f.g.position.y + 3.05 * f.scale, f.g.position.z);
-      // a player outside the close-up is not drawn; hiding his tag keeps it from sitting far off screen
-      el.style.visibility = inFrame ? "visible" : "hidden";
+      // a player outside the close-up is not drawn; his tag is made invisible (still reachable by keyboard)
+      el.toggleAttribute("data-pitch-off", !inFrame);
       if (inFrame) items.push({ el, x, y, w: el.offsetWidth || 60 });
     }
     // tags side by side on one line spread apart first, so each stays close to its own player
@@ -895,6 +931,9 @@ function setup(renderer: THREE.WebGLRenderer, canvas: HTMLCanvasElement, opts: S
   return {
     setPlayers(defs) {
       const before = new Map(figures.map((f) => [f.def.id, { x: f.g.position.x, z: f.g.position.z, homeX: f.homeX, homeZ: f.homeZ, anim: f.anim }]));
+      // a live update rebuilds the figures; keep the ball going round across it
+      const saved = pass && { fromId: pass.from.def.id, toId: pass.to.def.id, phase: pass.phase, t: pass.t, legT: pass.legT, dur: pass.dur, last: pass.last };
+      const settlingIds = settling.map((s) => ({ id: s.f.def.id, t: s.t }));
       clearFigures();
       figures = defs.map(buildFigure);
       for (const f of figures) {
@@ -903,6 +942,8 @@ function setup(renderer: THREE.WebGLRenderer, canvas: HTMLCanvasElement, opts: S
         if (prev) {
           f.anim.queue = prev.anim.queue;
           f.anim.current = prev.anim.current;
+          f.anim.yaw = prev.anim.yaw;
+          f.g.rotation.y = prev.anim.yaw;
           // a different lineup (another gameweek): glide from where he stood
           const moved = Math.abs(prev.homeX - f.homeX) > 0.05 || Math.abs(prev.homeZ - f.homeZ) > 0.05;
           if (moved && !reduceMotion) {
@@ -915,8 +956,24 @@ function setup(renderer: THREE.WebGLRenderer, canvas: HTMLCanvasElement, opts: S
         }
         scene.add(f.g);
       }
-      stopPassing();
-      pass = null;
+      const same = (id: number) => {
+        const a = before.get(id);
+        const f = figures.find((x) => x.def.id === id);
+        return !!a && !!f && !f.anim.slide && f.anim.pop == null && Math.abs(a.homeX - f.homeX) < 0.05 && Math.abs(a.homeZ - f.homeZ) < 0.05;
+      };
+      const from = saved && figures.find((x) => x.def.id === saved.fromId);
+      const to = saved && figures.find((x) => x.def.id === saved.toId);
+      if (saved && from && to && same(saved.fromId) && same(saved.toId) && !from.def.bench && !to.def.bench) {
+        pass = { from, to, phase: saved.phase, t: saved.t, legT: saved.legT, dur: saved.dur, last: saved.last };
+        settling = settlingIds.flatMap((x) => {
+          const f = figures.find((y) => y.def.id === x.id);
+          return f && f !== from ? [{ f, t: x.t }] : [];
+        });
+      } else {
+        pass = null;
+        settling = [];
+        stopPassing();
+      }
       if (selected != null) {
         // the focused player may have moved, or may no longer be in the lineup
         const f = figures.find((x) => x.def.id === selected);
@@ -946,6 +1003,7 @@ function setup(renderer: THREE.WebGLRenderer, canvas: HTMLCanvasElement, opts: S
         restPose(prev);
       }
       selected = id;
+      stopPassing(); // everyone squares up now, before his celebration is queued
       for (const f of figures) f.ring.visible = f.def.id === id;
       celebrating = null;
       const f = figures.find((x) => x.def.id === id);

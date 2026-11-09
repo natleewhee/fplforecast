@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useEffect, useRef, useState, type ReactNode } from "react";
 import { lookFor, type PitchKits, type PitchLooks, type Position } from "@/lib/appearance";
-import { setPitchAmbient, setPitchView, usePitchAmbient, type PitchView } from "@/lib/pitchView";
+import { setPitchAmbient, setPitchView, usePitchAmbient, usePrefersReducedMotion, type PitchView } from "@/lib/pitchView";
 import { benchSeat, formationSpots } from "./spots";
 import type { FigureDef, StageHandle, StageState } from "./stage";
 
@@ -72,9 +72,10 @@ function buildDefs(xi: Pitch3DPlayer[], bench: Pitch3DPlayer[], data: PitchData)
 /** The 3D / 2D switch, shared by every pitch, with the passing switch beside it in 3D. */
 export function ViewSwitch({ view, onChange }: { view: PitchView; onChange?: (v: PitchView) => void }) {
   const passing = usePitchAmbient();
+  const reduced = usePrefersReducedMotion();
   return (
     <div className="flex items-center gap-2">
-      {view === "3d" && (
+      {view === "3d" && !reduced && (
         <button
           type="button"
           aria-pressed={passing}
@@ -124,7 +125,7 @@ export default function Pitch3D({
   const stageRef = useRef<StageHandle | null>(null);
   const [ready, setReady] = useState(false);
   const [visible, setVisible] = useState(false);
-  const [state, setState] = useState<StageState>({ focusId: null, celebrating: null, passes: 0 });
+  const [state, setState] = useState<StageState>({ focusId: null, celebrating: null });
   const passing = usePitchAmbient();
   const passingRef = useRef(passing);
   useEffect(() => {
@@ -166,6 +167,10 @@ export default function Pitch3D({
           host: hostRef.current,
           tagLayer: tagsRef.current,
           onState: setState,
+          onPass: (n) => {
+            // straight onto the element: a pass should not re-render the whole pitch
+            if (rootRef.current) rootRef.current.dataset.passes = String(n);
+          },
           ambient: passingRef.current,
           onPick: (id) => {
             const el = rootRef.current?.querySelector<HTMLButtonElement>(`button[data-tag="${id}"]`);
@@ -265,7 +270,6 @@ export default function Pitch3D({
       data-testid="pitch3d"
       data-focus={state.focusId ?? undefined}
       data-celebrating={state.celebrating ?? undefined}
-      data-passes={state.passes || undefined}
     >
       <div ref={hostRef} className="relative aspect-[4/5] w-full scroll-mt-16 overflow-hidden rounded-xl bg-[#0a1a14] [contain:paint]">
         <div ref={tagsRef} className="pointer-events-none absolute inset-0">

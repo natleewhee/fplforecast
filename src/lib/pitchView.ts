@@ -50,3 +50,26 @@ export function setPitchAmbient(on: boolean) {
   writeItem(AMBIENT_KEY, on ? "on" : "off");
   listeners.forEach((l) => l());
 }
+
+/** Whether this device asks for less motion (then the ball does not go round, so its switch is not shown). */
+export function usePrefersReducedMotion(): boolean {
+  return useSyncExternalStore(
+    (cb) => {
+      try {
+        const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+        mq.addEventListener("change", cb);
+        return () => mq.removeEventListener("change", cb);
+      } catch {
+        return () => {};
+      }
+    },
+    () => {
+      try {
+        return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      } catch {
+        return false;
+      }
+    },
+    () => false,
+  );
+}

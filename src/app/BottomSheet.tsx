@@ -21,18 +21,24 @@ export default function BottomSheet({
   onClose,
   children,
   peek = false,
+  peekAction,
 }: {
   label: string;
   onClose: () => void;
   children: ReactNode;
   peek?: boolean;
+  /** A button kept beside Show all and Close in the short card (e.g. "Replace"), so it is not buried in the clipped preview. */
+  peekAction?: ReactNode;
 }) {
   const closeRef = useRef<HTMLButtonElement>(null);
+  const showAllRef = useRef<HTMLButtonElement>(null);
   const [expanded, setExpanded] = useState(false);
   const compact = peek && !expanded;
 
   useEffect(() => {
     if (!compact) closeRef.current?.focus();
+    // opened from the keyboard: the card is at the end of the page, so take focus to it
+    else if (document.activeElement?.matches(":focus-visible")) showAllRef.current?.focus();
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
     };
@@ -49,7 +55,7 @@ export default function BottomSheet({
         aria-label={label}
       >
         <div className="rise pointer-events-auto relative w-full max-w-md rounded-t-2xl border border-line bg-[var(--bg-1)] px-4 pb-[max(0.75rem,env(safe-area-inset-bottom))] pt-3 shadow-xl">
-          <div className="relative max-h-[11rem] overflow-hidden">
+          <div className="relative max-h-[11rem] overflow-hidden" inert>
             {children}
             <div
               className="pointer-events-none absolute inset-x-0 bottom-0 h-10 bg-gradient-to-t from-[var(--bg-1)] to-transparent"
@@ -57,7 +63,9 @@ export default function BottomSheet({
             />
           </div>
           <div className="mt-2 flex gap-2">
+            {peekAction}
             <button
+              ref={showAllRef}
               type="button"
               onClick={() => setExpanded(true)}
               className="inline-flex h-10 flex-1 items-center justify-center rounded-lg border border-[color-mix(in_srgb,var(--accent)_45%,transparent)] text-sm font-semibold text-[var(--accent)]"
