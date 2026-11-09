@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import type {
   BootstrapSnapshot,
   ChipStatus,
@@ -32,11 +32,13 @@ import Scenarios from "./Scenarios";
 import TransferForm from "./TransferForm";
 import AppTabs from "./AppTabs";
 import {
+  CLIENT_TIMEOUT_MS,
   INVALID_TEAM_ID_MESSAGE,
   NETWORK_MESSAGE,
   SLOW_LOAD_AFTER_MS,
   SLOW_LOAD_NOTE,
   TIMEOUT_MESSAGE,
+  cleanTeamIdInput,
   forecastErrorMessage,
   isValidTeamIdInput,
 } from "@/lib/forecastErrors";
@@ -195,6 +197,7 @@ function TeamIdBar({
   managerName,
   onChange,
   onReset,
+  onClearError,
   loading,
   slow,
   error,
@@ -204,6 +207,7 @@ function TeamIdBar({
   managerName?: string;
   onChange: (id: string) => void;
   onReset: () => void;
+  onClearError: () => void;
   loading: boolean;
   slow: boolean;
   error: string | null;
@@ -266,7 +270,10 @@ function TeamIdBar({
         </button>
         <button
           type="button"
-          onClick={() => setEditing((v) => !v)}
+          onClick={() => {
+            onClearError();
+            setEditing((v) => !v);
+          }}
           aria-expanded={editing}
           className="inline-flex h-11 shrink-0 items-center rounded-full border border-line px-3 text-xs font-medium text-ink-soft transition-colors hover:border-border-strong"
         >
@@ -278,20 +285,24 @@ function TeamIdBar({
           {error}
         </p>
       )}
-      {loading && slow && (
-        <p role="status" className="text-xs text-ink-soft">
-          {SLOW_LOAD_NOTE}
+      {/* always in the page, only its text changes, so screen readers announce it */}
+      <p role="status" className={loading && slow ? "text-xs text-ink-soft" : "sr-only"}>
+        {loading && slow ? SLOW_LOAD_NOTE : ""}
+      </p>
+      {editing && draft && !isValidTeamIdInput(draft) && (
+        <p id="team-id-bar-hint" className="text-xs text-ink-soft">
+          {INVALID_TEAM_ID_MESSAGE}
         </p>
       )}
       {editing && (
         <div className="flex flex-wrap items-center gap-2">
           <input
             value={draft}
-            onChange={(e) => setDraft(e.target.value.replace(/[^0-9]/g, ""))}
+            onChange={(e) => setDraft(cleanTeamIdInput(e.target.value))}
             placeholder="Team ID"
             inputMode="numeric"
-            maxLength={9}
             aria-label="Team ID"
+            aria-describedby={draft && !isValidTeamIdInput(draft) ? "team-id-bar-hint" : undefined}
             className="h-11 w-36 rounded-lg border border-line bg-[var(--bg-2)] px-2.5 text-xs text-ink placeholder:text-ink-faint focus:border-[var(--accent)] focus:outline-none"
           />
           <button
@@ -431,15 +442,15 @@ function TeamIdGate({
             <div className="flex w-full gap-2">
               <input
                 value={draft}
-                onChange={(e) => setDraft(e.target.value.replace(/[^0-9]/g, ""))}
+                onChange={(e) => setDraft(cleanTeamIdInput(e.target.value))}
                 placeholder="e.g. 1168513"
                 inputMode="numeric"
                 autoFocus
                 onKeyDown={(e) => {
                   if (e.key === "Enter" && valid && !loading) onSubmit(draft);
                 }}
-                maxLength={9}
                 aria-label="FPL team ID"
+                aria-describedby={draft && !valid ? "team-id-hint" : undefined}
                 className="h-11 flex-1 rounded-lg border border-line bg-[var(--bg-2)] px-3 text-sm text-ink placeholder:text-ink-faint focus:border-[var(--accent)] focus:outline-none"
               />
               {/* h-11 (44px, adapt.md's minimum touch target) here too --
@@ -453,13 +464,13 @@ function TeamIdGate({
               </button>
             </div>
             {draft && !valid && !loading && (
-              <span className="text-xs text-ink-soft">{INVALID_TEAM_ID_MESSAGE}</span>
-            )}
-            {loading && slow && (
-              <span role="status" className="text-xs text-ink-soft">
-                {SLOW_LOAD_NOTE}
+              <span id="team-id-hint" className="text-xs text-ink-soft">
+                {INVALID_TEAM_ID_MESSAGE}
               </span>
             )}
+            <span role="status" className={loading && slow ? "text-xs text-ink-soft" : "sr-only"}>
+              {loading && slow ? SLOW_LOAD_NOTE : ""}
+            </span>
             {error && (
               <span role="alert" className="text-xs text-[var(--danger)]">
                 {error}
@@ -522,8 +533,16 @@ export default function AppShell({
   const chips = isGuest ? null : initialChips;
   const overrides = isGuest ? null : initialOverrides;
 
-  const loadTeam = async (id: string, opts: { save?: boolean } = {}) => {
+  // Only the newest lookup may touch state: switching team or resetting mid-load must
+  // not be undone by a request the person has already walked away from.
+  const requestSeq = useRef(0);
+  const inFlight = useRef<AbortController | null>(null);
+
+  const loadTeam = async (id: string, opts: { save?: boolean; quiet?: boolean } = {}) => {
     const save = opts.save ?? true;
+    const seq = ++requestSeq.current;
+    inFlight.current?.abort();
+    inFlight.current = null;
     if (id === OWNER_TEAM_ID) {
       if (save) setClientTeamId(OWNER_TEAM_ID);
       setTeamId(OWNER_TEAM_ID);
@@ -534,7 +553,9 @@ export default function AppShell({
       return;
     }
     if (!isValidTeamIdInput(id)) {
-      setError(INVALID_TEAM_ID_MESSAGE);
+      // a stale bad cookie or ?team= value is not something the person just typed
+      setLoading(false);
+      if (!opts.quiet) setError(INVALID_TEAM_ID_MESSAGE);
       return;
     }
     setLoading(true);
@@ -547,17 +568,26 @@ export default function AppShell({
     // clear message instead of leaving "Loading…" up forever if something
     // is actually stuck (a hung Vercel Function, a dropped connection).
     const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 45_000);
+    inFlight.current = controller;
+    let timedOut = false;
+    const timeout = setTimeout(() => {
+      timedOut = true;
+      controller.abort();
+    }, CLIENT_TIMEOUT_MS);
     try {
       const res = await fetch(`/api/forecast?teamId=${id}`, { signal: controller.signal });
       const text = await res.text();
-      let json: Forecast | null = null;
+      let json: (Forecast & { error?: unknown }) | null = null;
       try {
         json = JSON.parse(text);
       } catch {
         // handled below: an unreadable body is reported by status
       }
-      if (!res.ok || !json) throw new ForecastRequestError(forecastErrorMessage(res.ok ? 502 : res.status, id));
+      if (seq !== requestSeq.current) return;
+      if (!res.ok || !json) {
+        const fromApp = !!json && typeof json.error === "string";
+        throw new ForecastRequestError(forecastErrorMessage(res.ok ? 502 : res.status, id, fromApp));
+      }
       if (save) {
         setClientTeamId(id);
         setSavedTeamId(id);
@@ -566,19 +596,32 @@ export default function AppShell({
       setForecast(json);
       setUrlTeamId(id);
     } catch (err) {
+      if (seq !== requestSeq.current) return; // abandoned by the person, not a failure
       const isAbort = err instanceof DOMException && err.name === "AbortError";
       setError(
-        isAbort ? TIMEOUT_MESSAGE : err instanceof ForecastRequestError ? err.message : NETWORK_MESSAGE,
+        isAbort && timedOut
+          ? TIMEOUT_MESSAGE
+          : err instanceof ForecastRequestError
+            ? err.message
+            : NETWORK_MESSAGE,
       );
     } finally {
       clearTimeout(timeout);
       clearTimeout(slowTimer);
-      setSlow(false);
-      setLoading(false);
+      if (seq === requestSeq.current) {
+        inFlight.current = null;
+        setSlow(false);
+        setLoading(false);
+      }
     }
   };
 
   const resetTeam = () => {
+    requestSeq.current++; // anything still in flight is now stale
+    inFlight.current?.abort();
+    inFlight.current = null;
+    setLoading(false);
+    setSlow(false);
     setClientTeamId(null);
     setUrlTeamId(null);
     setTeamId(null);
@@ -607,7 +650,7 @@ export default function AppShell({
     if (!toLoad) return;
     const t = setTimeout(() => {
       setSavedTeamId(stored);
-      loadTeam(toLoad, { save: toLoad === stored });
+      loadTeam(toLoad, { save: toLoad === stored, quiet: true });
     }, 0);
     return () => clearTimeout(t);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -749,6 +792,7 @@ export default function AppShell({
           managerName={forecast.managerName}
           onChange={loadTeam}
           onReset={resetTeam}
+          onClearError={() => setError(null)}
           loading={loading}
           slow={slow}
           error={error}

@@ -168,9 +168,20 @@ def test_guest_forecast_carries_none_of_the_owners_model_record(monkeypatch):
     assert status == 200
     assert payload["runningRecord"] is None
     assert payload["parCalibration"] is None
-    assert "modelVsBaseline" not in (payload["lastGameweek"] or {})
+    # guard against passing vacuously: there must be something to strip
+    assert payload["lastGameweek"] is not None
+    assert "modelVsBaseline" not in payload["lastGameweek"]
     rows = (payload["history"] or {}).get("gameweeks", [])
+    assert rows
     assert all("modelVsBaseline" not in row for row in rows)
+
+    # the same inputs built for the owner do carry the field
+    bootstrap = cf.load_bootstrap()
+    elements_by_id = {e["id"]: e for e in bootstrap["elements"]}
+    owner_review = cf.last_gameweek_review(bootstrap, elements_by_id, gw, picks, entry_history)
+    assert owner_review is not None and "modelVsBaseline" in owner_review
+    owner_rows = cf.build_history(history)["gameweeks"]
+    assert owner_rows and all("modelVsBaseline" in row for row in owner_rows)
 
 
 def test_owner_history_still_carries_model_vs_baseline_rows():
