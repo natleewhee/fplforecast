@@ -259,8 +259,11 @@ export default function Pitch({
   // which eleven + captain -- always this app's recommended XI
   const xiIds = active.startingXi;
   const benchIds = active.bench;
-  const captainId = shown(active.captainId);
-  const viceId = shown(active.viceCaptainId);
+  // If the model's captain was sold in FPL, the armband is not the joiner's: it goes to the vice (or nobody).
+  const captainSold = active.captainId != null && appliedOut.has(active.captainId);
+  const viceSold = active.viceCaptainId != null && appliedOut.has(active.viceCaptainId);
+  const captainId = captainSold ? (viceSold ? null : shown(active.viceCaptainId)) : shown(active.captainId);
+  const viceId = captainSold || viceSold ? null : shown(active.viceCaptainId);
 
   // per-player xP / opponents for the shown GW, from that gameweek's own
   // player entry (fixtures/minutes can differ gameweek to gameweek).
@@ -318,11 +321,12 @@ export default function Pitch({
     if (!swap) return sum;
     const was = gwPlayerById.get(id)?.projectedPoints ?? 0;
     const now = swap.perGameweek[gwIdx] ?? 0;
-    return sum + (now - was) * (id === active.captainId ? 2 : 1);
+    return sum + (now - was) * (id === active.captainId && !captainSold ? 2 : 1);
   }, 0);
   const headline = active.points + previewDelta;
   const pendingCount = transferTools?.pending.length ?? 0;
   const previewing = pendingShown > 0;
+  const adjusted = swaps.size > 0; // saved transfers and/or ones already made in FPL
   const previewTok = [...xi, ...benched].find((t) => t.id === selectedId && t.preview);
 
   const to3d = (t: Tok): Pitch3DPlayer => ({
@@ -390,10 +394,10 @@ export default function Pitch({
           </div>
           <div className="shrink-0 text-right">
             <div className="stat stat-glow text-2xl leading-none sm:text-3xl">
-              {previewing && previewDelta !== 0 ? "~" : ""}
+              {adjusted && previewDelta !== 0 ? "~" : ""}
               {headline.toFixed(0)}
             </div>
-            <div className="eyebrow mt-1">{previewing ? "proj pts (preview)" : "proj pts"}</div>
+            <div className="eyebrow mt-1">{previewing ? "proj pts (preview)" : adjusted ? "proj pts (adjusted)" : "proj pts"}</div>
             {isTargetGw && (
               <details className="mt-0.5">
                 <summary className="cursor-pointer list-none font-mono text-[10px] text-ink-faint hover:text-ink-soft">
@@ -430,6 +434,8 @@ export default function Pitch({
               .join(", ")}
             {sync.swaps.length > 3 ? ` and ${sync.swaps.length - 3} more` : ""}. The pitch shows your squad as it is in FPL now; the
             model re-picks the XI and captain at the next rebuild.
+            {captainSold && " Your captain was sold, so the armband shown is the vice-captain\u2019s."}
+            {sync.unresolved.length > 0 && ` Not shown yet (no projection): ${sync.unresolved.join(", ")}.`}
           </div>
         )}
 
@@ -451,7 +457,7 @@ export default function Pitch({
           <div className="mb-2 flex flex-wrap items-center gap-1.5">
             <span className="chip">{fmtDelta(forecast.nextGw.deltaVsNoChange)} vs no change</span>
             <span className="chip">{fmtDelta(forecast.nextGw.deltaVsBaselineXi)} vs baseline</span>
-            <span className="chip">agree {forecast.lineupAgreement}/11</span>
+            {sync.swaps.length === 0 && <span className="chip">agree {forecast.lineupAgreement}/11</span>}
           </div>
         )}
 
@@ -568,7 +574,7 @@ export default function Pitch({
         <ReplaceSheet
           out={byId.get(replacingId)!}
           squad={squad.players}
-          tools={transferTools}
+          tools={{ ...transferTools, pool: transferTools.pool.filter((p) => !appliedIn.has(p.id)) }}
           onClose={() => {
             setReplacingId(null);
             triggerRef.current?.focus();

@@ -413,7 +413,7 @@ function setup(renderer: THREE.WebGLRenderer, canvas: HTMLCanvasElement, opts: S
   apron.position.y = -0.03;
   scene.add(apron);
 
-  // the bench: a seat strip behind the far goal line, facing the camera
+  // the bench: a seat strip at the bottom (near end) of the field, facing the camera
   {
     const box = (w: number, h: number, d: number) => new THREE.BoxGeometry(w, h, d);
     const parts: Part[] = [

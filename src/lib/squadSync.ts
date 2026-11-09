@@ -40,3 +40,16 @@ export function squadSync<P extends PoolEntry>(model: SquadEntry[], live: SquadE
   }
   return { swaps, unresolved };
 }
+
+export type LiveSquadFeed = { gameweek: number; chip: string | null; squad: SquadEntry[] };
+
+/** The live squad, if it can be compared with the model's. The model starts from the squad of gameweek
+ * `basedOnGameweek` (plus any transfers saved in this app), so a live squad for that same gameweek is not
+ * newer and would only undo the saved ones; and a Free Hit squad lasts one gameweek, so it says nothing
+ * about the squad you keep. */
+export function usableLiveSquad(feed: LiveSquadFeed | null, basedOnGameweek: number): SquadEntry[] | null {
+  if (!feed || feed.squad.length === 0) return null;
+  if (feed.gameweek <= basedOnGameweek) return null;
+  if (feed.chip === "freehit") return null;
+  return feed.squad;
+}

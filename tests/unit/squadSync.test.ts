@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { squadSync } from "@/lib/squadSync";
+import { squadSync, usableLiveSquad } from "@/lib/squadSync";
 
 const model = [
   { id: 1, position: "GKP", webName: "Kinsky" },
@@ -57,4 +57,15 @@ test("a position mismatch (cannot pair) is reported, never forced into the wrong
   const r = squadSync(model, live, pool);
   assert.deepEqual(r.swaps, []);
   assert.deepEqual(r.unresolved, ["Gonzalo"]);
+});
+
+test("a live squad is only used when it is for a gameweek after the one the model was built from", () => {
+  const feed = (gameweek: number, chip: string | null = null) => ({ gameweek, chip, squad: model });
+  assert.equal(usableLiveSquad(feed(10), 9), model);
+  assert.equal(usableLiveSquad(feed(9), 9), null, "same gameweek: not newer, it would only undo saved transfers");
+  assert.equal(usableLiveSquad(feed(8), 9), null);
+  assert.equal(usableLiveSquad(feed(10, "freehit"), 9), null, "a Free Hit squad lasts one gameweek");
+  assert.equal(usableLiveSquad(feed(10, "wildcard"), 9), model, "a wildcard is a real change of squad");
+  assert.equal(usableLiveSquad(null, 9), null);
+  assert.equal(usableLiveSquad({ gameweek: 10, chip: null, squad: [] }, 9), null);
 });
