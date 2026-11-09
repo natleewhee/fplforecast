@@ -102,3 +102,85 @@ test("pickThreats: top owned first, skips owned, blanks, finished and low owners
   assert.deepEqual(out[0].components, { goals: 1 });
   assert.equal(out[1].components, undefined);
 });
+
+const mini = (over: Record<string, unknown> = {}): FplBootstrap => ({
+  events: [],
+  teams: [{ id: 1, short_name: "AAA" }, { id: 2, short_name: "BBB" }],
+  elements: [{ id: 2, team: 1, element_type: 3, web_name: "Big", selected_by_percent: "45.5", ...over }],
+});
+const fx = (): Map<number, FplFixture[]> => {
+  const f: FplFixture = { event: 9, team_h: 1, team_a: 2, kickoff_time: "2026-10-11T15:30:00Z" };
+  return new Map([[1, [f]], [2, [f]]]);
+};
+const pick = (element: number, position: number) => ({ element, position, multiplier: 1, is_captain: false, is_vice_captain: false });
+const run = (b: FplBootstrap, extra: Record<string, unknown> = {}, picks = [pick(1, 1)], chip: string | null = null) =>
+  pickThreats({ bootstrap: b, picks: { picks, active_chip: chip }, fixturesByTeam: fx(), teamName: new Map([[1, "AAA"], [2, "BBB"]]), components: { "2": { goals: 1 } }, ...extra });
+
+test("pickThreats prices threats from the supplied (this-gameweek) components and never from provisional ids", () => {
+  assert.deepEqual(run(mini())[0].components, { goals: 1 });
+  assert.equal(run(mini(), { provisionalXpIds: [2] })[0].components, undefined);
+  assert.equal(run(mini(), { components: {} })[0].components, undefined);
+});
+
+test("pickThreats skips players ruled out or with no chance of playing", () => {
+  for (const status of ["i", "s", "u", "n"]) assert.equal(run(mini({ status })).length, 0, status);
+  assert.equal(run(mini({ chance_of_playing_next_round: 0 })).length, 0);
+  assert.equal(run(mini({ status: "d", chance_of_playing_next_round: 50 })).length, 1);
+});
+
+test("pickThreats keeps your own bench (flagged) but not your XI, and not the bench under Bench Boost", () => {
+  const picks = [pick(1, 1), pick(2, 13)];
+  assert.equal(run(mini(), {}, picks)[0].onBench, true);
+  assert.equal(run(mini(), {}, [pick(1, 1), pick(2, 5)]).length, 0);
+  assert.equal(run(mini(), {}, picks, "bboost").length, 0);
+});
+
+test("a double gameweek's second leg uses leg minutes, not the gameweek total", () => {
+  const base = load();
+  const p: LivePayload = {
+    ...base,
+    threats: [threat({})],
+    liveByElement: { ...base.liveByElement, 900: { points: 8, minutes: 120, legMinutes: 30, goalsConceded: 0, fixtureStarted: true, fixtureFinished: false, breakdown: [] } },
+  };
+  const t = lines(p).find((l) => l.kind === "missing")!.text;
+  assert.match(t, /playing now \(30'\)/);
+  assert.doesNotMatch(t, /120/);
+});
+
+test("a live match where he has no minutes is not described as playing now", () => {
+  const base = load();
+  const p: LivePayload = {
+    ...base,
+    threats: [threat({})],
+    liveByElement: { ...base.liveByElement, 900: { points: 0, minutes: 0, goalsConceded: 0, fixtureStarted: true, fixtureFinished: false, breakdown: [] } },
+  };
+  const t = lines(p).find((l) => l.kind === "missing")!.text;
+  assert.doesNotMatch(t, /playing now/);
+  assert.match(t, /no minutes yet/);
+});
+
+test("a missing kickoff drops the time phrase", () => {
+  const t = lines({ ...load(), threats: [threat({ kickoffTime: null })] }).find((l) => l.kind === "missing")!.text;
+  assert.doesNotMatch(t, /—|SGT/);
+  assert.match(t, /has a match still to come/);
+});
+
+test("your bench is worded as such, and Bench Boost says your 15", () => {
+  const t = lines({ ...load(), threats: [threat({ onBench: true })] }).find((l) => l.kind === "missing")!.text;
+  assert.match(t, /on your bench so his points only count if he is subbed in/);
+  const base = load();
+  const bb: LivePayload = { ...base, picks: { ...base.picks, chip: "bboost" }, threats: [] };
+  assert.ok(lines(bb).some((l) => /of your 15 /.test(l.text)));
+});
+
+test("when the armband is the only player left, his xP is shown", () => {
+  const base = load();
+  const live = Object.fromEntries(
+    Object.entries(base.liveByElement).map(([k, v]) => [k, { ...v, fixtureStarted: true, fixtureFinished: true }]),
+  );
+  live["6"] = { ...base.liveByElement["6"], fixtureStarted: false, fixtureFinished: false, minutes: 0, points: 0 }; // Saka, the captain
+  const l = lines({ ...base, threats: [], liveByElement: live });
+  assert.equal(l.length, 1);
+  assert.match(l[0].text, /armband is on Saka/);
+  assert.match(l[0].text, /still expects about [\d.]+ pts from your 1 to play/);
+});
