@@ -530,10 +530,28 @@ def test_availability_info_surfaces_fpls_doubt_signal():
     doubtful = cf._availability_info(
         {"status": "d", "chance_of_playing_next_round": 75, "news": "Knock - 75% chance of playing"}
     )
-    assert doubtful == {"status": "d", "chance": 75, "news": "Knock - 75% chance of playing"}
+    assert doubtful == {
+        "status": "d", "chance": 75, "news": "Knock - 75% chance of playing", "risks": [],
+    }
 
     fit = cf._availability_info({"status": "a"})
-    assert fit == {"status": "a", "chance": None, "news": None}
+    assert fit == {"status": "a", "chance": None, "news": None, "risks": []}
+
+
+def test_availability_info_carries_scout_risks_verbatim():
+    el = {
+        "status": "a",
+        "scout_risks": [
+            {"property": "suspension_risk", "gameweek": None, "notes": "4 yellow cards.", "url": None},
+            {"property": "loan_ineligible", "gameweek": 16, "notes": "Loan clause.", "url": None},
+            {"property": "loan_ineligible", "gameweek": 27, "notes": "", "url": None},
+        ],
+    }
+    assert cf._availability_info(el)["risks"] == [
+        {"kind": "suspension_risk", "gameweek": None, "notes": "4 yellow cards."},
+        {"kind": "loan_ineligible", "gameweek": 16, "notes": "Loan clause."},
+    ]
+    assert cf._availability_info({"status": "a", "scout_risks": None})["risks"] == []
 
 
 def test_save_and_load_pool_context_roundtrips(monkeypatch, tmp_path):

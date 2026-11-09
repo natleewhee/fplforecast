@@ -737,6 +737,34 @@ test.describe("Screens say things once", () => {
   });
 });
 
+test.describe("Suspension / loan-ban risk", () => {
+  // Guest path: a ?team= link for a team that is not the saved one is served by
+  // /api/forecast. Mock that with the committed forecast plus FPL-style risks.
+  test("the deadline checklist quotes FPL's risk wording for a guest team", async ({ page }) => {
+    const dir = join(__dirname, "..", "..", "data", "forecast");
+    const newest = readdirSync(dir).filter((f) => /^gw\d+\.json$/.test(f)).sort((a, b) => Number(b.match(/\d+/)![0]) - Number(a.match(/\d+/)![0]))[0];
+    const fc = JSON.parse(readFileSync(join(dir, newest), "utf8"));
+    const note = "This player currently has 4 Premier League yellow cards and will face a 1-match suspension on receiving their next.";
+    fc.squad.players[0].availability = { ...fc.squad.players[0].availability, risks: [{ kind: "suspension_risk", gameweek: null, notes: note }] };
+    const name = fc.squad.players[0].webName;
+    await page.clock.install({ time: Date.parse(fc.deadlineTime) - 5 * 3_600_000 });
+    await page.route("**/api/forecast*", (route) => route.fulfill({ contentType: "application/json", body: JSON.stringify(fc) }));
+    await mockLive(page, { current: "a" });
+    await page.goto("/?team=999999&tab=squad");
+    const row = page.getByText("Suspension / loan-ban risk (FPL)");
+    await expect(row).toBeVisible();
+    await expect(page.getByText(`${name}: ${note}`)).toBeVisible();
+  });
+
+  test("the row says so when FPL flags nothing", async ({ page }) => {
+    await page.clock.install({ time: Date.parse(latestDeadline()) - 5 * 3_600_000 });
+    await mockLive(page, { current: "a" });
+    await open(page);
+    await openTab(page, "Squad");
+    await expect(page.getByText("Suspension / loan-ban risk (FPL)")).toBeVisible();
+  });
+});
+
 test.describe("Opens on the right view for the week", () => {
   const activeTab = (page: Page) => page.locator(".sticky .segment button[data-active='true']");
 

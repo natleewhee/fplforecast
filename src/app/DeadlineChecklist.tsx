@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import type { ChipStatus, Forecast } from "@/lib/snapshots";
-import { availabilityFlag } from "@/lib/availability";
+import { availabilityFlag, risksForGameweek } from "@/lib/availability";
 import { countdown } from "@/lib/time";
 
 type RowStatus = "ok" | "amber" | "red" | "info";
@@ -100,6 +100,16 @@ export default function DeadlineChecklist({
       ? `Your bench's likely first sub in, ${firstOutfieldSub?.webName}, is also a doubt (${subDoubt?.label}).`
       : "Your bench order looks fine against today's doubts.";
 
+  // FPL's own suspension / loan-ban warnings for the whole squad (a benched
+  // player still matters if he is the auto-sub). Quoted, never inferred.
+  const riskLines = forecast.squad.players.flatMap((p) =>
+    risksForGameweek(p.availability, forecast.targetGameweek).map((r) => `${p.webName}: ${r.notes}`)
+  );
+  const riskDetail =
+    riskLines.length === 0
+      ? `FPL flags no suspension or loan-ban risk in your squad for GW${forecast.targetGameweek}.`
+      : riskLines.join(" ");
+
   const topScenario = forecast.scenarios.byHorizon["1"]?.[0] ?? null;
   const transferDetail = !topScenario
     ? "No transfer scenario available yet."
@@ -142,6 +152,11 @@ export default function DeadlineChecklist({
       <div className="divide-y divide-[var(--line)]">
         <ChecklistRow status={captainStatus} label="Captain" detail={captainDetail} />
         <ChecklistRow status={injuryStatus} label="Injury / doubt risk in your XI" detail={injuryDetail} />
+        <ChecklistRow
+          status={riskLines.length > 0 ? "amber" : "ok"}
+          label="Suspension / loan-ban risk (FPL)"
+          detail={riskDetail}
+        />
         <ChecklistRow status={benchStatus} label="Bench order" detail={benchDetail} />
         <ChecklistRow status="info" label="Transfer" detail={transferDetail} />
         {chips != null && (

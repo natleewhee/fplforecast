@@ -92,6 +92,16 @@ export type Availability = {
   status: "a" | "d" | "i" | "s" | "u" | "n";
   chance: number | null;
   news: string | null;
+  // FPL's `scout_risks`: forward-looking flags (a yellow card from a ban, a
+  // loan clause for one fixture). `notes` is FPL's own wording. Absent on
+  // forecasts built before this field existed.
+  risks?: AvailabilityRisk[];
+};
+
+export type AvailabilityRisk = {
+  kind: string; // e.g. "suspension_risk", "loan_ineligible"
+  gameweek: number | null; // null = applies to the next match
+  notes: string;
 };
 
 export type PlayerCard = {
