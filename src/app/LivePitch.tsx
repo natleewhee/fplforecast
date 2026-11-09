@@ -287,7 +287,7 @@ export default function LivePitch({
       position: r.position,
       team: r.team ?? "",
       code: r.code,
-      sub: t === "pending" ? shortStatus(r).replace(/^[A-Za-z]{3} /, "") : `${pts.toFixed(0)} \u00B7 ${shortStatus(r)}`, // a kickoff shows the time only; the day is in "Still to come"
+      sub: t === "pending" ? shortStatus(r).replace(/^[A-Za-z]{3} /, "") : t === "done" ? `${pts.toFixed(0)}` : `${pts.toFixed(0)} \u00B7 ${shortStatus(r)}`, // full time: just the points, to leave room for the icons // a kickoff shows the time only; the day is in "Still to come"
       subTone: t === "live" ? "accent" : t === "done" && pts >= HAUL ? "warn" : t === "done" ? "accent" : "faint",
       role: r.isArmband ? "C" : r.isViceCaptain ? "V" : null,
       dim: t === "dnp" ? 0.5 : t === "off" ? 0.62 : t === "pending" ? 0.72 : 1,
@@ -295,7 +295,7 @@ export default function LivePitch({
         r.isArmband ? ", captain" : r.isViceCaptain ? ", vice captain" : ""
       }`,
       title: `${r.webName} \u2014 ${statusText(r)}`,
-      badges: eventBadgeItems(r).slice(0, 2), // the full set is in the breakdown sheet
+      badges: eventBadgeItems(r).slice(0, 3), // the three that say most; the full set is in the breakdown card
     };
   };
 
@@ -334,7 +334,7 @@ export default function LivePitch({
             onUnavailable={() => setNo3d(true)}
           />
           <p className="mt-2 text-[10.5px] leading-snug text-ink-faint">
-            Number = points so far, then minutes, FT or kickoff time · faded = yet to play, off or did not play ·{" "}
+            Number = points so far (with minutes while playing, or the kickoff time) · icons = goals, assists, clean sheet, cards, bonus · faded = yet to play, off or did not play ·{" "}
             {toPlay} of 11 still to play · C captain, V vice · tap a player for the breakdown · times in SGT
           </p>
         </>

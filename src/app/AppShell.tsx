@@ -543,6 +543,26 @@ export default function AppShell({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // Your squad as FPL has it now. The forecast starts from the squad you held when the last gameweek
+  // finished, so a transfer made since then is missing from it; the Squad pitch uses this to show it.
+  const [liveSquad, setLiveSquad] = useState<{ id: number; position: string }[] | null>(null);
+  const forecastBuiltAt = forecast?.generatedAt;
+  useEffect(() => {
+    if (!teamId || !forecastBuiltAt) return;
+    let stale = false;
+    // `squad=1` changes nothing on the server: it labels this request so the browser tests can tell it from the Live tab's
+    const qs = teamId !== savedTeamId ? `?squad=1&teamId=${teamId}` : "?squad=1";
+    fetch(`/api/live${qs}`, { cache: "no-store" })
+      .then((res) => (res.ok ? res.json() : null))
+      .then((json: { squad?: { id: number; position: string }[] } | null) => {
+        if (!stale) setLiveSquad(json?.squad ?? null);
+      })
+      .catch(() => {});
+    return () => {
+      stale = true;
+    };
+  }, [teamId, savedTeamId, forecastBuiltAt]);
+
   if (!teamId || !forecast) {
     return <TeamIdGate onSubmit={loadTeam} loading={loading} error={error} />;
   }
@@ -583,7 +603,7 @@ export default function AppShell({
         </div>
       )}
       <DeadlineChecklist forecast={forecast} chips={chips} />
-      <Pitch forecast={forecast} transferTools={transferTools} />
+      <Pitch forecast={forecast} transferTools={transferTools} liveSquad={liveSquad} />
 
 
       <Carousel>

@@ -17,7 +17,7 @@ const lerp = (a: number, b: number, k: number) => a + (b - a) * k;
 export type Shot = { pos: [number, number, number]; look: [number, number, number]; fov: number };
 
 /** The centred, high view of the whole pitch. */
-export const BROADCAST: Shot = { pos: [0, 18, 18.5], look: [0, 0, -5.4], fov: 46 };
+export const BROADCAST: Shot = { pos: [0, 21.5, 24.5], look: [0, 0, -3.6], fov: 46 };
 
 /** A close view of one player from further back and higher than before: a narrow lens at a
  * distance keeps the perspective gentle, so a player in the foreground is not a giant head.
