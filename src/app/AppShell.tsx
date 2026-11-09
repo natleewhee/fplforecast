@@ -3,7 +3,6 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import type {
   BootstrapSnapshot,
-  ChipStatus,
   Forecast,
   OverridesFile,
   ParCalibration,
@@ -44,6 +43,8 @@ import {
 } from "@/lib/forecastErrors";
 import { STALE_AFTER_HOURS, describeAge, forecastAgeHours } from "@/lib/time";
 import Carousel from "./Carousel";
+import CaptainShortlist from "./CaptainShortlist";
+import FixtureTicker from "./FixtureTicker";
 import type { PendingTransfer } from "@/lib/transfers";
 import type { TransferTools } from "./ReplaceSheet";
 
@@ -140,49 +141,6 @@ function ParCalibrationModule({ calibration }: { calibration: ParCalibration | n
           </span>
         </div>
       </div>
-    </Module>
-  );
-}
-
-function CaptainModule({ forecast }: { forecast: Forecast }) {
-  const edge = forecast.captainEdge;
-  return (
-    <Module
-      label={`Captain · GW${forecast.targetGameweek}`}
-      accent={
-        forecast.overridesApplied > 0 ? (
-          <span className="chip chip-warn">{forecast.overridesApplied} manual</span>
-        ) : null
-      }
-    >
-      <div className="flex items-end gap-3">
-        <div>
-          <div className="text-xl font-bold leading-none text-ink">
-            {forecast.captain?.webName ?? "—"}
-          </div>
-          {forecast.captain?.points != null && (
-            <div className="eyebrow mt-1">
-              <span className="stat text-[var(--accent)]">{forecast.captain.points.toFixed(1)}</span>{" "}
-              proj
-            </div>
-          )}
-        </div>
-      </div>
-      {forecast.viceCaptain && (
-        <div className="flex flex-wrap items-center gap-2 text-[11px] text-ink-soft">
-          <span>
-            <span className="text-ink-faint">VC</span> {forecast.viceCaptain.webName}
-            {forecast.viceCaptain.points != null && (
-              <span className="tabular-nums"> ({forecast.viceCaptain.points.toFixed(1)})</span>
-            )}
-          </span>
-          {edge && (
-            <span className={edge.label === "clear edge" ? "chip chip-accent" : "chip"}>
-              {edge.label} +{edge.points.toFixed(1)}
-            </span>
-          )}
-        </div>
-      )}
     </Module>
   );
 }
@@ -486,7 +444,6 @@ function TeamIdGate({
 export default function AppShell({
   initialForecast,
   bootstrap,
-  initialChips,
   initialOverrides,
   pitchLooks,
   pitchKits,
@@ -494,7 +451,6 @@ export default function AppShell({
 }: {
   initialForecast: Forecast;
   bootstrap: BootstrapSnapshot;
-  initialChips: ChipStatus[] | null;
   initialOverrides: OverridesFile | null;
   /** Per-player height, skin and hair, and club kits, for the 3D Squad pitch. */
   pitchLooks?: PitchLooks;
@@ -527,10 +483,9 @@ export default function AppShell({
   // i.e. an unsaved `?team=` link, not a manual switch via TeamIdBar (which
   // always saves immediately, same as before this phase).
   const isViewingSharedLink = teamId != null && teamId !== savedTeamId;
-  // Chip-usage badges and pending-transfer display are owner-only
-  // conveniences (they read this app's own committed history/overrides) --
-  // hidden rather than shown wrong for a guest lookup.
-  const chips = isGuest ? null : initialChips;
+  // Pending-transfer display is an owner-only convenience (it reads this
+  // app's own committed overrides) -- hidden rather than shown wrong for a
+  // guest lookup. Chip status is per team and rides in the forecast itself.
   const overrides = isGuest ? null : initialOverrides;
 
   // Only the newest lookup may touch state: switching team or resetting mid-load must
@@ -727,12 +682,12 @@ export default function AppShell({
           <RebuildButton builtAt={forecast.generatedAt} />
         </div>
       )}
-      <DeadlineChecklist forecast={forecast} chips={chips} />
+      <DeadlineChecklist forecast={forecast} />
       <Pitch forecast={forecast} transferTools={transferTools} liveSquad={liveSquad} />
-
+      <FixtureTicker forecast={forecast} liveSquad={liveSquad} pending={transferTools?.pending} pool={transferTools?.pool} />
+      <CaptainShortlist forecast={forecast} liveSquad={liveSquad} pending={transferTools?.pending} pool={transferTools?.pool} />
 
       <Carousel>
-        <CaptainModule forecast={forecast} />
         {isGuest && <GuestRecordModule />}
         {!isGuest && <RunningRecordModule record={forecast.runningRecord} />}
         {!isGuest && <ParCalibrationModule calibration={forecast.parCalibration} />}
@@ -751,7 +706,7 @@ export default function AppShell({
           squad={forecast.squad.players}
           forecastGw={forecast.targetGameweek}
           upcoming={forecast.upcoming}
-          chips={chips}
+          chips={forecast.chips ?? null}
         />
       )}
 

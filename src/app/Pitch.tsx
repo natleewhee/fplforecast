@@ -10,7 +10,7 @@ import { FormBars, Halo, meanFdr, RangeBar } from "./Shirt";
 import { FaceToggle, PlayerFace } from "./PlayerFace";
 import Pitch3D, { ViewSwitch, type Pitch3DPlayer } from "./pitch3d/Pitch3D";
 import PreviewSheet from "./PreviewSheet";
-import { squadSync } from "@/lib/squadSync";
+import { resolveSwaps } from "@/lib/squadView";
 import ReplaceSheet, { type TransferTools } from "./ReplaceSheet";
 import { setPitchView, usePitchView } from "@/lib/pitchView";
 import { ArmbandBadge, POSITION_DOT } from "./tokenParts";
@@ -230,30 +230,7 @@ export default function Pitch({
   // in the outgoing player's place right away, as a preview. (Replacements
   // are always the same position, so the formation stays legal.) The model's
   // own XI and captain choice only changes at the next rebuild.
-  const poolById = new Map((transferTools?.pool ?? forecast.pool ?? []).map((p) => [p.id, p]));
-  const swaps = new Map<number, PoolPlayer>();
-  // Transfers already made in FPL since the last build come first: they are your squad now.
-  const sync = squadSync(
-    squad.players.map((p) => ({ id: p.id, position: p.position, webName: p.webName })),
-    liveSquad ?? null,
-    forecast.pool ?? [],
-  );
-  const appliedOut = new Set<number>();
-  for (const a of sync.swaps) {
-    swaps.set(a.outId, a.incoming);
-    appliedOut.add(a.outId);
-  }
-  const appliedIn = new Set(sync.swaps.map((a) => a.incoming.id));
-  let pendingShown = 0;
-  for (const t of transferTools?.pending ?? []) {
-    if (appliedOut.has(t.out) || appliedIn.has(t.in)) continue;
-    const incoming = poolById.get(t.in);
-    const outgoing = byId.get(t.out);
-    if (incoming && outgoing && incoming.position === outgoing.position) {
-      swaps.set(t.out, incoming);
-      pendingShown += 1;
-    }
-  }
+  const { swaps, appliedOut, appliedIn, pendingShown, sync } = resolveSwaps(forecast, liveSquad, transferTools?.pending, transferTools?.pool);
   const shown = (id: number | null | undefined) => (id == null ? id : (swaps.get(id)?.id ?? id));
 
   // which eleven + captain -- always this app's recommended XI

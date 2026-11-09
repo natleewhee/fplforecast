@@ -204,6 +204,8 @@ class handler(BaseHTTPRequestHandler):
         body = json.dumps(payload).encode("utf-8")
         self.send_response(status)
         self.send_header("Content-Type", "application/json")
+        if status == 200:
+            self.send_header("Cache-Control", "public, s-maxage=900, stale-while-revalidate=3600")
         self._cors_headers()
         self.end_headers()
         self.wfile.write(body)

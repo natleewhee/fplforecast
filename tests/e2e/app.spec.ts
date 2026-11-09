@@ -733,7 +733,28 @@ test.describe("Screens say things once", () => {
     await mockLive(page, { current: "a" });
     await open(page);
     await openTab(page, "Squad");
-    await expect(page.getByText("Chips available")).toHaveCount(1);
+    // scoped to the checklist panel: page-wide text (team bar, manager names) varies by environment
+    const checklist = page.locator(".panel").filter({ has: page.getByRole("heading", { name: /this week.s decisions/i }) });
+    await expect(checklist.getByText("Chips", { exact: true })).toHaveCount(1);
+    // the owner at GW11: wildcard and Bench Boost are spent until GW20, no manager chip
+    await expect(checklist.getByText(/chips? left \(Free Hit, Triple Captain\); use by GW19 \(9 GWs incl\. this one\)/)).toBeVisible();
+    await expect(checklist.getByText(/Wildcard, Bench Boost used, next from GW20/)).toBeVisible();
+    await expect(checklist.getByText(/manager chip/i)).toHaveCount(0);
+  });
+
+  test("a guest's chips come from their own forecast, not the owner's", async ({ page, context }) => {
+    await context.clearCookies();
+    const forecast = JSON.parse(readFileSync(join(__dirname, "..", "..", "data", "forecast", "gw11.json"), "utf8"));
+    forecast.chips = forecast.chips.map((c: { name: string; window: { start: number } }) =>
+      c.name === "bboost" && c.window.start === 1 ? { ...c, used: false, availableNow: true } : c);
+    forecast.teamName = "Guest FC";
+    await page.route("**/api/forecast*", (route) => route.fulfill({ contentType: "application/json", body: JSON.stringify(forecast) }));
+    await page.clock.install({ time: Date.parse(latestDeadline()) - 5 * 3_600_000 });
+    await mockLive(page, { current: "a" });
+    await page.goto("/?team=999111");
+    await expect(page.getByText("Guest FC").first()).toBeVisible();
+    const checklist = page.locator(".panel").filter({ has: page.getByRole("heading", { name: /this week.s decisions/i }) });
+    await expect(checklist.getByText(/3 first-half chips left \(Free Hit, Bench Boost, Triple Captain\)/)).toBeVisible();
   });
 });
 
@@ -868,6 +889,79 @@ test.describe("3D pitch moves", () => {
     await expect(pitch).not.toHaveAttribute("data-celebrating", /.+/, { timeout: 8000 }); // the move finishes
     await page.keyboard.press("Escape");
     await expect(pitch).not.toHaveAttribute("data-focus", /.+/);
+  });
+
+  test("a goal that arrives in a later poll makes the scorer celebrate without any tap", async ({ page }) => {
+    const poll = { current: "a" as "a" | "b" };
+    await page.unroute("**/api/live*");
+    await mockLive(page, poll);
+    await page.goto("/?tab=live");
+    const pitch = page.getByTestId("pitch3d").first();
+    await pitch.locator('button[aria-label^="Palmer"]').waitFor();
+    poll.current = "b"; // Palmer scores
+    await page.evaluate(() => document.dispatchEvent(new Event("visibilitychange")));
+    await expect(pitch).toHaveAttribute("data-celebrating", "goal", { timeout: 10000 });
+    await expect(pitch).not.toHaveAttribute("data-focus", /.+/); // nobody selected, camera untouched
+    await expect(pitch).not.toHaveAttribute("data-celebrating", /.+/, { timeout: 8000 }); // and it ends
+  });
+
+  test("the ball stays put during a live celebration and the passing resumes after it", async ({ page }) => {
+    await page.addInitScript(() => {
+      try { localStorage.setItem("fpl-pitch-passing", "on"); } catch {}
+    });
+    const poll = { current: "a" as "a" | "b" };
+    await page.unroute("**/api/live*");
+    await mockLive(page, poll);
+    await page.goto("/?tab=live");
+    const pitch = page.getByTestId("pitch3d").first();
+    await pitch.locator('button[aria-label^="Palmer"]').waitFor();
+    await expect(pitch).toHaveAttribute("data-passes", /[1-9]/, { timeout: 15000 });
+    poll.current = "b";
+    await page.evaluate(() => document.dispatchEvent(new Event("visibilitychange")));
+    await expect(pitch).toHaveAttribute("data-celebrating", "goal", { timeout: 10000 });
+    await page.waitForTimeout(700); // a pass already in flight lands
+    const at = await pitch.getAttribute("data-passes");
+    await page.waitForTimeout(1800);
+    await expect(pitch).toHaveAttribute("data-celebrating", "goal"); // still mid-celebration
+    expect(await pitch.getAttribute("data-passes")).toBe(at);
+    await expect(pitch).not.toHaveAttribute("data-celebrating", /.+/, { timeout: 8000 });
+    await expect.poll(async () => await pitch.getAttribute("data-passes"), { timeout: 15000 }).not.toBe(at);
+  });
+
+  test("if the scorer leaves the lineup mid-celebration the pitch does not stay celebrating", async ({ page }) => {
+    const poll = { current: "a" as "a" | "b" | "c" };
+    await page.unroute("**/api/live*");
+    await page.route("**/api/live*", (route) => {
+      if (route.request().url().includes("squad=1")) return route.fulfill({ status: 503, body: "{}" });
+      const d = JSON.parse(fixture(`live-${poll.current === "c" ? "b" : poll.current}.json`));
+      if (poll.current === "c") {
+        // Palmer (7) swaps places with the last sub (15): he is no longer one of the eleven
+        const { starters, bench } = d.picks as { starters: number[]; bench: number[] };
+        starters[starters.indexOf(7)] = 15;
+        bench[bench.indexOf(15)] = 7;
+      }
+      return route.fulfill({ contentType: "application/json", body: JSON.stringify(d) });
+    });
+    await page.goto("/?tab=live");
+    const pitch = page.getByTestId("pitch3d").first();
+    await pitch.locator('button[aria-label^="Palmer"]').waitFor();
+    poll.current = "b";
+    await page.evaluate(() => document.dispatchEvent(new Event("visibilitychange")));
+    await expect(pitch).toHaveAttribute("data-celebrating", "goal", { timeout: 10000 });
+    poll.current = "c";
+    await page.evaluate(() => document.dispatchEvent(new Event("visibilitychange")));
+    await expect(pitch).not.toHaveAttribute("data-celebrating", /.+/, { timeout: 2500 });
+  });
+
+  test("the first poll alone never celebrates, even with goals already in it", async ({ page }) => {
+    const poll = { current: "b" as "a" | "b" };
+    await page.unroute("**/api/live*");
+    await mockLive(page, poll);
+    await page.goto("/?tab=live");
+    const pitch = page.getByTestId("pitch3d").first();
+    await pitch.locator('button[aria-label^="Palmer"]').waitFor();
+    await page.waitForTimeout(2500);
+    await expect(pitch).not.toHaveAttribute("data-celebrating", /.+/);
   });
 
   test("a clean sheet gets its own celebration", async ({ page }) => {
@@ -1306,7 +1400,6 @@ test.describe("Guest teams", () => {
     await enterTeam(page, "424242");
     await expect(page.getByTestId("team-bar")).toContainText("Guest FC");
     await openTab(page, "Squad");
-    await page.getByRole("button", { name: "Next" }).first().click(); // Captain -> the record card
     await expect(page.getByTestId("guest-record-empty")).toBeAttached();
     await expect(page.getByText(/Out-of-sample/)).toHaveCount(0);
     await expect(page.getByText(/Par calibration/)).toHaveCount(0);
@@ -1314,7 +1407,6 @@ test.describe("Guest teams", () => {
 
     await context.addCookies([{ name: "fpl_team_id", value: OWNER, url: ORIGIN }]);
     await page.goto("/?tab=squad");
-    await page.getByRole("button", { name: "Next" }).first().click();
     await expect(page.getByText(/Out-of-sample/).first()).toBeAttached();
     await expect(page.getByTestId("guest-record-empty")).toHaveCount(0);
   });

@@ -15,11 +15,19 @@ Still open from the last review:
   `points` is gross or net of the hit.
 - [ ] Whether the par line (the gameweek average) is net or gross of hits;
   until known, the band compares the gross projection.
-- [ ] Blank and postponed fixtures: a postponed match drops out of the
-  gameweek's fixtures, so bench cover can promise a sub FPL won't make.
+- [ ] Postponed after kickoff: blank gameweeks and matches postponed before
+  kickoff are handled in `liveBlend.ts` (the club counts as not played); a
+  match called off after it has started is not.
 - [ ] A stale or failed FPL response shows the last good data with its age;
   the season-rollover case (no current gameweek) is not handled specially.
-- [ ] Tests for the API routes that call FPL (live, recap, league).
+- [ ] Free Hit week should plan from the squad that comes back, not the
+  one-week Free Hit squad.
+- [ ] Price-change watch (risers/fallers) from FPL's own projection fields
+  (`price_change_percent`, `price_change_hourly_rate`,
+  `price_change_projections`), which every bootstrap snapshot now carries.
+- [ ] Flag suspension and loan-ban risk from `scout_risks`.
+- [ ] A guest's par line and rank describe next week's forecast, not the
+  current gameweek; say so or fix it.
 
 ## 3D players for all players (in progress)
 
@@ -31,7 +39,6 @@ fallback, and the `/appearance` review page. Still to do, in this order:
   15 hand-set players first. Measuring only: a suggestion, never final until checked.
 - [ ] Hair style, last, from photo shapes plus your corrections ("bald" and "beard" as
   their own options). Needs a decision on how it is read (shape rules or a model).
-- [ ] Put the 3D layer into the Squad pitch behind a 2D/3D switch (see the mock-up).
 
 ## Design/quality skills to run next (from the impeccable/taste-skill/ui-ux-pro-max/compound-engineering review)
 
@@ -56,6 +63,13 @@ Gaps worth knowing about, ranked by value or built where the fix was genuinely s
 
 - [x] **Ownership % in the transfer search** — LiveFPL/Scout both foreground "% owned" as a differential-vs-template signal, and fplforecast's own `bootstrap-static` snapshot already carries `selected_by_percent` per player (compute_forecast.py was already piping it into `pool`, just never into the plain player list TransferForm searches, and never rendered anywhere). Built: now shows next to price in the "In" search results.
 - [x] **A live overall-rank estimate** -- done (personal rank-calibration fit, surfaced in the live tracker).
-- [ ] **Price-change tracking (risers/fallers)** — LiveFPL/Scout both track this hourly. `bootstrap-static` already has `transfers_in_event`/`transfers_out_event`/`cost_change_event` per player (same snapshot as ownership above), so the raw signal exists — but turning net-transfer momentum into a "likely to rise/fall tonight" call needs a threshold model tuned against real price-change history, not a trivial display change.
-- [ ] **A visible "why" for the model's numbers** — Scout's stats hub lets managers explore the underlying xG/xA/BPS data themselves. fplforecast's engine already ingests Understat data (`scripts/ingest_understat.py`) and computes a per-player component breakdown (`squadComponents` — appearance/goals/assists/bonus/etc., already used by the live tracker's blend), but that breakdown is never shown for the *forecast* number itself, only for live in-match points. Could reuse the same breakdown UI to make "why does the model rate this player" inspectable, not just trust-the-number.
 - **Skipped, deliberately**: forums/community discussion, captaincy polls, article-driven pundit advice. This is a single-manager tool, not a media site — a social/content layer is out of scope, not a gap.
+
+## Done
+
+- [x] Tests for the API routes that call FPL (`tests/unit/apiRoutes.test.ts`
+  covers live, recap, league, league/squad and photo).
+- [x] Put the 3D layer into the Squad pitch behind a 2D/3D switch
+  (`src/app/Pitch.tsx`, `ViewSwitch` in `src/app/pitch3d/Pitch3D.tsx`).
+- [x] A visible "why" for the model's numbers: `PlayerBreakdownSheet` shows
+  the forecast's components.
