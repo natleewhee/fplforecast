@@ -33,6 +33,8 @@ import TransferForm from "./TransferForm";
 import AppTabs from "./AppTabs";
 import { STALE_AFTER_HOURS, describeAge, forecastAgeHours } from "@/lib/time";
 import Carousel from "./Carousel";
+import CaptainShortlist from "./CaptainShortlist";
+import FixtureTicker from "./FixtureTicker";
 import type { PendingTransfer } from "@/lib/transfers";
 import type { TransferTools } from "./ReplaceSheet";
 
@@ -113,49 +115,6 @@ function ParCalibrationModule({ calibration }: { calibration: ParCalibration | n
           </span>
         </div>
       </div>
-    </Module>
-  );
-}
-
-function CaptainModule({ forecast }: { forecast: Forecast }) {
-  const edge = forecast.captainEdge;
-  return (
-    <Module
-      label={`Captain · GW${forecast.targetGameweek}`}
-      accent={
-        forecast.overridesApplied > 0 ? (
-          <span className="chip chip-warn">{forecast.overridesApplied} manual</span>
-        ) : null
-      }
-    >
-      <div className="flex items-end gap-3">
-        <div>
-          <div className="text-xl font-bold leading-none text-ink">
-            {forecast.captain?.webName ?? "—"}
-          </div>
-          {forecast.captain?.points != null && (
-            <div className="eyebrow mt-1">
-              <span className="stat text-[var(--accent)]">{forecast.captain.points.toFixed(1)}</span>{" "}
-              proj
-            </div>
-          )}
-        </div>
-      </div>
-      {forecast.viceCaptain && (
-        <div className="flex flex-wrap items-center gap-2 text-[11px] text-ink-soft">
-          <span>
-            <span className="text-ink-faint">VC</span> {forecast.viceCaptain.webName}
-            {forecast.viceCaptain.points != null && (
-              <span className="tabular-nums"> ({forecast.viceCaptain.points.toFixed(1)})</span>
-            )}
-          </span>
-          {edge && (
-            <span className={edge.label === "clear edge" ? "chip chip-accent" : "chip"}>
-              {edge.label} +{edge.points.toFixed(1)}
-            </span>
-          )}
-        </div>
-      )}
     </Module>
   );
 }
@@ -617,10 +576,10 @@ export default function AppShell({
       )}
       <DeadlineChecklist forecast={forecast} chips={chips} />
       <Pitch forecast={forecast} transferTools={transferTools} liveSquad={liveSquad} />
-
+      <FixtureTicker forecast={forecast} liveSquad={liveSquad} pending={transferTools?.pending} pool={transferTools?.pool} />
+      <CaptainShortlist forecast={forecast} liveSquad={liveSquad} pending={transferTools?.pending} pool={transferTools?.pool} />
 
       <Carousel>
-        <CaptainModule forecast={forecast} />
         <RunningRecordModule record={forecast.runningRecord} />
         <ParCalibrationModule calibration={forecast.parCalibration} />
       </Carousel>
