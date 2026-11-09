@@ -154,3 +154,28 @@ def test_get_pool_context_uses_a_precomputed_cache_instead_of_refitting(monkeypa
             stale.unlink()
         if cache_dir.exists() and not any(cache_dir.iterdir()):
             cache_dir.rmdir()
+
+
+def test_guest_forecast_carries_none_of_the_owners_model_record(monkeypatch):
+    """The running record / par calibration / per-gameweek model-vs-baseline are
+    scored on the app owner's squad (data/record/*). A guest's forecast must not
+    carry them, or their dashboard would show the owner's numbers as theirs."""
+    gw, picks, entry_history, history = _latest_picks_and_history()
+    _stub_fpl_get(monkeypatch, gw, picks, entry_history, history)
+
+    status, payload = forecast_api.build_forecast_for_team(TEAM_ID)
+
+    assert status == 200
+    assert payload["runningRecord"] is None
+    assert payload["parCalibration"] is None
+    assert "modelVsBaseline" not in (payload["lastGameweek"] or {})
+    rows = (payload["history"] or {}).get("gameweeks", [])
+    assert all("modelVsBaseline" not in row for row in rows)
+
+
+def test_owner_history_still_carries_model_vs_baseline_rows():
+    hist = {"current": [{"event": 1, "points": 50}], "past": []}
+    owner_rows = cf.build_history(hist)["gameweeks"]
+    guest_rows = cf.build_history(hist, include_model_record=False)["gameweeks"]
+    assert "modelVsBaseline" in owner_rows[0]
+    assert "modelVsBaseline" not in guest_rows[0]

@@ -31,10 +31,22 @@ import RecapCard from "./RecapCard";
 import Scenarios from "./Scenarios";
 import TransferForm from "./TransferForm";
 import AppTabs from "./AppTabs";
+import {
+  INVALID_TEAM_ID_MESSAGE,
+  NETWORK_MESSAGE,
+  SLOW_LOAD_AFTER_MS,
+  SLOW_LOAD_NOTE,
+  TIMEOUT_MESSAGE,
+  forecastErrorMessage,
+  isValidTeamIdInput,
+} from "@/lib/forecastErrors";
 import { STALE_AFTER_HOURS, describeAge, forecastAgeHours } from "@/lib/time";
 import Carousel from "./Carousel";
 import type { PendingTransfer } from "@/lib/transfers";
 import type { TransferTools } from "./ReplaceSheet";
+
+/** Thrown for a message that is already fit to show a person. */
+class ForecastRequestError extends Error {}
 
 function RunningRecordModule({ record }: { record: RunningRecord | null }) {
   if (!record || record.gameweeksScored === 0) {
@@ -74,6 +86,19 @@ function RunningRecordModule({ record }: { record: RunningRecord | null }) {
           </span>
         </div>
       </div>
+    </Module>
+  );
+}
+
+/** What a guest sees instead of the model's record: that record is scored on the app
+ * owner's own squad, so showing it beside someone else's team would pass off the
+ * owner's numbers as theirs. */
+function GuestRecordModule() {
+  return (
+    <Module label="Model record">
+      <p className="text-xs text-ink-soft" data-testid="guest-record-empty">
+        The model&apos;s scored record is kept for this app&apos;s own team, so it isn&apos;t shown for yours.
+      </p>
     </Module>
   );
 }
@@ -171,6 +196,7 @@ function TeamIdBar({
   onChange,
   onReset,
   loading,
+  slow,
   error,
 }: {
   teamId: string;
@@ -179,6 +205,7 @@ function TeamIdBar({
   onChange: (id: string) => void;
   onReset: () => void;
   loading: boolean;
+  slow: boolean;
   error: string | null;
 }) {
   const [draft, setDraft] = useState("");
@@ -216,9 +243,7 @@ function TeamIdBar({
     <div className="space-y-2 px-1 pb-1 pt-3" data-testid="team-bar">
       <div className="flex items-center gap-2">
         <span className="min-w-0 flex-1 truncate text-xs text-ink-soft">
-          {error ? (
-            <span className="text-[var(--danger)]">{error}</span>
-          ) : loading ? (
+          {loading ? (
             "Loading…"
           ) : (
             <>
@@ -248,6 +273,16 @@ function TeamIdBar({
           Change team
         </button>
       </div>
+      {error && (
+        <p role="alert" className="text-xs text-[var(--danger)]">
+          {error}
+        </p>
+      )}
+      {loading && slow && (
+        <p role="status" className="text-xs text-ink-soft">
+          {SLOW_LOAD_NOTE}
+        </p>
+      )}
       {editing && (
         <div className="flex flex-wrap items-center gap-2">
           <input
@@ -255,12 +290,13 @@ function TeamIdBar({
             onChange={(e) => setDraft(e.target.value.replace(/[^0-9]/g, ""))}
             placeholder="Team ID"
             inputMode="numeric"
+            maxLength={9}
             aria-label="Team ID"
             className="h-11 w-36 rounded-lg border border-line bg-[var(--bg-2)] px-2.5 text-xs text-ink placeholder:text-ink-faint focus:border-[var(--accent)] focus:outline-none"
           />
           <button
             className="inline-flex h-11 items-center rounded-full bg-[var(--accent)] px-4 text-xs font-bold text-[var(--bg-0)] transition-opacity disabled:cursor-not-allowed disabled:opacity-40"
-            disabled={!draft || loading}
+            disabled={!isValidTeamIdInput(draft) || loading}
             onClick={() => {
               onChange(draft);
               setEditing(false);
@@ -350,13 +386,16 @@ function StaleForecastBanner({ generatedAt }: { generatedAt: string }) {
 function TeamIdGate({
   onSubmit,
   loading,
+  slow,
   error,
 }: {
   onSubmit: (id: string) => void;
   loading: boolean;
+  slow: boolean;
   error: string | null;
 }) {
   const [draft, setDraft] = useState("");
+  const valid = isValidTeamIdInput(draft);
   return (
     <>
       {/* Dimmed backdrop -- deliberately generic chrome, never this app's own
@@ -377,6 +416,14 @@ function TeamIdGate({
         <div className="w-full max-w-sm rounded-2xl border border-line bg-[var(--bg-1)] p-6 shadow-xl">
           <div className="flex flex-col items-center gap-3 text-center">
             <h1 className="text-lg font-semibold text-ink">Enter your FPL team ID</h1>
+            <p className="text-xs text-ink">
+              GafferFPL is a Fantasy Premier League decision tool for managers: it forecasts your next
+              gameweek, picks your captain and tests transfers against your own squad.
+            </p>
+            <p className="text-xs text-ink-soft">
+              Anyone can look up their own team. Saving transfers is only available for this
+              app&apos;s own team.
+            </p>
             <p className="text-xs text-ink-soft">
               Find it in the URL on the FPL site: fantasy.premierleague.com/entry/
               <span className="text-ink">123456</span>/event/…
@@ -389,21 +436,35 @@ function TeamIdGate({
                 inputMode="numeric"
                 autoFocus
                 onKeyDown={(e) => {
-                  if (e.key === "Enter" && draft && !loading) onSubmit(draft);
+                  if (e.key === "Enter" && valid && !loading) onSubmit(draft);
                 }}
+                maxLength={9}
+                aria-label="FPL team ID"
                 className="h-11 flex-1 rounded-lg border border-line bg-[var(--bg-2)] px-3 text-sm text-ink placeholder:text-ink-faint focus:border-[var(--accent)] focus:outline-none"
               />
               {/* h-11 (44px, adapt.md's minimum touch target) here too --
                * this is the very first tap a new visitor makes. */}
               <button
                 className="inline-flex h-11 items-center rounded-lg border border-line px-3 text-sm font-medium text-ink-soft transition-colors hover:border-border-strong disabled:cursor-not-allowed disabled:opacity-50"
-                disabled={!draft || loading}
+                disabled={!valid || loading}
                 onClick={() => onSubmit(draft)}
               >
                 {loading ? "Loading…" : "View squad"}
               </button>
             </div>
-            {error && <span className="text-xs text-[var(--danger)]">{error}</span>}
+            {draft && !valid && !loading && (
+              <span className="text-xs text-ink-soft">{INVALID_TEAM_ID_MESSAGE}</span>
+            )}
+            {loading && slow && (
+              <span role="status" className="text-xs text-ink-soft">
+                {SLOW_LOAD_NOTE}
+              </span>
+            )}
+            {error && (
+              <span role="alert" className="text-xs text-[var(--danger)]">
+                {error}
+              </span>
+            )}
           </div>
         </div>
       </div>
@@ -443,6 +504,8 @@ export default function AppShell({
   const [liveActive, setLiveActive] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  // A guest forecast can take ~10s on a cold start: after a few seconds say so.
+  const [slow, setSlow] = useState(false);
   // Saved transfers waiting for the next rebuild. `null` until one is saved or
   // removed this visit, when the committed file's list is used. Shared by the
   // transfer form, the pitch's replace sheet and the deadline banner.
@@ -470,8 +533,14 @@ export default function AppShell({
       setUrlTeamId(OWNER_TEAM_ID);
       return;
     }
+    if (!isValidTeamIdInput(id)) {
+      setError(INVALID_TEAM_ID_MESSAGE);
+      return;
+    }
     setLoading(true);
     setError(null);
+    setSlow(false);
+    const slowTimer = setTimeout(() => setSlow(true), SLOW_LOAD_AFTER_MS);
     // api/forecast.py fits the same model the daily cron does, live, on a
     // cold container -- measured ~8s+ for that alone, before the FPL API
     // round trips. 45s gives real cold starts room while still surfacing a
@@ -482,29 +551,29 @@ export default function AppShell({
     try {
       const res = await fetch(`/api/forecast?teamId=${id}`, { signal: controller.signal });
       const text = await res.text();
-      let json: Forecast | { error?: string };
+      let json: Forecast | null = null;
       try {
         json = JSON.parse(text);
       } catch {
-        throw new Error(
-          res.ok
-            ? "Got an unreadable response -- try again in a moment."
-            : `Server error (HTTP ${res.status}) -- try again in a moment.`,
-        );
+        // handled below: an unreadable body is reported by status
       }
-      if (!res.ok) throw new Error((json as { error?: string }).error || `HTTP ${res.status}`);
+      if (!res.ok || !json) throw new ForecastRequestError(forecastErrorMessage(res.ok ? 502 : res.status, id));
       if (save) {
         setClientTeamId(id);
         setSavedTeamId(id);
       }
       setTeamId(id);
-      setForecast(json as Forecast);
+      setForecast(json);
       setUrlTeamId(id);
     } catch (err) {
       const isAbort = err instanceof DOMException && err.name === "AbortError";
-      setError(isAbort ? "Timed out -- the model's taking too long, try again." : (err as Error).message);
+      setError(
+        isAbort ? TIMEOUT_MESSAGE : err instanceof ForecastRequestError ? err.message : NETWORK_MESSAGE,
+      );
     } finally {
       clearTimeout(timeout);
+      clearTimeout(slowTimer);
+      setSlow(false);
       setLoading(false);
     }
   };
@@ -577,7 +646,7 @@ export default function AppShell({
       : null;
 
   if (!teamId || !forecast) {
-    return <TeamIdGate onSubmit={loadTeam} loading={loading} error={error} />;
+    return <TeamIdGate onSubmit={loadTeam} loading={loading} slow={slow} error={error} />;
   }
 
   const committedPending: PendingTransfer[] =
@@ -621,8 +690,9 @@ export default function AppShell({
 
       <Carousel>
         <CaptainModule forecast={forecast} />
-        <RunningRecordModule record={forecast.runningRecord} />
-        <ParCalibrationModule calibration={forecast.parCalibration} />
+        {isGuest && <GuestRecordModule />}
+        {!isGuest && <RunningRecordModule record={forecast.runningRecord} />}
+        {!isGuest && <ParCalibrationModule calibration={forecast.parCalibration} />}
       </Carousel>
 
       {forecast.history && <History history={forecast.history} />}
@@ -680,6 +750,7 @@ export default function AppShell({
           onChange={loadTeam}
           onReset={resetTeam}
           loading={loading}
+          slow={slow}
           error={error}
         />
         <StaleForecastBanner generatedAt={forecast.generatedAt} />

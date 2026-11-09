@@ -322,7 +322,7 @@ export type HistoryGameweek = {
   transfers: number;
   hit: number; // points spent on transfers
   teamValue: number; // £m
-  modelVsBaseline: GwModelVsBaseline | { status: string } | null;
+  modelVsBaseline?: GwModelVsBaseline | { status: string } | null; // absent for a guest
 };
 
 export type HistorySeason = {
@@ -351,7 +351,8 @@ export type GameweekReview = {
   overallRank: number | null;
   captain: GameweekCaptain | null;
   viceCaptain: GameweekCaptain | null;
-  modelVsBaseline:
+  /** Absent for a guest's team: the record is the app owner's. */
+  modelVsBaseline?:
     | { model: number; baseline: number; delta: number }
     | { status: string }
     | null;
