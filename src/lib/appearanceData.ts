@@ -2,6 +2,9 @@ import fs from "fs";
 import path from "path";
 import {
   resolveAppearance,
+  toPitchLook,
+  type PitchKits,
+  type PitchLooks,
   type AppearanceRecord,
   type KitTable,
   type Position,
@@ -83,4 +86,12 @@ export function loadAppearanceRows(): AppearanceRow[] {
     ...p,
     look: resolveAppearance(p.position, auto[String(p.code)], overrides[String(p.code)]),
   }));
+}
+
+/** Everything the client-side 3D pitch needs, keyed by player code. Small on purpose:
+ * one short record per player rather than the full review-page rows. */
+export function loadPitchData(): { looks: PitchLooks; kits: PitchKits } {
+  const looks: PitchLooks = {};
+  for (const row of loadAppearanceRows()) looks[String(row.code)] = toPitchLook(row.look);
+  return { looks, kits: loadKitTable()?.clubs ?? {} };
 }

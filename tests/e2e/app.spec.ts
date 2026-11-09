@@ -15,6 +15,10 @@ test.beforeEach(async ({ context, page }) => {
   pageErrors = [];
   page.on("pageerror", (e) => pageErrors.push(e.message));
   await context.addCookies([{ name: "fpl_team_id", value: OWNER, url: "http://localhost:3123" }]);
+  // the Squad pitch opens in 3D by default; most tests below drive the flat 2D tokens
+  await page.addInitScript(() => {
+    try { if (!localStorage.getItem("fpl-pitch-view")) localStorage.setItem("fpl-pitch-view", "2d"); } catch {}
+  });
   // a recap with a week picker, so the Live tab always has its scrolling chip row;
   // unmocked, CI would reach FPL's real API and tests would depend on its data
   await page.route("**/api/recap*", (route) =>
@@ -762,5 +766,33 @@ test.describe("Appearance review page", () => {
     await expect(page.getByRole("button", { name: /^Copy an override for/ }).first()).toBeVisible();
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
     expect(overflow).toBeLessThanOrEqual(0);
+  });
+});
+
+test.describe("3D Squad pitch", () => {
+  test.beforeEach(async ({ page }) => {
+    await page.addInitScript(() => {
+      try { localStorage.setItem("fpl-pitch-view", "3d"); } catch {}
+    });
+  });
+
+  test("shows all fifteen players with the captain marked, and a tap opens the breakdown", async ({ page }) => {
+    await page.goto("/?tab=squad");
+    const pitch = page.getByTestId("pitch3d");
+    await expect(pitch.locator("canvas")).toBeVisible();
+    await expect(pitch.locator("[data-tag]")).toHaveCount(15);
+    await expect(pitch.getByText("C", { exact: true })).toHaveCount(1);
+    await pitch.locator("[data-tag]").first().click();
+    await expect(page.getByRole("dialog")).toBeVisible();
+  });
+
+  test("the 2D switch shows the flat pitch and the choice is remembered", async ({ page }) => {
+    await page.goto("/?tab=squad");
+    await expect(page.getByTestId("pitch3d")).toBeVisible();
+    await page.evaluate(() => localStorage.removeItem("fpl-pitch-view"));
+    await page.getByRole("group", { name: "Pitch view" }).getByRole("button", { name: "2D" }).click();
+    await expect(page.getByTestId("pitch3d")).toHaveCount(0);
+    await expect(page.locator(".floodlit-pitch").first()).toBeVisible();
+    expect(await page.evaluate(() => localStorage.getItem("fpl-pitch-view"))).toBe("2d");
   });
 });
