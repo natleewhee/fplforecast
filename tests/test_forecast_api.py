@@ -119,6 +119,30 @@ def test_build_forecast_for_team_404s_for_an_unknown_team(monkeypatch):
     assert "error" in payload
 
 
+def _respond_headers(status: int) -> dict[str, str]:
+    """Run the handler's _respond against a fake socket and return the headers."""
+    import io
+
+    h = object.__new__(forecast_api.handler)
+    sent: dict[str, str] = {}
+    h.send_response = lambda code: None
+    h.send_header = lambda k, v: sent.__setitem__(k, v)
+    h.end_headers = lambda: None
+    h.wfile = io.BytesIO()
+    h._respond(status, {"ok": status == 200})
+    return sent
+
+
+def test_successful_forecast_is_cacheable_at_the_edge():
+    headers = _respond_headers(200)
+    assert headers["Cache-Control"] == "public, s-maxage=900, stale-while-revalidate=3600"
+
+
+@pytest.mark.parametrize("status", [400, 404, 422, 502, 503])
+def test_error_forecast_responses_are_never_cached(status):
+    assert "Cache-Control" not in _respond_headers(status)
+
+
 def test_handler_rejects_a_non_numeric_team_id():
     from urllib.parse import parse_qs, urlparse
 

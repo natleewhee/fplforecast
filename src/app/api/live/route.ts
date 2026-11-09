@@ -1,9 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { fpl, upstreamFailure } from "@/lib/fplApi";
-import { loadLatestForecast, type Forecast } from "@/lib/snapshots";
+import { guestForecastInputs, liveInputsFor } from "@/lib/liveInputs";
 import {
   buildLivePayload,
-  forecastLiveInputs,
   liveGameweek,
   type FplBootstrap,
   type FplFixture,
@@ -29,28 +28,23 @@ export async function GET(req: NextRequest) {
         squad: picks.picks.map((p) => ({ id: p.element, position: positions[typeOf.get(p.element) ?? 0] ?? "MID" })),
       });
     }
-    let forecast: Forecast | null;
-    if (teamId === OWNER_TEAM_ID) {
-      forecast = loadLatestForecast();
-    } else {
-      // A guest's par margin/rank calibration/component xP are all
-      // squad-specific -- the owner's own cached forecast doesn't apply, so
-      // fetch this team's own on-demand one instead (the same one AppShell
-      // shows for them) rather than the static default.
-      const forecastRes = await fetch(
-        new URL(`/api/forecast?teamId=${teamId}`, req.url),
-      );
-      forecast = forecastRes.ok ? await forecastRes.json() : null;
-    }
-    if (!forecast) {
+    const bootstrap = await fpl<FplBootstrap>("/bootstrap-static/");
+    const gameweek = liveGameweek(bootstrap);
+
+    // Components come from the forecast built for THIS gameweek; a guest's own
+    // par/rank inputs come from their on-demand forecast, cached for 15 minutes.
+    const owner = teamId === OWNER_TEAM_ID;
+    const inputs = liveInputsFor({
+      liveGw: gameweek,
+      owner,
+      guestInputs: owner ? null : await guestForecastInputs(teamId, new URL(req.url)),
+    });
+    if (!inputs) {
       return NextResponse.json(
         { error: "no committed forecast snapshot on disk" },
         { status: 503 },
       );
     }
-
-    const bootstrap = await fpl<FplBootstrap>("/bootstrap-static/");
-    const gameweek = liveGameweek(bootstrap);
 
     const [live, fixtures, picks] = await Promise.all([
       fpl<FplLive>(`/event/${gameweek}/live/`),
@@ -63,7 +57,7 @@ export async function GET(req: NextRequest) {
       live,
       fixtures,
       picks,
-      inputs: forecastLiveInputs(forecast),
+      inputs,
       gameweek,
       now: new Date().toISOString(),
     });
