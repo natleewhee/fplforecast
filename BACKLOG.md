@@ -21,6 +21,18 @@ Still open from the last review:
   the season-rollover case (no current gameweek) is not handled specially.
 - [ ] Tests for the API routes that call FPL (live, recap, league).
 
+## 3D players for all players (in progress)
+
+Built: club kit table, Wikidata height lookup, the loader with overrides and a neutral
+fallback, and the `/appearance` review page. Still to do, in this order:
+- [ ] Run `scripts/ingest_heights.py` and read the match rate (I could not reach Wikidata
+  from the build sandbox, so the real rate is unknown).
+- [ ] Skin tone and hair colour measured from each official headshot, checked against the
+  15 hand-set players first. Measuring only: a suggestion, never final until checked.
+- [ ] Hair style, last, from photo shapes plus your corrections ("bald" and "beard" as
+  their own options). Needs a decision on how it is read (shape rules or a model).
+- [ ] Put the 3D layer into the Squad pitch behind a 2D/3D switch (see the mock-up).
+
 ## Design/quality skills to run next (from the impeccable/taste-skill/ui-ux-pro-max/compound-engineering review)
 
 Evaluated four external skill/plugin repos against fplforecast's current state (already run: impeccable's `detect` audit, `animate`, `colorize`, `typeset`, `layout`, `delight`, `critique`).
