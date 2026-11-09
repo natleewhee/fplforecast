@@ -90,6 +90,9 @@ test("Bench Boost counts the bench in the projected total and never subs", () =>
   assert.equal(off.benchBoost, false);
   assert.ok(on.projectedTotal >= off.projectedTotal);
   assert.equal(on.rows.some((r) => r.subbedIn || r.subbedOut), false);
+  // The Live tab's "n of N still to play" counts inLineup rows: 15 on Bench Boost, 11 otherwise.
+  assert.equal(on.rows.filter((r) => r.inLineup).length, 15);
+  assert.equal(off.rows.filter((r) => r.inLineup).length, 11);
 });
 
 test("Triple Captain triples the armband player in rows and total", () => {
@@ -219,3 +222,38 @@ test("with no fixtures loaded at all nobody is blanked", () => {
   const view = buildTracker(blankPayload({ captainBlank: false, noFixtures: true }), null);
   assert.equal(view.rows.find((r) => r.id === 10)!.status, "notStarted");
 });
+
+/* ---------- double gameweek: xP split per match ---------- */
+
+import { playerProjection, type LiveElement } from "../../src/lib/liveBlend.ts";
+
+const comps = { appearance: 4, goals: 2, cleanSheet: 2, bonus: 1 }; // both matches together: 9
+const perMatch = 9 / 2;
+const el = (over: Partial<LiveElement>): LiveElement => ({
+  points: 0, minutes: 0, goalsConceded: 0, fixtureStarted: false, fixtureFinished: false, breakdown: [], ...over,
+});
+
+test("single-match projection is unchanged", () => {
+  assert.equal(playerProjection(el({}), comps, "notStarted").remainingXp, 9);
+  const p = playerProjection(el({ minutes: 45, points: 2 }), comps, "playing");
+  assert.equal(p.remainingXp, 4.5);
+  assert.equal(playerProjection(el({ minutes: 45, goalsConceded: 1 }), comps, "playing").remainingXp, 3.5);
+  assert.equal(playerProjection(el({ legs: 1, legsDone: 0 }), comps, "notStarted").remainingXp, 9);
+});
+
+test("between the two matches of a double, remaining xP is one match", () => {
+  const p = playerProjection(el({ legs: 2, legsDone: 1, points: 6 }), comps, "notStarted");
+  assert.equal(p.remainingXp, perMatch);
+  assert.equal(p.contribution, 6 + perMatch);
+});
+
+test("at 45 minutes of the first match of a double, half a match plus a whole one is left", () => {
+  const p = playerProjection(el({ legs: 2, legsDone: 0, minutes: 45, points: 2 }), comps, "playing");
+  assert.equal(p.remainingXp, 0.5 * perMatch + perMatch);
+});
+
+test("a goal conceded in a double only costs the current match's clean sheet", () => {
+  const p = playerProjection(el({ legs: 2, legsDone: 0, minutes: 45, goalsConceded: 1 }), comps, "playing");
+  assert.equal(p.remainingXp, 0.5 * perMatch + perMatch - 0.5 * (2 / 2));
+});
+

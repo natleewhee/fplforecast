@@ -9,6 +9,7 @@ stubbed, since this sandbox has no network access to fantasy.premierleague.com.
 from __future__ import annotations
 
 import json
+from datetime import datetime, timedelta
 from pathlib import Path
 
 import pytest
@@ -67,18 +68,39 @@ def _stub_fpl_get(monkeypatch, gw: int, picks: list[dict], entry_history: dict, 
 
 
 def test_build_forecast_for_team_returns_a_full_forecast_shaped_payload(monkeypatch):
-    gw, picks, entry_history, history = _latest_picks_and_history()
+    # Pin "now" so the target GW is 11 whatever the real date: a day before
+    # GW11's deadline in the committed bootstrap.
+    gw11_deadline = datetime.fromisoformat(cf.deadline_time_for_gw(cf.load_bootstrap(), 11).replace("Z", "+00:00"))
+
+    class _PinnedDatetime(datetime):
+        @classmethod
+        def now(cls, tz=None):
+            return gw11_deadline - timedelta(days=1)
+
+    monkeypatch.setattr(forecast_api, "datetime", _PinnedDatetime)
+    gw, picks, entry_history, owner_history = _latest_picks_and_history()
+    # A guest's own chips, deliberately different from the owner's committed
+    # history (wildcard GW4, bboost GW7), so reading the owner's file fails.
+    history = {**owner_history, "chips": [{"name": "freehit", "event": 3}, {"name": "3xc", "event": 9}]}
     _stub_fpl_get(monkeypatch, gw, picks, entry_history, history)
 
     status, payload = forecast_api.build_forecast_for_team(TEAM_ID)
 
     assert status == 200
     assert payload["basedOnGameweek"] == gw
+    assert payload["targetGameweek"] == 11
     assert len(payload["squad"]["players"]) == len(picks)
     assert payload["overridesApplied"] == 0  # a guest lookup never has overrides to apply
     assert payload["teamName"] == "Test Team"
     assert payload["managerName"] == "Test Manager"
     assert "scenarios" in payload and "pool" in payload
+    # Chips come from the guest's own history, not the owner's.
+    assert isinstance(payload["chips"], list) and len(payload["chips"]) == 8
+    used = {(r["name"], r["window"]["start"], r["window"]["stop"]) for r in payload["chips"] if r["used"]}
+    assert used == {("freehit", 2, 19), ("3xc", 1, 19)}
+    wc = next(r for r in payload["chips"] if r["name"] == "wildcard" and r["window"]["start"] == 2)
+    assert not wc["used"] and wc["window"]["stop"] == 19
+    assert payload["scenarios"]["chipsAvailable"] == {"freeHit": False, "wildcard": True}
 
 
 def test_build_forecast_for_team_404s_for_an_unknown_team(monkeypatch):
@@ -95,6 +117,30 @@ def test_build_forecast_for_team_404s_for_an_unknown_team(monkeypatch):
 
     assert status == 404
     assert "error" in payload
+
+
+def _respond_headers(status: int) -> dict[str, str]:
+    """Run the handler's _respond against a fake socket and return the headers."""
+    import io
+
+    h = object.__new__(forecast_api.handler)
+    sent: dict[str, str] = {}
+    h.send_response = lambda code: None
+    h.send_header = lambda k, v: sent.__setitem__(k, v)
+    h.end_headers = lambda: None
+    h.wfile = io.BytesIO()
+    h._respond(status, {"ok": status == 200})
+    return sent
+
+
+def test_successful_forecast_is_cacheable_at_the_edge():
+    headers = _respond_headers(200)
+    assert headers["Cache-Control"] == "public, s-maxage=900, stale-while-revalidate=3600"
+
+
+@pytest.mark.parametrize("status", [400, 404, 422, 502, 503])
+def test_error_forecast_responses_are_never_cached(status):
+    assert "Cache-Control" not in _respond_headers(status)
 
 
 def test_handler_rejects_a_non_numeric_team_id():
@@ -154,3 +200,39 @@ def test_get_pool_context_uses_a_precomputed_cache_instead_of_refitting(monkeypa
             stale.unlink()
         if cache_dir.exists() and not any(cache_dir.iterdir()):
             cache_dir.rmdir()
+
+
+def test_guest_forecast_carries_none_of_the_owners_model_record(monkeypatch):
+    """The running record / par calibration / per-gameweek model-vs-baseline are
+    scored on the app owner's squad (data/record/*). A guest's forecast must not
+    carry them, or their dashboard would show the owner's numbers as theirs."""
+    gw, picks, entry_history, history = _latest_picks_and_history()
+    _stub_fpl_get(monkeypatch, gw, picks, entry_history, history)
+
+    status, payload = forecast_api.build_forecast_for_team(TEAM_ID)
+
+    assert status == 200
+    assert payload["runningRecord"] is None
+    assert payload["parCalibration"] is None
+    # guard against passing vacuously: there must be something to strip
+    assert payload["lastGameweek"] is not None
+    assert "modelVsBaseline" not in payload["lastGameweek"]
+    rows = (payload["history"] or {}).get("gameweeks", [])
+    assert rows
+    assert all("modelVsBaseline" not in row for row in rows)
+
+    # the same inputs built for the owner do carry the field
+    bootstrap = cf.load_bootstrap()
+    elements_by_id = {e["id"]: e for e in bootstrap["elements"]}
+    owner_review = cf.last_gameweek_review(bootstrap, elements_by_id, gw, picks, entry_history)
+    assert owner_review is not None and "modelVsBaseline" in owner_review
+    owner_rows = cf.build_history(history)["gameweeks"]
+    assert owner_rows and all("modelVsBaseline" in row for row in owner_rows)
+
+
+def test_owner_history_still_carries_model_vs_baseline_rows():
+    hist = {"current": [{"event": 1, "points": 50}], "past": []}
+    owner_rows = cf.build_history(hist)["gameweeks"]
+    guest_rows = cf.build_history(hist, include_model_record=False)["gameweeks"]
+    assert "modelVsBaseline" in owner_rows[0]
+    assert "modelVsBaseline" not in guest_rows[0]

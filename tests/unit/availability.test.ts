@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { risksForGameweek } from "@/lib/availability";
+import { hasRiskData, risksForGameweek } from "@/lib/availability";
 
 const base = { status: "a" as const, chance: null, news: null };
 const ban = { kind: "suspension_risk", gameweek: null, notes: "4 yellow cards." };
@@ -16,4 +16,14 @@ test("risksForGameweek keeps undated and same-gameweek risks only", () => {
 test("risksForGameweek tolerates old forecasts with no risks field", () => {
   assert.deepEqual(risksForGameweek(base, 10), []);
   assert.deepEqual(risksForGameweek(null, 10), []);
+});
+
+test("hasRiskData tells a missing field from an empty list", () => {
+  assert.equal(hasRiskData([{ availability: { status: "a", chance: null, news: null } }]), false);
+  assert.equal(hasRiskData([{ availability: { status: "a", chance: null, news: null, risks: [] } }]), true);
+});
+
+test("risksForGameweek ignores kinds the row is not labelled for", () => {
+  const odd = { kind: "something_new", gameweek: null, notes: "x" };
+  assert.deepEqual(risksForGameweek({ status: "a", chance: null, news: null, risks: [odd] }, 10), []);
 });

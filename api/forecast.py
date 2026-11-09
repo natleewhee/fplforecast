@@ -163,6 +163,8 @@ def build_forecast_for_team(team_id: int) -> tuple[int, dict]:
         squad_ids,
         overrides_applied=0,  # a guest has nowhere to persist a transfer override
         season_history=history,
+        # the out-of-sample record is scored on the app owner's squad, not this team's
+        include_model_record=False,
     )
     forecast["teamName"] = entry.get("name")
     forecast["managerName"] = f"{entry.get('player_first_name', '')} {entry.get('player_last_name', '')}".strip()
@@ -202,6 +204,8 @@ class handler(BaseHTTPRequestHandler):
         body = json.dumps(payload).encode("utf-8")
         self.send_response(status)
         self.send_header("Content-Type", "application/json")
+        if status == 200:
+            self.send_header("Cache-Control", "public, s-maxage=900, stale-while-revalidate=3600")
         self._cors_headers()
         self.end_headers()
         self.wfile.write(body)

@@ -7,6 +7,7 @@ import {
   type LivePayload,
   type TrackerView,
 } from "@/lib/liveBlend";
+import { buildRankThreats } from "@/lib/rankThreats";
 import { clockTime } from "@/lib/time";
 import { staleness } from "@/lib/staleness";
 import { FPL_UPDATING_TEXT } from "@/lib/fplApi";
@@ -166,6 +167,7 @@ export default function LiveTracker({
     <TrackerPanel
       view={view}
       payload={polls.cur}
+      prev={polls.prev}
       active={active}
       error={error}
       lastOk={lastOk}
@@ -215,6 +217,7 @@ function TrackerSkeleton() {
 function TrackerPanel({
   view,
   payload,
+  prev,
   active,
   error,
   lastOk,
@@ -223,6 +226,7 @@ function TrackerPanel({
 }: {
   view: TrackerView;
   payload: LivePayload;
+  prev: LivePayload | null;
   active: boolean;
   error: string | null;
   lastOk: string | null;
@@ -236,6 +240,7 @@ function TrackerPanel({
     error,
     online,
   });
+  const threatLines = buildRankThreats(payload, prev, view);
   const starters = view.rows.filter((r) => !r.isBench || r.subbedIn || view.benchBoost);
   const currentScore = starters.reduce((sum, r) => sum + r.pointsSoFar, 0);
 
@@ -364,6 +369,8 @@ function TrackerPanel({
         </details>
       )}
 
+      <RankThreatsCard lines={threatLines} />
+
       <LivePitch
         rows={view.rows}
         gameweek={payload.gameweek}
@@ -371,5 +378,33 @@ function TrackerPanel({
         polledAt={lastOk ? Date.parse(lastOk) : 0}
       />
     </div>
+  );
+}
+
+/** What could still change this gameweek's rank: your players and popular
+ * players you don't own who still have a match. Hidden when there is nothing
+ * true to say. */
+function RankThreatsCard({ lines }: { lines: ReturnType<typeof buildRankThreats> }) {
+  if (lines.length === 0) return null;
+  return (
+    <section aria-labelledby="rank-threats-h" data-testid="rank-threats" className="rounded-xl border border-line p-3">
+      <h3 id="rank-threats-h" className="eyebrow">
+        Still to play: what could move your rank
+      </h3>
+      <ul className="mt-2 space-y-2">
+        {lines.map((l) => (
+          <li key={l.key} data-kind={l.kind} className="flex gap-2 text-xs leading-snug text-ink-soft">
+            <span
+              aria-hidden
+              className={`mt-1 h-1.5 w-1.5 shrink-0 rounded-full ${l.kind === "yours" ? "bg-[var(--accent)]" : "bg-[var(--warn)]"}`}
+            />
+            <span>
+              <span className="sr-only">{l.kind === "yours" ? "Yours: " : "Not owned: "}</span>
+              {l.text}
+            </span>
+          </li>
+        ))}
+      </ul>
+    </section>
   );
 }

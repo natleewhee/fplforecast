@@ -16,13 +16,24 @@ export function availabilityFlag(
   return null;
 }
 
+/** The risk kinds FPL publishes today and the row is labelled for. */
+const KNOWN_RISK_KINDS = new Set(["suspension_risk", "loan_ineligible"]);
+
 /** FPL's scout risks that bear on the coming gameweek: ones with no gameweek
  * (a yellow-card ban warning) and ones for exactly that gameweek (a loan-clause
  * fixture). Later-gameweek loan entries are left out so the list stays about
- * this deadline. */
+ * this deadline. Kinds the row is not labelled for are left out too. */
 export function risksForGameweek(
   a: Availability | null | undefined,
   gameweek: number
 ): AvailabilityRisk[] {
-  return (a?.risks ?? []).filter((r) => r.gameweek == null || r.gameweek === gameweek);
+  return (a?.risks ?? []).filter(
+    (r) => KNOWN_RISK_KINDS.has(r.kind) && (r.gameweek == null || r.gameweek === gameweek)
+  );
+}
+
+/** True when the forecast was built with FPL's risk data. A forecast built before
+ * the field existed has no `risks` on any player, which must not read as "none". */
+export function hasRiskData(players: { availability?: Availability | null }[]): boolean {
+  return players.some((p) => Array.isArray(p.availability?.risks));
 }

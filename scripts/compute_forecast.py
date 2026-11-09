@@ -280,7 +280,7 @@ def _gw_model_vs_baseline(gw: int) -> dict | None:
     return None
 
 
-def build_history(hist: dict) -> dict | None:
+def build_history(hist: dict, include_model_record: bool = True) -> dict | None:
     """The season-so-far record for the history view: one row per finished
     gameweek (points, bench, rank, hits, team value + the model/baseline row
     if scored) and a summary line per completed past season."""
@@ -291,7 +291,7 @@ def build_history(hist: dict) -> dict | None:
     gameweeks = []
     for e in current:
         gw = e.get("event")
-        gameweeks.append(
+        row = (
             {
                 "gameweek": gw,
                 "points": e.get("points"),
@@ -302,9 +302,12 @@ def build_history(hist: dict) -> dict | None:
                 "transfers": e.get("event_transfers", 0),
                 "hit": e.get("event_transfers_cost", 0),
                 "teamValue": round((e.get("value") or 0) / 10, 1),
-                "modelVsBaseline": _gw_model_vs_baseline(gw) if gw else None,
             }
         )
+        if include_model_record:
+            # the out-of-sample record is the app owner's; a guest's rows omit it
+            row["modelVsBaseline"] = _gw_model_vs_baseline(gw) if gw else None
+        gameweeks.append(row)
     seasons = [
         {
             "season": p.get("season_name"),
@@ -322,6 +325,7 @@ def last_gameweek_review(
     based_on_gw: int,
     picks: list[dict],
     entry_history: dict,
+    include_model_record: bool = True,
 ) -> dict | None:
     """The 'decide -> watch -> learn' card: how the held squad actually did in
     the most recent finished gameweek, plus the model-vs-baseline row once that
@@ -363,7 +367,7 @@ def last_gameweek_review(
             "multiplier": pick.get("multiplier", 2 if flag == "is_captain" else 1),
         }
 
-    return {
+    review = {
         "gameweek": gw,
         "dataChecked": bool(event.get("data_checked")),
         "xiPoints": entry_history.get("points"),  # net of hits, captain doubled
@@ -372,8 +376,10 @@ def last_gameweek_review(
         "overallRank": entry_history.get("overall_rank"),
         "captain": _cap("is_captain"),
         "viceCaptain": _cap("is_vice_captain"),
-        "modelVsBaseline": _gw_model_vs_baseline(gw),
     }
+    if include_model_record:
+        review["modelVsBaseline"] = _gw_model_vs_baseline(gw)
+    return review
 
 
 def _scout_risks(el: dict) -> list[dict]:
@@ -383,13 +389,25 @@ def _scout_risks(el: dict) -> list[dict]:
     gameweek). Only FPL's own wording is carried; entries without notes are
     dropped and nothing is inferred here."""
     out = []
-    for r in el.get("scout_risks") or []:
-        notes = (r.get("notes") or "").strip()
+    raw = el.get("scout_risks")
+    if not isinstance(raw, list):
+        return out
+    for r in raw:
+        # A malformed entry must never break the cron or a guest lookup.
+        if not isinstance(r, dict):
+            continue
+        notes = r.get("notes")
+        notes = notes.strip() if isinstance(notes, str) else ""
         if not notes:
             continue
-        out.append(
-            {"kind": r.get("property") or "other", "gameweek": r.get("gameweek"), "notes": notes}
-        )
+        gw = r.get("gameweek")
+        if gw is not None:
+            try:
+                gw = int(gw)
+            except (TypeError, ValueError):
+                continue
+        kind = r.get("property")
+        out.append({"kind": kind if isinstance(kind, str) and kind else "other", "gameweek": gw, "notes": notes})
     return out
 
 
@@ -643,6 +661,70 @@ def _plan_week_to_dict(week: PlanWeek, pool_by_id: dict, target_gw: int) -> dict
     }
 
 
+def compute_chip_status(
+    bootstrap_chips: object, history_chips: object, target_gw: int
+) -> list[dict] | None:
+    """One row per chip *window* FPL's bootstrap-static ``chips`` list defines
+    (2026/27: two of each of wildcard / freehit / bboost / 3xc, one for
+    GW1-19 and one for GW20-38 -- read off the data, never assumed), marked
+    against *this team's* played chips (``history_chips``, the FPL
+    ``/entry/<id>/history/`` ``chips`` list of ``{name, event}``).
+
+    Each row: ``{name, window: {start, stop}, used, availableNow,
+    expiresGw}``. ``used``: this team played that chip inside the window
+    (``number`` plays allowed per window, 1 in practice). ``availableNow``:
+    unused and ``target_gw`` falls inside the window; ``expiresGw`` is the
+    window's last gameweek.
+
+    Returns ``None`` ("unknown") when either input isn't the expected shape,
+    so a changed FPL schema shows as unknown instead of a guess."""
+    if not isinstance(bootstrap_chips, list) or not bootstrap_chips:
+        return None
+    if not isinstance(history_chips, list):
+        return None
+    played: list[tuple[str, int]] = []
+    for c in history_chips:
+        if not isinstance(c, dict) or not isinstance(c.get("name"), str) or not isinstance(c.get("event"), int):
+            return None
+        played.append((c["name"].lower(), c["event"]))
+
+    rows = []
+    for c in bootstrap_chips:
+        if not isinstance(c, dict):
+            return None
+        name, start, stop = c.get("name"), c.get("start_event"), c.get("stop_event")
+        number = c.get("number", 1)
+        if (
+            not isinstance(name, str)
+            or not isinstance(start, int)
+            or not isinstance(stop, int)
+            or not isinstance(number, int)
+            or isinstance(start, bool)
+            or isinstance(stop, bool)
+            or start > stop
+        ):
+            return None
+        name = name.lower()
+        plays = sum(1 for n, ev in played if n == name and start <= ev <= stop)
+        used = plays >= max(number, 1)
+        rows.append(
+            {
+                "name": name,
+                "window": {"start": start, "stop": stop},
+                "used": used,
+                "availableNow": (not used) and start <= target_gw <= stop,
+                "expiresGw": stop,
+            }
+        )
+    rows.sort(key=lambda r: (r["window"]["start"], r["name"]))
+    return rows
+
+
+def chip_available_now(chip_status: list[dict] | None, name: str) -> bool:
+    """True only when a known window for ``name`` is open and unused."""
+    return any(r["name"] == name and r["availableNow"] for r in chip_status or [])
+
+
 def build_scenarios(
     pool: list[dict],
     squad_ids: list[int],
@@ -650,6 +732,7 @@ def build_scenarios(
     season_history: dict,
     target_gw: int,
     squad_cards: list[dict] | None = None,
+    bootstrap_chips: list | None = None,
 ) -> dict:
     """The transfer-scenario / chip-optimiser block (2026-09-05 plan): 3
     horizons x 4 pinned transfer counts (k=0..3, KD7/"Solve count"), plus
@@ -668,10 +751,12 @@ def build_scenarios(
     chips = season_history.get("chips") or []
     ft_value, ft_derivation = derive_free_transfers(current, chips, target_gw)
 
-    used_chip_names = {(c.get("name") or "").lower() for c in chips}
+    chip_status = compute_chip_status(bootstrap_chips, season_history.get("chips"), target_gw)
+    # Unknown chip rules/history -> offer neither chip scenario rather than
+    # guess one is available.
     chips_available = {
-        "freeHit": "freehit" not in used_chip_names,
-        "wildcard": "wildcard" not in used_chip_names,
+        "freeHit": chip_available_now(chip_status, "freehit"),
+        "wildcard": chip_available_now(chip_status, "wildcard"),
     }
 
     total_budget = bank + sum(
@@ -972,6 +1057,7 @@ def build_personal_forecast(
     squad_ids: list[int],
     overrides_applied: int = 0,
     season_history: dict | None = None,
+    include_model_record: bool = True,
 ) -> dict:
     """The team-specific half: given one manager's held squad (and their own
     season history, for the par-score/rank calibration), build the full
@@ -1256,7 +1342,15 @@ def build_personal_forecast(
         season_history.get("current") or [], bootstrap.get("events") or []
     )
 
-    scenarios = build_scenarios(pool, squad_ids, bank, season_history, target_gw, squad_cards=players)
+    scenarios = build_scenarios(
+        pool,
+        squad_ids,
+        bank,
+        season_history,
+        target_gw,
+        squad_cards=players,
+        bootstrap_chips=bootstrap.get("chips"),
+    )
 
     forecast = {
         "generatedAt": datetime.now(timezone.utc).isoformat(),
@@ -1303,10 +1397,12 @@ def build_personal_forecast(
             else None
         ),
         "captainEdge": captain_edge,
-        "runningRecord": load_running_record(),
-        "parCalibration": load_par_calibration_record(),
+        # The out-of-sample record is scored on the app owner's squad only, so a
+        # guest build (include_model_record=False) gets null, never the owner's numbers.
+        "runningRecord": load_running_record() if include_model_record else None,
+        "parCalibration": load_par_calibration_record() if include_model_record else None,
         "lastGameweek": last_gameweek_review(
-            bootstrap, elements_by_id, based_on_gw, picks, entry_history
+            bootstrap, elements_by_id, based_on_gw, picks, entry_history, include_model_record
         ),
         "upcoming": upcoming,
         "pool": pool,
@@ -1317,7 +1413,9 @@ def build_personal_forecast(
         "parBufferProvisional": PAR_BUFFER_PROVISIONAL_POINTS,
         "rankCalibration": rank_calibration_fit,
         "scenarios": scenarios,
-        "history": build_history(season_history),
+        # Per-team chip windows (None = unknown, see compute_chip_status).
+        "chips": compute_chip_status(bootstrap.get("chips"), season_history.get("chips"), target_gw),
+        "history": build_history(season_history, include_model_record),
     }
     return forecast
 

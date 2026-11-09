@@ -13,9 +13,15 @@ export type BreakdownItem = { identifier: string; points: number; value: number 
 export type LiveElement = {
   points: number;
   minutes: number;
+  /** Minutes in the CURRENT match only. FPL's `minutes` is summed over a double gameweek, so
+   * status and decay read this one; absent on a single-match payload (then `minutes` is it). */
+  legMinutes?: number;
   goalsConceded: number; // live goals against the player's team, for the CS carve-out (KTD6)
   fixtureStarted: boolean;
   fixtureFinished: boolean;
+  /** Matches this club plays in the gameweek (2 in a double) and how many are already over. Absent = a single match. */
+  legs?: number;
+  legsDone?: number;
   bonusPending?: boolean; // the match is over but FPL hasn't confirmed it yet, so bonus points can still land
   breakdown: BreakdownItem[]; // FPL's own scoring categories, summed across legs (double GW)
 };
@@ -77,6 +83,23 @@ export type LivePayload = {
   parBufferProvisional: number;
   nextDeadline: string | null; // the next not-yet-passed gameweek deadline, for the idle-state countdown
   rankCalibration: RankCalibration | null;
+  provisionalXpIds?: number[]; // players whose xP is next week's number (not in this gameweek's forecast pool)
+  /** Highly-owned players the manager does not hold who still have a match to play (see `pickThreats`). */
+  threats?: LiveThreat[];
+};
+
+/** A popular player outside the manager's fifteen: the upside (or the rank
+ * risk) of a match still to come. Ownership comes from bootstrap, xP from the
+ * forecast pool; both are optional and the card hides what is missing. */
+export type LiveThreat = {
+  id: number;
+  webName: string;
+  team: string | null;
+  ownedPct: number;
+  opponent: string | null; // "CHE (H)"
+  kickoffTime: string | null;
+  onBench?: boolean; // one of your own 15, but on the bench (no Bench Boost): his points only count if he is subbed in
+  components?: Record<string, number>; // baked xP legs, for the same decay maths the squad uses
 };
 
 // Minimal shapes of the FPL responses this module reads.
@@ -91,9 +114,10 @@ type FplEvent = {
 };
 export type FplBootstrap = {
   events: FplEvent[];
-  elements: { id: number; team: number; element_type: number; web_name: string; code?: number }[];
+  elements: { id: number; team: number; element_type: number; web_name: string; code?: number; selected_by_percent?: string | number | null; status?: string; chance_of_playing_next_round?: number | null }[];
   teams: { id: number; short_name: string }[];
 };
+type FplExplainEntry = { fixture?: number; stats: FplExplainStat[] };
 type FplExplainStat = { identifier: string; points: number; value: number };
 type FplLiveElement = {
   id: number;
@@ -101,7 +125,7 @@ type FplLiveElement = {
   // one entry per fixture (two for a double gameweek); FPL's own scoring
   // breakdown, already split into named categories with the points each
   // contributed -- the source for the tracker's score breakdown.
-  explain?: { stats: FplExplainStat[] }[];
+  explain?: FplExplainEntry[];
 };
 export type FplLive = { elements: FplLiveElement[] };
 /** The final whistle has gone. FPL sets `finished_provisional` when the match
@@ -135,6 +159,7 @@ export function currentFixture<T extends { finished?: boolean; finished_provisio
 }
 
 export type FplFixture = {
+  id?: number;
   event: number | null;
   started?: boolean;
   finished?: boolean;
@@ -144,6 +169,8 @@ export type FplFixture = {
   team_a: number;
   team_h_difficulty?: number | null;
   team_a_difficulty?: number | null;
+  team_h_score?: number | null;
+  team_a_score?: number | null;
 };
 type FplPick = { element: number; position: number; multiplier: number; is_captain: boolean; is_vice_captain: boolean };
 export type FplPicks = {
@@ -193,6 +220,8 @@ export type LiveProjectionInputs = {
   parBuffer: number;
   parBufferProvisional: number;
   rankCalibration: RankCalibration | null;
+  /** Players whose components are next week's numbers (no entry in this gameweek's forecast). */
+  provisionalXpIds?: number[];
 };
 
 export function forecastLiveInputs(forecast: Forecast): LiveProjectionInputs {
@@ -257,10 +286,24 @@ export function buildLivePayload(args: {
     const teamId = elementById.get(el.id)?.team ?? -1;
     const list = fixturesByTeam.get(teamId) ?? [];
     const f = currentFixture(list);
+    // FPL's `minutes` and `goals_conceded` are summed over the gameweek. In a double, read the
+    // current match's own figures off its explain entry (one per fixture, tagged with the fixture id).
+    let goalsConceded = el.stats?.goals_conceded ?? 0;
+    let legMinutes: number | undefined;
+    if (list.length > 1 && f) {
+      const entry = el.explain?.find((x) => x.fixture === f.id);
+      const stat = (id: string) => entry?.stats.find((x) => x.identifier === id)?.value;
+      legMinutes = stat("minutes") ?? 0;
+      const against = f.team_h === teamId ? f.team_a_score : f.team_h_score;
+      goalsConceded = stat("goals_conceded") ?? (typeof against === "number" ? against : 0);
+    }
     liveByElement[el.id] = {
       points: el.stats?.total_points ?? 0,
       minutes: el.stats?.minutes ?? 0,
-      goalsConceded: el.stats?.goals_conceded ?? 0,
+      legMinutes,
+      goalsConceded,
+      legs: list.length || 1,
+      legsDone: list.filter((x) => isFixtureOver(x)).length,
       // Minutes already on the clock also mean "started", but only for a single
       // fixture: in a double gameweek they may belong to the first match.
       fixtureStarted: hasStarted(f, now) || (list.length <= 1 && (el.stats?.minutes ?? 0) > 0),
@@ -377,7 +420,60 @@ export function buildLivePayload(args: {
     parBufferProvisional: inputs.parBufferProvisional,
     nextDeadline,
     rankCalibration: inputs.rankCalibration,
+    threats: pickThreats({ bootstrap, picks, fixturesByTeam, teamName, components, provisionalXpIds: inputs.provisionalXpIds }),
+    ...(inputs.provisionalXpIds?.length ? { provisionalXpIds: inputs.provisionalXpIds } : {}),
   };
+}
+
+const THREAT_MIN_OWNED_PCT = 10;
+const THREAT_MAX = 5;
+
+/** The most-owned players the manager does not hold whose club still has a
+ * match to finish this gameweek. Needs a real ownership figure and a fixture,
+ * so a missing one just drops that player. */
+export function pickThreats(args: {
+  bootstrap: FplBootstrap;
+  picks: FplPicks;
+  fixturesByTeam: Map<number, FplFixture[]>;
+  teamName: Map<number, string>;
+  /** This gameweek's baked xP (the gw{liveGw} pool), so a threat is priced for the match being played. */
+  components: Record<string, Record<string, number>>;
+  /** Ids whose components are next week's numbers: no xP is quoted for these. */
+  provisionalXpIds?: number[];
+}): LiveThreat[] {
+  const { bootstrap, picks, fixturesByTeam, teamName, components } = args;
+  const provisional = new Set(args.provisionalXpIds ?? []);
+  // Your own bench still counts as a threat (they are not in the XI), unless Bench Boost puts them in.
+  const mine = new Set(
+    picks.picks.filter((p) => p.position <= 11 || picks.active_chip === "bboost").map((p) => p.element),
+  );
+  const benched = new Set(picks.picks.filter((p) => !mine.has(p.element)).map((p) => p.element));
+  const out: LiveThreat[] = [];
+  const ranked = bootstrap.elements
+    .map((el) => ({ el, pct: Number(el.selected_by_percent) }))
+    .filter(({ el, pct }) => !mine.has(el.id) && Number.isFinite(pct) && pct >= THREAT_MIN_OWNED_PCT)
+    // ruled out (injured, suspended, unavailable, not in squad) or 0% chance: not a threat
+    .filter(({ el }) => !["i", "s", "u", "n"].includes(el.status ?? "") && el.chance_of_playing_next_round !== 0)
+    .sort((a, b) => b.pct - a.pct);
+  for (const { el, pct } of ranked) {
+    const list = fixturesByTeam.get(el.team) ?? [];
+    const f = list.find((x) => !isFixtureOver(x));
+    if (!f) continue; // blank, or every match already over
+    const home = f.team_h === el.team;
+    const opp = teamName.get(home ? f.team_a : f.team_h);
+    out.push({
+      id: el.id,
+      webName: el.web_name,
+      team: teamName.get(el.team) ?? null,
+      ownedPct: pct,
+      opponent: opp ? `${opp} (${home ? "H" : "A"})` : null,
+      kickoffTime: f.kickoff_time ?? null,
+      ...(benched.has(el.id) ? { onBench: true } : {}),
+      components: provisional.has(el.id) ? undefined : components[String(el.id)],
+    });
+    if (out.length >= THREAT_MAX) break;
+  }
+  return out;
 }
 
 /* ---------- client blend (KTD6) ---------- */
@@ -495,20 +591,23 @@ export function playerStatus(
 ): PlayerStatus {
   if (!el || !el.fixtureStarted) return "notStarted";
   if (el.fixtureFinished) return el.minutes > 0 ? "finished" : "didNotPlay";
-  if (el.minutes === 0) return "playing";
+  // In a double, `minutes` is summed over both matches; judge this match on its own.
+  const minutes = el.legMinutes ?? el.minutes;
+  const prevMinutes = prevEl ? prevEl.legMinutes ?? prevEl.minutes : undefined;
+  if (minutes === 0) return "playing";
   // FPL's `finished`/`finished_provisional` flags can lag the final whistle by
   // a poll or two while stats are checked. Minutes cannot legitimately sit at
   // or past 90' for two separate polls without the match being over -- unlike
   // the mid-game plateau below, this needs no minimum poll gap, since the
   // routine ~60s tick cadence would otherwise never clear the (higher) gap
   // threshold used to rule out a false off-pitch read.
-  if (prevEl && prevEl.minutes === el.minutes && el.minutes >= MATCH_MINUTES) return "finished";
+  if (prevEl && prevMinutes === minutes && minutes >= MATCH_MINUTES) return "finished";
   if (
     prevEl &&
     prevIso &&
-    prevEl.minutes === el.minutes &&
-    el.minutes < MATCH_MINUTES &&
-    !(el.minutes >= 44 && el.minutes <= 46) &&
+    prevMinutes === minutes &&
+    minutes < MATCH_MINUTES &&
+    !(minutes >= 44 && minutes <= 46) &&
     Date.parse(nowIso) - Date.parse(prevIso) >= OFF_PITCH_MIN_POLL_GAP_MS
   ) {
     return "offPitch";
@@ -516,26 +615,34 @@ export function playerStatus(
   return "playing";
 }
 
+/* Double gameweeks: the engine adds both matches into one component total
+ * (engine/model.py), so the per-match split here is an even one:
+ * components / legs. Per-match components would need an engine change. */
 export function playerProjection(
   el: LiveElement | undefined,
   components: Record<string, number>,
   status: PlayerStatus,
 ): PlayerProjection {
+  const legs = Math.max(1, el?.legs ?? 1);
+  const legsDone = Math.min(legs, Math.max(0, el?.legsDone ?? 0));
   switch (status) {
     case "notStarted": {
-      const remaining = remainingXp(components, 1, false);
-      // Banked points are 0 before a single match, but not between the two
-      // matches of a double gameweek.
+      // Every match still to start counts in full. Between the two matches of
+      // a double only the second is left, on top of the points already banked.
+      const remaining = remainingXp(components, (legs - legsDone) / legs, false);
       const banked = el?.points ?? 0;
       return { pointsSoFar: banked, remainingXp: remaining, contribution: banked + remaining };
     }
     case "playing": {
       const pointsSoFar = el?.points ?? 0;
-      const remaining = remainingXp(
-        components,
-        decayFactor(el?.minutes ?? 0),
-        (el?.goalsConceded ?? 0) > 0,
-      );
+      const later = Math.max(0, legs - legsDone - 1); // matches after the one in progress
+      const decay = decayFactor(el?.legMinutes ?? el?.minutes ?? 0);
+      const killed = (el?.goalsConceded ?? 0) > 0;
+      let remaining = 0;
+      for (const [key, value] of Object.entries(components)) {
+        const current = key === "cleanSheet" && killed ? 0 : decay;
+        remaining += (value * (later + current)) / legs;
+      }
       return { pointsSoFar, remainingXp: remaining, contribution: pointsSoFar + remaining };
     }
     case "offPitch":

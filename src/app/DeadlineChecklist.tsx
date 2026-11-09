@@ -1,8 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import type { ChipStatus, Forecast } from "@/lib/snapshots";
-import { availabilityFlag, risksForGameweek } from "@/lib/availability";
+import type { Forecast } from "@/lib/snapshots";
+import { chipChecklist } from "@/lib/chips";
+import { availabilityFlag, hasRiskData, risksForGameweek } from "@/lib/availability";
 import { countdown } from "@/lib/time";
 
 type RowStatus = "ok" | "amber" | "red" | "info";
@@ -42,13 +43,7 @@ function ChecklistRow({
  * across the Squad and Scenarios tabs (captain, injury risk, bench order,
  * whether to use a transfer, chips) into one glance. Reflects the last
  * daily forecast build, not real-time news -- see the "as of" line. */
-export default function DeadlineChecklist({
-  forecast,
-  chips,
-}: {
-  forecast: Forecast;
-  chips?: ChipStatus[] | null;
-}) {
+export default function DeadlineChecklist({ forecast }: { forecast: Forecast }) {
   const [nowMs, setNowMs] = useState(() => Date.now());
 
   useEffect(() => {
@@ -105,8 +100,10 @@ export default function DeadlineChecklist({
   const riskLines = forecast.squad.players.flatMap((p) =>
     risksForGameweek(p.availability, forecast.targetGameweek).map((r) => `${p.webName}: ${r.notes}`)
   );
-  const riskDetail =
-    riskLines.length === 0
+  const riskKnown = hasRiskData(forecast.squad.players);
+  const riskDetail = !riskKnown
+    ? "Not in this build yet; arrives with tonight's update."
+    : riskLines.length === 0
       ? `FPL flags no suspension or loan-ban risk in your squad for GW${forecast.targetGameweek}.`
       : riskLines.join(" ");
 
@@ -127,13 +124,7 @@ export default function DeadlineChecklist({
         edge ? ` -- ${edge.label} (+${edge.points.toFixed(1)})` : ""
       }`;
 
-  const chipsAvailable = (chips ?? [])
-    .filter((c) => c.remaining > 0)
-    .map((c) => (c.remaining > 1 ? `${c.name} ×${c.remaining}` : c.name));
-  const chipsUsed = (chips ?? []).filter((c) => c.remaining === 0).map((c) => c.name);
-  const chipsDetail = `${chipsAvailable.length ? chipsAvailable.join(", ") : "None remaining"}${
-    chipsUsed.length ? ` (used: ${chipsUsed.join(", ")})` : ""
-  }`;
+  const chipRow = chipChecklist(forecast.chips, forecast.targetGameweek);
 
   return (
     <div className="panel rise space-y-1 p-3 sm:p-4">
@@ -153,19 +144,13 @@ export default function DeadlineChecklist({
         <ChecklistRow status={captainStatus} label="Captain" detail={captainDetail} />
         <ChecklistRow status={injuryStatus} label="Injury / doubt risk in your XI" detail={injuryDetail} />
         <ChecklistRow
-          status={riskLines.length > 0 ? "amber" : "ok"}
+          status={!riskKnown ? "info" : riskLines.length > 0 ? "amber" : "ok"}
           label="Suspension / loan-ban risk (FPL)"
           detail={riskDetail}
         />
         <ChecklistRow status={benchStatus} label="Bench order" detail={benchDetail} />
         <ChecklistRow status="info" label="Transfer" detail={transferDetail} />
-        {chips != null && (
-          <ChecklistRow
-            status="info"
-            label="Chips available"
-            detail={chipsDetail}
-          />
-        )}
+        <ChecklistRow status={chipRow.status} label="Chips" detail={chipRow.detail} />
       </div>
 
       <p className="mt-2 text-[10px] text-ink-faint">

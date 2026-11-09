@@ -733,7 +733,28 @@ test.describe("Screens say things once", () => {
     await mockLive(page, { current: "a" });
     await open(page);
     await openTab(page, "Squad");
-    await expect(page.getByText("Chips available")).toHaveCount(1);
+    // scoped to the checklist panel: page-wide text (team bar, manager names) varies by environment
+    const checklist = page.locator(".panel").filter({ has: page.getByRole("heading", { name: /this week.s decisions/i }) });
+    await expect(checklist.getByText("Chips", { exact: true })).toHaveCount(1);
+    // the owner at GW11: wildcard and Bench Boost are spent until GW20, no manager chip
+    await expect(checklist.getByText(/chips? left \(Free Hit, Triple Captain\); use by GW19 \(9 GWs incl\. this one\)/)).toBeVisible();
+    await expect(checklist.getByText(/Wildcard, Bench Boost used, next from GW20/)).toBeVisible();
+    await expect(checklist.getByText(/manager chip/i)).toHaveCount(0);
+  });
+
+  test("a guest's chips come from their own forecast, not the owner's", async ({ page, context }) => {
+    await context.clearCookies();
+    const forecast = JSON.parse(readFileSync(join(__dirname, "..", "..", "data", "forecast", "gw11.json"), "utf8"));
+    forecast.chips = forecast.chips.map((c: { name: string; window: { start: number } }) =>
+      c.name === "bboost" && c.window.start === 1 ? { ...c, used: false, availableNow: true } : c);
+    forecast.teamName = "Guest FC";
+    await page.route("**/api/forecast*", (route) => route.fulfill({ contentType: "application/json", body: JSON.stringify(forecast) }));
+    await page.clock.install({ time: Date.parse(latestDeadline()) - 5 * 3_600_000 });
+    await mockLive(page, { current: "a" });
+    await page.goto("/?team=999111");
+    await expect(page.getByText("Guest FC").first()).toBeVisible();
+    const checklist = page.locator(".panel").filter({ has: page.getByRole("heading", { name: /this week.s decisions/i }) });
+    await expect(checklist.getByText(/3 first-half chips left \(Free Hit, Bench Boost, Triple Captain\)/)).toBeVisible();
   });
 });
 
@@ -756,12 +777,27 @@ test.describe("Suspension / loan-ban risk", () => {
     await expect(page.getByText(`${name}: ${note}`)).toBeVisible();
   });
 
-  test("the row says so when FPL flags nothing", async ({ page }) => {
+  test("a forecast built before the risk field existed does not say 'no risk'", async ({ page }) => {
+    // The committed forecast has no `risks` on any player yet: the row must not claim FPL flags none.
     await page.clock.install({ time: Date.parse(latestDeadline()) - 5 * 3_600_000 });
     await mockLive(page, { current: "a" });
     await open(page);
     await openTab(page, "Squad");
     await expect(page.getByText("Suspension / loan-ban risk (FPL)")).toBeVisible();
+    await expect(page.getByText(/Not in this build yet/)).toBeVisible();
+    await expect(page.getByText(/FPL flags no suspension or loan-ban risk/)).toHaveCount(0);
+  });
+
+  test("the row says FPL flags none when the forecast carries an empty risk list", async ({ page }) => {
+    const dir = join(__dirname, "..", "..", "data", "forecast");
+    const newest = readdirSync(dir).filter((f) => /^gw\d+\.json$/.test(f)).sort((a, b) => Number(b.match(/\d+/)![0]) - Number(a.match(/\d+/)![0]))[0];
+    const fc = JSON.parse(readFileSync(join(dir, newest), "utf8"));
+    for (const p of fc.squad.players) p.availability = { ...p.availability, risks: [] };
+    await page.clock.install({ time: Date.parse(fc.deadlineTime) - 5 * 3_600_000 });
+    await page.route("**/api/forecast*", (route) => route.fulfill({ contentType: "application/json", body: JSON.stringify(fc) }));
+    await mockLive(page, { current: "a" });
+    await page.goto("/?team=999999&tab=squad");
+    await expect(page.getByText(/FPL flags no suspension or loan-ban risk in your squad/)).toBeVisible();
   });
 });
 
@@ -841,6 +877,7 @@ test.describe("3D Squad pitch", () => {
   test("shows all fifteen players with the captain marked, and a tap opens the breakdown", async ({ page }) => {
     await page.goto("/?tab=squad");
     const pitch = squadPitch3d(page);
+    await pitch.scrollIntoViewIfNeeded(); // the 3D canvas is only built once the pitch is on screen
     await expect(pitch.locator("canvas")).toBeVisible();
     await expect(pitch.locator("[data-tag]")).toHaveCount(15);
     await expect(pitch.getByText("C", { exact: true })).toHaveCount(1);
@@ -896,6 +933,79 @@ test.describe("3D pitch moves", () => {
     await expect(pitch).not.toHaveAttribute("data-celebrating", /.+/, { timeout: 8000 }); // the move finishes
     await page.keyboard.press("Escape");
     await expect(pitch).not.toHaveAttribute("data-focus", /.+/);
+  });
+
+  test("a goal that arrives in a later poll makes the scorer celebrate without any tap", async ({ page }) => {
+    const poll = { current: "a" as "a" | "b" };
+    await page.unroute("**/api/live*");
+    await mockLive(page, poll);
+    await page.goto("/?tab=live");
+    const pitch = page.getByTestId("pitch3d").first();
+    await pitch.locator('button[aria-label^="Palmer"]').waitFor();
+    poll.current = "b"; // Palmer scores
+    await page.evaluate(() => document.dispatchEvent(new Event("visibilitychange")));
+    await expect(pitch).toHaveAttribute("data-celebrating", "goal", { timeout: 10000 });
+    await expect(pitch).not.toHaveAttribute("data-focus", /.+/); // nobody selected, camera untouched
+    await expect(pitch).not.toHaveAttribute("data-celebrating", /.+/, { timeout: 8000 }); // and it ends
+  });
+
+  test("the ball stays put during a live celebration and the passing resumes after it", async ({ page }) => {
+    await page.addInitScript(() => {
+      try { localStorage.setItem("fpl-pitch-passing", "on"); } catch {}
+    });
+    const poll = { current: "a" as "a" | "b" };
+    await page.unroute("**/api/live*");
+    await mockLive(page, poll);
+    await page.goto("/?tab=live");
+    const pitch = page.getByTestId("pitch3d").first();
+    await pitch.locator('button[aria-label^="Palmer"]').waitFor();
+    await expect(pitch).toHaveAttribute("data-passes", /[1-9]/, { timeout: 15000 });
+    poll.current = "b";
+    await page.evaluate(() => document.dispatchEvent(new Event("visibilitychange")));
+    await expect(pitch).toHaveAttribute("data-celebrating", "goal", { timeout: 10000 });
+    await page.waitForTimeout(700); // a pass already in flight lands
+    const at = await pitch.getAttribute("data-passes");
+    await page.waitForTimeout(1800);
+    await expect(pitch).toHaveAttribute("data-celebrating", "goal"); // still mid-celebration
+    expect(await pitch.getAttribute("data-passes")).toBe(at);
+    await expect(pitch).not.toHaveAttribute("data-celebrating", /.+/, { timeout: 8000 });
+    await expect.poll(async () => await pitch.getAttribute("data-passes"), { timeout: 15000 }).not.toBe(at);
+  });
+
+  test("if the scorer leaves the lineup mid-celebration the pitch does not stay celebrating", async ({ page }) => {
+    const poll = { current: "a" as "a" | "b" | "c" };
+    await page.unroute("**/api/live*");
+    await page.route("**/api/live*", (route) => {
+      if (route.request().url().includes("squad=1")) return route.fulfill({ status: 503, body: "{}" });
+      const d = JSON.parse(fixture(`live-${poll.current === "c" ? "b" : poll.current}.json`));
+      if (poll.current === "c") {
+        // Palmer (7) swaps places with the last sub (15): he is no longer one of the eleven
+        const { starters, bench } = d.picks as { starters: number[]; bench: number[] };
+        starters[starters.indexOf(7)] = 15;
+        bench[bench.indexOf(15)] = 7;
+      }
+      return route.fulfill({ contentType: "application/json", body: JSON.stringify(d) });
+    });
+    await page.goto("/?tab=live");
+    const pitch = page.getByTestId("pitch3d").first();
+    await pitch.locator('button[aria-label^="Palmer"]').waitFor();
+    poll.current = "b";
+    await page.evaluate(() => document.dispatchEvent(new Event("visibilitychange")));
+    await expect(pitch).toHaveAttribute("data-celebrating", "goal", { timeout: 10000 });
+    poll.current = "c";
+    await page.evaluate(() => document.dispatchEvent(new Event("visibilitychange")));
+    await expect(pitch).not.toHaveAttribute("data-celebrating", /.+/, { timeout: 2500 });
+  });
+
+  test("the first poll alone never celebrates, even with goals already in it", async ({ page }) => {
+    const poll = { current: "b" as "a" | "b" };
+    await page.unroute("**/api/live*");
+    await mockLive(page, poll);
+    await page.goto("/?tab=live");
+    const pitch = page.getByTestId("pitch3d").first();
+    await pitch.locator('button[aria-label^="Palmer"]').waitFor();
+    await page.waitForTimeout(2500);
+    await expect(pitch).not.toHaveAttribute("data-celebrating", /.+/);
   });
 
   test("a clean sheet gets its own celebration", async ({ page }) => {
@@ -1294,5 +1404,201 @@ test.describe("Squad correction from your live squad", () => {
     await expect(sheet).toContainText("In your FPL squad now");
     await expect(sheet).toContainText(leaver.webName);
     await expect(sheet.getByRole("button", { name: /^Undo/ })).toHaveCount(0);
+  });
+});
+
+test.describe("What could still move your rank", () => {
+  const withThreats = (threats: unknown[]) =>
+    JSON.stringify({ ...JSON.parse(fixture("live-a.json")), threats });
+  const mockThreats = (page: Page, threats: unknown[]) =>
+    page.route("**/api/live*", (route) =>
+      route.request().url().includes("squad=1")
+        ? route.fulfill({ status: 503, contentType: "application/json", body: "{}" })
+        : route.fulfill({ contentType: "application/json", body: withThreats(threats) }),
+    );
+  const foden = { id: 900, webName: "Foden", team: "MCI", ownedPct: 41.2, opponent: "TOT (A)", kickoffTime: "2026-10-11T15:30:00Z", components: { goals: 1.5, minutes: 2 } };
+
+  for (const width of [360, 390]) {
+    test(`quotes ownership and kickoff for a popular player you do not own, at ${width}px`, async ({ page }) => {
+      await page.setViewportSize({ width, height: 844 });
+      await mockThreats(page, [foden, { ...foden, id: 901, webName: "Ghost", ownedPct: 0 }, { ...foden, id: 902, webName: "NoGame", opponent: null }]);
+      await page.goto("/?tab=live");
+      const card = page.getByTestId("rank-threats");
+      await expect(card).toBeVisible();
+      await expect(card).toContainText("41% of managers own Foden, he plays Sun 23:30 SGT vs TOT (A), not in your squad");
+      await expect(card).not.toContainText("Ghost");
+      await expect(card).not.toContainText("NoGame");
+      await expect(card.getByRole("heading", { name: /what could move your rank/i })).toBeVisible();
+      const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
+      expect(overflow).toBeLessThanOrEqual(0);
+      await card.scrollIntoViewIfNeeded();
+      await page.screenshot({ path: `test-results/rank-threats-${width}.png` });
+    });
+  }
+
+  test("with no ownership data the not-owned lines disappear and your own still show", async ({ page }) => {
+    await mockThreats(page, []);
+    await page.goto("/?tab=live");
+    const card = page.getByTestId("rank-threats");
+    await expect(card).toBeVisible();
+    await expect(card.locator("[data-kind='missing']")).toHaveCount(0);
+    await expect(card.locator("[data-kind='yours']").first()).toBeVisible();
+  });
+});
+
+/** The committed forecast as /api/forecast would return it for a guest: no model record. */
+function guestForecast() {
+  const dir = join(__dirname, "..", "..", "data", "forecast");
+  const latest = readdirSync(dir)
+    .map((f) => /^gw(\d+)\.json$/.exec(f))
+    .filter((m): m is RegExpExecArray => !!m)
+    .sort((a, b) => Number(b[1]) - Number(a[1]))[0][0];
+  const f = JSON.parse(readFileSync(join(dir, latest), "utf8"));
+  f.teamName = "Guest FC";
+  f.managerName = "Gus Guest";
+  f.runningRecord = null;
+  f.parCalibration = null;
+  if (f.lastGameweek) delete f.lastGameweek.modelVsBaseline;
+  for (const g of f.history?.gameweeks ?? []) delete g.modelVsBaseline;
+  return f;
+}
+
+test.describe("Guest teams", () => {
+  test.beforeEach(async ({ context }) => {
+    await context.clearCookies();
+  });
+
+  const enterTeam = async (page: Page, id: string) => {
+    await page.goto("/");
+    await page.getByRole("textbox", { name: "FPL team ID" }).fill(id);
+    await page.getByRole("button", { name: "View squad" }).click();
+  };
+
+  // This only proves the client renders a record-less forecast; that the server omits the record is
+  // covered by tests/test_forecast_api.py.
+  test("a guest sees the empty-state copy, not the owner's model record; the owner still sees it", async ({ page, context }) => {
+    await page.route("**/api/forecast*", (route) =>
+      route.fulfill({ contentType: "application/json", body: JSON.stringify(guestForecast()) }),
+    );
+    await enterTeam(page, "424242");
+    await expect(page.getByTestId("team-bar")).toContainText("Guest FC");
+    await openTab(page, "Squad");
+    await expect(page.getByTestId("guest-record-empty")).toBeAttached();
+    await expect(page.getByText(/Out-of-sample/)).toHaveCount(0);
+    await expect(page.getByText(/Par calibration/)).toHaveCount(0);
+    await expect(page.getByText(/\bm-?\d+ b-?\d+\b/)).toHaveCount(0); // History's model/baseline marks
+
+    await context.addCookies([{ name: "fpl_team_id", value: OWNER, url: ORIGIN }]);
+    await page.goto("/?tab=squad");
+    await expect(page.getByText(/Out-of-sample/).first()).toBeAttached();
+    await expect(page.getByTestId("guest-record-empty")).toHaveCount(0);
+  });
+
+  const cases: [number, string, RegExp][] = [
+    [404, "RAW-SERVER-404", /FPL has no team with ID 777/],
+    [422, "RAW-SERVER-422", /Team 777 has no squad recorded[\s\S]*Check back/],
+    [503, "RAW-SERVER-503", /first gameweek hasn.t finished yet[\s\S]*Try again later/],
+  ];
+  for (const [status, serverText, expected] of cases) {
+    test(`HTTP ${status} shows a specific message with a next step`, async ({ page }) => {
+      await page.route("**/api/forecast*", (route) =>
+        route.fulfill({ status, contentType: "application/json", body: JSON.stringify({ error: serverText }) }),
+      );
+      await enterTeam(page, "777");
+      await expect(page.locator("span[role=alert]")).toContainText(expected);
+      await expect(page.getByText(serverText)).toHaveCount(0); // the raw server text is not shown
+    });
+  }
+
+  test("a pasted FPL address or a padded ID is turned into the team ID", async ({ page }) => {
+    let asked = "";
+    await page.route("**/api/forecast*", (route) => {
+      asked = new URL(route.request().url()).searchParams.get("teamId") ?? "";
+      return route.fulfill({ contentType: "application/json", body: JSON.stringify(guestForecast()) });
+    });
+    await page.goto("/");
+    const input = page.getByRole("textbox", { name: "FPL team ID" });
+    await input.fill("https://fantasy.premierleague.com/entry/424242/event/10");
+    await expect(input).toHaveValue("424242");
+    await input.fill(" 424242 ");
+    await expect(input).toHaveValue("424242");
+    await page.getByRole("button", { name: "View squad" }).click();
+    await expect(page.getByTestId("team-bar")).toContainText("Guest FC");
+    expect(asked).toBe("424242");
+  });
+
+  test("a platform timeout (504) says it timed out; a non-JSON 404 does not claim the team is unknown", async ({ page }) => {
+    await page.route("**/api/forecast*", (route) => route.fulfill({ status: 504, body: "gateway timeout" }));
+    await enterTeam(page, "777");
+    await expect(page.locator("span[role=alert]")).toContainText(/taking too long/);
+    await page.unroute("**/api/forecast*");
+    await page.route("**/api/forecast*", (route) => route.fulfill({ status: 404, body: "<html>not found</html>" }));
+    await page.getByRole("button", { name: "View squad" }).click();
+    await expect(page.locator("span[role=alert]")).not.toContainText(/no team with ID/);
+    await expect(page.locator("span[role=alert]")).toContainText(/Couldn't get your forecast/);
+  });
+
+  test("a bad saved team ID does not greet the visitor with an error", async ({ page, context }) => {
+    await context.addCookies([{ name: "fpl_team_id", value: "0123", url: ORIGIN }]);
+    await page.goto("/");
+    await expect(page.getByRole("textbox", { name: "FPL team ID" })).toBeVisible();
+    await expect(page.locator("span[role=alert]")).toHaveCount(0);
+  });
+
+  test("Switch team while a lookup is loading is not undone when the lookup answers", async ({ page }) => {
+    let calls = 0;
+    await page.route("**/api/forecast*", async (route) => {
+      calls++;
+      if (calls > 1) await new Promise((r) => setTimeout(r, 2000));
+      await route.fulfill({ contentType: "application/json", body: JSON.stringify(guestForecast()) }).catch(() => {});
+    });
+    await enterTeam(page, "424242");
+    const bar = page.getByTestId("team-bar");
+    await expect(bar).toContainText("Guest FC");
+    await bar.getByRole("button", { name: "Change team" }).click();
+    await bar.getByRole("textbox", { name: "Team ID" }).fill("535353");
+    await bar.getByRole("button", { name: "View", exact: true }).click(); // slow second lookup
+    await bar.getByRole("button", { name: "Change team" }).click();
+    await bar.getByRole("button", { name: "Switch team" }).click();
+    await page.waitForTimeout(3000);
+    await expect(page.getByRole("textbox", { name: "FPL team ID" })).toBeVisible(); // still on the gate
+    await expect(page.locator("span[role=alert]")).toHaveCount(0);
+  });
+
+  test("after 3 seconds a slow forecast says it is being built", async ({ page }) => {
+    await page.route("**/api/forecast*", async (route) => {
+      await new Promise((r) => setTimeout(r, 4500));
+      await route.fulfill({ contentType: "application/json", body: JSON.stringify(guestForecast()) });
+    });
+    await enterTeam(page, "424242");
+    const note = page.getByText("Building your forecast, about 10 seconds the first time.");
+    await expect(note).toHaveCount(0);
+    await expect(note).toBeVisible({ timeout: 4000 });
+    await expect(page.getByTestId("team-bar")).toContainText("Guest FC", { timeout: 10_000 });
+    await expect(note).toHaveCount(0);
+  });
+
+  test("the first-visit gate says what the app is and blocks invalid team IDs", async ({ page }) => {
+    let requests = 0;
+    await page.route("**/api/forecast*", (route) => {
+      requests++;
+      return route.fulfill({ status: 404, contentType: "application/json", body: "{}" });
+    });
+    await page.goto("/");
+    await expect(page.getByText(/decision tool for managers/)).toBeVisible();
+    await expect(page.getByText(/Saving transfers is only available for this app/)).toBeVisible();
+    const input = page.getByRole("textbox", { name: "FPL team ID" });
+    const go = page.getByRole("button", { name: "View squad" });
+    await expect(go).toBeDisabled();
+    await input.fill("0123");
+    await expect(go).toBeDisabled();
+    await input.fill("1234567890"); // ten digits
+    await expect(go).toBeDisabled();
+    await expect(input).toHaveAttribute("aria-describedby", "team-id-hint");
+    await input.fill("abc");
+    await expect(input).toHaveValue(""); // letters are dropped
+    await input.fill("123456789");
+    await expect(go).toBeEnabled();
+    expect(requests).toBe(0);
   });
 });

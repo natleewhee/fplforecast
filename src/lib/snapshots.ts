@@ -100,7 +100,7 @@ export type Availability = {
 
 export type AvailabilityRisk = {
   kind: string; // e.g. "suspension_risk", "loan_ineligible"
-  gameweek: number | null; // null = applies to the next match
+  gameweek: number | null; // null = no gameweek (a suspension_risk: a ban follows the next yellow card)
   notes: string;
 };
 
@@ -146,6 +146,17 @@ export type ParCalibration = {
   hitRateByVerdict: { green: number | null; amber: number | null; red: number | null };
 };
 
+/** One chip window from bootstrap-static `chips` (this season: two of each of
+ * wildcard / freehit / bboost / 3xc, one per half), marked against this
+ * team's own history. Built by `compute_chip_status` in compute_forecast.py. */
+export type ChipWindow = {
+  name: string; // FPL's chip name: wildcard | freehit | bboost | 3xc
+  window: { start: number; stop: number };
+  used: boolean;
+  availableNow: boolean; // unused and the target gameweek is inside the window
+  expiresGw: number; // the window's last gameweek
+};
+
 export type Forecast = {
   generatedAt: string;
   basedOnGameweek: number;
@@ -156,6 +167,10 @@ export type Forecast = {
   // Optional: absent on a forecast snapshot committed before this field
   // existed, until the next daily cron run regenerates it.
   deadlineTime?: string | null;
+  // This team's chip windows. `null` = the pipeline could not read FPL's chip
+  // rules or the team's history, so status is unknown; absent on a forecast
+  // committed before this field existed. Same shape for owner and guests.
+  chips?: ChipWindow[] | null;
   squad: {
     windowPoints: number;
     players: ForecastPlayer[];
@@ -332,7 +347,7 @@ export type HistoryGameweek = {
   transfers: number;
   hit: number; // points spent on transfers
   teamValue: number; // £m
-  modelVsBaseline: GwModelVsBaseline | { status: string } | null;
+  modelVsBaseline?: GwModelVsBaseline | { status: string } | null; // absent for a guest
 };
 
 export type HistorySeason = {
@@ -361,55 +376,12 @@ export type GameweekReview = {
   overallRank: number | null;
   captain: GameweekCaptain | null;
   viceCaptain: GameweekCaptain | null;
-  modelVsBaseline:
+  /** Absent for a guest's team: the record is the app owner's. */
+  modelVsBaseline?:
     | { model: number; baseline: number; delta: number }
     | { status: string }
     | null;
 };
-
-export type ChipUsage = { name: string; event: number };
-
-export type ChipStatus = {
-  name: string;
-  used: ChipUsage[];
-  remaining: number;
-};
-
-const TEAM_ID = "1168513";
-
-// Standard 2025/26 allocation (2x wildcard, one per half; 1x each of the
-// others). Not re-verified against 2026/27's live bootstrap-static — see
-// the plan doc's open question on rules drifting season to season.
-const ASSUMED_CHIP_ALLOCATION: Record<string, number> = {
-  wildcard: 2,
-  freehit: 1,
-  bboost: 1,
-  "3xc": 1,
-  manager: 1,
-};
-
-export function loadChipStatus(): ChipStatus[] | null {
-  const dir = path.join(DATA_DIR, `history-${TEAM_ID}`);
-  if (!fs.existsSync(dir)) return null;
-  const files = fs.readdirSync(dir).filter((f) => f.endsWith(".json")).sort();
-  if (files.length === 0) return null;
-  const raw = JSON.parse(fs.readFileSync(path.join(dir, files[files.length - 1]), "utf-8"));
-  const chips: { name: string; event: number }[] = raw.chips ?? [];
-
-  const usedByName = new Map<string, ChipUsage[]>();
-  for (const c of chips) {
-    const list = usedByName.get(c.name) ?? [];
-    list.push({ name: c.name, event: c.event });
-    usedByName.set(c.name, list);
-  }
-
-  const allNames = new Set([...Object.keys(ASSUMED_CHIP_ALLOCATION), ...usedByName.keys()]);
-  return [...allNames].map((name) => {
-    const used = usedByName.get(name) ?? [];
-    const allocation = ASSUMED_CHIP_ALLOCATION[name] ?? 1;
-    return { name, used, remaining: Math.max(0, allocation - used.length) };
-  });
-}
 
 export type { PendingTransfer };
 
@@ -435,6 +407,39 @@ export function loadLatestForecast(): Forecast | null {
   if (files.length === 0) return null;
   const latest = files[files.length - 1];
   return JSON.parse(fs.readFileSync(path.join(dir, latest), "utf-8"));
+}
+
+/** The committed forecast built FOR a given gameweek (data/forecast/gw{n}.json), or null if there is none. */
+export function loadForecastFor(gw: number): Forecast | null {
+  if (!Number.isInteger(gw) || gw < 1) return null;
+  const filePath = path.join(DATA_DIR, "forecast", `gw${gw}.json`);
+  if (!fs.existsSync(filePath)) return null;
+  return readForecastCached(filePath);
+}
+
+/** The newest committed forecast built for a gameweek at or before `gw`, or null. */
+export function loadForecastUpTo(gw: number): Forecast | null {
+  const dir = path.join(DATA_DIR, "forecast");
+  if (!fs.existsSync(dir)) return null;
+  const nums = fs
+    .readdirSync(dir)
+    .map((f) => /^gw(\d+)\.json$/.exec(f)?.[1])
+    .filter((n): n is string => n !== undefined)
+    .map(Number)
+    .filter((n) => n <= gw)
+    .sort((a, b) => b - a);
+  return nums.length ? readForecastCached(path.join(dir, `gw${nums[0]}.json`)) : null;
+}
+
+// A forecast file is 1MB+ and /api/live is polled every 60s: parse each once per file version.
+const forecastFileCache = new Map<string, { mtimeMs: number; forecast: Forecast }>();
+function readForecastCached(filePath: string): Forecast {
+  const mtimeMs = fs.statSync(filePath).mtimeMs;
+  const hit = forecastFileCache.get(filePath);
+  if (hit && hit.mtimeMs === mtimeMs) return hit.forecast;
+  const forecast: Forecast = JSON.parse(fs.readFileSync(filePath, "utf-8"));
+  forecastFileCache.set(filePath, { mtimeMs, forecast });
+  return forecast;
 }
 
 export function loadBootstrapSnapshot(): BootstrapSnapshot | null {
