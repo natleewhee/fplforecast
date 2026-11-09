@@ -5,6 +5,7 @@ import {
   BROADCAST,
   CLEAN_SHEET_SECONDS,
   GOAL_SECONDS,
+  WALL_BRICKS,
   benchCheerPose,
   blend,
   cleanSheetPose,
@@ -44,23 +45,38 @@ test("two goals add a spin, three add the confetti", () => {
   close(goalPose(1.5 + 1.2 - 1e-6, 2).yaw, Math.PI * 2, 0.01); // a full turn by the end of the hold
 });
 
-test("the clean sheet is a planted stance with folded arms and a rising shield, not a run", () => {
-  const p = cleanSheetPose(1.5);
-  assert.equal(p.dz, 0);
-  assert.ok(p.armL.z > 0.9 && p.armR.z < -0.9, "arms folded across the chest");
-  assert.ok(p.hipL.z < 0 && p.hipR.z > 0, "feet apart");
-  assert.equal(p.shieldRise, 1);
-  assert.equal(p.shieldAlpha, 1);
-  assert.equal(cleanSheetPose(0).shieldRise, 0);
+test("the clean sheet is a brick wall built round him one brick at a time, not a run", () => {
+  assert.equal(cleanSheetPose(0).bricks, 0);
+  let last = 0;
+  for (let t = 0; t <= 2.7; t += 0.1) {
+    const bricks = cleanSheetPose(t).bricks;
+    assert.ok(bricks >= last, "the wall only grows while it is being built");
+    last = bricks;
+  }
+  assert.equal(cleanSheetPose(2.7).bricks, WALL_BRICKS);
+  assert.equal(cleanSheetPose(1.5).dz, 0, "he stays where he is");
+  assert.ok(cleanSheetPose(1.5).hipL.z < 0 && cleanSheetPose(1.5).hipR.z > 0, "feet apart");
 });
 
-test("the shield fades out before the clean sheet celebration ends", () => {
-  assert.ok(cleanSheetPose(CLEAN_SHEET_SECONDS - 0.05).shieldAlpha < 0.2);
+test("while building he reaches forward, then dusts his hands, then folds his arms", () => {
+  const building = cleanSheetPose(1.2);
+  assert.ok(building.armL.x < -0.5 && building.armR.x < -0.5, "arms forward, placing bricks");
+  const dusting = cleanSheetPose(3.2);
+  assert.ok(dusting.armL.x < -0.7 && dusting.armR.x < -0.7, "hands together in front of him");
+  assert.ok(dusting.armL.z > 0 && dusting.armR.z < 0, "palms brought in towards each other");
+  const folded = cleanSheetPose(4.2);
+  assert.ok(folded.armL.z > 0.9 && folded.armR.z < -0.9, "arms folded across the chest");
+});
+
+test("the wall stays whole until the end, then crumbles away", () => {
+  assert.equal(cleanSheetPose(4.0).wallFade, 1);
+  assert.ok(cleanSheetPose(CLEAN_SHEET_SECONDS - 0.05).wallFade < 0.2);
+  close(cleanSheetPose(CLEAN_SHEET_SECONDS).wallFade, 0, 1e-9);
 });
 
 test("a goal and a clean sheet are different moves", () => {
   assert.notDeepEqual(goalPose(1.5, 1), cleanSheetPose(1.5));
-  assert.equal(goalPose(1.5, 1).shieldAlpha, 0);
+  assert.equal(goalPose(1.5, 1).bricks, 0);
   assert.equal(cleanSheetPose(1.5).burst, false);
 });
 
@@ -96,8 +112,8 @@ test("blending from rest at 0 is rest, at 1 is the target", () => {
 
 test("the close-up looks at the player from in front and above, and is tighter than the broadcast", () => {
   const shot = focusShot(4, -6, 1.05);
+  assert.ok(shot.pos[1] > 8, "high enough that the players in front do not tower over him");
   assert.ok(shot.pos[2] > -6, "camera is on the near side of him");
-  assert.ok(shot.pos[1] < BROADCAST.pos[1], "lower than the broadcast view");
   assert.ok(shot.fov < BROADCAST.fov);
   assert.equal(shot.look[0], 4);
 });

@@ -504,11 +504,6 @@ button:not(:disabled):active {
   border-radius: 4px;
 }
 
-/* While a player is in focus on a 3D pitch, the sheet's backdrop is light enough to see him through. */
-html[data-pitch-focus] [role="dialog"] > button[aria-label="Close"] {
-  background: rgba(0, 0, 0, 0.18);
-}
-
 /* Tab switches (AppTabs): the content pane slides and fades with a view transition while the
    header and tab bar stay put. The pane's own sliding transition is switched off for the
    duration so the two do not fight. Browsers without view transitions never set data-vt-dir. */

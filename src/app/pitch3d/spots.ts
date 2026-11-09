@@ -13,9 +13,9 @@ export function benchSeat(i: number): { x: number; z: number } {
 
 /** x/z for each row of the starting XI: keeper at the back, forwards up front. */
 export function formationSpots(rows: number[]): { x: number; z: number }[][] {
-  const zs = rows.length === 4 ? [-13.5, -7.5, -1.5, 6] : rows.map((_, i) => -13.5 + (i * 19.5) / Math.max(rows.length - 1, 1));
+  const zs = rows.length === 4 ? [-14.5, -8, -1.5, 5.5] : rows.map((_, i) => -13.5 + (i * 19.5) / Math.max(rows.length - 1, 1));
   return rows.map((n, r) => {
-    const spacing = n <= 1 ? 0 : Math.min(6.5, 17 / (n - 1));
+    const spacing = n <= 1 ? 0 : Math.min(5, 16 / (n - 1));
     return Array.from({ length: n }, (_, i) => ({ x: (i - (n - 1) / 2) * spacing, z: zs[r] }));
   });
 }

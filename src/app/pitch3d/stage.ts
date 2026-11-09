@@ -1,8 +1,11 @@
 import * as THREE from "three";
 import { SKIN_STEPS, type HairStyle } from "@/lib/appearance";
 import { BENCH_Z, SEAT_Y } from "./spots";
+import { ballAt, facing, kickLeg, nextReceiver, passSeconds, BALL_REST_Y, HOLD_SECONDS, KICK_AT, type Spot } from "./passes";
 import {
   BROADCAST,
+  WALL_BRICKS,
+  WALL_PER_COURSE,
   GLIDE_SECONDS,
   benchCheerPose,
   blend,
@@ -43,7 +46,7 @@ export type FigureDef = {
   bench: boolean;
   dim?: number; // 0..1, fades players who have not played or are off
   goals?: number; // goals scored: he celebrates when tapped
-  cleanSheet?: boolean; // clean sheet: he puts up the shield when tapped
+  cleanSheet?: boolean; // clean sheet: he builds the brick wall when tapped
 
   x: number;
   z: number;
@@ -198,13 +201,13 @@ function pitchTexture() {
 const scaleFor = (cm: number) => 1 + ((cm - 183) / 183) * 1.5;
 
 type Joints = { body: THREE.Group; armL: THREE.Group; armR: THREE.Group; hipL: THREE.Group; hipR: THREE.Group; kneeL: THREE.Group; kneeR: THREE.Group };
-type Shield = { group: THREE.Group; wall: THREE.Mesh; emblem: THREE.Mesh };
 /** What a figure is doing besides standing: celebrations queued for a tap, a glide to a new spot. */
 type Anim = {
   queue: MomentKind[];
   current: { kind: MomentKind; t: number; burst: boolean } | null;
   slide: { fromX: number; fromZ: number; t: number } | null;
   pop: number | null; // seconds since he appeared, for a new arrival
+  yaw: number; // how far he is turned (towards the ball while it is passed around)
 };
 type Figure = {
   g: THREE.Group;
@@ -216,7 +219,7 @@ type Figure = {
   disposables: { dispose(): void }[];
   mat: THREE.Material;
   joints: Joints;
-  shield: Shield | null;
+  wall: THREE.InstancedMesh | null; // the clean-sheet brick wall
   anim: Anim;
   homeX: number;
   homeZ: number;
@@ -308,30 +311,19 @@ function buildFigure(def: FigureDef): Figure {
   g.add(hit);
 
   const disposables: { dispose(): void }[] = [];
-  let shield: Shield | null = null;
+  let wall: THREE.InstancedMesh | null = null;
   if (def.cleanSheet) {
-    // a glowing wall that rises around him, with a shield badge floating above his head
-    const glow = new THREE.MeshBasicMaterial({ color: 0x7fd8ff, transparent: true, opacity: 0, side: THREE.DoubleSide, depthWrite: false });
-    const wallGeo = new THREE.CylinderGeometry(1.45, 1.45, 3.1, 28, 1, true);
-    const wall = new THREE.Mesh(wallGeo, glow);
+    // thirty bricks in three courses round him, laid one at a time when he celebrates
+    const brickGeo = new THREE.BoxGeometry(0.95, 0.36, 0.34);
+    const brickMat = new THREE.MeshLambertMaterial({ color: 0xffffff, transparent: true });
+    wall = new THREE.InstancedMesh(brickGeo, brickMat, WALL_BRICKS);
+    const tint = new THREE.Color();
+    for (let i = 0; i < WALL_BRICKS; i++) wall.setColorAt(i, tint.setHSL(0.03 + (i % 3) * 0.008, 0.55, 0.38 + ((i * 7) % 5) * 0.025));
+    wall.count = 0;
     wall.visible = false;
-    const badge = new THREE.Shape();
-    badge.moveTo(0, 0.5);
-    badge.lineTo(0.42, 0.34);
-    badge.lineTo(0.38, -0.08);
-    badge.quadraticCurveTo(0.3, -0.38, 0, -0.55);
-    badge.quadraticCurveTo(-0.3, -0.38, -0.38, -0.08);
-    badge.lineTo(-0.42, 0.34);
-    badge.closePath();
-    const badgeGeo = new THREE.ExtrudeGeometry(badge, { depth: 0.12, bevelEnabled: false });
-    const badgeMat = new THREE.MeshBasicMaterial({ color: 0xbfeaff, transparent: true, opacity: 0 });
-    const emblem = new THREE.Mesh(badgeGeo, badgeMat);
-    emblem.visible = false;
-    const group = new THREE.Group();
-    group.add(wall, emblem);
-    g.add(group);
-    shield = { group, wall, emblem };
-    disposables.push(glow, wallGeo, badgeGeo, badgeMat);
+    wall.frustumCulled = false;
+    g.add(wall);
+    disposables.push(brickGeo, brickMat, wall);
   }
 
   const scale = scaleFor(def.cm);
@@ -348,8 +340,8 @@ function buildFigure(def: FigureDef): Figure {
     disposables,
     mat,
     joints: { body: b, armL: arms[0], armR: arms[1], hipL: hips[0], hipR: hips[1], kneeL: knees[0], kneeR: knees[1] },
-    shield,
-    anim: { queue: [], current: null, slide: null, pop: null },
+    wall,
+    anim: { queue: [], current: null, slide: null, pop: null, yaw: 0 },
     homeX: def.x,
     homeZ: def.z,
   };
@@ -359,17 +351,20 @@ export type StageHandle = {
   setPlayers(defs: FigureDef[]): void;
   /** Tapping a player: the camera glides to him and he celebrates; null glides back. */
   setSelected(id: number | null): void;
+  /** The ball going round the XI while nobody is selected; the players stay on their spots. */
+  setAmbient(on: boolean): void;
   dispose(): void;
 };
 
 /** What the stage reports for the page (and the tests) to show. */
-export type StageState = { focusId: number | null; celebrating: MomentKind | null };
+export type StageState = { focusId: number | null; celebrating: MomentKind | null; passes: number };
 
 export type StageOptions = {
   host: HTMLElement; // sized by CSS; the stage fills it
   tagLayer: HTMLElement; // holds one element per player, marked data-tag="<id>"
   onPick(id: number): void;
   onState?(state: StageState): void;
+  ambient?: boolean; // start with the passing on (default true)
 };
 
 /** Create the scene on a canvas of its own (so a remount never reuses a lost context).
@@ -464,9 +459,114 @@ function setup(renderer: THREE.WebGLRenderer, canvas: HTMLCanvasElement, opts: S
   let size = { w: 0, h: 0 };
   let raf = 0;
   let lastTs = 0;
+  let ambientOnly = false;
   let disposed = false;
   let celebrating: MomentKind | null = null;
-  const report = () => opts.onState?.({ focusId: selected, celebrating });
+  const report = () => opts.onState?.({ focusId: selected, celebrating, passes });
+
+  /* ambient passing: the ball goes round the starting eleven, who stay where they are. */
+  let ambient = opts.ambient !== false && !reduceMotion;
+  let passes = 0;
+  type Pass = { from: Figure; to: Figure; phase: "hold" | "fly"; t: number; legT: number; dur: number; last: number | null };
+  let pass: Pass | null = null;
+  let ball: THREE.Mesh | null = null;
+  const spotOf = (f: Figure): Spot => ({ id: f.def.id, x: f.homeX, z: f.homeZ });
+  function ensureBall(): THREE.Mesh {
+    if (ball) return ball;
+    const geo = new THREE.IcosahedronGeometry(0.36, 1).toNonIndexed();
+    const n = geo.attributes.position.count / 3;
+    const col = new Float32Array(n * 9);
+    for (let i = 0; i < n; i++) {
+      const dark = i % 5 === 0 ? 0.12 : 0.95;
+      for (let k = 0; k < 9; k++) col[i * 9 + k] = dark;
+    }
+    geo.setAttribute("color", new THREE.BufferAttribute(col, 3));
+    ball = new THREE.Mesh(own(geo), own(new THREE.MeshLambertMaterial({ vertexColors: true })));
+    ball.visible = false;
+    scene.add(ball);
+    return ball;
+  }
+  /** Stand everyone square again and put the ball away (when a player is picked, or passing is switched off). */
+  function stopPassing() {
+    if (pass) {
+      pass.from.joints.hipR.rotation.x = 0;
+      pass.from.joints.kneeR.rotation.x = 0;
+    }
+    pass = null;
+    if (ball) ball.visible = false;
+    for (const f of figures) {
+      if (f.anim.yaw !== 0 && !f.def.bench && !f.anim.current && !f.anim.slide) {
+        f.anim.yaw = 0;
+        f.g.rotation.y = 0;
+      }
+    }
+  }
+  const xi = () => figures.filter((f) => !f.def.bench && !f.anim.slide && f.anim.pop == null);
+  function startPass(from: Figure, last: number | null, hold = 0): boolean {
+    const pool = xi();
+    if (pool.length < 3) return false;
+    const to = nextReceiver(pool.map(spotOf), from.def.id, last, Math.random);
+    const target = to && pool.find((f) => f.def.id === to.id);
+    if (!target) return false;
+    pass = { from, to: target, phase: "hold", t: hold, legT: 0, dur: passSeconds(Math.hypot(from.homeX - target.homeX, from.homeZ - target.homeZ)), last };
+    return true;
+  }
+  /** Advance the passing by dt. Returns true while it is running. */
+  function stepPassing(dt: number): boolean {
+    if (!ambient || selected != null || figures.length === 0) {
+      if (pass || ball?.visible) stopPassing();
+      return false;
+    }
+    if (!pass) {
+      const pool = xi();
+      if (!pool.length || !startPass(pool[Math.floor(Math.random() * pool.length)], null)) return false;
+    }
+    const cur = pass!;
+    const b = ensureBall();
+    b.visible = true;
+    const dir = Math.atan2(cur.to.homeX - cur.from.homeX, cur.to.homeZ - cur.from.homeZ);
+    const startX = cur.from.homeX + Math.sin(dir) * 0.8;
+    const startZ = cur.from.homeZ + Math.cos(dir) * 0.8;
+    const endX = cur.to.homeX - Math.sin(dir) * 0.8;
+    const endZ = cur.to.homeZ - Math.cos(dir) * 0.8;
+    cur.t += dt;
+    cur.legT += dt;
+    // the kicking leg draws back, swings through, and settles
+    const leg = kickLeg(cur.legT);
+    cur.from.joints.hipR.rotation.x = leg.hip;
+    cur.from.joints.kneeR.rotation.x = leg.knee;
+    if (cur.phase === "hold") {
+      b.position.set(startX, BALL_REST_Y, startZ);
+      if (cur.t >= KICK_AT) {
+        cur.phase = "fly";
+        cur.t = 0;
+      }
+    } else {
+      const p = cur.t / cur.dur;
+      const at = ballAt({ x: startX, z: startZ }, { x: endX, z: endZ }, p);
+      b.position.set(at.x, at.y, at.z);
+      b.rotation.x += dt * 9;
+      if (p >= 1) {
+        const next = cur.to;
+        passes += 1;
+        report();
+        cur.from.joints.hipR.rotation.x = 0;
+        cur.from.joints.kneeR.rotation.x = 0;
+        pass = null;
+        startPass(next, cur.from.def.id, HOLD_SECONDS - KICK_AT);
+      }
+    }
+    // he who has the ball looks at the man he is passing to; the receiver watches it come
+    for (const f of figures) {
+      if (f.def.bench || f.anim.current || f.anim.slide) continue;
+      let want = 0;
+      if (f === cur.from) want = facing(spotOf(f), spotOf(cur.to));
+      else if (f === cur.to && cur.phase === "fly") want = facing(spotOf(f), { x: b.position.x, z: b.position.z });
+      f.anim.yaw += (want - f.anim.yaw) * Math.min(1, 9 * dt);
+      f.g.rotation.y = f.anim.yaw;
+    }
+    return true;
+  }
 
   /* confetti: one Points object, reused */
   const CONFETTI = 90;
@@ -512,8 +612,14 @@ function setup(renderer: THREE.WebGLRenderer, canvas: HTMLCanvasElement, opts: S
     return alive;
   }
 
+  const brickMatrix = new THREE.Matrix4();
+  const brickPos = new THREE.Vector3();
+  const brickQuat = new THREE.Quaternion();
+  const brickEuler = new THREE.Euler();
+  const brickOne = new THREE.Vector3(1, 1, 1);
+
   /** Put a figure's joints in a pose, on top of its resting pose (standing or seated). */
-  function applyPose(f: Figure, pose: Pose, now: number) {
+  function applyPose(f: Figure, pose: Pose) {
     const j = f.joints;
     const seated = f.def.bench;
     j.body.position.y = (seated ? -0.43 : 0) + pose.bodyY;
@@ -529,22 +635,33 @@ function setup(renderer: THREE.WebGLRenderer, canvas: HTMLCanvasElement, opts: S
     j.kneeR.rotation.x = (seated ? 1.5 : 0) + pose.kneeRx;
     f.g.position.set(f.homeX, 0.05, f.homeZ + pose.dz);
     f.g.rotation.y = pose.yaw;
-    if (f.shield) {
-      const sh = f.shield;
-      const on = pose.shieldAlpha > 0.01 && pose.shieldRise > 0;
-      sh.wall.visible = sh.emblem.visible = on;
+    if (f.wall) {
+      const w = f.wall;
+      const on = pose.bricks > 0.01 && pose.wallFade > 0.01;
+      w.visible = on;
       if (on) {
-        sh.wall.scale.y = Math.max(0.01, pose.shieldRise);
-        sh.wall.position.y = 1.55 * pose.shieldRise;
-        (sh.wall.material as THREE.MeshBasicMaterial).opacity = 0.3 * pose.shieldAlpha * (0.8 + 0.2 * Math.sin(now * 6));
-        sh.emblem.position.set(0, 3.55 + Math.sin(now * 3) * 0.08, 0);
-        sh.emblem.rotation.y = now * 1.4;
-        sh.emblem.scale.setScalar(pose.shieldRise);
-        (sh.emblem.material as THREE.MeshBasicMaterial).opacity = pose.shieldAlpha;
+        const whole = Math.floor(pose.bricks);
+        w.count = Math.min(WALL_BRICKS, Math.ceil(pose.bricks));
+        for (let i = 0; i < w.count; i++) {
+          const drop = i === whole ? 1 - (pose.bricks - whole) : 0; // the newest brick is still dropping in
+          const course = Math.floor(i / WALL_PER_COURSE);
+          const a = (((i % WALL_PER_COURSE) + (course % 2) * 0.5) / WALL_PER_COURSE) * Math.PI * 2;
+          brickMatrix.compose(
+            brickPos.set(Math.cos(a) * 1.55, 0.18 + course * 0.37 + drop * 1.4 - (1 - pose.wallFade) * 0.6, Math.sin(a) * 1.55),
+            brickQuat.setFromEuler(brickEuler.set(0, -a - Math.PI / 2, 0)),
+            brickOne,
+          );
+          w.setMatrixAt(i, brickMatrix);
+        }
+        w.instanceMatrix.needsUpdate = true;
+        (w.material as THREE.MeshLambertMaterial).opacity = pose.wallFade;
       }
     }
   }
-  const restPose = (f: Figure) => applyPose(f, restingPose(), 0);
+  const restPose = (f: Figure) => {
+    f.anim.yaw = 0;
+    applyPose(f, restingPose());
+  };
 
   function startNext(f: Figure, delay = 0) {
     const kind = f.anim.queue.shift();
@@ -556,8 +673,9 @@ function setup(renderer: THREE.WebGLRenderer, canvas: HTMLCanvasElement, opts: S
     }
   }
 
-  /** Advance every animation by dt. Returns true while anything is still moving. */
-  function update(dt: number, now: number): boolean {
+  /** Advance every animation by dt. Returns 0 when nothing moves, 1 while only the ambient
+   * passing runs (the loop may take it easy), 2 while something else is moving. */
+  function update(dt: number): 0 | 1 | 2 {
     let active = false;
     if (glide) {
       glide.t += dt;
@@ -623,7 +741,7 @@ function setup(renderer: THREE.WebGLRenderer, canvas: HTMLCanvasElement, opts: S
         } else {
           const raw = cur.kind === "goal" ? (f.def.bench ? benchCheerPose(cur.t) : goalPose(cur.t, f.def.goals ?? 1)) : cleanSheetPose(cur.t);
           // ease out of the resting pose over the first moments
-          applyPose(f, blend(restingPose(), raw, clamp01(cur.t / 0.15)), now);
+          applyPose(f, blend(restingPose(), raw, clamp01(cur.t / 0.15)));
           if (raw.burst && !cur.burst) {
             cur.burst = true;
             burst(f.g.position.x, 3 * f.scale, f.g.position.z);
@@ -633,19 +751,29 @@ function setup(renderer: THREE.WebGLRenderer, canvas: HTMLCanvasElement, opts: S
       }
     }
     if (stepConfetti(dt)) active = true;
-    return active;
+    const passing = stepPassing(dt);
+    return active ? 2 : passing ? 1 : 0;
   }
 
   function frame(ts: number) {
     raf = 0;
     if (disposed || !size.w) return;
+    // while only the ball is going round, 30 frames a second is plenty and saves the battery
+    if (ambientOnly && lastTs && ts - lastTs < 30) {
+      raf = requestAnimationFrame(frame);
+      return;
+    }
     const dt = lastTs ? Math.min(0.05, (ts - lastTs) / 1000) : 1 / 60;
     lastTs = ts;
-    const keep = update(dt, ts / 1000);
+    const state = update(dt);
+    ambientOnly = state === 1;
     renderer.render(scene, camera);
     placeTags();
-    if (keep && !document.hidden) raf = requestAnimationFrame(frame);
-    else lastTs = 0;
+    if (state > 0 && !document.hidden) raf = requestAnimationFrame(frame);
+    else {
+      lastTs = 0;
+      ambientOnly = false;
+    }
   }
   const draw = () => {
     if (!raf && !disposed) raf = requestAnimationFrame(frame);
@@ -656,9 +784,11 @@ function setup(renderer: THREE.WebGLRenderer, canvas: HTMLCanvasElement, opts: S
   document.addEventListener("visibilitychange", onVisible);
 
   const tmp = new THREE.Vector3();
-  const px = (x: number, y: number, z: number): [number, number] => {
+  /** Screen position of a point, and whether it is inside (or just outside) the frame. */
+  const px = (x: number, y: number, z: number): [number, number, boolean] => {
     tmp.set(x, y, z).project(camera);
-    return [(tmp.x * 0.5 + 0.5) * size.w, (-tmp.y * 0.5 + 0.5) * size.h];
+    const inFrame = tmp.z < 1 && Math.abs(tmp.x) < 1.1 && Math.abs(tmp.y) < 1.1;
+    return [(tmp.x * 0.5 + 0.5) * size.w, (-tmp.y * 0.5 + 0.5) * size.h, inFrame];
   };
 
   function placeTags() {
@@ -666,10 +796,40 @@ function setup(renderer: THREE.WebGLRenderer, canvas: HTMLCanvasElement, opts: S
     for (const f of figures) {
       const el = tagLayer.querySelector<HTMLElement>(`[data-tag="${f.def.id}"]`);
       if (!el) continue;
-      const [x, y] = px(f.g.position.x, f.g.position.y + 3.05 * f.scale, f.g.position.z);
-      items.push({ el, x, y, w: el.offsetWidth || 60 });
+      const [x, y, inFrame] = px(f.g.position.x, f.g.position.y + 3.05 * f.scale, f.g.position.z);
+      // a player outside the close-up is not drawn; hiding his tag keeps it from sitting far off screen
+      el.style.visibility = inFrame ? "visible" : "hidden";
+      if (inFrame) items.push({ el, x, y, w: el.offsetWidth || 60 });
     }
-    // lowest on screen first; anything that would sit on top of a tag below it is lifted clear
+    // tags side by side on one line spread apart first, so each stays close to its own player
+    const lo = (it: { w: number }) => it.w / 2 + 3;
+    const clampX = (it: { x: number; w: number }) => {
+      it.x = Math.min(size.w - lo(it), Math.max(lo(it), it.x));
+    };
+    const byX = [...items].sort((a, b) => a.x - b.x);
+    const gap = (l: (typeof byX)[number], r: (typeof byX)[number]) => (l.w + r.w) / 2 + 2 - (r.x - l.x);
+    for (let pass = 0; pass < 3; pass++) {
+      for (let i = 1; i < byX.length; i++) {
+        const l = byX[i - 1];
+        const r = byX[i];
+        if (Math.abs(l.y - r.y) > 20) continue;
+        const overlap = gap(l, r);
+        if (overlap > 0) {
+          l.x -= overlap / 2;
+          r.x += overlap / 2;
+        }
+      }
+      byX.forEach(clampX);
+    }
+    // whatever is still touching (squeezed against an edge): push along, then back from the other edge
+    for (let i = 1; i < byX.length; i++) {
+      if (Math.abs(byX[i - 1].y - byX[i].y) <= 20 && gap(byX[i - 1], byX[i]) > 0) byX[i].x += gap(byX[i - 1], byX[i]);
+    }
+    for (let i = byX.length - 2; i >= 0; i--) {
+      if (Math.abs(byX[i + 1].y - byX[i].y) <= 20 && gap(byX[i], byX[i + 1]) > 0) byX[i].x -= gap(byX[i], byX[i + 1]);
+    }
+    byX.forEach(clampX);
+    // lowest on screen first; anything still sitting on top of a tag below it is lifted clear
     items.sort((a, b) => b.y - a.y);
     for (let i = 1; i < items.length; i++) {
       for (let pass = 0; pass < 4; pass++) {
@@ -683,7 +843,10 @@ function setup(renderer: THREE.WebGLRenderer, canvas: HTMLCanvasElement, opts: S
         if (!moved) break;
       }
     }
-    for (const it of items) it.el.style.transform = `translate(${Math.round(it.x)}px,${Math.round(it.y)}px) translate(-50%,-100%)`;
+    for (const it of items) {
+      clampX(it); // the vertical lift above can only have moved y, but keep a wide name at the edge in frame
+      it.el.style.transform = `translate(${Math.round(it.x)}px,${Math.round(it.y)}px) translate(-50%,-100%)`;
+    }
   }
 
   function resize() {
@@ -752,6 +915,8 @@ function setup(renderer: THREE.WebGLRenderer, canvas: HTMLCanvasElement, opts: S
         }
         scene.add(f.g);
       }
+      stopPassing();
+      pass = null;
       if (selected != null) {
         // the focused player may have moved, or may no longer be in the lineup
         const f = figures.find((x) => x.def.id === selected);
@@ -765,6 +930,11 @@ function setup(renderer: THREE.WebGLRenderer, canvas: HTMLCanvasElement, opts: S
           goTo(focusShot(f.homeX, f.homeZ, f.scale));
         }
       }
+      draw();
+    },
+    setAmbient(on) {
+      ambient = on && !reduceMotion;
+      if (!ambient) stopPassing();
       draw();
     },
     setSelected(id) {
@@ -801,6 +971,7 @@ function setup(renderer: THREE.WebGLRenderer, canvas: HTMLCanvasElement, opts: S
       selected = null;
       celebrating = null;
       report();
+      pass = null;
       clearFigures();
       staticOwned.forEach((o) => o.dispose());
       renderer.dispose();
