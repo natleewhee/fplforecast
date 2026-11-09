@@ -136,6 +136,17 @@ export type ParCalibration = {
   hitRateByVerdict: { green: number | null; amber: number | null; red: number | null };
 };
 
+/** One chip window from bootstrap-static `chips` (this season: two of each of
+ * wildcard / freehit / bboost / 3xc, one per half), marked against this
+ * team's own history. Built by `compute_chip_status` in compute_forecast.py. */
+export type ChipWindow = {
+  name: string; // FPL's chip name: wildcard | freehit | bboost | 3xc
+  window: { start: number; stop: number };
+  used: boolean;
+  availableNow: boolean; // unused and the target gameweek is inside the window
+  expiresGw: number; // the window's last gameweek
+};
+
 export type Forecast = {
   generatedAt: string;
   basedOnGameweek: number;
@@ -146,6 +157,10 @@ export type Forecast = {
   // Optional: absent on a forecast snapshot committed before this field
   // existed, until the next daily cron run regenerates it.
   deadlineTime?: string | null;
+  // This team's chip windows. `null` = the pipeline could not read FPL's chip
+  // rules or the team's history, so status is unknown; absent on a forecast
+  // committed before this field existed. Same shape for owner and guests.
+  chips?: ChipWindow[] | null;
   squad: {
     windowPoints: number;
     players: ForecastPlayer[];
@@ -356,50 +371,6 @@ export type GameweekReview = {
     | { status: string }
     | null;
 };
-
-export type ChipUsage = { name: string; event: number };
-
-export type ChipStatus = {
-  name: string;
-  used: ChipUsage[];
-  remaining: number;
-};
-
-const TEAM_ID = "1168513";
-
-// Standard 2025/26 allocation (2x wildcard, one per half; 1x each of the
-// others). Not re-verified against 2026/27's live bootstrap-static — see
-// the plan doc's open question on rules drifting season to season.
-const ASSUMED_CHIP_ALLOCATION: Record<string, number> = {
-  wildcard: 2,
-  freehit: 1,
-  bboost: 1,
-  "3xc": 1,
-  manager: 1,
-};
-
-export function loadChipStatus(): ChipStatus[] | null {
-  const dir = path.join(DATA_DIR, `history-${TEAM_ID}`);
-  if (!fs.existsSync(dir)) return null;
-  const files = fs.readdirSync(dir).filter((f) => f.endsWith(".json")).sort();
-  if (files.length === 0) return null;
-  const raw = JSON.parse(fs.readFileSync(path.join(dir, files[files.length - 1]), "utf-8"));
-  const chips: { name: string; event: number }[] = raw.chips ?? [];
-
-  const usedByName = new Map<string, ChipUsage[]>();
-  for (const c of chips) {
-    const list = usedByName.get(c.name) ?? [];
-    list.push({ name: c.name, event: c.event });
-    usedByName.set(c.name, list);
-  }
-
-  const allNames = new Set([...Object.keys(ASSUMED_CHIP_ALLOCATION), ...usedByName.keys()]);
-  return [...allNames].map((name) => {
-    const used = usedByName.get(name) ?? [];
-    const allocation = ASSUMED_CHIP_ALLOCATION[name] ?? 1;
-    return { name, used, remaining: Math.max(0, allocation - used.length) };
-  });
-}
 
 export type { PendingTransfer };
 

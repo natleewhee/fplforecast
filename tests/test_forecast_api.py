@@ -79,6 +79,10 @@ def test_build_forecast_for_team_returns_a_full_forecast_shaped_payload(monkeypa
     assert payload["teamName"] == "Test Team"
     assert payload["managerName"] == "Test Manager"
     assert "scenarios" in payload and "pool" in payload
+    # Chips come from the guest's own history, not the owner's.
+    assert isinstance(payload["chips"], list) and len(payload["chips"]) == 8
+    used_names = {r["name"] for r in payload["chips"] if r["used"]}
+    assert used_names == {c["name"] for c in history.get("chips", [])}
 
 
 def test_build_forecast_for_team_404s_for_an_unknown_team(monkeypatch):

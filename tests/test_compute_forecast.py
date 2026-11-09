@@ -661,3 +661,93 @@ def test_player_card_carries_photo_code_and_recent_points():
 
     bare = cf._player_card(7, elements, teams)  # callers that don't pass form data
     assert bare["recentPoints"] == []
+
+
+# --- Chip windows (2026/27: two of each chip, GW1-19 and GW20-38) ---
+
+def _bootstrap_chips() -> list[dict]:
+    """The real shape of bootstrap-static `chips` this season."""
+    def chip(name, start, stop):
+        return {"name": name, "number": 1, "start_event": start, "stop_event": stop}
+    return [
+        chip("wildcard", 2, 19), chip("wildcard", 20, 38),
+        chip("freehit", 2, 19), chip("freehit", 20, 38),
+        chip("bboost", 1, 19), chip("bboost", 20, 38),
+        chip("3xc", 1, 19), chip("3xc", 20, 38),
+    ]
+
+
+OWNER_PLAYED = [{"name": "wildcard", "event": 4}, {"name": "bboost", "event": 7}]
+
+
+def _row(status, name, start):
+    return next(r for r in status if r["name"] == name and r["window"]["start"] == start)
+
+
+def test_committed_bootstrap_has_the_eight_chip_windows_and_no_manager_chip():
+    chips = cf.load_bootstrap()["chips"]
+    assert len(chips) == 8
+    assert "manager" not in {c["name"] for c in chips}
+    status = cf.compute_chip_status(chips, OWNER_PLAYED, 11)
+    assert len(status) == 8
+
+
+def test_chip_status_owner_at_gw11():
+    status = cf.compute_chip_status(_bootstrap_chips(), OWNER_PLAYED, 11)
+    assert _row(status, "wildcard", 2)["used"] and not _row(status, "wildcard", 2)["availableNow"]
+    assert _row(status, "bboost", 1)["used"]
+    for name, start in (("freehit", 2), ("3xc", 1)):
+        r = _row(status, name, start)
+        assert not r["used"] and r["availableNow"] and r["expiresGw"] == 19
+    # second-half windows exist but are not open yet
+    assert not _row(status, "wildcard", 20)["availableNow"]
+    assert not _row(status, "wildcard", 20)["used"]
+    assert cf.chip_available_now(status, "freehit")
+    assert not cf.chip_available_now(status, "wildcard")
+
+
+def test_chip_status_second_half_reopens_chips_used_in_the_first():
+    status = cf.compute_chip_status(_bootstrap_chips(), OWNER_PLAYED, 20)
+    assert cf.chip_available_now(status, "wildcard")  # first-half use does not consume the second
+    assert cf.chip_available_now(status, "freehit")
+    assert _row(status, "bboost", 20)["availableNow"]
+    assert not _row(status, "freehit", 2)["availableNow"]  # first-half window has closed
+    # a chip used inside the second window is gone again
+    status = cf.compute_chip_status(_bootstrap_chips(), OWNER_PLAYED + [{"name": "freehit", "event": 22}], 25)
+    assert not cf.chip_available_now(status, "freehit")
+    assert cf.chip_available_now(status, "wildcard")
+
+
+def test_chip_status_matches_each_guests_own_history():
+    status = cf.compute_chip_status(_bootstrap_chips(), [], 11)
+    assert all(not r["used"] for r in status)
+    assert cf.chip_available_now(status, "wildcard") and cf.chip_available_now(status, "freehit")
+    guest = [{"name": "freehit", "event": 3}, {"name": "3xc", "event": 9}]
+    status = cf.compute_chip_status(_bootstrap_chips(), guest, 11)
+    assert not cf.chip_available_now(status, "freehit")
+    assert cf.chip_available_now(status, "wildcard")
+    assert _row(status, "3xc", 1)["used"]
+
+
+def test_chip_status_is_unknown_when_the_shape_is_not_what_we_expect():
+    assert cf.compute_chip_status(None, [], 11) is None
+    assert cf.compute_chip_status([], [], 11) is None
+    assert cf.compute_chip_status([{"name": "wildcard"}], [], 11) is None
+    assert cf.compute_chip_status(_bootstrap_chips(), None, 11) is None
+    assert cf.compute_chip_status(_bootstrap_chips(), [{"name": "bboost"}], 11) is None
+    assert not cf.chip_available_now(None, "wildcard")
+
+
+def test_scenarios_chip_flags_follow_the_chip_windows(monkeypatch):
+    """Wildcard / Free Hit scenarios are offered from GW20 even after a
+    first-half use, and not offered when chip status is unknown."""
+    monkeypatch.setattr(cf, "solve_squad", lambda *a, **k: type("R", (), {"feasible": False})())
+    monkeypatch.setattr(cf, "plan_transfers", lambda *a, **k: [])
+    history = {"current": [], "chips": OWNER_PLAYED + [{"name": "freehit", "event": 5}]}
+    kwargs = dict(pool=[], squad_ids=[], bank=0.0, season_history=history)
+    gw11 = cf.build_scenarios(**kwargs, target_gw=11, bootstrap_chips=_bootstrap_chips())
+    assert gw11["chipsAvailable"] == {"freeHit": False, "wildcard": False}
+    gw20 = cf.build_scenarios(**kwargs, target_gw=20, bootstrap_chips=_bootstrap_chips())
+    assert gw20["chipsAvailable"] == {"freeHit": True, "wildcard": True}
+    unknown = cf.build_scenarios(**kwargs, target_gw=20, bootstrap_chips=None)
+    assert unknown["chipsAvailable"] == {"freeHit": False, "wildcard": False}

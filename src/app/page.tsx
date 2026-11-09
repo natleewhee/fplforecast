@@ -2,7 +2,6 @@ import {
   latestSnapshotDate,
   loadBootstrapSnapshot,
   loadLatestForecast,
-  loadChipStatus,
   loadOverrides,
 } from "@/lib/snapshots";
 import { loadPitchData } from "@/lib/appearanceData";
@@ -16,7 +15,6 @@ export default function Home() {
   const fixturesDate = latestSnapshotDate("fixtures");
   const entryDate = latestSnapshotDate("entry-1168513");
   const forecast = loadLatestForecast();
-  const chips = loadChipStatus();
   const overrides = loadOverrides();
   const pitchData = loadPitchData();
 
@@ -58,7 +56,6 @@ export default function Home() {
       <AppShell
         initialForecast={forecast}
         bootstrap={bootstrap}
-        initialChips={chips}
         initialOverrides={overrides}
         pitchLooks={pitchData.looks}
         pitchKits={pitchData.kits}
