@@ -3,12 +3,12 @@
 import { createContext, useContext, useEffect, useRef, useState, type ReactNode } from "react";
 import { lookFor, type PitchKits, type PitchLooks, type Position } from "@/lib/appearance";
 import { setPitchAmbient, setPitchView, usePitchAmbient, usePrefersReducedMotion, type PitchView } from "@/lib/pitchView";
-import { benchSeat, formationSpots } from "./spots";
+import { formationSpots } from "./spots";
 import type { FigureDef, StageHandle, StageState } from "./stage";
 
 /* The 3D pitch used by the Live, Squad and Scenarios tabs: figures in kit
- * colours (height, skin and hair from the appearance data), the bench seated
- * behind the far goal line, and a name tag with a number above every starter.
+ * colours (height, skin and hair from the appearance data) and a name tag above every starter. The subs are
+ * not on the pitch: they are a dashed team-sheet strip under it, in the order they would come on.
  * three.js is loaded only when a 3D pitch is on screen. */
 
 type PitchData = { looks?: PitchLooks; kits?: PitchKits };
@@ -27,6 +27,8 @@ export type Pitch3DPlayer = {
   role?: "C" | "V" | null;
   /** 0..1: fades a player who has not played yet, or is off. */
   dim?: number;
+  /** For a sub: his place among the outfield subs (1 = first to come on). A goalkeeper sub shows "GK". */
+  benchOrder?: number;
   /** What he did this gameweek, so he can celebrate when tapped. */
   goals?: number;
   cleanSheet?: boolean;
@@ -39,7 +41,7 @@ const ROW_ORDER: Position[] = ["GKP", "DEF", "MID", "FWD"];
 const FALLBACK_KIT = { shirt: "#8a95a3", shorts: "#2b323b", socks: "#8a95a3" };
 
 /** Where everyone stands. Pure, so the layout is the same on every render. */
-function buildDefs(xi: Pitch3DPlayer[], bench: Pitch3DPlayer[], data: PitchData): FigureDef[] {
+function buildDefs(xi: Pitch3DPlayer[], data: PitchData): FigureDef[] {
   const def = (p: Pitch3DPlayer, at: { x: number; z: number }, isBench: boolean): FigureDef => {
     const position = (ROW_ORDER as string[]).includes(p.position) ? (p.position as Position) : "MID";
     const look = lookFor(data.looks, p.code, position);
@@ -65,7 +67,6 @@ function buildDefs(xi: Pitch3DPlayer[], bench: Pitch3DPlayer[], data: PitchData)
   const placed = formationSpots(rows.map((r) => r.length));
   const out: FigureDef[] = [];
   rows.forEach((row, r) => row.forEach((p, i) => out.push(def(p, placed[r][i], false))));
-  bench.forEach((p, i) => out.push(def(p, benchSeat(i), true)));
   return out;
 }
 
@@ -139,7 +140,7 @@ export default function Pitch3D({
   });
 
   // The figures depend only on this string, so a re-render with the same lineup rebuilds nothing.
-  const defsJson = JSON.stringify(buildDefs(xi, bench, data));
+  const defsJson = JSON.stringify(buildDefs(xi, data));
 
   // A 3D scene holds a GPU context, and a phone allows only a few. Hidden tabs and
   // collapsed cards are not on screen, so they get none until they are.
@@ -275,28 +276,35 @@ export default function Pitch3D({
       data-focus={state.focusId ?? undefined}
       data-celebrating={state.celebrating ?? undefined}
     >
-      <div ref={hostRef} className="relative aspect-[4/5] w-full scroll-mt-16 overflow-hidden rounded-xl bg-[#0a1a14] [contain:paint]">
+      <div ref={hostRef} className="relative aspect-[6/5] w-full scroll-mt-16 overflow-hidden rounded-xl bg-[#0a1a14] [contain:paint]">
         <div ref={tagsRef} className="pointer-events-none absolute inset-0">
           {ready && xi.map(floating)}
         </div>
         {!ready && <p className="absolute inset-0 grid place-items-center text-xs text-ink-faint">Loading the 3D pitch…</p>}
       </div>
       {bench.length > 0 && (
-        <div className="mt-3">
-          <p className="eyebrow mb-1.5">Bench</p>
-          <div className="grid grid-cols-4 gap-1.5">
-            {bench.map((p) =>
+        <div className="mt-2.5" data-testid="subs-strip">
+          <p className="eyebrow mb-1.5 flex items-baseline gap-1.5">
+            Subs <span className="font-sans text-[10px] font-normal normal-case tracking-normal text-ink-faint">in the order they come on</span>
+          </p>
+          <div className="grid gap-1.5" style={{ gridTemplateColumns: `repeat(${Math.min(bench.length, 4)}, minmax(0, 1fr))` }}>
+            {bench.map((p, i) =>
               tagEl(
                 p,
-                "flex min-w-0 flex-col items-center gap-1 rounded-lg border border-white/15 bg-[rgba(8,16,24,0.9)] px-0.5 py-2 text-center leading-tight focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--accent)]",
+                "relative flex min-w-0 flex-col items-center gap-0.5 overflow-hidden rounded-lg border border-dashed border-white/30 bg-[rgba(8,16,24,0.45)] px-0.5 pb-1 pt-1.5 text-center leading-tight focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--accent)]",
                 <>
-                  <span className="h-2.5 w-7 rounded-full border border-white/40" style={{ background: kitColor(p) }} aria-hidden />
-                  <span className="flex max-w-full flex-wrap items-center justify-center gap-1 text-[11px] font-bold text-white [overflow-wrap:anywhere]">
-                    {roleBadge(p)}
-                    {p.webName}
+                  <span className="absolute inset-x-0 top-0 h-[3px]" style={{ background: kitColor(p) }} aria-hidden />
+                  <span className="max-w-full text-[11px] font-bold text-white/90 [overflow-wrap:anywhere]">{p.webName}</span>
+                  <span className="flex items-center justify-center gap-1">
+                    <span
+                      className="grid h-4 min-w-4 place-items-center rounded-full bg-white/15 px-1 text-[9px] font-bold text-ink-soft"
+                      title={p.position === "GKP" ? "Substitute goalkeeper" : `Sub number ${p.benchOrder ?? i}: comes on after the ones before`}
+                    >
+                      {p.position === "GKP" ? "GK" : (p.benchOrder ?? i)}
+                    </span>
+                    <span className={`font-mono text-[10.5px] font-semibold ${subColor(p)}`}>{p.sub}</span>
+                    {badges(p, "text-[10px] leading-none")}
                   </span>
-                  <span className={`font-mono text-[11px] font-semibold ${subColor(p)}`}>{p.sub}</span>
-                  {(p.badges?.length ?? 0) > 0 && <span className="flex items-center justify-center gap-1 text-[11px]">{badges(p, "")}</span>}
                 </>,
               ),
             )}

@@ -1,6 +1,5 @@
 import * as THREE from "three";
 import { SKIN_STEPS, type HairStyle } from "@/lib/appearance";
-import { BENCH_Z, SEAT_Y } from "./spots";
 import { ballAt, facing, kickLeg, nextReceiver, passSeconds, BALL_REST_Y, HOLD_SECONDS, KICK_AT, type Spot } from "./passes";
 import {
   BROADCAST,
@@ -43,7 +42,7 @@ export type FigureDef = {
   skin: number; // index into SKIN_STEPS
   hair: [HairStyle, string];
   captain: boolean;
-  bench: boolean;
+  bench: boolean; // a seated figure; unused while the subs are a strip under the pitch
   dim?: number; // 0..1, fades players who have not played or are off
   goals?: number; // goals scored: he celebrates when tapped
   cleanSheet?: boolean; // clean sheet: he builds the brick wall when tapped
@@ -412,17 +411,6 @@ function setup(renderer: THREE.WebGLRenderer, canvas: HTMLCanvasElement, opts: S
   apron.rotation.x = -Math.PI / 2;
   apron.position.y = -0.03;
   scene.add(apron);
-
-  // the bench: a seat strip at the bottom (near end) of the field, facing the camera
-  {
-    const box = (w: number, h: number, d: number) => new THREE.BoxGeometry(w, h, d);
-    const parts: Part[] = [
-      P(box(14, 0.16, 1.5), "#243b52", { y: SEAT_Y - 0.08, z: BENCH_Z - 0.1 }),
-      P(box(14, 1.5, 0.12), "#18283a", { y: 0.9, z: BENCH_Z - 0.95 }),
-      P(box(14.4, 0.1, 0.3), "#36e0a2", { y: 1.7, z: BENCH_Z - 0.95 }),
-    ];
-    scene.add(new THREE.Mesh(own(bake(parts)), own(new THREE.MeshLambertMaterial({ vertexColors: true }))));
-  }
 
   let reduceMotion = false;
   try {

@@ -465,7 +465,7 @@ export default function Pitch({
           <>
             <Pitch3D
               xi={xi.map(to3d)}
-              bench={benched.map(to3d)}
+              bench={benched.map((t) => ({ ...to3d(t), benchOrder: benched.filter((b) => b.position !== "GKP").indexOf(t) + 1 }))}
               selectedId={selectedId}
               onSelect={openSheet}
               onUnavailable={() => setNo3d(true)}
