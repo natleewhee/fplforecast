@@ -55,6 +55,11 @@ async function mockLive(page: Page, poll: { current: "a" | "b" }) {
   );
 }
 
+/** The 3D pitch on the Squad tab. The Live tab's pitch is also in the page (off to the side), so
+ * "the first pitch" is not reliable once live data arrives. */
+const squadPitch3d = (page: Page) =>
+  page.locator(".panel", { has: page.getByText(/MODEL · GW/) }).first().getByTestId("pitch3d");
+
 /** Opens the app and waits for the Live tab's pitch (it appears after the first poll). */
 async function open(page: Page) {
   await page.goto("/?tab=live"); // the app opens on Squad before the deadline; most tests start on Live
@@ -772,25 +777,29 @@ test.describe("Appearance review page", () => {
 test.describe("3D Squad pitch", () => {
   test.beforeEach(async ({ page }) => {
     await page.addInitScript(() => {
+      try { localStorage.setItem("fpl-pitch-passing", "off"); } catch {} // keep these tests still and quick
+    });
+    await mockLive(page, { current: "a" }); // CI reaches live data, so the Live tab's pitch is in the page too
+    await page.addInitScript(() => {
       try { localStorage.setItem("fpl-pitch-view", "3d"); } catch {}
     });
   });
 
   test("shows all fifteen players with the captain marked, and a tap opens the breakdown", async ({ page }) => {
     await page.goto("/?tab=squad");
-    const pitch = page.getByTestId("pitch3d").first(); // the Squad tab's pitch is the first on the page
+    const pitch = squadPitch3d(page);
     await expect(pitch.locator("canvas")).toBeVisible();
     await expect(pitch.locator("[data-tag]")).toHaveCount(15);
     await expect(pitch.getByText("C", { exact: true })).toHaveCount(1);
-    await pitch.locator("[data-tag]").first().click();
+    await pitch.locator("[data-tag]").first().dispatchEvent("click"); // the tag itself, wherever it sits on screen
     await expect(page.getByRole("dialog")).toBeVisible();
   });
 
   test("the 2D switch shows the flat pitch and the choice is remembered", async ({ page }) => {
     await page.goto("/?tab=squad");
-    await expect(page.getByTestId("pitch3d").first()).toBeVisible();
+    await expect(squadPitch3d(page)).toBeVisible();
     await page.evaluate(() => localStorage.removeItem("fpl-pitch-view"));
-    await page.getByRole("group", { name: "Pitch view" }).first().getByRole("button", { name: "2D" }).click();
+    await squadPitch3d(page).locator("xpath=ancestor::div[contains(@class,'panel')][1]").getByRole("group", { name: "Pitch view" }).getByRole("button", { name: "2D" }).click();
     await expect(page.getByTestId("pitch3d")).toHaveCount(0);
     await expect(page.locator(".floodlit-pitch").first()).toBeVisible();
     expect(await page.evaluate(() => localStorage.getItem("fpl-pitch-view"))).toBe("2d");
@@ -815,6 +824,9 @@ test.describe("3D Squad pitch", () => {
 test.describe("3D pitch moves", () => {
   test.beforeEach(async ({ page }) => {
     await page.addInitScript(() => {
+      try { localStorage.setItem("fpl-pitch-passing", "off"); } catch {}
+    });
+    await page.addInitScript(() => {
       try { localStorage.setItem("fpl-pitch-view", "3d"); } catch {}
     });
     await mockLive(page, { current: "a" });
@@ -824,7 +836,7 @@ test.describe("3D pitch moves", () => {
     await page.goto("/?tab=live");
     const pitch = page.getByTestId("pitch3d").first();
     await pitch.locator('button[aria-label^="Gross"]').waitFor();
-    await pitch.locator('button[aria-label^="Gross"]').click({ force: true });
+    await pitch.locator('button[aria-label^="Gross"]').dispatchEvent("click");
     await expect(pitch).toHaveAttribute("data-focus", /\d+/);
     await expect(pitch).toHaveAttribute("data-celebrating", "goal");
     await expect(page.getByRole("dialog")).toBeVisible();
@@ -837,7 +849,7 @@ test.describe("3D pitch moves", () => {
     await page.goto("/?tab=live");
     const pitch = page.getByTestId("pitch3d").first();
     await pitch.locator('button[aria-label^="Raya"]').waitFor();
-    await pitch.locator('button[aria-label^="Raya"]').click({ force: true });
+    await pitch.locator('button[aria-label^="Raya"]').dispatchEvent("click");
     await expect(pitch).toHaveAttribute("data-celebrating", "cleanSheet");
   });
 
@@ -845,7 +857,7 @@ test.describe("3D pitch moves", () => {
     await page.goto("/?tab=live");
     const pitch = page.getByTestId("pitch3d").first();
     await pitch.locator('button[aria-label^="Van Dijk"]').waitFor();
-    await pitch.locator('button[aria-label^="Van Dijk"]').click({ force: true });
+    await pitch.locator('button[aria-label^="Van Dijk"]').dispatchEvent("click");
     await expect(pitch).toHaveAttribute("data-focus", /\d+/);
     await page.waitForTimeout(1500);
     await expect(pitch).not.toHaveAttribute("data-celebrating", /.+/);
@@ -857,7 +869,7 @@ test.describe("3D pitch moves", () => {
       await page.goto("/?tab=live");
       const pitch = page.getByTestId("pitch3d").first();
       await pitch.locator('button[aria-label^="Gross"]').waitFor();
-      await pitch.locator('button[aria-label^="Gross"]').click({ force: true });
+      await pitch.locator('button[aria-label^="Gross"]').dispatchEvent("click");
       await expect(pitch).toHaveAttribute("data-focus", /\d+/);
       await page.waitForTimeout(1500);
       await expect(pitch).not.toHaveAttribute("data-celebrating", /.+/);
@@ -918,3 +930,180 @@ test.describe("Rolling rank", () => {
   });
 });
 
+test.describe("3D pitch layout and the player card", () => {
+  test.beforeEach(async ({ page }) => {
+    await page.addInitScript(() => {
+      try {
+        localStorage.setItem("fpl-pitch-view", "3d");
+        localStorage.setItem("fpl-pitch-passing", "off");
+      } catch {}
+    });
+    await mockLive(page, { current: "a" });
+  });
+
+  test("names are shown in full on the pitch and on the bench", async ({ page }) => {
+    await page.goto("/?tab=live");
+    const pitch = page.getByTestId("pitch3d").first();
+    await pitch.locator("button[data-tag]").first().waitFor();
+    const cut = await pitch.locator("button[data-tag] span.truncate").evaluateAll((els) =>
+      els.filter((e) => e.scrollWidth > e.clientWidth + 1).map((e) => e.textContent),
+    );
+    expect(cut, "names cut off with an ellipsis").toEqual([]);
+    const benchOverflow = await pitch.locator(".grid button[data-tag]").evaluateAll((els) =>
+      els.filter((e) => e.scrollWidth > e.clientWidth + 1).map((e) => e.textContent),
+    );
+    expect(benchOverflow, "bench cards whose text spills out").toEqual([]);
+    await expect(pitch.locator(".grid button[data-tag]").first()).toContainText("Kinsky");
+  });
+
+  test("a tap opens a short card that leaves the pitch in view; Show all makes it the full sheet", async ({ page }) => {
+    await page.goto("/?tab=live");
+    const pitch = page.getByTestId("pitch3d").first();
+    await pitch.locator('button[aria-label^="Gross"]').waitFor();
+    await pitch.locator('button[aria-label^="Gross"]').dispatchEvent("click");
+    const card = page.getByRole("dialog");
+    await expect(card).toBeVisible();
+    await expect(card).toHaveAttribute("aria-modal", "false");
+    const box = await card.locator("> div").boundingBox();
+    expect(box!.height, "the card leaves most of the screen").toBeLessThan(844 * 0.4);
+    await expect(card.getByRole("button", { name: "Show all" })).toBeVisible();
+    await card.getByRole("button", { name: "Show all" }).click();
+    await expect(page.getByRole("dialog")).toHaveAttribute("aria-modal", "true");
+    await page.keyboard.press("Escape");
+    await expect(page.getByRole("dialog")).toHaveCount(0);
+    await expect(pitch).not.toHaveAttribute("data-focus", /.+/);
+  });
+
+  test("the card also closes from its own Close button and Escape", async ({ page }) => {
+    await page.goto("/?tab=live");
+    const pitch = page.getByTestId("pitch3d").first();
+    await pitch.locator('button[aria-label^="Raya"]').waitFor();
+    await pitch.locator('button[aria-label^="Raya"]').dispatchEvent("click");
+    await page.getByRole("dialog").getByRole("button", { name: "Close" }).click();
+    await expect(page.getByRole("dialog")).toHaveCount(0);
+    await pitch.locator('button[aria-label^="Raya"]').dispatchEvent("click");
+    await page.keyboard.press("Escape");
+    await expect(page.getByRole("dialog")).toHaveCount(0);
+  });
+
+  test("tapping a player never pushes the page sideways", async ({ page }) => {
+    await page.goto("/?tab=live");
+    const pitch = page.getByTestId("pitch3d").first();
+    await pitch.locator('button[aria-label^="Gross"]').waitFor();
+    await pitch.locator('button[aria-label^="Gross"]').dispatchEvent("click");
+    await expect(pitch).toHaveAttribute("data-focus", /\d+/);
+    await page.waitForTimeout(1500);
+    const m = await page.evaluate(() => ({
+      sw: document.documentElement.scrollWidth,
+      cw: document.documentElement.clientWidth,
+      x: window.scrollX,
+      panes: [...document.querySelectorAll(".overflow-hidden")].map((e) => e.scrollLeft).filter(Boolean),
+    }));
+    expect(m.sw).toBeLessThanOrEqual(m.cw);
+    expect(m.x).toBe(0);
+    expect(m.panes).toEqual([]);
+  });
+
+  test("in the close-up, tags of players out of frame are hidden, not parked far off screen", async ({ page }) => {
+    await page.goto("/?tab=live");
+    const pitch = page.getByTestId("pitch3d").first();
+    await pitch.locator('button[aria-label^="Gross"]').waitFor();
+    await pitch.locator('button[aria-label^="Gross"]').dispatchEvent("click");
+    await page.waitForTimeout(1500);
+    const off = await pitch.locator("div.pointer-events-none button[data-tag]").evaluateAll((els) =>
+      els.map((e) => e.hasAttribute("data-pitch-off")),
+    );
+    expect(off).toContain(false); // the player in frame
+    expect(off).toContain(true); // players out of frame are made invisible, not parked far away
+    // they stay reachable by keyboard
+    const stillFocusable = await pitch.locator("button[data-pitch-off]").first().evaluate((e) => (e as HTMLButtonElement).tabIndex >= 0 && getComputedStyle(e).display !== "none");
+    expect(stillFocusable).toBe(true);
+  });
+});
+
+test.describe("The short player card and the keyboard", () => {
+  test.beforeEach(async ({ page }) => {
+    await page.addInitScript(() => {
+      try {
+        localStorage.setItem("fpl-pitch-view", "3d");
+        localStorage.setItem("fpl-pitch-passing", "off");
+      } catch {}
+    });
+  });
+
+  test("on the Squad pitch the Replace action sits beside Show all, and the clipped preview cannot be tabbed into", async ({ page }) => {
+    await page.goto("/?tab=squad");
+    const pitch = page.locator(".panel", { has: page.getByText(/MODEL · GW/) }).first().getByTestId("pitch3d");
+    await pitch.locator("button[data-tag]").first().waitFor();
+    await pitch.locator("button[data-tag]").first().dispatchEvent("click");
+    const card = page.getByRole("dialog");
+    await expect(card).toHaveAttribute("aria-modal", "false");
+    // one copy in the clipped, inert preview and one in the button row: the row's is the last
+    await expect(card.getByRole("button", { name: /^Replace / }).last()).toBeVisible();
+    await expect(card.getByRole("button", { name: "Show all" })).toBeVisible();
+    expect(await card.locator("[inert]").count(), "the clipped preview is inert").toBe(1);
+  });
+});
+
+test.describe("Ball going round the pitch", () => {
+  test.beforeEach(async ({ page }) => {
+    await page.addInitScript(() => {
+      try { localStorage.setItem("fpl-pitch-view", "3d"); } catch {}
+    });
+    await mockLive(page, { current: "a" });
+  });
+
+  test("the ball is passed around while nobody is selected, and the players stay where they are", async ({ page }) => {
+    await page.goto("/?tab=live");
+    const pitch = page.getByTestId("pitch3d").first();
+    await pitch.locator("button[data-tag]").first().waitFor();
+    const spots = () =>
+      pitch.locator("div.pointer-events-none button[data-tag]").evaluateAll((els) =>
+        els.map((e) => [e.getAttribute("data-tag"), (e as HTMLElement).style.transform]),
+      );
+    await expect(pitch).toHaveAttribute("data-passes", /[1-9]/, { timeout: 15000 });
+    const before = await spots();
+    await expect.poll(async () => Number(await pitch.getAttribute("data-passes")), { timeout: 15000 }).toBeGreaterThanOrEqual(3);
+    expect(await spots()).toEqual(before);
+  });
+
+  test("the passing switch turns it off, and the choice is remembered", async ({ page }) => {
+    await page.goto("/?tab=live");
+    const pitch = page.getByTestId("pitch3d").first();
+    await pitch.locator("button[data-tag]").first().waitFor();
+    const toggle = page.getByRole("button", { name: /^Passing/ }).first();
+    await expect(toggle).toHaveText("Passing on");
+    await toggle.click();
+    await expect(toggle).toHaveText("Passing off");
+    expect(await page.evaluate(() => localStorage.getItem("fpl-pitch-passing"))).toBe("off");
+    await page.waitForTimeout(800); // a pass in flight lands
+    const at = await pitch.getAttribute("data-passes");
+    await page.waitForTimeout(2500);
+    expect(await pitch.getAttribute("data-passes")).toBe(at);
+  });
+
+  test("it stops while a player is selected", async ({ page }) => {
+    await page.goto("/?tab=live");
+    const pitch = page.getByTestId("pitch3d").first();
+    await pitch.locator('button[aria-label^="Gross"]').waitFor();
+    await expect(pitch).toHaveAttribute("data-passes", /[1-9]/, { timeout: 15000 });
+    await pitch.locator('button[aria-label^="Gross"]').dispatchEvent("click");
+    await expect(pitch).toHaveAttribute("data-focus", /\d+/);
+    await page.waitForTimeout(800); // let any pass in flight finish its count
+    const at = await pitch.getAttribute("data-passes");
+    await page.waitForTimeout(2500);
+    expect(await pitch.getAttribute("data-passes")).toBe(at);
+  });
+
+  test.describe("reduced motion", () => {
+    test.use({ reducedMotion: "reduce" });
+    test("nobody passes, and there is no passing switch to show", async ({ page }) => {
+      await page.goto("/?tab=live");
+      const pitch = page.getByTestId("pitch3d").first();
+      await pitch.locator("button[data-tag]").first().waitFor();
+      await page.waitForTimeout(3000);
+      await expect(pitch).not.toHaveAttribute("data-passes", /.+/);
+      await expect(page.getByRole("button", { name: /^Passing/ })).toHaveCount(0);
+    });
+  });
+});

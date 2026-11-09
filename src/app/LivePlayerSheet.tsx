@@ -26,17 +26,20 @@ export default function LivePlayerSheet({
   row,
   gameweek,
   onClose,
+  peek = false,
 }: {
   row: TrackerRow;
   gameweek: number;
   onClose: () => void;
+  /** Open as a short card first (used with the 3D pitch). */
+  peek?: boolean;
 }) {
   const opp = parseOpponent(row.opponent);
   const lines = visibleBreakdown(row.breakdown);
   const stillToCome = row.status === "notStarted" || row.status === "playing";
 
   return (
-    <BottomSheet label={`${row.webName} live points`} onClose={onClose}>
+    <BottomSheet label={`${row.webName} live points`} onClose={onClose} peek={peek}>
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">
           <p className="eyebrow">

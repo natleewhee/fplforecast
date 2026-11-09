@@ -49,6 +49,7 @@ export default function PlayerBreakdownSheet({
   isTargetGw,
   onClose,
   footer,
+  peek = false,
 }: {
   player: ForecastPlayer;
   xp: number | null;
@@ -57,6 +58,8 @@ export default function PlayerBreakdownSheet({
   isTargetGw: boolean;
   onClose: () => void;
   footer?: ReactNode; // an action under the details, e.g. "Replace this player"
+  /** Open as a short card first (used with the 3D pitch). */
+  peek?: boolean;
 }) {
   const b = player.breakdown;
   const components = isTargetGw && b.components ? b.components : null;
@@ -71,7 +74,10 @@ export default function PlayerBreakdownSheet({
   const source = sourceLabel(b.rateSource);
 
   return (
-    <BottomSheet label={`${player.webName} xP breakdown`} onClose={onClose}>
+    <BottomSheet label={`${player.webName} xP breakdown`} onClose={onClose}
+      peek={peek}
+      peekAction={footer ? <div className="min-w-0 flex-1 [&>button]:h-10 [&>button]:text-sm">{footer}</div> : undefined}
+    >
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">
           <p className="eyebrow">
