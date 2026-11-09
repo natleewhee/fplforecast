@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useEffect, useRef, useState, type ReactNode } from "react";
 import { lookFor, type PitchKits, type PitchLooks, type Position } from "@/lib/appearance";
-import { setPitchView, type PitchView } from "@/lib/pitchView";
+import { setPitchAmbient, setPitchView, usePitchAmbient, type PitchView } from "@/lib/pitchView";
 import { benchSeat, formationSpots } from "./spots";
 import type { FigureDef, StageHandle, StageState } from "./stage";
 
@@ -13,7 +13,6 @@ import type { FigureDef, StageHandle, StageState } from "./stage";
 
 type PitchData = { looks?: PitchLooks; kits?: PitchKits };
 const PitchDataContext = createContext<PitchData>({});
-let focusCount = 0;
 export const PitchDataProvider = PitchDataContext.Provider;
 
 export type Pitch3DPlayer = {
@@ -70,21 +69,35 @@ function buildDefs(xi: Pitch3DPlayer[], bench: Pitch3DPlayer[], data: PitchData)
   return out;
 }
 
-/** The 3D / 2D switch, shared by every pitch. */
+/** The 3D / 2D switch, shared by every pitch, with the passing switch beside it in 3D. */
 export function ViewSwitch({ view, onChange }: { view: PitchView; onChange?: (v: PitchView) => void }) {
+  const passing = usePitchAmbient();
   return (
-    <div className="inline-flex overflow-hidden rounded-lg border border-line text-[11px] font-semibold" role="group" aria-label="Pitch view">
-      {(["3d", "2d"] as const).map((v) => (
+    <div className="flex items-center gap-2">
+      {view === "3d" && (
         <button
-          key={v}
           type="button"
-          aria-pressed={view === v}
-          onClick={() => (onChange ?? setPitchView)(v)}
-          className={`h-8 px-3 transition ${view === v ? "bg-[color-mix(in_srgb,var(--accent)_16%,transparent)] text-[var(--accent)]" : "text-ink-faint hover:text-ink-soft"}`}
+          aria-pressed={passing}
+          onClick={() => setPitchAmbient(!passing)}
+          className={`h-8 rounded-lg border px-2.5 text-[11px] font-semibold transition ${passing ? "border-[color-mix(in_srgb,var(--accent)_50%,transparent)] text-[var(--accent)]" : "border-line text-ink-faint hover:text-ink-soft"}`}
+          title="The ball goes round the pitch while nobody is selected. Switch off to save battery."
         >
-          {v.toUpperCase()}
+          Passing {passing ? "on" : "off"}
         </button>
-      ))}
+      )}
+      <div className="inline-flex overflow-hidden rounded-lg border border-line text-[11px] font-semibold" role="group" aria-label="Pitch view">
+        {(["3d", "2d"] as const).map((v) => (
+          <button
+            key={v}
+            type="button"
+            aria-pressed={view === v}
+            onClick={() => (onChange ?? setPitchView)(v)}
+            className={`h-8 px-3 transition ${view === v ? "bg-[color-mix(in_srgb,var(--accent)_16%,transparent)] text-[var(--accent)]" : "text-ink-faint hover:text-ink-soft"}`}
+          >
+            {v.toUpperCase()}
+          </button>
+        ))}
+      </div>
     </div>
   );
 }
@@ -111,7 +124,12 @@ export default function Pitch3D({
   const stageRef = useRef<StageHandle | null>(null);
   const [ready, setReady] = useState(false);
   const [visible, setVisible] = useState(false);
-  const [state, setState] = useState<StageState>({ focusId: null, celebrating: null });
+  const [state, setState] = useState<StageState>({ focusId: null, celebrating: null, passes: 0 });
+  const passing = usePitchAmbient();
+  const passingRef = useRef(passing);
+  useEffect(() => {
+    passingRef.current = passing;
+  });
   const onSelectRef = useRef(onSelect);
   const onUnavailableRef = useRef(onUnavailable);
   useEffect(() => {
@@ -148,6 +166,7 @@ export default function Pitch3D({
           host: hostRef.current,
           tagLayer: tagsRef.current,
           onState: setState,
+          ambient: passingRef.current,
           onPick: (id) => {
             const el = rootRef.current?.querySelector<HTMLButtonElement>(`button[data-tag="${id}"]`);
             if (el) onSelectRef.current?.(id, el);
@@ -176,23 +195,19 @@ export default function Pitch3D({
     stageRef.current?.setSelected(selectedId);
   }, [ready, selectedId, defsJson]);
 
-  // bring the pitch up under the sticky bar when a player is tapped, so he stays in view above the sheet.
+  // The ball goes round while nobody is selected, if passing is on.
+  useEffect(() => {
+    if (ready) stageRef.current?.setAmbient(passing);
+  }, [ready, passing]);
+
+  // Bring the pitch up under the sticky bar when a player is tapped, so it sits clear of the card that
+  // opens below. Straight up or down only: scrolling an element into view can also push the page sideways.
   // Only on a new tap, not each time the live numbers refresh.
   useEffect(() => {
-    if (ready && selectedId != null) hostRef.current?.scrollIntoView({ block: "start", behavior: "smooth" });
+    if (!ready || selectedId == null || !hostRef.current) return;
+    const top = hostRef.current.getBoundingClientRect().top + window.scrollY - 72;
+    window.scrollTo({ top: Math.max(0, top), left: window.scrollX, behavior: "smooth" });
   }, [ready, selectedId]);
-
-  // The sheet that opens on a tap dims everything behind it; let the pitch show through while a player is in focus.
-  useEffect(() => {
-    if (state.focusId == null) return;
-    // Squad, Live and Scenarios each hold a pitch: count, so one letting go does not clear another's
-    focusCount += 1;
-    document.documentElement.setAttribute("data-pitch-focus", "");
-    return () => {
-      focusCount -= 1;
-      if (focusCount <= 0) document.documentElement.removeAttribute("data-pitch-focus");
-    };
-  }, [state.focusId]);
 
   const subColor = (p: Pitch3DPlayer) =>
     p.subTone === "warn" ? "text-[var(--warn)]" : p.subTone === "faint" ? "text-ink-faint" : "text-[var(--accent)]";
@@ -225,43 +240,55 @@ export default function Pitch3D({
       </div>
     );
 
+  // Floating tags carry the whole surname and the number, nothing else: the icons are in the player's card.
   const floating = (p: Pitch3DPlayer) =>
     tagEl(
       p,
-      "pointer-events-auto absolute left-0 top-0 flex max-w-[3.7rem] flex-col items-center rounded-md bg-[rgba(8,16,24,0.74)] px-1 py-px leading-tight text-ink will-change-transform focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--accent)]",
+      "pointer-events-auto absolute left-0 top-0 flex max-w-[6.5rem] flex-col items-center rounded-md border border-white/15 bg-[rgba(8,16,24,0.82)] px-1.5 py-px leading-tight text-ink will-change-transform focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--accent)]",
       <>
-        <span className="flex max-w-full items-center gap-0.5">
+        <span className="flex max-w-full items-center gap-1">
           {roleBadge(p)}
-          <span className="min-w-0 truncate text-[10px] font-semibold">{p.webName}</span>
-          {badges(p, "text-[9px]")}
+          <span className="min-w-0 truncate text-[11px] font-bold text-white">{p.webName}</span>
         </span>
-        <span className={`max-w-full truncate font-mono text-[10px] ${subColor(p)}`}>{p.sub}</span>
+        <span className={`max-w-full truncate font-mono text-[10.5px] font-semibold ${subColor(p)}`}>{p.sub}</span>
       </>,
     );
 
+  const kitColor = (p: Pitch3DPlayer) => {
+    const club = data.kits?.[p.team];
+    return club ? (p.position === "GKP" ? club.gk.shirt : club.shirt) : "#8a95a3";
+  };
+
   return (
-    <div ref={rootRef} data-testid="pitch3d" data-focus={state.focusId ?? undefined} data-celebrating={state.celebrating ?? undefined}>
-      <div ref={hostRef} className="relative aspect-[4/5] w-full scroll-mt-16 overflow-hidden rounded-xl bg-[#0a1a14]">
+    <div
+      ref={rootRef}
+      data-testid="pitch3d"
+      data-focus={state.focusId ?? undefined}
+      data-celebrating={state.celebrating ?? undefined}
+      data-passes={state.passes || undefined}
+    >
+      <div ref={hostRef} className="relative aspect-[4/5] w-full scroll-mt-16 overflow-hidden rounded-xl bg-[#0a1a14] [contain:paint]">
         <div ref={tagsRef} className="pointer-events-none absolute inset-0">
           {ready && xi.map(floating)}
         </div>
         {!ready && <p className="absolute inset-0 grid place-items-center text-xs text-ink-faint">Loading the 3D pitch…</p>}
       </div>
       {bench.length > 0 && (
-        <div className="mt-2">
+        <div className="mt-3">
           <p className="eyebrow mb-1.5">Bench</p>
-          <div className="flex gap-1.5">
+          <div className="grid grid-cols-4 gap-1.5">
             {bench.map((p) =>
               tagEl(
                 p,
-                "flex min-w-0 flex-1 basis-0 flex-col items-center rounded-md bg-[rgba(8,16,24,0.5)] px-1 py-1 leading-tight focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--accent)]",
+                "flex min-w-0 flex-col items-center gap-1 rounded-lg border border-white/15 bg-[rgba(8,16,24,0.9)] px-0.5 py-2 text-center leading-tight focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--accent)]",
                 <>
-                  <span className="flex max-w-full items-center gap-0.5">
+                  <span className="h-2.5 w-7 rounded-full border border-white/40" style={{ background: kitColor(p) }} aria-hidden />
+                  <span className="flex max-w-full flex-wrap items-center justify-center gap-1 text-[11px] font-bold text-white [overflow-wrap:anywhere]">
                     {roleBadge(p)}
-                    <span className="min-w-0 truncate text-[11px] font-semibold text-ink">{p.webName}</span>
-                    {badges(p, "text-[10px]")}
+                    {p.webName}
                   </span>
-                  <span className={`max-w-full truncate font-mono text-[10px] ${subColor(p)}`}>{p.sub}</span>
+                  <span className={`font-mono text-[11px] font-semibold ${subColor(p)}`}>{p.sub}</span>
+                  {(p.badges?.length ?? 0) > 0 && <span className="flex items-center justify-center gap-1 text-[11px]">{badges(p, "")}</span>}
                 </>,
               ),
             )}

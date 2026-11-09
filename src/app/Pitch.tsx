@@ -502,6 +502,7 @@ export default function Pitch({ forecast, transferTools }: { forecast: Forecast;
           gameweek={active.gameweek}
           isTargetGw={isTargetGw}
           onClose={closeSheet}
+          peek={view === "3d"}
           footer={
             transferTools && isTargetGw ? (
               <button

@@ -17,15 +17,16 @@ const lerp = (a: number, b: number, k: number) => a + (b - a) * k;
 export type Shot = { pos: [number, number, number]; look: [number, number, number]; fov: number };
 
 /** The centred, high view of the whole pitch. */
-export const BROADCAST: Shot = { pos: [0, 27, 30], look: [0, 0, -5.5], fov: 44 };
+export const BROADCAST: Shot = { pos: [0, 18, 18.5], look: [0, 0, -5.4], fov: 46 };
 
-/** A close view of one player, aimed a little short of him so he sits in the upper part of the
- * frame, clear of the bottom sheet that opens on a tap. `scale` is his drawn size. */
+/** A close view of one player from further back and higher than before: a narrow lens at a
+ * distance keeps the perspective gentle, so a player in the foreground is not a giant head.
+ * `scale` is his drawn size. */
 export function focusShot(x: number, z: number, scale: number): Shot {
   return {
-    pos: [x * 0.75, 1.5 * scale + 5, z + 11],
-    look: [x, 1.0 * scale, z + 2.6],
-    fov: 38,
+    pos: [x * 0.6, 1.5 * scale + 8, z + 15],
+    look: [x, 1.1 * scale, z + 1.2],
+    fov: 30,
   };
 }
 
@@ -48,9 +49,10 @@ export type Pose = {
   hipR: Arm;
   kneeLx: number;
   kneeRx: number;
-  /** 0 to 1: how far the shield has risen up around him, and how solid it is. */
-  shieldRise: number;
-  shieldAlpha: number;
+  /** Bricks laid so far in the wall around him (fractional: the newest is still falling into place),
+   * and how intact the wall is (1) as it crumbles away (0). */
+  bricks: number;
+  wallFade: number;
   /** True from the moment the confetti should go off. */
   burst: boolean;
 };
@@ -67,8 +69,8 @@ const base = (): Pose => ({
   hipR: { ...NEUTRAL_ARM },
   kneeLx: 0,
   kneeRx: 0,
-  shieldRise: 0,
-  shieldAlpha: 0,
+  bricks: 0,
+  wallFade: 1,
   burst: false,
 });
 
@@ -79,7 +81,6 @@ export type MomentKind = "goal" | "cleanSheet";
 
 /** How long each celebration lasts. A bench cheer is shorter. */
 export const GOAL_SECONDS = 3.6;
-export const CLEAN_SHEET_SECONDS = 3.2;
 export const BENCH_CHEER_SECONDS = 2.2;
 
 const RUN = 0.9; // run towards the corner
@@ -143,18 +144,44 @@ export function goalPose(t: number, goals: number): Pose {
   return p;
 }
 
-/** The wall: feet planted, arms folded, a slow nod, and a shield rising up around him. */
+/** The brick wall: he builds it round himself one brick at a time, dusts his hands, folds his
+ * arms with a nod, and the wall crumbles away. */
+export const WALL_BRICKS = 30;
+export const WALL_PER_COURSE = 10;
+const BUILD_START = 0.3;
+const BRICK_EVERY = 0.075;
+const BUILD_END = BUILD_START + WALL_BRICKS * BRICK_EVERY; // 2.55
+const DUST_END = BUILD_END + 0.9;
+const FOLD_END = DUST_END + 1.0;
+const CRUMBLE = 0.6;
+export const CLEAN_SHEET_SECONDS = FOLD_END + CRUMBLE; // 5.05
+
 export function cleanSheetPose(t: number): Pose {
   const p = base();
-  const settle = ease(t / 0.4);
+  const settle = ease(t / 0.3);
   p.hipL.z = -0.12 * settle;
   p.hipR.z = 0.12 * settle;
-  // arms folded across the chest
-  p.armL = { x: -1.1 * settle, z: 0.95 * settle };
-  p.armR = { x: -1.1 * settle, z: -0.95 * settle };
-  if (t > 0.6) p.bodyRx = 0.09 * Math.sin((t - 0.6) * 5);
-  p.shieldRise = ease(t / 0.8);
-  p.shieldAlpha = t < 2.6 ? 1 : clamp01(1 - (t - 2.6) / 0.6);
+  p.bricks = clamp01((t - BUILD_START) / (BUILD_END - BUILD_START)) * WALL_BRICKS;
+  if (t < BUILD_END) {
+    // placing bricks: stooping a little, hands reaching forward in turn
+    const w = Math.sin(t * 9);
+    p.bodyRx = 0.16 * settle;
+    p.armL = { x: (-1.0 + 0.35 * w) * settle, z: 0.2 * settle };
+    p.armR = { x: (-1.0 - 0.35 * w) * settle, z: -0.2 * settle };
+  } else if (t < DUST_END) {
+    // dusting his hands: palms rubbing together in front of him
+    const rub = Math.sin((t - BUILD_END) * 20);
+    p.bodyRx = 0.05;
+    p.armL = { x: -1.0 + 0.18 * rub, z: 0.55 };
+    p.armR = { x: -1.0 - 0.18 * rub, z: -0.55 };
+  } else {
+    // arms folded across the chest, a slow nod
+    const fold = ease((t - DUST_END) / 0.25);
+    p.armL = { x: -1.1 * fold, z: 0.95 * fold };
+    p.armR = { x: -1.1 * fold, z: -0.95 * fold };
+    p.bodyRx = 0.09 * Math.sin((t - DUST_END) * 5);
+  }
+  p.wallFade = t < FOLD_END ? 1 : clamp01(1 - (t - FOLD_END) / CRUMBLE);
   return p;
 }
 
@@ -189,8 +216,8 @@ export function blend(a: Pose, b: Pose, k: number): Pose {
     hipR: arm(a.hipR, b.hipR),
     kneeLx: lerp(a.kneeLx, b.kneeLx, k),
     kneeRx: lerp(a.kneeRx, b.kneeRx, k),
-    shieldRise: lerp(a.shieldRise, b.shieldRise, k),
-    shieldAlpha: lerp(a.shieldAlpha, b.shieldAlpha, k),
+    bricks: b.bricks,
+    wallFade: b.wallFade,
     burst: b.burst,
   };
 }

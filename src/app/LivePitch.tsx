@@ -287,7 +287,7 @@ export default function LivePitch({
       position: r.position,
       team: r.team ?? "",
       code: r.code,
-      sub: t === "pending" ? shortStatus(r) : `${pts.toFixed(0)} \u00B7 ${shortStatus(r)}`,
+      sub: t === "pending" ? shortStatus(r).replace(/^[A-Za-z]{3} /, "") : `${pts.toFixed(0)} \u00B7 ${shortStatus(r)}`, // a kickoff shows the time only; the day is in "Still to come"
       subTone: t === "live" ? "accent" : t === "done" && pts >= HAUL ? "warn" : t === "done" ? "accent" : "faint",
       role: r.isArmband ? "C" : r.isViceCaptain ? "V" : null,
       dim: t === "dnp" ? 0.5 : t === "off" ? 0.62 : t === "pending" ? 0.72 : 1,
@@ -391,7 +391,7 @@ export default function LivePitch({
 
       <BenchCover cover={cover} rows={rows} />
 
-      {selected && <LivePlayerSheet row={selected} gameweek={gameweek} onClose={closeSheet} />}
+      {selected && <LivePlayerSheet row={selected} gameweek={gameweek} onClose={closeSheet} peek={view === "3d"} />}
     </div>
   );
 }
