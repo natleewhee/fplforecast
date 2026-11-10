@@ -1,6 +1,6 @@
 import type { Forecast } from "@/lib/snapshots";
 import { buildCaptainShortlist } from "@/lib/captainShortlist";
-import { resolveSwaps, type PendingSwap } from "@/lib/squadView";
+import { lineupFor, resolveSwaps, type PendingSwap } from "@/lib/squadView";
 import { Module } from "./PageChrome";
 
 /** The top three captain options for the target gameweek; replaces the old one-line Captain card. */
@@ -15,8 +15,9 @@ export default function CaptainShortlist({
   pending?: PendingSwap[];
   pool?: Forecast["pool"];
 }) {
-  const { swaps, appliedOut } = resolveSwaps(forecast, liveSquad, pending, pool);
-  const s = buildCaptainShortlist(forecast, swaps, appliedOut);
+  const resolved = resolveSwaps(forecast, liveSquad, pending, pool);
+  const { swaps, appliedOut } = resolved;
+  const s = buildCaptainShortlist(forecast, swaps, appliedOut, 3, lineupFor(forecast, resolved));
   if (!s) return null;
   return (
     <Module

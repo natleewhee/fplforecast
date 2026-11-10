@@ -35,6 +35,8 @@ export function buildTicker(
   forecast: Pick<Forecast, "squad" | "upcoming">,
   swaps: Map<number, PoolPlayer>,
   horizon = 5,
+  /** the XI/bench to show (slot ids), from lineupFor; defaults to the model's own */
+  lineup?: { xi: number[]; bench: number[] } | null,
 ): Ticker {
   // the rolling window can run past the end of the season: there is no gameweek 39
   const upcoming = forecast.upcoming.filter((u) => u.gameweek <= LAST_GAMEWEEK).slice(0, horizon);
@@ -68,9 +70,9 @@ export function buildTicker(
     };
   };
 
-  const starters = first.startingXi.map((id) => rowFor(id, "starter")).filter((r): r is TickerRow => !!r);
+  const starters = (lineup?.xi ?? first.startingXi).map((id) => rowFor(id, "starter")).filter((r): r is TickerRow => !!r);
   // stable sort by pitch position (GKP, DEF, MID, FWD), keeping the model's order within a position
   starters.sort((a, b) => POSITION_ORDER.indexOf(a.position) - POSITION_ORDER.indexOf(b.position));
-  const subs = first.bench.map((id) => rowFor(id, "sub")).filter((r): r is TickerRow => !!r);
+  const subs = (lineup?.bench ?? first.bench).map((id) => rowFor(id, "sub")).filter((r): r is TickerRow => !!r);
   return { gameweeks: upcoming.map((u) => u.gameweek), rows: [...starters, ...subs] };
 }

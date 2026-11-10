@@ -62,6 +62,8 @@ export function buildCaptainShortlist(
   swaps: Map<number, PoolPlayer>,
   appliedOut: Set<number>,
   size = 3,
+  /** the XI and armband to use (slot ids), from lineupFor; defaults to the model's own */
+  lineup?: { xi: number[]; captain: number | null } | null,
 ): CaptainShortlist | null {
   const target = forecast.upcoming[0];
   if (!target) return null;
@@ -72,10 +74,13 @@ export function buildCaptainShortlist(
   // the armband, the way the Squad pitch places it: a captain sold in FPL passes it to the vice, if he is still there
   const captainSold = target.captainId != null && appliedOut.has(target.captainId);
   const viceSold = target.viceCaptainId != null && appliedOut.has(target.viceCaptainId);
-  const pickId = captainSold ? (viceSold ? null : shown(target.viceCaptainId)) : shown(target.captainId);
+  const pickId = lineup
+    ? shown(lineup.captain)
+    : captainSold ? (viceSold ? null : shown(target.viceCaptainId)) : shown(target.captainId);
+  const xiSlots = lineup?.xi ?? target.startingXi;
 
   const all: CaptainCandidate[] = [];
-  for (const slot of target.startingXi) {
+  for (const slot of xiSlots) {
     const swap = swaps.get(slot);
     const base = byId.get(slot);
     if (!base) continue;
@@ -114,7 +119,7 @@ export function buildCaptainShortlist(
   const edge =
     forecast.captainEdge && forecast.viceCaptain && !captainSold && !viceSold &&
     !swaps.has(target.captainId ?? -1) && !swaps.has(target.viceCaptainId ?? -1) &&
-    target.startingXi.includes(forecast.viceCaptain.id)
+    xiSlots.includes(forecast.viceCaptain.id)
       ? { label: forecast.captainEdge.label, points: forecast.captainEdge.points, viceName: forecast.viceCaptain.webName }
       : null;
   return { gameweek: target.gameweek, candidates: top, secondNote, edge };

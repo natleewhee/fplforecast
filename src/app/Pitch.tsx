@@ -10,7 +10,7 @@ import { FormBars, Halo, meanFdr, RangeBar } from "./Shirt";
 import { FaceToggle, PlayerFace } from "./PlayerFace";
 import Pitch3D, { ViewSwitch, type Pitch3DPlayer } from "./pitch3d/Pitch3D";
 import PreviewSheet from "./PreviewSheet";
-import { resolveSwaps } from "@/lib/squadView";
+import { lineupFor, resolveSwaps } from "@/lib/squadView";
 import ReplaceSheet, { type TransferTools } from "./ReplaceSheet";
 import { setPitchView, usePitchView } from "@/lib/pitchView";
 import { ArmbandBadge, POSITION_DOT } from "./tokenParts";
@@ -233,14 +233,14 @@ export default function Pitch({
   const { swaps, appliedOut, appliedIn, pendingShown, sync } = resolveSwaps(forecast, liveSquad, transferTools?.pending, transferTools?.pool);
   const shown = (id: number | null | undefined) => (id == null ? id : (swaps.get(id)?.id ?? id));
 
-  // which eleven + captain -- always this app's recommended XI
-  const xiIds = active.startingXi;
-  const benchIds = active.bench;
-  // If the model's captain was sold in FPL, the armband is not the joiner's: it goes to the vice (or nobody).
-  const captainSold = active.captainId != null && appliedOut.has(active.captainId);
-  const viceSold = active.viceCaptainId != null && appliedOut.has(active.viceCaptainId);
-  const captainId = captainSold ? (viceSold ? null : shown(active.viceCaptainId)) : shown(active.captainId);
-  const viceId = captainSold || viceSold ? null : shown(active.viceCaptainId);
+  // which eleven + captain: the model's, unless transfers are shown, in which case the app re-picks the
+  // best legal XI from the fifteen (one function shared with the ticker and the captain shortlist).
+  const resolved = { swaps, appliedOut };
+  const lineup = lineupFor(forecast, resolved, gwIdx)!;
+  const xiIds = lineup.xi;
+  const benchIds = lineup.bench;
+  const captainId = shown(lineup.captain) ?? null;
+  const viceId = shown(lineup.vice) ?? null;
 
   // per-player xP / opponents for the shown GW, from that gameweek's own
   // player entry (fixtures/minutes can differ gameweek to gameweek).
@@ -291,19 +291,12 @@ export default function Pitch({
   const benched = benchIds.map(tok).filter(Boolean) as Tok[];
   const rows = ROWS.map((pos) => xi.filter((p) => p.position === pos)).filter((r) => r.length);
 
-  // The headline moves with the preview: each swapped starter's projection
-  // replaces the one they stand in for (doubled for the captain).
-  const previewDelta = xiIds.reduce((sum, id) => {
-    const swap = swaps.get(id);
-    if (!swap) return sum;
-    const was = gwPlayerById.get(id)?.projectedPoints ?? 0;
-    const now = swap.perGameweek[gwIdx] ?? 0;
-    return sum + (now - was) * (id === active.captainId && !captainSold ? 2 : 1);
-  }, 0);
-  const headline = active.points + previewDelta;
+  // The headline is the shown XI's own total (captain doubled) once transfers change the lineup.
+  const adjusted = swaps.size > 0; // saved transfers and/or ones already made in FPL
+  const headline = adjusted ? lineup.points : active.points;
+  const headlineMoved = adjusted && Math.abs(headline - active.points) >= 0.05;
   const pendingCount = transferTools?.pending.length ?? 0;
   const previewing = pendingShown > 0;
-  const adjusted = swaps.size > 0; // saved transfers and/or ones already made in FPL
   const previewTok = [...xi, ...benched].find((t) => t.id === selectedId && t.preview);
 
   const to3d = (t: Tok): Pitch3DPlayer => ({
@@ -371,7 +364,7 @@ export default function Pitch({
           </div>
           <div className="shrink-0 text-right">
             <div className="stat stat-glow text-2xl leading-none sm:text-3xl">
-              {adjusted && previewDelta !== 0 ? "~" : ""}
+              {headlineMoved ? "~" : ""}
               {headline.toFixed(0)}
             </div>
             <div className="eyebrow mt-1">{previewing ? "proj pts (preview)" : adjusted ? "proj pts (adjusted)" : "proj pts"}</div>
@@ -409,9 +402,9 @@ export default function Pitch({
               .slice(0, 3)
               .map((a) => `${a.outName} \u2192 ${a.incoming.webName}`)
               .join(", ")}
-            {sync.swaps.length > 3 ? ` and ${sync.swaps.length - 3} more` : ""}. The pitch shows your squad as it is in FPL now; the
-            model re-picks the XI and captain at the next rebuild.
-            {captainSold && " Your captain was sold, so the armband shown is the vice-captain\u2019s."}
+            {sync.swaps.length > 3 ? ` and ${sync.swaps.length - 3} more` : ""}. The pitch shows your squad as it is in FPL now, with the
+            lineup re-picked for your transfers (this app&rsquo;s re-pick, not the model&rsquo;s; the model re-picks at the next rebuild).
+            {lineup.armbandAdjusted && " The armband is adjusted too: the model\u2019s captain was sold or is not starting, so it goes to the highest-xP starter."}
             {sync.unresolved.length > 0 && ` Not shown yet (no projection): ${sync.unresolved.join(", ")}.`}
           </div>
         )}
@@ -426,7 +419,7 @@ export default function Pitch({
             {previewing
               ? `${pendingCount} saved transfer${pendingCount === 1 ? "" : "s"} shown on the pitch.`
               : `${pendingCount} saved transfer${pendingCount === 1 ? "" : "s"} waiting.`}{" "}
-            The model re-picks the XI and captain at the next rebuild.
+            {previewing ? "The XI and armband are re-picked for the preview; the model re-picks at the next rebuild." : "The model re-picks the XI and captain at the next rebuild."}
           </div>
         )}
 
@@ -434,7 +427,7 @@ export default function Pitch({
           <div className="mb-2 flex flex-wrap items-center gap-1.5">
             <span className="chip">{fmtDelta(forecast.nextGw.deltaVsNoChange)} vs no change</span>
             <span className="chip">{fmtDelta(forecast.nextGw.deltaVsBaselineXi)} vs baseline</span>
-            {sync.swaps.length === 0 && <span className="chip">agree {forecast.lineupAgreement}/11</span>}
+            {sync.swaps.length === 0 && !lineup.repicked && <span className="chip">agree {forecast.lineupAgreement}/11</span>}
           </div>
         )}
 
@@ -481,7 +474,7 @@ export default function Pitch({
         {/* bench */}
         <div className="mt-3">
           <p className="eyebrow mb-1.5">Bench</p>
-          <div className="flex gap-x-1 gap-y-3">
+          <div className="flex gap-x-1 gap-y-3" data-testid="pitch-bench">
             {benched.map((t) => (
               <PlayerToken key={t.id} t={t} isCaptain={t.id === captainId} bench showRange={isTargetGw} onSelect={openSheet} />
             ))}
@@ -497,7 +490,7 @@ export default function Pitch({
               Why this XI?
             </summary>
             <ul className="mt-2 space-y-1 font-mono text-[10.5px] leading-relaxed text-ink-faint [overflow-wrap:anywhere]">
-              {(benchIds.map((id) => byId.get(id)).filter(Boolean) as ForecastPlayer[])
+              {(benchIds.filter((id) => active.bench.includes(id) && !swaps.has(id)).map((id) => byId.get(id)).filter(Boolean) as ForecastPlayer[])
                 .filter((p) => p.rationale)
                 .map((p) => (
                   <li key={p.id}>
