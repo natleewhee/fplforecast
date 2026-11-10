@@ -215,12 +215,101 @@ test.describe("Squad and Scenarios tabs", () => {
     await expect(token).toBeFocused();
   });
 
-  test("the scenarios pitch shows a full eleven", async ({ page }) => {
+  test("the scenarios pitch shows a full eleven once a plan row is opened", async ({ page }) => {
     await mockLive(page, { current: "a" });
     await open(page);
     await openTab(page, "Scenarios");
+    const row = page.locator('[data-testid^="plan-row-"]').first();
+    await row.scrollIntoViewIfNeeded();
+    await row.click();
     const scene = await visibleScene(page);
+    await scene.scrollIntoViewIfNeeded();
     await expect(scene.locator("[data-flip]")).toHaveCount(11);
+  });
+
+  test("Scenarios: plan rows start collapsed with no pitch; a tap opens one", async ({ page }) => {
+    await mockLive(page, { current: "a" });
+    await open(page);
+    await openTab(page, "Scenarios");
+    const rows = page.locator('[data-testid^="plan-row-"]');
+    expect(await rows.count()).toBeGreaterThan(0);
+    for (const r of await rows.all()) await expect(r).toHaveAttribute("aria-expanded", "false");
+    // the other tabs stay mounted with their own pitches: count the change, not the total
+    const pitches = page.locator(".floodlit-pitch");
+    const before = await pitches.count();
+    await rows.first().click();
+    await expect(rows.first()).toHaveAttribute("aria-expanded", "true");
+    await expect(pitches).toHaveCount(before + 1);
+    await rows.first().click();
+    await expect(pitches).toHaveCount(before);
+  });
+
+  test("Scenarios: the 3D pitch is not built until a row is opened", async ({ page }) => {
+    await page.addInitScript(() => {
+      try { localStorage.setItem("fpl-pitch-view", "3d"); } catch {}
+    });
+    await mockLive(page, { current: "a" });
+    await page.goto("/?tab=scenarios");
+    const row = page.locator('[data-testid^="plan-row-"]').first();
+    await row.waitFor();
+    const pitch = row.locator("xpath=..").getByTestId("pitch3d"); // this row's own pitch
+    await expect(pitch).toHaveCount(0);
+    await row.scrollIntoViewIfNeeded();
+    await row.click();
+    await expect(pitch).toHaveCount(1);
+    await pitch.scrollIntoViewIfNeeded();
+    await expect(pitch.locator("canvas")).toBeVisible();
+  });
+
+  test("Scenarios: chip cards keep their numbers and open the XI on tap", async ({ page }) => {
+    await mockLive(page, { current: "a" });
+    await open(page);
+    await openTab(page, "Scenarios");
+    const card = page.getByTestId("chip-card").first();
+    await card.scrollIntoViewIfNeeded();
+    await expect(card).toContainText(/total over \d+ GW/);
+    const btn = card.getByRole("button", { name: /the XI/ });
+    await expect(btn).toHaveAttribute("aria-expanded", "false");
+    await expect(card.locator(".floodlit-pitch")).toHaveCount(0);
+    await btn.click();
+    await expect(btn).toHaveAttribute("aria-expanded", "true");
+    await expect(card.locator(".floodlit-pitch").first()).toBeVisible();
+  });
+
+  test("Scenarios: Pin players shows the count and keeps pins when collapsed", async ({ page }) => {
+    await mockLive(page, { current: "a" });
+    await open(page);
+    await openTab(page, "Scenarios");
+    const toggle = page.getByRole("button", { name: /^Pin players \(0\)/ });
+    await toggle.scrollIntoViewIfNeeded();
+    await expect(toggle).toHaveAttribute("aria-expanded", "false");
+    const body = page.locator("#force-lock-body");
+    await expect(body).toBeHidden();
+    await toggle.click();
+    await expect(body).toBeVisible();
+    await body.getByRole("button").first().click(); // keep
+    const one = page.getByRole("button", { name: /^Pin players \(1\)/ });
+    await expect(one).toBeVisible();
+    await one.click();
+    await expect(body).toBeHidden();
+    await one.click();
+    await expect(body.getByRole("button", { name: /^Solve with 1 pin/ })).toBeEnabled();
+  });
+
+  test("Scenarios: the owner's Log a transfer form is collapsed until tapped", async ({ page }) => {
+    await mockLive(page, { current: "a" });
+    await open(page);
+    await openTab(page, "Scenarios");
+    const toggle = page.getByRole("button", { name: /^Log a transfer/ });
+    await toggle.scrollIntoViewIfNeeded();
+    await expect(toggle).toHaveAttribute("aria-expanded", "false");
+    await expect(page.getByRole("button", { name: "Save transfer" })).toBeHidden();
+    const box = await toggle.boundingBox();
+    expect(box!.height).toBeGreaterThanOrEqual(44);
+    await toggle.focus();
+    await page.keyboard.press("Enter");
+    await expect(toggle).toHaveAttribute("aria-expanded", "true");
+    await expect(page.getByRole("button", { name: "Save transfer" })).toBeVisible();
   });
 });
 
@@ -1694,5 +1783,17 @@ test.describe("Guest teams", () => {
     await input.fill("123456789");
     await expect(go).toBeEnabled();
     expect(requests).toBe(0);
+  });
+
+  test("a guest never gets the Log a transfer control on Scenarios", async ({ page }) => {
+    await page.route("**/api/forecast*", (route) =>
+      route.fulfill({ contentType: "application/json", body: JSON.stringify(guestForecast()) }),
+    );
+    await enterTeam(page, "424242");
+    await expect(page.getByTestId("team-bar")).toContainText("Guest FC");
+    await openTab(page, "Scenarios");
+    await expect(page.getByText(/only available for this app.s own team/)).toBeAttached();
+    await expect(page.getByRole("button", { name: /Log a transfer/ })).toHaveCount(0);
+    await expect(page.getByRole("button", { name: "Save transfer" })).toHaveCount(0);
   });
 });

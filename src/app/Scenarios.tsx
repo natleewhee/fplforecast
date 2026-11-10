@@ -352,9 +352,11 @@ function ChipCard({
   poolById: Map<number, PoolPlayer>;
 }) {
   const gain = baselineNetPoints != null ? scenario.netPoints - baselineNetPoints : null;
+  // The numbers stay on show; the XI (a whole pitch) opens on tap.
+  const [showXi, setShowXi] = useState(false);
 
   return (
-    <div className="panel rise space-y-3 p-3">
+    <div className="panel rise space-y-3 p-3" data-testid="chip-card">
       <div className="flex items-center justify-between gap-2">
         <h3 className="font-mono text-[12px] font-bold tracking-wide text-ink">{title}</h3>
         <div className="text-right">
@@ -370,13 +372,24 @@ function ChipCard({
         </div>
       </div>
 
-      <WeeklyXi
-        weeks={scenario.weeks}
-        squad={scenario.squad}
-        xiByGw={scenario.xiByGw}
-        captainByGw={scenario.captainByGw}
-        poolById={poolById}
-      />
+      <button
+        type="button"
+        aria-expanded={showXi}
+        onClick={() => setShowXi((v) => !v)}
+        className="flex min-h-11 w-full items-center justify-between rounded-lg border border-line px-2.5 text-left text-xs font-medium text-ink-soft"
+      >
+        <span>{showXi ? "Hide the XI" : "Show the XI"}</span>
+        <span aria-hidden className="text-ink-faint">{showXi ? "▾" : "▸"}</span>
+      </button>
+      {showXi && (
+        <WeeklyXi
+          weeks={scenario.weeks}
+          squad={scenario.squad}
+          xiByGw={scenario.xiByGw}
+          captainByGw={scenario.captainByGw}
+          poolById={poolById}
+        />
+      )}
     </div>
   );
 }
@@ -401,6 +414,8 @@ function ForceLockPanel({
   const [result, setResult] = useState<Scenario | null>(null);
   const [status, setStatus] = useState<"idle" | "loading" | "error">("idle");
   const [error, setError] = useState<string | null>(null);
+  // Collapsed with `hidden`, not unmounted, so the pins survive a close.
+  const [open, setOpen] = useState(false);
 
   const cycleLock = (id: number) => {
     setLocks((prev) => {
@@ -438,10 +453,20 @@ function ForceLockPanel({
 
   return (
     <div className="panel space-y-3 p-3">
-      <div className="flex flex-wrap items-center justify-between gap-2">
-        <h3 className="eyebrow">Force keep / remove</h3>
-        <p className="text-[11px] text-ink-faint">Tap a player: keep -&gt; remove -&gt; clear</p>
-      </div>
+      <button
+        type="button"
+        aria-expanded={open}
+        aria-controls="force-lock-body"
+        onClick={() => setOpen((v) => !v)}
+        className="flex min-h-11 w-full items-center justify-between gap-2 text-left"
+      >
+        <span className="eyebrow">Pin players ({locks.size})</span>
+        <span className="text-[11px] text-ink-faint">
+          Force keep / remove <span aria-hidden>{open ? "▾" : "▸"}</span>
+        </span>
+      </button>
+      <div id="force-lock-body" hidden={!open} className="space-y-3">
+      <p className="text-[11px] text-ink-faint">Tap a player: keep -&gt; remove -&gt; clear</p>
       <div className="flex flex-wrap gap-1.5">
         {squad.map((p) => {
           const lock = locks.get(p.id);
@@ -478,6 +503,7 @@ function ForceLockPanel({
         )}
       </div>
       {status === "error" && <p className="text-xs text-[var(--danger)]">{error}</p>}
+      </div>
       {result && (
         <div className="border-t border-line pt-2">
           <div className="mb-1.5 flex items-center justify-between">
@@ -518,7 +544,9 @@ function PlanWeekRow({
       <button
         type="button"
         onClick={onToggle}
-        className="flex w-full items-center justify-between gap-2 px-2.5 py-2 text-left"
+        aria-expanded={isOpen}
+        data-testid={`plan-row-${week.targetGw}`}
+        className="flex min-h-11 w-full items-center justify-between gap-2 px-2.5 py-2 text-left"
       >
         <div className="flex items-center gap-2">
           <span className="font-mono text-xs font-bold text-ink">GW{week.targetGw}</span>
@@ -569,7 +597,7 @@ function PlanTimeline({
   forecastGw: number;
   poolById: Map<number, PoolPlayer>;
 }) {
-  const [openGw, setOpenGw] = useState<number | null>(plan[0]?.targetGw ?? null);
+  const [openGw, setOpenGw] = useState<number | null>(null);
   const feasibleWeeks = plan.filter((w) => w.feasible);
   if (feasibleWeeks.length === 0) return null;
 

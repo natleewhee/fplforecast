@@ -30,6 +30,8 @@ export default function TransferForm({ squad, allPlayers, basedOnGw, bank, pendi
   const [confirmation, setConfirmation] = useState<{ text: string; rebuild: Rebuild } | null>(null);
   const [removing, setRemoving] = useState<string | null>(null);
   const inFlight = useRef(false);
+  // Collapsed with `hidden` so a half-typed swap survives a close.
+  const [open, setOpen] = useState(false);
 
   const nameOf = (id: number) => allPlayers.find((p) => p.id === id)?.webName ?? `#${id}`;
 
@@ -99,9 +101,19 @@ export default function TransferForm({ squad, allPlayers, basedOnGw, bank, pendi
 
   return (
     <div>
-      <h2 className="font-mono text-[13px] font-bold tracking-[0.12em] text-ink">
-        MAKE A TRANSFER
-      </h2>
+      <button
+        type="button"
+        aria-expanded={open}
+        aria-controls="transfer-form-body"
+        onClick={() => setOpen((v) => !v)}
+        className="flex min-h-11 w-full items-center justify-between gap-2 text-left"
+      >
+        <span className="font-mono text-[13px] font-bold tracking-[0.12em] text-ink">
+          Log a transfer{pending.length > 0 ? ` (${pending.length} pending)` : ""}
+        </span>
+        <span aria-hidden className="text-ink-faint">{open ? "▾" : "▸"}</span>
+      </button>
+      <div id="transfer-form-body" hidden={!open}>
       <p className="mt-1 text-xs text-ink-soft">
         Saved transfers apply when the forecast next rebuilds. Bank{" "}
         <span className="font-semibold text-ink tabular-nums">£{bank.toFixed(1)}m</span> · sell prices
@@ -223,6 +235,7 @@ export default function TransferForm({ squad, allPlayers, basedOnGw, bank, pendi
       {status === "error" && (
         <p role="alert" className="mt-2 text-xs font-medium text-[var(--danger)]">{errorMsg}</p>
       )}
+      </div>
     </div>
   );
 }
