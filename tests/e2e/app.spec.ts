@@ -304,6 +304,7 @@ test.describe("Squad and Scenarios tabs", () => {
     await toggle.scrollIntoViewIfNeeded();
     await expect(toggle).toHaveAttribute("aria-expanded", "false");
     await expect(page.getByRole("button", { name: "Save transfer" })).toBeHidden();
+    await expect(page.getByRole("heading", { name: /^Log a transfer/ })).toBeAttached();
     const box = await toggle.boundingBox();
     expect(box!.height).toBeGreaterThanOrEqual(44);
     await toggle.focus();
@@ -1801,5 +1802,37 @@ test.describe("Guest teams", () => {
     await expect(page.getByText(/only available for this app.s own team/)).toBeAttached();
     await expect(page.getByRole("button", { name: /Log a transfer/ })).toHaveCount(0);
     await expect(page.getByRole("button", { name: "Save transfer" })).toHaveCount(0);
+    // positive control: the same page for the owner does have the toggle (see the owner test above)
+    await expect(page.getByRole("button", { name: /^Pin players/ })).toBeAttached();
+  });
+
+  test("pins and the custom result do not follow you to another team", async ({ page, context }) => {
+    await context.addCookies([{ name: "fpl_team_id", value: OWNER, url: ORIGIN }]);
+    await mockLive(page, { current: "a" });
+    await page.route("**/api/solve*", (route) =>
+      route.fulfill({ contentType: "application/json", body: JSON.stringify({ ...guestForecast().scenarios.byHorizon["1"][0] }) }),
+    );
+    await page.goto("/?tab=scenarios");
+    await expect(page.getByRole("button", { name: /^Log a transfer/ })).toBeAttached(); // owner has it
+    const toggle = page.getByRole("button", { name: /^Pin players \(0\)/ });
+    await toggle.scrollIntoViewIfNeeded();
+    await toggle.click();
+    const body = page.locator("#force-lock-body");
+    await body.getByRole("button", { name: /^(?!Solve|clear)/ }).nth(0).click();
+    await body.getByRole("button", { name: /^(?!Solve|clear)/ }).nth(1).click();
+    await body.getByRole("button", { name: /^Solve with 2 pins/ }).click();
+    await expect(page.getByText("Custom scenario")).toBeVisible();
+    // look up a different team: its squad differs by one player
+    const other = guestForecast();
+    other.squad.players[0] = { ...other.squad.players[0], id: 999001, webName: "Newguy" };
+    await page.route("**/api/forecast*", (route) => route.fulfill({ contentType: "application/json", body: JSON.stringify(other) }));
+    const bar = page.getByTestId("team-bar");
+    await bar.getByRole("button", { name: "Change team" }).click();
+    await bar.getByRole("textbox", { name: "Team ID" }).fill("424242");
+    await bar.getByRole("button", { name: "View", exact: true }).click();
+    await expect(bar).toContainText("Guest FC");
+    await openTab(page, "Scenarios");
+    await expect(page.getByRole("button", { name: /^Pin players \(0\)/ })).toBeAttached();
+    await expect(page.getByText("Custom scenario")).toHaveCount(0);
   });
 });

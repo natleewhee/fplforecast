@@ -101,18 +101,20 @@ export default function TransferForm({ squad, allPlayers, basedOnGw, bank, pendi
 
   return (
     <div>
-      <button
-        type="button"
-        aria-expanded={open}
-        aria-controls="transfer-form-body"
-        onClick={() => setOpen((v) => !v)}
-        className="flex min-h-11 w-full items-center justify-between gap-2 text-left"
-      >
-        <span className="font-mono text-[13px] font-bold tracking-[0.12em] text-ink">
-          Log a transfer{pending.length > 0 ? ` (${pending.length} pending)` : ""}
-        </span>
-        <span aria-hidden className="text-ink-faint">{open ? "▾" : "▸"}</span>
-      </button>
+      <h2>
+        <button
+          type="button"
+          aria-expanded={open}
+          aria-controls="transfer-form-body"
+          onClick={() => setOpen((v) => !v)}
+          className="flex min-h-11 w-full items-center justify-between gap-2 text-left"
+        >
+          <span className="font-mono text-[13px] font-bold tracking-[0.12em] text-ink">
+            Log a transfer{pending.length > 0 ? ` (${pending.length} pending)` : ""}
+          </span>
+          <span aria-hidden className="text-ink-faint">{open ? "▾" : "▸"}</span>
+        </button>
+      </h2>
       <div id="transfer-form-body" hidden={!open}>
       <p className="mt-1 text-xs text-ink-soft">
         Saved transfers apply when the forecast next rebuilds. Bank{" "}
@@ -224,6 +226,7 @@ export default function TransferForm({ squad, allPlayers, basedOnGw, bank, pendi
         {status === "saving" ? "Saving…" : "Save transfer"}
       </button>
 
+      </div>
       {confirmation && status !== "error" && (
         <div role="status" className="mt-2 text-xs">
           <p className="font-medium text-[var(--accent)]">{confirmation.text}</p>
@@ -235,7 +238,6 @@ export default function TransferForm({ squad, allPlayers, basedOnGw, bank, pendi
       {status === "error" && (
         <p role="alert" className="mt-2 text-xs font-medium text-[var(--danger)]">{errorMsg}</p>
       )}
-      </div>
     </div>
   );
 }
