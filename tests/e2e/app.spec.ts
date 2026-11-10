@@ -1338,6 +1338,51 @@ test.describe("Squad correction from your live squad", () => {
     await expect(banner).toContainText(`${leaver.webName} \u2192 ${joiner.webName}`);
   });
 
+  for (const width of [360, 390]) {
+    test(`a joiner who out-scores a starter starts and the displaced player is benched, at ${width}px`, async ({ page }) => {
+      await page.setViewportSize({ width, height: 844 });
+      const { squad, basedOn } = forecastSquad();
+      const dir = join(__dirname, "..", "..", "data", "forecast");
+      const latest = readdirSync(dir).map((f) => /^gw(\d+)\.json$/.exec(f)).filter((m): m is RegExpExecArray => !!m).sort((a, b) => Number(b[1]) - Number(a[1]))[0][0];
+      const f = JSON.parse(readFileSync(join(dir, latest), "utf8"));
+      const u = f.upcoming[0];
+      const xp = new Map<number, number>(u.players.map((p: { id: number; projectedPoints: number }) => [p.id, p.projectedPoints]));
+      const name = new Map<number, string>(squad.map((p) => [p.id, p.webName]));
+      const inSquad = new Set(squad.map((p) => p.id));
+      // the benched defender leaves; the best defender outside the squad joins and beats the weakest starting defender
+      const leaver = (u.bench as number[]).map((id) => squad.find((p) => p.id === id)!).find((p) => p.position === "DEF")!;
+      const startDefs = (u.startingXi as number[]).filter((id) => squad.find((p) => p.id === id)?.position === "DEF");
+      const weakest = startDefs.sort((a, b) => xp.get(a)! - xp.get(b)!)[0];
+      const joiner = (f.pool as { id: number; webName: string; position: string; perGameweek: number[] }[])
+        .filter((p) => p.position === "DEF" && !inSquad.has(p.id))
+        .sort((a, b) => b.perGameweek[0] - a.perGameweek[0])[0];
+      expect(joiner.perGameweek[0]).toBeGreaterThan(xp.get(weakest)! + 0.3);
+      const live = squad.map((p) => ({ id: p.id === leaver.id ? joiner.id : p.id, position: p.position }));
+      await page.route("**/api/live*", (route) =>
+        route.request().url().includes("squad=1")
+          ? route.fulfill({ contentType: "application/json", body: JSON.stringify({ gameweek: basedOn + 1, chip: null, squad: live }) })
+          : route.fulfill({ status: 503, contentType: "application/json", body: "{}" }),
+      );
+      await page.goto("/?tab=squad");
+      const panel = page.locator(".panel", { has: page.getByText(/MODEL · GW/) }).first();
+      await panel.scrollIntoViewIfNeeded();
+      const bench = panel.getByTestId("pitch-bench");
+      await expect(page.getByTestId("squad-sync-banner")).toContainText("lineup re-picked for your transfers");
+      // joiner starts (on the pitch, not in the bench row); displaced starter is benched
+      await expect(bench.getByRole("button", { name: new RegExp(`^${joiner.webName}:`) })).toHaveCount(0);
+      await expect(panel.getByRole("button", { name: new RegExp(`^${joiner.webName}:`) })).toHaveCount(1);
+      // somebody the model started now sits on the bench (which starter depends on the formation rules)
+      const modelStarters = (u.startingXi as number[]).map((id) => name.get(id)!);
+      await expect(bench.getByRole("button")).toHaveCount(4);
+      const benchLabels = await bench.getByRole("button").evaluateAll((els) => els.map((e) => e.getAttribute("aria-label") ?? ""));
+      expect(benchLabels.filter((l) => modelStarters.some((n) => l.startsWith(`${n}:`))).length).toBeGreaterThanOrEqual(1);
+      await expect(bench.getByRole("button", { name: new RegExp(`^${leaver.webName}:`) })).toHaveCount(0);
+      const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
+      expect(overflow).toBeLessThanOrEqual(0);
+      await page.screenshot({ path: `test-results/repick-${width}.png` });
+    });
+  }
+
   test("nothing changed: no banner", async ({ page }) => {
     const { squad, basedOn } = forecastSquad();
     await page.route("**/api/live*", (route) =>

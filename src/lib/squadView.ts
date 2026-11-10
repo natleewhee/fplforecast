@@ -6,6 +6,7 @@
 
 import type { Forecast, PoolPlayer } from "./snapshots";
 import { squadSync, type SquadSync } from "./squadSync";
+import { pickLineup, type Lineup, type Slot } from "./pickXi";
 
 export type PendingSwap = { out: number; in: number };
 
@@ -54,4 +55,37 @@ export function resolveSwaps(
     }
   }
   return { swaps, appliedOut, appliedIn, pendingShown, sync };
+}
+
+/** The lineup to show for one upcoming gameweek (index into `forecast.upcoming`), with transfers applied:
+ * the model's own XI when there are none, otherwise the best legal XI from the fifteen (see pickXi.ts).
+ * The Squad pitch, fixture ticker and captain shortlist all call this so they agree. */
+export function lineupFor(
+  forecast: Pick<Forecast, "squad" | "upcoming">,
+  resolved: Pick<ResolvedSwaps, "swaps">,
+  gwIdx = 0,
+): Lineup | null {
+  const gw = forecast.upcoming[gwIdx] ?? forecast.upcoming[0]; // a stale index falls back to the target gameweek
+  if (!gw) return null;
+  if (!forecast.upcoming[gwIdx]) gwIdx = 0;
+  const xpNow = new Map(gw.players.map((p) => [p.id, p.projectedPoints]));
+  const gwProv = new Map(gw.players.map((p) => [p.id, p.provisional]));
+  const slots: Slot[] = forecast.squad.players.map((p) => {
+    const swap = resolved.swaps.get(p.id);
+    return {
+      slot: p.id,
+      position: p.position,
+      xp: swap ? (swap.perGameweek[gwIdx] ?? null) : (xpNow.get(p.id) ?? null),
+      provisional: swap ? false : !!(gwProv.get(p.id) || p.provisional),
+    };
+  });
+  return pickLineup({
+    slots,
+    modelXi: gw.startingXi,
+    modelBench: gw.bench,
+    modelCaptain: gw.captainId,
+    modelVice: gw.viceCaptainId,
+    swappedSlots: new Set(resolved.swaps.keys()),
+    hasSwaps: resolved.swaps.size > 0,
+  });
 }

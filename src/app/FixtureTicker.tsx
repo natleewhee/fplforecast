@@ -3,7 +3,7 @@
 import { useRef, useState } from "react";
 import type { Forecast } from "@/lib/snapshots";
 import { buildTicker, type TickerCell, type TickerRow } from "@/lib/fixtureTicker";
-import { resolveSwaps, type PendingSwap } from "@/lib/squadView";
+import { lineupFor, resolveSwaps, type PendingSwap } from "@/lib/squadView";
 import { fdrColor } from "@/lib/teamColors";
 import PlayerBreakdownSheet from "./PlayerBreakdownSheet";
 import { POSITION_DOT } from "./tokenParts";
@@ -70,8 +70,9 @@ export default function FixtureTicker({
 }) {
   const [openId, setOpenId] = useState<number | null>(null);
   const triggerRef = useRef<HTMLButtonElement | null>(null);
-  const { swaps } = resolveSwaps(forecast, liveSquad, pending, pool);
-  const { gameweeks, rows } = buildTicker(forecast, swaps);
+  const resolved = resolveSwaps(forecast, liveSquad, pending, pool);
+  const { swaps } = resolved;
+  const { gameweeks, rows } = buildTicker(forecast, swaps, 5, lineupFor(forecast, resolved));
   if (rows.length === 0) return null;
   const doubles = rows.reduce((n, r) => n + r.cells.filter((c) => c.kind === "double").length, 0);
   const blanks = rows.reduce((n, r) => n + r.cells.filter((c) => c.kind === "blank").length, 0);

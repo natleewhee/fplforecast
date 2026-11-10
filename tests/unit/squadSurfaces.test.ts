@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { buildTicker, cellFor } from "@/lib/fixtureTicker";
 import { buildCaptainShortlist, secondPickNote, type CaptainCandidate } from "@/lib/captainShortlist";
-import { resolveSwaps } from "@/lib/squadView";
+import { lineupFor, resolveSwaps } from "@/lib/squadView";
 import type { Forecast, OpponentLeg, PoolPlayer } from "@/lib/snapshots";
 
 const leg = (team: string, wasHome = true, fdrRating: number | null = 3): OpponentLeg => ({ team, wasHome, fdrRating });
@@ -209,4 +209,27 @@ test("the committed forecast builds a ticker and a shortlist", () => {
   assert.equal(s.candidates.length, 3);
   assert.equal(s.candidates.filter((c) => c.isModelPick).length, 1);
   assert.equal(s.candidates[0].id, f.captain?.id);
+});
+
+test("lineup: a saved transfer of the captain does not hand the armband to a weak joiner", () => {
+  const weak = { ...pool[6], id: 77, webName: "Weak", perGameweek: [1, 1] } as PoolPlayer;
+  const resolved = { swaps: new Map<number, PoolPlayer>([[7, weak]]), appliedOut: new Set<number>() };
+  const l = lineupFor(forecast, resolved)!;
+  assert.equal(l.captain, 5);
+  assert.equal(l.vice, 6);
+  assert.equal(l.armbandAdjusted, true);
+  assert.equal(l.captainChanged, true);
+});
+
+test("shortlist: no 'Model pick' label and no edge when the app moved the armband", () => {
+  const weak = { ...pool[6], id: 77, webName: "Weak", perGameweek: [1, 1] } as PoolPlayer;
+  const resolved = { swaps: new Map<number, PoolPlayer>([[7, weak]]), appliedOut: new Set<number>() };
+  const s = buildCaptainShortlist(forecast, resolved.swaps, resolved.appliedOut, 3, lineupFor(forecast, resolved))!;
+  assert.ok(s.candidates.every((c) => !c.isModelPick));
+  assert.equal(s.edge, null);
+});
+
+test("lineup: an out-of-range gameweek index falls back to the target gameweek instead of throwing", () => {
+  const l = lineupFor(forecast, { swaps: new Map() }, 9)!;
+  assert.deepEqual(l.xi, [1, 3, 4, 5, 6, 7]);
 });
