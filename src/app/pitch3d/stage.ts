@@ -1,6 +1,6 @@
 import * as THREE from "three";
 import { SKIN_STEPS, type HairStyle } from "@/lib/appearance";
-import { clearOverlaps } from "./tagLayout";
+import { fitTags, type TagItem, type TagState } from "./tagLayout";
 import { ballAt, facing, kickLeg, nextReceiver, passSeconds, BALL_REST_Y, HOLD_SECONDS, KICK_AT, type Spot } from "./passes";
 import {
   BROADCAST,
@@ -820,15 +820,20 @@ function setup(renderer: THREE.WebGLRenderer, canvas: HTMLCanvasElement, opts: S
     return [(tmp.x * 0.5 + 0.5) * size.w, (-tmp.y * 0.5 + 0.5) * size.h, inFrame];
   };
 
+  const tagState: TagState = { tier: 0, memory: new Map() };
   function placeTags() {
-    const items: { el: HTMLElement; x: number; y: number; w: number; h: number }[] = [];
+    const items: (TagItem & { el: HTMLElement })[] = [];
     for (const f of figures) {
       const el = tagLayer.querySelector<HTMLElement>(`[data-tag="${f.def.id}"]`);
       if (!el) continue;
       const [x, y, inFrame] = px(f.g.position.x, f.g.position.y + 3.05 * f.scale, f.g.position.z);
       // a player outside the close-up is not drawn; his tag is made invisible (still reachable by keyboard)
       el.toggleAttribute("data-pitch-off", !inFrame);
-      if (inFrame) items.push({ el, x, y, w: el.offsetWidth || 60, h: el.offsetHeight || 26 });
+      if (inFrame) {
+        const [, feet] = px(f.g.position.x, f.g.position.y, f.g.position.z);
+        const half = Math.max(8, (feet - y) * 0.2);
+        items.push({ el, key: String(f.def.id), x, y, w: el.offsetWidth || 60, h: el.offsetHeight || 26, figure: { l: x - half, r: x + half, t: y, b: feet } });
+      }
     }
     // tags side by side on one line spread apart first, so each stays close to its own player
     const lo = (it: { w: number }) => it.w / 2 + 3;
@@ -860,6 +865,7 @@ function setup(renderer: THREE.WebGLRenderer, canvas: HTMLCanvasElement, opts: S
     byX.forEach(clampX);
     // lowest on screen first; anything still sitting on top of a tag below it is lifted clear
     items.sort((a, b) => b.y - a.y);
+    const preLift = items.map((it) => ({ x: it.x, y: it.y }));
     for (let i = 1; i < items.length; i++) {
       for (let pass = 0; pass < 4; pass++) {
         let moved = false;
@@ -872,11 +878,25 @@ function setup(renderer: THREE.WebGLRenderer, canvas: HTMLCanvasElement, opts: S
         if (!moved) break;
       }
     }
+    // a lift that ran out of room (the far rows pile up against the top of a narrow pitch) is not used:
+    // the layout below starts from where the tags were before it and finds each one a spot nearby
+    const outOfRoom = items.some((it) => it.y < it.h + 1);
+    if (outOfRoom) items.forEach((it, i) => ((it.x = preLift[i].x), (it.y = preLift[i].y)));
     for (const it of items) {
       clampX(it); // the vertical lift above can only have moved y, but keep a wide name at the edge in frame
       it.y = Math.max(it.h + 1, it.y); // and a lifted tag never rises out of the top (the keeper's)
     }
-    clearOverlaps(items, size.w, size.h);
+    // Whatever the earlier passes left touching is cleared by the least move. If a tag still cannot be
+    // cleared close to its player, every tag goes smaller (shorter name, then number only) and it is tried again.
+    const home = items.map((it) => ({ x: it.x, y: it.y }));
+    fitTags(items, home, size.w, size.h, tagState, (tier) => {
+      for (const it of items) {
+        if (tier) it.el.dataset.tagSize = tier === 1 ? "sm" : "xs";
+        else delete it.el.dataset.tagSize;
+        it.w = it.el.offsetWidth || it.w; // measured again: the size just changed
+        it.h = it.el.offsetHeight || it.h;
+      }
+    });
     for (const it of items) {
       it.el.style.transform = `translate(${Math.round(it.x)}px,${Math.round(it.y)}px) translate(-50%,-100%)`;
     }

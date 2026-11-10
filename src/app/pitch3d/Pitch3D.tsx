@@ -112,7 +112,7 @@ export default function Pitch3D({
   onSelect,
   onUnavailable,
   goals,
-  compact = false,
+  compact: compactCard = false,
 }: {
   xi: Pitch3DPlayer[];
   bench: Pitch3DPlayer[];
@@ -123,7 +123,7 @@ export default function Pitch3D({
   onUnavailable: () => void;
   /** Live goals from the latest poll: a starter who scored celebrates on his own (see celebrate.ts for the rules). */
   goals?: CelebrationEvent[];
-  /** A pitch inside a narrow card (a scenario): a taller frame and smaller, shorter name tags, so the eleven fit without touching. */
+  /** A pitch inside a card (a scenario): when the card is narrow (under 340px) it gets a taller frame and smaller, shorter name tags, so the eleven fit without touching. */
   compact?: boolean;
 }) {
   const data = useContext(PitchDataContext);
@@ -131,6 +131,15 @@ export default function Pitch3D({
   const hostRef = useRef<HTMLDivElement>(null);
   const tagsRef = useRef<HTMLDivElement>(null);
   const stageRef = useRef<StageHandle | null>(null);
+  const [cardWidth, setCardWidth] = useState(0);
+  const compact = compactCard && cardWidth < 340; // narrow until measured: phones come first
+  useEffect(() => {
+    const el = rootRef.current;
+    if (!el || !compactCard || typeof ResizeObserver === "undefined") return;
+    const ro = new ResizeObserver(() => setCardWidth(el.clientWidth));
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, [compactCard]);
   const [ready, setReady] = useState(false);
   const [visible, setVisible] = useState(false);
   const [state, setState] = useState<StageState>({ focusId: null, celebrating: null });
@@ -293,14 +302,19 @@ export default function Pitch3D({
   const floating = (p: Pitch3DPlayer) =>
     tagEl(
       p,
-      `pointer-events-auto absolute left-0 top-0 flex flex-col items-center rounded-md border border-white/15 bg-[rgba(8,16,24,0.82)] leading-tight text-ink will-change-transform focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--accent)] ${compact ? "max-w-[4.4rem] px-1 py-0" : "max-w-[9rem] px-1.5 py-px"}`,
+      `group pointer-events-auto absolute left-0 top-0 flex flex-col items-center rounded-md border border-white/15 bg-[rgba(8,16,24,0.82)] leading-tight text-ink will-change-transform focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--accent)] data-[tag-size=sm]:max-w-[3.6rem] data-[tag-size=xs]:max-w-[2.6rem] ${compact ? "max-w-[4.4rem] px-1 py-0" : "max-w-[9rem] px-1.5 py-px"}`,
       <>
-        <span className="flex max-w-full items-center gap-0.5">
+        <span className={`flex max-w-full items-center ${compact ? "gap-0.5" : "gap-1"} group-data-[tag-size=xs]:hidden`}>
           {roleBadge(p)}
-          <span className={`min-w-0 truncate font-bold text-white ${compact ? "text-[10px]" : "text-[11px]"}`}>{p.webName}</span>
+          <span className={`min-w-0 truncate font-bold text-white group-data-[tag-size=sm]:text-[9px] ${compact ? "text-[10px]" : "text-[11px]"}`}>{p.webName}</span>
         </span>
         <span className="flex max-w-full items-center justify-center gap-1">
           <span className={`font-mono font-semibold ${compact ? "text-[9.5px]" : "text-[10.5px]"} ${subColor(p)}`}>{p.sub}</span>
+          {compact && (p.badges?.length ?? 0) > 0 && (
+            <span className="text-[10px] font-black leading-none text-[var(--warn)]" aria-hidden>
+              !
+            </span>
+          )}
           {!compact && badges(p, "text-[10px] leading-none")}
         </span>
       </>,
