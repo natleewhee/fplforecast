@@ -91,6 +91,12 @@ async function open(page: Page) {
   await page.getByRole("button", { name: /^Van Dijk,/ }).waitFor();
 }
 
+/** Opens the team bar's overflow menu and taps one item ("Copy link" or "Change team"). */
+async function openTeamMenu(page: Page, item: "Copy link" | "Change team") {
+  await page.getByRole("button", { name: "Team options" }).click();
+  await page.getByRole("menuitem", { name: item }).click();
+}
+
 /** The recap folds to a bar while matches are live: tap it open if it is closed. */
 async function openRecap(page: Page) {
   const bar = page.getByTestId("recap").getByRole("button", { name: /recap/i }).first();
@@ -138,7 +144,7 @@ test.describe("Live tab", () => {
   test("lists what is still to come and who is due bonus", async ({ page }) => {
     await mockLive(page, { current: "a" });
     await open(page);
-    const strip = page.getByText("Still to come").locator("..");
+    const strip = page.getByTestId("rank-threats");
     await expect(strip).toContainText("Playing now");
     await expect(strip).toContainText("Sun 23:30");
     await expect(strip).toContainText("Bonus due");
@@ -149,7 +155,7 @@ test.describe("Live tab", () => {
     const poll = { current: "a" as "a" | "b" };
     await mockLive(page, poll);
     await open(page);
-    await expect(page.getByText("show up here as they happen")).toBeVisible();
+    await expect(page.getByText("appear here live while this page is open")).toBeVisible();
     poll.current = "b";
     await page.evaluate(() => document.dispatchEvent(new Event("visibilitychange")));
     const feed = page.getByText("What just happened").locator("..");
@@ -262,7 +268,7 @@ test.describe("Replace a player on the pitch", () => {
     await page.keyboard.press("Escape");
     // the saved swap now marks the outgoing shirt, and the deadline banner counts it
     await expect(scene.locator("span[title^='Saved transfer']")).toHaveCount(1);
-    await expect(page.getByText(/transfers? pending/).first()).toBeVisible();
+    await expect(page.getByTestId("deadline-banner")).toContainText("1 pending");
 
     // and the pitch previews the incoming player in their place, still eleven on the pitch
     await expect(page.getByTestId("preview-banner")).toContainText("1 saved transfer");
@@ -323,8 +329,9 @@ test.describe("Deadline banner", () => {
     await page.clock.install({ time: deadline - 5 * 3_600_000 });
     await mockLive(page, { current: "a" });
     await page.goto("/");
-    const banner = page.getByRole("status").filter({ hasText: /deadline/i });
-    await expect(banner).toContainText("Deadline today");
+    const banner = page.getByTestId("deadline-banner");
+    await expect(banner).toHaveAttribute("data-tone", "today");
+    await expect(banner).toContainText("deadline");
     await expect(banner).toContainText("SGT");
     await expect(banner).toContainText("4h");
 
@@ -590,8 +597,8 @@ test.describe("Team bar", () => {
     const bar = page.getByTestId("team-bar");
     await expect(bar).toContainText("Viewing");
     await expect(bar.getByRole("textbox")).toHaveCount(0);
-    expect((await bar.boundingBox())!.height).toBeLessThan(80); // one row, not two
-    await bar.getByRole("button", { name: "Change team" }).click();
+    expect((await bar.boundingBox())!.height).toBeLessThan(40); // one text line; the buttons live in the header menu
+    await openTeamMenu(page, "Change team");
     await expect(bar.getByRole("textbox", { name: "Team ID" })).toBeVisible();
     await expect(bar.getByRole("button", { name: "View" })).toBeDisabled(); // nothing typed yet
     await bar.getByRole("textbox", { name: "Team ID" }).fill("12");
@@ -599,6 +606,89 @@ test.describe("Team bar", () => {
   });
 });
 
+
+test.describe("Team bar overflow menu", () => {
+  test("opens with Copy link and Change team, Escape closes it and returns focus to the button", async ({ page }) => {
+    await mockLive(page, { current: "a" });
+    await open(page);
+    const bar = page.getByRole("banner");
+    const trigger = bar.getByRole("button", { name: "Team options" });
+    await expect(trigger).toHaveAttribute("aria-haspopup", "menu");
+    await expect(trigger).toHaveAttribute("aria-expanded", "false");
+    expect((await trigger.boundingBox())!.height).toBeGreaterThanOrEqual(44);
+    expect((await trigger.boundingBox())!.width).toBeGreaterThanOrEqual(44);
+    await trigger.focus();
+    await page.keyboard.press("Enter");
+    await expect(trigger).toHaveAttribute("aria-expanded", "true");
+    const items = page.getByRole("menuitem");
+    await expect(items).toHaveText(["Copy link", "Change team"]);
+    for (const box of await items.all()) expect((await box.boundingBox())!.height).toBeGreaterThanOrEqual(44);
+    await expect(items.first()).toBeFocused(); // keyboard lands inside the menu
+    await page.keyboard.press("ArrowDown");
+    await expect(items.nth(1)).toBeFocused();
+    await page.keyboard.press("Escape");
+    await expect(page.getByRole("menu")).toHaveCount(0);
+    await expect(trigger).toHaveAttribute("aria-expanded", "false");
+    await expect(trigger).toBeFocused();
+  });
+
+  test("tapping outside closes it", async ({ page }) => {
+    await mockLive(page, { current: "a" });
+    await open(page);
+    await page.getByRole("button", { name: "Team options" }).click();
+    await expect(page.getByRole("menu")).toBeVisible();
+    await page.mouse.click(5, 400);
+    await expect(page.getByRole("menu")).toHaveCount(0);
+  });
+
+  test("Copy link copies the share link and says so; Change team opens the team field", async ({ page, context }) => {
+    await context.grantPermissions(["clipboard-read", "clipboard-write"], { origin: ORIGIN });
+    await page.addInitScript(() => { Object.defineProperty(navigator, "share", { value: undefined, configurable: true }); });
+    await mockLive(page, { current: "a" });
+    await open(page);
+    await openTeamMenu(page, "Copy link");
+    await expect(page.getByText("Link copied")).toBeVisible();
+    expect(await page.evaluate(() => navigator.clipboard.readText())).toBe(`${ORIGIN}/?team=${OWNER}`);
+    await openTeamMenu(page, "Change team");
+    await expect(page.getByTestId("team-bar").getByRole("textbox", { name: "Team ID" })).toBeFocused();
+  });
+
+  test("a guest can still switch team from the menu", async ({ page, context }) => {
+    await context.clearCookies();
+    await page.route("**/api/forecast*", (route) =>
+      route.fulfill({ contentType: "application/json", body: JSON.stringify({ ...guestForecast(), teamName: new URL(route.request().url()).searchParams.get("teamId") === "535353" ? "Second FC" : "Guest FC" }) }),
+    );
+    await page.goto("/");
+    await page.getByRole("textbox", { name: "FPL team ID" }).fill("424242");
+    await page.getByRole("button", { name: "View squad" }).click();
+    const bar = page.getByTestId("team-bar");
+    await expect(bar).toContainText("Guest FC");
+    await openTeamMenu(page, "Change team");
+    await bar.getByRole("textbox", { name: "Team ID" }).fill("535353");
+    await bar.getByRole("button", { name: "View", exact: true }).click();
+    await expect(bar).toContainText("Second FC");
+  });
+});
+
+test.describe("Chrome height", () => {
+  for (const width of [360, 390]) {
+    test(`the deadline banner is one line at ${width}px, even with a pending transfer`, async ({ page }) => {
+      await page.clock.install({ time: Date.parse(latestDeadline()) - 30 * 3_600_000 });
+      await page.setViewportSize({ width, height: 844 });
+      await mockLive(page, { current: "a" });
+      await page.goto("/?tab=live");
+      const banner = page.getByTestId("deadline-banner");
+      await expect(banner).toContainText("SGT");
+      const box = (await banner.boundingBox())!;
+      expect(box.height).toBeLessThan(40); // one text line plus padding, never wrapped
+      expect((await page.getByRole("banner").boundingBox())!.height).toBeLessThan(66); // the menu button does not grow the header
+      expect((await page.getByTestId("team-bar").boundingBox())!.height).toBeLessThan(40);
+      await expect(banner).not.toContainText(/\bC\s+\w/); // the captain is on the pitch and in the checklist
+      expect(await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth)).toBeLessThanOrEqual(0);
+      await page.screenshot({ path: `test-results/chrome-${width}.png`, clip: { x: 0, y: 0, width, height: 360 } });
+    });
+  }
+});
 
 test.describe("Match day", () => {
   test("bench cover says who comes on if a starter doesn't play", async ({ page }) => {
@@ -1530,6 +1620,33 @@ test.describe("What could still move your rank", () => {
     });
   }
 
+  for (const width of [360, 390]) {
+    test(`is one card with the count, the kickoff list and the threat lines, no duplicate headings, at ${width}px`, async ({ page }) => {
+      await page.setViewportSize({ width, height: 844 });
+      await mockThreats(page, [foden]);
+      await page.goto("/?tab=live");
+      const card = page.getByTestId("rank-threats");
+      await expect(card).toBeVisible();
+      await expect(page.getByTestId("rank-threats")).toHaveCount(1);
+      await expect(card.getByTestId("still-to-play-count")).toContainText(/\d+ of your XI (has|have) a match left/);
+      await expect(card.getByTestId("next-up")).toContainText("Playing now");
+      await expect(card.getByTestId("next-up")).toContainText("Sun 23:30");
+      await expect(card.locator("[data-kind='yours']").first()).toBeVisible();
+      await expect(card.locator("[data-kind='missing']")).toHaveCount(1);
+      await expect(page.getByText("Still to come", { exact: true })).toHaveCount(0); // the old second card's heading
+      await expect(page.getByRole("heading", { name: /still to play/i })).toHaveCount(1);
+      // count line first, then the kickoff list, then the threat lines
+      const y = async (loc: Locator) => (await loc.boundingBox())!.y;
+      expect(await y(card.getByTestId("still-to-play-count"))).toBeLessThan(await y(card.getByTestId("next-up")));
+      expect(await y(card.getByTestId("next-up"))).toBeLessThan(await y(card.locator("li").first()));
+      // one explainer row, not two
+      await expect(page.locator("details > summary", { hasText: /worked out/ })).toHaveCount(1);
+      expect(await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth)).toBeLessThanOrEqual(0);
+      await card.scrollIntoViewIfNeeded();
+      await page.screenshot({ path: `test-results/still-to-play-${width}.png` });
+    });
+  }
+
   test("with no ownership data the not-owned lines disappear and your own still show", async ({ page }) => {
     await mockThreats(page, []);
     await page.goto("/?tab=live");
@@ -1649,10 +1766,10 @@ test.describe("Guest teams", () => {
     await enterTeam(page, "424242");
     const bar = page.getByTestId("team-bar");
     await expect(bar).toContainText("Guest FC");
-    await bar.getByRole("button", { name: "Change team" }).click();
+    await openTeamMenu(page, "Change team");
     await bar.getByRole("textbox", { name: "Team ID" }).fill("535353");
     await bar.getByRole("button", { name: "View", exact: true }).click(); // slow second lookup
-    await bar.getByRole("button", { name: "Change team" }).click();
+    await openTeamMenu(page, "Change team");
     await bar.getByRole("button", { name: "Switch team" }).click();
     await page.waitForTimeout(3000);
     await expect(page.getByRole("textbox", { name: "FPL team ID" })).toBeVisible(); // still on the gate

@@ -7,12 +7,13 @@ import {
   type LivePayload,
   type TrackerView,
 } from "@/lib/liveBlend";
-import { buildRankThreats } from "@/lib/rankThreats";
+import { buildRankThreats, stillToPlayCount } from "@/lib/rankThreats";
 import { clockTime } from "@/lib/time";
 import { staleness } from "@/lib/staleness";
 import { FPL_UPDATING_TEXT } from "@/lib/fplApi";
 import DuelMini from "./DuelMini";
 import LivePitch from "./LivePitch";
+import { NextUpLines } from "./LiveUpdates";
 import RollingNumber from "./RollingNumber";
 
 /* The in-gameweek surface (KTD7): while matches are live it leads the page with
@@ -324,8 +325,8 @@ function TrackerPanel({
       </div>
 
       <details className="text-[11px] text-ink-faint">
-        <summary className="cursor-pointer font-medium text-ink-soft hover:text-ink">
-          How is the safety score worked out?
+        <summary className="cursor-pointer py-2 font-medium text-ink-soft hover:text-ink">
+          How {view.estimatedRank ? "are the safety score and rank" : "is the safety score"} worked out?
         </summary>
         <div className="mt-1.5 space-y-1.5">
           <p>
@@ -345,31 +346,26 @@ function TrackerPanel({
                 : "Shown as low confidence right now because no match has kicked off — the projection is still the pre-match expectation and par isn't meaningful yet."}
             </p>
           )}
+          {view.estimatedRank && (
+            <>
+              <p>
+                <span className="font-medium text-ink-soft">Estimated overall rank:</span> FPL
+                doesn&rsquo;t publish the live population&rsquo;s score distribution, so this is
+                a personal calibration instead: fitted from how far your projected total
+                ({view.projectedTotal.toFixed(1)}) sits above or below the gameweek average
+                ({payload.liveAverage.toFixed(1)}), against how your own overall rank has actually
+                moved with that gap over your last {view.estimatedRank.sampleSize} finished
+                gameweeks. Treat it as a rough steer, not a real-time population estimate.
+              </p>
+              {view.estimatedRank.lastKnownRank != null && (
+                <p>Last known rank: {view.estimatedRank.lastKnownRank.toLocaleString()}.</p>
+              )}
+            </>
+          )}
         </div>
       </details>
 
-      {view.estimatedRank && (
-        <details className="text-[11px] text-ink-faint">
-          <summary className="cursor-pointer font-medium text-ink-soft hover:text-ink">
-            How is the overall rank estimated?
-          </summary>
-          <div className="mt-1.5 space-y-1.5">
-            <p>
-              FPL doesn&rsquo;t publish the live population&rsquo;s score distribution, so this is
-              a personal calibration instead: fitted from how far your projected total
-              ({view.projectedTotal.toFixed(1)}) sits above or below the gameweek average
-              ({payload.liveAverage.toFixed(1)}), against how your own overall rank has actually
-              moved with that gap over your last {view.estimatedRank.sampleSize} finished
-              gameweeks. Treat it as a rough steer, not a real-time population estimate.
-            </p>
-            {view.estimatedRank.lastKnownRank != null && (
-              <p>Last known rank: {view.estimatedRank.lastKnownRank.toLocaleString()}.</p>
-            )}
-          </div>
-        </details>
-      )}
-
-      <RankThreatsCard lines={threatLines} />
+      <StillToPlayCard view={view} lines={threatLines} />
 
       <LivePitch
         rows={view.rows}
@@ -381,30 +377,41 @@ function TrackerPanel({
   );
 }
 
-/** What could still change this gameweek's rank: your players and popular
- * players you don't own who still have a match. Hidden when there is nothing
- * true to say. */
-function RankThreatsCard({ lines }: { lines: ReturnType<typeof buildRankThreats> }) {
-  if (lines.length === 0) return null;
+/** One card for what is left this gameweek: the count of your players still to
+ * play, who plays when (SGT) and who is due bonus, then what could move your
+ * rank (your armband, the model's expectation, popular players you don't
+ * count). Hidden when there is nothing true to say. */
+function StillToPlayCard({ view, lines }: { view: TrackerView; lines: ReturnType<typeof buildRankThreats> }) {
+  const { toPlay, side } = stillToPlayCount(view);
+  const onPitch = view.rows.filter((r) => (!r.isBench && !r.subbedOut) || r.subbedIn);
+  const hasNextUp = onPitch.some((r) => r.status === "playing" || r.status === "notStarted" || r.bonusPending);
+  if (toPlay === 0 && !hasNextUp && lines.length === 0) return null;
   return (
-    <section aria-labelledby="rank-threats-h" data-testid="rank-threats" className="rounded-xl border border-line p-3">
+    <section aria-labelledby="rank-threats-h" data-testid="rank-threats" className="space-y-2 rounded-xl border border-line p-3">
       <h3 id="rank-threats-h" className="eyebrow">
         Still to play: what could move your rank
       </h3>
-      <ul className="mt-2 space-y-2">
-        {lines.map((l) => (
-          <li key={l.key} data-kind={l.kind} className="flex gap-2 text-xs leading-snug text-ink-soft">
-            <span
-              aria-hidden
-              className={`mt-1 h-1.5 w-1.5 shrink-0 rounded-full ${l.kind === "yours" ? "bg-[var(--accent)]" : "bg-[var(--warn)]"}`}
-            />
-            <span>
-              <span className="sr-only">{l.kind === "yours" ? "Yours: " : "Not owned: "}</span>
-              {l.text}
-            </span>
-          </li>
-        ))}
-      </ul>
+      <p className="text-xs font-medium text-ink" data-testid="still-to-play-count">
+        {toPlay} of your {side}{" "}
+        {toPlay === 1 ? "has" : "have"} a match left
+      </p>
+      {hasNextUp && <NextUpLines rows={onPitch} />}
+      {lines.length > 0 && (
+        <ul className="space-y-2 border-t border-line pt-2">
+          {lines.map((l) => (
+            <li key={l.key} data-kind={l.kind} className="flex gap-2 text-xs leading-snug text-ink-soft">
+              <span
+                aria-hidden
+                className={`mt-1 h-1.5 w-1.5 shrink-0 rounded-full ${l.kind === "yours" ? "bg-[var(--accent)]" : "bg-[var(--warn)]"}`}
+              />
+              <span>
+                <span className="sr-only">{l.kind === "yours" ? "Yours: " : "Not owned: "}</span>
+                {l.text}
+              </span>
+            </li>
+          ))}
+        </ul>
+      )}
     </section>
   );
 }

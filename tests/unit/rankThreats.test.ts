@@ -4,7 +4,7 @@ import { readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { buildTracker, pickThreats, type FplBootstrap, type FplFixture, type LivePayload, type LiveThreat } from "../../src/lib/liveBlend.ts";
-import { buildRankThreats } from "../../src/lib/rankThreats.ts";
+import { buildRankThreats, stillToPlayCount } from "../../src/lib/rankThreats.ts";
 
 const here = dirname(fileURLToPath(import.meta.url));
 const load = (): LivePayload => JSON.parse(readFileSync(join(here, "..", "e2e", "fixtures", "live-a.json"), "utf8"));
@@ -60,6 +60,15 @@ test("your own side names the armband and what is left in the XI; capped to two 
   const own = lines(p).filter((l) => l.kind === "yours");
   assert.ok(own.length >= 1 && own.length <= 2);
   assert.ok(own.some((l) => /pts from your \d+ to play/.test(l.text) || /armband/.test(l.text)));
+});
+
+test("the count line says how many of the XI have a match left; the xP line does not repeat who or when", () => {
+  const p = { ...load(), threats: [] };
+  const c = stillToPlayCount(buildTracker(p, null));
+  assert.equal(c.side, "XI");
+  assert.equal(c.total, 11);
+  assert.ok(c.toPlay > 0 && c.toPlay <= 11);
+  for (const l of lines(p).filter((x) => x.kind === "yours")) assert.doesNotMatch(l.text, /have a match left|plays Sun/);
 });
 
 test("nothing left to play and no threats: no lines at all", () => {
@@ -170,7 +179,8 @@ test("your bench is worded as such, and Bench Boost says your 15", () => {
   assert.match(t, /on your bench so his points only count if he is subbed in/);
   const base = load();
   const bb: LivePayload = { ...base, picks: { ...base.picks, chip: "bboost" }, threats: [] };
-  assert.ok(lines(bb).some((l) => /of your 15 /.test(l.text)));
+  assert.equal(stillToPlayCount(buildTracker(bb, null)).side, "15");
+  assert.equal(stillToPlayCount(buildTracker(bb, null)).total, 15);
 });
 
 test("when the armband is the only player left, his xP is shown", () => {
