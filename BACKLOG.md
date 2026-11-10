@@ -22,7 +22,7 @@ Still open from the last review:
   the season-rollover case (no current gameweek) is not handled specially.
 - [ ] Free Hit week should plan from the squad that comes back, not the
   one-week Free Hit squad.
-- [ ] Price-change watch (risers/fallers) from FPL's own projection fields
+- [x] Price-change watch (risers/fallers) from FPL's own projection fields
   (`price_change_percent`, `price_change_hourly_rate`,
   `price_change_projections`), which every bootstrap snapshot now carries.
 - [ ] Flag suspension and loan-ban risk from `scout_risks`.

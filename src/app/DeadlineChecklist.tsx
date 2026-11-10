@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import type { Forecast } from "@/lib/snapshots";
 import { chipChecklist } from "@/lib/chips";
 import { availabilityFlag, hasRiskData, risksForGameweek } from "@/lib/availability";
+import { priceRow } from "@/lib/priceWatch";
 import { countdown } from "@/lib/time";
 
 type RowStatus = "ok" | "amber" | "red" | "info";
@@ -102,10 +103,12 @@ export default function DeadlineChecklist({ forecast }: { forecast: Forecast }) 
   );
   const riskKnown = hasRiskData(forecast.squad.players);
   const riskDetail = !riskKnown
-    ? "Not in this build yet; arrives with tonight's update."
+    ? "Not in this build yet; arrives with the next daily update."
     : riskLines.length === 0
       ? `FPL flags no suspension or loan-ban risk in your squad for GW${forecast.targetGameweek}.`
       : riskLines.join(" ");
+
+  const price = priceRow(forecast.squad.players);
 
   const topScenario = forecast.scenarios.byHorizon["1"]?.[0] ?? null;
   const transferDetail = !topScenario
@@ -148,6 +151,7 @@ export default function DeadlineChecklist({ forecast }: { forecast: Forecast }) 
           label="Suspension / loan-ban risk (FPL)"
           detail={riskDetail}
         />
+        <ChecklistRow status={price.status} label="Price changes (FPL)" detail={price.detail} />
         <ChecklistRow status={benchStatus} label="Bench order" detail={benchDetail} />
         <ChecklistRow status="info" label="Transfer" detail={transferDetail} />
         <ChecklistRow status={chipRow.status} label="Chips" detail={chipRow.detail} />

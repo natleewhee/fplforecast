@@ -104,6 +104,18 @@ export type AvailabilityRisk = {
   notes: string;
 };
 
+// FPL's own price-movement fields, carried as published (nothing predicted).
+// `percent` is FPL's progress toward the next price change: near +100 a rise,
+// near -100 a fall. `likelihood` is its coarse -5..+5 bucket for the next update.
+// Absent on forecasts built before this field existed; null = FPL sent none.
+export type PriceWatch = {
+  percent: number;
+  likelihood: number | null;
+  hourlyRate: number | null;
+  changeThisGw: number; // tenths of £m since the gameweek began (+1 = already rose £0.1m)
+  netTransfers: number | null; // transfers in minus out this gameweek
+};
+
 export type PlayerCard = {
   id: number;
   webName: string;
@@ -119,6 +131,7 @@ export type PlayerCard = {
   breakdown: ProjectionBreakdown;
   floorCeiling?: FloorCeiling | null;
   availability?: Availability;
+  priceWatch?: PriceWatch | null;
   code?: number | null; // FPL photo code (headshot filename)
   recentPoints?: (number | null)[]; // last few gameweeks' points, oldest first; null = didn't play
 };

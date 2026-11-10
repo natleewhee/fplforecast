@@ -411,6 +411,57 @@ def _scout_risks(el: dict) -> list[dict]:
     return out
 
 
+def _price_change_info(el: dict) -> dict | None:
+    """FPL's own price-movement fields for one player, carried as published.
+    `price_change_percent` (a string, about -100..+100) is FPL's progress toward
+    the next price change: near +100 a rise, near -100 a fall. `likelihood` is
+    the coarse -5..+5 bucket on its first projection (offset 0). Nothing is
+    predicted here. Returns None when the essentials are missing or malformed,
+    so a bad entry never breaks the cron or a guest lookup."""
+
+    def num(v):
+        try:
+            f = float(v)
+        except (TypeError, ValueError):
+            return None
+        return f if math.isfinite(f) else None
+
+    percent = num(el.get("price_change_percent"))
+    if percent is None:
+        return None
+    # A calibrating or locked player's percent is not a usable signal.
+    if el.get("price_change_calibrating") is True:
+        return None
+    locked = el.get("price_change_locked_until")
+    if isinstance(locked, str) and locked:
+        try:
+            until = datetime.fromisoformat(locked.replace("Z", "+00:00"))
+            if until.tzinfo is None:
+                until = until.replace(tzinfo=timezone.utc)
+            if until > datetime.now(timezone.utc):
+                return None
+        except ValueError:
+            pass
+    likelihood = None
+    projections = el.get("price_change_projections")
+    if isinstance(projections, list):
+        for pr in projections:
+            if isinstance(pr, dict) and num(pr.get("offset")) == 0:
+                lk = num(pr.get("likelihood"))
+                likelihood = int(lk) if lk is not None else None
+                break
+    hourly = num(el.get("price_change_hourly_rate"))
+    change = num(el.get("cost_change_event"))
+    t_in, t_out = num(el.get("transfers_in_event")), num(el.get("transfers_out_event"))
+    return {
+        "percent": round(percent, 1),
+        "likelihood": likelihood,
+        "hourlyRate": int(hourly) if hourly is not None else None,
+        "changeThisGw": int(change) if change is not None else 0,  # tenths of GBP m, since the GW began
+        "netTransfers": int(t_in - t_out) if t_in is not None and t_out is not None else None,
+    }
+
+
 def _availability_info(el: dict) -> dict:
     """FPL's own doubt signal -- status letter, the % chance of playing the
     next round it publishes for doubtful/returning players, and its news
@@ -444,6 +495,7 @@ def _player_card(
         "elementType": el.get("element_type"),
         "price": round((el.get("now_cost") or 0) / 10, 1),
         "availability": _availability_info(el),
+        "priceWatch": _price_change_info(el),
     }
 
 

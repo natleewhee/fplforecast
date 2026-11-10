@@ -784,7 +784,8 @@ test.describe("Suspension / loan-ban risk", () => {
     await open(page);
     await openTab(page, "Squad");
     await expect(page.getByText("Suspension / loan-ban risk (FPL)")).toBeVisible();
-    await expect(page.getByText(/Not in this build yet/)).toBeVisible();
+    const riskBox = page.locator("div.flex.items-start", { has: page.getByText("Suspension / loan-ban risk (FPL)", { exact: true }) });
+    await expect(riskBox).toContainText("Not in this build yet");
     await expect(page.getByText(/FPL flags no suspension or loan-ban risk/)).toHaveCount(0);
   });
 
@@ -798,6 +799,54 @@ test.describe("Suspension / loan-ban risk", () => {
     await mockLive(page, { current: "a" });
     await page.goto("/?team=999999&tab=squad");
     await expect(page.getByText(/FPL flags no suspension or loan-ban risk in your squad/)).toBeVisible();
+  });
+});
+
+test.describe("Price changes (FPL)", () => {
+  const newestForecast = () => {
+    const dir = join(__dirname, "..", "..", "data", "forecast");
+    const newest = readdirSync(dir).filter((f) => /^gw\d+\.json$/.test(f)).sort((a, b) => Number(b.match(/\d+/)![0]) - Number(a.match(/\d+/)![0]))[0];
+    return JSON.parse(readFileSync(join(dir, newest), "utf8"));
+  };
+  const priceRowBox = (page: Page) =>
+    page.locator("div.flex.items-start", { has: page.getByText("Price changes (FPL)", { exact: true }) });
+  const quiet = { percent: 3, likelihood: 0, hourlyRate: 0, changeThisGw: 0, netTransfers: 100 };
+
+  test("quotes FPL's price signals for a guest team", async ({ page }) => {
+    const fc = newestForecast();
+    for (const p of fc.squad.players) p.priceWatch = quiet;
+    fc.squad.players[0].priceWatch = { ...quiet, percent: 96.5, likelihood: 4, netTransfers: 24380 };
+    fc.squad.players[1].priceWatch = { ...quiet, percent: -99.3, likelihood: -5, netTransfers: -4602 };
+    const [a, b] = [fc.squad.players[0].webName, fc.squad.players[1].webName];
+    await page.clock.install({ time: Date.parse(fc.deadlineTime) - 5 * 3_600_000 });
+    await page.route("**/api/forecast*", (route) => route.fulfill({ contentType: "application/json", body: JSON.stringify(fc) }));
+    await mockLive(page, { current: "a" });
+    await page.goto("/?team=999999&tab=squad");
+    await expect(page.getByText("Price changes (FPL)")).toBeVisible();
+    await expect(priceRowBox(page)).toContainText(`FPL data suggests ${b} (-99.3%, -5k net transfers this GW) price may fall.`);
+    await expect(priceRowBox(page)).toContainText(`FPL data suggests ${a} (+96.5%, +24k net transfers this GW) price may rise.`);
+  });
+
+  test("says none are near a change when the data is there and quiet", async ({ page }) => {
+    const fc = newestForecast();
+    for (const p of fc.squad.players) p.priceWatch = quiet;
+    await page.clock.install({ time: Date.parse(fc.deadlineTime) - 5 * 3_600_000 });
+    await page.route("**/api/forecast*", (route) => route.fulfill({ contentType: "application/json", body: JSON.stringify(fc) }));
+    await mockLive(page, { current: "a" });
+    await page.goto("/?team=999999&tab=squad");
+    await expect(priceRowBox(page)).toContainText(/FPL data shows none of your 15 near a price change/);
+  });
+
+  test("a forecast built before the price fields existed shows a neutral row, not 'no change'", async ({ page }) => {
+    const fc = newestForecast();
+    for (const p of fc.squad.players) delete p.priceWatch;
+    await page.clock.install({ time: Date.parse(fc.deadlineTime) - 5 * 3_600_000 });
+    await page.route("**/api/forecast*", (route) => route.fulfill({ contentType: "application/json", body: JSON.stringify(fc) }));
+    await mockLive(page, { current: "a" });
+    await page.goto("/?team=999999&tab=squad");
+    await expect(page.getByText("Price changes (FPL)")).toBeVisible();
+    await expect(priceRowBox(page)).toContainText("Not in this build yet");
+    await expect(priceRowBox(page)).not.toContainText(/near a price change/);
   });
 });
 
