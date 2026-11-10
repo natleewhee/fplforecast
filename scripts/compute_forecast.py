@@ -382,6 +382,35 @@ def last_gameweek_review(
     return review
 
 
+def _scout_risks(el: dict) -> list[dict]:
+    """FPL's `scout_risks` list: forward-looking flags such as a one-yellow-
+    card-from-a-ban warning (`suspension_risk`, no gameweek) or a loan clause
+    that rules a player out of one fixture (`loan_ineligible`, with the
+    gameweek). Only FPL's own wording is carried; entries without notes are
+    dropped and nothing is inferred here."""
+    out = []
+    raw = el.get("scout_risks")
+    if not isinstance(raw, list):
+        return out
+    for r in raw:
+        # A malformed entry must never break the cron or a guest lookup.
+        if not isinstance(r, dict):
+            continue
+        notes = r.get("notes")
+        notes = notes.strip() if isinstance(notes, str) else ""
+        if not notes:
+            continue
+        gw = r.get("gameweek")
+        if gw is not None:
+            try:
+                gw = int(gw)
+            except (TypeError, ValueError):
+                continue
+        kind = r.get("property")
+        out.append({"kind": kind if isinstance(kind, str) and kind else "other", "gameweek": gw, "notes": notes})
+    return out
+
+
 def _availability_info(el: dict) -> dict:
     """FPL's own doubt signal -- status letter, the % chance of playing the
     next round it publishes for doubtful/returning players, and its news
@@ -392,6 +421,7 @@ def _availability_info(el: dict) -> dict:
         "status": el.get("status", "a"),
         "chance": el.get("chance_of_playing_next_round"),
         "news": el.get("news") or None,
+        "risks": _scout_risks(el),
     }
 
 

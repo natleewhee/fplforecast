@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import type { Forecast } from "@/lib/snapshots";
 import { chipChecklist } from "@/lib/chips";
-import { availabilityFlag } from "@/lib/availability";
+import { availabilityFlag, hasRiskData, risksForGameweek } from "@/lib/availability";
 import { countdown } from "@/lib/time";
 
 type RowStatus = "ok" | "amber" | "red" | "info";
@@ -95,6 +95,18 @@ export default function DeadlineChecklist({ forecast }: { forecast: Forecast }) 
       ? `Your bench's likely first sub in, ${firstOutfieldSub?.webName}, is also a doubt (${subDoubt?.label}).`
       : "Your bench order looks fine against today's doubts.";
 
+  // FPL's own suspension / loan-ban warnings for the whole squad (a benched
+  // player still matters if he is the auto-sub). Quoted, never inferred.
+  const riskLines = forecast.squad.players.flatMap((p) =>
+    risksForGameweek(p.availability, forecast.targetGameweek).map((r) => `${p.webName}: ${r.notes}`)
+  );
+  const riskKnown = hasRiskData(forecast.squad.players);
+  const riskDetail = !riskKnown
+    ? "Not in this build yet; arrives with tonight's update."
+    : riskLines.length === 0
+      ? `FPL flags no suspension or loan-ban risk in your squad for GW${forecast.targetGameweek}.`
+      : riskLines.join(" ");
+
   const topScenario = forecast.scenarios.byHorizon["1"]?.[0] ?? null;
   const transferDetail = !topScenario
     ? "No transfer scenario available yet."
@@ -131,6 +143,11 @@ export default function DeadlineChecklist({ forecast }: { forecast: Forecast }) 
       <div className="divide-y divide-[var(--line)]">
         <ChecklistRow status={captainStatus} label="Captain" detail={captainDetail} />
         <ChecklistRow status={injuryStatus} label="Injury / doubt risk in your XI" detail={injuryDetail} />
+        <ChecklistRow
+          status={!riskKnown ? "info" : riskLines.length > 0 ? "amber" : "ok"}
+          label="Suspension / loan-ban risk (FPL)"
+          detail={riskDetail}
+        />
         <ChecklistRow status={benchStatus} label="Bench order" detail={benchDetail} />
         <ChecklistRow status="info" label="Transfer" detail={transferDetail} />
         <ChecklistRow status={chipRow.status} label="Chips" detail={chipRow.detail} />

@@ -530,10 +530,28 @@ def test_availability_info_surfaces_fpls_doubt_signal():
     doubtful = cf._availability_info(
         {"status": "d", "chance_of_playing_next_round": 75, "news": "Knock - 75% chance of playing"}
     )
-    assert doubtful == {"status": "d", "chance": 75, "news": "Knock - 75% chance of playing"}
+    assert doubtful == {
+        "status": "d", "chance": 75, "news": "Knock - 75% chance of playing", "risks": [],
+    }
 
     fit = cf._availability_info({"status": "a"})
-    assert fit == {"status": "a", "chance": None, "news": None}
+    assert fit == {"status": "a", "chance": None, "news": None, "risks": []}
+
+
+def test_availability_info_carries_scout_risks_verbatim():
+    el = {
+        "status": "a",
+        "scout_risks": [
+            {"property": "suspension_risk", "gameweek": None, "notes": "4 yellow cards.", "url": None},
+            {"property": "loan_ineligible", "gameweek": 16, "notes": "Loan clause.", "url": None},
+            {"property": "loan_ineligible", "gameweek": 27, "notes": "", "url": None},
+        ],
+    }
+    assert cf._availability_info(el)["risks"] == [
+        {"kind": "suspension_risk", "gameweek": None, "notes": "4 yellow cards."},
+        {"kind": "loan_ineligible", "gameweek": 16, "notes": "Loan clause."},
+    ]
+    assert cf._availability_info({"status": "a", "scout_risks": None})["risks"] == []
 
 
 def test_save_and_load_pool_context_roundtrips(monkeypatch, tmp_path):
@@ -751,3 +769,13 @@ def test_scenarios_chip_flags_follow_the_chip_windows(monkeypatch):
     assert gw20["chipsAvailable"] == {"freeHit": True, "wildcard": True}
     unknown = cf.build_scenarios(**kwargs, target_gw=20, bootstrap_chips=None)
     assert unknown["chipsAvailable"] == {"freeHit": False, "wildcard": False}
+
+
+def test_scout_risks_survive_malformed_entries():
+    el = {"scout_risks": [
+        "junk", None, {"property": "suspension_risk", "notes": 5},
+        {"property": "loan_ineligible", "gameweek": "16", "notes": " Loan clause "},
+        {"property": "loan_ineligible", "gameweek": "soon", "notes": "bad gw"},
+    ]}
+    assert cf._scout_risks(el) == [{"kind": "loan_ineligible", "gameweek": 16, "notes": "Loan clause"}]
+    assert cf._scout_risks({"scout_risks": {"a": 1}}) == []
