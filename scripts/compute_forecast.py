@@ -429,6 +429,19 @@ def _price_change_info(el: dict) -> dict | None:
     percent = num(el.get("price_change_percent"))
     if percent is None:
         return None
+    # A calibrating or locked player's percent is not a usable signal.
+    if el.get("price_change_calibrating") is True:
+        return None
+    locked = el.get("price_change_locked_until")
+    if isinstance(locked, str) and locked:
+        try:
+            until = datetime.fromisoformat(locked.replace("Z", "+00:00"))
+            if until.tzinfo is None:
+                until = until.replace(tzinfo=timezone.utc)
+            if until > datetime.now(timezone.utc):
+                return None
+        except ValueError:
+            pass
     likelihood = None
     projections = el.get("price_change_projections")
     if isinstance(projections, list):

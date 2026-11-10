@@ -784,7 +784,8 @@ test.describe("Suspension / loan-ban risk", () => {
     await open(page);
     await openTab(page, "Squad");
     await expect(page.getByText("Suspension / loan-ban risk (FPL)")).toBeVisible();
-    await expect(page.getByText(/Not in this build yet/).first()).toBeVisible();
+    const riskBox = page.locator("div.flex.items-start", { has: page.getByText("Suspension / loan-ban risk (FPL)", { exact: true }) });
+    await expect(riskBox).toContainText("Not in this build yet");
     await expect(page.getByText(/FPL flags no suspension or loan-ban risk/)).toHaveCount(0);
   });
 
@@ -807,6 +808,8 @@ test.describe("Price changes (FPL)", () => {
     const newest = readdirSync(dir).filter((f) => /^gw\d+\.json$/.test(f)).sort((a, b) => Number(b.match(/\d+/)![0]) - Number(a.match(/\d+/)![0]))[0];
     return JSON.parse(readFileSync(join(dir, newest), "utf8"));
   };
+  const priceRowBox = (page: Page) =>
+    page.locator("div.flex.items-start", { has: page.getByText("Price changes (FPL)", { exact: true }) });
   const quiet = { percent: 3, likelihood: 0, hourlyRate: 0, changeThisGw: 0, netTransfers: 100 };
 
   test("quotes FPL's price signals for a guest team", async ({ page }) => {
@@ -820,8 +823,8 @@ test.describe("Price changes (FPL)", () => {
     await mockLive(page, { current: "a" });
     await page.goto("/?team=999999&tab=squad");
     await expect(page.getByText("Price changes (FPL)")).toBeVisible();
-    await expect(page.getByText(`FPL data suggests ${b} (-99.3%, -4.6k net transfers this GW) may fall.`)).toBeVisible();
-    await expect(page.getByText(`FPL data suggests ${a} (+96.5%, +24k net transfers this GW) may rise.`)).toBeVisible();
+    await expect(priceRowBox(page)).toContainText(`FPL data suggests ${b} (-99.3%, -5k net transfers this GW) price may fall.`);
+    await expect(priceRowBox(page)).toContainText(`FPL data suggests ${a} (+96.5%, +24k net transfers this GW) price may rise.`);
   });
 
   test("says none are near a change when the data is there and quiet", async ({ page }) => {
@@ -831,7 +834,7 @@ test.describe("Price changes (FPL)", () => {
     await page.route("**/api/forecast*", (route) => route.fulfill({ contentType: "application/json", body: JSON.stringify(fc) }));
     await mockLive(page, { current: "a" });
     await page.goto("/?team=999999&tab=squad");
-    await expect(page.getByText(/FPL data shows none of your 15 near a price change/)).toBeVisible();
+    await expect(priceRowBox(page)).toContainText(/FPL data shows none of your 15 near a price change/);
   });
 
   test("a forecast built before the price fields existed shows a neutral row, not 'no change'", async ({ page }) => {
@@ -842,8 +845,8 @@ test.describe("Price changes (FPL)", () => {
     await mockLive(page, { current: "a" });
     await page.goto("/?team=999999&tab=squad");
     await expect(page.getByText("Price changes (FPL)")).toBeVisible();
-    await expect(page.getByText(/Not in this build yet/).first()).toBeVisible();
-    await expect(page.getByText(/near a price change/)).toHaveCount(0);
+    await expect(priceRowBox(page)).toContainText("Not in this build yet");
+    await expect(priceRowBox(page)).not.toContainText(/near a price change/);
   });
 });
 

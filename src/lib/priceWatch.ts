@@ -7,6 +7,9 @@ export const NEAR_PERCENT = 90;
 
 export type PriceSignal = "rise" | "fall" | null;
 
+/** Shown by the checklist when the forecast predates the price fields. */
+export const NO_PRICE_DATA = "Not in this build yet; arrives with the next daily update.";
+
 const finite = (v: unknown): v is number => typeof v === "number" && Number.isFinite(v);
 
 /** FPL's own signal for one player: "rise" or "fall" when its progress figure
@@ -26,38 +29,47 @@ export function hasPriceData(players: { priceWatch?: PriceWatch | null }[]): boo
   return players.some((p) => p.priceWatch != null && finite(p.priceWatch.percent));
 }
 
-const compact = (n: number) => {
+/** Net transfers as a short signed figure: 950, +10k, +1.2m. */
+export const compact = (n: number) => {
   const a = Math.abs(n);
-  const v = a >= 1000 ? `${(a / 1000).toFixed(a >= 10000 ? 0 : 1)}k` : `${a}`;
+  let v: string;
+  if (a >= 999_500) v = `${(a / 1_000_000).toFixed(1)}m`;
+  else if (a >= 1000) v = `${Math.round(a / 1000)}k`;
+  else v = `${Math.round(a)}`;
   return `${n < 0 ? "-" : "+"}${v}`;
 };
 
 export type PriceRow = { status: "info" | "amber" | "ok"; detail: string };
 
+type Row = { webName: string; priceWatch?: PriceWatch | null };
+
 /** The one checklist row: which of the squad FPL's data says are near a rise or
- * fall, quoted with the numbers; what it does show otherwise. */
-export function priceRow(
-  players: { webName: string; priceWatch?: PriceWatch | null }[]
-): PriceRow {
-  if (!hasPriceData(players)) return { status: "info", detail: "Not in this build yet; arrives with tonight's update." };
-  const line = (p: { webName: string; priceWatch?: PriceWatch | null }) => {
+ * fall, quoted with the numbers; what it does show otherwise. The "near" state
+ * comes from the flags alone. Moves already made this GW are summarised (a
+ * list of every mover floods the row): only owned players who already fell are
+ * named. FPL's figure is against today's price, not the manager's sell price. */
+export function priceRow(players: Row[]): PriceRow {
+  if (!hasPriceData(players)) return { status: "info", detail: NO_PRICE_DATA };
+  const withData = players.filter((p) => p.priceWatch != null && finite(p.priceWatch.percent));
+  const line = (p: Row) => {
     const w = p.priceWatch!;
     const net = finite(w.netTransfers) ? `, ${compact(w.netTransfers)} net transfers this GW` : "";
     return `${p.webName} (${w.percent > 0 ? "+" : ""}${w.percent}%${net})`;
   };
-  const flagged = (s: PriceSignal) => players.filter((p) => priceSignal(p.priceWatch) === s);
+  const flagged = (s: PriceSignal) => withData.filter((p) => priceSignal(p.priceWatch) === s);
   const rises = flagged("rise");
   const falls = flagged("fall");
-  const moved = players.filter((p) => finite(p.priceWatch?.changeThisGw) && p.priceWatch!.changeThisGw !== 0);
+  const moved = withData.filter((p) => finite(p.priceWatch!.changeThisGw) && p.priceWatch!.changeThisGw !== 0);
+  const fell = moved.filter((p) => p.priceWatch!.changeThisGw < 0);
   const parts: string[] = [];
-  if (falls.length) parts.push(`FPL data suggests ${falls.map(line).join(", ")} may fall.`);
-  if (rises.length) parts.push(`FPL data suggests ${rises.map(line).join(", ")} may rise.`);
-  if (moved.length)
-    parts.push(
-      `Already moved this GW: ${moved
-        .map((p) => `${p.webName} ${p.priceWatch!.changeThisGw > 0 ? "+" : "-"}£${(Math.abs(p.priceWatch!.changeThisGw) / 10).toFixed(1)}m`)
-        .join(", ")}.`
-    );
-  if (!parts.length) return { status: "ok", detail: "FPL data shows none of your 15 near a price change." };
-  return { status: falls.length ? "amber" : "info", detail: parts.join(" ") };
+  if (falls.length) parts.push(`FPL data suggests ${falls.map(line).join(", ")} price may fall.`);
+  if (rises.length) parts.push(`FPL data suggests ${rises.map(line).join(", ")} price may rise.`);
+  if (!falls.length && !rises.length)
+    parts.push(`FPL data shows none of your ${withData.length} near a price change.`);
+  if (fell.length) parts.push(`Already fell this GW: ${fell.map((p) => p.webName).join(", ")}.`);
+  const others = moved.length - fell.length;
+  if (others > 0) parts.push(`${others} other${others === 1 ? "" : "s"} moved this GW.`);
+  const missing = players.length - withData.length;
+  if (missing > 0) parts.push(`No price data for ${missing}.`);
+  return { status: falls.length ? "amber" : rises.length ? "info" : "ok", detail: parts.join(" ") };
 }

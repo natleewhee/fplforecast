@@ -817,3 +817,11 @@ def test_player_card_carries_price_watch_or_none():
     card = cf._player_card(7, {7: {"team": 1, "element_type": 3, **_PRICE_EL}}, teams)
     assert card["priceWatch"]["percent"] == 95.7
     assert cf._player_card(7, {7: {"team": 1, "element_type": 3}}, teams)["priceWatch"] is None
+
+
+def test_price_change_info_ignores_locked_and_calibrating_players():
+    assert cf._price_change_info({**_PRICE_EL, "price_change_calibrating": True}) is None
+    assert cf._price_change_info({**_PRICE_EL, "price_change_locked_until": "2999-01-01T00:00:00.000000Z"}) is None
+    assert cf._price_change_info({**_PRICE_EL, "price_change_locked_until": "2000-01-01T00:00:00Z"})["percent"] == 95.7
+    assert cf._price_change_info({**_PRICE_EL, "price_change_locked_until": "garbage"})["percent"] == 95.7
+    assert cf._price_change_info({**_PRICE_EL, "price_change_locked_until": None})["percent"] == 95.7

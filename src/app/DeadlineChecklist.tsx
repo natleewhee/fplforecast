@@ -103,7 +103,7 @@ export default function DeadlineChecklist({ forecast }: { forecast: Forecast }) 
   );
   const riskKnown = hasRiskData(forecast.squad.players);
   const riskDetail = !riskKnown
-    ? "Not in this build yet; arrives with tonight's update."
+    ? "Not in this build yet; arrives with the next daily update."
     : riskLines.length === 0
       ? `FPL flags no suspension or loan-ban risk in your squad for GW${forecast.targetGameweek}.`
       : riskLines.join(" ");
