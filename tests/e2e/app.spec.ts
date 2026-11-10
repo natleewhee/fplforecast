@@ -867,11 +867,16 @@ test.describe("Suspension / loan-ban risk", () => {
   });
 
   test("a forecast built before the risk field existed does not say 'no risk'", async ({ page }) => {
-    // The committed forecast has no `risks` on any player yet: the row must not claim FPL flags none.
-    await page.clock.install({ time: Date.parse(latestDeadline()) - 5 * 3_600_000 });
+    // Strip `risks` from the newest committed forecast (the nightly build now carries it) so this
+    // keeps testing the old shape: the row must not claim FPL flags none.
+    const dir = join(__dirname, "..", "..", "data", "forecast");
+    const newest = readdirSync(dir).filter((f) => /^gw\d+\.json$/.test(f)).sort((a, b) => Number(b.match(/\d+/)![0]) - Number(a.match(/\d+/)![0]))[0];
+    const fc = JSON.parse(readFileSync(join(dir, newest), "utf8"));
+    for (const p of fc.squad.players) if (p.availability) delete p.availability.risks;
+    await page.clock.install({ time: Date.parse(fc.deadlineTime) - 5 * 3_600_000 });
+    await page.route("**/api/forecast*", (route) => route.fulfill({ contentType: "application/json", body: JSON.stringify(fc) }));
     await mockLive(page, { current: "a" });
-    await open(page);
-    await openTab(page, "Squad");
+    await page.goto("/?team=999999&tab=squad");
     await expect(page.getByText("Suspension / loan-ban risk (FPL)")).toBeVisible();
     const riskBox = page.locator("div.flex.items-start", { has: page.getByText("Suspension / loan-ban risk (FPL)", { exact: true }) });
     await expect(riskBox).toContainText("Not in this build yet");
@@ -1084,7 +1089,7 @@ test.describe("3D pitch moves", () => {
     await page.evaluate(() => document.dispatchEvent(new Event("visibilitychange")));
     await expect(pitch).toHaveAttribute("data-celebrating", "goal", { timeout: 10000 });
     await expect(pitch).not.toHaveAttribute("data-focus", /.+/); // nobody selected, camera untouched
-    await expect(pitch).not.toHaveAttribute("data-celebrating", /.+/, { timeout: 8000 }); // and it ends
+    await expect(pitch).not.toHaveAttribute("data-celebrating", /.+/, { timeout: 25000 }); // and it ends (the stage caps each step at 0.05s, so on a slow or busy machine 3.6s of animation takes far longer in wall time)
   });
 
   test("the ball stays put during a live celebration and the passing resumes after it", async ({ page }) => {
