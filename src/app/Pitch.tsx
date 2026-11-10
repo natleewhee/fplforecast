@@ -223,6 +223,7 @@ export default function Pitch({
   };
 
   const active = upcoming[gwIdx] ?? upcoming[0];
+  const activeIdx = upcoming[gwIdx] ? gwIdx : 0; // a stale index (fewer gameweeks than before) falls back to the target
   if (!active) return null;
   const isTargetGw = gwIdx === 0;
 
@@ -236,7 +237,7 @@ export default function Pitch({
   // which eleven + captain: the model's, unless transfers are shown, in which case the app re-picks the
   // best legal XI from the fifteen (one function shared with the ticker and the captain shortlist).
   const resolved = { swaps, appliedOut };
-  const lineup = lineupFor(forecast, resolved, gwIdx)!;
+  const lineup = lineupFor(forecast, resolved, activeIdx)!;
   const xiIds = lineup.xi;
   const benchIds = lineup.bench;
   const captainId = shown(lineup.captain) ?? null;
@@ -259,9 +260,9 @@ export default function Pitch({
         webName: swap.webName,
         position: swap.position,
         team: swap.team,
-        xp: swap.perGameweek[gwIdx] ?? null,
+        xp: swap.perGameweek[activeIdx] ?? null,
         provisional: true,
-        opponents: swap.opponents[gwIdx] ?? [],
+        opponents: swap.opponents[activeIdx] ?? [],
         availability: swap.availability,
         code: swap.code,
         recentPoints: swap.recentPoints,
@@ -297,6 +298,15 @@ export default function Pitch({
   const headlineMoved = adjusted && Math.abs(headline - active.points) >= 0.05;
   const pendingCount = transferTools?.pending.length ?? 0;
   const previewing = pendingShown > 0;
+  // What the app changed versus the model's lineup, said plainly (the app's re-pick, not the model's).
+  const changedBits = [
+    lineup.repicked && "lineup re-picked for your transfers",
+    lineup.captainChanged && "captain adjusted (the model\u2019s captain was transferred out or is not starting; the highest-xP starter wears the armband)",
+    !lineup.captainChanged && lineup.viceChanged && "vice-captain adjusted",
+  ].filter(Boolean) as string[];
+  const lineupNote = changedBits.length
+    ? `Adjusted for your transfers: ${changedBits.join("; ")}. This is the app\u2019s re-pick, not the model\u2019s; the model re-picks at the next rebuild.`
+    : "The model\u2019s XI still looks best with them; the model re-picks at the next rebuild.";
   const previewTok = [...xi, ...benched].find((t) => t.id === selectedId && t.preview);
 
   const to3d = (t: Tok): Pitch3DPlayer => ({
@@ -402,9 +412,8 @@ export default function Pitch({
               .slice(0, 3)
               .map((a) => `${a.outName} \u2192 ${a.incoming.webName}`)
               .join(", ")}
-            {sync.swaps.length > 3 ? ` and ${sync.swaps.length - 3} more` : ""}. The pitch shows your squad as it is in FPL now, with the
-            lineup re-picked for your transfers (this app&rsquo;s re-pick, not the model&rsquo;s; the model re-picks at the next rebuild).
-            {lineup.armbandAdjusted && " The armband is adjusted too: the model\u2019s captain was sold or is not starting, so it goes to the highest-xP starter."}
+            {sync.swaps.length > 3 ? ` and ${sync.swaps.length - 3} more` : ""}. The pitch shows your squad as it is in FPL now.{" "}
+            {lineupNote}
             {sync.unresolved.length > 0 && ` Not shown yet (no projection): ${sync.unresolved.join(", ")}.`}
           </div>
         )}
@@ -419,7 +428,7 @@ export default function Pitch({
             {previewing
               ? `${pendingCount} saved transfer${pendingCount === 1 ? "" : "s"} shown on the pitch.`
               : `${pendingCount} saved transfer${pendingCount === 1 ? "" : "s"} waiting.`}{" "}
-            {previewing ? "The XI and armband are re-picked for the preview; the model re-picks at the next rebuild." : "The model re-picks the XI and captain at the next rebuild."}
+            {previewing ? lineupNote : "The model re-picks the XI and captain at the next rebuild."}
           </div>
         )}
 

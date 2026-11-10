@@ -11,6 +11,8 @@ export type Slot = {
   position: string; // GKP | DEF | MID | FWD
   /** target-gameweek xP of whoever stands in this slot now (a joiner's, if swapped); null = unknown */
   xp: number | null;
+  /** projected from a prior alone (no history): may start, but the model never gives such a player the armband */
+  provisional?: boolean;
 };
 
 export type LineupInput = {
@@ -19,8 +21,8 @@ export type LineupInput = {
   modelBench: number[];
   modelCaptain: number | null;
   modelVice: number | null;
-  /** slots whose player was sold in FPL: they cannot keep the armband for the joiner */
-  soldSlots: Set<number>;
+  /** slots whose player was transferred out (made in FPL or saved here): the armband does not pass to the joiner */
+  swappedSlots: Set<number>;
   /** whether any transfer (made or saved) is shown */
   hasSwaps: boolean;
 };
@@ -33,8 +35,10 @@ export type Lineup = {
   vice: number | null;
   /** the app re-picked the XI because of transfers (not the model's choice) */
   repicked: boolean;
-  /** the armband differs from the model's because its holder was sold or benched */
+  /** the armband differs from the model's because its holder was transferred out or benched */
   armbandAdjusted: boolean;
+  captainChanged: boolean;
+  viceChanged: boolean;
   /** XI xP with the captain counted twice, like the model's headline */
   points: number;
 };
@@ -54,6 +58,7 @@ export function isLegalXi(positions: string[]): boolean {
   });
 }
 
+// A missing xP counts as 0 (harmless for choosing the XI; the headline counts it as 0 too, unflagged).
 const val = (s: Slot) => s.xp ?? 0;
 
 export function pickLineup(input: LineupInput): Lineup {
@@ -92,15 +97,19 @@ export function pickLineup(input: LineupInput): Lineup {
     }
   }
 
-  // Armband: the model's holder keeps it while he is still starting and his transfer is not a sale in FPL.
-  // Otherwise the highest-xP starter takes it (and the vice likewise), flagged as adjusted.
+  // Armband: the model's holder keeps it while he is still starting and was not transferred out (a joiner
+  // never inherits it). Otherwise the highest-xP starter takes it (and the vice likewise), flagged as adjusted.
+  // Provisional (prior-only) players may start but never wear the armband, as in the model.
   const ranked = [...xi].sort((a, b) => val(by.get(b)!) - val(by.get(a)!));
-  const ok = (id: number | null) => id != null && xi.includes(id) && !input.soldSlots.has(id);
-  const captain = ok(input.modelCaptain) ? input.modelCaptain : input.hasSwaps ? (ranked[0] ?? null) : input.modelCaptain;
+  const eligible = ranked.filter((id) => !by.get(id)!.provisional);
+  const ok = (id: number | null) => id != null && xi.includes(id) && !input.swappedSlots.has(id);
+  const captain = ok(input.modelCaptain) ? input.modelCaptain : input.hasSwaps ? (eligible[0] ?? null) : input.modelCaptain;
   const vice = ok(input.modelVice) && input.modelVice !== captain
     ? input.modelVice
-    : input.hasSwaps ? (ranked.find((id) => id !== captain) ?? null) : input.modelVice;
-  const armbandAdjusted = input.hasSwaps && (captain !== input.modelCaptain || vice !== input.modelVice);
+    : input.hasSwaps ? (eligible.find((id) => id !== captain) ?? null) : input.modelVice;
+  const captainChanged = input.hasSwaps && captain !== input.modelCaptain;
+  const viceChanged = input.hasSwaps && vice !== input.modelVice;
+  const armbandAdjusted = captainChanged || viceChanged;
   const points = total(xi) + (captain != null && by.has(captain) ? val(by.get(captain)!) : 0);
-  return { xi, bench, captain, vice, repicked, armbandAdjusted, points };
+  return { xi, bench, captain, vice, repicked, armbandAdjusted, captainChanged, viceChanged, points };
 }

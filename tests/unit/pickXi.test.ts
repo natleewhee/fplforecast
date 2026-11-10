@@ -16,7 +16,7 @@ function squad(over: Record<number, number> = {}): Slot[] {
 const modelXi = [1, 3, 4, 5, 6, 8, 9, 10, 11, 13, 14]; // 4-4-2
 const modelBench = [2, 7, 12, 15];
 const input = (slots: Slot[], hasSwaps: boolean, extra = {}) => ({
-  slots, modelXi, modelBench, modelCaptain: 13, modelVice: 8, soldSlots: new Set<number>(), hasSwaps, ...extra,
+  slots, modelXi, modelBench, modelCaptain: 13, modelVice: 8, swappedSlots: new Set<number>(), hasSwaps, ...extra,
 });
 
 test("no swaps: the model's lineup is returned untouched, even if a bench player scores more", () => {
@@ -82,7 +82,7 @@ test("armband: kept while the holder still starts", () => {
 });
 
 test("armband: a sold captain falls to the highest-xP starter and is flagged", () => {
-  const l = pickLineup(input(squad({ 13: 1.2 }), true, { soldSlots: new Set([13]) }));
+  const l = pickLineup(input(squad({ 13: 1.2 }), true, { swappedSlots: new Set([13]) }));
   assert.equal(l.captain, 8);
   assert.notEqual(l.vice, l.captain);
   assert.equal(l.armbandAdjusted, true);
@@ -100,4 +100,20 @@ test("headline points: XI total plus the captain once more", () => {
   const l = pickLineup(input(squad(), true));
   const xp = (id: number) => squad().find((s) => s.slot === id)!.xp!;
   assert.equal(l.points, l.xi.reduce((n, id) => n + xp(id), 0) + xp(l.captain!));
+});
+
+test("armband fallback skips provisional players, who may still start", () => {
+  const s = squad({ 13: 1.2 }).map((x) => (x.slot === 8 ? { ...x, provisional: true } : x));
+  const l = pickLineup(input(s, true, { swappedSlots: new Set([13]), modelVice: 14 }));
+  assert.ok(l.xi.includes(8));
+  assert.notEqual(l.captain, 8);
+  assert.notEqual(l.vice, 8);
+  assert.equal(l.captain, 9);
+});
+
+test("a saved transfer of the captain moves the armband to the best starter and flags it", () => {
+  const l = pickLineup(input(squad({ 13: 4 }), true, { swappedSlots: new Set([13]) }));
+  assert.equal(l.captain, 8);
+  assert.equal(l.captainChanged, true);
+  assert.equal(l.armbandAdjusted, true);
 });
