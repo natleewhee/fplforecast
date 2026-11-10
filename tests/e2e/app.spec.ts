@@ -1074,7 +1074,7 @@ test.describe("3D pitch moves", () => {
     await expect(pitch).toHaveAttribute("data-focus", /\d+/);
     await expect(pitch).toHaveAttribute("data-celebrating", "goal");
     await expect(page.getByRole("dialog")).toBeVisible();
-    await expect(pitch).not.toHaveAttribute("data-celebrating", /.+/, { timeout: 8000 }); // the move finishes
+    await expect(pitch).not.toHaveAttribute("data-celebrating", /.+/, { timeout: 25000 }); // the move finishes (wall time stretches on a slow machine: the stage caps each step at 0.05s)
     await page.keyboard.press("Escape");
     await expect(pitch).not.toHaveAttribute("data-focus", /.+/);
   });
@@ -1094,6 +1094,7 @@ test.describe("3D pitch moves", () => {
   });
 
   test("the ball stays put during a live celebration and the passing resumes after it", async ({ page }) => {
+    test.slow(); // several waits on a stage that slows down under load add up to more than the default limit
     await page.addInitScript(() => {
       try { localStorage.setItem("fpl-pitch-passing", "on"); } catch {}
     });
@@ -1112,7 +1113,7 @@ test.describe("3D pitch moves", () => {
     await page.waitForTimeout(1800);
     await expect(pitch).toHaveAttribute("data-celebrating", "goal"); // still mid-celebration
     expect(await pitch.getAttribute("data-passes")).toBe(at);
-    await expect(pitch).not.toHaveAttribute("data-celebrating", /.+/, { timeout: 8000 });
+    await expect(pitch).not.toHaveAttribute("data-celebrating", /.+/, { timeout: 25000 });
     await expect.poll(async () => await pitch.getAttribute("data-passes"), { timeout: 15000 }).not.toBe(at);
   });
 
