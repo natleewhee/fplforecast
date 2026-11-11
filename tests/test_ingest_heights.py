@@ -165,5 +165,5 @@ def test_a_dropped_connection_is_retried_not_fatal(monkeypatch):
 
 
 def test_the_user_agent_names_the_project_with_a_url_and_no_personal_details():
-    assert "github.com/natleewhee/fplforecast" in heights.USER_AGENT
+    assert "github.com/natleewhee/gafferfpl" in heights.USER_AGENT
     assert "@" not in heights.USER_AGENT
