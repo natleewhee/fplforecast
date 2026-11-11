@@ -95,7 +95,7 @@ _BOOL_FIELDS = {"was_home", "finished"}
 
 
 def fetch_text(url: str) -> str:
-    req = urllib.request.Request(url, headers={"User-Agent": "fplforecast-ingest-history/1.0"})
+    req = urllib.request.Request(url, headers={"User-Agent": "gafferfpl-ingest-history/1.0"})
     with urllib.request.urlopen(req, timeout=60) as resp:
         return resp.read().decode("utf-8")
 

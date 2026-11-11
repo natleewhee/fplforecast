@@ -84,7 +84,7 @@ def load_entity_resolution() -> dict[str, dict]:
 def fetch_prior_season_stats() -> dict[int, dict]:
     """historical id (in PRIOR_SEASON) -> {minutes, points, starts} for that season."""
     url = f"{VAASTAV_BASE}/{PRIOR_SEASON}/players_raw.csv"
-    req = urllib.request.Request(url, headers={"User-Agent": "fplforecast-minutes-model/1.0"})
+    req = urllib.request.Request(url, headers={"User-Agent": "gafferfpl-minutes-model/1.0"})
     try:
         with urllib.request.urlopen(req, timeout=30) as resp:
             text = resp.read().decode("utf-8")

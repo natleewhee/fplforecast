@@ -63,7 +63,7 @@ def fetch_players(league: str, season: str) -> list[dict]:
         ENDPOINT,
         data=body,
         headers={
-            "User-Agent": "Mozilla/5.0 fplforecast-understat/1.0",
+            "User-Agent": "Mozilla/5.0 gafferfpl-understat/1.0",
             "X-Requested-With": "XMLHttpRequest",
             "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
             "Accept": "application/json",
