@@ -333,7 +333,7 @@ export default function Pitch3D({
                 "relative flex min-w-0 flex-col items-center gap-0.5 overflow-hidden rounded-lg border border-dashed border-white/30 bg-[rgba(8,16,24,0.45)] px-0.5 pb-1 pt-1.5 text-center leading-tight focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--accent)]",
                 <>
                   <span className="absolute inset-x-0 top-0 h-[3px]" style={{ background: kitColor(p) }} aria-hidden />
-                  <span className="max-w-full truncate text-[9px] font-bold text-white/90 min-[380px]:text-[10px]" title={p.webName} data-testid="sub-name">{p.webName}</span>
+                  <span className="line-clamp-2 max-w-full text-[9px] font-bold text-white/90 [hyphens:manual] [overflow-wrap:normal] min-[380px]:text-[10px]" title={p.webName} data-testid="sub-name">{p.webName}</span>
                   <span className="flex items-center justify-center gap-1">
                     <span
                       className="grid h-4 min-w-4 place-items-center rounded-full bg-white/15 px-1 text-[9px] font-bold text-ink-soft"

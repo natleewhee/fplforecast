@@ -81,6 +81,7 @@ export default function CaptainShortlist({
       <button
         type="button"
         aria-expanded={more}
+        aria-controls={more ? "captain-more-details" : undefined}
         data-testid="captain-more"
         onClick={() => setMore((m) => !m)}
         className="inline-flex min-h-11 w-full items-center justify-between gap-2 rounded-lg border border-line px-3 text-[11px] font-medium text-ink-soft hover:border-border-strong"
@@ -89,7 +90,7 @@ export default function CaptainShortlist({
         <span aria-hidden>{more ? "▴" : "▾"}</span>
       </button>
       {more && (
-        <p className="text-[10px] leading-snug text-ink-faint">
+        <p id="captain-more-details" className="text-[10px] leading-snug text-ink-faint">
           Ranked by expected points. Ownership is FPL&rsquo;s overall figure, not effective ownership.
         </p>
       )}

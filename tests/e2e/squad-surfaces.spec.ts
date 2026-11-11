@@ -141,8 +141,9 @@ for (const width of [360, 390]) {
     await strip.scrollIntoViewIfNeeded();
     const names = strip.getByTestId("sub-name");
     expect(await names.count()).toBeGreaterThan(0);
-    for (const h of await names.evaluateAll((els) => els.map((e) => e.getBoundingClientRect().height)))
-      expect(h, "one line per name").toBeLessThan(16);
+    // a name wraps at a hyphen or space at most; it is never cut mid-word (nothing clipped sideways)
+    for (const c of await names.evaluateAll((els) => els.map((e) => ({ clipped: e.scrollWidth - e.clientWidth, h: e.getBoundingClientRect().height, text: e.textContent ?? "" }))))
+      expect(c.clipped, `${c.text} fits its tile`).toBeLessThanOrEqual(1);
     // History: chart + 3 rows, then "Show all"
     const history = page.locator(".panel", { has: page.getByRole("heading", { name: "HISTORY" }) });
     await expect(history.locator("ul > li").filter({ hasText: /^GW\d+/ })).toHaveCount(3);
@@ -179,4 +180,73 @@ test("checklist: all-clear line is compact and an actionable row stays expanded;
   await expect(btn).toHaveAttribute("aria-expanded", "false");
   expect((await btn.boundingBox())!.height).toBeGreaterThanOrEqual(43.5);
   await expect(page.getByTestId("rebuild")).toHaveCount(0); // guests never get it
+});
+
+type P = Record<string, any>; // eslint-disable-line @typescript-eslint/no-explicit-any
+type FC = Record<string, any>; // eslint-disable-line @typescript-eslint/no-explicit-any
+const guestWith = (mutate: (fc: FC) => void) => async (page: Page, context: import("@playwright/test").BrowserContext, width = 390) => {
+  const fc = latestForecast();
+  mutate(fc);
+  await page.setViewportSize({ width, height: 844 });
+  await page.clock.install({ time: Date.parse(fc.deadlineTime) - 5 * 3_600_000 });
+  await context.clearCookies();
+  await page.route("**/api/forecast*", (route) => route.fulfill({ contentType: "application/json", body: JSON.stringify({ ...fc, teamName: "Guest FC" }) }));
+  await page.goto("/?team=999111&tab=squad");
+  await page.getByTestId("fixture-ticker").first().waitFor({ state: "attached" });
+};
+
+test("checklist: price data on 1 of 15 players is never folded into 'all clear'", async ({ page, context }) => {
+  await guestWith((fc) => {
+    fc.squad.players.forEach((p: P, i: number) => { p.priceWatch = i === 0 ? { percent: 3, likelihood: 0, hourlyRate: 0, changeThisGw: 0, netTransfers: 10 } : undefined; });
+  })(page, context);
+  await expect(page.getByTestId("checklist-all-clear")).not.toContainText("price");
+  await expect(page.getByText("Price changes (FPL)")).toBeVisible();
+  await expect(page.getByText(/No price data for 14/)).toBeVisible();
+});
+
+test("checklist: a player who already fell this GW keeps the price row open", async ({ page, context }) => {
+  await guestWith((fc) => {
+    fc.squad.players.forEach((p: P, i: number) => { p.priceWatch = { percent: 3, likelihood: 0, hourlyRate: 0, changeThisGw: i === 0 ? -1 : 0, netTransfers: 10 }; });
+  })(page, context);
+  await expect(page.getByTestId("checklist-all-clear")).not.toContainText("price");
+  await expect(page.getByText(/Already fell this GW/)).toBeVisible();
+});
+
+test("checklist: no captain picked is shown, not folded into 'all clear'", async ({ page, context }) => {
+  await guestWith((fc) => { fc.captain = null; fc.viceCaptain = null; })(page, context);
+  await expect(page.getByText("No captain picked yet.")).toBeVisible();
+  await expect(page.getByTestId("checklist-all-clear")).not.toContainText("captain");
+});
+
+test("checklist: risk data on only 1 of 15 players does not say 'FPL flags none'", async ({ page, context }) => {
+  await guestWith((fc) => {
+    fc.squad.players.forEach((p: P, i: number) => { p.availability = { ...p.availability, risks: i === 0 ? [] : undefined }; });
+  })(page, context);
+  await expect(page.getByTestId("checklist-all-clear")).not.toContainText("suspension");
+  await expect(page.getByText(/FPL risk data covers 1 of 15 players/)).toBeVisible();
+});
+
+test("subs strip: a long hyphenated name wraps at the hyphen and is not cut at 360px", async ({ page, context }) => {
+  await page.addInitScript(() => { try { localStorage.setItem("fpl-pitch-view", "3d"); } catch {} });
+  await guestWith((fc) => {
+    const benchId = fc.upcoming[0].bench[1];
+    for (const list of [fc.squad.players, ...fc.upcoming.map((u: { players: P[] }) => u.players)])
+      for (const p of list) if (p.id === benchId) p.webName = "Alexander-Arnold";
+  })(page, context, 360);
+  const name = page.getByTestId("subs-strip").first().getByTestId("sub-name").filter({ hasText: "Alexander-Arnold" });
+  await name.scrollIntoViewIfNeeded();
+  const m = await name.evaluate((e) => ({ clipped: e.scrollWidth - e.clientWidth, text: e.textContent }));
+  expect(m.text).toBe("Alexander-Arnold");
+  expect(m.clipped, "not clipped sideways").toBeLessThanOrEqual(1);
+});
+
+test("the page scrolls only as far as the Squad tab (no empty panes below it)", async ({ page }) => {
+  await openSquad(page);
+  const { doc, pane } = await page.evaluate(() => {
+    const t = document.querySelector("[data-testid=fixture-ticker]")!;
+    let el: HTMLElement | null = t as HTMLElement;
+    while (el && !(el.parentElement && el.parentElement.classList.contains("tab-swipe"))) el = el.parentElement;
+    return { doc: document.documentElement.scrollHeight, pane: el!.getBoundingClientRect().bottom + window.scrollY };
+  });
+  expect(doc - pane, "only the footer below the pane").toBeLessThanOrEqual(220);
 });

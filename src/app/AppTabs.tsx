@@ -133,8 +133,13 @@ export default function AppTabs({ tabs, deadline }: { tabs: Tab[]; deadline?: st
             <div
               key={t.id}
               className="shrink-0 space-y-4"
-              // only the open tab is captured for the slide, not every tab side by side
-              style={{ width: `${100 / tabs.length}%`, viewTransitionName: active === i ? "tabpane" : "none" }}
+              // only the open tab is captured for the slide, not every tab side by side.
+              // Panes that are off to the side take no height, so the page scrolls only as far as the open tab.
+              style={{
+                width: `${100 / tabs.length}%`,
+                viewTransitionName: active === i ? "tabpane" : "none",
+                ...(active === i ? {} : { height: 0, overflow: "hidden" }),
+              }}
             >
               {t.content}
             </div>

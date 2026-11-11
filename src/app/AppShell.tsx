@@ -675,7 +675,7 @@ export default function AppShell({
 
   const squadTab = (
     <>
-      <DeadlineChecklist forecast={forecast} />
+      <DeadlineChecklist forecast={forecast} liveSquad={liveSquad} pending={transferTools?.pending} pool={transferTools?.pool} />
       <Pitch forecast={forecast} transferTools={transferTools} liveSquad={liveSquad} />
       <FixtureTicker forecast={forecast} liveSquad={liveSquad} pending={transferTools?.pending} pool={transferTools?.pool} />
       <CaptainShortlist forecast={forecast} liveSquad={liveSquad} pending={transferTools?.pending} pool={transferTools?.pool} />

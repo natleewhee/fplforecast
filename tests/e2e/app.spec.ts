@@ -1347,6 +1347,7 @@ test.describe("Ball going round the pitch", () => {
     await pitch.locator("button[data-tag]").first().waitFor();
     const toggle = page.getByRole("button", { name: /^Passing/ }).first();
     await expect(toggle).toHaveText("Passing on");
+    await toggle.evaluate((e) => e.scrollIntoView({ block: "center" })); // not under the sticky header
     await toggle.click();
     await expect(toggle).toHaveText("Passing off");
     expect(await page.evaluate(() => localStorage.getItem("fpl-pitch-passing"))).toBe("off");

@@ -131,7 +131,7 @@ export default function History({ history }: { history: SeasonHistory }) {
             </div>
           </div>
 
-          <ul className="mt-3 divide-y divide-line text-xs">
+          <ul id="history-rows" className="mt-3 divide-y divide-line text-xs">
             {[...gws].reverse().slice(0, showAll ? undefined : RECENT_ROWS).map((g) => {
               const mvb = g.modelVsBaseline;
               const scored = mvb && "model" in mvb;
@@ -157,6 +157,7 @@ export default function History({ history }: { history: SeasonHistory }) {
             <button
               type="button"
               aria-expanded={showAll}
+              aria-controls="history-rows"
               onClick={() => setShowAll((a) => !a)}
               className="mt-1 inline-flex min-h-11 w-full items-center justify-center rounded-lg border border-line text-[11px] font-medium text-ink-soft hover:border-border-strong"
             >
