@@ -14,6 +14,8 @@ const SWIPE_THRESHOLD_PX = 60;
 export default function AppTabs({ tabs, deadline }: { tabs: Tab[]; deadline?: string | null }) {
   const [active, setActive] = useState(0);
   const touchStartX = useRef<number | null>(null);
+  const rootRef = useRef<HTMLDivElement | null>(null);
+  const tabButtons = useRef<(HTMLButtonElement | null)[]>([]);
   const activeRef = useRef(0);
   const vtRun = useRef(0);
   useEffect(() => {
@@ -30,7 +32,14 @@ export default function AppTabs({ tabs, deadline }: { tabs: Tab[]; deadline?: st
     try {
       reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     } catch {}
+    // A short tab opened from deep down a tall one would land at its bottom: start at the top of the new tab
+    // (just under the sticky tab bar) instead. Done with the swap, so the slide does not scroll.
+    const toTop = () => {
+      const top = (rootRef.current?.getBoundingClientRect().top ?? 0) + window.scrollY;
+      if (window.scrollY > top) window.scrollTo(0, top);
+    };
     if (!doc.startViewTransition || reduce) {
+      toTop();
       setActive(to);
       return;
     }
@@ -42,7 +51,7 @@ export default function AppTabs({ tabs, deadline }: { tabs: Tab[]; deadline?: st
       if (run === vtRun.current) delete root.dataset.vtDir;
     };
     try {
-      doc.startViewTransition(() => flushSync(() => setActive(to))).finished.then(clear, clear);
+      doc.startViewTransition(() => { flushSync(() => setActive(to)); toTop(); }).finished.then(clear, clear);
     } catch {
       clear();
       setActive(to);
@@ -81,7 +90,11 @@ export default function AppTabs({ tabs, deadline }: { tabs: Tab[]; deadline?: st
   useEffect(() => {
     const onGoto = (e: Event) => {
       const i = tabs.findIndex((t) => t.id === (e as CustomEvent<string>).detail);
-      if (i >= 0) go(i);
+      if (i >= 0) {
+        go(i);
+        // keyboard and screen-reader users land on the tab they were sent to
+        requestAnimationFrame(() => tabButtons.current[i]?.focus({ preventScroll: true }));
+      }
     };
     window.addEventListener("gaffer:goto-tab", onGoto);
     return () => window.removeEventListener("gaffer:goto-tab", onGoto);
@@ -106,11 +119,11 @@ export default function AppTabs({ tabs, deadline }: { tabs: Tab[]; deadline?: st
   };
 
   return (
-    <div>
+    <div ref={rootRef}>
       <div className="sticky top-0 z-20 -mx-4 mb-3 border-b border-line bg-[var(--bg-0)]/95 px-4 backdrop-blur">
         <div className="segment w-full">
           {tabs.map((t, i) => (
-            <button key={t.id} data-active={active === i} onClick={() => go(i)} className="flex-1">
+            <button key={t.id} ref={(el) => { tabButtons.current[i] = el; }} data-active={active === i} onClick={() => go(i)} className="flex-1">
               {t.label}
             </button>
           ))}
@@ -133,12 +146,14 @@ export default function AppTabs({ tabs, deadline }: { tabs: Tab[]; deadline?: st
             <div
               key={t.id}
               className="shrink-0 space-y-4"
+              // off-screen panes stay mounted but cannot be focused, tabbed into or read out
+              inert={active !== i}
               // only the open tab is captured for the slide, not every tab side by side.
               // Panes that are off to the side take no height, so the page scrolls only as far as the open tab.
               style={{
                 width: `${100 / tabs.length}%`,
                 viewTransitionName: active === i ? "tabpane" : "none",
-                ...(active === i ? {} : { height: 0, overflow: "hidden" }),
+                ...(active === i ? {} : { height: 0, overflow: "clip" }),
               }}
             >
               {t.content}

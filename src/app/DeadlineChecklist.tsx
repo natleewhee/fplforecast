@@ -178,7 +178,7 @@ export default function DeadlineChecklist({
   const price = priceRow(forecast.squad.players);
   // "Nothing near a change" folds away only when every player has price data and nothing moved this GW.
   const priceCovered = forecast.squad.players.filter((p) => p.priceWatch != null && Number.isFinite(p.priceWatch.percent)).length;
-  const priceMoved = forecast.squad.players.some((p) => (p.priceWatch?.changeThisGw ?? 0) !== 0);
+  const priceMoved = forecast.squad.players.some((p) => Number.isFinite(p.priceWatch?.changeThisGw) && p.priceWatch!.changeThisGw !== 0);
   const priceFold = price.status === "ok" && priceCovered === forecast.squad.players.length && !priceMoved;
 
   const topScenario = forecast.scenarios.byHorizon["1"]?.[0] ?? null;
@@ -196,15 +196,24 @@ export default function DeadlineChecklist({
   const byPlayerId = new Map(forecast.squad.players.map((p) => [p.id, p]));
   const nameOf = (id: number | null | undefined) =>
     id == null ? null : (resolved.swaps.get(id)?.webName ?? byPlayerId.get(id)?.webName ?? null);
-  const armbandMoved = !!lineup && (lineup.captainChanged || lineup.viceChanged) && resolved.swaps.size > 0;
-  const captainName = armbandMoved ? nameOf(lineup!.captain) : (forecast.captain?.webName ?? null);
-  const viceName = armbandMoved ? nameOf(lineup!.vice) : (forecast.viceCaptain?.webName ?? null);
-  const edge = armbandMoved ? null : forecast.captainEdge;
-  const captainStatus: RowStatus = !captainName ? "amber" : armbandMoved || edge?.label === "coin-flip" ? "amber" : "ok";
+  const swapped = resolved.swaps.size > 0;
+  const capMoved = !!lineup && swapped && lineup.captainChanged;
+  const viceMoved = !!lineup && swapped && !capMoved && lineup.viceChanged;
+  const moved = capMoved || viceMoved;
+  const captainName = moved ? nameOf(lineup!.captain) : (forecast.captain?.webName ?? null);
+  const viceName = moved ? nameOf(lineup!.vice) : (forecast.viceCaptain?.webName ?? null);
+  const edge = moved ? null : forecast.captainEdge; // the edge was the model's captain over the model's vice
+  const captainStatus: RowStatus = !captainName ? "amber" : capMoved || edge?.label === "coin-flip" ? "amber" : "ok";
   const captainDetail = !captainName
     ? "No captain picked yet."
     : `${captainName}${viceName ? `, vice ${viceName}` : ""}${
-        armbandMoved ? " -- the app moved the armband for your transfers; the model re-picks at the next rebuild" : edge ? ` -- ${edge.label} (+${edge.points.toFixed(1)})` : ""
+        capMoved
+          ? " -- the app moved the armband for your transfers; the model re-picks at the next rebuild"
+          : viceMoved
+            ? " -- vice adjusted for your transfers; the model re-picks at the next rebuild"
+            : edge
+              ? ` -- ${edge.label} (+${edge.points.toFixed(1)})`
+              : ""
       }`;
 
   const chipRow = chipChecklist(forecast.chips, forecast.targetGameweek);
@@ -212,7 +221,7 @@ export default function DeadlineChecklist({
   // The checks with nothing to act on fold into one "all clear" line; the full sentences stay a tap away.
   const clear: { label: string; short: string; detail: string }[] = [];
   if (captainStatus === "ok")
-    clear.push({ label: "Captain", short: `captain ${captainName}`, detail: captainDetail });
+    clear.push({ label: "Captain", short: `captain ${captainName}${viceMoved ? " (vice adjusted)" : ""}`, detail: captainDetail });
   if (injuryStatus === "ok") clear.push({ label: "Injury / doubt risk in your XI", short: "injury (no doubts in your XI)", detail: injuryDetail });
   if (riskStatus === "ok")
     clear.push({
@@ -247,6 +256,11 @@ export default function DeadlineChecklist({
         ) : (
           <ChecklistRow status="amber" label="Suspension / loan-ban risk (FPL)">
             <RiskDetail risks={riskList} />
+            {!riskComplete && (
+              <div className="text-[10.5px] text-ink-faint">
+                FPL risk data covers {riskCovered} of {forecast.squad.players.length} players.
+              </div>
+            )}
           </ChecklistRow>
         )}
         {priceFold ? null : price.detail === NO_PRICE_DATA ? (

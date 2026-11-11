@@ -141,9 +141,14 @@ for (const width of [360, 390]) {
     await strip.scrollIntoViewIfNeeded();
     const names = strip.getByTestId("sub-name");
     expect(await names.count()).toBeGreaterThan(0);
-    // a name wraps at a hyphen or space at most; it is never cut mid-word (nothing clipped sideways)
-    for (const c of await names.evaluateAll((els) => els.map((e) => ({ clipped: e.scrollWidth - e.clientWidth, h: e.getBoundingClientRect().height, text: e.textContent ?? "" }))))
-      expect(c.clipped, `${c.text} fits its tile`).toBeLessThanOrEqual(1);
+    // a name wraps between words at most (two lines), and is never cut mid-word
+    for (const c of await names.evaluateAll((els) => els.map((e) => ({ clipped: e.scrollWidth - e.clientWidth, h: e.getBoundingClientRect().height, lh: parseFloat(getComputedStyle(e).lineHeight), text: e.textContent ?? "" }))))
+      {
+        expect(c.clipped, `${c.text} fits its tile`).toBeLessThanOrEqual(1);
+        expect(c.h, `${c.text} is at most two lines`).toBeLessThanOrEqual(2 * c.lh + 1);
+      }
+    for (const h of await strip.locator("button, [role=group]").evaluateAll((els) => els.map((e) => e.getBoundingClientRect().height)))
+      expect(h, "sub tile meets the 44px rule").toBeGreaterThanOrEqual(43.5);
     // History: chart + 3 rows, then "Show all"
     const history = page.locator(".panel", { has: page.getByRole("heading", { name: "HISTORY" }) });
     await expect(history.locator("ul > li").filter({ hasText: /^GW\d+/ })).toHaveCount(3);
@@ -235,18 +240,100 @@ test("subs strip: a long hyphenated name wraps at the hyphen and is not cut at 3
   })(page, context, 360);
   const name = page.getByTestId("subs-strip").first().getByTestId("sub-name").filter({ hasText: "Alexander-Arnold" });
   await name.scrollIntoViewIfNeeded();
-  const m = await name.evaluate((e) => ({ clipped: e.scrollWidth - e.clientWidth, text: e.textContent }));
+  const m = await name.evaluate((e) => {
+    const parts = [...e.children] as HTMLElement[];
+    return {
+      text: e.textContent,
+      words: parts.map((c) => c.textContent),
+      cut: parts.map((c) => c.scrollWidth - c.clientWidth),
+      tops: parts.map((c) => Math.round(c.getBoundingClientRect().top)),
+      h: e.getBoundingClientRect().height,
+      lh: parseFloat(getComputedStyle(e).lineHeight),
+    };
+  });
   expect(m.text).toBe("Alexander-Arnold");
-  expect(m.clipped, "not clipped sideways").toBeLessThanOrEqual(1);
+  expect(m.words, "split only after the hyphen").toEqual(["Alexander-", "Arnold"]);
+  expect(m.cut.every((c) => c <= 1), "no word is cut").toBe(true);
+  expect(m.tops[1], "line 1 ends with 'Alexander-'").toBeGreaterThan(m.tops[0]);
+  expect(m.h).toBeLessThanOrEqual(2 * m.lh + 1);
 });
 
-test("the page scrolls only as far as the Squad tab (no empty panes below it)", async ({ page }) => {
-  await openSquad(page);
-  const { doc, pane } = await page.evaluate(() => {
-    const t = document.querySelector("[data-testid=fixture-ticker]")!;
-    let el: HTMLElement | null = t as HTMLElement;
-    while (el && !(el.parentElement && el.parentElement.classList.contains("tab-swipe"))) el = el.parentElement;
-    return { doc: document.documentElement.scrollHeight, pane: el!.getBoundingClientRect().bottom + window.scrollY };
+/** The pane on screen (the others are off to the side with no height) and where its content ends. */
+const activePane = (page: Page) =>
+  page.evaluate(() => {
+    const panes = [...document.querySelectorAll(".tab-swipe > div")] as HTMLElement[];
+    const on = panes.find((p) => p.getBoundingClientRect().left > -5 && p.getBoundingClientRect().left < innerWidth - 5)!;
+    return { doc: document.documentElement.scrollHeight, bottom: on.getBoundingClientRect().bottom + window.scrollY, others: panes.filter((p) => p !== on).map((p) => p.getBoundingClientRect().height) };
   });
-  expect(doc - pane, "only the footer below the pane").toBeLessThanOrEqual(220);
+
+for (const tab of ["leagues", "live", "squad"]) {
+  test(`the page scrolls only as far as the ${tab} tab (no empty panes below it)`, async ({ page }) => {
+    await openSquad(page, `/?tab=${tab}`).catch(() => page.waitForTimeout(1500));
+    await page.waitForTimeout(800);
+    const m = await activePane(page);
+    // a short tab fills the screen (the page is at least one screen tall); a long one has only the footer below it
+    const vh = page.viewportSize()!.height;
+    expect(m.doc, "no empty panes below the open tab").toBeLessThanOrEqual(Math.max(m.bottom + 220, vh + 120));
+    expect(m.others.every((h) => h === 0), "other panes take no height").toBe(true);
+  });
+}
+
+test("switching from deep in Squad to another tab starts at the top of that tab", async ({ page }) => {
+  await openSquad(page);
+  await page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight));
+  expect(await page.evaluate(() => window.scrollY)).toBeGreaterThan(1200);
+  await page.getByRole("button", { name: /^Scenarios$/ }).click();
+  await page.waitForTimeout(900);
+  const y = await page.evaluate(() => window.scrollY);
+  expect(y, "near the top of the new tab, not at its bottom").toBeLessThan(450);
+  await expect(page.getByRole("button", { name: /^Scenarios$/ })).toHaveAttribute("data-active", "true");
+});
+
+test("panes that are not open cannot be focused or tabbed into", async ({ page }) => {
+  await openSquad(page);
+  const inertPanes = await page.evaluate(() => [...document.querySelectorAll(".tab-swipe > div")].map((p) => (p as HTMLElement).inert));
+  expect(inertPanes.filter(Boolean).length).toBe(inertPanes.length - 1);
+  const reached = new Set<boolean>();
+  for (let i = 0; i < 70; i++) {
+    await page.keyboard.press("Tab");
+    reached.add(await page.evaluate(() => {
+      const a = document.activeElement;
+      return !!a && [...document.querySelectorAll(".tab-swipe > div")].some((p) => (p as HTMLElement).inert && p.contains(a));
+    }));
+  }
+  expect(reached.has(true), "focus never enters a hidden pane").toBe(false);
+});
+
+const swapCaptain = (which: "captainId" | "viceCaptainId") => async (page: Page, context: import("@playwright/test").BrowserContext) => {
+  const fc = latestForecast();
+  const leaver = fc.squad.players.find((p: { id: number }) => p.id === fc.upcoming[0][which]);
+  const inSquad = new Set(fc.squad.players.map((p: { id: number }) => p.id));
+  const joiner = fc.pool.find((p: { id: number; position: string }) => !inSquad.has(p.id) && p.position === leaver.position);
+  const live = fc.squad.players.map((p: { id: number; position: string }) => ({ id: p.id === leaver.id ? joiner.id : p.id, position: p.position }));
+  await page.clock.install({ time: Date.parse(fc.deadlineTime) - 5 * 3_600_000 });
+  await context.clearCookies();
+  await page.route("**/api/forecast*", (route) => route.fulfill({ contentType: "application/json", body: JSON.stringify({ ...fc, teamName: "Guest FC" }) }));
+  await page.route("**/api/live*", (route) =>
+    route.request().url().includes("squad=1")
+      ? route.fulfill({ contentType: "application/json", body: JSON.stringify({ gameweek: fc.basedOnGameweek + 1, chip: null, squad: live }) })
+      : route.fulfill({ status: 503, contentType: "application/json", body: "{}" }));
+  await page.goto("/?team=999111&tab=squad");
+  await page.getByTestId("squad-sync-banner").waitFor();
+  return leaver.webName as string;
+};
+
+test("checklist: when a transfer sells the captain the row follows the pitch's armband and is not 'all clear'", async ({ page, context }) => {
+  const sold = await swapCaptain("captainId")(page, context);
+  const pick = (await page.getByTestId("captain-shortlist").locator("li").first().locator("span.truncate").innerText()).split(/\s/)[0]; // the shortlist's top pick wears the armband
+  const row = page.locator("div.flex.items-start", { has: page.getByText("Captain", { exact: true }) });
+  await expect(row).toContainText("moved the armband");
+  await expect(row).toContainText(pick);
+  await expect(row).not.toContainText(`${sold},`);
+  await expect(page.getByTestId("checklist-all-clear")).not.toContainText("captain");
+});
+
+test("checklist: when only the vice changes the captain row says vice adjusted, not that the armband moved", async ({ page, context }) => {
+  await swapCaptain("viceCaptainId")(page, context);
+  await expect(page.getByTestId("checklist-all-clear")).toContainText("vice adjusted");
+  await expect(page.getByText(/moved the armband/)).toHaveCount(0);
 });
