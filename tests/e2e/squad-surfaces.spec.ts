@@ -66,13 +66,20 @@ for (const width of [360, 390]) {
     await test.info().attach(`ticker-${width}`, { path: test.info().outputPath(`ticker-${width}.png`), contentType: "image/png" });
   });
 
-  test(`owner: the shortlist shows three players and marks the model's pick at ${width}px`, async ({ page }) => {
+  test(`owner: the shortlist shows two players, More reveals the third, and marks the model's pick at ${width}px`, async ({ page }) => {
     await page.setViewportSize({ width, height: 844 });
     await openSquad(page);
     const list = page.getByTestId("captain-shortlist");
-    await expect(list.locator("li")).toHaveCount(3);
+    await expect(list.locator("li")).toHaveCount(2);
     await expect(list.locator("li[data-pick=true]")).toHaveCount(1);
     await expect(list.locator("li[data-pick=true]")).toContainText("Model pick");
+    await expect(list.locator("li").first()).not.toContainText("% owned overall");
+    const more = page.getByTestId("captain-more");
+    await expect(more).toHaveAttribute("aria-expanded", "false");
+    expect((await more.boundingBox())!.height, "44px tap rule").toBeGreaterThanOrEqual(43.5);
+    await more.click();
+    await expect(more).toHaveAttribute("aria-expanded", "true");
+    await expect(list.locator("li")).toHaveCount(3);
     await expect(list.locator("li").first()).toContainText("% owned overall");
     await expect(page.getByText(/^Captain · GW/)).toHaveCount(0); // the old card is gone
     expect(await noSideScroll(page)).toBeLessThanOrEqual(1);
@@ -113,6 +120,8 @@ test("guest: a blank and a double gameweek render, and tapping a row opens the p
   await expect(dbl).toContainText("BUR A");
   expect(await noSideScroll(page)).toBeLessThanOrEqual(1);
   // the shortlist works from the guest payload and shows the double
+  await expect(page.getByTestId("captain-shortlist").locator("li")).toHaveCount(2);
+  await page.getByRole("button", { name: /^More/ }).click();
   await expect(page.getByTestId("captain-shortlist").locator("li")).toHaveCount(3);
   // tap a row: the existing player sheet opens
   const row = ticker.getByRole("button", { name: new RegExp(`^${doubleName}, show breakdown`) });
@@ -121,4 +130,53 @@ test("guest: a blank and a double gameweek render, and tapping a row opens the p
   await page.keyboard.press("Escape");
   await expect(row).toBeFocused();
   await page.screenshot({ path: test.info().outputPath("ticker-guest-360.png") });
+});
+
+for (const width of [360, 390]) {
+  test(`owner: subs names do not break mid-word at ${width}px, History folds to 3 rows, Rebuild is last`, async ({ page, context }) => {
+    await page.setViewportSize({ width, height: 844 });
+    await page.addInitScript(() => { try { localStorage.setItem("fpl-pitch-view", "3d"); } catch {} });
+    await openSquad(page);
+    const strip = page.getByTestId("subs-strip").first();
+    await strip.scrollIntoViewIfNeeded();
+    const names = strip.getByTestId("sub-name");
+    expect(await names.count()).toBeGreaterThan(0);
+    for (const h of await names.evaluateAll((els) => els.map((e) => e.getBoundingClientRect().height)))
+      expect(h, "one line per name").toBeLessThan(16);
+    // History: chart + 3 rows, then "Show all"
+    const history = page.locator(".panel", { has: page.getByRole("heading", { name: "HISTORY" }) });
+    await expect(history.locator("ul > li").filter({ hasText: /^GW\d+/ })).toHaveCount(3);
+    const all = history.locator("button[aria-expanded]").filter({ hasText: /^Show/ });
+    expect((await all.boundingBox())!.height).toBeGreaterThanOrEqual(43.5);
+    await all.click();
+    await expect(all).toHaveAttribute("aria-expanded", "true");
+    expect(await history.locator("ul > li").filter({ hasText: /^GW\d+/ }).count()).toBeGreaterThan(3);
+    // the record carousel sits under History, and Rebuild (owner) is the last panel
+    const hy = (await history.boundingBox())!.y;
+    const hb = (await history.boundingBox())!.height;
+    const rec = page.getByText(/Out-of-sample · \d+ GW/i).first();
+    expect((await rec.boundingBox())!.y).toBeGreaterThan(hy + hb - 1);
+    const rb = page.getByTestId("rebuild").first();
+    expect((await rb.boundingBox())!.y).toBeGreaterThan((await rec.boundingBox())!.y);
+    expect(await noSideScroll(page)).toBeLessThanOrEqual(1);
+    await context.clearCookies();
+  });
+}
+
+test("checklist: all-clear line is compact and an actionable row stays expanded; Rebuild is owner-only", async ({ page, context }) => {
+  const fc = latestForecast();
+  await page.clock.install({ time: Date.parse(fc.deadlineTime) - 5 * 3_600_000 });
+  for (const p of fc.squad.players) p.availability = { ...p.availability, risks: [] };
+  fc.squad.players[0].availability.risks = [{ kind: "suspension_risk", gameweek: null, notes: "FPL sentence." }];
+  await context.clearCookies();
+  await page.route("**/api/forecast*", (route) => route.fulfill({ contentType: "application/json", body: JSON.stringify({ ...fc, teamName: "Guest FC" }) }));
+  await page.goto("/?team=999111&tab=squad");
+  const clear = page.getByTestId("checklist-all-clear");
+  await expect(clear).toContainText("All clear:");
+  await expect(clear).not.toContainText("suspension");
+  await expect(page.getByText("Suspension / loan-ban risk (FPL)")).toBeVisible();
+  const btn = page.getByRole("button", { name: /^All clear/ });
+  await expect(btn).toHaveAttribute("aria-expanded", "false");
+  expect((await btn.boundingBox())!.height).toBeGreaterThanOrEqual(43.5);
+  await expect(page.getByTestId("rebuild")).toHaveCount(0); // guests never get it
 });

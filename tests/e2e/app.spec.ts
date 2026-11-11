@@ -284,9 +284,10 @@ test.describe("Rebuild now", () => {
     await open(page);
     await openTab(page, "Squad");
     const box = page.getByTestId("rebuild").first();
-    // it is the first thing on the Squad tab, not buried under the pitch
+    // it is rarely needed, so it sits at the bottom of the Squad tab, under the pitch
+    await box.scrollIntoViewIfNeeded();
     const scene = await visibleScene(page);
-    expect((await box.boundingBox())!.y).toBeLessThan((await scene.boundingBox())!.y);
+    expect((await box.boundingBox())!.y).toBeGreaterThan((await scene.boundingBox())!.y);
     await box.getByRole("button", { name: "Rebuild now" }).click();
     await expect(box).toContainText("Rebuilding the forecast now");
     await expect(box.getByRole("button")).toBeDisabled(); // a short cool-down, so it can't be mashed
@@ -766,6 +767,7 @@ test.describe("Suspension / loan-ban risk", () => {
     const newest = readdirSync(dir).filter((f) => /^gw\d+\.json$/.test(f)).sort((a, b) => Number(b.match(/\d+/)![0]) - Number(a.match(/\d+/)![0]))[0];
     const fc = JSON.parse(readFileSync(join(dir, newest), "utf8"));
     const note = "This player currently has 4 Premier League yellow cards and will face a 1-match suspension on receiving their next.";
+    for (const p of fc.squad.players) p.availability = { ...p.availability, risks: [] };
     fc.squad.players[0].availability = { ...fc.squad.players[0].availability, risks: [{ kind: "suspension_risk", gameweek: null, notes: note }] };
     const name = fc.squad.players[0].webName;
     await page.clock.install({ time: Date.parse(fc.deadlineTime) - 5 * 3_600_000 });
@@ -774,15 +776,25 @@ test.describe("Suspension / loan-ban risk", () => {
     await page.goto("/?team=999999&tab=squad");
     const row = page.getByText("Suspension / loan-ban risk (FPL)");
     await expect(row).toBeVisible();
+    // short copy by default; FPL's own sentence is one tap away
+    await expect(page.getByText(`${name}: one yellow from a ban (FPL)`)).toBeVisible();
+    await expect(page.getByText(`${name}: ${note}`)).toHaveCount(0);
+    await page.getByRole("button", { name: new RegExp(`^${name}: one yellow`) }).click();
     await expect(page.getByText(`${name}: ${note}`)).toBeVisible();
+    // an actionable row stays expanded: the all-clear line does not list suspension
+    await expect(page.getByTestId("checklist-all-clear")).not.toContainText("suspension");
   });
 
   test("a forecast built before the risk field existed does not say 'no risk'", async ({ page }) => {
     // The committed forecast has no `risks` on any player yet: the row must not claim FPL flags none.
+    const dir = join(__dirname, "..", "..", "data", "forecast");
+    const newest = readdirSync(dir).filter((f) => /^gw\d+\.json$/.test(f)).sort((a, b) => Number(b.match(/\d+/)![0]) - Number(a.match(/\d+/)![0]))[0];
+    const fc = JSON.parse(readFileSync(join(dir, newest), "utf8"));
+    for (const p of fc.squad.players) if (p.availability) delete p.availability.risks;
+    await page.route("**/api/forecast*", (route) => route.fulfill({ contentType: "application/json", body: JSON.stringify(fc) }));
     await page.clock.install({ time: Date.parse(latestDeadline()) - 5 * 3_600_000 });
     await mockLive(page, { current: "a" });
-    await open(page);
-    await openTab(page, "Squad");
+    await page.goto("/?team=999999&tab=squad");
     await expect(page.getByText("Suspension / loan-ban risk (FPL)")).toBeVisible();
     const riskBox = page.locator("div.flex.items-start", { has: page.getByText("Suspension / loan-ban risk (FPL)", { exact: true }) });
     await expect(riskBox).toContainText("Not in this build yet");
@@ -798,6 +810,9 @@ test.describe("Suspension / loan-ban risk", () => {
     await page.route("**/api/forecast*", (route) => route.fulfill({ contentType: "application/json", body: JSON.stringify(fc) }));
     await mockLive(page, { current: "a" });
     await page.goto("/?team=999999&tab=squad");
+    const clear = page.getByTestId("checklist-all-clear");
+    await expect(clear).toContainText("suspension (FPL flags none)");
+    await clear.click();
     await expect(page.getByText(/FPL flags no suspension or loan-ban risk in your squad/)).toBeVisible();
   });
 });
@@ -834,7 +849,10 @@ test.describe("Price changes (FPL)", () => {
     await page.route("**/api/forecast*", (route) => route.fulfill({ contentType: "application/json", body: JSON.stringify(fc) }));
     await mockLive(page, { current: "a" });
     await page.goto("/?team=999999&tab=squad");
-    await expect(priceRowBox(page)).toContainText(/FPL data shows none of your 15 near a price change/);
+    const clear = page.getByTestId("checklist-all-clear");
+    await expect(clear).toContainText("price (none near a change)");
+    await clear.click();
+    await expect(page.getByText(/FPL data shows none of your 15 near a price change/)).toBeVisible();
   });
 
   test("a forecast built before the price fields existed shows a neutral row, not 'no change'", async ({ page }) => {

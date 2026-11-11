@@ -1,3 +1,6 @@
+"use client";
+
+import { useState } from "react";
 import type { SeasonHistory } from "@/lib/snapshots";
 
 function compactRank(n: number | null): string {
@@ -17,7 +20,10 @@ const CHART_H = 112; // px, matches the old h-28 bar area
 const LINE_TOP = 10; // px inset so the rank line doesn't clip the top edge
 const LINE_BOTTOM = 100; // px inset so the rank line doesn't clip the GW labels
 
+const RECENT_ROWS = 3;
+
 export default function History({ history }: { history: SeasonHistory }) {
+  const [showAll, setShowAll] = useState(false);
   const gws = history.gameweeks.filter((g) => g.gameweek != null && g.points != null);
   const seasonTotal = gws.length ? gws[gws.length - 1].totalPoints : null;
   const maxPts = Math.max(1, ...gws.map((g) => g.points ?? 0));
@@ -126,15 +132,15 @@ export default function History({ history }: { history: SeasonHistory }) {
           </div>
 
           <ul className="mt-3 divide-y divide-line text-xs">
-            {[...gws].reverse().map((g) => {
+            {[...gws].reverse().slice(0, showAll ? undefined : RECENT_ROWS).map((g) => {
               const mvb = g.modelVsBaseline;
               const scored = mvb && "model" in mvb;
               return (
-                <li key={g.gameweek} className="flex items-center gap-3 py-1.5">
+                <li key={g.gameweek} className="flex items-start gap-3 py-1.5">
                   <span className="w-9 font-mono text-ink-faint">GW{g.gameweek}</span>
                   <span className="stat w-8 text-ink">{g.points}</span>
                   {g.hit > 0 && <span className="text-[var(--danger)]">−{g.hit}</span>}
-                  <span className="flex-1 truncate text-ink-faint">
+                  <span className="min-w-0 flex-1 text-ink-faint">
                     bench {g.benchPoints ?? "—"} · GWR {compactRank(g.rank)} · OR{" "}
                     {compactRank(g.overallRank)} · £{g.teamValue.toFixed(1)}
                   </span>
@@ -147,6 +153,16 @@ export default function History({ history }: { history: SeasonHistory }) {
               );
             })}
           </ul>
+          {gws.length > RECENT_ROWS && (
+            <button
+              type="button"
+              aria-expanded={showAll}
+              onClick={() => setShowAll((a) => !a)}
+              className="mt-1 inline-flex min-h-11 w-full items-center justify-center rounded-lg border border-line text-[11px] font-medium text-ink-soft hover:border-border-strong"
+            >
+              {showAll ? "Show fewer" : `Show all ${gws.length} gameweeks`}
+            </button>
+          )}
         </>
       ) : (
         <p className="mt-3 text-xs text-ink-soft">No gameweeks recorded yet this season.</p>
