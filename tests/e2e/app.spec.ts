@@ -331,6 +331,7 @@ test.describe("Deadline banner", () => {
     await page.goto("/");
     const banner = page.getByTestId("deadline-banner");
     await expect(banner).toHaveAttribute("data-tone", "today");
+    await expect(banner).toContainText(/today/i); // a visible cue, not colour alone
     await expect(banner).toContainText("deadline");
     await expect(banner).toContainText("SGT");
     await expect(banner).toContainText("4h");
@@ -651,6 +652,42 @@ test.describe("Team bar overflow menu", () => {
     expect(await page.evaluate(() => navigator.clipboard.readText())).toBe(`${ORIGIN}/?team=${OWNER}`);
     await openTeamMenu(page, "Change team");
     await expect(page.getByTestId("team-bar").getByRole("textbox", { name: "Team ID" })).toBeFocused();
+  });
+
+  test("choosing Change team twice keeps the field open and focused", async ({ page }) => {
+    await mockLive(page, { current: "a" });
+    await open(page);
+    const field = page.getByTestId("team-bar").getByRole("textbox", { name: "Team ID" });
+    await openTeamMenu(page, "Change team");
+    await expect(field).toBeFocused();
+    await openTeamMenu(page, "Change team");
+    await expect(field).toBeVisible();
+    await expect(field).toBeFocused();
+  });
+
+  test("a guest with a long team name at 360px: no overflow, 44px targets, Link copied announced", async ({ page, context }) => {
+    await context.clearCookies();
+    await context.grantPermissions(["clipboard-read", "clipboard-write"], { origin: ORIGIN });
+    await page.addInitScript(() => { Object.defineProperty(navigator, "share", { value: undefined, configurable: true }); });
+    await page.setViewportSize({ width: 360, height: 780 });
+    await page.route("**/api/forecast*", (route) =>
+      route.fulfill({ contentType: "application/json", body: JSON.stringify({ ...guestForecast(), teamName: "Wolves of Wall Street", managerName: "Gus Guest" }) }),
+    );
+    await page.goto("/");
+    await page.getByRole("textbox", { name: "FPL team ID" }).fill("424242");
+    await page.getByRole("button", { name: "View squad" }).click();
+    await expect(page.getByTestId("team-bar")).toContainText("Wolves of Wall Street");
+    const status = page.getByRole("banner").getByRole("status");
+    await expect(status).toBeAttached(); // mounted before the text arrives, so the change is announced
+    await expect(status).toHaveText("");
+    await openTeamMenu(page, "Copy link");
+    await expect(status).toHaveText("Link copied");
+    const trigger = page.getByRole("button", { name: "Team options" });
+    expect((await trigger.boundingBox())!.height).toBeGreaterThanOrEqual(44);
+    expect((await trigger.boundingBox())!.width).toBeGreaterThanOrEqual(44);
+    expect(await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth)).toBeLessThanOrEqual(0);
+    const header = (await page.getByRole("banner").boundingBox())!;
+    expect(header.width).toBeLessThanOrEqual(360);
   });
 
   test("a guest can still switch team from the menu", async ({ page, context }) => {
@@ -1634,7 +1671,7 @@ test.describe("What could still move your rank", () => {
       const card = page.getByTestId("rank-threats");
       await expect(card).toBeVisible();
       await expect(page.getByTestId("rank-threats")).toHaveCount(1);
-      await expect(card.getByTestId("still-to-play-count")).toContainText(/\d+ of your XI (has|have) a match left/);
+      await expect(card.getByTestId("still-to-play-count")).toHaveText("4 of your XI have a match left"); // Van Dijk playing, Porro, Szoboszlai, Haaland to come
       await expect(card.getByTestId("next-up")).toContainText("Playing now");
       await expect(card.getByTestId("next-up")).toContainText("Sun 23:30");
       await expect(card.locator("[data-kind='yours']").first()).toBeVisible();
@@ -1652,6 +1689,38 @@ test.describe("What could still move your rank", () => {
       await page.screenshot({ path: `test-results/still-to-play-${width}.png` });
     });
   }
+
+  test("Bench Boost: the count says 15 and the card still names the bench players left, with kickoff", async ({ page }) => {
+    const base = JSON.parse(fixture("live-a.json"));
+    base.picks.chip = "bboost";
+    base.threats = [];
+    base.liveByElement["15"] = { points: 0, minutes: 0, goalsConceded: 0, fixtureStarted: false, fixtureFinished: false, bonusPending: false, breakdown: [] };
+    const bench15 = base.squad.find((p: { id: number }) => p.id === 15);
+    bench15.kickoffTime = "2026-10-11T15:30:00Z";
+    await page.route("**/api/live*", (route) =>
+      route.request().url().includes("squad=1")
+        ? route.fulfill({ status: 503, contentType: "application/json", body: "{}" })
+        : route.fulfill({ contentType: "application/json", body: JSON.stringify(base) }),
+    );
+    await page.goto("/?tab=live");
+    const card = page.getByTestId("rank-threats");
+    await expect(card.getByTestId("still-to-play-count")).toHaveText("6 of your 15 have a match left");
+    const nextUp = card.getByTestId("next-up");
+    await expect(nextUp).toContainText(bench15.webName); // an unplayed bench player, with the kickoff line
+    await expect(nextUp.locator("p", { hasText: bench15.webName })).toContainText("Sun 23:30");
+    await expect(nextUp).toContainText(/Playing now.*53'/); // the bench player already on
+  });
+
+  test("the one explainer row holds the safety score and the rank estimate", async ({ page }) => {
+    await mockThreats(page, []);
+    await page.goto("/?tab=live");
+    const details = page.locator("details", { hasText: /worked out/ });
+    await expect(details).toHaveCount(1);
+    await details.locator("summary").click();
+    await expect(details).toContainText("par");
+    await expect(details).toContainText("Estimated overall rank:");
+    await expect(details).toContainText("Last known rank: 150,000");
+  });
 
   test("with no ownership data the not-owned lines disappear and your own still show", async ({ page }) => {
     await mockThreats(page, []);

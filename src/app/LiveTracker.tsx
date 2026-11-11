@@ -383,8 +383,9 @@ function TrackerPanel({
  * count). Hidden when there is nothing true to say. */
 function StillToPlayCard({ view, lines }: { view: TrackerView; lines: ReturnType<typeof buildRankThreats> }) {
   const { toPlay, side } = stillToPlayCount(view);
-  const onPitch = view.rows.filter((r) => (!r.isBench && !r.subbedOut) || r.subbedIn);
-  const hasNextUp = onPitch.some((r) => r.status === "playing" || r.status === "notStarted" || r.bonusPending);
+  // the side that counts: the post-autosub XI, or all 15 on Bench Boost (same set as the count line)
+  const counting = view.rows.filter((r) => r.inLineup);
+  const hasNextUp = counting.some((r) => r.status === "playing" || r.status === "notStarted" || r.bonusPending);
   if (toPlay === 0 && !hasNextUp && lines.length === 0) return null;
   return (
     <section aria-labelledby="rank-threats-h" data-testid="rank-threats" className="space-y-2 rounded-xl border border-line p-3">
@@ -395,7 +396,7 @@ function StillToPlayCard({ view, lines }: { view: TrackerView; lines: ReturnType
         {toPlay} of your {side}{" "}
         {toPlay === 1 ? "has" : "have"} a match left
       </p>
-      {hasNextUp && <NextUpLines rows={onPitch} />}
+      {hasNextUp && <NextUpLines rows={counting} />}
       {lines.length > 0 && (
         <ul className="space-y-2 border-t border-line pt-2">
           {lines.map((l) => (

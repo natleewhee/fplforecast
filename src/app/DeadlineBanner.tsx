@@ -61,12 +61,19 @@ export default function DeadlineBanner({
     >
       <span className="shrink-0 font-semibold" style={{ color: tone.color }}>
         GW{gameweek} deadline
-        {tone.key !== "next" && <span className="sr-only">, {tone.key === "soon" ? "soon" : "today"}</span>}
+        {tone.key !== "next" && (
+          <span className="ml-1 text-[10px] font-bold uppercase tracking-wide">{tone.key === "soon" ? "soon" : "today"}</span>
+        )}
       </span>
       <span className="shrink-0 font-mono font-semibold tabular-nums text-ink">{countdown(deadline, nowMs)}</span>
       <span className="min-w-0 truncate text-ink-faint">{sgDeadline(deadline)}</span>
       {pendingTransfers > 0 && (
-        <span className="chip chip-warn ml-auto shrink-0">{pendingTransfers} pending</span>
+        <span className="chip chip-warn ml-auto shrink-0">
+          <span aria-hidden>{pendingTransfers} pending</span>
+          <span className="sr-only">
+            {pendingTransfers} transfer{pendingTransfers > 1 ? "s" : ""} pending
+          </span>
+        </span>
       )}
     </div>
   );

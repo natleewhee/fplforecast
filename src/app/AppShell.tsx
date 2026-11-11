@@ -241,11 +241,10 @@ function TeamMenu({
     "flex h-11 w-full items-center px-4 text-left text-xs font-medium text-ink-soft hover:bg-white/5 hover:text-ink";
   return (
     <div className="flex shrink-0 items-center gap-2">
-      {copied && (
-        <span role="status" className="text-xs font-medium text-[var(--accent)]">
-          Link copied
-        </span>
-      )}
+      {/* always mounted, only its text changes, so screen readers announce it */}
+      <span role="status" className="text-xs font-medium text-[var(--accent)]">
+        {copied ? "Link copied" : ""}
+      </span>
       <div className="relative" ref={menuRef} onKeyDown={onMenuKeyDown}>
         <button
           ref={triggerRef}
@@ -310,6 +309,7 @@ function TeamIdBar({
   onReset,
   editing,
   setEditing,
+  focusTick,
   loading,
   slow,
   error,
@@ -321,11 +321,17 @@ function TeamIdBar({
   onReset: () => void;
   editing: boolean;
   setEditing: (v: boolean) => void;
+  focusTick: number;
   loading: boolean;
   slow: boolean;
   error: string | null;
 }) {
   const [draft, setDraft] = useState("");
+  const inputRef = useRef<HTMLInputElement>(null);
+  // "Change team" again while the field is open: keep it open and put focus in it
+  useEffect(() => {
+    if (focusTick > 0) inputRef.current?.focus();
+  }, [focusTick]);
 
   return (
     <div className="space-y-2 px-1 pb-1 pt-2" data-testid="team-bar">
@@ -364,6 +370,7 @@ function TeamIdBar({
             inputMode="numeric"
             aria-label="Team ID"
             aria-describedby={draft && !isValidTeamIdInput(draft) ? "team-id-bar-hint" : undefined}
+            ref={inputRef}
             autoFocus
             className="h-11 w-36 rounded-lg border border-line bg-[var(--bg-2)] px-2.5 text-xs text-ink placeholder:text-ink-faint focus:border-[var(--accent)] focus:outline-none"
           />
@@ -717,6 +724,7 @@ export default function AppShell({
 
   // Your squad as FPL has it now. The forecast starts from the squad you held when the last gameweek
   // finished, so a transfer made since then is missing from it; the Squad pitch uses this to show it.
+  const [teamFocusTick, setTeamFocusTick] = useState(0); // bumps on each "Change team" so the field takes focus even if already open
   const [teamEditing, setTeamEditing] = useState(false); // the header menu's "Change team" opens the team-ID field
   const [liveFeed, setLiveFeed] = useState<{ teamId: string; builtAt: string; feed: LiveSquadFeed } | null>(null);
   const forecastBuiltAt = forecast?.generatedAt;
@@ -839,7 +847,7 @@ export default function AppShell({
   return (
     <>
       <Header
-        actions={<TeamMenu teamId={teamId} teamName={forecast.teamName} onChangeTeam={() => { setError(null); setTeamEditing((v) => !v); }} />}
+        actions={<TeamMenu teamId={teamId} teamName={forecast.teamName} onChangeTeam={() => { setError(null); setTeamEditing(true); setTeamFocusTick((t) => t + 1); }} />}
         subtitle={
           isGuest
             ? `GW${forecast.targetGameweek} · ${forecast.teamName ?? `team ${teamId}`}`
@@ -855,6 +863,7 @@ export default function AppShell({
           onReset={resetTeam}
           editing={teamEditing}
           setEditing={setTeamEditing}
+          focusTick={teamFocusTick}
           loading={loading}
           slow={slow}
           error={error}
