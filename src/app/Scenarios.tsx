@@ -345,16 +345,21 @@ function ChipCard({
   scenario,
   baselineNetPoints,
   poolById,
+  showXi,
+  onToggleXi,
 }: {
   title: string;
   scenario: Scenario;
   baselineNetPoints: number | null;
   poolById: Map<number, PoolPlayer>;
+  showXi: boolean;
+  onToggleXi: () => void;
 }) {
   const gain = baselineNetPoints != null ? scenario.netPoints - baselineNetPoints : null;
+  // The numbers stay on show; the XI (a whole pitch) opens on tap (state lives in ChipToggle).
 
   return (
-    <div className="panel rise space-y-3 p-3">
+    <div className="panel rise space-y-3 p-3" data-testid="chip-card">
       <div className="flex items-center justify-between gap-2">
         <h3 className="font-mono text-[12px] font-bold tracking-wide text-ink">{title}</h3>
         <div className="text-right">
@@ -370,13 +375,24 @@ function ChipCard({
         </div>
       </div>
 
-      <WeeklyXi
-        weeks={scenario.weeks}
-        squad={scenario.squad}
-        xiByGw={scenario.xiByGw}
-        captainByGw={scenario.captainByGw}
-        poolById={poolById}
-      />
+      <button
+        type="button"
+        aria-expanded={showXi}
+        onClick={onToggleXi}
+        className="flex min-h-11 w-full items-center justify-between rounded-lg border border-line px-2.5 text-left text-xs font-medium text-ink-soft"
+      >
+        <span>{showXi ? "Hide the XI" : "Show the XI"}</span>
+        <span aria-hidden className="text-ink-faint">{showXi ? "▾" : "▸"}</span>
+      </button>
+      {showXi && (
+        <WeeklyXi
+          weeks={scenario.weeks}
+          squad={scenario.squad}
+          xiByGw={scenario.xiByGw}
+          captainByGw={scenario.captainByGw}
+          poolById={poolById}
+        />
+      )}
     </div>
   );
 }
@@ -401,6 +417,8 @@ function ForceLockPanel({
   const [result, setResult] = useState<Scenario | null>(null);
   const [status, setStatus] = useState<"idle" | "loading" | "error">("idle");
   const [error, setError] = useState<string | null>(null);
+  // Collapsed with `hidden`, not unmounted, so the pins survive a close.
+  const [open, setOpen] = useState(false);
 
   const cycleLock = (id: number) => {
     setLocks((prev) => {
@@ -438,10 +456,22 @@ function ForceLockPanel({
 
   return (
     <div className="panel space-y-3 p-3">
-      <div className="flex flex-wrap items-center justify-between gap-2">
-        <h3 className="eyebrow">Force keep / remove</h3>
-        <p className="text-[11px] text-ink-faint">Tap a player: keep -&gt; remove -&gt; clear</p>
-      </div>
+      <h3>
+        <button
+          type="button"
+          aria-expanded={open}
+          aria-controls="force-lock-body"
+          onClick={() => setOpen((v) => !v)}
+          className="flex min-h-11 w-full items-center justify-between gap-2 text-left"
+        >
+          <span className="eyebrow">Pin players ({locks.size})</span>
+          <span className="text-[11px] text-ink-faint">
+            Force keep / remove <span aria-hidden>{open ? "▾" : "▸"}</span>
+          </span>
+        </button>
+      </h3>
+      <div id="force-lock-body" hidden={!open} className="space-y-3">
+      <p className="text-[11px] text-ink-faint">Tap a player: keep -&gt; remove -&gt; clear</p>
       <div className="flex flex-wrap gap-1.5">
         {squad.map((p) => {
           const lock = locks.get(p.id);
@@ -449,7 +479,7 @@ function ForceLockPanel({
             <button
               key={p.id}
               onClick={() => cycleLock(p.id)}
-              className="rounded-full border px-2 py-1 text-xs font-medium transition-colors"
+              className="min-h-11 rounded-full border px-3 py-1 text-xs font-medium transition-colors"
               style={
                 lock === "keep"
                   ? { borderColor: "var(--accent)", color: "var(--accent)", background: "color-mix(in srgb, var(--accent) 14%, transparent)" }
@@ -465,19 +495,20 @@ function ForceLockPanel({
       </div>
       <div className="flex items-center gap-2">
         <button
-          className="rounded-lg bg-gradient-to-b from-[var(--accent)] to-[#23c78c] px-3 py-1.5 text-xs font-bold text-black shadow-[0_0_20px_var(--accent-glow)] transition hover:brightness-110 disabled:cursor-not-allowed disabled:bg-none disabled:bg-white/5 disabled:text-ink-faint disabled:shadow-none"
+          className="min-h-11 rounded-lg bg-gradient-to-b from-[var(--accent)] to-[#23c78c] px-3 py-1.5 text-xs font-bold text-black shadow-[0_0_20px_var(--accent-glow)] transition hover:brightness-110 disabled:cursor-not-allowed disabled:bg-none disabled:bg-white/5 disabled:text-ink-faint disabled:shadow-none"
           disabled={locks.size === 0 || status === "loading"}
           onClick={solve}
         >
           {status === "loading" ? "Solving…" : `Solve with ${locks.size} pin${locks.size === 1 ? "" : "s"}`}
         </button>
         {locks.size > 0 && (
-          <button className="text-xs text-ink-faint underline" onClick={() => { setLocks(new Map()); setResult(null); }}>
+          <button className="min-h-11 px-2 text-xs text-ink-faint underline" onClick={() => { setLocks(new Map()); setResult(null); }}>
             clear
           </button>
         )}
       </div>
-      {status === "error" && <p className="text-xs text-[var(--danger)]">{error}</p>}
+      </div>
+      {status === "error" && <p role="alert" className="text-xs text-[var(--danger)]">{error}</p>}
       {result && (
         <div className="border-t border-line pt-2">
           <div className="mb-1.5 flex items-center justify-between">
@@ -518,7 +549,9 @@ function PlanWeekRow({
       <button
         type="button"
         onClick={onToggle}
-        className="flex w-full items-center justify-between gap-2 px-2.5 py-2 text-left"
+        aria-expanded={isOpen}
+        data-testid={`plan-row-${week.targetGw}`}
+        className="flex min-h-11 w-full items-center justify-between gap-2 px-2.5 py-2 text-left"
       >
         <div className="flex items-center gap-2">
           <span className="font-mono text-xs font-bold text-ink">GW{week.targetGw}</span>
@@ -534,7 +567,7 @@ function PlanWeekRow({
           <span className="font-mono text-xs font-semibold text-[var(--accent)]">
             {week.weekXp.toFixed(1)}
           </span>
-          <span className="text-ink-faint">{isOpen ? "▾" : "▸"}</span>
+          <span aria-hidden className="text-ink-faint">{isOpen ? "▾" : "▸"}</span>
         </div>
       </button>
       {isOpen && (
@@ -569,7 +602,7 @@ function PlanTimeline({
   forecastGw: number;
   poolById: Map<number, PoolPlayer>;
 }) {
-  const [openGw, setOpenGw] = useState<number | null>(plan[0]?.targetGw ?? null);
+  const [openGw, setOpenGw] = useState<number | null>(null);
   const feasibleWeeks = plan.filter((w) => w.feasible);
   if (feasibleWeeks.length === 0) return null;
 
@@ -628,6 +661,7 @@ function ChipToggle({
 }) {
   const [which, setWhich] = useState<"freeHit" | "wildcard">(freeHit ? "freeHit" : "wildcard");
   const [wildcardHorizon, setWildcardHorizon] = useState<WildcardHorizon>("1");
+  const [showXi, setShowXi] = useState(false); // survives a horizon switch (ChipCard is re-keyed)
   const showToggle = freeHit && wildcardByHorizon;
   const active = which === "freeHit" && freeHit ? "freeHit" : wildcardByHorizon ? "wildcard" : "freeHit";
   const wildcard = wildcardByHorizon?.[wildcardHorizon] ?? null;
@@ -652,7 +686,7 @@ function ChipToggle({
         </div>
       )}
       {active === "freeHit" && freeHit && (
-        <ChipCard title="FREE HIT" scenario={freeHit} baselineNetPoints={baselineFor1Gw} poolById={poolById} />
+        <ChipCard title="FREE HIT" scenario={freeHit} baselineNetPoints={baselineFor1Gw} poolById={poolById} showXi={showXi} onToggleXi={() => setShowXi((v) => !v)} />
       )}
       {active === "wildcard" && wildcardByHorizon && (
         <div className="space-y-2">
@@ -675,6 +709,8 @@ function ChipToggle({
               scenario={wildcard}
               baselineNetPoints={rollForWildcardHorizon}
               poolById={poolById}
+              showXi={showXi}
+              onToggleXi={() => setShowXi((v) => !v)}
             />
           )}
         </div>
@@ -869,7 +905,7 @@ export default function Scenarios({
         </Carousel>
       )}
 
-      <ForceLockPanel squad={squad} forecastGw={forecastGw} horizon={horizon} />
+      <ForceLockPanel key={squad.map((p) => p.id).join(",")} squad={squad} forecastGw={forecastGw} horizon={horizon} />
 
       {scenarios.plan && (
         <PlanTimeline plan={scenarios.plan} forecastGw={forecastGw} poolById={poolById} />
