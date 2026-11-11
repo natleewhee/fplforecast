@@ -37,9 +37,11 @@ function when(status: PlayerStatus, minutes: number, kickoff: string | null): st
   return kickoff && Number.isFinite(Date.parse(kickoff)) ? `plays ${sgKickoff(kickoff)} SGT` : "has a match still to come";
 }
 
-function listNames(names: string[]): string {
-  if (names.length <= 3) return names.join(", ");
-  return `${names.slice(0, 3).join(", ")} and ${names.length - 3} more`;
+/** The count line that leads the Live tab's "still to play" card: how many of
+ * the side that counts (the XI, or all 15 on Bench Boost) have a match left. */
+export function stillToPlayCount(view: TrackerView): { toPlay: number; total: number; side: "XI" | "15" } {
+  const counting = view.rows.filter((r) => r.inLineup);
+  return { toPlay: counting.filter((r) => toPlay(r.status)).length, total: counting.length, side: view.benchBoost ? "15" : "XI" };
 }
 
 export function buildRankThreats(
@@ -48,7 +50,6 @@ export function buildRankThreats(
   view: TrackerView,
 ): RankThreatLine[] {
   const own: RankThreatLine[] = [];
-  const side = view.benchBoost ? "15" : "XI";
 
   // Your own: who in the counting side still has a match to play.
   const pending = view.rows.filter((r) => r.inLineup && toPlay(r.status) && r.opponent != null);
@@ -66,12 +67,10 @@ export function buildRankThreats(
         (others.length === 0 ? xpText : ""),
     });
   }
-  if (others.length > 0) {
-    own.push({
-      key: "xi-pending",
-      kind: "yours",
-      text: `${armband ? "Also " : ""}${others.length} of your ${side} ${others.length === 1 ? "has" : "have"} a match left: ${listNames(others.map((r) => r.webName))}.${xpText}`,
-    });
+  // Who is left, and when, is the card's count line and kickoff list above these lines;
+  // only the model's expectation is new here.
+  if (others.length > 0 && xp != null) {
+    own.push({ key: "xi-pending", kind: "yours", text: xpText.trim() });
   }
 
   // Popular players you don't count: not in your squad, or on your bench.
