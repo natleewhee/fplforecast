@@ -5,14 +5,17 @@ import type { TrackerRow } from "@/lib/liveBlend";
 import { sgKickoff } from "@/lib/liveLabels";
 import type { FeedItem } from "./useLiveFx";
 
-/* Two small glance-aids that sit above the Live pitch: what's still to come
- * for the eleven that count (in Singapore time, so a late-night kickoff is
- * obvious), and a short log of what just happened, since the floating +N on a
+/* Two small glance-aids on the Live pitch: what's still to come for the eleven
+ * that count (in Singapore time, so a late-night kickoff is obvious; rendered
+ * inside LiveTracker's one "still to play" card), and a short log of what just happened, since the floating +N on a
  * token fades after a couple of seconds. */
 
 const names = (rows: TrackerRow[]) => rows.map((r) => r.webName).join(", ");
 
-export function NextUp({ rows }: { rows: TrackerRow[] }) {
+/** The "still to come" lines (playing now, kickoffs in SGT, bonus due) for the
+ * eleven that count, or null when there is nothing to say. They sit inside the
+ * Live tab's single "still to play" card, under its count line. */
+export function NextUpLines({ rows }: { rows: TrackerRow[] }) {
   const playing = rows.filter((r) => r.status === "playing");
   const byKickoff = new Map<string, TrackerRow[]>();
   for (const r of rows.filter((r) => r.status === "notStarted")) {
@@ -24,8 +27,7 @@ export function NextUp({ rows }: { rows: TrackerRow[] }) {
   if (!playing.length && !groups.length && !bonus.length) return null;
 
   return (
-    <div className="mb-2 space-y-1 rounded-xl border border-line px-3 py-2 text-[11px] leading-snug">
-      <p className="eyebrow">Still to come</p>
+    <div className="space-y-1 text-[11px] leading-snug" data-testid="next-up">
       {playing.length > 0 && (
         <p>
           <span className="font-semibold text-[var(--accent)]">Playing now</span>
@@ -59,7 +61,7 @@ export function LiveFeed({ feed, showEmpty }: { feed: FeedItem[]; showEmpty: boo
   if (!feed.length) {
     return showEmpty ? (
       <p className="mb-2 text-[10.5px] leading-snug text-ink-faint">
-        Goals, assists, cards and bonus show up here as they happen while this page is open.
+        Goals, assists, cards and bonus appear here live while this page is open.
       </p>
     ) : null;
   }

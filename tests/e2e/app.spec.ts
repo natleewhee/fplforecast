@@ -91,6 +91,12 @@ async function open(page: Page) {
   await page.getByRole("button", { name: /^Van Dijk,/ }).waitFor();
 }
 
+/** Opens the team bar's overflow menu and taps one item ("Copy link" or "Change team"). */
+async function openTeamMenu(page: Page, item: "Copy link" | "Change team") {
+  await page.getByRole("button", { name: "Team options" }).click();
+  await page.getByRole("menuitem", { name: item }).click();
+}
+
 /** The recap folds to a bar while matches are live: tap it open if it is closed. */
 async function openRecap(page: Page) {
   const bar = page.getByTestId("recap").getByRole("button", { name: /recap/i }).first();
@@ -138,7 +144,7 @@ test.describe("Live tab", () => {
   test("lists what is still to come and who is due bonus", async ({ page }) => {
     await mockLive(page, { current: "a" });
     await open(page);
-    const strip = page.getByText("Still to come").locator("..");
+    const strip = page.getByTestId("rank-threats");
     await expect(strip).toContainText("Playing now");
     await expect(strip).toContainText("Sun 23:30");
     await expect(strip).toContainText("Bonus due");
@@ -149,7 +155,7 @@ test.describe("Live tab", () => {
     const poll = { current: "a" as "a" | "b" };
     await mockLive(page, poll);
     await open(page);
-    await expect(page.getByText("show up here as they happen")).toBeVisible();
+    await expect(page.getByText("appear here live while this page is open")).toBeVisible();
     poll.current = "b";
     await page.evaluate(() => document.dispatchEvent(new Event("visibilitychange")));
     const feed = page.getByText("What just happened").locator("..");
@@ -215,12 +221,102 @@ test.describe("Squad and Scenarios tabs", () => {
     await expect(token).toBeFocused();
   });
 
-  test("the scenarios pitch shows a full eleven", async ({ page }) => {
+  test("the scenarios pitch shows a full eleven once a plan row is opened", async ({ page }) => {
     await mockLive(page, { current: "a" });
     await open(page);
     await openTab(page, "Scenarios");
+    const row = page.locator('[data-testid^="plan-row-"]').first();
+    await row.scrollIntoViewIfNeeded();
+    await row.click();
     const scene = await visibleScene(page);
+    await scene.scrollIntoViewIfNeeded();
     await expect(scene.locator("[data-flip]")).toHaveCount(11);
+  });
+
+  test("Scenarios: plan rows start collapsed with no pitch; a tap opens one", async ({ page }) => {
+    await mockLive(page, { current: "a" });
+    await open(page);
+    await openTab(page, "Scenarios");
+    const rows = page.locator('[data-testid^="plan-row-"]');
+    expect(await rows.count()).toBeGreaterThan(0);
+    for (const r of await rows.all()) await expect(r).toHaveAttribute("aria-expanded", "false");
+    // the other tabs stay mounted with their own pitches: count the change, not the total
+    const pitches = page.locator(".floodlit-pitch");
+    const before = await pitches.count();
+    await rows.first().click();
+    await expect(rows.first()).toHaveAttribute("aria-expanded", "true");
+    await expect(pitches).toHaveCount(before + 1);
+    await rows.first().click();
+    await expect(pitches).toHaveCount(before);
+  });
+
+  test("Scenarios: the 3D pitch is not built until a row is opened", async ({ page }) => {
+    await page.addInitScript(() => {
+      try { localStorage.setItem("fpl-pitch-view", "3d"); } catch {}
+    });
+    await mockLive(page, { current: "a" });
+    await page.goto("/?tab=scenarios");
+    const row = page.locator('[data-testid^="plan-row-"]').first();
+    await row.waitFor();
+    const pitch = row.locator("xpath=..").getByTestId("pitch3d"); // this row's own pitch
+    await expect(pitch).toHaveCount(0);
+    await row.scrollIntoViewIfNeeded();
+    await row.click();
+    await expect(pitch).toHaveCount(1);
+    await pitch.scrollIntoViewIfNeeded();
+    await expect(pitch.locator("canvas")).toBeVisible();
+  });
+
+  test("Scenarios: chip cards keep their numbers and open the XI on tap", async ({ page }) => {
+    await mockLive(page, { current: "a" });
+    await open(page);
+    await openTab(page, "Scenarios");
+    const card = page.getByTestId("chip-card").first();
+    await card.scrollIntoViewIfNeeded();
+    await expect(card).toContainText(/total over \d+ GW/);
+    const btn = card.getByRole("button", { name: /the XI/ });
+    await expect(btn).toHaveAttribute("aria-expanded", "false");
+    await expect(card.locator(".floodlit-pitch")).toHaveCount(0);
+    await btn.click();
+    await expect(btn).toHaveAttribute("aria-expanded", "true");
+    await expect(card.locator(".floodlit-pitch").first()).toBeVisible();
+  });
+
+  test("Scenarios: Pin players shows the count and keeps pins when collapsed", async ({ page }) => {
+    await mockLive(page, { current: "a" });
+    await open(page);
+    await openTab(page, "Scenarios");
+    const toggle = page.getByRole("button", { name: /^Pin players \(0\)/ });
+    await toggle.scrollIntoViewIfNeeded();
+    await expect(toggle).toHaveAttribute("aria-expanded", "false");
+    const body = page.locator("#force-lock-body");
+    await expect(body).toBeHidden();
+    await toggle.click();
+    await expect(body).toBeVisible();
+    await body.getByRole("button").first().click(); // keep
+    const one = page.getByRole("button", { name: /^Pin players \(1\)/ });
+    await expect(one).toBeVisible();
+    await one.click();
+    await expect(body).toBeHidden();
+    await one.click();
+    await expect(body.getByRole("button", { name: /^Solve with 1 pin/ })).toBeEnabled();
+  });
+
+  test("Scenarios: the owner's Log a transfer form is collapsed until tapped", async ({ page }) => {
+    await mockLive(page, { current: "a" });
+    await open(page);
+    await openTab(page, "Scenarios");
+    const toggle = page.getByRole("button", { name: /^Log a transfer/ });
+    await toggle.scrollIntoViewIfNeeded();
+    await expect(toggle).toHaveAttribute("aria-expanded", "false");
+    await expect(page.getByRole("button", { name: "Save transfer" })).toBeHidden();
+    await expect(page.getByRole("heading", { name: /^Log a transfer/ })).toBeAttached();
+    const box = await toggle.boundingBox();
+    expect(box!.height).toBeGreaterThanOrEqual(44);
+    await toggle.focus();
+    await page.keyboard.press("Enter");
+    await expect(toggle).toHaveAttribute("aria-expanded", "true");
+    await expect(page.getByRole("button", { name: "Save transfer" })).toBeVisible();
   });
 });
 
@@ -262,7 +358,7 @@ test.describe("Replace a player on the pitch", () => {
     await page.keyboard.press("Escape");
     // the saved swap now marks the outgoing shirt, and the deadline banner counts it
     await expect(scene.locator("span[title^='Saved transfer']")).toHaveCount(1);
-    await expect(page.getByText(/transfers? pending/).first()).toBeVisible();
+    await expect(page.getByTestId("deadline-banner")).toContainText("1 pending");
 
     // and the pitch previews the incoming player in their place, still eleven on the pitch
     await expect(page.getByTestId("preview-banner")).toContainText("1 saved transfer");
@@ -323,8 +419,10 @@ test.describe("Deadline banner", () => {
     await page.clock.install({ time: deadline - 5 * 3_600_000 });
     await mockLive(page, { current: "a" });
     await page.goto("/");
-    const banner = page.getByRole("status").filter({ hasText: /deadline/i });
-    await expect(banner).toContainText("Deadline today");
+    const banner = page.getByTestId("deadline-banner");
+    await expect(banner).toHaveAttribute("data-tone", "today");
+    await expect(banner).toContainText(/today/i); // a visible cue, not colour alone
+    await expect(banner).toContainText("deadline");
     await expect(banner).toContainText("SGT");
     await expect(banner).toContainText("4h");
 
@@ -590,8 +688,8 @@ test.describe("Team bar", () => {
     const bar = page.getByTestId("team-bar");
     await expect(bar).toContainText("Viewing");
     await expect(bar.getByRole("textbox")).toHaveCount(0);
-    expect((await bar.boundingBox())!.height).toBeLessThan(80); // one row, not two
-    await bar.getByRole("button", { name: "Change team" }).click();
+    expect((await bar.boundingBox())!.height).toBeLessThan(40); // one text line; the buttons live in the header menu
+    await openTeamMenu(page, "Change team");
     await expect(bar.getByRole("textbox", { name: "Team ID" })).toBeVisible();
     await expect(bar.getByRole("button", { name: "View" })).toBeDisabled(); // nothing typed yet
     await bar.getByRole("textbox", { name: "Team ID" }).fill("12");
@@ -599,6 +697,125 @@ test.describe("Team bar", () => {
   });
 });
 
+
+test.describe("Team bar overflow menu", () => {
+  test("opens with Copy link and Change team, Escape closes it and returns focus to the button", async ({ page }) => {
+    await mockLive(page, { current: "a" });
+    await open(page);
+    const bar = page.getByRole("banner");
+    const trigger = bar.getByRole("button", { name: "Team options" });
+    await expect(trigger).toHaveAttribute("aria-haspopup", "menu");
+    await expect(trigger).toHaveAttribute("aria-expanded", "false");
+    expect((await trigger.boundingBox())!.height).toBeGreaterThanOrEqual(44);
+    expect((await trigger.boundingBox())!.width).toBeGreaterThanOrEqual(44);
+    await trigger.focus();
+    await page.keyboard.press("Enter");
+    await expect(trigger).toHaveAttribute("aria-expanded", "true");
+    const items = page.getByRole("menuitem");
+    await expect(items).toHaveText(["Copy link", "Change team"]);
+    for (const box of await items.all()) expect((await box.boundingBox())!.height).toBeGreaterThanOrEqual(44);
+    await expect(items.first()).toBeFocused(); // keyboard lands inside the menu
+    await page.keyboard.press("ArrowDown");
+    await expect(items.nth(1)).toBeFocused();
+    await page.keyboard.press("Escape");
+    await expect(page.getByRole("menu")).toHaveCount(0);
+    await expect(trigger).toHaveAttribute("aria-expanded", "false");
+    await expect(trigger).toBeFocused();
+  });
+
+  test("tapping outside closes it", async ({ page }) => {
+    await mockLive(page, { current: "a" });
+    await open(page);
+    await page.getByRole("button", { name: "Team options" }).click();
+    await expect(page.getByRole("menu")).toBeVisible();
+    await page.mouse.click(5, 400);
+    await expect(page.getByRole("menu")).toHaveCount(0);
+  });
+
+  test("Copy link copies the share link and says so; Change team opens the team field", async ({ page, context }) => {
+    await context.grantPermissions(["clipboard-read", "clipboard-write"], { origin: ORIGIN });
+    await page.addInitScript(() => { Object.defineProperty(navigator, "share", { value: undefined, configurable: true }); });
+    await mockLive(page, { current: "a" });
+    await open(page);
+    await openTeamMenu(page, "Copy link");
+    await expect(page.getByText("Link copied")).toBeVisible();
+    expect(await page.evaluate(() => navigator.clipboard.readText())).toBe(`${ORIGIN}/?team=${OWNER}`);
+    await openTeamMenu(page, "Change team");
+    await expect(page.getByTestId("team-bar").getByRole("textbox", { name: "Team ID" })).toBeFocused();
+  });
+
+  test("choosing Change team twice keeps the field open and focused", async ({ page }) => {
+    await mockLive(page, { current: "a" });
+    await open(page);
+    const field = page.getByTestId("team-bar").getByRole("textbox", { name: "Team ID" });
+    await openTeamMenu(page, "Change team");
+    await expect(field).toBeFocused();
+    await openTeamMenu(page, "Change team");
+    await expect(field).toBeVisible();
+    await expect(field).toBeFocused();
+  });
+
+  test("a guest with a long team name at 360px: no overflow, 44px targets, Link copied announced", async ({ page, context }) => {
+    await context.clearCookies();
+    await context.grantPermissions(["clipboard-read", "clipboard-write"], { origin: ORIGIN });
+    await page.addInitScript(() => { Object.defineProperty(navigator, "share", { value: undefined, configurable: true }); });
+    await page.setViewportSize({ width: 360, height: 780 });
+    await page.route("**/api/forecast*", (route) =>
+      route.fulfill({ contentType: "application/json", body: JSON.stringify({ ...guestForecast(), teamName: "Wolves of Wall Street", managerName: "Gus Guest" }) }),
+    );
+    await page.goto("/");
+    await page.getByRole("textbox", { name: "FPL team ID" }).fill("424242");
+    await page.getByRole("button", { name: "View squad" }).click();
+    await expect(page.getByTestId("team-bar")).toContainText("Wolves of Wall Street");
+    const status = page.getByRole("banner").getByRole("status");
+    await expect(status).toBeAttached(); // mounted before the text arrives, so the change is announced
+    await expect(status).toHaveText("");
+    await openTeamMenu(page, "Copy link");
+    await expect(status).toHaveText("Link copied");
+    const trigger = page.getByRole("button", { name: "Team options" });
+    expect((await trigger.boundingBox())!.height).toBeGreaterThanOrEqual(44);
+    expect((await trigger.boundingBox())!.width).toBeGreaterThanOrEqual(44);
+    expect(await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth)).toBeLessThanOrEqual(0);
+    const header = (await page.getByRole("banner").boundingBox())!;
+    expect(header.width).toBeLessThanOrEqual(360);
+  });
+
+  test("a guest can still switch team from the menu", async ({ page, context }) => {
+    await context.clearCookies();
+    await page.route("**/api/forecast*", (route) =>
+      route.fulfill({ contentType: "application/json", body: JSON.stringify({ ...guestForecast(), teamName: new URL(route.request().url()).searchParams.get("teamId") === "535353" ? "Second FC" : "Guest FC" }) }),
+    );
+    await page.goto("/");
+    await page.getByRole("textbox", { name: "FPL team ID" }).fill("424242");
+    await page.getByRole("button", { name: "View squad" }).click();
+    const bar = page.getByTestId("team-bar");
+    await expect(bar).toContainText("Guest FC");
+    await openTeamMenu(page, "Change team");
+    await bar.getByRole("textbox", { name: "Team ID" }).fill("535353");
+    await bar.getByRole("button", { name: "View", exact: true }).click();
+    await expect(bar).toContainText("Second FC");
+  });
+});
+
+test.describe("Chrome height", () => {
+  for (const width of [360, 390]) {
+    test(`the deadline banner is one line at ${width}px, even with a pending transfer`, async ({ page }) => {
+      await page.clock.install({ time: Date.parse(latestDeadline()) - 30 * 3_600_000 });
+      await page.setViewportSize({ width, height: 844 });
+      await mockLive(page, { current: "a" });
+      await page.goto("/?tab=live");
+      const banner = page.getByTestId("deadline-banner");
+      await expect(banner).toContainText("SGT");
+      const box = (await banner.boundingBox())!;
+      expect(box.height).toBeLessThan(40); // one text line plus padding, never wrapped
+      expect((await page.getByRole("banner").boundingBox())!.height).toBeLessThan(66); // the menu button does not grow the header
+      expect((await page.getByTestId("team-bar").boundingBox())!.height).toBeLessThan(40);
+      await expect(banner).not.toContainText(/\bC\s+\w/); // the captain is on the pitch and in the checklist
+      expect(await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth)).toBeLessThanOrEqual(0);
+      await page.screenshot({ path: `test-results/chrome-${width}.png`, clip: { x: 0, y: 0, width, height: 360 } });
+    });
+  }
+});
 
 test.describe("Match day", () => {
   test("bench cover says who comes on if a starter doesn't play", async ({ page }) => {
@@ -778,11 +995,16 @@ test.describe("Suspension / loan-ban risk", () => {
   });
 
   test("a forecast built before the risk field existed does not say 'no risk'", async ({ page }) => {
-    // The committed forecast has no `risks` on any player yet: the row must not claim FPL flags none.
-    await page.clock.install({ time: Date.parse(latestDeadline()) - 5 * 3_600_000 });
+    // Strip `risks` from the newest committed forecast (the nightly build now carries it) so this
+    // keeps testing the old shape: the row must not claim FPL flags none.
+    const dir = join(__dirname, "..", "..", "data", "forecast");
+    const newest = readdirSync(dir).filter((f) => /^gw\d+\.json$/.test(f)).sort((a, b) => Number(b.match(/\d+/)![0]) - Number(a.match(/\d+/)![0]))[0];
+    const fc = JSON.parse(readFileSync(join(dir, newest), "utf8"));
+    for (const p of fc.squad.players) if (p.availability) delete p.availability.risks;
+    await page.clock.install({ time: Date.parse(fc.deadlineTime) - 5 * 3_600_000 });
+    await page.route("**/api/forecast*", (route) => route.fulfill({ contentType: "application/json", body: JSON.stringify(fc) }));
     await mockLive(page, { current: "a" });
-    await open(page);
-    await openTab(page, "Squad");
+    await page.goto("/?team=999999&tab=squad");
     await expect(page.getByText("Suspension / loan-ban risk (FPL)")).toBeVisible();
     const riskBox = page.locator("div.flex.items-start", { has: page.getByText("Suspension / loan-ban risk (FPL)", { exact: true }) });
     await expect(riskBox).toContainText("Not in this build yet");
@@ -979,7 +1201,7 @@ test.describe("3D pitch moves", () => {
     await expect(pitch).toHaveAttribute("data-focus", /\d+/);
     await expect(pitch).toHaveAttribute("data-celebrating", "goal");
     await expect(page.getByRole("dialog")).toBeVisible();
-    await expect(pitch).not.toHaveAttribute("data-celebrating", /.+/, { timeout: 8000 }); // the move finishes
+    await expect(pitch).not.toHaveAttribute("data-celebrating", /.+/, { timeout: 25000 }); // the move finishes (wall time stretches on a slow machine: the stage caps each step at 0.05s)
     await page.keyboard.press("Escape");
     await expect(pitch).not.toHaveAttribute("data-focus", /.+/);
   });
@@ -995,10 +1217,11 @@ test.describe("3D pitch moves", () => {
     await page.evaluate(() => document.dispatchEvent(new Event("visibilitychange")));
     await expect(pitch).toHaveAttribute("data-celebrating", "goal", { timeout: 10000 });
     await expect(pitch).not.toHaveAttribute("data-focus", /.+/); // nobody selected, camera untouched
-    await expect(pitch).not.toHaveAttribute("data-celebrating", /.+/, { timeout: 8000 }); // and it ends
+    await expect(pitch).not.toHaveAttribute("data-celebrating", /.+/, { timeout: 25000 }); // and it ends (the stage caps each step at 0.05s, so on a slow or busy machine 3.6s of animation takes far longer in wall time)
   });
 
   test("the ball stays put during a live celebration and the passing resumes after it", async ({ page }) => {
+    test.slow(); // several waits on a stage that slows down under load add up to more than the default limit
     await page.addInitScript(() => {
       try { localStorage.setItem("fpl-pitch-passing", "on"); } catch {}
     });
@@ -1017,7 +1240,7 @@ test.describe("3D pitch moves", () => {
     await page.waitForTimeout(1800);
     await expect(pitch).toHaveAttribute("data-celebrating", "goal"); // still mid-celebration
     expect(await pitch.getAttribute("data-passes")).toBe(at);
-    await expect(pitch).not.toHaveAttribute("data-celebrating", /.+/, { timeout: 8000 });
+    await expect(pitch).not.toHaveAttribute("data-celebrating", /.+/, { timeout: 25000 });
     await expect.poll(async () => await pitch.getAttribute("data-passes"), { timeout: 15000 }).not.toBe(at);
   });
 
@@ -1530,6 +1753,65 @@ test.describe("What could still move your rank", () => {
     });
   }
 
+  for (const width of [360, 390]) {
+    test(`is one card with the count, the kickoff list and the threat lines, no duplicate headings, at ${width}px`, async ({ page }) => {
+      await page.setViewportSize({ width, height: 844 });
+      await mockThreats(page, [foden]);
+      await page.goto("/?tab=live");
+      const card = page.getByTestId("rank-threats");
+      await expect(card).toBeVisible();
+      await expect(page.getByTestId("rank-threats")).toHaveCount(1);
+      await expect(card.getByTestId("still-to-play-count")).toHaveText("4 of your XI have a match left"); // Van Dijk playing, Porro, Szoboszlai, Haaland to come
+      await expect(card.getByTestId("next-up")).toContainText("Playing now");
+      await expect(card.getByTestId("next-up")).toContainText("Sun 23:30");
+      await expect(card.locator("[data-kind='yours']").first()).toBeVisible();
+      await expect(card.locator("[data-kind='missing']")).toHaveCount(1);
+      await expect(page.getByText("Still to come", { exact: true })).toHaveCount(0); // the old second card's heading
+      await expect(page.getByRole("heading", { name: /still to play/i })).toHaveCount(1);
+      // count line first, then the kickoff list, then the threat lines
+      const y = async (loc: Locator) => (await loc.boundingBox())!.y;
+      expect(await y(card.getByTestId("still-to-play-count"))).toBeLessThan(await y(card.getByTestId("next-up")));
+      expect(await y(card.getByTestId("next-up"))).toBeLessThan(await y(card.locator("li").first()));
+      // one explainer row, not two
+      await expect(page.locator("details > summary", { hasText: /worked out/ })).toHaveCount(1);
+      expect(await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth)).toBeLessThanOrEqual(0);
+      await card.scrollIntoViewIfNeeded();
+      await page.screenshot({ path: `test-results/still-to-play-${width}.png` });
+    });
+  }
+
+  test("Bench Boost: the count says 15 and the card still names the bench players left, with kickoff", async ({ page }) => {
+    const base = JSON.parse(fixture("live-a.json"));
+    base.picks.chip = "bboost";
+    base.threats = [];
+    base.liveByElement["15"] = { points: 0, minutes: 0, goalsConceded: 0, fixtureStarted: false, fixtureFinished: false, bonusPending: false, breakdown: [] };
+    const bench15 = base.squad.find((p: { id: number }) => p.id === 15);
+    bench15.kickoffTime = "2026-10-11T15:30:00Z";
+    await page.route("**/api/live*", (route) =>
+      route.request().url().includes("squad=1")
+        ? route.fulfill({ status: 503, contentType: "application/json", body: "{}" })
+        : route.fulfill({ contentType: "application/json", body: JSON.stringify(base) }),
+    );
+    await page.goto("/?tab=live");
+    const card = page.getByTestId("rank-threats");
+    await expect(card.getByTestId("still-to-play-count")).toHaveText("6 of your 15 have a match left");
+    const nextUp = card.getByTestId("next-up");
+    await expect(nextUp).toContainText(bench15.webName); // an unplayed bench player, with the kickoff line
+    await expect(nextUp.locator("p", { hasText: bench15.webName })).toContainText("Sun 23:30");
+    await expect(nextUp).toContainText(/Playing now.*53'/); // the bench player already on
+  });
+
+  test("the one explainer row holds the safety score and the rank estimate", async ({ page }) => {
+    await mockThreats(page, []);
+    await page.goto("/?tab=live");
+    const details = page.locator("details", { hasText: /worked out/ });
+    await expect(details).toHaveCount(1);
+    await details.locator("summary").click();
+    await expect(details).toContainText("par");
+    await expect(details).toContainText("Estimated overall rank:");
+    await expect(details).toContainText("Last known rank: 150,000");
+  });
+
   test("with no ownership data the not-owned lines disappear and your own still show", async ({ page }) => {
     await mockThreats(page, []);
     await page.goto("/?tab=live");
@@ -1649,10 +1931,10 @@ test.describe("Guest teams", () => {
     await enterTeam(page, "424242");
     const bar = page.getByTestId("team-bar");
     await expect(bar).toContainText("Guest FC");
-    await bar.getByRole("button", { name: "Change team" }).click();
+    await openTeamMenu(page, "Change team");
     await bar.getByRole("textbox", { name: "Team ID" }).fill("535353");
     await bar.getByRole("button", { name: "View", exact: true }).click(); // slow second lookup
-    await bar.getByRole("button", { name: "Change team" }).click();
+    await openTeamMenu(page, "Change team");
     await bar.getByRole("button", { name: "Switch team" }).click();
     await page.waitForTimeout(3000);
     await expect(page.getByRole("textbox", { name: "FPL team ID" })).toBeVisible(); // still on the gate
@@ -1694,5 +1976,49 @@ test.describe("Guest teams", () => {
     await input.fill("123456789");
     await expect(go).toBeEnabled();
     expect(requests).toBe(0);
+  });
+
+  test("a guest never gets the Log a transfer control on Scenarios", async ({ page }) => {
+    await page.route("**/api/forecast*", (route) =>
+      route.fulfill({ contentType: "application/json", body: JSON.stringify(guestForecast()) }),
+    );
+    await enterTeam(page, "424242");
+    await expect(page.getByTestId("team-bar")).toContainText("Guest FC");
+    await openTab(page, "Scenarios");
+    await expect(page.getByText(/only available for this app.s own team/)).toBeAttached();
+    await expect(page.getByRole("button", { name: /Log a transfer/ })).toHaveCount(0);
+    await expect(page.getByRole("button", { name: "Save transfer" })).toHaveCount(0);
+    // positive control: the same page for the owner does have the toggle (see the owner test above)
+    await expect(page.getByRole("button", { name: /^Pin players/ })).toBeAttached();
+  });
+
+  test("pins and the custom result do not follow you to another team", async ({ page, context }) => {
+    await context.addCookies([{ name: "fpl_team_id", value: OWNER, url: ORIGIN }]);
+    await mockLive(page, { current: "a" });
+    await page.route("**/api/solve*", (route) =>
+      route.fulfill({ contentType: "application/json", body: JSON.stringify({ ...guestForecast().scenarios.byHorizon["1"][0] }) }),
+    );
+    await page.goto("/?tab=scenarios");
+    await expect(page.getByRole("button", { name: /^Log a transfer/ })).toBeAttached(); // owner has it
+    const toggle = page.getByRole("button", { name: /^Pin players \(0\)/ });
+    await toggle.scrollIntoViewIfNeeded();
+    await toggle.click();
+    const body = page.locator("#force-lock-body");
+    await body.getByRole("button", { name: /^(?!Solve|clear)/ }).nth(0).click();
+    await body.getByRole("button", { name: /^(?!Solve|clear)/ }).nth(1).click();
+    await body.getByRole("button", { name: /^Solve with 2 pins/ }).click();
+    await expect(page.getByText("Custom scenario")).toBeVisible();
+    // look up a different team: its squad differs by one player
+    const other = guestForecast();
+    other.squad.players[0] = { ...other.squad.players[0], id: 999001, webName: "Newguy" };
+    await page.route("**/api/forecast*", (route) => route.fulfill({ contentType: "application/json", body: JSON.stringify(other) }));
+    const bar = page.getByTestId("team-bar");
+    await bar.getByRole("button", { name: "Change team" }).click();
+    await bar.getByRole("textbox", { name: "Team ID" }).fill("424242");
+    await bar.getByRole("button", { name: "View", exact: true }).click();
+    await expect(bar).toContainText("Guest FC");
+    await openTab(page, "Scenarios");
+    await expect(page.getByRole("button", { name: /^Pin players \(0\)/ })).toBeAttached();
+    await expect(page.getByText("Custom scenario")).toHaveCount(0);
   });
 });

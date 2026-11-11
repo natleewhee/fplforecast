@@ -112,6 +112,7 @@ export default function Pitch3D({
   onSelect,
   onUnavailable,
   goals,
+  compact: compactCard = false,
 }: {
   xi: Pitch3DPlayer[];
   bench: Pitch3DPlayer[];
@@ -122,12 +123,23 @@ export default function Pitch3D({
   onUnavailable: () => void;
   /** Live goals from the latest poll: a starter who scored celebrates on his own (see celebrate.ts for the rules). */
   goals?: CelebrationEvent[];
+  /** A pitch inside a card (a scenario): when the card is narrow (under 340px) it gets a taller frame and smaller, shorter name tags, so the eleven fit without touching. */
+  compact?: boolean;
 }) {
   const data = useContext(PitchDataContext);
   const rootRef = useRef<HTMLDivElement>(null);
   const hostRef = useRef<HTMLDivElement>(null);
   const tagsRef = useRef<HTMLDivElement>(null);
   const stageRef = useRef<StageHandle | null>(null);
+  const [cardWidth, setCardWidth] = useState(0);
+  const compact = compactCard && cardWidth < 340; // narrow until measured: phones come first
+  useEffect(() => {
+    const el = rootRef.current;
+    if (!el || !compactCard || typeof ResizeObserver === "undefined") return;
+    const ro = new ResizeObserver(() => setCardWidth(el.clientWidth));
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, [compactCard]);
   const [ready, setReady] = useState(false);
   const [visible, setVisible] = useState(false);
   const [state, setState] = useState<StageState>({ focusId: null, celebrating: null });
@@ -290,15 +302,20 @@ export default function Pitch3D({
   const floating = (p: Pitch3DPlayer) =>
     tagEl(
       p,
-      "pointer-events-auto absolute left-0 top-0 flex max-w-[9rem] flex-col items-center rounded-md border border-white/15 bg-[rgba(8,16,24,0.82)] px-1.5 py-px leading-tight text-ink will-change-transform focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--accent)]",
+      `group pointer-events-auto absolute left-0 top-0 flex flex-col items-center rounded-md border border-white/15 bg-[rgba(8,16,24,0.82)] leading-tight text-ink will-change-transform focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--accent)] data-[tag-size=sm]:max-w-[3.6rem] data-[tag-size=xs]:max-w-[2.6rem] ${compact ? "max-w-[4.4rem] px-1 py-0" : "max-w-[9rem] px-1.5 py-px"}`,
       <>
-        <span className="flex max-w-full items-center gap-1">
+        <span className={`flex max-w-full items-center ${compact ? "gap-0.5" : "gap-1"} group-data-[tag-size=xs]:hidden`}>
           {roleBadge(p)}
-          <span className="min-w-0 truncate text-[11px] font-bold text-white">{p.webName}</span>
+          <span className={`min-w-0 truncate font-bold text-white group-data-[tag-size=sm]:text-[9px] ${compact ? "text-[10px]" : "text-[11px]"}`}>{p.webName}</span>
         </span>
         <span className="flex max-w-full items-center justify-center gap-1">
-          <span className={`font-mono text-[10.5px] font-semibold ${subColor(p)}`}>{p.sub}</span>
-          {badges(p, "text-[10px] leading-none")}
+          <span className={`font-mono font-semibold ${compact ? "text-[9.5px]" : "text-[10.5px]"} ${subColor(p)}`}>{p.sub}</span>
+          {compact && (p.badges?.length ?? 0) > 0 && (
+            <span className="text-[10px] font-black leading-none text-[var(--warn)]" aria-hidden>
+              !
+            </span>
+          )}
+          {!compact && badges(p, "text-[10px] leading-none")}
         </span>
       </>,
     );
@@ -315,7 +332,7 @@ export default function Pitch3D({
       data-focus={state.focusId ?? undefined}
       data-celebrating={state.celebrating ?? undefined}
     >
-      <div ref={hostRef} className="relative aspect-[6/5] w-full scroll-mt-16 overflow-hidden rounded-xl bg-[#0a1a14] [contain:paint]">
+      <div ref={hostRef} className={`relative w-full scroll-mt-16 overflow-hidden ${compact ? "aspect-[5/6]" : "aspect-[6/5]"}  rounded-xl bg-[#0a1a14] [contain:paint]`}>
         <div ref={tagsRef} className="pointer-events-none absolute inset-0">
           {ready && xi.map(floating)}
         </div>
@@ -326,15 +343,15 @@ export default function Pitch3D({
           <p className="eyebrow mb-1.5 flex items-baseline gap-1.5">
             Subs <span className="font-sans text-[10px] font-normal normal-case tracking-normal text-ink-faint">in the order they come on</span>
           </p>
-          <div className="grid gap-1.5" style={{ gridTemplateColumns: `repeat(${Math.min(bench.length, 4)}, minmax(0, 1fr))` }}>
+          <div className="grid gap-1.5" style={{ gridTemplateColumns: `repeat(${Math.min(bench.length, compact ? 2 : 4)}, minmax(0, 1fr))` }}>
             {bench.map((p, i) =>
               tagEl(
                 p,
-                "relative flex min-w-0 flex-col items-center gap-0.5 overflow-hidden rounded-lg border border-dashed border-white/30 bg-[rgba(8,16,24,0.45)] px-0.5 pb-1 pt-1.5 text-center leading-tight focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--accent)]",
+                "relative flex min-h-11 min-w-0 flex-col items-center justify-center gap-0.5 overflow-hidden rounded-lg border border-dashed border-white/30 bg-[rgba(8,16,24,0.45)] px-0.5 pb-1 pt-1.5 text-center leading-tight focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--accent)]",
                 <>
                   <span className="absolute inset-x-0 top-0 h-[3px]" style={{ background: kitColor(p) }} aria-hidden />
                   <span className="max-w-full text-[11px] font-bold text-white/90 [overflow-wrap:anywhere]">{p.webName}</span>
-                  <span className="flex items-center justify-center gap-1">
+                  <span className="flex flex-wrap items-center justify-center gap-1">
                     <span
                       className="grid h-4 min-w-4 place-items-center rounded-full bg-white/15 px-1 text-[9px] font-bold text-ink-soft"
                       title={p.position === "GKP" ? "Substitute goalkeeper" : `Sub number ${p.benchOrder ?? i}: comes on after the ones before`}
