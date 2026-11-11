@@ -194,7 +194,7 @@ function XiPitch({
       };
     };
     const byPos = (ids: number[]) => ids.map((id) => poolById.get(id)).filter((p): p is PoolPlayer => !!p);
-    return <Pitch3D xi={byPos(xi).map(to3d)} bench={byPos(bench).map((p, _i, all) => ({ ...to3d(p), benchOrder: all.filter((b) => b.position !== "GKP").indexOf(p) + 1 }))} onUnavailable={() => setNo3d(true)} />;
+    return <Pitch3D xi={byPos(xi).map(to3d)} bench={byPos(bench).map((p, _i, all) => ({ ...to3d(p), benchOrder: all.filter((b) => b.position !== "GKP").indexOf(p) + 1 }))} onUnavailable={() => setNo3d(true)} compact />;
   }
   const rows = ROWS.map((pos) =>
     xi.map((id) => poolById.get(id)).filter((p): p is PoolPlayer => !!p && p.position === pos)
