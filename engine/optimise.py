@@ -395,31 +395,11 @@ def derive_free_transfers(
     """
     from engine.config import FT_MAX_BANKED
 
-    used_by_gw: dict[int, int] = {}
-    for idx, row in enumerate(history_current or []):
-        gw = int(row.get("event") or idx + 1)
-        used_by_gw[gw] = int(row.get("event_transfers") or 0)
-    chip_gws = {
-        int(c["event"])
-        for c in chips or []
-        if c.get("name") in ("wildcard", "freehit") and c.get("event") is not None
-    }
-
-    first_gw = min(used_by_gw) if used_by_gw else 1
-    if target_gw <= first_gw + 1:
+    ft, ledger, first_gw = free_transfer_ledger(history_current, chips, target_gw)
+    if not ledger:
         return 1, f"1 FT (first deadline after GW{first_gw}, the team's unlimited week)"
-
-    ft = 1  # arrives for first_gw + 1
-    spent = 0
-    chip_weeks: list[int] = []
-    for gw in range(first_gw + 1, target_gw):
-        if gw in chip_gws:
-            chip_weeks.append(gw)
-            continue  # Wildcard / Free Hit: bank carried over untouched
-        used = used_by_gw.get(gw, 0)
-        spent += min(used, ft)
-        ft = min(FT_MAX_BANKED, max(0, ft - used) + 1)
-
+    spent = sum(min(row["used"], row["before"]) for row in ledger if row["chip"] is None)
+    chip_weeks = [row["gameweek"] for row in ledger if row["chip"] is not None]
     parts = [
         f"replayed GW{first_gw + 1}-GW{target_gw - 1}: +1 FT a week, capped at {FT_MAX_BANKED}",
         f"{spent} spent",
@@ -427,3 +407,36 @@ def derive_free_transfers(
     if chip_weeks:
         parts.append("chip weeks kept the bank (" + ", ".join(f"GW{g}" for g in chip_weeks) + ")")
     return ft, "; ".join(parts)
+
+
+def free_transfer_ledger(
+    history_current: list[dict], chips: list, target_gw: int
+) -> tuple[int, list[dict], int]:
+    """The week-by-week replay behind ``derive_free_transfers``.
+
+    Returns ``(free_transfers_at_target, ledger, first_gw)``. Each ledger row
+    is one gameweek after the team's unlimited first week, up to the one
+    before ``target_gw``: ``{"gameweek", "before", "used", "chip", "after"}``
+    -- the FTs held at that deadline, transfers made, the Wildcard / Free Hit
+    played (or None), and the FTs carried to the next deadline."""
+    used_by_gw: dict[int, int] = {}
+    for idx, row in enumerate(history_current or []):
+        gw = int(row.get("event") or idx + 1)
+        used_by_gw[gw] = int(row.get("event_transfers") or 0)
+    chip_by_gw = {
+        int(c["event"]): c["name"]
+        for c in chips or []
+        if c.get("name") in ("wildcard", "freehit") and c.get("event") is not None
+    }
+    first_gw = min(used_by_gw) if used_by_gw else 1
+    ft = 1  # arrives for first_gw + 1
+    ledger: list[dict] = []
+    for gw in range(first_gw + 1, target_gw):
+        used = used_by_gw.get(gw, 0)
+        chip = chip_by_gw.get(gw)
+        before = ft
+        if chip is None:
+            ft = min(FT_MAX_BANKED, max(0, ft - used) + 1)
+        # Wildcard / Free Hit: bank carried over untouched
+        ledger.append({"gameweek": gw, "before": before, "used": used, "chip": chip, "after": ft})
+    return ft, ledger, first_gw

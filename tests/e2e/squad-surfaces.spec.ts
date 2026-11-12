@@ -357,3 +357,28 @@ test("Scenarios: a guest's pinned re-solve sends the guest's own squad", async (
   expect(team.bank).toBe(fc.squad.bank);
   expect(team.freeTransfers).toBe(fc.scenarios.freeTransfers.value);
 });
+
+test("Scenarios: the free-transfer count opens a week-by-week replay", async ({ page, context }) => {
+  const fc = latestForecast();
+  fc.scenarios.freeTransfers = {
+    value: 2,
+    derivation: "replayed",
+    weeks: [
+      { gameweek: 2, before: 1, used: 0, chip: null, after: 2 },
+      { gameweek: 3, before: 2, used: 0, chip: "wildcard", after: 2 },
+      { gameweek: 4, before: 2, used: 1, chip: null, after: 2 },
+    ],
+  };
+  await context.clearCookies();
+  await page.route("**/api/forecast*", (route) => route.fulfill({ contentType: "application/json", body: JSON.stringify({ ...fc, teamName: "Guest FC" }) }));
+  await page.goto("/?team=999222&tab=scenarios");
+  const note = page.getByTestId("ft-derivation").first();
+  const summary = note.locator("summary");
+  await expect(summary).toContainText("2 FT");
+  expect((await summary.boundingBox())!.height, "the tap target meets the 44px rule").toBeGreaterThanOrEqual(43.5);
+  await summary.click();
+  const rows = note.locator("li");
+  await expect(rows).toHaveCount(3);
+  await expect(rows.nth(1)).toContainText("Wildcard, bank kept");
+  await expect(rows.nth(2)).toContainText("2 held, 1 made");
+});

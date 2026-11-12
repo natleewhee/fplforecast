@@ -40,6 +40,7 @@ import json
 import os
 import shutil
 import sys
+import traceback
 import urllib.error
 import urllib.request
 from datetime import datetime, timezone
@@ -220,8 +221,10 @@ class handler(BaseHTTPRequestHandler):
 
         try:
             status, payload = build_forecast_for_team(team_id)
-        except Exception as exc:  # noqa: BLE001 -- an on-demand lookup should never 500 silently
-            self._respond(502, {"error": f"forecast build failed: {exc}"})
+        except Exception:  # noqa: BLE001 -- an on-demand lookup should never 500 silently
+            # The detail goes to the function log, not to an anonymous caller.
+            traceback.print_exc(file=sys.stderr)
+            self._respond(502, {"error": "forecast build failed -- try again in a minute"})
             return
         self._respond(status, payload)
 

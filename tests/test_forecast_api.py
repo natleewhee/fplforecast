@@ -350,3 +350,18 @@ def test_guest_before_the_deadline_does_not_ask_for_next_weeks_picks(monkeypatch
     monkeypatch.setattr(forecast_api.compute_forecast, "upcoming_gameweek", lambda *a, **k: gw + 1)
     forecast_api.build_forecast_for_team(TEAM_ID)
     assert f"/entry/{TEAM_ID}/event/{gw + 1}/picks/" not in asked
+
+
+def test_a_failed_build_returns_a_fixed_message_not_the_exception(monkeypatch, capsys):
+    def boom(team_id):
+        raise RuntimeError("secret internal detail /var/task/data")
+
+    monkeypatch.setattr(forecast_api, "build_forecast_for_team", boom)
+    h = forecast_api.handler.__new__(forecast_api.handler)
+    h.path = f"/api/forecast?teamId={TEAM_ID}"
+    sent = {}
+    monkeypatch.setattr(h, "_respond", lambda status, body, **kw: sent.update(status=status, body=body), raising=False)
+    h.do_GET()
+    assert sent["status"] == 502
+    assert "secret" not in json.dumps(sent["body"])
+    assert "secret internal detail" in capsys.readouterr().err  # still in the function log

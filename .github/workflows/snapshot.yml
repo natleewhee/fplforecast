@@ -132,7 +132,7 @@ jobs:
           title="Daily snapshot is failing"
           url="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
           body="The snapshot run failed on $(date -u +%Y-%m-%d). The forecast on the site stops updating until it is fixed. Run: ${url}"
-          existing=$(gh issue list --state open --search "\"${title}\" in:title" --json number --jq '.[0].number' || true)
+          existing=$(gh issue list --state open --author app/github-actions --search "\"${title}\" in:title" --json number --jq '.[0].number' || true)
           if [ -n "${existing}" ]; then
             gh issue comment "${existing}" --body "${body}" || true
           else
@@ -145,7 +145,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           title="Daily snapshot is failing"
-          existing=$(gh issue list --state open --search "\"${title}\" in:title" --json number --jq '.[0].number' || true)
+          existing=$(gh issue list --state open --author app/github-actions --search "\"${title}\" in:title" --json number --jq '.[0].number' || true)
           if [ -n "${existing}" ]; then
             gh issue close "${existing}" --comment "The snapshot is passing again: ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}" || true
           fi
