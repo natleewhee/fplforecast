@@ -107,6 +107,18 @@ test("the tab bar is a tablist: arrows move between tabs, only the open tab is a
   await expect(list.getByRole("tab", { name: "Leagues" })).toHaveAttribute("aria-selected", "true");
   await page.keyboard.press("Home");
   await expect(live).toHaveAttribute("aria-selected", "true");
+  // quick repeat presses each move one tab, even mid-transition
+  await page.keyboard.press("ArrowRight");
+  await page.keyboard.press("ArrowRight");
+  await page.keyboard.press("ArrowRight");
+  await expect(list.getByRole("tab", { name: "Leagues" })).toHaveAttribute("aria-selected", "true");
+  // Alt+Left is the browser's Back: the tab bar neither switches nor cancels it
+  await page.evaluate(() => {
+    window.addEventListener("keydown", (e) => { (window as unknown as { altPrevented: boolean }).altPrevented = e.defaultPrevented; }, { once: true });
+  });
+  await page.keyboard.press("Alt+ArrowLeft");
+  await expect(list.getByRole("tab", { name: "Leagues" })).toHaveAttribute("aria-selected", "true");
+  expect(await page.evaluate(() => (window as unknown as { altPrevented: boolean }).altPrevented)).toBe(false);
   // panels that are not open stay inert
   await expect(page.locator("[role=tabpanel]:not([inert])")).toHaveCount(1);
 });

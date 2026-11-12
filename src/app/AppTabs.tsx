@@ -102,8 +102,12 @@ export default function AppTabs({ tabs, deadline }: { tabs: Tab[]; deadline?: st
 
   // Left/Right wrap round the bar, Home/End jump to the ends; focus follows the tab that opens.
   const onTabKey = (e: KeyboardEvent<HTMLDivElement>) => {
+    if (e.altKey || e.metaKey || e.ctrlKey) return; // leave Alt+Left (browser Back) and friends alone
     const n = tabs.length;
-    const cur = activeRef.current;
+    // Start from the tab the key was pressed on, not activeRef: a switch commits inside the view
+    // transition a frame later, so quick repeat presses would otherwise all read the old tab.
+    const from = tabButtons.current.indexOf(e.target as HTMLButtonElement);
+    const cur = from >= 0 ? from : activeRef.current;
     const to =
       e.key === "ArrowRight" ? (cur + 1) % n
       : e.key === "ArrowLeft" ? (cur - 1 + n) % n
