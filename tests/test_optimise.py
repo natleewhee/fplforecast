@@ -248,24 +248,69 @@ def test_plan_transfers_takes_an_available_improving_swap():
     assert plan[1].transfers_out == []
 
 
-def test_derive_free_transfers_floors_at_one():
-    history = [{"event_transfers": 0}]  # GW1 only, target GW2 -> 1 elapsed
-    value, derivation = derive_free_transfers(history, [], target_gw=1)
+def _hist(*transfers_by_gw):
+    """Entry-history ``current`` rows from GW1: one ``event_transfers`` per week."""
+    return [{"event": gw, "event_transfers": n} for gw, n in enumerate(transfers_by_gw, start=1)]
+
+
+def test_derive_free_transfers_is_one_at_the_first_deadline_after_the_unlimited_week():
+    value, derivation = derive_free_transfers(_hist(0), [], target_gw=2)
     assert value == 1
-    assert "capped at" in derivation
+    assert "GW1" in derivation
 
 
-def test_derive_free_transfers_caps_at_max_banked():
-    history = [{"event_transfers": 0} for _ in range(20)]
-    value, _ = derive_free_transfers(history, [], target_gw=25)
+def test_derive_free_transfers_banks_one_a_week_up_to_the_cap():
+    assert derive_free_transfers(_hist(0, 0, 0), [], target_gw=4)[0] == 3
+    value, _ = derive_free_transfers(_hist(*[0] * 20), [], target_gw=21)
     assert value == FT_MAX_BANKED
 
 
-def test_derive_free_transfers_subtracts_transfers_used():
-    history = [{"event_transfers": 1}, {"event_transfers": 2}]
-    value, _ = derive_free_transfers(history, [], target_gw=4)
-    # 3 elapsed since GW1, minus 3 used -> floors at 1.
-    assert value == 1
+def test_derive_free_transfers_replays_spending_week_by_week():
+    # GW2: 1 FT, use 1 -> 1 for GW3; GW3: use 0 -> 2 for GW4; GW4: use 2 -> 1 for GW5.
+    assert derive_free_transfers(_hist(0, 1, 0, 2), [], target_gw=5)[0] == 1
+
+
+def test_derive_free_transfers_a_hit_does_not_go_below_zero():
+    # GW2: 1 FT, make 3 (a -8 hit) -> bank 0, +1 -> 1 for GW3.
+    assert derive_free_transfers(_hist(0, 3), [], target_gw=3)[0] == 1
+
+
+def test_derive_free_transfers_cap_is_applied_each_week_not_once_at_the_end():
+    # Bank to 5 by GW6, sit on it to GW10 (still 5), then spend 4 in GW10 -> 2.
+    # The old "accrued minus used" sum would say min(5, 10 - 4) = 5.
+    value, _ = derive_free_transfers(_hist(0, 0, 0, 0, 0, 0, 0, 0, 0, 4), [], target_gw=11)
+    assert value == 2
+
+
+def test_derive_free_transfers_wildcard_and_free_hit_weeks_keep_the_bank():
+    # 3 FT going into GW4; Wildcard there (15 transfers) -> still 3 for GW5.
+    chips = [{"name": "wildcard", "event": 4}]
+    value, derivation = derive_free_transfers(_hist(0, 0, 0, 15), chips, target_gw=5)
+    assert value == 3
+    assert "GW4" in derivation
+    # Same for a Free Hit; a Bench Boost week is a normal week.
+    assert derive_free_transfers(_hist(0, 0, 0, 9), [{"name": "freehit", "event": 4}], 5)[0] == 3
+    assert derive_free_transfers(_hist(0, 0, 0, 0), [{"name": "bboost", "event": 4}], 5)[0] == 4
+
+
+def test_derive_free_transfers_late_joiner_starts_from_their_first_week():
+    history = [{"event": 6, "event_transfers": 0}, {"event": 7, "event_transfers": 0}]
+    assert derive_free_transfers(history, [], target_gw=7)[0] == 1
+    assert derive_free_transfers(history, [], target_gw=8)[0] == 2
+
+
+def test_force_in_missing_from_the_pool_is_infeasible():
+    players, _ = _pool_with_known_optimal()
+    result = solve_squad(
+        players,
+        held=[],
+        bank=1000,
+        free_transfers=0,
+        horizon_gws=1,
+        unlimited=True,
+        force_in=[987_654],  # no such pool row
+    )
+    assert not result.feasible
 
 
 def test_force_in_pins_a_player_the_optimum_would_otherwise_drop():

@@ -30,7 +30,7 @@ from engine.config import (
     ROLLING_WINDOW,
     SETTLE_GAMEWEEK,
 )
-from engine.features import UNAVAILABLE_STATUSES, POSITIONS, build_feature_frame, team_fixtures
+from engine.features import GONE_STATUSES, POSITIONS, build_feature_frame, team_fixtures
 from engine.history import ColdStart, archive_rates_for, classify, load_history, season_rates
 from engine.model import ModelContext
 from engine.optimise import (
@@ -179,6 +179,54 @@ def load_latest_picks() -> tuple[int, list[dict], dict] | None:
     data = load_json(latest)
     gw = int(latest.stem.removeprefix("gw"))
     return gw, data.get("picks", []), data.get("entry_history", {})
+
+
+def load_picks_snapshot(gw: int) -> dict | None:
+    """The raw ``picks-<TEAM_ID>/gw<gw>.json`` snapshot, or None if absent."""
+    path = DATA_DIR / f"picks-{TEAM_ID}" / f"gw{gw}.json"
+    return load_json(path) if path.exists() else None
+
+
+FREE_HIT_MAX_LOOKBACK = 3  # defensive bound; FPL never allows back-to-back Free Hits
+
+
+def squad_after_free_hit(
+    based_on_gw: int,
+    active_chip: str | None,
+    picks: list[dict],
+    entry_history: dict,
+    load_gw,
+) -> tuple[list[dict], dict, int | None]:
+    """The squad the manager actually holds going into the next deadline.
+
+    A Free Hit squad lasts one gameweek: at the next deadline FPL hands back
+    the squad (and bank) from the gameweek before the chip. So when
+    ``based_on_gw`` was a Free Hit week, walk back to the last non-Free-Hit
+    gameweek's picks. ``load_gw(gw)`` returns that gameweek's raw picks
+    payload (``picks``, ``entry_history``, ``active_chip``) or None.
+
+    Returns ``(squad_picks, squad_entry_history, reverted_from_gw)``;
+    ``reverted_from_gw`` is the gameweek whose squad is used, or None when no
+    reversion applied. If the earlier picks can't be loaded, falls back to
+    the Free Hit picks (the old behaviour) rather than failing the build."""
+    gw, chip = based_on_gw, active_chip
+    squad_picks, squad_entry = picks, entry_history
+    steps = 0
+    while chip == "freehit" and gw > 1 and steps < FREE_HIT_MAX_LOOKBACK:
+        gw -= 1
+        steps += 1
+        prev = load_gw(gw)
+        if not prev or not prev.get("picks"):
+            print(
+                f"free hit: no GW{gw} picks to revert to -- using the GW{based_on_gw} Free Hit squad",
+                file=sys.stderr,
+            )
+            return picks, entry_history, None
+        squad_picks, squad_entry = prev["picks"], prev.get("entry_history", {})
+        chip = prev.get("active_chip")
+    if squad_picks is picks:
+        return picks, entry_history, None
+    return squad_picks, squad_entry, gw
 
 
 def load_entry_history() -> dict:
@@ -791,10 +839,10 @@ def build_scenarios(
     Free Hit (1 GW) and Wildcard (5 GW) full rebuilds, each solved once via
     ``engine.optimise.solve_squad`` over the full pool.
 
-    ``pool`` excludes unavailable players (status != "a"), but a held squad
-    player can still be unavailable -- the optimiser correctly sells them
-    (they can't be in ``pool`` so can't be re-selected), and they show up in
-    ``transfers_out``. ``squad_cards`` (built from the full squad regardless
+    ``pool`` excludes only players who have left (``GONE_STATUSES``), but a
+    held squad player can be one of them -- the optimiser correctly sells
+    them (they can't be in ``pool`` so can't be re-selected), and they show
+    up in ``transfers_out``. ``squad_cards`` (built from the full squad regardless
     of availability) backs the display lookup for exactly that case."""
     pool_by_id = {p["id"]: p for p in pool}
     for card in squad_cards or []:
@@ -988,6 +1036,7 @@ def build_pool_context(bootstrap: dict, target_gw: int) -> dict:
         elements_by_id=elements_by_id,
         teams_by_id=teams_by_id,
         team_strength=live_team_strength(bootstrap),
+        availability_gw=target_gw,
     )
 
     def model_fn(row, gw):
@@ -1010,17 +1059,17 @@ def build_pool_context(bootstrap: dict, target_gw: int) -> dict:
     minutes_risk_by_id = {
         pid: model.minutes_risk_flag(row, ctx) for pid, row in feature_frame.iterrows()
     }
-    # "the best *available* alternative" (R12): only players FPL lists as
-    # available (not injured / suspended / loaned / out of the game). A
-    # "d" (doubtful) player stays eligible -- the model already discounts
-    # their xP by chance_of_playing_next_round (availability_multiplier), so
-    # excluding them here on top of that would double-penalise a doubt and,
-    # worse, make the optimiser (engine/optimise.py) unable to ever select or
-    # force-keep them at all, since they'd never be a candidate variable.
+    # The pool drops only players who have left (GONE_STATUSES: loaned /
+    # transferred out, not in the squad). Injured, suspended and doubtful
+    # players stay in: availability_multiplier already zeroes or discounts
+    # their *next* gameweek, and later weeks assume a return. Excluding them
+    # here would double-penalise a short absence and stop the optimiser
+    # (engine/optimise.py) from ever keeping or planning around them, since
+    # they'd never be a candidate variable.
     pool_ids = [
         pid
         for pid in feature_frame.index
-        if elements_by_id.get(pid, {}).get("status") not in UNAVAILABLE_STATUSES
+        if elements_by_id.get(pid, {}).get("status") not in GONE_STATUSES
     ]
 
     # Whole-pool POOL_HORIZON_WEEKS-gameweek projections for the pre-deadline
@@ -1110,6 +1159,9 @@ def build_personal_forecast(
     overrides_applied: int = 0,
     season_history: dict | None = None,
     include_model_record: bool = True,
+    squad_picks: list[dict] | None = None,
+    squad_entry_history: dict | None = None,
+    free_hit_reverted_from: int | None = None,
 ) -> dict:
     """The team-specific half: given one manager's held squad (and their own
     season history, for the par-score/rank calibration), build the full
@@ -1131,7 +1183,13 @@ def build_personal_forecast(
     season_history = season_history or {}
     form_by_id = recent_form_by_id()
 
-    bank = round((entry_history.get("bank") or 0) / 10, 1)
+    # ``picks``/``entry_history`` are the based-on gameweek's own (reviewed in
+    # lastGameweek). ``squad_picks``/``squad_entry_history`` are the squad held
+    # going into the next deadline -- different only after a Free Hit, when
+    # FPL hands back the pre-chip squad and bank (see squad_after_free_hit).
+    squad_picks = picks if squad_picks is None else squad_picks
+    squad_entry_history = entry_history if squad_entry_history is None else squad_entry_history
+    bank = round((squad_entry_history.get("bank") or 0) / 10, 1)
 
     # Your squad is the anchor: the fifteen held players, each with the model's
     # projection; the planning table (poolUpgrades below) is the sole upgrade
@@ -1229,8 +1287,8 @@ def build_personal_forecast(
 
     model_xi_points = _xi_points(starting_ids, captain["id"] if captain else None)
 
-    prev_start_ids = [p["element"] for p in picks if p.get("position", 99) <= 11]
-    prev_captain_id = next((p["element"] for p in picks if p.get("is_captain")), None)
+    prev_start_ids = [p["element"] for p in squad_picks if p.get("position", 99) <= 11]
+    prev_captain_id = next((p["element"] for p in squad_picks if p.get("is_captain")), None)
     no_change_points = _xi_points(prev_start_ids or starting_ids, prev_captain_id)
 
     bl_starting, bl_bench = best_xi(
@@ -1407,6 +1465,9 @@ def build_personal_forecast(
     forecast = {
         "generatedAt": datetime.now(timezone.utc).isoformat(),
         "basedOnGameweek": based_on_gw,
+        # Set when based_on_gw was a Free Hit: the squad is this earlier
+        # gameweek's, which FPL restores at the next deadline.
+        "squadFromGameweek": free_hit_reverted_from,
         "targetGameweek": target_gw,
         "rollingWindow": ROLLING_WINDOW,
         "overridesApplied": overrides_applied,
@@ -1495,8 +1556,15 @@ def main(now: datetime | None = None) -> int:
     based_on_gw, picks, entry_history = picks_result
     target_gw = upcoming_gameweek(bootstrap, now, fallback=based_on_gw + 1)
 
+    latest_raw = load_picks_snapshot(based_on_gw) or {}
+    squad_picks, squad_entry_history, reverted_from = squad_after_free_hit(
+        based_on_gw, latest_raw.get("active_chip"), picks, entry_history, load_picks_snapshot
+    )
+    if reverted_from is not None:
+        print(f"free hit: GW{based_on_gw} was a Free Hit -- building from the GW{reverted_from} squad")
+
     overrides = load_overrides(based_on_gw)
-    squad_ids = [p["element"] for p in picks]
+    squad_ids = [p["element"] for p in squad_picks]
     overrides_applied = 0
     if overrides:
         original_ids = set(squad_ids)
@@ -1519,6 +1587,9 @@ def main(now: datetime | None = None) -> int:
         squad_ids,
         overrides_applied=overrides_applied,
         season_history=season_history,
+        squad_picks=squad_picks,
+        squad_entry_history=squad_entry_history,
+        free_hit_reverted_from=reverted_from,
     )
 
     out_dir = DATA_DIR / "forecast"

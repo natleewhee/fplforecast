@@ -103,12 +103,16 @@ def solve_squad(
     """
     held_ids = set(held)
     by_id = {p["id"]: p for p in players}
+    # A pin is a hard constraint: a force_in id with no pool row (sold,
+    # left the club, filtered out) can't be satisfied, so say so rather than
+    # solve as if the pin weren't there.
+    if any(pid not in by_id for pid in force_in or []):
+        return _infeasible(horizon_gws)
     prob = pulp.LpProblem("squad", pulp.LpMaximize)
 
     x = {p["id"]: pulp.LpVariable(f"x_{p['id']}", cat="Binary") for p in players}
     for pid in force_in or []:
-        if pid in x:
-            prob += x[pid] == 1
+        prob += x[pid] == 1
     for pid in force_out or []:
         if pid in x:
             prob += x[pid] == 0
@@ -334,23 +338,53 @@ def plan_transfers(
 def derive_free_transfers(
     history_current: list[dict], chips: list, target_gw: int
 ) -> tuple[int, str]:
-    """KD5: 1 free transfer accrued per gameweek since GW1, capped at
-    ``FT_MAX_BANKED``, minus transfers already used, floored at 1.
+    """Free transfers available at ``target_gw``'s deadline, replayed week by
+    week the way FPL counts them:
+
+    - the first gameweek the team played is unlimited (no FT used), and 1 FT
+      arrives for the week after it;
+    - each later week, transfers made spend the bank (a hit can't take it
+      below 0), then 1 FT is added, capped at ``FT_MAX_BANKED``;
+    - a Wildcard or Free Hit week spends nothing and adds nothing: the bank
+      going in is the bank coming out (FPL's 2024/25+ rule).
 
     ``history_current`` is the ``current`` list from the entry-history
-    snapshot (one row per completed gameweek with ``event_transfers``);
-    ``chips`` is that snapshot's ``chips`` list (currently unused in the
-    arithmetic -- reserved for a future rule around chip gameweeks, e.g. a
-    Wildcard/Free Hit gameweek not consuming a free transfer).
+    snapshot (one row per gameweek with ``event`` and ``event_transfers``);
+    a row without ``event`` is read as GW(index + 1). A week missing from the
+    history counts as no transfers made. ``chips`` is that snapshot's
+    ``chips`` list (``{"name", "event"}``).
     """
     from engine.config import FT_MAX_BANKED
 
-    gws_elapsed = max(0, target_gw - 1)
-    transfers_used = sum(gw.get("event_transfers", 0) or 0 for gw in history_current)
-    raw = gws_elapsed - transfers_used
-    value = max(1, min(FT_MAX_BANKED, raw))
-    derivation = (
-        f"{gws_elapsed} FT accrued since GW1 (1/GW), capped at {FT_MAX_BANKED}, "
-        f"minus {transfers_used} used"
-    )
-    return value, derivation
+    used_by_gw: dict[int, int] = {}
+    for idx, row in enumerate(history_current or []):
+        gw = int(row.get("event") or idx + 1)
+        used_by_gw[gw] = int(row.get("event_transfers") or 0)
+    chip_gws = {
+        int(c["event"])
+        for c in chips or []
+        if c.get("name") in ("wildcard", "freehit") and c.get("event") is not None
+    }
+
+    first_gw = min(used_by_gw) if used_by_gw else 1
+    if target_gw <= first_gw + 1:
+        return 1, f"1 FT (first deadline after GW{first_gw}, the team's unlimited week)"
+
+    ft = 1  # arrives for first_gw + 1
+    spent = 0
+    chip_weeks: list[int] = []
+    for gw in range(first_gw + 1, target_gw):
+        if gw in chip_gws:
+            chip_weeks.append(gw)
+            continue  # Wildcard / Free Hit: bank carried over untouched
+        used = used_by_gw.get(gw, 0)
+        spent += min(used, ft)
+        ft = min(FT_MAX_BANKED, max(0, ft - used) + 1)
+
+    parts = [
+        f"replayed GW{first_gw + 1}-GW{target_gw - 1}: +1 FT a week, capped at {FT_MAX_BANKED}",
+        f"{spent} spent",
+    ]
+    if chip_weeks:
+        parts.append("chip weeks kept the bank (" + ", ".join(f"GW{g}" for g in chip_weeks) + ")")
+    return ft, "; ".join(parts)

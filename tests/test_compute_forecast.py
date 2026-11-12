@@ -14,7 +14,7 @@ import pandas as pd
 import pytest
 
 import scripts.compute_forecast as cf
-from engine.features import UNAVAILABLE_STATUSES
+from engine.features import GONE_STATUSES, UNAVAILABLE_STATUSES
 from engine.history import HistoryArchive
 from engine.optimise import ScenarioResult
 
@@ -109,12 +109,11 @@ def test_pool_block_covers_every_available_player_with_per_gw_projections(foreca
 
     bootstrap = cf.load_bootstrap()
     # "Available" here means eligible for the optimiser to select or
-    # force-keep, not just fully fit -- a "d" (doubtful) player stays in the
-    # pool (their xP is already discounted by chance_of_playing_next_round);
-    # only genuinely unavailable statuses (injured/suspended/left/not in
-    # this season's squad) are excluded.
+    # force-keep, not just fully fit -- doubtful, injured and suspended
+    # players stay in the pool (availability discounts their next gameweek
+    # only); just the ones who have left (GONE_STATUSES) are excluded.
     available = {
-        el["id"] for el in bootstrap["elements"] if el.get("status") not in UNAVAILABLE_STATUSES
+        el["id"] for el in bootstrap["elements"] if el.get("status") not in GONE_STATUSES
     }
     pool = forecast["pool"]
     assert {p["id"] for p in pool} == available
@@ -142,12 +141,101 @@ def test_doubtful_player_stays_in_the_pool(forecast):
     assert doubtful in {p["id"] for p in forecast["pool"]}
 
 
-def test_unavailable_player_is_absent_from_the_pool(forecast):
+def test_player_who_left_is_absent_from_the_pool(forecast):
     bootstrap = cf.load_bootstrap()
-    unavailable = next(
-        el["id"] for el in bootstrap["elements"] if el.get("status") in UNAVAILABLE_STATUSES
+    gone = next(
+        (el["id"] for el in bootstrap["elements"] if el.get("status") in GONE_STATUSES), None
     )
-    assert unavailable not in {p["id"] for p in forecast["pool"]}
+    if gone is None:
+        pytest.skip("no departed player in this snapshot")
+    assert gone not in {p["id"] for p in forecast["pool"]}
+
+
+def test_injured_player_stays_in_the_pool_with_a_zero_next_week(forecast):
+    bootstrap = cf.load_bootstrap()
+    out_now = [
+        el["id"]
+        for el in bootstrap["elements"]
+        if el.get("status") in UNAVAILABLE_STATUSES - GONE_STATUSES
+    ]
+    if not out_now:
+        pytest.skip("no injured or suspended player in this snapshot")
+    pool_by_id = {p["id"]: p for p in forecast["pool"]}
+    in_pool = [pid for pid in out_now if pid in pool_by_id]
+    assert in_pool, "injured/suspended players should stay pickable for later weeks"
+    for pid in in_pool:
+        per_gw = pool_by_id[pid]["perGameweek"]
+        assert per_gw[0] == 0.0
+    # A full return is assumed after the next week, so at least one of them
+    # carries points later in the horizon.
+    assert any(sum(pool_by_id[pid]["perGameweek"][1:]) > 0 for pid in in_pool)
+
+
+def _fh_payload(element_ids, chip=None, bank=0):
+    return {
+        "active_chip": chip,
+        "picks": [
+            {"element": e, "position": i + 1, "is_captain": i == 0} for i, e in enumerate(element_ids)
+        ],
+        "entry_history": {"bank": bank},
+    }
+
+
+def test_free_hit_week_reverts_to_the_previous_gameweeks_squad():
+    fh = _fh_payload([101, 102], chip="freehit", bank=5)
+    before = _fh_payload([1, 2], bank=17)
+    picks, entry, reverted = cf.squad_after_free_hit(
+        10, "freehit", fh["picks"], fh["entry_history"], {9: before}.get
+    )
+    assert [p["element"] for p in picks] == [1, 2]
+    assert entry["bank"] == 17
+    assert reverted == 9
+
+
+def test_non_free_hit_week_keeps_its_own_squad():
+    wk = _fh_payload([1, 2], chip="wildcard")
+    picks, entry, reverted = cf.squad_after_free_hit(
+        10, "wildcard", wk["picks"], wk["entry_history"], lambda gw: pytest.fail("no lookup")
+    )
+    assert picks is wk["picks"] and entry is wk["entry_history"] and reverted is None
+
+
+def test_free_hit_with_no_earlier_picks_falls_back_to_the_free_hit_squad():
+    fh = _fh_payload([101, 102], chip="freehit")
+    picks, _, reverted = cf.squad_after_free_hit(10, "freehit", fh["picks"], fh["entry_history"], lambda gw: None)
+    assert [p["element"] for p in picks] == [101, 102]
+    assert reverted is None
+
+
+def test_personal_forecast_after_a_free_hit_uses_the_restored_squad_and_bank(forecast):
+    """End to end on the committed data: pretend the latest picks week was a
+    Free Hit with a junk squad, and check the build holds the real squad."""
+    bootstrap = cf.load_bootstrap()
+    picks_gw, picks, entry_history = cf.load_latest_picks()
+    pool_ctx = cf.build_pool_context(bootstrap, picks_gw + 1)
+    real_ids = [p["element"] for p in picks]
+    fh_ids = [p["id"] for p in forecast["pool"] if p["id"] not in real_ids][:15]
+    fh = _fh_payload(fh_ids, chip="freehit", bank=0)
+    restored = {"picks": picks, "entry_history": {**entry_history, "bank": 42}, "active_chip": None}
+    squad_picks, squad_entry, reverted = cf.squad_after_free_hit(
+        picks_gw, "freehit", fh["picks"], fh["entry_history"], {picks_gw - 1: restored}.get
+    )
+    out = cf.build_personal_forecast(
+        bootstrap,
+        pool_ctx,
+        picks_gw,
+        fh["picks"],
+        fh["entry_history"],
+        [p["element"] for p in squad_picks],
+        squad_picks=squad_picks,
+        squad_entry_history=squad_entry,
+        free_hit_reverted_from=reverted,
+        include_model_record=False,
+    )
+    held = {p["id"] for p in out["squad"]["players"]}
+    assert held <= set(real_ids) and not held & set(fh_ids)
+    assert out["squad"]["bank"] == 4.2
+    assert out["squadFromGameweek"] == picks_gw - 1
 
 
 def test_par_margin_is_the_median_delta_over_completed_gameweeks():

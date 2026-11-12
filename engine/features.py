@@ -25,6 +25,10 @@ from engine.config import (
 from engine.history import ARCHIVE_RATE_KEYS
 
 UNAVAILABLE_STATUSES = {"i", "s", "u", "n"}  # injured, suspended, unavailable, not in squad
+# The subset that won't come back this season on its own: "u" (left the club,
+# loaned out of the league) and "n" (not in the squad). An "i"/"s" player is
+# out for the next gameweek but can return, so stays pickable for later weeks.
+GONE_STATUSES = {"u", "n"}
 
 POSITIONS = {1: "GKP", 2: "DEF", 3: "MID", 4: "FWD"}
 
@@ -55,8 +59,19 @@ def team_fixtures(team_id: int, target_gw: int, fixtures: list[dict]) -> list[di
     return out
 
 
-def availability_multiplier(el: dict) -> float:
-    if el.get("status") in UNAVAILABLE_STATUSES:
+def availability_multiplier(el: dict, next_gameweek: bool = True) -> float:
+    """FPL's availability as a 0-1 multiplier on projected points.
+
+    FPL's doubt signal (status letter, ``chance_of_playing_next_round``)
+    describes the *next* gameweek only, so it is applied to that week alone
+    (``next_gameweek=True``). Later weeks assume a full return, except for a
+    player who has left (``GONE_STATUSES``), who stays at 0 throughout."""
+    status = el.get("status")
+    if status in GONE_STATUSES:
+        return 0.0
+    if not next_gameweek:
+        return 1.0
+    if status in UNAVAILABLE_STATUSES:
         return 0.0
     chance = el.get("chance_of_playing_next_round")
     if chance is None:

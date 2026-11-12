@@ -71,6 +71,9 @@ class ModelContext:
     elements_by_id: dict[int, dict]
     teams_by_id: dict[int, str] | None = None
     team_strength: dict | None = field(default=None)
+    # The one gameweek FPL's availability signal describes (the next
+    # deadline). None keeps the old behaviour: apply it to every week asked.
+    availability_gw: int | None = None
 
 
 def dc_hit_probability(mean_actions: float, threshold: int, variance_ratio: float) -> float:
@@ -202,7 +205,9 @@ def project_detail(feature_row: Mapping, target_gw: int, ctx: ModelContext) -> d
         totals["cards"] -= yellow90 * mins90
 
     element = (ctx.elements_by_id or {}).get(int(feature_row["player_id"]), {})
-    availability = availability_multiplier(element)
+    availability = availability_multiplier(
+        element, next_gameweek=ctx.availability_gw is None or target_gw == ctx.availability_gw
+    )
     points = sum(totals.values()) * availability
 
     return {

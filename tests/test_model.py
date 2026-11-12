@@ -138,6 +138,44 @@ def test_availability_veto_zeroes_an_injured_player():
     assert project(feature_row(xg90=0.8), 3, injured) == 0.0
 
 
+def test_availability_applies_to_the_next_gameweek_only():
+    fixtures = [fixture(3, 10, 20), fixture(4, 10, 20)]
+    injured = ctx(
+        fixtures=fixtures,
+        element={"status": "i", "chance_of_playing_next_round": 0},
+        availability_gw=3,
+    )
+    fit = ctx(fixtures=fixtures, availability_gw=3)
+    assert project(feature_row(xg90=0.8), 3, injured) == 0.0
+    # FPL's doubt signal says nothing about GW4: a full return is assumed.
+    assert project(feature_row(xg90=0.8), 4, injured) == pytest.approx(
+        project(feature_row(xg90=0.8), 4, fit)
+    )
+
+
+def test_doubtful_discount_applies_to_the_next_gameweek_only():
+    fixtures = [fixture(3, 10, 20), fixture(4, 10, 20)]
+    doubt = ctx(
+        fixtures=fixtures,
+        element={"status": "d", "chance_of_playing_next_round": 50},
+        availability_gw=3,
+    )
+    fit = ctx(fixtures=fixtures, availability_gw=3)
+    row = feature_row(xg90=0.8)
+    assert project(row, 3, doubt) == pytest.approx(0.5 * project(row, 3, fit), abs=0.01)
+    assert project(row, 4, doubt) == pytest.approx(project(row, 4, fit))
+
+
+def test_player_who_left_stays_at_zero_in_later_weeks():
+    fixtures = [fixture(3, 10, 20), fixture(4, 10, 20)]
+    gone = ctx(
+        fixtures=fixtures,
+        element={"status": "u", "chance_of_playing_next_round": 0},
+        availability_gw=3,
+    )
+    assert project(feature_row(xg90=0.8), 4, gone) == 0.0
+
+
 def test_cold_start_player_still_gets_a_provisional_number():
     result = project(feature_row(cold_start=True, xg90=0.5), 3, ctx())
     assert isinstance(result, float) and result > 0

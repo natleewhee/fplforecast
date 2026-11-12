@@ -151,7 +151,18 @@ def build_forecast_for_team(team_id: int) -> tuple[int, dict]:
     entry_history = picks_payload.get("entry_history", {})
     if not picks:
         return 422, {"error": f"team {team_id} has no picks recorded for GW{based_on_gw} yet"}
-    squad_ids = [p["element"] for p in picks]
+
+    def _fetch_gw_picks(gw: int) -> dict | None:
+        try:
+            return _fpl_get(f"/entry/{team_id}/event/{gw}/picks/")
+        except (urllib.error.HTTPError, urllib.error.URLError):
+            return None
+
+    # After a Free Hit, FPL restores the pre-chip squad at the next deadline.
+    squad_picks, squad_entry_history, reverted_from = compute_forecast.squad_after_free_hit(
+        based_on_gw, picks_payload.get("active_chip"), picks, entry_history, _fetch_gw_picks
+    )
+    squad_ids = [p["element"] for p in squad_picks]
 
     pool_ctx = _get_pool_context(bootstrap, target_gw)
     forecast = compute_forecast.build_personal_forecast(
@@ -165,6 +176,9 @@ def build_forecast_for_team(team_id: int) -> tuple[int, dict]:
         season_history=history,
         # the out-of-sample record is scored on the app owner's squad, not this team's
         include_model_record=False,
+        squad_picks=squad_picks,
+        squad_entry_history=squad_entry_history,
+        free_hit_reverted_from=reverted_from,
     )
     forecast["teamName"] = entry.get("name")
     forecast["managerName"] = f"{entry.get('player_first_name', '')} {entry.get('player_last_name', '')}".strip()
