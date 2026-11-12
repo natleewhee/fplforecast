@@ -325,7 +325,7 @@ function TrackerPanel({
       </div>
 
       <details className="text-[11px] text-ink-faint">
-        <summary className="cursor-pointer py-2 font-medium text-ink-soft hover:text-ink">
+        <summary className="min-h-11 cursor-pointer py-3 font-medium text-ink-soft hover:text-ink">
           How {view.estimatedRank ? "are the safety score and rank" : "is the safety score"} worked out?
         </summary>
         <div className="mt-1.5 space-y-1.5">

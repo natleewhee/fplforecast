@@ -78,7 +78,7 @@ function RiskDetail({ risks }: { risks: Risk[] }) {
         aria-controls={open ? "checklist-risk-wording" : undefined}
         title={full.join(" ")}
         onClick={() => setOpen((o) => !o)}
-        className="-my-1 flex min-h-11 w-full items-center justify-between gap-2 text-left text-[11px] text-ink-soft"
+        className="relative -my-1 flex min-h-11 w-full items-center justify-between gap-2 text-left text-[11px] text-ink-soft"
       >
         <span className="min-w-0">{shortRisks(risks)}</span>
         <span className="shrink-0 text-ink-faint" aria-hidden>

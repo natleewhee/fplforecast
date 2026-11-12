@@ -354,7 +354,7 @@ export default function Pitch({
           {!showAllGws && upcoming.length > 1 && (
             <button
               onClick={() => setShowAllGws(true)}
-              className="shrink-0 rounded-xl border border-line px-3 py-1.5 text-[11px] text-ink-faint transition hover:border-border-strong hover:text-ink-soft"
+              className="min-h-11 shrink-0 rounded-xl border border-line px-3 py-1.5 text-[11px] text-ink-faint transition hover:border-border-strong hover:text-ink-soft"
             >
               +{upcoming.length - 1} more
             </button>
@@ -380,7 +380,7 @@ export default function Pitch({
             <div className="eyebrow mt-1">{previewing ? "proj pts (preview)" : adjusted ? "proj pts (adjusted)" : "proj pts"}</div>
             {isTargetGw && (
               <details className="mt-0.5">
-                <summary className="cursor-pointer list-none font-mono text-[10px] text-ink-faint hover:text-ink-soft">
+                <summary className="hit-44 relative cursor-pointer list-none font-mono text-[10px] text-ink-faint hover:text-ink-soft">
                   {forecast.xiFloorCeiling.floor.toFixed(0)}–{forecast.xiFloorCeiling.ceiling.toFixed(0)}
                   {forecast.xiFloorCeiling.bandProvisional && " (prov.)"}
                 </summary>

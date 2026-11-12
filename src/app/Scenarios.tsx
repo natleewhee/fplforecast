@@ -254,7 +254,9 @@ function WeeklyXi({
              horizon (Wildcard's 7 GW) fits more GW buttons than a phone is
              wide; scrolling the pill row keeps it a single line instead of
              wrapping into two, or pushing the page wider. */}
-          <div className="segment max-w-full overflow-x-auto">
+          {/* A scrolling segment clips at its padding, so the pills are 2px taller here to keep a
+             44px tap area inside it, and overflow-y-hidden stops a 1px vertical scroll. */}
+          <div className="segment max-w-full overflow-x-auto overflow-y-hidden [&>button]:min-h-[38px]">
             {weeks.map((w, i) => (
               <button
                 key={w.targetGw}

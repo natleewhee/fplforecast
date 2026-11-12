@@ -82,20 +82,20 @@ export function ViewSwitch({ view, onChange }: { view: PitchView; onChange?: (v:
           type="button"
           aria-pressed={passing}
           onClick={() => setPitchAmbient(!passing)}
-          className={`h-8 rounded-lg border px-2.5 text-[11px] font-semibold transition ${passing ? "border-[color-mix(in_srgb,var(--accent)_50%,transparent)] text-[var(--accent)]" : "border-line text-ink-faint hover:text-ink-soft"}`}
+          className={`hit-44 relative h-8 rounded-lg border px-2.5 text-[11px] font-semibold transition ${passing ? "border-[color-mix(in_srgb,var(--accent)_50%,transparent)] text-[var(--accent)]" : "border-line text-ink-faint hover:text-ink-soft"}`}
           title="The ball goes round the pitch while nobody is selected. Switch off to save battery."
         >
           Passing {passing ? "on" : "off"}
         </button>
       )}
-      <div className="inline-flex overflow-hidden rounded-lg border border-line text-[11px] font-semibold" role="group" aria-label="Pitch view">
+      <div className="inline-flex rounded-lg border border-line text-[11px] font-semibold" role="group" aria-label="Pitch view">
         {(["3d", "2d"] as const).map((v) => (
           <button
             key={v}
             type="button"
             aria-pressed={view === v}
             onClick={() => (onChange ?? setPitchView)(v)}
-            className={`h-8 px-3 transition ${view === v ? "bg-[color-mix(in_srgb,var(--accent)_16%,transparent)] text-[var(--accent)]" : "text-ink-faint hover:text-ink-soft"}`}
+            className={`hit-44 relative h-8 w-11 transition first:rounded-l-[7px] last:rounded-r-[7px] ${view === v ? "bg-[color-mix(in_srgb,var(--accent)_16%,transparent)] text-[var(--accent)]" : "text-ink-faint hover:text-ink-soft"}`}
           >
             {v.toUpperCase()}
           </button>

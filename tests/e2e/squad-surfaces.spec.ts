@@ -282,11 +282,11 @@ test("switching from deep in Squad to another tab starts at the top of that tab"
   await openSquad(page);
   await page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight));
   expect(await page.evaluate(() => window.scrollY)).toBeGreaterThan(1200);
-  await page.getByRole("button", { name: /^Scenarios$/ }).click();
+  await page.getByRole("tab", { name: /^Scenarios$/ }).click();
   await page.waitForTimeout(900);
   const y = await page.evaluate(() => window.scrollY);
   expect(y, "near the top of the new tab, not at its bottom").toBeLessThan(450);
-  await expect(page.getByRole("button", { name: /^Scenarios$/ })).toHaveAttribute("data-active", "true");
+  await expect(page.getByRole("tab", { name: /^Scenarios$/ })).toHaveAttribute("aria-selected", "true");
 });
 
 test("panes that are not open cannot be focused or tabbed into", async ({ page }) => {
