@@ -85,17 +85,43 @@ def finished_gameweeks(bootstrap: dict) -> list[int]:
     return sorted(e["id"] for e in bootstrap.get("events", []) if e.get("finished"))
 
 
-def snapshot_event_live(gw: int) -> None:
-    """Per-GW live points, keyed by gameweek not date — once finished it stops changing."""
+FROZEN_KEY = "_frozen"  # set on a gameweek's live file once FPL has signed it off
+
+
+def snapshot_event_live(gw: int, data_checked: bool = True) -> None:
+    """Per-GW live points, keyed by gameweek not date.
+
+    FPL marks a gameweek ``finished`` after its last match, but bonus points
+    and corrections only settle once it is ``data_checked``. So a finished
+    but unchecked gameweek is re-fetched on every run, and the file is frozen
+    (``"_frozen": true``, never fetched again) only once it is data-checked.
+    A file written before this rule (no ``_frozen`` key) is re-fetched once."""
     out_path = DATA_DIR / "event-live" / f"gw{gw}.json"
     if out_path.exists():
-        return
-    payload = fetch(f"{FPL_BASE}/event/{gw}/live/")
+        try:
+            if json.loads(out_path.read_text()).get(FROZEN_KEY):
+                return
+        except (OSError, ValueError):
+            pass  # unreadable: fetch it again
+    have = out_path.exists()
+    try:
+        payload = fetch(f"{FPL_BASE}/event/{gw}/live/")
+    except Exception as exc:  # noqa: BLE001
+        if have:  # a refresh of a file we already have: keep it, try again next run
+            print(f"event-live gw{gw}: refresh failed ({exc}) -- keeping the copy we have", file=sys.stderr)
+            return
+        raise
     if not payload.get("elements"):
+        if have:
+            print(f"event-live gw{gw}: refresh returned no elements -- keeping the copy we have", file=sys.stderr)
+            return
         raise RuntimeError(f"event/{gw}/live returned no elements — schema change? aborting")
+    if data_checked:
+        payload[FROZEN_KEY] = True
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(payload, indent=2, sort_keys=True))
-    print(f"event-live gw{gw}: -> {out_path}")
+    state = "frozen" if data_checked else "provisional, re-fetched until FPL data-checks it"
+    print(f"event-live gw{gw}: -> {out_path} ({state})")
 
 
 def snapshot_event_live_history(bootstrap: dict) -> None:
@@ -103,8 +129,9 @@ def snapshot_event_live_history(bootstrap: dict) -> None:
     if not gws:
         print("event-live: no finished gameweeks yet, skipping")
         return
+    checked = {e["id"]: bool(e.get("data_checked")) for e in bootstrap.get("events", [])}
     for gw in gws:
-        snapshot_event_live(gw)
+        snapshot_event_live(gw, data_checked=checked.get(gw, False))
 
 
 def snapshot_picks(bootstrap: dict) -> None:

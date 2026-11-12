@@ -322,7 +322,12 @@ export type PlanWeek = {
 };
 
 export type Scenarios = {
-  freeTransfers: { value: number; derivation: string };
+  freeTransfers: {
+    value: number;
+    derivation: string;
+    /** The week-by-week replay behind `value` (absent in forecasts built before it existed). */
+    weeks?: FreeTransferWeek[];
+  };
   chipsAvailable: { freeHit: boolean; wildcard: boolean };
   byHorizon: Record<string, Scenario[]>; // "1" | "3" | "5" -> top-3 by net points
   freeHit: Scenario | null;
@@ -489,4 +494,14 @@ export type FreeHitWeek = {
   freeHitPoints: number;
   keepPoints: number;
   gain: number;
+};
+
+/** One gameweek of the free-transfer replay: FTs held at the deadline, transfers made,
+ * Wildcard / Free Hit played (which keeps the bank), and FTs carried to the next deadline. */
+export type FreeTransferWeek = {
+  gameweek: number;
+  before: number;
+  used: number;
+  chip: string | null;
+  after: number;
 };
