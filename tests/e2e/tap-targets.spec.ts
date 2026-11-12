@@ -20,6 +20,24 @@ test.beforeEach(async ({ context, page }) => {
       : route.fulfill({ contentType: "application/json", body: fixture("live-a.json") }),
   );
   await page.route("**/api/recap*", (route) => route.fulfill({ status: 503, contentType: "application/json", body: "{}" }));
+  // a fixed league (two leagues, so the picker shows), not FPL's live one: CI can reach FPL, a laptop may not
+  const row = (entryId: number, rank: number, entryName: string, captainName: string | null) => ({
+    entryId, entryName, playerName: `Manager ${rank}`, rank, lastRank: rank + 1, totalPoints: 700 - rank, eventPoints: 50, projectedXp: 60,
+    chip: rank === 2 ? "3xc" : null, captainName, playersPlayed: 6, playersLive: 1, playersToPlay: 4,
+  });
+  await page.route(/\/api\/league(\?|$)/, (route) =>
+    route.fulfill({
+      contentType: "application/json",
+      body: JSON.stringify({
+        gameweek: 11,
+        leagues: [{ leagueId: 1, leagueName: "Mates" }, { leagueId: 2, leagueName: "Work" }],
+        league: {
+          leagueId: 1, leagueName: "Mates", myEntryId: 1168513, myRank: 2, totalEntries: 4, totalEntriesIsFloor: false, appendedEntryId: null,
+          entries: [row(100, 1, "Top Dog FC", "Haaland"), row(1168513, 2, "Me FC", null), row(300, 3, "Third Place", "Salah"), row(400, 4, "Fourth", null)],
+        },
+      }),
+    }),
+  );
 });
 
 type Probe = { name: string; w: number; h: number; stolenBy: string | null; pitchTag: boolean };
@@ -141,8 +159,10 @@ for (const width of [360, 390]) {
           if (await row.count()) await row.click();
           await page.waitForTimeout(800);
         }
+        if (tab === "leagues") await expect(page.getByRole("button", { name: /Top Dog FC/ })).toBeVisible(); // the mocked table, not an error
         const ps = await probe(page);
-        expect(ps.length, `${tab}: found controls`).toBeGreaterThan(tab === "leagues" ? 0 : 3);
+        if (tab === "leagues") expect(ps.filter((p) => /Top Dog FC|Me FC|Third Place|Fourth/.test(p.name)), "league rows measured").toHaveLength(4);
+        expect(ps.length, `${tab}: found controls`).toBeGreaterThan(3);
         problems.push(...tooSmall(ps).map((s) => `${tab} small: ${s}`), ...stolen(ps).map((s) => `${tab} covered: ${s}`));
       }
       expect(problems).toEqual([]);
