@@ -728,13 +728,21 @@ function ChipToggle({
  * button", holding the squad exactly as forecast. Derived entirely from
  * `upcoming` (already computed per-GW for the pitch view), no new backend
  * data needed. */
-// Below this a Free Hit week isn't worth calling out: the chip is usually saved for a blank or
-// double gameweek, where the gap to your own XI is much larger.
-const FREE_HIT_STANDOUT_GAIN = 8;
+// A fresh one-week squad beats any fixed 15 by a few points in an ordinary week, so a week only
+// stands out when its gain beats the window's typical (median) week by this much -- the size of
+// edge a blank or double gameweek gives, which is when the chip usually pays off.
+const FREE_HIT_STANDOUT_MARGIN = 4;
+
+function median(values: number[]): number {
+  const v = [...values].sort((a, b) => a - b);
+  const mid = Math.floor(v.length / 2);
+  return v.length % 2 ? v[mid] : (v[mid - 1] + v[mid]) / 2;
+}
 
 /** Free Hit timing: the gain over your own XI for each projected week, best week marked. */
 function FreeHitTiming({ weeks, pick, expiresGw }: { weeks: FreeHitWeek[]; pick: FreeHitWeek; expiresGw: number }) {
-  const standout = pick.gain >= FREE_HIT_STANDOUT_GAIN;
+  const typical = median(weeks.map((w) => w.gain));
+  const standout = weeks.length > 1 && pick.gain - typical >= FREE_HIT_STANDOUT_MARGIN;
   const top = Math.max(...weeks.map((w) => w.gain), 1);
   return (
     <div className="border-t border-line pt-2" data-testid="free-hit-timing">
@@ -749,8 +757,8 @@ function FreeHitTiming({ weeks, pick, expiresGw }: { weeks: FreeHitWeek[]; pick:
           </>
         ) : (
           <>
-            No standout week yet (best GW{pick.gameweek}, +{pick.gain.toFixed(1)}). Usually worth saving for a blank or
-            double gameweek.
+            No standout week yet: best is GW{pick.gameweek} (+{pick.gain.toFixed(1)}), close to a typical week
+            (+{typical.toFixed(1)}). Usually worth saving for a blank or double gameweek.
           </>
         )}
       </p>

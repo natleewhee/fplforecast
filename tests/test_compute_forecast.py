@@ -960,7 +960,9 @@ def test_free_hit_by_week_compares_a_free_hit_with_your_own_xi(forecast):
         return
     assert weeks, "Free Hit is open, so each projected week should be priced"
     horizon = len(forecast["pool"][0]["perGameweek"])
-    assert [w["gameweek"] for w in weeks] == list(range(forecast["targetGameweek"], forecast["targetGameweek"] + horizon))
+    gws = [w["gameweek"] for w in weeks]
+    assert gws == list(range(forecast["targetGameweek"], forecast["targetGameweek"] + len(gws)))
+    assert 0 < len(gws) <= horizon
     for w in weeks:
         assert w["gain"] == pytest.approx(w["freeHitPoints"] - w["keepPoints"], abs=0.02)
         # a Free Hit can always field your own XI, so it never loses points
@@ -982,7 +984,17 @@ def test_free_hit_by_week_uses_each_weeks_own_projection():
             star = pid % (n + 1) == 0
             pool.append(player(pid, pos, pid % 10, 4.0, [1.0, 9.0 if star else 1.0]))
     held = [p["id"] for p in pool if p["perGameweek"][1] == 1.0][:15]
-    weeks = cf.free_hit_by_week(pool, held, bank=0.0, total_budget=100.0, target_gw=7)
+    weeks = cf.free_hit_by_week(pool, held, total_budget=100.0, target_gw=7)
     assert [w["gameweek"] for w in weeks] == [7, 8]
     assert weeks[0]["gain"] == pytest.approx(0.0, abs=0.01)  # nothing better to buy in week 1
     assert weeks[1]["gain"] > 0
+    # stops at the chip's last week
+    assert [w["gameweek"] for w in cf.free_hit_by_week(pool, held, 100.0, 7, last_gw=7)] == [7]
+    # a held player who has left still fills his slot, on 0 points, rather than
+    # the baseline quietly buying a replacement
+    gone = held[0]
+    pool_wo = [p for p in pool if p["id"] != gone]
+    card = {"id": gone, "elementType": next(p for p in pool if p["id"] == gone)["elementType"]}
+    w_gone = cf.free_hit_by_week(pool_wo, held, 100.0, 7, cards={gone: card})
+    assert len(w_gone) == 2
+    assert w_gone[0]["keepPoints"] <= weeks[0]["keepPoints"]
