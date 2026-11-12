@@ -1867,22 +1867,21 @@ test.describe("Guest teams", () => {
 
   // This only proves the client renders a record-less forecast; that the server omits the record is
   // covered by tests/test_forecast_api.py.
-  test("a guest sees the empty-state copy, not the owner's model record; the owner still sees it", async ({ page, context }) => {
+  test("neither guest nor owner sees the model's out-of-sample record; only the owner sees par calibration", async ({ page, context }) => {
     await page.route("**/api/forecast*", (route) =>
       route.fulfill({ contentType: "application/json", body: JSON.stringify(guestForecast()) }),
     );
     await enterTeam(page, "424242");
     await expect(page.getByTestId("team-bar")).toContainText("Guest FC");
     await openTab(page, "Squad");
-    await expect(page.getByTestId("guest-record-empty")).toBeAttached();
     await expect(page.getByText(/Out-of-sample/)).toHaveCount(0);
     await expect(page.getByText(/Par calibration/)).toHaveCount(0);
     await expect(page.getByText(/\bm-?\d+ b-?\d+\b/)).toHaveCount(0); // History's model/baseline marks
 
     await context.addCookies([{ name: "fpl_team_id", value: OWNER, url: ORIGIN }]);
     await page.goto("/?tab=squad");
-    await expect(page.getByText(/Out-of-sample/).first()).toBeAttached();
-    await expect(page.getByTestId("guest-record-empty")).toHaveCount(0);
+    await expect(page.getByText(/Par calibration/).first()).toBeAttached();
+    await expect(page.getByText(/Out-of-sample/)).toHaveCount(0);
   });
 
   const cases: [number, string, RegExp][] = [

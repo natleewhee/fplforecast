@@ -157,10 +157,10 @@ for (const width of [360, 390]) {
     await all.click();
     await expect(all).toHaveAttribute("aria-expanded", "true");
     expect(await history.locator("ul > li").filter({ hasText: /^GW\d+/ }).count()).toBeGreaterThan(3);
-    // the record carousel sits under History, and Rebuild (owner) is the last panel
+    // par calibration sits under History, and Rebuild (owner) is the last panel
     const hy = (await history.boundingBox())!.y;
     const hb = (await history.boundingBox())!.height;
-    const rec = page.getByText(/Out-of-sample · \d+ GW/i).first();
+    const rec = page.getByText(/Par calibration · \d+ GW/i).first();
     expect((await rec.boundingBox())!.y).toBeGreaterThan(hy + hb - 1);
     const rb = page.getByTestId("rebuild").first();
     expect((await rb.boundingBox())!.y).toBeGreaterThan((await rec.boundingBox())!.y);

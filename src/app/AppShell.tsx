@@ -6,7 +6,6 @@ import type {
   Forecast,
   OverridesFile,
   ParCalibration,
-  RunningRecord,
 } from "@/lib/snapshots";
 import {
   OWNER_TEAM_ID,
@@ -42,7 +41,6 @@ import {
   isValidTeamIdInput,
 } from "@/lib/forecastErrors";
 import { STALE_AFTER_HOURS, describeAge, forecastAgeHours } from "@/lib/time";
-import Carousel from "./Carousel";
 import CaptainShortlist from "./CaptainShortlist";
 import FixtureTicker from "./FixtureTicker";
 import type { PendingTransfer } from "@/lib/transfers";
@@ -50,61 +48,6 @@ import type { TransferTools } from "./ReplaceSheet";
 
 /** Thrown for a message that is already fit to show a person. */
 class ForecastRequestError extends Error {}
-
-function RunningRecordModule({ record }: { record: RunningRecord | null }) {
-  if (!record || record.gameweeksScored === 0) {
-    return (
-      <Module label="Out-of-sample record">
-        <p className="text-xs text-ink-soft">
-          Fills in as gameweeks are scored — model vs baseline, out of sample.
-        </p>
-      </Module>
-    );
-  }
-  return (
-    <Module
-      label={`Out-of-sample · ${record.gameweeksScored} GW`}
-      accent={
-        <span className={record.meaningful ? "chip chip-accent" : "chip"}>
-          {record.meaningful ? "edge" : "no edge"}
-        </span>
-      }
-    >
-      <div className="flex items-end gap-4">
-        <div>
-          <div className="stat stat-glow text-2xl leading-none">
-            {record.pooledDeltaPerGw > 0 ? "+" : ""}
-            {record.pooledDeltaPerGw.toFixed(2)}
-          </div>
-          <div className="eyebrow mt-1">Δ per gameweek</div>
-        </div>
-        <div className="flex gap-3 text-xs text-ink-soft">
-          <span className="stat">
-            {record.modelTotal}
-            <span className="ml-1 font-sans font-normal text-ink-faint">model</span>
-          </span>
-          <span className="stat">
-            {record.baselineTotal}
-            <span className="ml-1 font-sans font-normal text-ink-faint">base</span>
-          </span>
-        </div>
-      </div>
-    </Module>
-  );
-}
-
-/** What a guest sees instead of the model's record: that record is scored on the app
- * owner's own squad, so showing it beside someone else's team would pass off the
- * owner's numbers as theirs. */
-function GuestRecordModule() {
-  return (
-    <Module label="Model record">
-      <p className="text-xs text-ink-soft" data-testid="guest-record-empty">
-        The model&apos;s scored record is kept for this app&apos;s own team, so it isn&apos;t shown for yours.
-      </p>
-    </Module>
-  );
-}
 
 function ParCalibrationModule({ calibration }: { calibration: ParCalibration | null }) {
   if (!calibration || calibration.gameweeksScored === 0) {
@@ -795,11 +738,7 @@ export default function AppShell({
 
       {forecast.history && <History history={forecast.history} />}
 
-      <Carousel>
-        {isGuest && <GuestRecordModule />}
-        {!isGuest && <RunningRecordModule record={forecast.runningRecord} />}
-        {!isGuest && <ParCalibrationModule calibration={forecast.parCalibration} />}
-      </Carousel>
+      {!isGuest && <ParCalibrationModule calibration={forecast.parCalibration} />}
 
       {/* Rarely needed, so it sits at the bottom. Own team only. */}
       {transferTools && (
