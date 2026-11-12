@@ -37,7 +37,7 @@ export default function Carousel({ children }: { children: ReactNode }) {
           ›
         </button>
       </div>
-      <div className="mt-1.5 flex justify-center gap-1">
+      <div className="mt-1.5 flex flex-wrap justify-center">
         {items.map((_, i) => (
           // The visible dot stays small; the button itself gets enough
           // padding to clear the 44x44px minimum touch target (adapt.md) --
@@ -46,7 +46,7 @@ export default function Carousel({ children }: { children: ReactNode }) {
             key={i}
             onClick={() => setActive(i)}
             aria-label={`Go to ${i + 1}`}
-            className="grid h-11 w-6 place-items-center"
+            className="grid h-11 w-11 place-items-center"
           >
             <span
               className={`h-1.5 rounded-full transition-all ${

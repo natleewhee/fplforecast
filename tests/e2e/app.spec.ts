@@ -105,7 +105,7 @@ async function openRecap(page: Page) {
 }
 
 async function openTab(page: Page, name: "Live" | "Squad" | "Scenarios") {
-  await page.getByRole("button", { name: new RegExp(`^${name}$`) }).first().click();
+  await page.getByRole("tab", { name: new RegExp(`^${name}$`) }).click();
   await page.waitForTimeout(700); // the tab pane slides in
 }
 
@@ -508,7 +508,7 @@ test.describe("Rivalry duel", () => {
       return route.fulfill({ contentType: "application/json", body: JSON.stringify(body) });
     });
     await open(page);
-    await page.getByRole("button", { name: /^Leagues$/ }).first().click();
+    await page.getByRole("tab", { name: /^Leagues$/ }).click();
     await page.getByRole("button", { name: /Sam FC/ }).click();
     await page.getByRole("button", { name: /Duel/ }).click();
     const odds = page.getByTestId("duel-odds");
@@ -1335,7 +1335,7 @@ test.describe("Tab transitions", () => {
       if (real) d.startViewTransition = (cb) => { (window as unknown as { __vt: number }).__vt++; return real(cb); };
     });
     await page.goto("/?tab=live");
-    await page.getByRole("button", { name: "Squad", exact: true }).click();
+    await page.getByRole("tab", { name: "Squad", exact: true }).click();
     await expect(page.getByText(/MODEL · GW/)).toBeVisible();
     await expect(page.locator("html")).not.toHaveAttribute("data-vt-dir", /.+/);
     expect(await page.evaluate(() => (window as unknown as { __vt: number }).__vt)).toBeGreaterThanOrEqual(1);
@@ -1351,7 +1351,7 @@ test.describe("Tab transitions", () => {
         if (real) d.startViewTransition = (cb) => { (window as unknown as { __vt: number }).__vt++; return real(cb); };
       });
       await page.goto("/?tab=live");
-      await page.getByRole("button", { name: "Squad", exact: true }).click();
+      await page.getByRole("tab", { name: "Squad", exact: true }).click();
       await expect(page.getByText(/MODEL · GW/)).toBeVisible();
       expect(await page.evaluate(() => (window as unknown as { __vt: number }).__vt)).toBe(0);
     });
