@@ -45,6 +45,10 @@
   --mid: #b483ff;
   --fwd: #ff6b81;
 
+  /* xP breakdown: defensive contribution gets its own hue so it can't be
+     read as the red used for cards (a minus) */
+  --defcon: #fb923c;
+
   /* ---- legacy names the components still reference ---- */
   --pitch-dark: var(--accent);
   --pitch: #13a869;
