@@ -28,7 +28,7 @@ export default function RebuildButton({ builtAt }: { builtAt?: string }) {
   };
 
   const built = builtAt ? new Date(builtAt) : null;
-  const builtText = built && !Number.isNaN(built.getTime()) ? built.toLocaleString([], { dateStyle: "medium", timeStyle: "short" }) : null;
+  const builtText = built && !Number.isNaN(built.getTime()) ? built.toLocaleString([], { day: "numeric", month: "short", hour: "numeric", minute: "2-digit" }) : null;
 
   return (
     <div className="space-y-1" data-testid="rebuild">

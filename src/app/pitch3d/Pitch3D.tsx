@@ -350,7 +350,7 @@ export default function Pitch3D({
                 "relative flex min-h-11 min-w-0 flex-col items-center justify-center gap-0.5 overflow-hidden rounded-lg border border-dashed border-white/30 bg-[rgba(8,16,24,0.45)] px-0.5 pb-1 pt-1.5 text-center leading-tight focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--accent)]",
                 <>
                   <span className="absolute inset-x-0 top-0 h-[3px]" style={{ background: kitColor(p) }} aria-hidden />
-                  <span className="max-w-full text-[11px] font-bold text-white/90 [overflow-wrap:anywhere]">{p.webName}</span>
+                  <SubName name={p.webName} />
                   <span className="flex flex-wrap items-center justify-center gap-1">
                     <span
                       className="grid h-4 min-w-4 place-items-center rounded-full bg-white/15 px-1 text-[9px] font-bold text-ink-soft"
@@ -368,5 +368,24 @@ export default function Pitch3D({
         </div>
       )}
     </div>
+  );
+}
+
+/** A sub's name on the tile: wraps between words (after a hyphen or at a space), never inside one; a word
+ * wider than the tile is cut with an ellipsis instead. */
+function SubName({ name }: { name: string }) {
+  const words = name.match(/\S+?(?:-|(?=\s|$))\s*/g) ?? [name];
+  return (
+    <span
+      className="flex max-w-full flex-wrap justify-center text-[9px] font-bold leading-tight text-white/90 min-[380px]:text-[10px]"
+      title={name}
+      data-testid="sub-name"
+    >
+      {words.map((w, i) => (
+        <span key={i} className={`min-w-0 max-w-full truncate ${/\s$/.test(w) ? "mr-[0.25em]" : ""}`}>
+          {w.trimEnd()}
+        </span>
+      ))}
+    </span>
   );
 }

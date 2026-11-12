@@ -511,7 +511,7 @@ button:not(:disabled):active {
 ::view-transition-new(root) { animation: none; mix-blend-mode: normal; }
 ::view-transition-old(root) { display: none; }
 html[data-vt-dir] .tab-swipe { transition: none; }
-::view-transition-group(tabpane) { animation-duration: 260ms; }
+::view-transition-group(tabpane) { animation: none; } /* only the sideways slide below, no vertical or size morph */
 html[data-vt-dir="fwd"]::view-transition-old(tabpane) { animation: vt-out-left 260ms ease both; }
 html[data-vt-dir="fwd"]::view-transition-new(tabpane) { animation: vt-in-right 260ms ease both; }
 html[data-vt-dir="back"]::view-transition-old(tabpane) { animation: vt-out-right 260ms ease both; }
