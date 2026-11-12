@@ -2028,7 +2028,7 @@ test.describe("Guest teams", () => {
     other.squad.players[0] = { ...other.squad.players[0], id: 999001, webName: "Newguy" };
     await page.route("**/api/forecast*", (route) => route.fulfill({ contentType: "application/json", body: JSON.stringify(other) }));
     const bar = page.getByTestId("team-bar");
-    await bar.getByRole("button", { name: "Change team" }).click();
+    await openTeamMenu(page, "Change team");
     await bar.getByRole("textbox", { name: "Team ID" }).fill("424242");
     await bar.getByRole("button", { name: "View", exact: true }).click();
     await expect(bar).toContainText("Guest FC");
