@@ -4,6 +4,7 @@ import { useState } from "react";
 import Carousel from "./Carousel";
 import type {
   ChipWindow,
+  FreeHitWeek,
   ForecastPlayer,
   PlanWeek,
   PoolPlayer,
@@ -727,16 +728,63 @@ function ChipToggle({
  * button", holding the squad exactly as forecast. Derived entirely from
  * `upcoming` (already computed per-GW for the pitch view), no new backend
  * data needed. */
+// Below this a Free Hit week isn't worth calling out: the chip is usually saved for a blank or
+// double gameweek, where the gap to your own XI is much larger.
+const FREE_HIT_STANDOUT_GAIN = 8;
+
+/** Free Hit timing: the gain over your own XI for each projected week, best week marked. */
+function FreeHitTiming({ weeks, pick, expiresGw }: { weeks: FreeHitWeek[]; pick: FreeHitWeek; expiresGw: number }) {
+  const standout = pick.gain >= FREE_HIT_STANDOUT_GAIN;
+  const top = Math.max(...weeks.map((w) => w.gain), 1);
+  return (
+    <div className="border-t border-line pt-2" data-testid="free-hit-timing">
+      <div className="flex items-baseline justify-between gap-2">
+        <p className="text-[11px] text-ink-faint">Free Hit</p>
+        <p className="text-[11px] text-ink-faint">use by GW{expiresGw}</p>
+      </div>
+      <p className="text-xs text-ink-soft">
+        {standout ? (
+          <>
+            Best in <span className="stat text-ink">GW{pick.gameweek}</span>: +{pick.gain.toFixed(1)} pts over your XI
+          </>
+        ) : (
+          <>
+            No standout week yet (best GW{pick.gameweek}, +{pick.gain.toFixed(1)}). Usually worth saving for a blank or
+            double gameweek.
+          </>
+        )}
+      </p>
+      <ul className="mt-1 flex items-end gap-1" aria-label="Free Hit gain by gameweek">
+        {weeks.map((w) => (
+          <li key={w.gameweek} className="flex flex-1 flex-col items-center gap-0.5" data-best={w.gameweek === pick.gameweek || undefined}>
+            <span className="text-[11px] tabular-nums text-ink-soft">{w.gain.toFixed(1)}</span>
+            <span
+              className="w-full rounded-sm"
+              style={{
+                height: `${Math.max(3, (Math.max(0, w.gain) / top) * 28)}px`,
+                background: w.gameweek === pick.gameweek ? "var(--accent)" : "var(--border-strong)",
+              }}
+            />
+            <span className="text-[11px] text-ink-faint">{w.gameweek}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
 function ChipTimingCard({
   upcoming,
   squad,
   chips,
   forecastGw,
+  freeHitWeeks,
 }: {
   upcoming: UpcomingGameweek[];
   squad: ForecastPlayer[];
   chips: ChipWindow[] | null;
   forecastGw: number;
+  freeHitWeeks?: FreeHitWeek[] | null;
 }) {
   if (upcoming.length === 0) return null;
   const squadById = new Map(squad.map((p) => [p.id, p]));
@@ -746,8 +794,10 @@ function ChipTimingCard({
   // assumed available.
   const bboost = chipState(chips, "bboost", forecastGw);
   const tc = chipState(chips, "3xc", forecastGw);
+  const fh = chipState(chips, "freehit", forecastGw);
   const gone = (s: ChipState) => s.kind === "closed" && s.nextFromGw == null;
-  if (gone(bboost) && gone(tc)) return null; // both gone for the season
+  const fhWeeks = fh.kind === "open" ? (freeHitWeeks ?? []) : [];
+  if (gone(bboost) && gone(tc) && fhWeeks.length === 0) return null; // nothing left to time
 
   const bboostPick =
     bboost.kind === "open"
@@ -780,6 +830,11 @@ function ChipTimingCard({
         )
       : null;
 
+  const fhPick =
+    fh.kind === "open" && fhWeeks.length
+      ? bestWithinWindow([...fhWeeks].sort((a, b) => b.gain - a.gain), fh.expiresGw, fhWeeks[fhWeeks.length - 1].gameweek)
+      : null;
+
   const closedText = (s: ChipState) =>
     s.kind === "unknown"
       ? "status unknown"
@@ -791,6 +846,7 @@ function ChipTimingCard({
   const beyond = [
     { label: "Bench Boost", state: bboost, pick: bboostPick },
     { label: "Triple Captain", state: tc, pick: tcPick },
+    { label: "Free Hit", state: fh, pick: fhPick },
   ].flatMap((c) =>
     c.state.kind === "open" && c.pick && !c.pick.seesAllOfWindow
       ? [`${c.label} runs to GW${c.state.expiresGw}`]
@@ -829,6 +885,9 @@ function ChipTimingCard({
           )}
         </div>
       </div>
+      {fhPick && fh.kind === "open" && (
+        <FreeHitTiming weeks={fhWeeks.filter((w) => w.gameweek <= fh.expiresGw)} pick={fhPick.pick} expiresGw={fh.expiresGw} />
+      )}
       <p className="text-[11px] text-ink-faint">
         Best gameweek in the {upcoming.length}-GW window (up to each chip&rsquo;s last gameweek) to
         hold your squad unchanged and press the button — assumes no transfers between now and then.
@@ -923,7 +982,7 @@ export default function Scenarios({
         />
       )}
 
-      <ChipTimingCard upcoming={upcoming} squad={squad} chips={chips} forecastGw={forecastGw} />
+      <ChipTimingCard upcoming={upcoming} squad={squad} chips={chips} forecastGw={forecastGw} freeHitWeeks={scenarios.freeHitWeeks} />
     </section>
   );
 }

@@ -337,3 +337,26 @@ test("checklist: when only the vice changes the captain row says vice adjusted, 
   await expect(page.getByTestId("checklist-all-clear")).toContainText("vice adjusted");
   await expect(page.getByText(/moved the armband/)).toHaveCount(0);
 });
+
+test("Scenarios: chip timing prices a Free Hit in each week and only calls out a standout one", async ({ page, context }) => {
+  const fc = latestForecast();
+  const gw = fc.targetGameweek;
+  fc.chips = [{ name: "freehit", used: false, availableNow: true, expiresGw: gw + 8, window: { start: 2, stop: gw + 8 } }];
+  const week = (i: number, gain: number) => ({ gameweek: gw + i, freeHitPoints: 60 + gain, keepPoints: 60, gain });
+  fc.scenarios.freeHitWeeks = [week(0, 4.2), week(1, 3.1), week(2, 5.0)];
+  await context.clearCookies();
+  const serve = () =>
+    page.route("**/api/forecast*", (route) => route.fulfill({ contentType: "application/json", body: JSON.stringify({ ...fc, teamName: "Guest FC" }) }));
+  await serve();
+  await page.goto("/?team=999333&tab=scenarios");
+  const card = page.getByTestId("free-hit-timing").first();
+  await expect(card).toContainText("No standout week yet");
+  await expect(card.locator("li")).toHaveCount(3);
+  await expect(card.locator("li[data-best]")).toContainText(String(gw + 2));
+
+  fc.scenarios.freeHitWeeks = [week(0, 4.2), week(1, 11.5), week(2, 5.0)];
+  await page.unrouteAll();
+  await serve();
+  await page.reload();
+  await expect(page.getByTestId("free-hit-timing").first()).toContainText(`Best in GW${gw + 1}`);
+});

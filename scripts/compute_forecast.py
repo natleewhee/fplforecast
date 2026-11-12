@@ -825,6 +825,36 @@ def chip_available_now(chip_status: list[dict] | None, name: str) -> bool:
     return any(r["name"] == name and r["availableNow"] for r in chip_status or [])
 
 
+def free_hit_by_week(
+    pool: list[dict], squad_ids: list[int], bank: float, total_budget: float, target_gw: int
+) -> list[dict]:
+    """What a Free Hit would add in each gameweek the pool projects.
+
+    For each week ``target_gw + h`` (h = 0 is the next deadline), two one-week solves over
+    the pool's ``perGameweek[h]``: the best Free Hit squad on the full
+    budget, and the best XI + captain from your current 15 with no
+    transfers. ``gain`` is the difference -- the points the chip buys that
+    week. Both use today's prices and today's squad, so a later week's
+    numbers assume no transfers in between. About 0.1 s per week."""
+    horizon = min((len(p.get("perGameweek") or []) for p in pool), default=0)
+    out: list[dict] = []
+    for h in range(horizon):
+        shifted = [{**p, "perGameweek": p["perGameweek"][h:]} for p in pool]
+        fh = solve_squad(shifted, held=[], bank=total_budget, free_transfers=0, horizon_gws=1, unlimited=True)
+        keep = solve_squad(shifted, held=squad_ids, bank=bank, free_transfers=0, horizon_gws=1, max_transfers=0)
+        if not (fh.feasible and keep.feasible):
+            continue
+        out.append(
+            {
+                "gameweek": target_gw + h,
+                "freeHitPoints": round(fh.points, 2),
+                "keepPoints": round(keep.points, 2),
+                "gain": round(fh.points - keep.points, 2),
+            }
+        )
+    return out
+
+
 def build_scenarios(
     pool: list[dict],
     squad_ids: list[int],
@@ -888,6 +918,8 @@ def build_scenarios(
         if result.feasible:
             free_hit = _scenario_to_dict(result, pool_by_id, target_gw)
 
+    free_hit_weeks = free_hit_by_week(pool, squad_ids, bank, total_budget, target_gw) if chips_available["freeHit"] else None
+
     # Wildcard, unlike Free Hit, is a permanent squad -- solved at each of
     # 1/3/5/7 horizons (rather than once at a fixed length) so the horizon
     # toggle picks an actually-different, horizon-optimal squad, not just a
@@ -918,6 +950,7 @@ def build_scenarios(
         "chipsAvailable": chips_available,
         "byHorizon": by_horizon,
         "freeHit": free_hit,
+        "freeHitWeeks": free_hit_weeks,
         "wildcard": wildcard_by_horizon if wildcard_by_horizon else None,
         "plan": plan,
     }
