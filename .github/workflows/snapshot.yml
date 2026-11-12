@@ -36,6 +36,7 @@ jobs:
           pip install -e .
 
       - name: Run snapshotter
+        id: snapshot
         env:
           FPL_TEAM_ID: "1168513"
         run: python scripts/snapshot.py
@@ -68,11 +69,25 @@ jobs:
         run: python scripts/compute_forecast.py
 
       - name: Drop daily snapshots older than 14 days
+        # Same condition as the commit below, so a run of failed days doesn't
+        # commit ~3.4 MB a day without pruning.
+        if: ${{ !cancelled() && steps.snapshot.outcome == 'success' }}
         # Everything reads only the newest file in these folders, so older copies
         # just grow the repo (about 3.4 MB a day). They stay in git history.
         run: python scripts/prune_snapshots.py --days 14
 
       - name: Commit snapshot
+        # Runs even when a later step (model fit, scoring, forecast) failed, as
+        # long as the snapshotter itself succeeded: FPL's raw data for the day
+        # can't be fetched again later, so keep it. A failed later step may
+        # leave some of its outputs updated and others not (compute_forecast
+        # saves the pool-context cache before it writes the forecast); the next
+        # good run rewrites them. The alert step below still fires on any
+        # failure, and the commit message says the run was partial. A run that
+        # hits the job timeout counts as cancelled, so its snapshot is not kept.
+        if: ${{ !cancelled() && steps.snapshot.outcome == 'success' }}
+        env:
+          JOB_STATUS: ${{ job.status }}
         run: |
           git config user.name "fpl-snapshotter"
           git config user.email "actions@users.noreply.github.com"
@@ -81,7 +96,11 @@ jobs:
             echo "No changes to commit"
             exit 0
           fi
-          git commit -m "Snapshot FPL data $(date -u +%Y-%m-%d)"
+          msg="Snapshot FPL data $(date -u +%Y-%m-%d)"
+          if [ "${JOB_STATUS}" != "success" ]; then
+            msg="${msg} (partial: a later step failed)"
+          fi
+          git commit -m "${msg}"
           # Something else (a merged PR) can land on this branch while the job
           # runs, which makes a plain push a non-fast-forward rejection even
           # though every step above succeeded. Only data/ changes here, so
