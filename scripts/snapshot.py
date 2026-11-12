@@ -103,8 +103,18 @@ def snapshot_event_live(gw: int, data_checked: bool = True) -> None:
                 return
         except (OSError, ValueError):
             pass  # unreadable: fetch it again
-    payload = fetch(f"{FPL_BASE}/event/{gw}/live/")
+    have = out_path.exists()
+    try:
+        payload = fetch(f"{FPL_BASE}/event/{gw}/live/")
+    except Exception as exc:  # noqa: BLE001
+        if have:  # a refresh of a file we already have: keep it, try again next run
+            print(f"event-live gw{gw}: refresh failed ({exc}) -- keeping the copy we have", file=sys.stderr)
+            return
+        raise
     if not payload.get("elements"):
+        if have:
+            print(f"event-live gw{gw}: refresh returned no elements -- keeping the copy we have", file=sys.stderr)
+            return
         raise RuntimeError(f"event/{gw}/live returned no elements — schema change? aborting")
     if data_checked:
         payload[FROZEN_KEY] = True

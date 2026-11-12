@@ -60,3 +60,28 @@ def test_file_from_before_the_freeze_rule_is_refetched_once(tmp_path, monkeypatc
     snap.snapshot_event_live_history(_boot(True))
     assert len(calls) == 1
     assert _saved(tmp_path)["elements"][0]["stats"]["total_points"] == 4
+
+
+def test_a_failed_refresh_keeps_the_copy_we_have(tmp_path, monkeypatch):
+    _setup(tmp_path, monkeypatch, [5])
+    snap.snapshot_event_live_history(_boot(False))  # provisional copy on disk
+
+    def broken(url):
+        raise OSError("FPL is down")
+
+    monkeypatch.setattr(snap, "fetch", broken)
+    snap.snapshot_event_live_history(_boot(False))  # must not raise
+    assert _saved(tmp_path)["elements"][0]["stats"]["total_points"] == 5
+
+    monkeypatch.setattr(snap, "fetch", lambda url: {"elements": []})
+    snap.snapshot_event_live_history(_boot(True))  # empty reply: keep, don't freeze
+    assert not _saved(tmp_path).get(snap.FROZEN_KEY)
+
+
+def test_a_first_fetch_that_fails_still_fails_loudly(tmp_path, monkeypatch):
+    _setup(tmp_path, monkeypatch, [5])
+    monkeypatch.setattr(snap, "fetch", lambda url: {"elements": []})
+    import pytest
+
+    with pytest.raises(RuntimeError):
+        snap.snapshot_event_live_history(_boot(True))
