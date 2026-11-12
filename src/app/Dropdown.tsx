@@ -59,7 +59,7 @@ export function Dropdown<T extends string | number>({
         onClick={() => setOpen((o) => !o)}
         aria-haspopup="listbox"
         aria-expanded={open}
-        className="flex w-full items-center justify-between gap-2 rounded-lg border border-line bg-[var(--bg-2)] px-3 py-2 text-sm text-ink transition-colors hover:border-border-strong"
+        className="flex min-h-11 w-full items-center justify-between gap-2 rounded-lg border border-line bg-[var(--bg-2)] px-3 py-2 text-sm text-ink transition-colors hover:border-border-strong"
       >
         <span className={`truncate ${current ? "text-ink" : "text-ink-faint"}`}>
           {current?.label ?? placeholder}
@@ -83,7 +83,7 @@ export function Dropdown<T extends string | number>({
                   onChange(o.value);
                   close();
                 }}
-                className={`block w-full truncate rounded-md px-2.5 py-1.5 text-left transition-colors hover:bg-white/[0.06] ${
+                className={`block min-h-11 w-full truncate rounded-md px-2.5 py-1.5 text-left transition-colors hover:bg-white/[0.06] ${
                   o.value === value ? "font-semibold text-[var(--accent)]" : "text-ink"
                 }`}
               >

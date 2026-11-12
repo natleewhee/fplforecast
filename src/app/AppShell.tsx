@@ -788,17 +788,12 @@ export default function AppShell({
 
   const squadTab = (
     <>
-      {/* First thing on the tab: after saving a transfer this is what you
-       * reach for, so it shouldn't sit below the pitch. Own team only. */}
-      {transferTools && (
-        <div className="panel rise p-3">
-          <RebuildButton builtAt={forecast.generatedAt} />
-        </div>
-      )}
-      <DeadlineChecklist forecast={forecast} />
+      <DeadlineChecklist forecast={forecast} liveSquad={liveSquad} pending={transferTools?.pending} pool={transferTools?.pool} />
       <Pitch forecast={forecast} transferTools={transferTools} liveSquad={liveSquad} />
       <FixtureTicker forecast={forecast} liveSquad={liveSquad} pending={transferTools?.pending} pool={transferTools?.pool} />
       <CaptainShortlist forecast={forecast} liveSquad={liveSquad} pending={transferTools?.pending} pool={transferTools?.pool} />
+
+      {forecast.history && <History history={forecast.history} />}
 
       <Carousel>
         {isGuest && <GuestRecordModule />}
@@ -806,7 +801,12 @@ export default function AppShell({
         {!isGuest && <ParCalibrationModule calibration={forecast.parCalibration} />}
       </Carousel>
 
-      {forecast.history && <History history={forecast.history} />}
+      {/* Rarely needed, so it sits at the bottom. Own team only. */}
+      {transferTools && (
+        <div className="panel rise p-3">
+          <RebuildButton builtAt={forecast.generatedAt} />
+        </div>
+      )}
     </>
   );
 

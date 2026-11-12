@@ -82,20 +82,20 @@ export function ViewSwitch({ view, onChange }: { view: PitchView; onChange?: (v:
           type="button"
           aria-pressed={passing}
           onClick={() => setPitchAmbient(!passing)}
-          className={`h-8 rounded-lg border px-2.5 text-[11px] font-semibold transition ${passing ? "border-[color-mix(in_srgb,var(--accent)_50%,transparent)] text-[var(--accent)]" : "border-line text-ink-faint hover:text-ink-soft"}`}
+          className={`hit-44 relative h-8 rounded-lg border px-2.5 text-[11px] font-semibold transition ${passing ? "border-[color-mix(in_srgb,var(--accent)_50%,transparent)] text-[var(--accent)]" : "border-line text-ink-faint hover:text-ink-soft"}`}
           title="The ball goes round the pitch while nobody is selected. Switch off to save battery."
         >
           Passing {passing ? "on" : "off"}
         </button>
       )}
-      <div className="inline-flex overflow-hidden rounded-lg border border-line text-[11px] font-semibold" role="group" aria-label="Pitch view">
+      <div className="inline-flex rounded-lg border border-line text-[11px] font-semibold" role="group" aria-label="Pitch view">
         {(["3d", "2d"] as const).map((v) => (
           <button
             key={v}
             type="button"
             aria-pressed={view === v}
             onClick={() => (onChange ?? setPitchView)(v)}
-            className={`h-8 px-3 transition ${view === v ? "bg-[color-mix(in_srgb,var(--accent)_16%,transparent)] text-[var(--accent)]" : "text-ink-faint hover:text-ink-soft"}`}
+            className={`hit-44 relative h-8 w-11 transition first:rounded-l-[7px] last:rounded-r-[7px] ${view === v ? "bg-[color-mix(in_srgb,var(--accent)_16%,transparent)] text-[var(--accent)]" : "text-ink-faint hover:text-ink-soft"}`}
           >
             {v.toUpperCase()}
           </button>
@@ -350,7 +350,7 @@ export default function Pitch3D({
                 "relative flex min-h-11 min-w-0 flex-col items-center justify-center gap-0.5 overflow-hidden rounded-lg border border-dashed border-white/30 bg-[rgba(8,16,24,0.45)] px-0.5 pb-1 pt-1.5 text-center leading-tight focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--accent)]",
                 <>
                   <span className="absolute inset-x-0 top-0 h-[3px]" style={{ background: kitColor(p) }} aria-hidden />
-                  <span className="max-w-full text-[11px] font-bold text-white/90 [overflow-wrap:anywhere]">{p.webName}</span>
+                  <SubName name={p.webName} />
                   <span className="flex flex-wrap items-center justify-center gap-1">
                     <span
                       className="grid h-4 min-w-4 place-items-center rounded-full bg-white/15 px-1 text-[9px] font-bold text-ink-soft"
@@ -368,5 +368,24 @@ export default function Pitch3D({
         </div>
       )}
     </div>
+  );
+}
+
+/** A sub's name on the tile: wraps between words (after a hyphen or at a space), never inside one; a word
+ * wider than the tile is cut with an ellipsis instead. */
+function SubName({ name }: { name: string }) {
+  const words = name.match(/\S+?(?:-|(?=\s|$))\s*/g) ?? [name];
+  return (
+    <span
+      className="flex max-w-full flex-wrap justify-center text-[9px] font-bold leading-tight text-white/90 min-[380px]:text-[10px]"
+      title={name}
+      data-testid="sub-name"
+    >
+      {words.map((w, i) => (
+        <span key={i} className={`min-w-0 max-w-full truncate ${/\s$/.test(w) ? "mr-[0.25em]" : ""}`}>
+          {w.trimEnd()}
+        </span>
+      ))}
+    </span>
   );
 }

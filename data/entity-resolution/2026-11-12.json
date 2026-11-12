@@ -1,6 +1,6 @@
 {
-  "bootstrapDate": "2026-10-29",
-  "generatedAt": "2026-10-29T09:40:14.303764+00:00",
+  "bootstrapDate": "2026-11-12",
+  "generatedAt": "2026-11-12T10:47:39.379453+00:00",
   "resolved": {
     "1": {
       "bySeason": {
@@ -3669,7 +3669,7 @@
     "2024-25",
     "2023-24"
   ],
-  "totalPlayers": 669,
+  "totalPlayers": 672,
   "unresolved": [
     {
       "ambiguousIn": [],
@@ -3733,6 +3733,13 @@
       "matchedSeasons": [],
       "normalizedName": "ibrahim mbaye",
       "webName": "Mbaye"
+    },
+    {
+      "ambiguousIn": [],
+      "currentId": 672,
+      "matchedSeasons": [],
+      "normalizedName": "modou keba cisse",
+      "webName": "Ciss\u00e9"
     },
     {
       "ambiguousIn": [],
@@ -3866,6 +3873,13 @@
       "matchedSeasons": [],
       "normalizedName": "mahdi nicoll-jazuli",
       "webName": "Nicoll-Jazuli"
+    },
+    {
+      "ambiguousIn": [],
+      "currentId": 670,
+      "matchedSeasons": [],
+      "normalizedName": "olutayo subuloye",
+      "webName": "Subuloye"
     },
     {
       "ambiguousIn": [],
@@ -4702,6 +4716,13 @@
     },
     {
       "ambiguousIn": [],
+      "currentId": 671,
+      "matchedSeasons": [],
+      "normalizedName": "luca gunter",
+      "webName": "Gunter"
+    },
+    {
+      "ambiguousIn": [],
       "currentId": 541,
       "matchedSeasons": [],
       "normalizedName": "thomas meunier",
@@ -4736,5 +4757,5 @@
       "webName": "J.Angulo"
     }
   ],
-  "unresolvedCount": 152
+  "unresolvedCount": 155
 }

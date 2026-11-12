@@ -40,8 +40,8 @@ export function Module({
 }) {
   return (
     <Panel className="flex flex-col gap-2">
-      <div className="flex items-center justify-between gap-2">
-        <span className="eyebrow">{label}</span>
+      <div className="flex flex-wrap items-center justify-between gap-x-2 gap-y-1">
+        <span className="eyebrow whitespace-nowrap">{label}</span>
         {accent}
       </div>
       {children}

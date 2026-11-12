@@ -153,7 +153,7 @@ export function FaceToggle() {
       type="button"
       aria-pressed={mode === value}
       onClick={() => setFaceMode(value)}
-      className={`h-8 px-3 text-[11px] font-semibold transition-colors ${
+      className={`hit-44 relative h-8 px-3 text-[11px] font-semibold transition-colors first:rounded-l-full last:rounded-r-full ${
         mode === value ? "bg-[color-mix(in_srgb,var(--accent)_16%,transparent)] text-[var(--accent)]" : "text-ink-soft hover:text-ink"
       }`}
     >
@@ -161,7 +161,7 @@ export function FaceToggle() {
     </button>
   );
   return (
-    <div role="group" aria-label="Player faces" className="inline-flex overflow-hidden rounded-full border border-line">
+    <div role="group" aria-label="Player faces" className="inline-flex rounded-full border border-line">
       {opt("photo", "Photos")}
       {opt("shirt", "Shirts")}
     </div>

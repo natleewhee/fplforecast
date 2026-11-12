@@ -132,12 +132,15 @@ function LeagueTable({
                         </span>
                       )}
                     </td>
-                    <td className="min-w-0 px-1.5 py-2 sm:px-3">
+                    <td className="min-w-0 px-1.5 py-0 sm:px-3">
+                      {/* The whole name cell is the button (team, manager and captain lines), so the tap
+                          area is the row's full height (44px or more), not just the 16px team name. */}
                       <button
                         type="button"
                         onClick={() => onSelectManager(e.entryId, e.entryName)}
-                        className="flex w-full items-center gap-1.5 truncate text-left font-medium text-ink hover:text-[var(--accent)]"
+                        className="group block min-h-11 w-full py-2 text-left"
                       >
+                      <span className="flex w-full items-center gap-1.5 truncate font-medium text-ink group-hover:text-[var(--accent)]">
                         {e.entryName}
                         {isMe && (
                           <span className="rounded bg-[var(--accent)] px-1 py-0.5 text-[9px] font-bold text-[var(--bg-0)]">
@@ -149,15 +152,16 @@ function LeagueTable({
                             {e.chip}
                           </span>
                         )}
-                      </button>
-                      <div className="truncate text-[10px] text-ink-faint">{e.playerName}</div>
+                      </span>
+                      <span className="block truncate text-[10px] text-ink-faint">{e.playerName}</span>
                       {(e.captainName || e.playersLive != null) && (
-                        <div className="truncate text-[10px] text-ink-faint">
+                        <span className="block truncate text-[10px] text-ink-faint">
                           {e.captainName && <>C: {e.captainName}</>}
                           {e.captainName && e.playersLive != null && " · "}
                           <LiveCell entry={e} />
-                        </div>
+                        </span>
                       )}
+                      </button>
                     </td>
                     <td className="truncate px-1.5 py-2 text-right font-mono tabular-nums text-ink-soft sm:px-3">
                       {e.totalPoints}
