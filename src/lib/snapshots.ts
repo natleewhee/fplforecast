@@ -331,6 +331,9 @@ export type Scenarios = {
   chipsAvailable: { freeHit: boolean; wildcard: boolean };
   byHorizon: Record<string, Scenario[]>; // "1" | "3" | "5" -> top-3 by net points
   freeHit: Scenario | null;
+  /** What a Free Hit adds in each projected gameweek (null when the chip isn't open;
+   * absent in forecasts built before it existed). */
+  freeHitWeeks?: FreeHitWeek[] | null;
   wildcard: Record<string, Scenario> | null; // "1" | "3" | "5" -> that horizon's rebuild
   plan: PlanWeek[] | null; // absent/null on an older snapshot built before this field existed
 };
@@ -483,6 +486,15 @@ export function loadBootstrapSnapshot(): BootstrapSnapshot | null {
 
   return { date: found.date, players };
 }
+
+/** A Free Hit in one gameweek: the best one-week squad on the full budget vs the best XI from the
+ * current 15 with no transfers (both at today's prices). */
+export type FreeHitWeek = {
+  gameweek: number;
+  freeHitPoints: number;
+  keepPoints: number;
+  gain: number;
+};
 
 /** One gameweek of the free-transfer replay: FTs held at the deadline, transfers made,
  * Wildcard / Free Hit played (which keeps the bank), and FTs carried to the next deadline. */

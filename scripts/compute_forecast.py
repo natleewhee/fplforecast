@@ -826,6 +826,68 @@ def chip_available_now(chip_status: list[dict] | None, name: str) -> bool:
     return any(r["name"] == name and r["availableNow"] for r in chip_status or [])
 
 
+def _keep_points(pool_by_id: dict, squad_ids: list[int], cards: dict, h: int) -> float | None:
+    """Best XI + captain (counted twice, as in solve_squad) from the current 15
+    in week offset ``h``, with no transfers. A held player missing from the
+    pool (he has left) scores 0 but still fills his slot. None if a player's
+    position can't be told."""
+    rows = []
+    for pid in squad_ids:
+        p = pool_by_id.get(pid)
+        if p is not None:
+            per_gw = p.get("perGameweek") or []
+            rows.append({"id": pid, "element_type": p["elementType"], "projected": per_gw[h] if h < len(per_gw) else 0.0})
+            continue
+        card = cards.get(pid) or {}
+        if card.get("elementType") not in (1, 2, 3, 4):
+            return None
+        rows.append({"id": pid, "element_type": card["elementType"], "projected": 0.0})
+    xi, _ = best_xi(rows)
+    if not xi:
+        return None
+    return sum(r["projected"] for r in xi) + max(r["projected"] for r in xi)
+
+
+def free_hit_by_week(
+    pool: list[dict],
+    squad_ids: list[int],
+    total_budget: float,
+    target_gw: int,
+    *,
+    cards: dict | None = None,
+    last_gw: int | None = None,
+) -> list[dict]:
+    """What a Free Hit would add in each gameweek the pool projects, up to
+    ``last_gw`` (the chip's last week) when given.
+
+    For each week ``target_gw + h`` (h = 0 is the next deadline): the best
+    Free Hit squad on the full budget (one solve), against the best XI +
+    captain from your current 15 with no transfers (``_keep_points``; a
+    player who has left scores 0). ``gain`` is the difference -- the points
+    the chip buys that week. Both use today's prices and today's squad, so a
+    later week's numbers assume no transfers in between. About 0.05 s a week."""
+    horizon = min((len(p.get("perGameweek") or []) for p in pool), default=0)
+    if last_gw is not None:
+        horizon = min(horizon, max(0, last_gw - target_gw + 1))
+    pool_by_id = {p["id"]: p for p in pool}
+    out: list[dict] = []
+    for h in range(horizon):
+        shifted = [{**p, "perGameweek": p["perGameweek"][h:]} for p in pool]
+        fh = solve_squad(shifted, held=[], bank=total_budget, free_transfers=0, horizon_gws=1, unlimited=True)
+        keep = _keep_points(pool_by_id, squad_ids, cards or {}, h)
+        if not fh.feasible or keep is None:
+            continue
+        out.append(
+            {
+                "gameweek": target_gw + h,
+                "freeHitPoints": round(fh.points, 2),
+                "keepPoints": round(keep, 2),
+                "gain": round(fh.points - keep, 2),
+            }
+        )
+    return out
+
+
 def build_scenarios(
     pool: list[dict],
     squad_ids: list[int],
@@ -890,6 +952,18 @@ def build_scenarios(
         if result.feasible:
             free_hit = _scenario_to_dict(result, pool_by_id, target_gw)
 
+    fh_last = next(
+        (r.get("expiresGw") for r in chip_status or [] if r["name"] == "freehit" and r["availableNow"]), None
+    )
+    free_hit_weeks = (
+        free_hit_by_week(
+            pool, squad_ids, total_budget, target_gw,
+            cards={c["id"]: c for c in squad_cards or []}, last_gw=fh_last,
+        )
+        if chips_available["freeHit"]
+        else None
+    )
+
     # Wildcard, unlike Free Hit, is a permanent squad -- solved at each of
     # 1/3/5/7 horizons (rather than once at a fixed length) so the horizon
     # toggle picks an actually-different, horizon-optimal squad, not just a
@@ -920,6 +994,7 @@ def build_scenarios(
         "chipsAvailable": chips_available,
         "byHorizon": by_horizon,
         "freeHit": free_hit,
+        "freeHitWeeks": free_hit_weeks,
         "wildcard": wildcard_by_horizon if wildcard_by_horizon else None,
         "plan": plan,
     }
