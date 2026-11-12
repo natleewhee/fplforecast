@@ -950,3 +950,51 @@ def test_main_after_a_free_hit_builds_from_the_restored_squad(tmp_path, monkeypa
     assert [p["element"] for p in captured["squad_picks"]] == list(range(1, 16))
     assert captured["squad_entry_history"]["bank"] == 21
     assert captured["free_hit_reverted_from"] == 9
+
+
+def test_free_hit_by_week_compares_a_free_hit_with_your_own_xi(forecast):
+    sc = forecast["scenarios"]
+    weeks = sc.get("freeHitWeeks")
+    if not sc["chipsAvailable"]["freeHit"]:
+        assert weeks is None
+        return
+    assert weeks, "Free Hit is open, so each projected week should be priced"
+    horizon = len(forecast["pool"][0]["perGameweek"])
+    gws = [w["gameweek"] for w in weeks]
+    assert gws == list(range(forecast["targetGameweek"], forecast["targetGameweek"] + len(gws)))
+    assert 0 < len(gws) <= horizon
+    for w in weeks:
+        assert w["gain"] == pytest.approx(w["freeHitPoints"] - w["keepPoints"], abs=0.02)
+        # a Free Hit can always field your own XI, so it never loses points
+        assert w["freeHitPoints"] >= w["keepPoints"] - 0.01
+    # week 1 matches the existing next-week Free Hit scenario
+    assert weeks[0]["freeHitPoints"] == pytest.approx(sc["freeHit"]["points"], abs=0.01)
+
+
+def test_free_hit_by_week_uses_each_weeks_own_projection():
+    def player(pid, pos, team, price, per_gw):
+        return {"id": pid, "elementType": pos, "position": ["", "GKP", "DEF", "MID", "FWD"][pos],
+                "team": f"T{team}", "teamId": team, "price": price, "sellPrice": price, "perGameweek": per_gw}
+
+    pool, pid = [], 0
+    for pos, n in ((1, 2), (2, 5), (3, 5), (4, 3)):
+        for _ in range(n + 1):
+            pid += 1
+            # the last of each position is a better pick in week 2 only
+            star = pid % (n + 1) == 0
+            pool.append(player(pid, pos, pid % 10, 4.0, [1.0, 9.0 if star else 1.0]))
+    held = [p["id"] for p in pool if p["perGameweek"][1] == 1.0][:15]
+    weeks = cf.free_hit_by_week(pool, held, total_budget=100.0, target_gw=7)
+    assert [w["gameweek"] for w in weeks] == [7, 8]
+    assert weeks[0]["gain"] == pytest.approx(0.0, abs=0.01)  # nothing better to buy in week 1
+    assert weeks[1]["gain"] > 0
+    # stops at the chip's last week
+    assert [w["gameweek"] for w in cf.free_hit_by_week(pool, held, 100.0, 7, last_gw=7)] == [7]
+    # a held player who has left still fills his slot, on 0 points, rather than
+    # the baseline quietly buying a replacement
+    gone = held[0]
+    pool_wo = [p for p in pool if p["id"] != gone]
+    card = {"id": gone, "elementType": next(p for p in pool if p["id"] == gone)["elementType"]}
+    w_gone = cf.free_hit_by_week(pool_wo, held, 100.0, 7, cards={gone: card})
+    assert len(w_gone) == 2
+    assert w_gone[0]["keepPoints"] <= weeks[0]["keepPoints"]
