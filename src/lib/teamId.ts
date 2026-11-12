@@ -20,7 +20,8 @@ export function resolveTeamId(cookieJar: { get(name: string): { value: string } 
   if (!raw) return OWNER_TEAM_ID;
   const parsed = Number(raw);
   if (!Number.isInteger(parsed) || parsed <= 0) return OWNER_TEAM_ID;
-  return raw;
+  // Canonical form, so "16", "0x10" and "16.0" are one team (one cache entry, one build).
+  return String(parsed);
 }
 
 function isValidTeamId(raw: string | null | undefined): raw is string {
@@ -44,7 +45,7 @@ export function resolveTeamIdFromRequest(req: {
   cookies: { get(name: string): { value: string } | undefined };
 }): string {
   const queryRaw = req.nextUrl.searchParams.get("teamId");
-  if (isValidTeamId(queryRaw)) return queryRaw;
+  if (isValidTeamId(queryRaw)) return String(Number(queryRaw));
   return resolveTeamId(req.cookies);
 }
 
@@ -80,7 +81,7 @@ export function getUrlTeamId(): string | null {
   if (typeof window === "undefined") return null;
   const raw = new URLSearchParams(window.location.search).get(URL_TEAM_PARAM);
   if (!isValidTeamId(raw)) return null;
-  return raw;
+  return String(Number(raw));
 }
 
 /** Client-side: reflects the currently-viewed team in the address bar via

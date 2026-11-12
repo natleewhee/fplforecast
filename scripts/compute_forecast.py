@@ -37,6 +37,7 @@ from engine.optimise import (
     PlanWeek,
     ScenarioResult,
     derive_free_transfers,
+    free_transfer_ledger,
     plan_transfers,
     solve_squad,
 )
@@ -850,6 +851,7 @@ def build_scenarios(
     current = season_history.get("current") or []
     chips = season_history.get("chips") or []
     ft_value, ft_derivation = derive_free_transfers(current, chips, target_gw)
+    _, ft_ledger, _ = free_transfer_ledger(current, chips, target_gw)
 
     chip_status = compute_chip_status(bootstrap_chips, season_history.get("chips"), target_gw)
     # Unknown chip rules/history -> offer neither chip scenario rather than
@@ -914,7 +916,7 @@ def build_scenarios(
     plan = [_plan_week_to_dict(w, pool_by_id, target_gw) for w in plan_weeks]
 
     return {
-        "freeTransfers": {"value": ft_value, "derivation": ft_derivation},
+        "freeTransfers": {"value": ft_value, "derivation": ft_derivation, "weeks": ft_ledger},
         "chipsAvailable": chips_available,
         "byHorizon": by_horizon,
         "freeHit": free_hit,

@@ -12,6 +12,7 @@ from pathlib import Path
 import pytest
 
 from engine.config import FT_MAX_BANKED, HIT_COST
+from engine.optimise import free_transfer_ledger
 from engine.optimise import derive_free_transfers, plan_transfers, solve_squad
 from engine.squad import best_xi
 
@@ -383,3 +384,18 @@ def test_real_pool_fourteen_solve_set_completes_within_budget():
     solve_squad(pool, held=[], bank=100.1, free_transfers=0, horizon_gws=5, unlimited=True)
     elapsed = time.monotonic() - start
     assert elapsed < 60.0
+
+
+def test_free_transfer_ledger_lists_each_week_and_matches_the_count():
+    chips = [{"name": "wildcard", "event": 4}]
+    hist = _hist(0, 0, 0, 15, 2)
+    value, ledger, first = free_transfer_ledger(hist, chips, target_gw=6)
+    assert first == 1
+    assert value == derive_free_transfers(hist, chips, 6)[0] == 2
+    assert [(r["gameweek"], r["before"], r["used"], r["chip"], r["after"]) for r in ledger] == [
+        (2, 1, 0, None, 2),
+        (3, 2, 0, None, 3),
+        (4, 3, 15, "wildcard", 3),
+        (5, 3, 2, None, 2),
+    ]
+    assert free_transfer_ledger(hist, chips, target_gw=2)[1] == []

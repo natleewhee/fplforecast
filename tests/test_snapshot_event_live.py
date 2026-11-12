@@ -1,0 +1,62 @@
+"""scripts/snapshot.py: a finished gameweek's live points are re-fetched until
+FPL data-checks it, then frozen."""
+
+from __future__ import annotations
+
+import json
+
+import scripts.snapshot as snap
+
+
+def _setup(tmp_path, monkeypatch, points):
+    calls = []
+
+    def fake_fetch(url):
+        calls.append(url)
+        return {"elements": [{"id": 1, "stats": {"total_points": points[0]}}]}
+
+    monkeypatch.setattr(snap, "DATA_DIR", tmp_path)
+    monkeypatch.setattr(snap, "fetch", fake_fetch)
+    return calls
+
+
+def _boot(checked):
+    return {"events": [{"id": 3, "finished": True, "data_checked": checked}]}
+
+
+def _saved(tmp_path):
+    return json.loads((tmp_path / "event-live" / "gw3.json").read_text())
+
+
+def test_unchecked_gameweek_is_refetched_until_checked_then_frozen(tmp_path, monkeypatch):
+    points = [5]
+    calls = _setup(tmp_path, monkeypatch, points)
+
+    snap.snapshot_event_live_history(_boot(False))
+    assert _saved(tmp_path)["elements"][0]["stats"]["total_points"] == 5
+    assert not _saved(tmp_path).get(snap.FROZEN_KEY)
+
+    points[0] = 7  # bonus added after "finished"
+    snap.snapshot_event_live_history(_boot(False))
+    assert _saved(tmp_path)["elements"][0]["stats"]["total_points"] == 7
+
+    points[0] = 8
+    snap.snapshot_event_live_history(_boot(True))
+    assert _saved(tmp_path)["elements"][0]["stats"]["total_points"] == 8
+    assert _saved(tmp_path)[snap.FROZEN_KEY] is True
+
+    points[0] = 99
+    snap.snapshot_event_live_history(_boot(True))
+    assert _saved(tmp_path)["elements"][0]["stats"]["total_points"] == 8
+    assert len(calls) == 3
+
+
+def test_file_from_before_the_freeze_rule_is_refetched_once(tmp_path, monkeypatch):
+    calls = _setup(tmp_path, monkeypatch, [4])
+    out = tmp_path / "event-live" / "gw3.json"
+    out.parent.mkdir(parents=True)
+    out.write_text(json.dumps({"elements": [{"id": 1, "stats": {"total_points": 2}}]}))
+    snap.snapshot_event_live_history(_boot(True))
+    snap.snapshot_event_live_history(_boot(True))
+    assert len(calls) == 1
+    assert _saved(tmp_path)["elements"][0]["stats"]["total_points"] == 4
