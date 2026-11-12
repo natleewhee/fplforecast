@@ -25,7 +25,7 @@ const COMPONENT_COLOR: Record<keyof ProjectionComponents, string> = {
   cleanSheet: "var(--def)",
   goalsConceded: "var(--danger)",
   saves: "var(--gkp)",
-  defensiveContribution: "var(--fwd)",
+  defensiveContribution: "var(--defcon)",
   bonus: "var(--warn)",
   cards: "var(--danger)",
 };
