@@ -21,7 +21,7 @@ test("calls the FPL API with a user agent and the default 40s cache", async () =
   assert.deepEqual(await fpl("/bootstrap-static/"), { ok: true });
   assert.equal(calls[0].url, "https://fantasy.premierleague.com/api/bootstrap-static/");
   assert.equal(calls[0].init.next?.revalidate, 40);
-  assert.match(String((calls[0].init.headers as Record<string, string>)["User-Agent"]), /fplforecast/);
+  assert.match(String((calls[0].init.headers as Record<string, string>)["User-Agent"]), /gafferfpl/);
 });
 
 test("a caller can ask for a longer cache", async () => {

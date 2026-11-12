@@ -43,7 +43,7 @@ def normalize_name(first: str, second: str) -> str:
 
 
 def fetch_text(url: str) -> str:
-    req = urllib.request.Request(url, headers={"User-Agent": "fplforecast-entity-resolution/1.0"})
+    req = urllib.request.Request(url, headers={"User-Agent": "gafferfpl-entity-resolution/1.0"})
     with urllib.request.urlopen(req, timeout=30) as resp:
         return resp.read().decode("utf-8")
 

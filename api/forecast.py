@@ -112,7 +112,7 @@ def _ensure_data_decompressed() -> None:
 
 
 def _fpl_get(path: str) -> dict:
-    req = urllib.request.Request(f"{FPL}{path}", headers={"User-Agent": "fplforecast-guest/1.0"})
+    req = urllib.request.Request(f"{FPL}{path}", headers={"User-Agent": "gafferfpl-guest/1.0"})
     with urllib.request.urlopen(req, timeout=15) as res:
         return json.loads(res.read())
 

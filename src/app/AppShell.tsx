@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { useEffect, useRef, useState, type KeyboardEvent as ReactKeyboardEvent, type ReactNode } from "react";
 import type {
   BootstrapSnapshot,
   Forecast,
@@ -145,33 +145,23 @@ function ParCalibrationModule({ calibration }: { calibration: ParCalibration | n
   );
 }
 
-/** A compact bar for switching whose team this page shows. Always visible
- * (not hidden behind a settings menu) since "type in any team ID" is the
- * whole point of this component's existence -- burying it would defeat the
- * feature it's here to expose. */
-function TeamIdBar({
+/** The header's overflow button: "Copy link" and "Change team" live in this one
+ * 44px menu instead of two pills, so they stay one tap away on every tab
+ * without costing a row of screen. A real button (aria-haspopup, aria-expanded);
+ * Arrow keys move, Escape closes and returns focus to the button. */
+function TeamMenu({
   teamId,
   teamName,
-  managerName,
-  onChange,
-  onReset,
-  onClearError,
-  loading,
-  slow,
-  error,
+  onChangeTeam,
 }: {
   teamId: string;
   teamName?: string;
-  managerName?: string;
-  onChange: (id: string) => void;
-  onReset: () => void;
-  onClearError: () => void;
-  loading: boolean;
-  slow: boolean;
-  error: string | null;
+  onChangeTeam: () => void;
 }) {
-  const [draft, setDraft] = useState("");
   const [copied, setCopied] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
 
   const copyLink = async () => {
     const url = `${window.location.origin}${window.location.pathname}?team=${teamId}`;
@@ -196,48 +186,167 @@ function TeamIdBar({
     }
   };
 
-  const [editing, setEditing] = useState(false);
+  /** Closes the menu; focus goes back to its button unless something else takes it. */
+  const closeMenu = (refocus = true) => {
+    setMenuOpen(false);
+    if (refocus) triggerRef.current?.focus();
+  };
 
-  // One tidy row by default (whose team this is, plus share), with the team-ID
-  // field only on demand: this bar sits above every tab, so on a phone it
-  // shouldn't cost two rows of screen before any content.
+  // Opening moves focus to the first item, so the keyboard lands inside the menu.
+  useEffect(() => {
+    if (menuOpen) menuRef.current?.querySelector<HTMLElement>("[role=menuitem]")?.focus();
+  }, [menuOpen]);
+
+  // A tap or focus anywhere outside the menu closes it.
+  useEffect(() => {
+    if (!menuOpen) return;
+    const away = (e: Event) => {
+      if (menuRef.current && !menuRef.current.contains(e.target as Node)) setMenuOpen(false);
+    };
+    document.addEventListener("pointerdown", away);
+    document.addEventListener("focusin", away);
+    return () => {
+      document.removeEventListener("pointerdown", away);
+      document.removeEventListener("focusin", away);
+    };
+  }, [menuOpen]);
+
+  const onMenuKeyDown = (e: ReactKeyboardEvent) => {
+    if (!menuOpen) return;
+    if (e.key === "Escape") {
+      e.preventDefault();
+      closeMenu();
+      return;
+    }
+    const items = [...(menuRef.current?.querySelectorAll<HTMLElement>("[role=menuitem]") ?? [])];
+    const i = items.indexOf(document.activeElement as HTMLElement);
+    if (e.key === "ArrowDown") {
+      e.preventDefault();
+      items[(i + 1) % items.length]?.focus();
+    } else if (e.key === "ArrowUp") {
+      e.preventDefault();
+      items[(i - 1 + items.length) % items.length]?.focus();
+    } else if (e.key === "Home") {
+      e.preventDefault();
+      items[0]?.focus();
+    } else if (e.key === "End") {
+      e.preventDefault();
+      items[items.length - 1]?.focus();
+    } else if (e.key === "Tab") {
+      setMenuOpen(false); // Tab carries on to wherever it was going
+    }
+  };
+
+  const itemClass =
+    "flex h-11 w-full items-center px-4 text-left text-xs font-medium text-ink-soft hover:bg-white/5 hover:text-ink";
   return (
-    <div className="space-y-2 px-1 pb-1 pt-3" data-testid="team-bar">
-      <div className="flex items-center gap-2">
-        <span className="min-w-0 flex-1 truncate text-xs text-ink-soft">
-          {loading ? (
-            "Loading…"
-          ) : (
-            <>
-              <span className="text-ink-faint">Viewing </span>
-              <span className="font-semibold text-ink">
-                {teamName ? `${teamName} (${managerName})` : `team ${teamId}`}
-              </span>
-            </>
-          )}
-        </span>
-        {/* h-11 (44px, adapt.md's minimum touch target -- see Carousel.tsx's
-         * own comment) on every tappable control here, padding absorbing the
-         * extra height rather than growing the text. */}
+    <div className="flex shrink-0 items-center gap-2">
+      {/* always mounted, only its text changes, so screen readers announce it */}
+      <span role="status" className="text-xs font-medium text-[var(--accent)]">
+        {copied ? "Link copied" : ""}
+      </span>
+      <div className="relative" ref={menuRef} onKeyDown={onMenuKeyDown}>
         <button
+          ref={triggerRef}
           type="button"
-          onClick={copyLink}
-          className="inline-flex h-11 shrink-0 items-center rounded-full border border-line px-3 text-xs font-medium text-ink-soft transition-colors hover:border-border-strong"
+          aria-haspopup="menu"
+          aria-expanded={menuOpen}
+          aria-controls={menuOpen ? "team-menu" : undefined}
+          aria-label="Team options"
+          data-testid="team-menu-button"
+          onClick={() => setMenuOpen((v) => !v)}
+          className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-line text-ink-soft transition-colors hover:border-border-strong"
         >
-          {copied ? "Copied!" : "Copy link"}
+          <svg viewBox="0 0 24 24" className="h-5 w-5" fill="currentColor" aria-hidden="true">
+            <circle cx="5" cy="12" r="1.8" />
+            <circle cx="12" cy="12" r="1.8" />
+            <circle cx="19" cy="12" r="1.8" />
+          </svg>
         </button>
-        <button
-          type="button"
-          onClick={() => {
-            onClearError();
-            setEditing((v) => !v);
-          }}
-          aria-expanded={editing}
-          className="inline-flex h-11 shrink-0 items-center rounded-full border border-line px-3 text-xs font-medium text-ink-soft transition-colors hover:border-border-strong"
-        >
-          Change team
-        </button>
+        {menuOpen && (
+          <div
+            id="team-menu"
+            role="menu"
+            aria-label="Team options"
+            className="absolute right-0 top-12 z-40 min-w-40 overflow-hidden rounded-xl border border-line bg-[var(--bg-2)] shadow-lg"
+          >
+            <button
+              type="button"
+              role="menuitem"
+              className={itemClass}
+              onClick={() => {
+                closeMenu();
+                void copyLink();
+              }}
+            >
+              Copy link
+            </button>
+            <button
+              type="button"
+              role="menuitem"
+              className={itemClass}
+              onClick={() => {
+                onChangeTeam();
+                closeMenu(false);
+              }}
+            >
+              Change team
+            </button>
+          </div>
+        )}
       </div>
+    </div>
+  );
+}
+
+/** Whose team this page shows (one text line), plus the team-ID field when
+ * "Change team" is chosen from the header menu. */
+function TeamIdBar({
+  teamId,
+  teamName,
+  managerName,
+  onChange,
+  onReset,
+  editing,
+  setEditing,
+  focusTick,
+  loading,
+  slow,
+  error,
+}: {
+  teamId: string;
+  teamName?: string;
+  managerName?: string;
+  onChange: (id: string) => void;
+  onReset: () => void;
+  editing: boolean;
+  setEditing: (v: boolean) => void;
+  focusTick: number;
+  loading: boolean;
+  slow: boolean;
+  error: string | null;
+}) {
+  const [draft, setDraft] = useState("");
+  const inputRef = useRef<HTMLInputElement>(null);
+  // "Change team" again while the field is open: keep it open and put focus in it
+  useEffect(() => {
+    if (focusTick > 0) inputRef.current?.focus();
+  }, [focusTick]);
+
+  return (
+    <div className="space-y-2 px-1 pb-1 pt-2" data-testid="team-bar">
+      <p className="truncate text-xs text-ink-soft">
+        {loading ? (
+          "Loading…"
+        ) : (
+          <>
+            <span className="text-ink-faint">Viewing </span>
+            <span className="font-semibold text-ink">
+              {teamName ? `${teamName} (${managerName})` : `team ${teamId}`}
+            </span>
+          </>
+        )}
+      </p>
       {error && (
         <p role="alert" className="text-xs text-[var(--danger)]">
           {error}
@@ -261,6 +370,8 @@ function TeamIdBar({
             inputMode="numeric"
             aria-label="Team ID"
             aria-describedby={draft && !isValidTeamIdInput(draft) ? "team-id-bar-hint" : undefined}
+            ref={inputRef}
+            autoFocus
             className="h-11 w-36 rounded-lg border border-line bg-[var(--bg-2)] px-2.5 text-xs text-ink placeholder:text-ink-faint focus:border-[var(--accent)] focus:outline-none"
           />
           <button
@@ -613,6 +724,8 @@ export default function AppShell({
 
   // Your squad as FPL has it now. The forecast starts from the squad you held when the last gameweek
   // finished, so a transfer made since then is missing from it; the Squad pitch uses this to show it.
+  const [teamFocusTick, setTeamFocusTick] = useState(0); // bumps on each "Change team" so the field takes focus even if already open
+  const [teamEditing, setTeamEditing] = useState(false); // the header menu's "Change team" opens the team-ID field
   const [liveFeed, setLiveFeed] = useState<{ teamId: string; builtAt: string; feed: LiveSquadFeed } | null>(null);
   const forecastBuiltAt = forecast?.generatedAt;
   useEffect(() => {
@@ -734,6 +847,7 @@ export default function AppShell({
   return (
     <>
       <Header
+        actions={<TeamMenu teamId={teamId} teamName={forecast.teamName} onChangeTeam={() => { setError(null); setTeamEditing(true); setTeamFocusTick((t) => t + 1); }} />}
         subtitle={
           isGuest
             ? `GW${forecast.targetGameweek} · ${forecast.teamName ?? `team ${teamId}`}`
@@ -747,7 +861,9 @@ export default function AppShell({
           managerName={forecast.managerName}
           onChange={loadTeam}
           onReset={resetTeam}
-          onClearError={() => setError(null)}
+          editing={teamEditing}
+          setEditing={setTeamEditing}
+          focusTick={teamFocusTick}
           loading={loading}
           slow={slow}
           error={error}
@@ -757,7 +873,6 @@ export default function AppShell({
           deadline={forecast.deadlineTime}
           gameweek={forecast.targetGameweek}
           pendingTransfers={isGuest ? 0 : pendingTransfers.length}
-          captain={forecast.captain?.webName ?? null}
         />
         {isViewingSharedLink && (
           <SharedLinkBanner

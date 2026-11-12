@@ -32,7 +32,7 @@ FPL_API = "https://fantasy.premierleague.com/api"
 
 def fetch_event_live(gw: int) -> dict:
     req = urllib.request.Request(
-        f"{FPL_API}/event/{gw}/live/", headers={"User-Agent": "fplforecast-score-predictions/1.0"}
+        f"{FPL_API}/event/{gw}/live/", headers={"User-Agent": "gafferfpl-score-predictions/1.0"}
     )
     with urllib.request.urlopen(req, timeout=30) as resp:
         return json.loads(resp.read().decode("utf-8"))

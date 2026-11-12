@@ -22,7 +22,7 @@ TODAY = datetime.now(timezone.utc).strftime("%Y-%m-%d")
 
 
 def fetch(url: str) -> dict:
-    req = urllib.request.Request(url, headers={"User-Agent": "fplforecast-snapshotter/1.0"})
+    req = urllib.request.Request(url, headers={"User-Agent": "gafferfpl-snapshotter/1.0"})
     with urllib.request.urlopen(req, timeout=30) as resp:
         return json.load(resp)
 

@@ -101,7 +101,7 @@ press "Rebuild now" in a browser, the app asks for that key and remembers it in
 an httpOnly cookie. With `OWNER_SECRET` unset, both routes refuse everyone.
 
 Requires a `GITHUB_TOKEN` env var in Vercel: a fine-grained personal access
-token scoped to `natleewhee/fplforecast` with **Contents: read and write**
+token scoped to `natleewhee/gafferfpl` with **Contents: read and write**
 and **Actions: read and write** permissions. Contents lets the app save a
 transfer; Actions lets it start a forecast rebuild straight away (after a
 saved transfer, and from the "Rebuild now" button on the Squad tab). Without

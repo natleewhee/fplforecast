@@ -40,7 +40,7 @@ OUT_FILE = DATA_DIR / "appearance" / "players.json"
 
 API = "https://www.wikidata.org/w/api.php"
 # Wikimedia asks automated clients to say who they are with a URL; no personal details.
-USER_AGENT = "gafferfpl-appearance/1.0 (https://github.com/natleewhee/fplforecast)"
+USER_AGENT = "gafferfpl-appearance/1.0 (https://github.com/natleewhee/gafferfpl)"
 
 # Wikidata unit items for a height value.
 UNIT_METRE = "Q11573"

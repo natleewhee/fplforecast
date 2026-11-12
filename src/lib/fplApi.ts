@@ -27,7 +27,7 @@ export function upstreamFailure(err: unknown): { status: number; body: { error: 
 export async function fpl<T>(path: string, revalidate = 40): Promise<T> {
   const res = await fetch(`${FPL}${path}`, {
     next: { revalidate },
-    headers: { "User-Agent": "fplforecast-live/1.0" },
+    headers: { "User-Agent": "gafferfpl-live/1.0" },
   });
   if (res.status === 503) throw new FplUpdatingError(path);
   if (!res.ok) throw new Error(`FPL ${path} -> ${res.status}`);

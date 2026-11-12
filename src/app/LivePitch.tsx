@@ -8,7 +8,7 @@ import { PitchScene, type PitchMood } from "./PitchScene";
 import { Halo } from "./Shirt";
 import { FaceToggle, PlayerFace } from "./PlayerFace";
 import BenchCover from "./BenchCover";
-import { LiveFeed, NextUp } from "./LiveUpdates";
+import { LiveFeed } from "./LiveUpdates";
 import LivePlayerSheet, { statusText } from "./LivePlayerSheet";
 import { useLiveFx, type Float } from "./useLiveFx";
 import { ArmbandBadge } from "./tokenParts";
@@ -262,8 +262,6 @@ export default function LivePitch({
   const benchSlots = rows.filter((r) => r.isBench && r.position !== "GKP");
   const lines = ROWS.map((pos) => onPitch.filter((r) => r.position === pos)).filter((l) => l.length);
   // Everyone who counts towards the score: 11 normally, all 15 on Bench Boost.
-  const counting = rows.filter((r) => r.inLineup);
-  const toPlay = counting.filter((r) => r.status === "notStarted" || r.status === "playing").length;
   const selected = selectedId != null ? rows.find((r) => r.id === selectedId) : undefined;
 
   // Where the gameweek total is coming from (captain doubling included).
@@ -291,7 +289,7 @@ export default function LivePitch({
       position: r.position,
       team: r.team ?? "",
       code: r.code,
-      sub: t === "pending" ? shortStatus(r).replace(/^[A-Za-z]{3} /, "") : t === "done" ? `${pts.toFixed(0)}` : `${pts.toFixed(0)} \u00B7 ${shortStatus(r)}`, // full time: just the points, to leave room for the icons // a kickoff shows the time only; the day is in "Still to come"
+      sub: t === "pending" ? shortStatus(r).replace(/^[A-Za-z]{3} /, "") : t === "done" ? `${pts.toFixed(0)}` : `${pts.toFixed(0)} \u00B7 ${shortStatus(r)}`, // full time: just the points, to leave room for the icons // a kickoff shows the time only; the day is in the "still to play" card
       subTone: t === "live" ? "accent" : t === "done" && pts >= HAUL ? "warn" : t === "done" ? "accent" : "faint",
       role: r.isArmband ? "C" : r.isViceCaptain ? "V" : null,
       dim: t === "dnp" ? 0.5 : t === "off" ? 0.62 : t === "pending" ? 0.72 : 1,
@@ -326,7 +324,6 @@ export default function LivePitch({
           </button>}
         </div>
       </div>
-      <NextUp rows={onPitch} />
       <LiveFeed feed={fx.feed} showEmpty={mood !== "pre"} />
       {view === "3d" ? (
         <>
@@ -339,8 +336,7 @@ export default function LivePitch({
             goals={fx.goals}
           />
           <p className="mt-2 text-[10.5px] leading-snug text-ink-faint">
-            Number = points so far (with minutes while playing, or the kickoff time) · icons = goals, assists, clean sheet, cards, bonus · faded = yet to play, off or did not play ·{" "}
-            {toPlay} of {counting.length} still to play · C captain, V vice · tap a player for the breakdown · times in SGT
+            Number = points so far (minutes while playing, else kickoff time) · icons = goals, assists, clean sheet, cards, bonus · faded = yet to play, off or did not play · C captain, V vice · tap a player for the breakdown · times in SGT
           </p>
         </>
       ) : (
@@ -366,8 +362,7 @@ export default function LivePitch({
       </PitchScene>
 
       <p className="mt-2 text-[10.5px] leading-snug text-ink-faint">
-        The shirt outline fills with minutes played and glows while playing · dashed = yet to start ·{" "}
-        {toPlay} of {counting.length} still to play · ★ bonus not added yet · the bar under a name is points against the model&rsquo;s expected
+        Outline fills with minutes played and glows while playing · dashed = yet to start · ★ bonus not added yet · bar under a name = points against the model&rsquo;s expected
         (white tick) · tap a player for the breakdown · times in SGT
       </p>
 
