@@ -38,7 +38,7 @@ _ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 if _ROOT not in sys.path:
     sys.path.insert(0, _ROOT)
 
-from engine.optimise import ScenarioResult, solve_squad  # noqa: E402
+from engine.optimise import ScenarioResult, solve_squad, with_held_rows  # noqa: E402
 
 MAX_FORCED_PLAYERS = 15  # can't force in/out more than a full squad
 
@@ -120,27 +120,52 @@ def _pool_by_id_with_squad_fallback(forecast: dict) -> dict:
     return pool_by_id
 
 
+_POSITION_TYPE = {"GKP": 1, "DEF": 2, "MID": 3, "FWD": 4}
+
+
+def _strict_int(value, what: str) -> int:
+    if isinstance(value, bool) or not isinstance(value, (int, float)) or float(value) != int(value):
+        raise ValueError(f"{what} must be a whole number")
+    return int(value)
+
+
 def _parse_team(team: dict) -> dict:
-    """Validate a guest's ``{"squad": [{"id", "sellPrice"}] x15, "bank", "freeTransfers"}``."""
+    """Validate a guest's ``{"squad": [{"id", "position"?, "team"?, "webName"?,
+    "price"?}] x15, "bank", "freeTransfers"}``. Positions, clubs, names and
+    prices are only used for a player missing from the pool (one who has
+    left), and a price must be a real FPL price (3.5-15.5)."""
     squad = team["squad"]
     if not isinstance(squad, list) or len(squad) != 15:
         raise ValueError("squad must list 15 players")
-    sell = {}
+    cards: dict[int, dict] = {}
     for row in squad:
-        pid = int(row["id"])
-        price = float(row["sellPrice"])
-        if pid <= 0 or not 3.0 <= price <= 20.0:
-            raise ValueError(f"player {pid} has an impossible id or sell price")
-        sell[pid] = price
-    if len(sell) != 15:
+        pid = _strict_int(row["id"], "player id")
+        if pid <= 0:
+            raise ValueError(f"player id {pid} must be positive")
+        card = {"id": pid}
+        pos = row.get("position")
+        if pos in _POSITION_TYPE:
+            card.update(position=pos, elementType=_POSITION_TYPE[pos])
+        if isinstance(row.get("team"), str) and 0 < len(row["team"]) <= 5:
+            card["team"] = row["team"]
+        if isinstance(row.get("webName"), str):
+            card["webName"] = row["webName"][:40]
+        price = row.get("price")
+        if price is not None:
+            price = float(price)
+            if not 3.5 <= price <= 15.5:
+                raise ValueError(f"player {pid} has an impossible price")
+            card.update(price=price, sellPrice=price)
+        cards[pid] = card
+    if len(cards) != 15:
         raise ValueError("squad has a duplicate player")
     bank = float(team["bank"])
-    free_transfers = int(team["freeTransfers"])
     if not 0.0 <= bank <= 100.0:
         raise ValueError("bank out of range")
+    free_transfers = _strict_int(team["freeTransfers"], "freeTransfers")
     if not 0 <= free_transfers <= 5:
         raise ValueError("freeTransfers must be 0-5")
-    return {"ids": list(sell), "sell": sell, "bank": bank, "freeTransfers": free_transfers}
+    return {"ids": list(cards), "cards": cards, "bank": bank, "freeTransfers": free_transfers}
 
 
 def solve(body: dict) -> tuple[int, dict]:
@@ -178,19 +203,23 @@ def solve(body: dict) -> tuple[int, dict]:
 
     # A guest's own squad. The committed forecast is the app owner's; its pool
     # is team-agnostic and reusable, but its squad, bank and free transfers
-    # are the owner's. A guest's page sends its own (from its own forecast),
-    # with each player's sell price, so the solve starts from the guest's 15.
+    # are the owner's. A guest's page sends its own 15 (ids, plus position,
+    # club and name used only for a player no longer in the pool), bank and
+    # free transfers. Prices come from the pool, not the request.
     team = body.get("team")
-    if team is not None:
+    cards = {p["id"]: p for p in forecast["squad"]["players"]}
+    if team is not None and team is not False:
         try:
             guest = _parse_team(team)
         except (KeyError, TypeError, ValueError) as exc:
             return 400, {"error": f"bad team: {exc}"}
         squad_ids, bank, free_transfers = guest["ids"], guest["bank"], guest["freeTransfers"]
-        pool = [{**p, "sellPrice": guest["sell"][p["id"]]} if p["id"] in guest["sell"] else p for p in pool]
-        pool_by_id = {**pool_by_id, **{p["id"]: p for p in pool}}
-        for pid in squad_ids:
-            pool_by_id.setdefault(pid, {"id": pid, "sellPrice": guest["sell"][pid]})
+        cards = guest["cards"]
+
+    # A held player who has left the league has no pool row; give him a 0-xP
+    # one so a sale counts as a transfer and credits his sell price.
+    pool = with_held_rows(pool, squad_ids, cards)
+    pool_by_id = {**pool_by_id, **{p["id"]: p for p in pool}}
 
     if scenario_type == "transfer":
         result = solve_squad(

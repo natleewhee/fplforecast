@@ -164,16 +164,24 @@ def build_forecast_for_team(team_id: int) -> tuple[int, dict]:
     # finished), that week's picks are already public and are the squad the
     # manager actually holds now -- with this week's transfers in it. Before
     # the deadline FPL answers 404 and the last finished week stands.
+    # The week before the target is the live one (its deadline has passed);
+    # target_gw - 1 rather than based_on_gw + 1, in case the bundled
+    # bootstrap is a few days stale and more than one deadline has passed.
     squad_gw, squad_chip = based_on_gw, picks_payload.get("active_chip")
     squad_from_picks, squad_from_entry = picks, entry_history
-    live = _fetch_gw_picks(based_on_gw + 1) if target_gw > based_on_gw + 1 else None
+    live_gw = target_gw - 1
+    live = _fetch_gw_picks(live_gw) if live_gw > based_on_gw else None
     if live and live.get("picks"):
-        squad_gw, squad_chip = based_on_gw + 1, live.get("active_chip")
+        squad_gw, squad_chip = live_gw, live.get("active_chip")
         squad_from_picks, squad_from_entry = live["picks"], live.get("entry_history", {})
+
+    def _picks_for(gw: int) -> dict | None:
+        # the finished week's picks are already in hand; don't fetch them twice
+        return picks_payload if gw == based_on_gw else _fetch_gw_picks(gw)
 
     # After a Free Hit, FPL restores the pre-chip squad at the next deadline.
     squad_picks, squad_entry_history, reverted_from = compute_forecast.squad_after_free_hit(
-        squad_gw, squad_chip, squad_from_picks, squad_from_entry, _fetch_gw_picks
+        squad_gw, squad_chip, squad_from_picks, squad_from_entry, _picks_for
     )
     squad_ids = [p["element"] for p in squad_picks]
 

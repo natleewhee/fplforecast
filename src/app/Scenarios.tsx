@@ -406,7 +406,13 @@ type LockState = "keep" | "remove";
  * since a pick is one of 15 players x keep/remove and there's no bounding
  * that combinatorially. Everything else on this page is static JSON; this
  * panel is the sole live network call. */
-export type GuestTeam = { squad: { id: number; sellPrice: number }[]; bank: number; freeTransfers: number };
+/** Positions, clubs, names and prices only matter server-side for a player who has left the
+ * league (no pool row); prices otherwise come from the pool. */
+export type GuestTeam = {
+  squad: { id: number; position?: string; team?: string; webName?: string; price?: number }[];
+  bank: number;
+  freeTransfers: number;
+};
 
 function ForceLockPanel({
   squad,
