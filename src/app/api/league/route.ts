@@ -12,6 +12,7 @@ import {
   type FplPicks,
 } from "@/lib/liveBlend";
 import { OWNER_TEAM_ID, resolveTeamIdFromRequest } from "@/lib/teamId";
+import { internalOrigin } from "@/lib/internalOrigin";
 
 type FplStandingsEntry = {
   entry: number;
@@ -350,7 +351,7 @@ export async function GET(request: NextRequest) {
     } else {
       // Same reasoning as /api/live: a guest's own par margin/component xP
       // don't come from the owner's cached forecast.
-      const forecastRes = await fetch(new URL(`/api/forecast?teamId=${teamId}`, request.url));
+      const forecastRes = await fetch(new URL(`/api/forecast?teamId=${teamId}`, internalOrigin(request.url)));
       forecast = forecastRes.ok ? await forecastRes.json() : null;
     }
     if (!forecast) {

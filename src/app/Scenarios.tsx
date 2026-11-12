@@ -843,6 +843,45 @@ function ChipTimingCard({
   );
 }
 
+const CHIP_NAME: Record<string, string> = { wildcard: "Wildcard", freehit: "Free Hit" };
+
+/** The FT count, with the week-by-week replay behind it a tap away. */
+function FreeTransferNote({ freeTransfers }: { freeTransfers: ScenariosData["freeTransfers"] }) {
+  const weeks = freeTransfers.weeks ?? [];
+  const tail = "Every projection assumes optimal captaincy and XI selection each gameweek, so it reads slightly high versus reality.";
+  if (!weeks.length) {
+    return (
+      <p className="px-1 text-xs text-ink-faint">
+        <span className="font-semibold text-ink-soft">{freeTransfers.value} FT</span> — {freeTransfers.derivation}. {tail}
+      </p>
+    );
+  }
+  return (
+    <details className="px-1 text-xs text-ink-faint" data-testid="ft-derivation">
+      <summary className="flex min-h-[44px] cursor-pointer items-center gap-1">
+        <span className="font-semibold text-ink-soft">{freeTransfers.value} FT</span>
+        <span>· how is this counted?</span>
+      </summary>
+      <p className="mb-1">
+        +1 a week, up to 5. Transfers use them up; a hit can&apos;t go below 0. A Wildcard or Free Hit week keeps
+        what you had.
+      </p>
+      <ul className="tabular-nums">
+        {weeks.map((w) => (
+          <li key={w.gameweek} className="flex justify-between gap-2 border-t border-line py-0.5">
+            <span>GW{w.gameweek}</span>
+            <span>
+              {w.chip ? `${CHIP_NAME[w.chip] ?? w.chip}, bank kept` : `${w.before} held, ${w.used} made`}
+            </span>
+            <span className="text-ink-soft">→ {w.after}</span>
+          </li>
+        ))}
+      </ul>
+      <p className="mt-1">{tail}</p>
+    </details>
+  );
+}
+
 export default function Scenarios({
   scenarios,
   pool,
@@ -880,11 +919,7 @@ export default function Scenarios({
         </div>
       </div>
 
-      <p className="px-1 text-xs text-ink-faint">
-        <span className="font-semibold text-ink-soft">{scenarios.freeTransfers.value} FT</span> —{" "}
-        {scenarios.freeTransfers.derivation}. Every projection assumes optimal captaincy and XI
-        selection each gameweek, so it reads slightly high versus reality.
-      </p>
+      <FreeTransferNote freeTransfers={scenarios.freeTransfers} />
 
       {scenariosForHorizon.length === 0 ? (
         <div className="panel rise px-3 py-4 text-center">

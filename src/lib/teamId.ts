@@ -17,16 +17,21 @@ export const TEAM_ID_COOKIE = "fpl_team_id";
  * team for a plain visit or a malformed cookie value. */
 export function resolveTeamId(cookieJar: { get(name: string): { value: string } | undefined }): string {
   const raw = cookieJar.get(TEAM_ID_COOKIE)?.value;
-  if (!raw) return OWNER_TEAM_ID;
-  const parsed = Number(raw);
-  if (!Number.isInteger(parsed) || parsed <= 0) return OWNER_TEAM_ID;
-  return raw;
+  if (!isValidTeamId(raw)) return OWNER_TEAM_ID;
+  return canonicalTeamId(raw);
 }
 
+// Plain decimal digits only (FPL ids are well under 10 digits). Number() would also accept
+// "0x10", "16.0" and "1e21" -- the last turns into "1e+21", and past 2^53 into a different team.
+const TEAM_ID_RE = /^\d{1,10}$/;
+
 function isValidTeamId(raw: string | null | undefined): raw is string {
-  if (!raw) return false;
-  const parsed = Number(raw);
-  return Number.isInteger(parsed) && parsed > 0;
+  return !!raw && TEAM_ID_RE.test(raw) && parseInt(raw, 10) > 0;
+}
+
+/** One spelling per team ("016" -> "16"), so a team is one cache entry and one build. */
+function canonicalTeamId(raw: string): string {
+  return String(parseInt(raw, 10));
 }
 
 /** Server-side, for the per-team read routes (/api/live, /api/league,
@@ -44,7 +49,7 @@ export function resolveTeamIdFromRequest(req: {
   cookies: { get(name: string): { value: string } | undefined };
 }): string {
   const queryRaw = req.nextUrl.searchParams.get("teamId");
-  if (isValidTeamId(queryRaw)) return queryRaw;
+  if (isValidTeamId(queryRaw)) return canonicalTeamId(queryRaw);
   return resolveTeamId(req.cookies);
 }
 
@@ -80,7 +85,7 @@ export function getUrlTeamId(): string | null {
   if (typeof window === "undefined") return null;
   const raw = new URLSearchParams(window.location.search).get(URL_TEAM_PARAM);
   if (!isValidTeamId(raw)) return null;
-  return raw;
+  return canonicalTeamId(raw);
 }
 
 /** Client-side: reflects the currently-viewed team in the address bar via

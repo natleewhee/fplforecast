@@ -12,6 +12,7 @@ import {
   type FplPicks,
 } from "@/lib/liveBlend";
 import { OWNER_TEAM_ID, resolveTeamIdFromRequest } from "@/lib/teamId";
+import { internalOrigin } from "@/lib/internalOrigin";
 
 type FplEntry = { name?: string; player_first_name?: string; player_last_name?: string };
 
@@ -68,7 +69,7 @@ export async function GET(request: NextRequest) {
     if (teamId === OWNER_TEAM_ID) {
       forecast = loadLatestForecast();
     } else {
-      const forecastRes = await fetch(new URL(`/api/forecast?teamId=${teamId}`, request.url));
+      const forecastRes = await fetch(new URL(`/api/forecast?teamId=${teamId}`, internalOrigin(request.url)));
       forecast = forecastRes.ok ? await forecastRes.json() : null;
     }
 

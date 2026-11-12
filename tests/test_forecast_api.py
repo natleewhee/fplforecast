@@ -306,3 +306,18 @@ def test_guest_free_hit_lookup_failure_falls_back_to_the_free_hit_squad(monkeypa
     assert status == 200
     assert {p["id"] for p in payload["squad"]["players"]} <= set(junk)
     assert payload["squadFromGameweek"] is None
+
+
+def test_a_failed_build_returns_a_fixed_message_not_the_exception(monkeypatch, capsys):
+    def boom(team_id):
+        raise RuntimeError("secret internal detail /var/task/data")
+
+    monkeypatch.setattr(forecast_api, "build_forecast_for_team", boom)
+    h = forecast_api.handler.__new__(forecast_api.handler)
+    h.path = f"/api/forecast?teamId={TEAM_ID}"
+    sent = {}
+    monkeypatch.setattr(h, "_respond", lambda status, body, **kw: sent.update(status=status, body=body), raising=False)
+    h.do_GET()
+    assert sent["status"] == 502
+    assert "secret" not in json.dumps(sent["body"])
+    assert "secret internal detail" in capsys.readouterr().err  # still in the function log
