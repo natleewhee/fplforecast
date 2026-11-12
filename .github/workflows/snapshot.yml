@@ -69,6 +69,9 @@ jobs:
         run: python scripts/compute_forecast.py
 
       - name: Drop daily snapshots older than 14 days
+        # Same condition as the commit below, so a run of failed days doesn't
+        # commit ~3.4 MB a day without pruning.
+        if: ${{ !cancelled() && steps.snapshot.outcome == 'success' }}
         # Everything reads only the newest file in these folders, so older copies
         # just grow the repo (about 3.4 MB a day). They stay in git history.
         run: python scripts/prune_snapshots.py --days 14
@@ -80,7 +83,8 @@ jobs:
         # leave some of its outputs updated and others not (compute_forecast
         # saves the pool-context cache before it writes the forecast); the next
         # good run rewrites them. The alert step below still fires on any
-        # failure, and the commit message says the run was partial.
+        # failure, and the commit message says the run was partial. A run that
+        # hits the job timeout counts as cancelled, so its snapshot is not kept.
         if: ${{ !cancelled() && steps.snapshot.outcome == 'success' }}
         env:
           JOB_STATUS: ${{ job.status }}
