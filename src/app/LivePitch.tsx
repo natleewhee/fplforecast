@@ -314,7 +314,7 @@ export default function LivePitch({
             type="button"
             aria-pressed={heat}
             onClick={() => setHeat((h) => !h)}
-            className={`inline-flex h-8 items-center rounded-full border px-3 text-[11px] font-semibold transition-colors ${
+            className={`hit-44 relative inline-flex h-8 items-center rounded-full border px-3 text-[11px] font-semibold transition-colors ${
               heat
                 ? "border-[var(--accent-2)] bg-[color-mix(in_srgb,var(--accent-2)_16%,transparent)] text-[var(--accent-2)]"
                 : "border-line text-ink-soft hover:border-border-strong"

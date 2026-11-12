@@ -13,7 +13,7 @@ export default function BenchCover({ cover, rows }: { cover: BenchCoverItem[]; r
 
   return (
     <details className="mt-3 rounded-xl border border-line px-3 py-2 text-[11.5px]" data-testid="bench-cover">
-      <summary className="cursor-pointer list-none">
+      <summary className="-mx-3 -my-2 min-h-11 cursor-pointer list-none px-3 py-3">
         <span className="eyebrow">Bench cover</span>
         <span className="ml-2 text-ink-soft">
           {gaps.length === 0

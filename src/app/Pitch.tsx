@@ -27,6 +27,7 @@ function bandLabel(band: { floor: number; ceiling: number; bandProvisional: bool
 // information without needing a separate pitch view to switch to).
 const MODEL_CAPTION =
   "This app's recommended XI and captain: scoring history, form and ICT, plus fixture difficulty and minutes risk.";
+const MODEL_SHORT = "The model\u2019s XI and captain";
 
 const ROWS = ["GKP", "DEF", "MID", "FWD"];
 const fmtDelta = (n: number) => `${n >= 0 ? "+" : ""}${n.toFixed(1)}`;
@@ -210,6 +211,7 @@ export default function Pitch({
   const byId = new Map(squad.players.map((p) => [p.id, p]));
   const [gwIdx, setGwIdx] = useState(0);
   const [showAllGws, setShowAllGws] = useState(false);
+  const [showKey, setShowKey] = useState(false);
   const [selectedId, setSelectedId] = useState<number | null>(null);
   const [replacingId, setReplacingId] = useState<number | null>(null);
   const triggerRef = useRef<HTMLButtonElement | null>(null);
@@ -352,7 +354,7 @@ export default function Pitch({
           {!showAllGws && upcoming.length > 1 && (
             <button
               onClick={() => setShowAllGws(true)}
-              className="shrink-0 rounded-xl border border-line px-3 py-1.5 text-[11px] text-ink-faint transition hover:border-border-strong hover:text-ink-soft"
+              className="min-h-11 shrink-0 rounded-xl border border-line px-3 py-1.5 text-[11px] text-ink-faint transition hover:border-border-strong hover:text-ink-soft"
             >
               +{upcoming.length - 1} more
             </button>
@@ -365,9 +367,7 @@ export default function Pitch({
               MODEL · GW{active.gameweek}
             </h2>
             {isTargetGw ? (
-              <p className="mt-1 max-w-[26rem] text-[10.5px] leading-snug text-ink-faint">
-                {MODEL_CAPTION}
-              </p>
+              <p className="mt-1 text-[10.5px] leading-snug text-ink-faint">{MODEL_SHORT}</p>
             ) : (
               <p className="eyebrow mt-0.5">projected lineup</p>
             )}
@@ -380,7 +380,7 @@ export default function Pitch({
             <div className="eyebrow mt-1">{previewing ? "proj pts (preview)" : adjusted ? "proj pts (adjusted)" : "proj pts"}</div>
             {isTargetGw && (
               <details className="mt-0.5">
-                <summary className="cursor-pointer list-none font-mono text-[10px] text-ink-faint hover:text-ink-soft">
+                <summary className="hit-44 relative cursor-pointer list-none font-mono text-[10px] text-ink-faint hover:text-ink-soft">
                   {forecast.xiFloorCeiling.floor.toFixed(0)}–{forecast.xiFloorCeiling.ceiling.toFixed(0)}
                   {forecast.xiFloorCeiling.bandProvisional && " (prov.)"}
                 </summary>
@@ -395,9 +395,25 @@ export default function Pitch({
           </div>
         </div>
 
-        <div className="mb-2 flex items-center justify-end gap-2">
-          {view === "2d" && <FaceToggle />}
-          <ViewSwitch view={view} onChange={(v) => { setNo3d(false); setPitchView(v); }} />
+        <div className="mb-2 flex flex-wrap items-center justify-between gap-x-2 gap-y-1.5">
+          {isTargetGw ? (
+            <p className="min-w-0 text-[10.5px] leading-snug text-ink-soft" data-testid="pitch-deltas">
+              <span className="chip">{fmtDelta(forecast.nextGw.deltaVsNoChange)} vs no change</span>{" "}
+              <span className="chip">{fmtDelta(forecast.nextGw.deltaVsBaselineXi)} vs baseline</span>
+              {sync.swaps.length === 0 && !lineup.repicked && (
+                <>
+                  {" "}
+                  <span className="chip">agree {forecast.lineupAgreement}/11</span>
+                </>
+              )}
+            </p>
+          ) : (
+            <span />
+          )}
+          <div className="ml-auto flex items-center gap-2">
+            {view === "2d" && <FaceToggle />}
+            <ViewSwitch view={view} onChange={(v) => { setNo3d(false); setPitchView(v); }} />
+          </div>
         </div>
         {no3d && <p className="mb-2 text-[10.5px] text-ink-faint">3D isn&rsquo;t available on this device, so you&rsquo;re seeing the 2D pitch.</p>}
 
@@ -432,14 +448,6 @@ export default function Pitch({
           </div>
         )}
 
-        {isTargetGw && (
-          <div className="mb-2 flex flex-wrap items-center gap-1.5">
-            <span className="chip">{fmtDelta(forecast.nextGw.deltaVsNoChange)} vs no change</span>
-            <span className="chip">{fmtDelta(forecast.nextGw.deltaVsBaselineXi)} vs baseline</span>
-            {sync.swaps.length === 0 && !lineup.repicked && <span className="chip">agree {forecast.lineupAgreement}/11</span>}
-          </div>
-        )}
-
         {view === "3d" ? (
           <>
             <Pitch3D
@@ -449,10 +457,6 @@ export default function Pitch({
               onSelect={openSheet}
               onUnavailable={() => setNo3d(true)}
             />
-            <p className="mt-2 text-[10.5px] leading-snug text-ink-faint">
-              Number = expected points · taller players are drawn taller, skin and hair are approximate ·
-              the bench sits in the dugout on the right · C captain, V vice · tap a player for the breakdown
-            </p>
           </>
         ) : (
           <>
@@ -474,11 +478,6 @@ export default function Pitch({
             ))}
           </div>
         </PitchScene>
-        <p className="mt-2 text-[10.5px] leading-snug text-ink-faint">
-          Number = expected points · the shirt outline fills as expected points rise · the blue bar
-          under a name is the typical range (white tick = projection) · ✚ doubtful or out, ⏱ minutes
-          risk · tap a player for the breakdown
-        </p>
 
         {/* bench */}
         <div className="mt-3">
@@ -493,9 +492,30 @@ export default function Pitch({
           </>
         )}
 
+        <div className="mt-2">
+          <button
+            type="button"
+            aria-expanded={showKey}
+            aria-controls="pitch-key"
+            onClick={() => setShowKey((k) => !k)}
+            className="flex min-h-11 w-full items-center justify-between gap-2 text-left text-[11px] font-medium text-ink-soft hover:text-ink"
+          >
+            <span>How to read the pitch</span>
+            <span aria-hidden>{showKey ? "▴" : "▾"}</span>
+          </button>
+          {showKey && (
+            <p id="pitch-key" className="text-[10.5px] leading-snug text-ink-faint">
+              {isTargetGw && `${MODEL_CAPTION} `}
+              {view === "3d"
+                ? "Number = expected points · taller players are drawn taller, skin and hair are approximate · the bench sits in the dugout on the right · C captain, V vice · tap a player for the breakdown"
+                : "Number = expected points · the shirt outline fills as expected points rise · the blue bar under a name is the typical range (white tick = projection) · ✚ doubtful or out, ⏱ minutes risk · tap a player for the breakdown"}
+            </p>
+          )}
+        </div>
+
         {isTargetGw && (
-          <details className="mt-3 border-t border-line pt-3">
-            <summary className="cursor-pointer text-[11px] font-medium text-ink-soft hover:text-ink">
+          <details className="border-t border-line">
+            <summary className="flex min-h-11 cursor-pointer items-center text-[11px] font-medium text-ink-soft hover:text-ink">
               Why this XI?
             </summary>
             <ul className="mt-2 space-y-1 font-mono text-[10.5px] leading-relaxed text-ink-faint [overflow-wrap:anywhere]">

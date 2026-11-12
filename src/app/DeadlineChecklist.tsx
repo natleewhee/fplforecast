@@ -1,11 +1,12 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import type { Forecast } from "@/lib/snapshots";
 import { chipChecklist } from "@/lib/chips";
 import { availabilityFlag, hasRiskData, risksForGameweek } from "@/lib/availability";
-import { priceRow } from "@/lib/priceWatch";
+import { NO_PRICE_DATA, priceRow } from "@/lib/priceWatch";
 import { countdown } from "@/lib/time";
+import { lineupFor, resolveSwaps, type PendingSwap } from "@/lib/squadView";
 
 type RowStatus = "ok" | "amber" | "red" | "info";
 
@@ -20,23 +21,78 @@ function ChecklistRow({
   status,
   label,
   detail,
+  compact = false,
+  children,
 }: {
   status: RowStatus;
   label: string;
-  detail: string;
+  detail?: string;
+  /** One short line (the neutral "not in this build yet" rows and the info rows). */
+  compact?: boolean;
+  children?: ReactNode;
 }) {
   return (
-    <div className="flex items-start gap-2 py-1.5">
+    <div className={`flex items-start gap-2 ${compact ? "py-1" : "py-1.5"}`}>
       <span
         className="mt-1 h-2 w-2 shrink-0 rounded-full"
         style={{ background: DOT_COLOR[status] }}
         aria-hidden
       />
-      <div className="min-w-0">
+      <div className="min-w-0 flex-1">
         <div className="text-xs font-medium text-ink">{label}</div>
-        <div className="text-[11px] text-ink-soft">{detail}</div>
+        {detail != null && <div className="text-[11px] text-ink-soft">{detail}</div>}
+        {children}
       </div>
     </div>
+  );
+}
+
+/** What FPL's risk kinds mean in two or three words. The full FPL sentence stays reachable. */
+function riskPhrase(kind: string): string {
+  if (kind === "suspension_risk") return "one yellow from a ban";
+  if (kind === "loan_ineligible") return "loan-ban risk";
+  return "flagged by FPL";
+}
+
+type Risk = { name: string; kind: string; notes: string };
+
+/** "Tavernier, Groß: one yellow from a ban (FPL)": players grouped by what FPL flagged them for. */
+function shortRisks(risks: Risk[]): string {
+  const byKind = new Map<string, string[]>();
+  for (const r of risks) {
+    const names = byKind.get(r.kind) ?? [];
+    if (!names.includes(r.name)) names.push(r.name);
+    byKind.set(r.kind, names);
+  }
+  return [...byKind].map(([kind, names]) => `${names.join(", ")}: ${riskPhrase(kind)} (FPL)`).join("; ");
+}
+
+function RiskDetail({ risks }: { risks: Risk[] }) {
+  const [open, setOpen] = useState(false);
+  const full = risks.map((r) => `${r.name}: ${r.notes}`);
+  return (
+    <>
+      <button
+        type="button"
+        aria-expanded={open}
+        aria-controls={open ? "checklist-risk-wording" : undefined}
+        title={full.join(" ")}
+        onClick={() => setOpen((o) => !o)}
+        className="relative -my-1 flex min-h-11 w-full items-center justify-between gap-2 text-left text-[11px] text-ink-soft"
+      >
+        <span className="min-w-0">{shortRisks(risks)}</span>
+        <span className="shrink-0 text-ink-faint" aria-hidden>
+          {open ? "▴" : "▾"}
+        </span>
+      </button>
+      {open && (
+        <ul id="checklist-risk-wording" className="mb-1 space-y-0.5 text-[11px] text-ink-faint">
+          {full.map((l, i) => (
+            <li key={`${i}-${l}`}>{l}</li>
+          ))}
+        </ul>
+      )}
+    </>
   );
 }
 
@@ -44,8 +100,20 @@ function ChecklistRow({
  * across the Squad and Scenarios tabs (captain, injury risk, bench order,
  * whether to use a transfer, chips) into one glance. Reflects the last
  * daily forecast build, not real-time news -- see the "as of" line. */
-export default function DeadlineChecklist({ forecast }: { forecast: Forecast }) {
+export default function DeadlineChecklist({
+  forecast,
+  liveSquad,
+  pending,
+  pool,
+}: {
+  forecast: Forecast;
+  /** with these, the captain row follows the same armband as the pitch and shortlist */
+  liveSquad?: { id: number; position: string }[] | null;
+  pending?: PendingSwap[];
+  pool?: Forecast["pool"];
+}) {
   const [nowMs, setNowMs] = useState(() => Date.now());
+  const [showClear, setShowClear] = useState(false);
 
   useEffect(() => {
     const id = setInterval(() => setNowMs(Date.now()), 60_000);
@@ -98,17 +166,20 @@ export default function DeadlineChecklist({ forecast }: { forecast: Forecast }) 
 
   // FPL's own suspension / loan-ban warnings for the whole squad (a benched
   // player still matters if he is the auto-sub). Quoted, never inferred.
-  const riskLines = forecast.squad.players.flatMap((p) =>
-    risksForGameweek(p.availability, forecast.targetGameweek).map((r) => `${p.webName}: ${r.notes}`)
+  const riskList: Risk[] = forecast.squad.players.flatMap((p) =>
+    risksForGameweek(p.availability, forecast.targetGameweek).map((r) => ({ name: p.webName, kind: r.kind, notes: r.notes })),
   );
   const riskKnown = hasRiskData(forecast.squad.players);
-  const riskDetail = !riskKnown
-    ? "Not in this build yet; arrives with the next daily update."
-    : riskLines.length === 0
-      ? `FPL flags no suspension or loan-ban risk in your squad for GW${forecast.targetGameweek}.`
-      : riskLines.join(" ");
+  // "FPL flags none" only holds when FPL's risk data is on every player; partial data is said as partial.
+  const riskCovered = forecast.squad.players.filter((p) => Array.isArray(p.availability?.risks)).length;
+  const riskComplete = riskCovered === forecast.squad.players.length;
+  const riskStatus: RowStatus = !riskKnown ? "info" : riskList.length > 0 ? "amber" : riskComplete ? "ok" : "info";
 
   const price = priceRow(forecast.squad.players);
+  // "Nothing near a change" folds away only when every player has price data and nothing moved this GW.
+  const priceCovered = forecast.squad.players.filter((p) => p.priceWatch != null && Number.isFinite(p.priceWatch.percent)).length;
+  const priceMoved = forecast.squad.players.some((p) => Number.isFinite(p.priceWatch?.changeThisGw) && p.priceWatch!.changeThisGw !== 0);
+  const priceFold = price.status === "ok" && priceCovered === forecast.squad.players.length && !priceMoved;
 
   const topScenario = forecast.scenarios.byHorizon["1"]?.[0] ?? null;
   const transferDetail = !topScenario
@@ -119,15 +190,47 @@ export default function DeadlineChecklist({ forecast }: { forecast: Forecast }) 
           .map((p) => p.webName)
           .join(", ")} (${topScenario.netPoints >= 0 ? "+" : ""}${topScenario.netPoints.toFixed(1)} net pts)`;
 
-  const edge = forecast.captainEdge;
-  const captainStatus: RowStatus = edge?.label === "coin-flip" ? "amber" : "ok";
-  const captainDetail = !forecast.captain
+  // The captain the pitch shows: the model's, unless saved or made transfers moved the armband.
+  const resolved = resolveSwaps(forecast, liveSquad, pending, pool);
+  const lineup = lineupFor(forecast, resolved);
+  const byPlayerId = new Map(forecast.squad.players.map((p) => [p.id, p]));
+  const nameOf = (id: number | null | undefined) =>
+    id == null ? null : (resolved.swaps.get(id)?.webName ?? byPlayerId.get(id)?.webName ?? null);
+  const swapped = resolved.swaps.size > 0;
+  const capMoved = !!lineup && swapped && lineup.captainChanged;
+  const viceMoved = !!lineup && swapped && !capMoved && lineup.viceChanged;
+  const moved = capMoved || viceMoved;
+  const captainName = moved ? nameOf(lineup!.captain) : (forecast.captain?.webName ?? null);
+  const viceName = moved ? nameOf(lineup!.vice) : (forecast.viceCaptain?.webName ?? null);
+  const edge = moved ? null : forecast.captainEdge; // the edge was the model's captain over the model's vice
+  const captainStatus: RowStatus = !captainName ? "amber" : capMoved || edge?.label === "coin-flip" ? "amber" : "ok";
+  const captainDetail = !captainName
     ? "No captain picked yet."
-    : `${forecast.captain.webName}${forecast.viceCaptain ? `, vice ${forecast.viceCaptain.webName}` : ""}${
-        edge ? ` -- ${edge.label} (+${edge.points.toFixed(1)})` : ""
+    : `${captainName}${viceName ? `, vice ${viceName}` : ""}${
+        capMoved
+          ? " -- the app moved the armband for your transfers; the model re-picks at the next rebuild"
+          : viceMoved
+            ? " -- vice adjusted for your transfers; the model re-picks at the next rebuild"
+            : edge
+              ? ` -- ${edge.label} (+${edge.points.toFixed(1)})`
+              : ""
       }`;
 
   const chipRow = chipChecklist(forecast.chips, forecast.targetGameweek);
+
+  // The checks with nothing to act on fold into one "all clear" line; the full sentences stay a tap away.
+  const clear: { label: string; short: string; detail: string }[] = [];
+  if (captainStatus === "ok")
+    clear.push({ label: "Captain", short: `captain ${captainName}${viceMoved ? " (vice adjusted)" : ""}`, detail: captainDetail });
+  if (injuryStatus === "ok") clear.push({ label: "Injury / doubt risk in your XI", short: "injury (no doubts in your XI)", detail: injuryDetail });
+  if (riskStatus === "ok")
+    clear.push({
+      label: "Suspension / loan-ban risk (FPL)",
+      short: "suspension (FPL flags none)",
+      detail: `FPL flags no suspension or loan-ban risk in your squad for GW${forecast.targetGameweek}.`,
+    });
+  if (priceFold) clear.push({ label: "Price changes (FPL)", short: "price (none near a change)", detail: price.detail });
+  if (benchStatus === "ok") clear.push({ label: "Bench order", short: "bench", detail: benchDetail });
 
   return (
     <div className="panel rise space-y-1 p-3 sm:p-4">
@@ -144,18 +247,58 @@ export default function DeadlineChecklist({ forecast }: { forecast: Forecast }) 
       </div>
 
       <div className="divide-y divide-[var(--line)]">
-        <ChecklistRow status={captainStatus} label="Captain" detail={captainDetail} />
-        <ChecklistRow status={injuryStatus} label="Injury / doubt risk in your XI" detail={injuryDetail} />
-        <ChecklistRow
-          status={!riskKnown ? "info" : riskLines.length > 0 ? "amber" : "ok"}
-          label="Suspension / loan-ban risk (FPL)"
-          detail={riskDetail}
-        />
-        <ChecklistRow status={price.status} label="Price changes (FPL)" detail={price.detail} />
-        <ChecklistRow status={benchStatus} label="Bench order" detail={benchDetail} />
-        <ChecklistRow status="info" label="Transfer" detail={transferDetail} />
-        <ChecklistRow status={chipRow.status} label="Chips" detail={chipRow.detail} />
+        {captainStatus === "ok" ? null : <ChecklistRow status={captainStatus} label="Captain" detail={captainDetail} />}
+        {injuryStatus === "ok" ? null : <ChecklistRow status={injuryStatus} label="Injury / doubt risk in your XI" detail={injuryDetail} />}
+        {riskStatus === "ok" ? null : !riskKnown ? (
+          <ChecklistRow compact status="info" label="Suspension / loan-ban risk (FPL)" detail="Not in this build yet; arrives with the next daily update." />
+        ) : riskList.length === 0 ? (
+          <ChecklistRow compact status="info" label="Suspension / loan-ban risk (FPL)" detail={`FPL risk data covers ${riskCovered} of ${forecast.squad.players.length} players; none flagged among them.`} />
+        ) : (
+          <ChecklistRow status="amber" label="Suspension / loan-ban risk (FPL)">
+            <RiskDetail risks={riskList} />
+            {!riskComplete && (
+              <div className="text-[10.5px] text-ink-faint">
+                FPL risk data covers {riskCovered} of {forecast.squad.players.length} players.
+              </div>
+            )}
+          </ChecklistRow>
+        )}
+        {priceFold ? null : price.detail === NO_PRICE_DATA ? (
+          <ChecklistRow compact status="info" label="Price changes (FPL)" detail={price.detail} />
+        ) : (
+          <ChecklistRow status={price.status === "ok" ? "info" : price.status} label="Price changes (FPL)" detail={price.detail} />
+        )}
+        {benchStatus === "ok" ? null : <ChecklistRow status={benchStatus} label="Bench order" detail={benchDetail} />}
+        <ChecklistRow compact status="info" label="Transfer" detail={transferDetail} />
+        <ChecklistRow compact status={chipRow.status} label="Chips" detail={chipRow.detail} />
       </div>
+
+      {clear.length > 0 && (
+        <div className="border-t border-[var(--line)]">
+          <button
+            type="button"
+            aria-expanded={showClear}
+            aria-controls="checklist-clear"
+            onClick={() => setShowClear((o) => !o)}
+            className="flex min-h-11 w-full items-center gap-2 py-1.5 text-left"
+          >
+            <span className="h-2 w-2 shrink-0 rounded-full" style={{ background: DOT_COLOR.ok }} aria-hidden />
+            <span className="min-w-0 flex-1 text-[11px] text-ink-soft" data-testid="checklist-all-clear">
+              <span className="font-medium text-ink">All clear:</span> {clear.map((c) => c.short).join(", ")}
+            </span>
+            <span className="shrink-0 text-ink-faint" aria-hidden>
+              {showClear ? "▴" : "▾"}
+            </span>
+          </button>
+          {showClear && (
+            <div id="checklist-clear" className="divide-y divide-[var(--line)] pb-1">
+              {clear.map((c) => (
+                <ChecklistRow key={c.label} compact status="ok" label={c.label} detail={c.detail} />
+              ))}
+            </div>
+          )}
+        </div>
+      )}
 
       <p className="mt-2 text-[10px] text-ink-faint">
         As of last night&rsquo;s build ({new Date(forecast.generatedAt).toLocaleString()}) -- not live news.

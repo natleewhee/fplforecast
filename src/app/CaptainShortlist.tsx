@@ -1,3 +1,6 @@
+"use client";
+
+import { useState } from "react";
 import type { Forecast } from "@/lib/snapshots";
 import { buildCaptainShortlist } from "@/lib/captainShortlist";
 import { lineupFor, resolveSwaps, type PendingSwap } from "@/lib/squadView";
@@ -15,10 +18,17 @@ export default function CaptainShortlist({
   pending?: PendingSwap[];
   pool?: Forecast["pool"];
 }) {
+  const [more, setMore] = useState(false);
   const resolved = resolveSwaps(forecast, liveSquad, pending, pool);
   const { swaps, appliedOut } = resolved;
   const s = buildCaptainShortlist(forecast, swaps, appliedOut, 3, lineupFor(forecast, resolved));
   if (!s) return null;
+  // Two rows by default; the model's pick is always one of them. The rest, and each row's
+  // range / ownership / form, sit behind "More".
+  const pickIdx = s.candidates.findIndex((c) => c.isModelPick);
+  const shown = new Set<number>(pickIdx >= 2 ? [pickIdx, 0] : [0, 1]);
+  const rows = s.candidates.filter((_, i) => more || shown.has(i));
+  const hiddenCount = s.candidates.length - shown.size;
   return (
     <Module
       label={`Captain shortlist · GW${s.gameweek}`}
@@ -29,7 +39,7 @@ export default function CaptainShortlist({
       }
     >
       <ol className="space-y-1.5" data-testid="captain-shortlist">
-        {s.candidates.map((c) => (
+        {rows.map((c) => (
           <li
             key={c.id}
             data-pick={c.isModelPick ? "true" : undefined}
@@ -46,11 +56,15 @@ export default function CaptainShortlist({
             <div className="mt-0.5 flex flex-wrap items-center gap-x-2 gap-y-0.5 text-[10.5px] text-ink-soft">
               {c.isModelPick && <span className="chip chip-accent">Model pick</span>}
               {c.isDouble && <span className="chip chip-warn">Double GW</span>}
+              {more && (
+                <>
               <span>
                 range {c.floor != null && c.ceiling != null ? `${c.floor.toFixed(1)}–${c.ceiling.toFixed(1)}` : "—"}
               </span>
               <span>{c.ownedPct != null ? `${c.ownedPct.toFixed(1)}% owned overall` : "ownership —"}</span>
               <span>form {c.form != null ? c.form.toFixed(1) : "—"}</span>
+                </>
+              )}
             </div>
           </li>
         ))}
@@ -64,9 +78,22 @@ export default function CaptainShortlist({
         </div>
       )}
       {s.secondNote && <p className="text-[11px] leading-snug text-ink-soft">{s.secondNote.text}</p>}
-      <p className="text-[10px] leading-snug text-ink-faint">
-        Ranked by expected points. Ownership is FPL&rsquo;s overall figure, not effective ownership.
-      </p>
+      <button
+        type="button"
+        aria-expanded={more}
+        aria-controls={more ? "captain-more-details" : undefined}
+        data-testid="captain-more"
+        onClick={() => setMore((m) => !m)}
+        className="inline-flex min-h-11 w-full items-center justify-between gap-2 rounded-lg border border-line px-3 text-[11px] font-medium text-ink-soft hover:border-border-strong"
+      >
+        <span>{more ? "Less" : `More${hiddenCount > 0 ? `: ${hiddenCount} more pick${hiddenCount === 1 ? "" : "s"}, ` : ": "}range, ownership, form`}</span>
+        <span aria-hidden>{more ? "▴" : "▾"}</span>
+      </button>
+      {more && (
+        <p id="captain-more-details" className="text-[10px] leading-snug text-ink-faint">
+          Ranked by expected points. Ownership is FPL&rsquo;s overall figure, not effective ownership.
+        </p>
+      )}
     </Module>
   );
 }
