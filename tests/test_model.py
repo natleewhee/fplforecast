@@ -138,19 +138,21 @@ def test_availability_veto_zeroes_an_injured_player():
     assert project(feature_row(xg90=0.8), 3, injured) == 0.0
 
 
-def test_availability_applies_to_the_next_gameweek_only():
-    fixtures = [fixture(3, 10, 20), fixture(4, 10, 20)]
-    injured = ctx(
+def test_dated_suspension_holds_until_the_return_date():
+    fixtures = [fixture(3, 10, 20), fixture(4, 10, 20), fixture(5, 10, 20)]
+    deadlines = {3: "2026-11-21T11:00:00Z", 4: "2026-11-27T18:30:00Z", 5: "2026-12-05T11:00:00Z"}
+    banned = ctx(
         fixtures=fixtures,
-        element={"status": "i", "chance_of_playing_next_round": 0},
+        element={"status": "s", "chance_of_playing_next_round": 0,
+                 "news": "Suspended until 5 Dec", "news_added": "2026-11-08T14:30:09Z"},
         availability_gw=3,
+        deadlines_by_gw=deadlines,
     )
-    fit = ctx(fixtures=fixtures, availability_gw=3)
-    assert project(feature_row(xg90=0.8), 3, injured) == 0.0
-    # FPL's doubt signal says nothing about GW4: a full return is assumed.
-    assert project(feature_row(xg90=0.8), 4, injured) == pytest.approx(
-        project(feature_row(xg90=0.8), 4, fit)
-    )
+    fit = ctx(fixtures=fixtures, availability_gw=3, deadlines_by_gw=deadlines)
+    row = feature_row(xg90=0.8)
+    assert project(row, 3, banned) == 0.0
+    assert project(row, 4, banned) == 0.0  # still banned at the GW4 deadline
+    assert project(row, 5, banned) == pytest.approx(project(row, 5, fit))
 
 
 def test_doubtful_discount_applies_to_the_next_gameweek_only():

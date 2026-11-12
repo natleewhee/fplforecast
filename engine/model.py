@@ -74,6 +74,9 @@ class ModelContext:
     # The one gameweek FPL's availability signal describes (the next
     # deadline). None keeps the old behaviour: apply it to every week asked.
     availability_gw: int | None = None
+    # Gameweek id -> deadline (ISO string), so a dated return in FPL's news
+    # can be matched to the weeks it rules out.
+    deadlines_by_gw: dict[int, str] | None = None
 
 
 def dc_hit_probability(mean_actions: float, threshold: int, variance_ratio: float) -> float:
@@ -205,8 +208,9 @@ def project_detail(feature_row: Mapping, target_gw: int, ctx: ModelContext) -> d
         totals["cards"] -= yellow90 * mins90
 
     element = (ctx.elements_by_id or {}).get(int(feature_row["player_id"]), {})
+    weeks_ahead = 0 if ctx.availability_gw is None else max(0, target_gw - ctx.availability_gw)
     availability = availability_multiplier(
-        element, next_gameweek=ctx.availability_gw is None or target_gw == ctx.availability_gw
+        element, weeks_ahead, (ctx.deadlines_by_gw or {}).get(target_gw)
     )
     points = sum(totals.values()) * availability
 

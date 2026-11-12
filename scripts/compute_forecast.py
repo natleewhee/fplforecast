@@ -1037,6 +1037,7 @@ def build_pool_context(bootstrap: dict, target_gw: int) -> dict:
         teams_by_id=teams_by_id,
         team_strength=live_team_strength(bootstrap),
         availability_gw=target_gw,
+        deadlines_by_gw={e["id"]: e.get("deadline_time") for e in bootstrap.get("events", [])},
     )
 
     def model_fn(row, gw):
@@ -1061,8 +1062,8 @@ def build_pool_context(bootstrap: dict, target_gw: int) -> dict:
     }
     # The pool drops only players who have left (GONE_STATUSES: loaned /
     # transferred out, not in the squad). Injured, suspended and doubtful
-    # players stay in: availability_multiplier already zeroes or discounts
-    # their *next* gameweek, and later weeks assume a return. Excluding them
+    # players stay in: availability_multiplier zeroes them up to their
+    # return (dated from FPL's news, or UNKNOWN_RETURN_WEEKS when undated). Excluding them
     # here would double-penalise a short absence and stop the optimiser
     # (engine/optimise.py) from ever keeping or planning around them, since
     # they'd never be a candidate variable.

@@ -913,3 +913,40 @@ def test_price_change_info_ignores_locked_and_calibrating_players():
     assert cf._price_change_info({**_PRICE_EL, "price_change_locked_until": "2000-01-01T00:00:00Z"})["percent"] == 95.7
     assert cf._price_change_info({**_PRICE_EL, "price_change_locked_until": "garbage"})["percent"] == 95.7
     assert cf._price_change_info({**_PRICE_EL, "price_change_locked_until": None})["percent"] == 95.7
+
+
+def test_main_after_a_free_hit_builds_from_the_restored_squad(tmp_path, monkeypatch):
+    """main() reads active_chip from the latest picks file and hands the
+    restored squad to build_personal_forecast. The heavy model build is
+    stubbed: only the wiring is under test here."""
+    picks_dir = tmp_path / f"picks-{cf.TEAM_ID}"
+    picks_dir.mkdir()
+    real = _fh_payload(list(range(1, 16)), bank=21)
+    fh = _fh_payload(list(range(101, 116)), chip="freehit", bank=0)
+    (picks_dir / "gw9.json").write_text(json.dumps(real))
+    (picks_dir / "gw10.json").write_text(json.dumps(fh))
+    monkeypatch.setattr(cf, "DATA_DIR", tmp_path)
+    monkeypatch.setattr(cf, "load_bootstrap", lambda: {"events": []})
+    monkeypatch.setattr(cf, "upcoming_gameweek", lambda *a, **k: 11)
+    monkeypatch.setattr(cf, "build_pool_context", lambda b, gw: {"targetGw": gw})
+    monkeypatch.setattr(cf, "save_pool_context", lambda ctx, gw: tmp_path / "ctx.pkl")
+    monkeypatch.setattr(cf, "load_entry_history", lambda: {})
+    captured = {}
+
+    class _Stop(Exception):
+        pass
+
+    def fake_build(bootstrap, pool_ctx, based_on_gw, picks, entry_history, squad_ids, **kw):
+        captured.update(based_on_gw=based_on_gw, picks=picks, squad_ids=squad_ids, **kw)
+        raise _Stop
+
+    monkeypatch.setattr(cf, "build_personal_forecast", fake_build)
+    with pytest.raises(_Stop):
+        cf.main()
+
+    assert captured["based_on_gw"] == 10
+    assert [p["element"] for p in captured["picks"]] == list(range(101, 116))  # reviewed week
+    assert captured["squad_ids"] == list(range(1, 16))
+    assert [p["element"] for p in captured["squad_picks"]] == list(range(1, 16))
+    assert captured["squad_entry_history"]["bank"] == 21
+    assert captured["free_hit_reverted_from"] == 9

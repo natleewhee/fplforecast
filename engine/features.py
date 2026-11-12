@@ -11,6 +11,9 @@ dicts, returns plain data / a pandas frame.
 
 from __future__ import annotations
 
+import re
+from datetime import date, datetime
+
 import pandas as pd
 
 from engine.config import (
@@ -21,13 +24,15 @@ from engine.config import (
     RATE_FORM_WINDOW,
     RATE_PRIOR_GAMES,
     RATE_SEASON_FULL_GAMES,
+    UNKNOWN_RETURN_WEEKS,
 )
 from engine.history import ARCHIVE_RATE_KEYS
 
 UNAVAILABLE_STATUSES = {"i", "s", "u", "n"}  # injured, suspended, unavailable, not in squad
 # The subset that won't come back this season on its own: "u" (left the club,
-# loaned out of the league) and "n" (not in the squad). An "i"/"s" player is
-# out for the next gameweek but can return, so stays pickable for later weeks.
+# loaned out of the league) and "n" (not in the squad). An "i"/"s" player can
+# return, so stays pickable for the weeks after their return (see
+# availability_multiplier).
 GONE_STATUSES = {"u", "n"}
 
 POSITIONS = {1: "GKP", 2: "DEF", 3: "MID", 4: "FWD"}
@@ -59,24 +64,75 @@ def team_fixtures(team_id: int, target_gw: int, fixtures: list[dict]) -> list[di
     return out
 
 
-def availability_multiplier(el: dict, next_gameweek: bool = True) -> float:
+_MONTHS = {m: i for i, m in enumerate(
+    ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"], start=1
+)}
+_RETURN_RE = re.compile(r"(?:until|back)\s+(\d{1,2})\s+([A-Za-z]{3})", re.IGNORECASE)
+
+
+def _parse_iso(value) -> datetime | None:
+    if not value:
+        return None
+    try:
+        return datetime.fromisoformat(str(value).replace("Z", "+00:00"))
+    except ValueError:
+        return None
+
+
+def return_date(el: dict) -> date | None:
+    """The date FPL's news says a player is back ("Expected back 29 Nov",
+    "Suspended until 5 Dec"), or None. The news has no year: it's the first
+    such date on or after the day the news was posted (``news_added``)."""
+    m = _RETURN_RE.search(el.get("news") or "")
+    if not m or m.group(2).lower() not in _MONTHS:
+        return None
+    added = _parse_iso(el.get("news_added"))
+    year = added.year if added else datetime.now().year
+    try:
+        when = date(year, _MONTHS[m.group(2).lower()], int(m.group(1)))
+        if added and when < added.date():
+            when = date(year + 1, when.month, when.day)
+    except ValueError:
+        return None
+    return when
+
+
+def availability_multiplier(
+    el: dict, weeks_ahead: int = 0, deadline: datetime | str | None = None
+) -> float:
     """FPL's availability as a 0-1 multiplier on projected points.
 
-    FPL's doubt signal (status letter, ``chance_of_playing_next_round``)
-    describes the *next* gameweek only, so it is applied to that week alone
-    (``next_gameweek=True``). Later weeks assume a full return, except for a
-    player who has left (``GONE_STATUSES``), who stays at 0 throughout."""
+    ``weeks_ahead`` is 0 for the next gameweek, 1 for the one after, and so
+    on; ``deadline`` is that gameweek's deadline (datetime or ISO string).
+
+    - A player who has left (``GONE_STATUSES``) is 0 for every week.
+    - Next gameweek: FPL's status and ``chance_of_playing_next_round``.
+    - Later weeks, for a player FPL flags (any status but "a"): if the news
+      gives a return date, 0 for every gameweek whose deadline falls before
+      it; if not, an injured player ("i") stays at 0 for
+      ``UNKNOWN_RETURN_WEEKS`` weeks counting the next one. Otherwise a full
+      return is assumed (a suspension with no date is one match).
+    """
     status = el.get("status")
     if status in GONE_STATUSES:
         return 0.0
-    if not next_gameweek:
+    if weeks_ahead <= 0:
+        if status in UNAVAILABLE_STATUSES:
+            return 0.0
+        chance = el.get("chance_of_playing_next_round")
+        if chance is None:
+            return 1.0
+        return chance / 100.0
+    if status in (None, "a"):
         return 1.0
-    if status in UNAVAILABLE_STATUSES:
-        return 0.0
-    chance = el.get("chance_of_playing_next_round")
-    if chance is None:
-        return 1.0
-    return chance / 100.0
+    back = return_date(el)
+    if back is not None:
+        when = _parse_iso(deadline) if isinstance(deadline, str) else deadline
+        if when is not None:
+            return 0.0 if when.date() < back else 1.0
+    if status == "i" and back is None:
+        return 0.0 if weeks_ahead < UNKNOWN_RETURN_WEEKS else 1.0
+    return 1.0
 
 
 def _to_number(value) -> float | None:

@@ -353,6 +353,10 @@ def derive_free_transfers(
     a row without ``event`` is read as GW(index + 1). A week missing from the
     history counts as no transfers made. ``chips`` is that snapshot's
     ``chips`` list (``{"name", "event"}``).
+
+    Not modelled: one-off top-ups FPL announces mid-season (2025/26 topped
+    everyone up to 5 at GW16 for AFCON) -- they aren't in the history, so a
+    season with one would undercount until this function learns its week.
     """
     from engine.config import FT_MAX_BANKED
 

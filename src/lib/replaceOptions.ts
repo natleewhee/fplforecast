@@ -51,7 +51,11 @@ export function bankAfterPending(bank: number, held: Held[], pending: PendingTra
   return b;
 }
 
-const isOut = (a: Availability | undefined | null) => a?.status === "i" || a?.status === "s" || a?.status === "u" || a?.status === "n";
+// Only players who have left ("u" loaned/transferred out, "n" not in the
+// squad) are hidden. Injured and suspended players stay listable, like in the
+// optimiser's pool: their xP is already 0 until they're back, and the row
+// shows the availability flag.
+const hasLeft = (a: Availability | undefined | null) => a?.status === "u" || a?.status === "n";
 
 export function replaceOptions(args: {
   out: Held;
@@ -76,7 +80,7 @@ export function replaceOptions(args: {
         !inSquad.has(p.id) &&
         p.price <= budget + 1e-9 &&
         clubCount(p.team) < MAX_PER_CLUB &&
-        !isOut(p.availability) &&
+        !hasLeft(p.availability) &&
         (q === "" || p.webName.toLowerCase().includes(q)),
     )
     .map((p) => {

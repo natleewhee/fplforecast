@@ -111,9 +111,9 @@ def _ensure_data_decompressed() -> None:
     _decompressed = True
 
 
-def _fpl_get(path: str) -> dict:
+def _fpl_get(path: str, timeout: float = 15) -> dict:
     req = urllib.request.Request(f"{FPL}{path}", headers={"User-Agent": "gafferfpl-guest/1.0"})
-    with urllib.request.urlopen(req, timeout=15) as res:
+    with urllib.request.urlopen(req, timeout=timeout) as res:
         return json.loads(res.read())
 
 
@@ -153,9 +153,11 @@ def build_forecast_for_team(team_id: int) -> tuple[int, dict]:
         return 422, {"error": f"team {team_id} has no picks recorded for GW{based_on_gw} yet"}
 
     def _fetch_gw_picks(gw: int) -> dict | None:
+        # Best effort, inside a ~10s function budget: any failure (404, timeout,
+        # bad JSON) falls back to the Free Hit squad rather than failing the build.
         try:
-            return _fpl_get(f"/entry/{team_id}/event/{gw}/picks/")
-        except (urllib.error.HTTPError, urllib.error.URLError):
+            return _fpl_get(f"/entry/{team_id}/event/{gw}/picks/", timeout=4)
+        except Exception:  # noqa: BLE001
             return None
 
     # After a Free Hit, FPL restores the pre-chip squad at the next deadline.
