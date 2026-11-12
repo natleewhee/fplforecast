@@ -302,6 +302,26 @@ test.describe("Squad and Scenarios tabs", () => {
     await expect(body.getByRole("button", { name: /^Solve with 1 pin/ })).toBeEnabled();
   });
 
+  test("Scenarios: the owner's pinned re-solve sends no guest team", async ({ page }) => {
+    const bodies: Record<string, unknown>[] = [];
+    await page.route("**/api/solve*", async (route) => {
+      bodies.push(JSON.parse(route.request().postData() ?? "{}"));
+      await route.fulfill({ status: 422, contentType: "application/json", body: JSON.stringify({ error: "stub" }) });
+    });
+    await mockLive(page, { current: "a" });
+    await open(page);
+    await openTab(page, "Scenarios");
+    const toggle = page.getByRole("button", { name: /^Pin players \(0\)/ });
+    await toggle.scrollIntoViewIfNeeded();
+    await toggle.click();
+    const body = page.locator("#force-lock-body");
+    await body.getByRole("button").first().click();
+    await body.getByRole("button", { name: /^Solve with 1 pin/ }).click();
+    await expect.poll(() => bodies.length).toBeGreaterThan(0);
+    expect(bodies[0].team).toBeUndefined();
+    expect(bodies[0].forceIn).toHaveLength(1);
+  });
+
   test("Scenarios: the owner's Log a transfer form is collapsed until tapped", async ({ page }) => {
     await mockLive(page, { current: "a" });
     await open(page);
