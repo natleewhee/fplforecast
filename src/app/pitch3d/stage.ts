@@ -1,7 +1,7 @@
 import * as THREE from "three";
 import { SKIN_STEPS, type HairStyle } from "@/lib/appearance";
 import { fitTags, type TagItem, type TagState } from "./tagLayout";
-import { ballAt, facing, kickLeg, nextReceiver, passSeconds, BALL_REST_Y, HOLD_SECONDS, KICK_AT, type Spot } from "./passes";
+import { ballAt, cushionLeg, facing, kickLeg, nextReceiver, passSeconds, receiveHold, setBall, BALL_REST_Y, KICK_AT, type Spot } from "./passes";
 import {
   BROADCAST,
   WALL_BRICKS,
@@ -467,7 +467,12 @@ function setup(renderer: THREE.WebGLRenderer, canvas: HTMLCanvasElement, opts: S
   /* ambient passing: the ball goes round the starting eleven, who stay where they are. */
   let ambient = opts.ambient !== false && !reduceMotion;
   let passes = 0;
-  type Pass = { from: Figure; to: Figure; phase: "hold" | "fly"; t: number; legT: number; dur: number; last: number | null };
+  // `wait` is how long he keeps it before the wind-up; `rest` is where the ball came to rest after his
+  // first touch (null for the first pass of a spell, which starts at his feet)
+  type Pass = {
+    from: Figure; to: Figure; phase: "hold" | "fly"; t: number; legT: number; dur: number; last: number | null;
+    wait: number; rest: { x: number; z: number } | null;
+  };
   let pass: Pass | null = null;
   // a kicker's leg keeps swinging through and settles for a moment after the ball has gone
   let settling: { f: Figure; t: number }[] = [];
@@ -506,8 +511,9 @@ function setup(renderer: THREE.WebGLRenderer, canvas: HTMLCanvasElement, opts: S
     }
   }
   const xi = () => figures.filter((f) => !f.def.bench && !f.anim.slide && f.anim.pop == null);
-  /** `wait` is extra time he keeps the ball before the usual wind-up (a receiver holds it a moment first). */
-  function startPass(from: Figure, last: number | null, wait = 0): boolean {
+  /** `wait` is extra time he keeps the ball before the wind-up (a receiver may hold it a moment first);
+   * `rest` is where the ball is when he starts. */
+  function startPass(from: Figure, last: number | null, wait = 0, rest: { x: number; z: number } | null = null): boolean {
     const pool = xi();
     if (pool.length < 3) return false;
     const to = nextReceiver(pool.map(spotOf), from.def.id, last, Math.random);
@@ -522,6 +528,8 @@ function setup(renderer: THREE.WebGLRenderer, canvas: HTMLCanvasElement, opts: S
       legT: -wait,
       dur: passSeconds(Math.hypot(from.homeX - target.homeX, from.homeZ - target.homeZ)),
       last,
+      wait,
+      rest,
     };
     return true;
   }
@@ -546,7 +554,12 @@ function setup(renderer: THREE.WebGLRenderer, canvas: HTMLCanvasElement, opts: S
     cur.t += dt;
     if (cur.phase === "hold") {
       cur.legT = cur.t; // the wind-up runs with the hold, so the foot meets the ball as it is released
-      b.position.set(startX, BALL_REST_Y, startZ);
+      // his first touch sets the ball where he'll kick it from, rather than it jumping there
+      const set = cur.rest
+        ? setBall(cur.rest, { x: startX, z: startZ }, (cur.t + cur.wait) / Math.max(0.01, cur.wait + KICK_AT * 0.6))
+        : { x: startX, z: startZ };
+      b.position.set(set.x, BALL_REST_Y, set.z);
+      if (cur.rest) b.rotation.x += dt * 3;
       if (cur.t >= KICK_AT) {
         cur.phase = "fly";
         cur.t = 0;
@@ -557,19 +570,21 @@ function setup(renderer: THREE.WebGLRenderer, canvas: HTMLCanvasElement, opts: S
       const p = cur.t / cur.dur;
       const at = ballAt({ x: startX, z: startZ }, { x: endX, z: endZ }, p);
       b.position.set(at.x, at.y, at.z);
-      b.rotation.x += dt * 9;
+      b.rotation.x += dt * 9 * (1.6 - p); // spins less as it slows
       if (p >= 1) {
         const next = cur.to;
         passes += 1;
         opts.onPass?.(passes);
         settling.push({ f: cur.from, t: cur.legT });
         pass = null;
-        startPass(next, cur.from.def.id, HOLD_SECONDS - KICK_AT);
+        startPass(next, cur.from.def.id, receiveHold(Math.random), { x: endX, z: endZ });
       }
     }
-    const leg = kickLeg(cur.legT);
-    cur.from.joints.hipR.rotation.x = leg.hip;
-    cur.from.joints.kneeR.rotation.x = leg.knee;
+    // before his wind-up a receiver is still cushioning the ball; then the kick
+    const holder = pass ?? cur;
+    const leg = holder.legT < 0 ? cushionLeg(holder.legT + holder.wait, Math.min(0.3, holder.wait)) : kickLeg(holder.legT);
+    holder.from.joints.hipR.rotation.x = leg.hip;
+    holder.from.joints.kneeR.rotation.x = leg.knee;
     // legs of men who have just kicked finish their swing
     for (const s of settling) {
       s.t += dt;
@@ -949,7 +964,7 @@ function setup(renderer: THREE.WebGLRenderer, canvas: HTMLCanvasElement, opts: S
     setPlayers(defs) {
       const before = new Map(figures.map((f) => [f.def.id, { x: f.g.position.x, z: f.g.position.z, homeX: f.homeX, homeZ: f.homeZ, anim: f.anim }]));
       // a live update rebuilds the figures; keep the ball going round across it
-      const saved = pass && { fromId: pass.from.def.id, toId: pass.to.def.id, phase: pass.phase, t: pass.t, legT: pass.legT, dur: pass.dur, last: pass.last };
+      const saved = pass && { fromId: pass.from.def.id, toId: pass.to.def.id, phase: pass.phase, t: pass.t, legT: pass.legT, dur: pass.dur, last: pass.last, wait: pass.wait, rest: pass.rest };
       const settlingIds = settling.map((s) => ({ id: s.f.def.id, t: s.t }));
       clearFigures();
       figures = defs.map(buildFigure);
@@ -981,7 +996,7 @@ function setup(renderer: THREE.WebGLRenderer, canvas: HTMLCanvasElement, opts: S
       const from = saved && figures.find((x) => x.def.id === saved.fromId);
       const to = saved && figures.find((x) => x.def.id === saved.toId);
       if (saved && from && to && same(saved.fromId) && same(saved.toId) && !from.def.bench && !to.def.bench) {
-        pass = { from, to, phase: saved.phase, t: saved.t, legT: saved.legT, dur: saved.dur, last: saved.last };
+        pass = { from, to, phase: saved.phase, t: saved.t, legT: saved.legT, dur: saved.dur, last: saved.last, wait: saved.wait, rest: saved.rest };
         settling = settlingIds.flatMap((x) => {
           const f = figures.find((y) => y.def.id === x.id);
           return f && f !== from ? [{ f, t: x.t }] : [];
