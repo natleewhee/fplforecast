@@ -21,6 +21,12 @@ ROLLING_WINDOW = 5
 # silently change just because a scenario horizon grew.
 POOL_HORIZON_WEEKS = 7
 
+# An injured player FPL lists with no return date ("Unknown return date") is
+# held at 0 for this many gameweeks, counting the next one, before the model
+# assumes a return. A dated return ("Expected back 29 Nov", "Suspended until
+# 5 Dec") uses the date instead.
+UNKNOWN_RETURN_WEEKS = 3
+
 # Completed seasons the multi-season archive and backtest cover -- the same list
 # as scripts/resolve_entities.py's PAST_SEASONS. Inherits KTD3.
 ARCHIVE_SEASONS = ["2025-26", "2024-25", "2023-24"]

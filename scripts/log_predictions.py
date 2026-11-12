@@ -74,6 +74,7 @@ def main(now: datetime | None = None) -> int:
         elements_by_id={el["id"]: el for el in bootstrap["elements"]},
         teams_by_id={t["id"]: t["short_name"] for t in bootstrap["teams"]},
         team_strength=cf.live_team_strength(bootstrap),
+        availability_gw=gw,
     )
 
     model_map: dict[str, float | None] = {}

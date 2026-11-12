@@ -30,15 +30,17 @@ const pool = [
   pl(10, "MCI", 9.0, [7, 6, 6]), // too expensive for 8.0 + 0.5
   pl(11, "MCI", 8.5, [6, 5, 5]), // affordable
   pl(12, "CHE", 6.0, [9, 9, 9]), // a fourth Chelsea player
-  pl(13, "TOT", 7.0, [5, 4, 4], "MID", "i"), // injured
+  pl(13, "TOT", 7.0, [0, 4, 4], "MID", "i"), // injured: 0 next week, back after
+  pl(16, "TOT", 7.0, [5, 4, 4], "MID", "u"), // has left the club
   pl(14, "TOT", 7.0, [5, 4, 4]),
   pl(15, "TOT", 6.0, [3, 3, 3], "DEF"), // wrong position
   pl(2, "CHE", 6.0, [4, 4, 4]), // already owned
 ];
 
-test("only legal, affordable, healthy, same-position players, best first", () => {
+test("only legal, affordable, same-position players still at a club, best first", () => {
   const r = replaceOptions({ out: squad[0], outXp: 4, squad, pool, bank: 0.5, horizon: 1 });
-  assert.deepEqual(r.map((o) => o.player.id), [11, 14]);
+  // the injured player is listed (last, on 0 xP); the one who left is not
+  assert.deepEqual(r.map((o) => o.player.id), [11, 14, 13]);
   assert.equal(r[0].left, 0); // 8.0 + 0.5 - 8.5
   assert.ok(Math.abs(r[0].delta - 2) < 1e-9);
 });

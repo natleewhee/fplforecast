@@ -236,3 +236,73 @@ def test_owner_history_still_carries_model_vs_baseline_rows():
     guest_rows = cf.build_history(hist, include_model_record=False)["gameweeks"]
     assert "modelVsBaseline" in owner_rows[0]
     assert "modelVsBaseline" not in guest_rows[0]
+
+
+def _stub_free_hit_week(monkeypatch, gw, real_picks, entry_history, history, junk_ids, previous):
+    """The based-on gameweek is a Free Hit with a junk squad; ``previous`` is
+    what the GW-1 picks fetch returns (a payload, or an exception to raise)."""
+    entry_payload = {"name": "Test Team", "player_first_name": "Test", "player_last_name": "Manager"}
+    fh_payload = {
+        "active_chip": "freehit",
+        "picks": [{"element": e, "position": i + 1, "is_captain": i == 0} for i, e in enumerate(junk_ids)],
+        "entry_history": {**entry_history, "bank": 0},
+    }
+    asked = []
+
+    def fake_get(path: str, timeout: float = 15) -> dict:
+        asked.append(path)
+        if path == f"/entry/{TEAM_ID}/":
+            return entry_payload
+        if path == f"/entry/{TEAM_ID}/history/":
+            return history
+        if path == f"/entry/{TEAM_ID}/event/{gw}/picks/":
+            return fh_payload
+        if path == f"/entry/{TEAM_ID}/event/{gw - 1}/picks/":
+            if isinstance(previous, Exception):
+                raise previous
+            return previous
+        raise AssertionError(f"unexpected FPL path requested: {path}")
+
+    monkeypatch.setattr(forecast_api, "_fpl_get", fake_get)
+    return asked
+
+
+def _junk_squad(real_ids: list[int]) -> list[int]:
+    bootstrap = cf.load_bootstrap()
+    by_type: dict[int, list[int]] = {}
+    for el in bootstrap["elements"]:
+        if el["id"] not in real_ids and el.get("status") == "a":
+            by_type.setdefault(el["element_type"], []).append(el["id"])
+    return by_type[1][:2] + by_type[2][:5] + by_type[3][:5] + by_type[4][:3]
+
+
+def test_guest_after_a_free_hit_is_built_from_the_restored_squad(monkeypatch):
+    gw, picks, entry_history, history = _latest_picks_and_history()
+    real_ids = [p["element"] for p in picks]
+    junk = _junk_squad(real_ids)
+    restored = {"picks": picks, "entry_history": {**entry_history, "bank": 33}, "active_chip": None}
+    asked = _stub_free_hit_week(monkeypatch, gw, picks, entry_history, history, junk, restored)
+
+    status, payload = forecast_api.build_forecast_for_team(TEAM_ID)
+
+    assert status == 200
+    assert f"/entry/{TEAM_ID}/event/{gw - 1}/picks/" in asked
+    held = [p["id"] for p in payload["squad"]["players"]]
+    assert set(held) <= set(real_ids) and not set(held) & set(junk)
+    assert payload["squad"]["bank"] == 3.3
+    assert payload["squadFromGameweek"] == gw - 1
+    # "your XI" (the do-nothing baseline) is the restored squad's lineup too.
+    assert set(payload["squad"]["yourXi"]) <= set(real_ids)
+
+
+@pytest.mark.parametrize("failure", [TimeoutError("read timed out"), json.JSONDecodeError("x", "", 0)])
+def test_guest_free_hit_lookup_failure_falls_back_to_the_free_hit_squad(monkeypatch, failure):
+    gw, picks, entry_history, history = _latest_picks_and_history()
+    junk = _junk_squad([p["element"] for p in picks])
+    _stub_free_hit_week(monkeypatch, gw, picks, entry_history, history, junk, failure)
+
+    status, payload = forecast_api.build_forecast_for_team(TEAM_ID)
+
+    assert status == 200
+    assert {p["id"] for p in payload["squad"]["players"]} <= set(junk)
+    assert payload["squadFromGameweek"] is None
