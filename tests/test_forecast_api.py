@@ -306,3 +306,47 @@ def test_guest_free_hit_lookup_failure_falls_back_to_the_free_hit_squad(monkeypa
     assert status == 200
     assert {p["id"] for p in payload["squad"]["players"]} <= set(junk)
     assert payload["squadFromGameweek"] is None
+
+
+def test_guest_mid_gameweek_uses_the_live_weeks_squad(monkeypatch):
+    """After the next deadline, that week's picks (with this week's transfers)
+    are the squad to build from; the finished week is still what's reviewed."""
+    gw, picks, entry_history, history = _latest_picks_and_history()
+    real_ids = [p["element"] for p in picks]
+    live_ids = _junk_squad(real_ids)
+    live_payload = {
+        "active_chip": None,
+        "picks": [{"element": e, "position": i + 1, "is_captain": i == 0} for i, e in enumerate(live_ids)],
+        "entry_history": {**entry_history, "bank": 7},
+    }
+    entry_payload = {"name": "Test Team", "player_first_name": "Test", "player_last_name": "Manager"}
+    asked = []
+
+    def fake_get(path: str, timeout: float = 15) -> dict:
+        asked.append(path)
+        return {
+            f"/entry/{TEAM_ID}/": entry_payload,
+            f"/entry/{TEAM_ID}/history/": history,
+            f"/entry/{TEAM_ID}/event/{gw}/picks/": {"active_chip": None, "picks": picks, "entry_history": entry_history},
+            f"/entry/{TEAM_ID}/event/{gw + 1}/picks/": live_payload,
+        }[path]
+
+    monkeypatch.setattr(forecast_api, "_fpl_get", fake_get)
+    monkeypatch.setattr(forecast_api.compute_forecast, "upcoming_gameweek", lambda *a, **k: gw + 2)
+    monkeypatch.setattr(forecast_api, "_get_pool_context", lambda bootstrap, target: cf.build_pool_context(bootstrap, gw + 1))
+
+    status, payload = forecast_api.build_forecast_for_team(TEAM_ID)
+
+    assert status == 200
+    assert f"/entry/{TEAM_ID}/event/{gw + 1}/picks/" in asked
+    assert {p["id"] for p in payload["squad"]["players"]} <= set(live_ids)
+    assert payload["squad"]["bank"] == 0.7
+    assert payload["basedOnGameweek"] == gw
+
+
+def test_guest_before_the_deadline_does_not_ask_for_next_weeks_picks(monkeypatch):
+    gw, picks, entry_history, history = _latest_picks_and_history()
+    asked = _stub_free_hit_week(monkeypatch, gw, picks, entry_history, history, _junk_squad([p["element"] for p in picks]), None)
+    monkeypatch.setattr(forecast_api.compute_forecast, "upcoming_gameweek", lambda *a, **k: gw + 1)
+    forecast_api.build_forecast_for_team(TEAM_ID)
+    assert f"/entry/{TEAM_ID}/event/{gw + 1}/picks/" not in asked

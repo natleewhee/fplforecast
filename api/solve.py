@@ -17,6 +17,9 @@ itself only needs ``pulp``, so that's the only third-party dependency this
 function bundles. Keep these helpers in sync with compute_forecast.py's by
 hand if that shape changes; tests/test_solve_api.py pins the contract.
 
+A guest page sends ``team`` (its own squad, sell prices, bank and free
+transfers); without it the solve uses the owner's committed squad.
+
 NOT verified against a live Vercel deployment from this environment (no
 Vercel access here) -- see the PR description for the specific things that
 need checking after deploy: the CBC binary running under Vercel's Python
@@ -117,6 +120,29 @@ def _pool_by_id_with_squad_fallback(forecast: dict) -> dict:
     return pool_by_id
 
 
+def _parse_team(team: dict) -> dict:
+    """Validate a guest's ``{"squad": [{"id", "sellPrice"}] x15, "bank", "freeTransfers"}``."""
+    squad = team["squad"]
+    if not isinstance(squad, list) or len(squad) != 15:
+        raise ValueError("squad must list 15 players")
+    sell = {}
+    for row in squad:
+        pid = int(row["id"])
+        price = float(row["sellPrice"])
+        if pid <= 0 or not 3.0 <= price <= 20.0:
+            raise ValueError(f"player {pid} has an impossible id or sell price")
+        sell[pid] = price
+    if len(sell) != 15:
+        raise ValueError("squad has a duplicate player")
+    bank = float(team["bank"])
+    free_transfers = int(team["freeTransfers"])
+    if not 0.0 <= bank <= 100.0:
+        raise ValueError("bank out of range")
+    if not 0 <= free_transfers <= 5:
+        raise ValueError("freeTransfers must be 0-5")
+    return {"ids": list(sell), "sell": sell, "bank": bank, "freeTransfers": free_transfers}
+
+
 def solve(body: dict) -> tuple[int, dict]:
     """Pure request -> (status, payload) so this is testable without an
     HTTP server in front of it."""
@@ -147,14 +173,31 @@ def solve(body: dict) -> tuple[int, dict]:
     pool_by_id = _pool_by_id_with_squad_fallback(forecast)
     squad_ids = [p["id"] for p in forecast["squad"]["players"]]
     bank = forecast["squad"]["bank"]
+    free_transfers = forecast["scenarios"]["freeTransfers"]["value"]
     target_gw = forecast["targetGameweek"]
+
+    # A guest's own squad. The committed forecast is the app owner's; its pool
+    # is team-agnostic and reusable, but its squad, bank and free transfers
+    # are the owner's. A guest's page sends its own (from its own forecast),
+    # with each player's sell price, so the solve starts from the guest's 15.
+    team = body.get("team")
+    if team is not None:
+        try:
+            guest = _parse_team(team)
+        except (KeyError, TypeError, ValueError) as exc:
+            return 400, {"error": f"bad team: {exc}"}
+        squad_ids, bank, free_transfers = guest["ids"], guest["bank"], guest["freeTransfers"]
+        pool = [{**p, "sellPrice": guest["sell"][p["id"]]} if p["id"] in guest["sell"] else p for p in pool]
+        pool_by_id = {**pool_by_id, **{p["id"]: p for p in pool}}
+        for pid in squad_ids:
+            pool_by_id.setdefault(pid, {"id": pid, "sellPrice": guest["sell"][pid]})
 
     if scenario_type == "transfer":
         result = solve_squad(
             pool,
             held=squad_ids,
             bank=bank,
-            free_transfers=forecast["scenarios"]["freeTransfers"]["value"],
+            free_transfers=free_transfers,
             horizon_gws=horizon,
             force_in=force_in,
             force_out=force_out,

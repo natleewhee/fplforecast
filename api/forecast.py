@@ -160,9 +160,20 @@ def build_forecast_for_team(team_id: int) -> tuple[int, dict]:
         except Exception:  # noqa: BLE001
             return None
 
+    # Mid-gameweek (the next gameweek's deadline has passed but it hasn't
+    # finished), that week's picks are already public and are the squad the
+    # manager actually holds now -- with this week's transfers in it. Before
+    # the deadline FPL answers 404 and the last finished week stands.
+    squad_gw, squad_chip = based_on_gw, picks_payload.get("active_chip")
+    squad_from_picks, squad_from_entry = picks, entry_history
+    live = _fetch_gw_picks(based_on_gw + 1) if target_gw > based_on_gw + 1 else None
+    if live and live.get("picks"):
+        squad_gw, squad_chip = based_on_gw + 1, live.get("active_chip")
+        squad_from_picks, squad_from_entry = live["picks"], live.get("entry_history", {})
+
     # After a Free Hit, FPL restores the pre-chip squad at the next deadline.
     squad_picks, squad_entry_history, reverted_from = compute_forecast.squad_after_free_hit(
-        based_on_gw, picks_payload.get("active_chip"), picks, entry_history, _fetch_gw_picks
+        squad_gw, squad_chip, squad_from_picks, squad_from_entry, _fetch_gw_picks
     )
     squad_ids = [p["element"] for p in squad_picks]
 
