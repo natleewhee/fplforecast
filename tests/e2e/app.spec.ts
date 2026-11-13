@@ -104,10 +104,16 @@ async function openRecap(page: Page) {
   if ((await bar.getAttribute("aria-expanded")) === "false") await bar.click();
 }
 
+/** Live and Squad are the Now and Next halves of the Team tab. */
 async function openTab(page: Page, name: "Live" | "Squad" | "Scenarios") {
-  await page.getByRole("tab", { name: new RegExp(`^${name}$`) }).click();
+  const tab = name === "Scenarios" ? "Scenarios" : "Team";
+  await page.getByRole("tab", { name: new RegExp(`^${tab}$`) }).click();
   await page.waitForTimeout(700); // the tab pane slides in
+  if (name !== "Scenarios") await teamHalf(page, name === "Live" ? "Now" : "Next").click();
 }
+
+const teamHalf = (page: Page, half: "Now" | "Next") =>
+  page.getByRole("group", { name: "Now or next gameweek" }).getByRole("button", { name: new RegExp(`^${half}`) });
 
 /** The pitch scene currently on screen (the tabs keep all three mounted). */
 async function visibleScene(page: Page): Promise<Locator> {
@@ -1157,29 +1163,53 @@ test.describe("Price changes (FPL)", () => {
 
 test.describe("Opens on the right view for the week", () => {
   const activeTab = (page: Page) => page.locator(".sticky .segment button[data-active='true']");
+  const pressed = (page: Page, half: "Now" | "Next") => expect(teamHalf(page, half)).toHaveAttribute("aria-pressed", "true");
 
-  test("before the deadline it opens on Squad with the week's decisions", async ({ page }) => {
+  test("before the deadline it opens on Team · Next with the week's decisions", async ({ page }) => {
     await page.clock.install({ time: Date.parse(latestDeadline()) - 3 * 24 * 3_600_000 });
     await mockLive(page, { current: "a" });
     await page.goto("/");
-    await expect(activeTab(page)).toHaveText("Squad");
+    await expect(activeTab(page)).toHaveText("Team");
+    await pressed(page, "Next");
     await expect(page.getByText("THIS WEEK’S DECISIONS")).toBeVisible();
   });
 
-  test("it flips to Live by itself when the deadline passes", async ({ page }) => {
+  test("it flips to Now by itself when the deadline passes", async ({ page }) => {
     await page.clock.install({ time: Date.parse(latestDeadline()) - 60_000 });
     await mockLive(page, { current: "a" });
     await page.goto("/");
-    await expect(activeTab(page)).toHaveText("Squad");
+    await pressed(page, "Next");
     await page.clock.fastForward(120_000);
-    await expect(activeTab(page)).toHaveText("Live");
+    await pressed(page, "Now");
   });
 
-  test("after the deadline it opens on Live", async ({ page }) => {
+  test("a half the viewer picked stays put when the deadline passes", async ({ page }) => {
+    await page.clock.install({ time: Date.parse(latestDeadline()) - 60_000 });
+    await mockLive(page, { current: "a" });
+    await page.goto("/");
+    await pressed(page, "Next");
+    await teamHalf(page, "Now").click();
+    await teamHalf(page, "Next").click();
+    await page.clock.fastForward(120_000);
+    await pressed(page, "Next");
+  });
+
+  test("after the deadline it opens on Team · Now", async ({ page }) => {
     await page.clock.install({ time: Date.parse(latestDeadline()) + 3_600_000 });
     await mockLive(page, { current: "a" });
     await page.goto("/");
-    await expect(activeTab(page)).toHaveText("Live");
+    await expect(activeTab(page)).toHaveText("Team");
+    await pressed(page, "Now");
+  });
+
+  test("the Now/Next buttons are at least 44px tall", async ({ page }) => {
+    await page.setViewportSize({ width: 360, height: 780 });
+    await mockLive(page, { current: "a" });
+    await page.goto("/");
+    for (const half of ["Now", "Next"] as const) {
+      const box = (await teamHalf(page, half).boundingBox())!;
+      expect(box.height).toBeGreaterThanOrEqual(44);
+    }
   });
 });
 
@@ -1413,8 +1443,8 @@ test.describe("Tab transitions", () => {
       if (real) d.startViewTransition = (cb) => { (window as unknown as { __vt: number }).__vt++; return real(cb); };
     });
     await page.goto("/?tab=live");
-    await page.getByRole("tab", { name: "Squad", exact: true }).click();
-    await expect(page.getByText(/MODEL · GW/)).toBeVisible();
+    await page.getByRole("tab", { name: "Scenarios", exact: true }).click();
+    await expect(page.getByRole("tab", { name: "Scenarios", exact: true })).toHaveAttribute("aria-selected", "true");
     await expect(page.locator("html")).not.toHaveAttribute("data-vt-dir", /.+/);
     expect(await page.evaluate(() => (window as unknown as { __vt: number }).__vt)).toBeGreaterThanOrEqual(1);
   });
@@ -1429,8 +1459,8 @@ test.describe("Tab transitions", () => {
         if (real) d.startViewTransition = (cb) => { (window as unknown as { __vt: number }).__vt++; return real(cb); };
       });
       await page.goto("/?tab=live");
-      await page.getByRole("tab", { name: "Squad", exact: true }).click();
-      await expect(page.getByText(/MODEL · GW/)).toBeVisible();
+      await page.getByRole("tab", { name: "Scenarios", exact: true }).click();
+      await expect(page.getByRole("tab", { name: "Scenarios", exact: true })).toHaveAttribute("aria-selected", "true");
       expect(await page.evaluate(() => (window as unknown as { __vt: number }).__vt)).toBe(0);
     });
   });
