@@ -38,7 +38,7 @@ function PlayerRow({ r }: { r: AppearanceRow }) {
       <div className="flex items-center gap-2">
         <PositionBadge position={r.position} />
         <span className="min-w-0 flex-1 truncate text-sm font-semibold text-ink">{r.name}</span>
-        <span className="font-mono text-[11px] text-ink-faint">{r.team}</span>
+        <span className="font-mono text-xs text-ink-faint">{r.team}</span>
         <CopyOverride snippet={snippet(r)} label={r.name} />
       </div>
       <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5 text-xs text-ink-soft">
@@ -136,7 +136,7 @@ export default function AppearancePage() {
                             <Swatch key={part} colour={c} label={`${club} home ${part} ${c}`} />
                           ))}
                         </span>
-                        <span className="text-[11px] text-ink-faint">keeper</span>
+                        <span className="text-xs text-ink-faint">keeper</span>
                         <span className="flex items-center gap-1">
                           {([["shirt", gk.shirt], ["shorts", gk.shorts], ["socks", gk.socks]] as const).map(([part, c]) => (
                             <Swatch key={part} colour={c} label={`${club} keeper ${part} ${c}`} />

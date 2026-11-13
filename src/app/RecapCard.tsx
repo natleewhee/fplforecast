@@ -215,7 +215,7 @@ export default function RecapCard({
             Share this card
           </button>
           {(note || error) && (
-            <p className="text-[11px] text-ink-faint">{note ?? `Couldn't load that week: ${error}`}</p>
+            <p className="text-xs text-ink-faint">{note ?? `Couldn't load that week: ${error}`}</p>
           )}
 
           {recap.achievements.length > 0 && (

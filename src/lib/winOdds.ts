@@ -4,7 +4,7 @@ import type { LeagueSquadResponse, LeagueSquadRow } from "@/app/api/league/squad
  * players return 2-3 pts, a few haul), so the spread of what's still to come
  * is wider than a plain Poisson at the same mean. Remaining points are
  * modelled as `c * Poisson(mean / c)`, which keeps the mean at the app's xP
- * and gives variance `c * mean` -- c = 2.5 puts a 5 xP player at roughly
+ * and gives variance `c * mean` — c = 2.5 puts a 5 xP player at roughly
  * sd 3.5, close to a typical outfield returns spread. This is an assumption,
  * not a fit to the forecast model's own floor/ceiling band (that band is
  * only computed for the owner's squad, so it can't be used for a rival). */

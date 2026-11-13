@@ -12,8 +12,8 @@ import { LiveFeed } from "./LiveUpdates";
 import LivePlayerSheet, { statusText } from "./LivePlayerSheet";
 import { useLiveFx, type Float } from "./useLiveFx";
 import { ArmbandBadge } from "./tokenParts";
-import Pitch3D, { ViewSwitch, type Pitch3DPlayer } from "./pitch3d/Pitch3D";
-import { setPitchView, usePitchView } from "@/lib/pitchView";
+import Pitch3D, { type Pitch3DPlayer } from "./pitch3d/Pitch3D";
+import { usePitchView } from "@/lib/pitchView";
 
 /* The Live tab's floodlit night pitch: the eleven who count right now (an
  * auto-subbed-in bench player replaces whoever didn't play), each as a token
@@ -304,17 +304,16 @@ export default function LivePitch({
   return (
     <div>
       <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
-        <span className="text-[11px] text-ink-soft" role="status">
+        <span className="text-xs text-ink-soft" role="status">
           {moodText}
         </span>
         <div className="flex shrink-0 items-center gap-2">
           {view === "2d" && <FaceToggle />}
-          <ViewSwitch view={view} onChange={(v) => { setNo3d(false); setPitchView(v); }} />
           {view === "2d" && <button
             type="button"
             aria-pressed={heat}
             onClick={() => setHeat((h) => !h)}
-            className={`hit-44 relative inline-flex h-8 items-center rounded-full border px-3 text-[11px] font-semibold transition-colors ${
+            className={`hit-44 relative inline-flex h-8 items-center rounded-full border px-3 text-xs font-semibold transition-colors ${
               heat
                 ? "border-[var(--accent-2)] bg-[color-mix(in_srgb,var(--accent-2)_16%,transparent)] text-[var(--accent-2)]"
                 : "border-line text-ink-soft hover:border-border-strong"
@@ -335,7 +334,7 @@ export default function LivePitch({
             onUnavailable={() => setNo3d(true)}
             goals={fx.goals}
           />
-          <p className="mt-2 text-[10.5px] leading-snug text-ink-faint">
+          <p className="mt-2 text-xs leading-snug text-ink-faint">
             Number = points so far (minutes while playing, else kickoff time) · icons = goals, assists, clean sheet, cards, bonus · faded = yet to play, off or did not play · C captain, V vice · tap a player for the breakdown · times in SGT
           </p>
         </>
@@ -361,7 +360,7 @@ export default function LivePitch({
         </div>
       </PitchScene>
 
-      <p className="mt-2 text-[10.5px] leading-snug text-ink-faint">
+      <p className="mt-2 text-xs leading-snug text-ink-faint">
         Outline fills with minutes played and glows while playing · dashed = yet to start · ★ bonus not added yet · bar under a name = points against the model&rsquo;s expected
         (white tick) · tap a player for the breakdown · times in SGT
       </p>

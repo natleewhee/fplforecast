@@ -34,7 +34,7 @@ type FplClassicLeagueRef = {
   name: string;
   // "x" = a classic league someone created (a private mini-league); "s" =
   // an FPL system league (Overall, a country, etc) with millions of
-  // entries -- not something a per-entry-picks standings table works for.
+  // entries — not something a per-entry-picks standings table works for.
   // NOT verified against a live FPL response from this environment; if
   // this filter is wrong (e.g. the field name/values differ), tell me what
   // `/entry/<id>/` actually returns and I'll fix it.
@@ -77,7 +77,7 @@ export type LeaguePayload = {
   myRank: number | null;
   myEntryId: number;
   // Set to your own entry id only when it was appended after the top 10 (i.e.
-  // you're outside it) -- an explicit flag rather than inferring it from a
+  // you're outside it) — an explicit flag rather than inferring it from a
   // rank-number gap, since tied ranks (FPL gives equal `rank` to entries tied
   // on points) make consecutive array rows' ranks not always differ by 1.
   appendedEntryId: number | null;
@@ -106,7 +106,7 @@ const MAX_STANDINGS_PAGES = 10;
 // Standings are sorted descending by `total`, so instead of scanning every
 // page in between, binary-search for the page your own total points falls
 // on: exponential search to bracket an upper bound (unknown page count),
-// then bisect within it. O(log n) requests instead of O(n) -- a
+// then bisect within it. O(log n) requests instead of O(n) — a
 // million-entry league resolves in under 30 fetches instead of needing
 // ~20,000. `myTotal` is `summary_overall_points` (already fetched for the
 // entry), which matches a league's `total` for the common case (scored
@@ -140,7 +140,7 @@ async function findRankBeyondCap(
 ): Promise<FplStandingsEntry | null> {
   if (lastScannedResults.length === 0) return null;
   // The caller already scanned pages 1..lastScannedPage (didn't find the
-  // entry there) -- pick up the exponential search past that instead of
+  // entry there) — pick up the exponential search past that instead of
   // re-fetching pages already ruled out.
   let low = lastScannedPage;
   let lowResults = lastScannedResults;
@@ -190,7 +190,7 @@ async function findRankBeyondCap(
     }
   }
 
-  // Landed within one page of the right spot -- check a small neighborhood
+  // Landed within one page of the right spot — check a small neighborhood
   // in case the estimate (summary_overall_points as a stand-in for this
   // league's own `total`) was off by a page or so, rather than silently
   // reporting "not found" right next to the answer.
@@ -235,7 +235,7 @@ async function fetchLeague(
   }
 
   // Top 10 always come from the first page (already sorted by rank). Page
-  // through the rest (lightly -- just the standings list, no picks) up to
+  // through the rest (lightly — just the standings list, no picks) up to
   // the cap regardless of whether your entry has already turned up: stopping
   // early the moment it's found would make `allResults.length` reflect
   // "which page your rank happened to fall on" rather than a stable count,
@@ -254,12 +254,12 @@ async function fetchLeague(
       lastPageResults = next.standings.results;
       hasNext = next.standings.has_next;
     } catch {
-      break; // couldn't page further -- show what we have
+      break; // couldn't page further — show what we have
     }
   }
   let myResult = allResults.find((r) => r.entry === myEntryId);
 
-  // Didn't turn up in the first MAX_STANDINGS_PAGES pages -- a big league
+  // Didn't turn up in the first MAX_STANDINGS_PAGES pages — a big league
   // (the "#? of 500+" case). Binary-search the rest instead of giving up.
   if (!myResult && hasNext && myOverallPoints != null) {
     myResult =
@@ -292,7 +292,7 @@ async function fetchLeague(
         // Three-way split matching FPL's own gameweek view: played (their
         // match is over, or they were subbed off mid-match), live
         // (currently mid-match), to play (fixture hasn't kicked off). The
-        // three always sum to the full XI (11) -- which needs the *post*
+        // three always sum to the full XI (11) — which needs the *post*
         // autosub XI (a declared starter who autosubbed off swapped out for
         // a bench player), not the pre-match one: `!isBench` alone still
         // counts a subbed-off starter's now-empty slot while dropping their
@@ -340,7 +340,7 @@ async function fetchLeague(
 }
 
 // Only the selected league's standings (plus every entry's picks) are
-// fetched -- showing all of a manager's leagues at once fans out one FPL
+// fetched — showing all of a manager's leagues at once fans out one FPL
 // request per entry per league, which doesn't scale past a couple of leagues.
 export async function GET(request: NextRequest) {
   try {

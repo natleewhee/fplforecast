@@ -21,7 +21,7 @@ function legLabel(l: { team: string | null; wasHome: boolean; fdrRating: number 
 function Cell({ cell, gw }: { cell: TickerCell; gw: number }) {
   if (cell.kind === "blank") {
     return (
-      <span className="block text-center text-[10px] text-ink-faint" aria-label={`GW${gw}: no fixture`} data-cell="blank">
+      <span className="block text-center text-xs text-ink-faint" aria-label={`GW${gw}: no fixture`} data-cell="blank">
         &ndash;
       </span>
     );
@@ -50,7 +50,7 @@ function RowLabel({ row }: { row: TickerRow }) {
   return (
     <span className="flex min-w-0 items-center gap-1">
       <span className="h-1.5 w-1.5 shrink-0 rounded-full" style={{ background: POSITION_DOT[row.position] }} aria-hidden />
-      <span className="truncate text-[11px] text-ink">{row.webName}</span>
+      <span className="truncate text-xs text-ink">{row.webName}</span>
     </span>
   );
 }
@@ -85,16 +85,16 @@ export default function FixtureTicker({
     <details className="panel group p-3" data-testid="fixture-ticker">
       <summary className="-my-3 flex min-h-11 cursor-pointer list-none items-center justify-between gap-2 [&::-webkit-details-marker]:hidden">
         <span className="flex items-center gap-1.5">
-          <span aria-hidden className="inline-block text-[10px] text-ink-faint transition-transform group-open:rotate-90 motion-reduce:transition-none">&#9656;</span>
+          <span aria-hidden className="inline-block text-xs text-ink-faint transition-transform group-open:rotate-90 motion-reduce:transition-none">&#9656;</span>
           <span className="eyebrow">Fixtures &middot; next {gameweeks.length} GW</span>
         </span>
-        <span className="text-[10px] text-ink-faint">{note || "no blanks or doubles"}</span>
+        <span className="text-xs text-ink-faint">{note || "no blanks or doubles"}</span>
       </summary>
       <div className="mt-2" role="table" aria-label="Your squad's next fixtures">
         <div className={`grid ${COLS} gap-x-1 pb-1`} role="row">
           <span role="columnheader"><span className="sr-only">Player</span></span>
           {gameweeks.map((g) => (
-            <span key={g} role="columnheader" className="text-center font-mono text-[9px] font-bold tracking-wide text-ink-faint">
+            <span key={g} role="columnheader" className="text-center font-mono text-xs font-bold tracking-wide text-ink-faint">
               GW{g}
             </span>
           ))}
@@ -102,7 +102,7 @@ export default function FixtureTicker({
         {rows.map((r, i) => (
           <div key={r.id}>
             {(i === 0 || rows[i - 1].group !== r.group) && (
-              <div className="eyebrow mb-0.5 mt-1.5 text-[9px]">{r.group === "starter" ? "Starters" : "Subs"}</div>
+              <div className="eyebrow mb-0.5 mt-1.5 text-xs">{r.group === "starter" ? "Starters" : "Subs"}</div>
             )}
             <div
               className={`grid ${COLS} items-center gap-x-1 border-t border-line py-0.5`}
@@ -133,7 +133,7 @@ export default function FixtureTicker({
           </div>
         ))}
       </div>
-      <p className="mt-2 text-[10px] leading-snug text-ink-faint">
+      <p className="mt-2 text-xs leading-snug text-ink-faint">
         H home, A away. The bar beside each opponent is FPL&rsquo;s difficulty, green easy to red hard.
         {swaps.size > 0 && " Transferred players are shown in the place of the player they replace."}
       </p>

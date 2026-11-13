@@ -5,7 +5,7 @@
  * there instead of hardcoding `TEAM_ID`.
  *
  * `/api/transfers` (the one route that writes to this repo) is the
- * exception -- it never accepts a guest's team ID, see its own route.ts. */
+ * exception — it never accepts a guest's team ID, see its own route.ts. */
 
 export const OWNER_TEAM_ID = process.env.FPL_TEAM_ID || "1168513";
 
@@ -22,7 +22,7 @@ export function resolveTeamId(cookieJar: { get(name: string): { value: string } 
 }
 
 // Plain decimal digits only (FPL ids are well under 10 digits). Number() would also accept
-// "0x10", "16.0" and "1e21" -- the last turns into "1e+21", and past 2^53 into a different team.
+// "0x10", "16.0" and "1e21" — the last turns into "1e+21", and past 2^53 into a different team.
 const TEAM_ID_RE = /^\d{1,10}$/;
 
 function isValidTeamId(raw: string | null | undefined): raw is string {
@@ -38,11 +38,11 @@ function canonicalTeamId(raw: string): string {
  * /api/league/squad): prefers an explicit `?teamId=` query param over the
  * cookie. The client sends that param when viewing a shared link (`?team=`
  * on the page URL) that differs from the saved cookie, so those tabs follow
- * the link's team rather than whatever's saved -- see teamId's own module
+ * the link's team rather than whatever's saved — see teamId's own module
  * doc and AppShell.tsx's isViewingSharedLink.
  *
  * Never used by /api/transfers, which stays strictly cookie-scoped to the
- * owner (see that route's own guard) -- a query param must never be able to
+ * owner (see that route's own guard) — a query param must never be able to
  * write to this repo on someone else's behalf. */
 export function resolveTeamIdFromRequest(req: {
   nextUrl: { searchParams: URLSearchParams };
@@ -54,7 +54,7 @@ export function resolveTeamIdFromRequest(req: {
 }
 
 /** Client-side: read the cookie directly from `document.cookie` (no library
- * needed for one flat cookie). `null` means "no override set" -- the owner's
+ * needed for one flat cookie). `null` means "no override set" — the owner's
  * own team, same as the server-side default. */
 export function getClientTeamId(): string | null {
   if (typeof document === "undefined") return null;
@@ -80,7 +80,7 @@ export function setClientTeamId(teamId: string | null): void {
 const URL_TEAM_PARAM = "team";
 
 /** Client-side: the `?team=` on the current page URL, if any and valid.
- * `null` means no link-supplied team -- fall back to the cookie. */
+ * `null` means no link-supplied team — fall back to the cookie. */
 export function getUrlTeamId(): string | null {
   if (typeof window === "undefined") return null;
   const raw = new URLSearchParams(window.location.search).get(URL_TEAM_PARAM);

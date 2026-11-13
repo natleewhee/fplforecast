@@ -27,7 +27,7 @@ export function NextUpLines({ rows }: { rows: TrackerRow[] }) {
   if (!playing.length && !groups.length && !bonus.length) return null;
 
   return (
-    <div className="space-y-1 text-[11px] leading-snug" data-testid="next-up">
+    <div className="space-y-1 text-xs leading-snug" data-testid="next-up">
       {playing.length > 0 && (
         <p>
           <span className="font-semibold text-[var(--accent)]">Playing now</span>
@@ -60,7 +60,7 @@ export function NextUpLines({ rows }: { rows: TrackerRow[] }) {
 export function LiveFeed({ feed, showEmpty }: { feed: FeedItem[]; showEmpty: boolean }) {
   if (!feed.length) {
     return showEmpty ? (
-      <p className="mb-2 text-[10.5px] leading-snug text-ink-faint">
+      <p className="mb-2 text-xs leading-snug text-ink-faint">
         Goals, assists, cards and bonus appear here live while this page is open.
       </p>
     ) : null;

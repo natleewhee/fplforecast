@@ -50,7 +50,7 @@ export default function LiveTracker({
   // Told whenever matches go live or stop, so other cards can make way.
   onActive?: (active: boolean) => void;
   // Set only while viewing a shared link that differs from the saved
-  // cookie (AppShell's isViewingSharedLink) -- passed through explicitly
+  // cookie (AppShell's isViewingSharedLink) — passed through explicitly
   // so this tab follows the URL's team, not whatever's saved, per the
   // experience-roadmap plan's Phase 2 "Done when" list.
   teamId?: string | null;
@@ -146,7 +146,7 @@ export default function LiveTracker({
   );
 
   if (loading) return <TrackerSkeleton />;
-  // First load failed outright (no live payload at all) -- still show
+  // First load failed outright (no live payload at all) — still show
   // whatever we have (last result, and the deadline once a payload lands).
   if (!polls.cur || !view) {
     return error ? <LoadFailed error={error} online={online} onRetry={() => void tick()} /> : null;
@@ -155,7 +155,7 @@ export default function LiveTracker({
   const anyStarted = polls.cur.fixtures.some((f) => f.started);
   // Before any match kicks off there is nothing to *track* and par is
   // meaningless (KD6), and once the gameweek is data_checked (bonus applied,
-  // stats final) the tracker's job is done too (KTD7) -- but the tab used to
+  // stats final) the tracker's job is done too (KTD7) — but the tab used to
   // just go blank for that whole stretch (deadline day through kickoff, and
   // again once the gameweek wraps up). Show the idle recap/countdown instead
   // of nothing so the tab always has content, and hand the *planning* lead
@@ -193,7 +193,7 @@ function LoadFailed({ error, online, onRetry }: { error: string; online: boolean
       <button
         type="button"
         onClick={onRetry}
-        className="inline-flex h-11 shrink-0 items-center rounded-full border border-line px-3 text-[11px] text-ink-soft hover:border-border-strong"
+        className="inline-flex h-11 shrink-0 items-center rounded-full border border-line px-3 text-xs text-ink-soft hover:border-border-strong"
       >
         Retry
       </button>
@@ -268,7 +268,7 @@ function TrackerPanel({
             <span className="ml-2 text-ink-faint">final</span>
           )}
         </span>
-        <span className="text-[11px] text-ink-faint">
+        <span className="text-xs text-ink-faint">
           {fresh.level === "ok" ? fresh.text : `updated ${clockTime(lastOk)}`}
         </span>
       </div>
@@ -310,7 +310,7 @@ function TrackerPanel({
       </div>
 
       {!payload.dataChecked && view.rows.some((r) => r.subbedIn || r.subbedOut) && (
-        <p className="text-[11px] text-ink-faint" data-testid="autosub-note">
+        <p className="text-xs text-ink-faint" data-testid="autosub-note">
           Auto-subs shown here are provisional: FPL confirms them when the gameweek ends.
         </p>
       )}
@@ -324,7 +324,7 @@ function TrackerPanel({
         {view.lowConfidence && <span className="chip">low confidence</span>}
       </div>
 
-      <details className="text-[11px] text-ink-faint">
+      <details className="text-xs text-ink-faint">
         <summary className="min-h-11 cursor-pointer py-3 font-medium text-ink-soft hover:text-ink">
           How {view.estimatedRank ? "are the safety score and rank" : "is the safety score"} worked out?
         </summary>

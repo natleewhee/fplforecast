@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { sgDateTime } from "@/lib/time";
 import { REBUILD_TEXT, rebuildNow, type Rebuild } from "@/lib/transfersClient";
 
 const COOLDOWN_MS = 60_000;
@@ -28,7 +29,7 @@ export default function RebuildButton({ builtAt }: { builtAt?: string }) {
   };
 
   const built = builtAt ? new Date(builtAt) : null;
-  const builtText = built && !Number.isNaN(built.getTime()) ? built.toLocaleString([], { day: "numeric", month: "short", hour: "numeric", minute: "2-digit" }) : null;
+  const builtText = built && !Number.isNaN(built.getTime()) ? sgDateTime(builtAt) : null;
 
   return (
     <div className="space-y-1" data-testid="rebuild">
@@ -41,7 +42,7 @@ export default function RebuildButton({ builtAt }: { builtAt?: string }) {
         >
           {phase === "busy" ? "Starting…" : phase === "cooldown" ? "Rebuild requested" : "Rebuild now"}
         </button>
-        {builtText && <span className="text-[11px] text-ink-faint">Forecast built {builtText}</span>}
+        {builtText && <span className="text-xs text-ink-faint">Forecast built {builtText}</span>}
       </div>
       {(result || error) && (
         <p role="status" className={`text-xs ${error || result?.rebuild === "scheduled" ? "text-[var(--warn)]" : "text-ink-soft"}`}>

@@ -38,9 +38,34 @@ export function ageText(ms: number): string {
   return `${h}h ${m % 60}m ago`;
 }
 
-/** A local clock time like "04:19 PM", or an em dash when there is none. */
-export function clockTime(iso: string | null): string {
-  if (!iso) return "—";
+/* The one place the app formats a date or time. Everything is shown in
+ * Singapore Time (deadlines, kickoffs and build times are all read against it),
+ * 24-hour, en-GB, so every screen says "Sat 21:00" the same way. */
+const SG = "Asia/Singapore";
+const fmtDay = new Intl.DateTimeFormat("en-GB", { weekday: "short", timeZone: SG });
+const fmtTime = new Intl.DateTimeFormat("en-GB", { hour: "2-digit", minute: "2-digit", hourCycle: "h23", timeZone: SG });
+const fmtDate = new Intl.DateTimeFormat("en-GB", { day: "numeric", month: "short", timeZone: SG });
+
+function parsed(iso: string | null | undefined): Date | null {
+  if (!iso) return null;
   const d = new Date(iso);
-  return Number.isNaN(d.getTime()) ? "—" : d.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+  return Number.isNaN(d.getTime()) ? null : d;
+}
+
+/** "21:00" in SGT, or an em dash when there is no time. */
+export function clockTime(iso: string | null): string {
+  const d = parsed(iso);
+  return d ? fmtTime.format(d) : "—";
+}
+
+/** "Sat 21:00" in SGT (the caller adds "SGT" where it helps), or an em dash. */
+export function sgDayTime(iso: string | null): string {
+  const d = parsed(iso);
+  return d ? `${fmtDay.format(d)} ${fmtTime.format(d)}` : "—";
+}
+
+/** "13 Nov, 21:00 SGT", for when something was built, or an em dash. */
+export function sgDateTime(iso: string | null | undefined): string {
+  const d = parsed(iso);
+  return d ? `${fmtDate.format(d)}, ${fmtTime.format(d)} SGT` : "—";
 }

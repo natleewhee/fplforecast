@@ -42,7 +42,7 @@ export type LeagueSquadResponse = {
   managerName: string | null;
   gameweek: number;
   totalPoints: number; // effective (post-autosub) XI's actual pointsSoFar
-  totalXp: number; // same XI's pointsSoFar + remainingXp -- "where this GW is heading"
+  totalXp: number; // same XI's pointsSoFar + remainingXp — "where this GW is heading"
   chip: string | null;
   rows: LeagueSquadRow[];
 };
@@ -54,7 +54,7 @@ export type LeagueSquadResponse = {
  * something that makes sense pointed at someone else's team). "Current
  * points and xP", not "what would this app do with their squad". Reuses
  * the viewing manager's own pool component xP the same way /api/league's
- * own projectedXp column already does (poolLiveInputs) -- the pool
+ * own projectedXp column already does (poolLiveInputs) — the pool
  * projection is squad-agnostic, so it's valid for any entry's held
  * players, not just the viewer's. */
 export async function GET(request: NextRequest) {
@@ -125,7 +125,7 @@ export async function GET(request: NextRequest) {
     }));
 
     // The effective (post-autosub) XI, same definition as /api/league's own
-    // played/live/toPlay split -- see that route's own comment for why
+    // played/live/toPlay split — see that route's own comment for why
     // `!isBench` alone is wrong once a sub has fired, and wrong on Bench Boost.
     const inLineup = new Set(tracker.rows.filter((r) => r.inLineup).map((r) => r.id));
     const effectiveXi = rows.filter((r) => inLineup.has(r.id));

@@ -25,3 +25,16 @@ test("ageText and clockTime handle the edges", () => {
   assert.equal(clockTime("nonsense"), "—");
   assert.ok(clockTime("2026-10-17T12:00:00Z").length > 3);
 });
+
+test("one formatter: every time is SGT, 24-hour, en-GB", async () => {
+  const { sgDayTime, sgDateTime } = await import("../../src/lib/time.ts");
+  const { sgKickoff } = await import("../../src/lib/liveLabels.ts");
+  const iso = "2026-11-21T11:00:00Z"; // Sat 19:00 in Singapore
+  assert.equal(clockTime(iso), "19:00");
+  assert.equal(sgDayTime(iso), "Sat 19:00");
+  assert.equal(sgKickoff(iso), "Sat 19:00");
+  assert.equal(sgDateTime(iso), "21 Nov, 19:00 SGT");
+  assert.equal(sgDateTime("2026-11-21T16:30:00Z"), "22 Nov, 00:30 SGT"); // past midnight, no "24:30"
+  assert.equal(sgDayTime(null), "—");
+  assert.equal(sgDateTime(undefined), "—");
+});

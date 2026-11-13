@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { countdown } from "@/lib/time";
+import { countdown, sgDayTime } from "@/lib/time";
 
 /* A one-line reminder under the team bar, on every tab, while a deadline is
  * ahead: how long is left, when it is in Singapore time, and whether a transfer is
@@ -11,10 +11,7 @@ import { countdown } from "@/lib/time";
  * built statically. */
 
 function sgDeadline(iso: string): string {
-  const d = new Date(iso);
-  const day = d.toLocaleDateString("en-GB", { weekday: "short", timeZone: "Asia/Singapore" });
-  const time = d.toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit", timeZone: "Asia/Singapore" });
-  return `${day} ${time} SGT`;
+  return `${sgDayTime(iso)} SGT`;
 }
 
 export default function DeadlineBanner({
@@ -62,7 +59,7 @@ export default function DeadlineBanner({
       <span className="shrink-0 font-semibold" style={{ color: tone.color }}>
         GW{gameweek} deadline
         {tone.key !== "next" && (
-          <span className="ml-1 text-[10px] font-bold uppercase tracking-wide">{tone.key === "soon" ? "soon" : "today"}</span>
+          <span className="ml-1 text-xs font-bold uppercase tracking-wide">{tone.key === "soon" ? "soon" : "today"}</span>
         )}
       </span>
       <span className="shrink-0 font-mono font-semibold tabular-nums text-ink">{countdown(deadline, nowMs)}</span>

@@ -124,13 +124,13 @@ type FplLiveElement = {
   stats?: { total_points?: number; minutes?: number; goals_conceded?: number };
   // one entry per fixture (two for a double gameweek); FPL's own scoring
   // breakdown, already split into named categories with the points each
-  // contributed -- the source for the tracker's score breakdown.
+  // contributed — the source for the tracker's score breakdown.
   explain?: FplExplainEntry[];
 };
 export type FplLive = { elements: FplLiveElement[] };
 /** The final whistle has gone. FPL sets `finished_provisional` when the match
  * ends and `finished` only once bonus points are confirmed, often an hour or
- * more later -- and sends `finished: false` meanwhile, so `finished ??
+ * more later — and sends `finished: false` meanwhile, so `finished ??
  * finished_provisional` never falls through to the provisional flag and kept a
  * match that had ended reading as live. */
 export function isFixtureOver(f: { finished?: boolean; finished_provisional?: boolean } | undefined): boolean {
@@ -209,7 +209,7 @@ export function liveGameweek(bootstrap: FplBootstrap): number {
 }
 
 /** Per-component xP for whatever squad this payload is being built for, plus
- * the par-score inputs -- split out from ``Forecast`` so the same builder
+ * the par-score inputs — split out from ``Forecast`` so the same builder
  * works for a league entry that isn't "your" forecast (no par margin of its
  * own; ``componentXpByElement`` sourced from the pool instead of
  * ``squadComponents`` so it covers any player, not just your held 15). */
@@ -236,7 +236,7 @@ export function forecastLiveInputs(forecast: Forecast): LiveProjectionInputs {
 }
 
 /** Every pool player's target-gameweek component breakdown, keyed the same
- * way as ``squadComponents`` -- lets a league entry's arbitrary picks (not
+ * way as ``squadComponents`` — lets a league entry's arbitrary picks (not
  * just your own squad) get the same decay-based live projection. */
 export function poolLiveInputs(forecast: Forecast): LiveProjectionInputs {
   const componentXpByElement: Record<string, Record<string, number>> = {};
@@ -244,7 +244,7 @@ export function poolLiveInputs(forecast: Forecast): LiveProjectionInputs {
     if (p.components) componentXpByElement[String(p.id)] = p.components;
   }
   // A league entry's squad may include your own held players too (not in
-  // `pool` if one of them is unavailable) -- squadComponents fills that gap.
+  // `pool` if one of them is unavailable) — squadComponents fills that gap.
   for (const [id, components] of Object.entries(forecast.squadComponents ?? {})) {
     if (!(id in componentXpByElement)) componentXpByElement[id] = components;
   }
@@ -273,7 +273,7 @@ export function buildLivePayload(args: {
   const teamName = new Map(bootstrap.teams.map((t) => [t.id, t.short_name]));
   const gwFixtures = fixtures.filter((f) => f.event === gameweek);
 
-  // Fixtures per club, in kickoff order -- a double gameweek gives a club two.
+  // Fixtures per club, in kickoff order — a double gameweek gives a club two.
   const fixturesByTeam = new Map<number, FplFixture[]>();
   for (const f of [...gwFixtures].sort(
     (a, b) => Date.parse(a.kickoff_time ?? "") - Date.parse(b.kickoff_time ?? "") || 0,
@@ -354,7 +354,7 @@ export function buildLivePayload(args: {
       const oppId = home ? f.team_a : f.team_h;
       opponent = `${teamName.get(oppId) ?? "???"} (${home ? "H" : "A"})`;
       // Read the difficulty off this same gameweek's fixture rather than the
-      // latest forecast snapshot -- that snapshot can already be looking
+      // latest forecast snapshot — that snapshot can already be looking
       // ahead to next gameweek once it's been regenerated mid-gameweek,
       // which mismatched this FDR against the (correct) opponent above.
       fdrRating = (home ? f.team_h_difficulty : f.team_a_difficulty) ?? null;
@@ -541,7 +541,7 @@ export type EstimatedRank = {
 /** FPL doesn't publish the live population's score distribution, so this
  * projects off the manager's own personal calibration instead (see
  * `rankCalibration` / `RANK_CALIBRATION_MIN_GAMEWEEKS` in
- * scripts/compute_forecast.py) -- a coarse but real estimate, not a
+ * scripts/compute_forecast.py) — a coarse but real estimate, not a
  * guess: exp(intercept + slope*(live score - live average)). */
 function estimateRank(
   calibration: RankCalibration | null,
@@ -597,7 +597,7 @@ export function playerStatus(
   if (minutes === 0) return "playing";
   // FPL's `finished`/`finished_provisional` flags can lag the final whistle by
   // a poll or two while stats are checked. Minutes cannot legitimately sit at
-  // or past 90' for two separate polls without the match being over -- unlike
+  // or past 90' for two separate polls without the match being over — unlike
   // the mid-game plateau below, this needs no minimum poll gap, since the
   // routine ~60s tick cadence would otherwise never clear the (higher) gap
   // threshold used to rule out a false off-pitch read.

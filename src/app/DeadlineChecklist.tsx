@@ -5,7 +5,7 @@ import type { Forecast } from "@/lib/snapshots";
 import { chipChecklist } from "@/lib/chips";
 import { availabilityFlag, hasRiskData, risksForGameweek } from "@/lib/availability";
 import { NO_PRICE_DATA, priceRow } from "@/lib/priceWatch";
-import { countdown } from "@/lib/time";
+import { countdown, sgDateTime } from "@/lib/time";
 import { lineupFor, resolveSwaps, type PendingSwap } from "@/lib/squadView";
 
 type RowStatus = "ok" | "amber" | "red" | "info";
@@ -40,7 +40,7 @@ function ChecklistRow({
       />
       <div className="min-w-0 flex-1">
         <div className="text-xs font-medium text-ink">{label}</div>
-        {detail != null && <div className="text-[11px] text-ink-soft">{detail}</div>}
+        {detail != null && <div className="text-xs text-ink-soft">{detail}</div>}
         {children}
       </div>
     </div>
@@ -78,7 +78,7 @@ function RiskDetail({ risks }: { risks: Risk[] }) {
         aria-controls={open ? "checklist-risk-wording" : undefined}
         title={full.join(" ")}
         onClick={() => setOpen((o) => !o)}
-        className="relative -my-1 flex min-h-11 w-full items-center justify-between gap-2 text-left text-[11px] text-ink-soft"
+        className="relative -my-1 flex min-h-11 w-full items-center justify-between gap-2 text-left text-xs text-ink-soft"
       >
         <span className="min-w-0">{shortRisks(risks)}</span>
         <span className="shrink-0 text-ink-faint" aria-hidden>
@@ -86,7 +86,7 @@ function RiskDetail({ risks }: { risks: Risk[] }) {
         </span>
       </button>
       {open && (
-        <ul id="checklist-risk-wording" className="mb-1 space-y-0.5 text-[11px] text-ink-faint">
+        <ul id="checklist-risk-wording" className="mb-1 space-y-0.5 text-xs text-ink-faint">
           {full.map((l, i) => (
             <li key={`${i}-${l}`}>{l}</li>
           ))}
@@ -96,10 +96,10 @@ function RiskDetail({ risks }: { risks: Risk[] }) {
   );
 }
 
-/** The Squad tab's quick view before targetGameweek's deadline -- pulls together decisions otherwise spread
+/** The Squad tab's quick view before targetGameweek's deadline — pulls together decisions otherwise spread
  * across the Squad and Scenarios tabs (captain, injury risk, bench order,
  * whether to use a transfer, chips) into one glance. Reflects the last
- * daily forecast build, not real-time news -- see the "as of" line. */
+ * daily forecast build, not real-time news — see the "as of" line. */
 export default function DeadlineChecklist({
   forecast,
   liveSquad,
@@ -151,7 +151,7 @@ export default function DeadlineChecklist({
   // (that needs formation-legality checking, overkill for a planning aid):
   // for each doubtful starter, whether the bench's next outfield player
   // (bench[1], since bench[0] is always the GK per squad.ts's own rule) is
-  // also doubtful -- a reasonable proxy for "would the auto-sub also be a
+  // also doubtful — a reasonable proxy for "would the auto-sub also be a
   // doubt", not a guarantee of exactly who'd come on.
   const byId = new Map(forecast.squad.players.map((p) => [p.id, p]));
   const firstOutfieldSubId = forecast.squad.bench[1];
@@ -185,7 +185,7 @@ export default function DeadlineChecklist({
   const transferDetail = !topScenario
     ? "No transfer scenario available yet."
     : topScenario.transfersIn.length === 0
-      ? "Rolling your transfer is the best move this week -- no swap clears the gap."
+      ? "Rolling your transfer is the best move this week — no swap clears the gap."
       : `Best move: ${topScenario.transfersOut.map((p) => p.webName).join(", ")} → ${topScenario.transfersIn
           .map((p) => p.webName)
           .join(", ")} (${topScenario.netPoints >= 0 ? "+" : ""}${topScenario.netPoints.toFixed(1)} net pts)`;
@@ -208,11 +208,11 @@ export default function DeadlineChecklist({
     ? "No captain picked yet."
     : `${captainName}${viceName ? `, vice ${viceName}` : ""}${
         capMoved
-          ? " -- the app moved the armband for your transfers; the model re-picks at the next rebuild"
+          ? " — the app moved the armband for your transfers; the model re-picks at the next rebuild"
           : viceMoved
-            ? " -- vice adjusted for your transfers; the model re-picks at the next rebuild"
+            ? " — vice adjusted for your transfers; the model re-picks at the next rebuild"
             : edge
-              ? ` -- ${edge.label} (+${edge.points.toFixed(1)})`
+              ? ` — ${edge.label} (+${edge.points.toFixed(1)})`
               : ""
       }`;
 
@@ -257,7 +257,7 @@ export default function DeadlineChecklist({
           <ChecklistRow status="amber" label="Suspension / loan-ban risk (FPL)">
             <RiskDetail risks={riskList} />
             {!riskComplete && (
-              <div className="text-[10.5px] text-ink-faint">
+              <div className="text-xs text-ink-faint">
                 FPL risk data covers {riskCovered} of {forecast.squad.players.length} players.
               </div>
             )}
@@ -283,7 +283,7 @@ export default function DeadlineChecklist({
             className="flex min-h-11 w-full items-center gap-2 py-1.5 text-left"
           >
             <span className="h-2 w-2 shrink-0 rounded-full" style={{ background: DOT_COLOR.ok }} aria-hidden />
-            <span className="min-w-0 flex-1 text-[11px] text-ink-soft" data-testid="checklist-all-clear">
+            <span className="min-w-0 flex-1 text-xs text-ink-soft" data-testid="checklist-all-clear">
               <span className="font-medium text-ink">All clear:</span> {clear.map((c) => c.short).join(", ")}
             </span>
             <span className="shrink-0 text-ink-faint" aria-hidden>
@@ -300,8 +300,8 @@ export default function DeadlineChecklist({
         </div>
       )}
 
-      <p className="mt-2 text-[10px] text-ink-faint">
-        As of last night&rsquo;s build ({new Date(forecast.generatedAt).toLocaleString()}) -- not live news.
+      <p className="mt-2 text-xs text-ink-faint">
+        As of last night&rsquo;s build ({sgDateTime(forecast.generatedAt)}) — not live news.
       </p>
     </div>
   );

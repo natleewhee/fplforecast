@@ -17,6 +17,7 @@ import {
 import { Header, Module, Panel, Shell } from "./PageChrome";
 import Pitch from "./Pitch";
 import { PitchDataProvider } from "./pitch3d/Pitch3D";
+import { setPitchAmbient, setPitchView, usePitchAmbient, usePitchView, usePrefersReducedMotion } from "@/lib/pitchView";
 import type { PitchKits, PitchLooks } from "@/lib/appearance";
 import { usableLiveSquad, type LiveSquadFeed } from "@/lib/squadSync";
 import DeadlineChecklist from "./DeadlineChecklist";
@@ -40,7 +41,7 @@ import {
   forecastErrorMessage,
   isValidTeamIdInput,
 } from "@/lib/forecastErrors";
-import { STALE_AFTER_HOURS, describeAge, forecastAgeHours } from "@/lib/time";
+import { STALE_AFTER_HOURS, describeAge, forecastAgeHours, sgDateTime } from "@/lib/time";
 import CaptainShortlist from "./CaptainShortlist";
 import FixtureTicker from "./FixtureTicker";
 import type { PendingTransfer } from "@/lib/transfers";
@@ -103,6 +104,10 @@ function TeamMenu({
 }) {
   const [copied, setCopied] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  // The pitch settings live here, once, rather than beside every pitch.
+  const pitchView = usePitchView();
+  const passing = usePitchAmbient();
+  const reducedMotion = usePrefersReducedMotion();
   const menuRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
 
@@ -116,7 +121,7 @@ function TeamMenu({
         return;
       } catch {
         // user cancelled the share sheet, or the browser doesn't actually
-        // support it despite the feature check -- fall through to clipboard
+        // support it despite the feature check — fall through to clipboard
       }
     }
     try {
@@ -124,7 +129,7 @@ function TeamMenu({
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch {
-      // clipboard access denied -- nothing more to do silently; the address
+      // clipboard access denied — nothing more to do silently; the address
       // bar itself already reflects this URL, so it can be copied by hand
     }
   };
@@ -137,7 +142,7 @@ function TeamMenu({
 
   // Opening moves focus to the first item, so the keyboard lands inside the menu.
   useEffect(() => {
-    if (menuOpen) menuRef.current?.querySelector<HTMLElement>("[role=menuitem]")?.focus();
+    if (menuOpen) menuRef.current?.querySelector<HTMLElement>("[role^=menuitem]")?.focus();
   }, [menuOpen]);
 
   // A tap or focus anywhere outside the menu closes it.
@@ -161,7 +166,7 @@ function TeamMenu({
       closeMenu();
       return;
     }
-    const items = [...(menuRef.current?.querySelectorAll<HTMLElement>("[role=menuitem]") ?? [])];
+    const items = [...(menuRef.current?.querySelectorAll<HTMLElement>("[role^=menuitem]") ?? [])];
     const i = items.indexOf(document.activeElement as HTMLElement);
     if (e.key === "ArrowDown") {
       e.preventDefault();
@@ -211,7 +216,7 @@ function TeamMenu({
             id="team-menu"
             role="menu"
             aria-label="Team options"
-            className="absolute right-0 top-12 z-40 min-w-40 overflow-hidden rounded-xl border border-line bg-[var(--bg-2)] shadow-lg"
+            className="absolute right-0 top-12 z-40 min-w-48 overflow-hidden rounded-xl border border-line bg-[var(--bg-2)] shadow-lg"
           >
             <button
               type="button"
@@ -235,6 +240,34 @@ function TeamMenu({
             >
               Change team
             </button>
+            <div role="group" aria-label="Pitch view" className="border-t border-line">
+              {(["3d", "2d"] as const).map((v) => (
+                <button
+                  key={v}
+                  type="button"
+                  role="menuitemradio"
+                  aria-checked={pitchView === v}
+                  className={itemClass}
+                  onClick={() => setPitchView(v)}
+                >
+                  <span className="flex-1">{v === "3d" ? "3D pitch" : "2D pitch"}</span>
+                  {pitchView === v && <span aria-hidden="true" className="text-[var(--accent)]">✓</span>}
+                </button>
+              ))}
+              {pitchView === "3d" && !reducedMotion && (
+                <button
+                  type="button"
+                  role="menuitemcheckbox"
+                  aria-checked={passing}
+                  className={itemClass}
+                  title="The ball goes round the pitch while nobody is selected. Switch off to save battery."
+                  onClick={() => setPitchAmbient(!passing)}
+                >
+                  <span className="flex-1">Ball passing</span>
+                  <span className={passing ? "text-[var(--accent)]" : "text-ink-faint"}>{passing ? "On" : "Off"}</span>
+                </button>
+              )}
+            </div>
           </div>
         )}
       </div>
@@ -377,7 +410,7 @@ function SharedLinkBanner({
 
 /** Warns when the forecast is older than a daily rebuild should ever leave it:
  * the squad, scenarios and any saved transfers on screen are then out of date,
- * and nothing else in the app says so. "Now" is read after mount -- this page
+ * and nothing else in the app says so. "Now" is read after mount — this page
  * is built statically, so a server-side clock would be frozen at build time. */
 function StaleForecastBanner({ generatedAt }: { generatedAt: string }) {
   const [nowMs, setNowMs] = useState<number | null>(null);
@@ -395,7 +428,7 @@ function StaleForecastBanner({ generatedAt }: { generatedAt: string }) {
     >
       <span className="font-semibold text-[var(--warn)]">Forecast is {describeAge(hours)} old.</span>{" "}
       <span className="text-ink-soft">
-        Last rebuilt {new Date(generatedAt).toLocaleString()}. The daily rebuild may be failing, so your
+        Last rebuilt {sgDateTime(generatedAt)}. The daily rebuild may be failing, so your
         squad, scenarios and any saved transfers could be out of date.
       </span>
     </div>
@@ -403,7 +436,7 @@ function StaleForecastBanner({ generatedAt }: { generatedAt: string }) {
 }
 
 /** First-visit gate: shown whenever no team ID cookie exists yet, instead of
- * silently defaulting to this app's own team -- a visitor's dashboard should
+ * silently defaulting to this app's own team — a visitor's dashboard should
  * never look like it's showing their team when it's actually someone else's
  * (KTD-style "don't assume" per the vault's own working rules). */
 function TeamIdGate({
@@ -421,7 +454,7 @@ function TeamIdGate({
   const valid = isValidTeamIdInput(draft);
   return (
     <>
-      {/* Dimmed backdrop -- deliberately generic chrome, never this app's own
+      {/* Dimmed backdrop — deliberately generic chrome, never this app's own
        * squad, so a first-time visitor never sees "someone's" data behind
        * the prompt and mistakes it for a preview of their own. */}
       <div aria-hidden className="pointer-events-none select-none blur-[2px] opacity-40">
@@ -511,12 +544,12 @@ export default function AppShell({
   pitchKits?: PitchKits;
   footer: ReactNode;
 }) {
-  // `null` means "no team ID cookie yet" -- shown as a prompt, never
+  // `null` means "no team ID cookie yet" — shown as a prompt, never
   // defaulted to this app's own team, so a stranger's first visit never
   // looks like it's showing them their own squad when it isn't.
   const [teamId, setTeamId] = useState<string | null>(null);
   // Mirrors the *saved* cookie (independent of `teamId`, which is whatever's
-  // currently being viewed) -- lets a shared `?team=` link be viewed without
+  // currently being viewed) — lets a shared `?team=` link be viewed without
   // silently overwriting the browser's own saved team.
   const [savedTeamId, setSavedTeamId] = useState<string | null>(null);
   const [forecast, setForecast] = useState<Forecast | null>(null);
@@ -538,7 +571,7 @@ export default function AppShell({
   // always saves immediately, same as before this phase).
   const isViewingSharedLink = teamId != null && teamId !== savedTeamId;
   // Pending-transfer display is an owner-only convenience (it reads this
-  // app's own committed overrides) -- hidden rather than shown wrong for a
+  // app's own committed overrides) — hidden rather than shown wrong for a
   // guest lookup. Chip status is per team and rides in the forecast itself.
   const overrides = isGuest ? null : initialOverrides;
 
@@ -572,7 +605,7 @@ export default function AppShell({
     setSlow(false);
     const slowTimer = setTimeout(() => setSlow(true), SLOW_LOAD_AFTER_MS);
     // api/forecast.py fits the same model the daily cron does, live, on a
-    // cold container -- measured ~8s+ for that alone, before the FPL API
+    // cold container — measured ~8s+ for that alone, before the FPL API
     // round trips. 45s gives real cold starts room while still surfacing a
     // clear message instead of leaving "Loading…" up forever if something
     // is actually stuck (a hung Vercel Function, a dropped connection).

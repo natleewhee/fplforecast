@@ -44,7 +44,7 @@ function RankHeader({ league }: { league: NonNullable<LeaguesResponse["league"]>
         <button
           type="button"
           onClick={scrollToMe}
-          className="inline-flex h-11 items-center rounded bg-white/[0.06] px-2 text-[11px] font-medium text-ink-soft hover:bg-white/[0.1]"
+          className="inline-flex h-11 items-center rounded bg-white/[0.06] px-2 text-xs font-medium text-ink-soft hover:bg-white/[0.1]"
         >
           Jump to my position ↓
         </button>
@@ -69,13 +69,13 @@ function LeagueTable({
     <section className="space-y-2">
       <div className="flex flex-wrap items-center justify-between gap-2 px-1">
         <h2 className="eyebrow">{league.leagueName}</h2>
-        <span className="text-[11px] text-ink-faint">GW{gameweek}</span>
+        <span className="text-xs text-ink-faint">GW{gameweek}</span>
       </div>
       <RankHeader league={league} />
-      {/* Fixed height with its own scroll, not the page's -- a 20-manager
+      {/* Fixed height with its own scroll, not the page's — a 20-manager
          league shouldn't push everything below it half a screen down.
          table-fixed + explicit column widths (no horizontal scroll) so the
-         5 columns always fit a phone width -- captain/chip/live-play all
+         5 columns always fit a phone width — captain/chip/live-play all
          fold into the Manager cell as extra lines rather than becoming
          their own columns, which is what pushed this past the viewport
          width before. */}
@@ -102,7 +102,7 @@ function LeagueTable({
               const moved = e.lastRank - e.rank;
               const isMe = e.entryId === league.myEntryId;
               // Driven by the server's explicit `appendedEntryId`, not a gap
-              // between consecutive ranks -- FPL gives tied entries the same
+              // between consecutive ranks — FPL gives tied entries the same
               // `rank`, so a rank-number gap isn't a reliable "was this
               // appended after the top 10" signal.
               const showDivider = i > 0 && e.entryId === league.appendedEntryId;
@@ -110,7 +110,7 @@ function LeagueTable({
                 <Fragment key={e.entryId}>
                   {showDivider && (
                     <tr key={`divider-${e.entryId}`} aria-hidden="true">
-                      <td colSpan={5} className="px-1.5 py-1 text-center text-[10px] text-ink-faint sm:px-3">
+                      <td colSpan={5} className="px-1.5 py-1 text-center text-xs text-ink-faint sm:px-3">
                         ⋯
                       </td>
                     </tr>
@@ -125,7 +125,7 @@ function LeagueTable({
                       <span className="font-mono tabular-nums">{e.rank}</span>
                       {moved !== 0 && (
                         <span
-                          className={`ml-0.5 font-mono text-[9px] ${moved > 0 ? "text-[var(--accent)]" : "text-[var(--danger)]"}`}
+                          className={`ml-0.5 font-mono text-xs ${moved > 0 ? "text-[var(--accent)]" : "text-[var(--danger)]"}`}
                         >
                           {moved > 0 ? "▲" : "▼"}
                           {Math.abs(moved)}
@@ -143,19 +143,19 @@ function LeagueTable({
                       <span className="flex w-full items-center gap-1.5 truncate font-medium text-ink group-hover:text-[var(--accent)]">
                         {e.entryName}
                         {isMe && (
-                          <span className="rounded bg-[var(--accent)] px-1 py-0.5 text-[9px] font-bold text-[var(--bg-0)]">
+                          <span className="rounded bg-[var(--accent)] px-1 py-0.5 text-xs font-bold text-[var(--bg-0)]">
                             YOU
                           </span>
                         )}
                         {e.chip && (
-                          <span className="rounded bg-[var(--accent)]/15 px-1 py-0.5 text-[9px] font-bold text-[var(--accent)]">
+                          <span className="rounded bg-[var(--accent)]/15 px-1 py-0.5 text-xs font-bold text-[var(--accent)]">
                             {e.chip}
                           </span>
                         )}
                       </span>
-                      <span className="block truncate text-[10px] text-ink-faint">{e.playerName}</span>
+                      <span className="block truncate text-xs text-ink-faint">{e.playerName}</span>
                       {(e.captainName || e.playersLive != null) && (
-                        <span className="block truncate text-[10px] text-ink-faint">
+                        <span className="block truncate text-xs text-ink-faint">
                           {e.captainName && <>C: {e.captainName}</>}
                           {e.captainName && e.playersLive != null && " · "}
                           <LiveCell entry={e} />
@@ -183,13 +183,13 @@ function LeagueTable({
   );
 }
 
-/** One private mini-league at a time -- picked from a dropdown of every
+/** One private mini-league at a time — picked from a dropdown of every
  * league the manager is in (system-wide leagues like Overall or a country
  * league are excluded server-side, since they have too many entries for a
  * per-entry-picks table to be meaningful). Selection is remembered across
  * visits via localStorage. */
-/** Matches TrackerSkeleton's (LiveTracker.tsx) treatment -- same shimmer
- * bars, same panel/rise shell -- so every "fetching from the FPL API"
+/** Matches TrackerSkeleton's (LiveTracker.tsx) treatment — same shimmer
+ * bars, same panel/rise shell — so every "fetching from the FPL API"
  * moment in the app reads as one consistent loading language rather than
  * two different ones. */
 function LeaguesSkeleton() {
@@ -205,7 +205,7 @@ function LeaguesSkeleton() {
   );
 }
 
-/** A read-only look at another manager's current squad -- their picks plus
+/** A read-only look at another manager's current squad — their picks plus
  * this app's own projections, reusing the same on-demand endpoint the "view
  * any team" feature uses. No scenarios/optimizer/transfer form: those are
  * squad-*planning* tools for whoever's actually holding the squad, not
@@ -229,12 +229,12 @@ function ManagerSquadPreview({
 
   useEffect(() => {
     // The parent keys this component by entryId, so a manager switch is a
-    // fresh mount (state already starts at null) -- no reset needed here.
+    // fresh mount (state already starts at null) — no reset needed here.
     // `attempt` only changes via the Retry button below.
     let cancelled = false;
     const controller = new AbortController();
     // Live points/status for an arbitrary entry is a couple of FPL API
-    // round trips, not a model fit -- fast in practice, but still guarded
+    // round trips, not a model fit — fast in practice, but still guarded
     // the same way as the (much slower) forecast lookup so a dropped
     // connection or FPL-side slowness never leaves this skeleton spinning
     // forever with nothing to show for it.
@@ -251,8 +251,8 @@ function ManagerSquadPreview({
         } catch {
           throw new Error(
             res.ok
-              ? "Got an unreadable response -- try again in a moment."
-              : `Server error (HTTP ${res.status}) -- try again in a moment.`,
+              ? "Got an unreadable response — try again in a moment."
+              : `Server error (HTTP ${res.status}) — try again in a moment.`,
           );
         }
         if (!res.ok) throw new Error((json as { error?: string }).error || `HTTP ${res.status}`);
@@ -268,9 +268,9 @@ function ManagerSquadPreview({
         const isNetworkError = err instanceof TypeError;
         setError(
           isAbort
-            ? "Timed out -- the model's taking too long, try again."
+            ? "Timed out — the model's taking too long, try again."
             : isNetworkError
-              ? "Network error -- the connection dropped before a response came back. Try again."
+              ? "Network error — the connection dropped before a response came back. Try again."
               : (err as Error).message,
         );
       }
@@ -287,7 +287,7 @@ function ManagerSquadPreview({
     <div className="panel rise space-y-3 p-3">
       <div className="flex items-center justify-between gap-2">
         <h3 className="eyebrow truncate">{name}&rsquo;s squad</h3>
-        {/* h-11 (44px, adapt.md's minimum touch target -- see Carousel.tsx's
+        {/* h-11 (44px, adapt.md's minimum touch target — see Carousel.tsx's
          * own comment) with the visible pill kept small via padding, not
          * button height. */}
         <div className="flex shrink-0 gap-2">
@@ -295,7 +295,7 @@ function ManagerSquadPreview({
             <button
               type="button"
               onClick={onDuel}
-              className="inline-flex h-11 items-center gap-1.5 rounded-full bg-[var(--accent)] px-3 text-[11px] font-bold text-[var(--bg-0)]"
+              className="inline-flex h-11 items-center gap-1.5 rounded-full bg-[var(--accent)] px-3 text-xs font-bold text-[var(--bg-0)]"
             >
               <SwordsIcon /> Duel
             </button>
@@ -303,7 +303,7 @@ function ManagerSquadPreview({
           <button
             type="button"
             onClick={onClose}
-            className="inline-flex h-11 items-center rounded-full border border-line px-3 text-[11px] text-ink-soft hover:border-border-strong"
+            className="inline-flex h-11 items-center rounded-full border border-line px-3 text-xs text-ink-soft hover:border-border-strong"
           >
             Close
           </button>
@@ -318,7 +318,7 @@ function ManagerSquadPreview({
               setError(null);
               setAttempt((a) => a + 1);
             }}
-            className="inline-flex h-11 shrink-0 items-center rounded-full border border-line px-3 text-[11px] text-ink-soft hover:border-border-strong"
+            className="inline-flex h-11 shrink-0 items-center rounded-full border border-line px-3 text-xs text-ink-soft hover:border-border-strong"
           >
             Retry
           </button>
@@ -334,6 +334,14 @@ function ManagerSquadPreview({
       {squad && <LiveSquadPitch data={squad} />}
     </div>
   );
+}
+
+/** Plain words for a failed /api/league call: what happened and whether retrying helps. */
+export function leaguesErrorText(status: number): string {
+  if (status === 404) return "FPL couldn't find this team's leagues. Check the team ID.";
+  if (status === 429) return "FPL is rate-limiting requests right now. Wait a minute, then try again.";
+  if (status === 503 || status === 502 || status === 504) return "FPL isn't responding right now (it's often updating around deadlines).";
+  return "Something went wrong on our side.";
 }
 
 export default function LeaguesPage({ teamId }: { teamId?: string | null } = {}) {
@@ -367,19 +375,20 @@ export default function LeaguesPage({ teamId }: { teamId?: string | null } = {})
       if (teamId) params.set("teamId", teamId);
       const qs = params.toString() ? `?${params.toString()}` : "";
       const res = await fetch(`/api/league${qs}`, { cache: "no-store" });
-      const json = await res.json();
-      if (!res.ok) throw new Error(json.error || `HTTP ${res.status}`);
+      const json = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(leaguesErrorText(res.status));
       if (selectedIdRef.current !== requestedId) return; // superseded by a newer selection
       setData(json as LeaguesResponse);
       setError(null);
     } catch (err) {
       if (selectedIdRef.current !== requestedId) return;
-      setError((err as Error).message);
+      // a TypeError is the browser never reaching the server (offline, dropped)
+      setError(err instanceof TypeError ? "You look to be offline, or the connection dropped." : (err as Error).message);
     } finally {
       if (selectedIdRef.current === requestedId) setLoading(false);
     }
     // selectedId isn't read in the body (selectedIdRef is), but it must stay
-    // a dependency so a new `tick` is created on selection change -- that's
+    // a dependency so a new `tick` is created on selection change — that's
     // what makes the polling effect below (keyed on `tick`) restart the
     // interval and fire an immediate fetch for the new league.
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -405,7 +414,22 @@ export default function LeaguesPage({ teamId }: { teamId?: string | null } = {})
   }
   if (error) {
     return (
-      <div className="panel p-3 text-xs text-[var(--danger)]">Leagues unavailable: {error}</div>
+      <div className="panel space-y-2 p-3 text-xs" role="alert" data-testid="leagues-error">
+        <p className="text-ink-soft">
+          <span className="font-semibold text-[var(--danger)]">Couldn&rsquo;t load your leagues.</span> {error}
+        </p>
+        <button
+          type="button"
+          className="chip min-h-[44px] px-4"
+          onClick={() => {
+            setError(null);
+            setLoading(true);
+            void tick();
+          }}
+        >
+          Try again
+        </button>
+      </div>
     );
   }
   if (!data) {
@@ -473,9 +497,9 @@ export default function LeaguesPage({ teamId }: { teamId?: string | null } = {})
         />
       )}
       {data.league && (
-        <p className="px-1 text-[11px] text-ink-faint">
+        <p className="px-1 text-xs text-ink-faint">
           Live xP is this app&rsquo;s own projection (actual points so far + decayed expected points
-          for the rest of the gameweek), not FPL&rsquo;s -- it can read slightly off for an entry
+          for the rest of the gameweek), not FPL&rsquo;s — it can read slightly off for an entry
           playing a chip this gameweek. Captain shown is who they picked, not who ends up with the
           armband if their captain doesn&rsquo;t play.
         </p>

@@ -4,12 +4,12 @@ import { useEffect, useRef, useState } from "react";
 
 export type DropdownOption<T extends string | number> = { value: T; label: string };
 
-/** A themed stand-in for a native `<select>` -- the browser's own dropdown
+/** A themed stand-in for a native `<select>` — the browser's own dropdown
  * chrome (system font, square corners, native arrow) is the one control in
  * this app that doesn't pick up the dark HUD styling everything else does,
  * and reads as an unfinished/default web form next to the rest of the UI.
  * This renders the trigger and menu as ordinary HTML (a button + a `.panel`
- * list), so it's just CSS -- no popover/portal library. */
+ * list), so it's just CSS — no popover/portal library. */
 export function Dropdown<T extends string | number>({
   value,
   options,
@@ -25,7 +25,7 @@ export function Dropdown<T extends string | number>({
   const rootRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
 
-  // Closing unmounts whichever option `<li>` button was focused -- without
+  // Closing unmounts whichever option `<li>` button was focused — without
   // this, a keyboard user's focus falls off the DOM entirely (back to
   // `<body>`) instead of landing back on the trigger, every time.
   const close = () => {
@@ -65,7 +65,7 @@ export function Dropdown<T extends string | number>({
           {current?.label ?? placeholder}
         </span>
         <span
-          className={`shrink-0 text-[10px] text-ink-faint transition-transform duration-150 ${open ? "rotate-180" : ""}`}
+          className={`shrink-0 text-xs text-ink-faint transition-transform duration-150 ${open ? "rotate-180" : ""}`}
         >
           ▾
         </span>

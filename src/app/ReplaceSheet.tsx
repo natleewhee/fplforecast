@@ -110,7 +110,7 @@ export default function ReplaceSheet({
     <div>
       <p className="eyebrow">Replace · {out.position}</p>
       <h3 className="text-lg font-semibold text-ink">{out.webName}</h3>
-      <p className="text-[11px] text-ink-soft">
+      <p className="text-xs text-ink-soft">
         Sells for about £{(outHeld?.sellPrice ?? 0).toFixed(1)}m · bank £{bank.toFixed(1)}m
       </p>
     </div>
@@ -163,7 +163,7 @@ export default function ReplaceSheet({
             <span className="text-ink-soft line-through">{out.webName}</span>
             <span className="px-2 text-ink-faint">{"→"}</span>
             <span className="font-semibold text-ink">{chosen.webName}</span>
-            <div className="mt-1 text-[11px] text-ink-soft">
+            <div className="mt-1 text-xs text-ink-soft">
               {chosen.team} · £{chosen.price.toFixed(1)}m · £{left.toFixed(1)}m left ·{" "}
               <span className={xp - outXp >= 0 ? "text-[var(--accent)]" : "text-[var(--danger)]"}>
                 {fmt(xp - outXp)} xP over {horizon === 1 ? "this GW" : `${horizon} GWs`}
@@ -204,7 +204,7 @@ export default function ReplaceSheet({
             type="button"
             aria-pressed={horizon === h.value}
             onClick={() => setHorizon(h.value)}
-            className={`h-8 rounded-full border px-3 text-[11px] font-semibold transition-colors ${
+            className={`h-8 rounded-full border px-3 text-xs font-semibold transition-colors ${
               horizon === h.value
                 ? "border-[var(--accent)] bg-[color-mix(in_srgb,var(--accent)_14%,transparent)] text-[var(--accent)]"
                 : "border-line text-ink-soft hover:border-border-strong"
@@ -237,7 +237,7 @@ export default function ReplaceSheet({
                       <span className="h-1.5 w-1.5 rounded-full" style={{ background: doubt.color }} title={doubt.label} />
                     )}
                   </span>
-                  <span className="block text-[11px] text-ink-soft">
+                  <span className="block text-xs text-ink-soft">
                     {o.player.team} · £{o.player.price.toFixed(1)}m · £{o.left.toFixed(1)}m left
                   </span>
                   <FormBars points={o.player.recentPoints} />
@@ -245,7 +245,7 @@ export default function ReplaceSheet({
                 <span className="shrink-0 text-right">
                   <span className="block font-mono text-sm font-bold text-ink">{o.xp.toFixed(1)}</span>
                   <span
-                    className={`block font-mono text-[11px] ${o.delta >= 0 ? "text-[var(--accent)]" : "text-[var(--danger)]"}`}
+                    className={`block font-mono text-xs ${o.delta >= 0 ? "text-[var(--accent)]" : "text-[var(--danger)]"}`}
                   >
                     {fmt(o.delta)}
                   </span>
@@ -261,7 +261,7 @@ export default function ReplaceSheet({
           </li>
         )}
       </ul>
-      <p className="mt-2 text-[10.5px] leading-snug text-ink-faint">
+      <p className="mt-2 text-xs leading-snug text-ink-faint">
         Ranked by the model&rsquo;s expected points; healthy players only. xP is the player&rsquo;s own, with the gain
         over {out.webName} underneath.
       </p>

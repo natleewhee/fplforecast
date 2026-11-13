@@ -100,7 +100,7 @@ export type TimingPick<T> = { pick: T; seesAllOfWindow: boolean; lastGwSeen: num
 /** Best gameweek for a hold-the-squad chip (Bench Boost / Triple Captain),
  * restricted to gameweeks at or before the chip window's last gameweek.
  * `seesAllOfWindow` is false when the window runs past the last forecast
- * gameweek -- the forecast only looks a few GWs ahead, so a better week may
+ * gameweek — the forecast only looks a few GWs ahead, so a better week may
  * come later. Returns null when no forecast gameweek is inside the window. */
 export function bestWithinWindow<T extends { gameweek: number }>(
   ranked: T[],

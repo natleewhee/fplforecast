@@ -60,7 +60,7 @@ async function triggerRebuild(): Promise<{ rebuild: Rebuild; hint?: string }> {
 
 export async function POST(req: NextRequest) {
   // This route writes straight to this repo (a git commit + redeploy), so
-  // it needs the owner key -- see ownerAuth.ts.
+  // it needs the owner key — see ownerAuth.ts.
   if (!isOwnerRequest(req)) return NextResponse.json(LOCKED_BODY, { status: 401 });
   try {
     const body = await req.json();

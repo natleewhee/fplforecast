@@ -37,7 +37,7 @@ export default function Home() {
   }
 
   const footer = (
-    <p className="pt-2 text-center font-mono text-[11px] text-ink-faint">
+    <p className="pt-2 text-center font-mono text-xs text-ink-faint">
       <span className="text-[var(--accent)] opacity-60">{"// "}</span>
       snapshot {bootstrap.date}
       {fixturesDate && ` · fixtures ${fixturesDate}`}
@@ -47,7 +47,7 @@ export default function Home() {
 
   if (forecast && forecast.squad && forecast.squad.startingXi) {
     // The static shell renders this app's own team instantly for everyone
-    // (edge-cached, `force-static` above) -- AppShell is a client component
+    // (edge-cached, `force-static` above) — AppShell is a client component
     // that, after mount, checks for a different team ID a visitor picked on
     // a previous visit and swaps in an on-demand forecast for it. That keeps
     // this page's own hosting characteristics (and everyone's default
@@ -85,7 +85,7 @@ export default function Home() {
           </Panel>
 
           <Panel className="!p-0 overflow-hidden">
-            {/* table-fixed + colgroup, same as the Leagues table -- an
+            {/* table-fixed + colgroup, same as the Leagues table — an
                unconstrained table can grow past the viewport on a long
                player name with no way to scroll to see it. */}
             <table className="w-full table-fixed text-sm">

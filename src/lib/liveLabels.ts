@@ -1,3 +1,4 @@
+import { sgDayTime } from "@/lib/time";
 import type { BreakdownItem } from "@/lib/liveBlend";
 
 // FPL's own `explain` identifiers -> a short human label for the breakdown.
@@ -38,18 +39,7 @@ export function visibleBreakdown(breakdown: BreakdownItem[]): BreakdownItem[] {
 }
 
 /** Kickoff day + time in Singapore Time, e.g. "Sat 21:00" (the caller says SGT). */
-export function sgKickoff(iso: string | null): string {
-  if (!iso) return "—";
-  const d = new Date(iso);
-  if (Number.isNaN(d.getTime())) return "—";
-  const day = d.toLocaleDateString("en-GB", { weekday: "short", timeZone: "Asia/Singapore" });
-  const time = d.toLocaleTimeString("en-GB", {
-    hour: "2-digit",
-    minute: "2-digit",
-    timeZone: "Asia/Singapore",
-  });
-  return `${day} ${time}`;
-}
+export const sgKickoff = sgDayTime;
 
 /** "MCI (H)" -> { team: "MCI", home: true }; null when there is no fixture. */
 export function parseOpponent(opponent: string | null): { team: string; home: boolean } | null {

@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 
 /** Shared chrome used by both the server-rendered fallback states in
  * page.tsx (no data yet / no forecast yet) and AppShell.tsx's client-side
- * "ready" view -- split out so neither has to duplicate it or import from
+ * "ready" view — split out so neither has to duplicate it or import from
  * the other. */
 
 const POSITION_COLOR: Record<string, string> = {
@@ -15,7 +15,7 @@ const POSITION_COLOR: Record<string, string> = {
 export function PositionBadge({ position }: { position: string }) {
   return (
     <span
-      className={`inline-block w-9 shrink-0 rounded-md py-0.5 text-center text-[10px] font-bold tracking-wide text-black/85 ${
+      className={`inline-block w-9 shrink-0 rounded-md py-0.5 text-center text-xs font-bold tracking-wide text-black/85 ${
         POSITION_COLOR[position] ?? "bg-ink-soft"
       }`}
     >
@@ -64,7 +64,7 @@ export function Header({ subtitle, actions }: { subtitle: string; actions?: Reac
             <div className="font-display text-[22px] font-extrabold leading-none tracking-[0.01em] text-ink">
               Gaffer<span className="text-[var(--accent)]">FPL</span>
             </div>
-            <div className="mt-0.5 text-[10px] tracking-wide text-ink-faint">{subtitle}</div>
+            <div className="mt-0.5 text-xs tracking-wide text-ink-faint">{subtitle}</div>
           </div>
         </div>
         <span className="hidden h-px flex-1 bg-gradient-to-r from-transparent via-[var(--border-strong)] to-transparent sm:block" />

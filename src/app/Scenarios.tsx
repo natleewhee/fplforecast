@@ -20,7 +20,7 @@ import { bestWithinWindow, chipState, type ChipState } from "@/lib/chips";
 import { PitchScene } from "./PitchScene";
 import { FormBars, Halo, meanFdr } from "./Shirt";
 import { PlayerFace } from "./PlayerFace";
-import Pitch3D, { ViewSwitch, type Pitch3DPlayer } from "./pitch3d/Pitch3D";
+import Pitch3D, { type Pitch3DPlayer } from "./pitch3d/Pitch3D";
 import { usePitchView } from "@/lib/pitchView";
 import { ArmbandBadge } from "./tokenParts";
 
@@ -32,12 +32,12 @@ function fmtNet(n: number) {
   return `${n >= 0 ? "+" : ""}${n.toFixed(1)}`;
 }
 
-/** Compact shirt token for a pitch-style XI/bench display -- a lighter
+/** Compact shirt token for a pitch-style XI/bench display — a lighter
  * cousin of Pitch.tsx's PlayerToken, since scenario players don't carry the
  * full per-GW breakdown/floor-ceiling data that component expects.
  * `weekIndex` picks which entry of the player's perGameweek/opponents arrays
  * (both aligned to the scenario's horizon, offset 0 = its first gameweek) to
- * show -- lets a multi-week scenario (Wildcard) show any week's number and
+ * show — lets a multi-week scenario (Wildcard) show any week's number and
  * fixture, not just the first. */
 function ShirtToken({
   player,
@@ -72,7 +72,7 @@ function ShirtToken({
         />
         {isCaptain && <ArmbandBadge role="captain" />}
       </div>
-      <span className="mt-1 max-w-full truncate text-[11px] font-semibold text-ink [text-shadow:0_1px_3px_rgba(0,0,0,0.85)]">
+      <span className="mt-1 max-w-full truncate text-xs font-semibold text-ink [text-shadow:0_1px_3px_rgba(0,0,0,0.85)]">
         {player.webName}
       </span>
       <FormBars points={player.recentPoints} />
@@ -81,7 +81,7 @@ function ShirtToken({
   );
 }
 
-/** Zip transfersOut/transfersIn into 1:1 swaps -- squad composition (2 GKP/5
+/** Zip transfersOut/transfersIn into 1:1 swaps — squad composition (2 GKP/5
  * DEF/5 MID/3 FWD) stays fixed across any transfer, so grouping by position
  * always yields equal-length in/out lists per position. Sorted by price
  * (desc) within a position so the priciest swap leads. */
@@ -125,7 +125,7 @@ function SwapPlayer({ player, direction }: { player: ScenarioPlayerRef; directio
         {player.webName ?? "?"}
       </span>
       {player.price != null && (
-        <span className="font-mono text-[10px] tabular-nums text-ink-faint">
+        <span className="font-mono text-xs tabular-nums text-ink-faint">
           £{player.price.toFixed(1)}
         </span>
       )}
@@ -155,7 +155,7 @@ function TransferPairs({
   );
 }
 
-/** The pitch + bench view for one gameweek of a squad -- shared by the
+/** The pitch + bench view for one gameweek of a squad — shared by the
  * chip cards, the "show squad for these GWs" disclosure on a transfer
  * scenario, and the multi-week plan timeline. `weekIndex` is the absolute
  * offset from the forecast's own first gameweek (0 = forecastGw), which is
@@ -251,7 +251,7 @@ function WeeklyXi({
     <div className="space-y-3">
       {weeks.length > 1 && (
         <div className="flex flex-wrap items-center justify-between gap-2">
-          {/* overflow-x-auto, not flex-wrap, on the segment itself -- a long
+          {/* overflow-x-auto, not flex-wrap, on the segment itself — a long
              horizon (Wildcard's 7 GW) fits more GW buttons than a phone is
              wide; scrolling the pill row keeps it a single line instead of
              wrapping into two, or pushing the page wider. */}
@@ -367,11 +367,11 @@ function ChipCard({
         <h3 className="font-mono text-[12px] font-bold tracking-wide text-ink">{title}</h3>
         <div className="text-right">
           <div className="stat text-lg leading-none">{scenario.netPoints.toFixed(1)}</div>
-          <div className="text-[11px] text-ink-faint">
+          <div className="text-xs text-ink-faint">
             total over {scenario.horizonGws} GW{scenario.horizonGws > 1 ? "s" : ""}
           </div>
           {gain != null && (
-            <div className={`text-[11px] ${gain >= 0 ? "text-[var(--accent)]" : "text-[var(--danger)]"}`}>
+            <div className={`text-xs ${gain >= 0 ? "text-[var(--accent)]" : "text-[var(--danger)]"}`}>
               {fmtNet(gain)} vs current squad
             </div>
           )}
@@ -403,7 +403,7 @@ function ChipCard({
 type LockState = "keep" | "remove";
 
 /** Force-keep/force-remove a squad player, then re-solve live via
- * /api/solve.py -- the one thing that can't be precomputed at build time,
+ * /api/solve.py — the one thing that can't be precomputed at build time,
  * since a pick is one of 15 players x keep/remove and there's no bounding
  * that combinatorially. Everything else on this page is static JSON; this
  * panel is the sole live network call. */
@@ -485,13 +485,13 @@ function ForceLockPanel({
           className="flex min-h-11 w-full items-center justify-between gap-2 text-left"
         >
           <span className="eyebrow">Pin players ({locks.size})</span>
-          <span className="text-[11px] text-ink-faint">
+          <span className="text-xs text-ink-faint">
             Force keep / remove <span aria-hidden>{open ? "▾" : "▸"}</span>
           </span>
         </button>
       </h3>
       <div id="force-lock-body" hidden={!open} className="space-y-3">
-      <p className="text-[11px] text-ink-faint">Tap a player: keep -&gt; remove -&gt; clear</p>
+      <p className="text-xs text-ink-faint">Tap a player: keep -&gt; remove -&gt; clear</p>
       <div className="flex flex-wrap gap-1.5">
         {squad.map((p) => {
           const lock = locks.get(p.id);
@@ -579,10 +579,10 @@ function PlanWeekRow({
             {nTransfers === 0 ? "Hold" : `${nTransfers} transfer${nTransfers > 1 ? "s" : ""}`}
           </span>
           {week.hitCost > 0 && (
-            <span className="text-[11px] text-[var(--danger)]">−{week.hitCost}</span>
+            <span className="text-xs text-[var(--danger)]">−{week.hitCost}</span>
           )}
         </div>
-        <div className="flex items-center gap-2 text-[11px] text-ink-faint">
+        <div className="flex items-center gap-2 text-xs text-ink-faint">
           <span>{week.ftBefore} FT → {week.ftAfter} FT</span>
           <span className="font-mono text-xs font-semibold text-[var(--accent)]">
             {week.weekXp.toFixed(1)}
@@ -611,7 +611,7 @@ function PlanWeekRow({
 /** A week-by-week transfer plan, letting FT get spent unevenly across the
  * window (e.g. 1 transfer this week, bank the rest, 2 next week) rather
  * than the single up-front decision the horizon toggle above models. Rows
- * collapse by default -- 5 weeks of full pitches at once would be a lot of
+ * collapse by default — 5 weeks of full pitches at once would be a lot of
  * scrolling for what's meant to be a skimmable itinerary. */
 function PlanTimeline({
   plan,
@@ -630,7 +630,7 @@ function PlanTimeline({
     <section className="space-y-2">
       <div className="flex flex-wrap items-center justify-between gap-2 px-1">
         <h2 className="eyebrow">Multi-week plan</h2>
-        <span className="text-[11px] text-ink-faint">spend FT unevenly across the window</span>
+        <span className="text-xs text-ink-faint">spend FT unevenly across the window</span>
       </div>
       <div className="space-y-1.5">
         {feasibleWeeks.map((week) => (
@@ -644,8 +644,8 @@ function PlanTimeline({
           />
         ))}
       </div>
-      <p className="px-1 text-[11px] text-ink-faint">
-        Each week is solved as if it were the only decision -- it takes whatever transfer(s) pay off
+      <p className="px-1 text-xs text-ink-faint">
+        Each week is solved as if it were the only decision — it takes whatever transfer(s) pay off
         that week alone, not the biggest swing over the whole window, and a bought-in player&rsquo;s
         future sell price is assumed equal to what you paid (no profit-taking modelled).
       </p>
@@ -654,7 +654,7 @@ function PlanTimeline({
 }
 
 // Wildcard rebuilds the whole squad with no held constraint, so unlike the
-// pinned-transfer-count byHorizon scenarios (capped at 5 -- a longer pinned
+// pinned-transfer-count byHorizon scenarios (capped at 5 — a longer pinned
 // horizon would need the multi-week planner's chained-week approach instead
 // of blowing up a one-shot solve's variable count), it can offer a longer,
 // Wildcard-only 7-GW option. Kept as its own horizon, independent of the
@@ -662,7 +662,7 @@ function PlanTimeline({
 const WILDCARD_HORIZONS = ["1", "3", "5", "7"] as const;
 type WildcardHorizon = (typeof WILDCARD_HORIZONS)[number];
 
-/** Free Hit and Wildcard used to render side by side -- each is a full pitch
+/** Free Hit and Wildcard used to render side by side — each is a full pitch
  * view, so together they made this the tallest section on the page. Shown
  * one at a time behind a toggle instead; defaults to whichever chip is
  * actually available when only one is. */
@@ -686,7 +686,7 @@ function ChipToggle({
   const active = which === "freeHit" && freeHit ? "freeHit" : wildcardByHorizon ? "wildcard" : "freeHit";
   const wildcard = wildcardByHorizon?.[wildcardHorizon] ?? null;
   // A "roll" (0-transfer) baseline only exists at 1/3/5 (byHorizon's own
-  // range) -- at 7 GW there's nothing to compare against, so the gain line
+  // range) — at 7 GW there's nothing to compare against, so the gain line
   // just doesn't render (ChipCard already handles a null baseline).
   const rollAtWildcardHorizon = (byHorizon[wildcardHorizon] ?? []).find(
     (s) => s.transfersOut.length === 0,
@@ -741,12 +741,12 @@ function ChipToggle({
 
 /** Bench Boost / Triple Captain timing: unlike Wildcard/Free Hit these don't
  * change the squad at all, so there's nothing for the ILP optimiser to
- * solve -- it's purely "which gameweek in the window is best to press the
+ * solve — it's purely "which gameweek in the window is best to press the
  * button", holding the squad exactly as forecast. Derived entirely from
  * `upcoming` (already computed per-GW for the pitch view), no new backend
  * data needed. */
 // A fresh one-week squad beats any fixed 15 by a few points in an ordinary week, so a week only
-// stands out when its gain beats the window's typical (median) week by this much -- the size of
+// stands out when its gain beats the window's typical (median) week by this much — the size of
 // edge a blank or double gameweek gives, which is when the chip usually pays off.
 const FREE_HIT_STANDOUT_MARGIN = 4;
 
@@ -764,8 +764,8 @@ function FreeHitTiming({ weeks, pick, expiresGw }: { weeks: FreeHitWeek[]; pick:
   return (
     <div className="border-t border-line pt-2" data-testid="free-hit-timing">
       <div className="flex items-baseline justify-between gap-2">
-        <p className="text-[11px] text-ink-faint">Free Hit</p>
-        <p className="text-[11px] text-ink-faint">use by GW{expiresGw}</p>
+        <p className="text-xs text-ink-faint">Free Hit</p>
+        <p className="text-xs text-ink-faint">use by GW{expiresGw}</p>
       </div>
       <p className="text-xs text-ink-soft">
         {standout ? (
@@ -782,7 +782,7 @@ function FreeHitTiming({ weeks, pick, expiresGw }: { weeks: FreeHitWeek[]; pick:
       <ul className="mt-1 flex items-end gap-1" aria-label="Free Hit gain by gameweek">
         {weeks.map((w) => (
           <li key={w.gameweek} className="flex flex-1 flex-col items-center gap-0.5" data-best={w.gameweek === pick.gameweek || undefined}>
-            <span className="text-[11px] tabular-nums text-ink-soft">{w.gain.toFixed(1)}</span>
+            <span className="text-xs tabular-nums text-ink-soft">{w.gain.toFixed(1)}</span>
             <span
               className="w-full rounded-sm"
               style={{
@@ -790,7 +790,7 @@ function FreeHitTiming({ weeks, pick, expiresGw }: { weeks: FreeHitWeek[]; pick:
                 background: w.gameweek === pick.gameweek ? "var(--accent)" : "var(--border-strong)",
               }}
             />
-            <span className="text-[11px] text-ink-faint">{w.gameweek}</span>
+            <span className="text-xs text-ink-faint">{w.gameweek}</span>
           </li>
         ))}
       </ul>
@@ -883,19 +883,19 @@ function ChipTimingCard({
       <p className="eyebrow">Chip timing</p>
       <div className="grid grid-cols-2 gap-3">
         <div>
-          <p className="text-[11px] text-ink-faint">Bench Boost</p>
+          <p className="text-xs text-ink-faint">Bench Boost</p>
           {bboostPick && bboost.kind === "open" ? (
             <>
               <p className="stat text-lg text-ink">GW{bboostPick.pick.gameweek}</p>
               <p className="text-xs text-ink-soft">+{bboostPick.pick.benchTotal.toFixed(1)} bench pts</p>
-              <p className="text-[11px] text-ink-faint">use by GW{bboost.expiresGw}</p>
+              <p className="text-xs text-ink-faint">use by GW{bboost.expiresGw}</p>
             </>
           ) : (
             <p className="mt-1 text-sm text-ink-faint opacity-60">{closedText(bboost)}</p>
           )}
         </div>
         <div>
-          <p className="text-[11px] text-ink-faint">Triple Captain</p>
+          <p className="text-xs text-ink-faint">Triple Captain</p>
           {tcPick && tc.kind === "open" ? (
             <>
               <p className="stat text-lg text-ink">GW{tcPick.pick.gameweek}</p>
@@ -903,7 +903,7 @@ function ChipTimingCard({
                 {tcPick.pick.captainId != null ? squadById.get(tcPick.pick.captainId)?.webName ?? "?" : "—"}
                 , +{tcPick.pick.captainPoints.toFixed(1)} extra
               </p>
-              <p className="text-[11px] text-ink-faint">use by GW{tc.expiresGw}</p>
+              <p className="text-xs text-ink-faint">use by GW{tc.expiresGw}</p>
             </>
           ) : (
             <p className="mt-1 text-sm text-ink-faint opacity-60">{closedText(tc)}</p>
@@ -913,12 +913,12 @@ function ChipTimingCard({
       {fhPick && fh.kind === "open" && (
         <FreeHitTiming weeks={fhWeeks.filter((w) => w.gameweek <= fh.expiresGw)} pick={fhPick.pick} expiresGw={fh.expiresGw} />
       )}
-      <p className="text-[11px] text-ink-faint">
+      <p className="text-xs text-ink-faint">
         Best gameweek in the {upcoming.length}-GW window (up to each chip&rsquo;s last gameweek) to
         hold your squad unchanged and press the button — assumes no transfers between now and then.
       </p>
       {beyond.length > 0 && (
-        <p className="text-[11px] text-ink-soft" data-testid="chip-beyond-window">
+        <p className="text-xs text-ink-soft" data-testid="chip-beyond-window">
           {beyond.join("; ")}, but the forecast only looks ahead to GW{lastForecastGw} — a better week
           may come later.
         </p>
@@ -985,7 +985,6 @@ export default function Scenarios({
    * from their 15 rather than the app owner's. Null for the owner. */
   guestTeam?: GuestTeam | null;
 }) {
-  const pitchView = usePitchView();
   const [horizon, setHorizon] = useState<Horizon>("1");
   const poolById = new Map(pool.map((p) => [p.id, p]));
 
@@ -997,7 +996,6 @@ export default function Scenarios({
     <section className="space-y-4">
       <div className="flex flex-wrap items-center justify-between gap-2 px-1">
         <h2 className="eyebrow">Transfer scenarios</h2>
-        <ViewSwitch view={pitchView} />
         <div className="segment">
           {HORIZONS.map((h) => (
             <button key={h} data-active={horizon === h} onClick={() => setHorizon(h)}>

@@ -1190,11 +1190,12 @@ test.describe("3D Squad pitch", () => {
     await expect(page.getByRole("dialog")).toBeVisible();
   });
 
-  test("the 2D switch shows the flat pitch and the choice is remembered", async ({ page }) => {
+  test("the 2D setting in the team menu shows the flat pitch and the choice is remembered", async ({ page }) => {
     await page.goto("/?tab=squad");
     await expect(squadPitch3d(page)).toBeVisible();
     await page.evaluate(() => localStorage.removeItem("fpl-pitch-view"));
-    await squadPitch3d(page).locator("xpath=ancestor::div[contains(@class,'panel')][1]").getByRole("group", { name: "Pitch view" }).getByRole("button", { name: "2D" }).click();
+    await page.getByTestId("team-menu-button").click();
+    await page.getByRole("menuitemradio", { name: "2D pitch" }).click();
     await expect(page.getByTestId("pitch3d")).toHaveCount(0);
     await expect(page.locator(".floodlit-pitch").first()).toBeVisible();
     expect(await page.evaluate(() => localStorage.getItem("fpl-pitch-view"))).toBe("2d");
@@ -1210,9 +1211,12 @@ test.describe("3D Squad pitch", () => {
     await expect(page.getByRole("dialog")).toBeVisible();
   });
 
-  test("the Scenarios tab has the same 2D/3D switch", async ({ page }) => {
+  test("the pitch setting is one control in the team menu, not one per pitch", async ({ page }) => {
     await page.goto("/?tab=scenarios");
-    await expect(page.getByRole("group", { name: "Pitch view" }).first()).toBeVisible();
+    await expect(page.getByRole("group", { name: "Pitch view" })).toHaveCount(0); // closed menu: none on the page
+    await page.getByTestId("team-menu-button").click();
+    await expect(page.getByRole("group", { name: "Pitch view" })).toHaveCount(1);
+    await expect(page.getByRole("menuitemradio", { name: "3D pitch" })).toHaveAttribute("aria-checked", "true");
   });
 });
 
@@ -1582,11 +1586,12 @@ test.describe("Ball going round the pitch", () => {
     await page.goto("/?tab=live");
     const pitch = page.getByTestId("pitch3d").first();
     await pitch.locator("button[data-tag]").first().waitFor();
-    const toggle = page.getByRole("button", { name: /^Passing/ }).first();
-    await expect(toggle).toHaveText("Passing on");
-    await toggle.evaluate((e) => e.scrollIntoView({ block: "center" })); // not under the sticky header
+    await page.getByTestId("team-menu-button").click();
+    const toggle = page.getByRole("menuitemcheckbox", { name: /Ball passing/ });
+    await expect(toggle).toHaveAttribute("aria-checked", "true");
     await toggle.click();
-    await expect(toggle).toHaveText("Passing off");
+    await expect(toggle).toHaveAttribute("aria-checked", "false");
+    await page.keyboard.press("Escape");
     expect(await page.evaluate(() => localStorage.getItem("fpl-pitch-passing"))).toBe("off");
     await page.waitForTimeout(800); // a pass in flight lands
     const at = await pitch.getAttribute("data-passes");

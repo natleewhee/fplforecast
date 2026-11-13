@@ -86,7 +86,7 @@ export type FloorCeiling = {
 // FPL's own doubt signal: status letter (a/d/i/s/u/n), the % chance it
 // publishes of playing the next round for doubtful/returning players, and
 // its news blurb. Distinct from breakdown.availabilityMultiplier, which
-// already folds this into projected points -- this is for "is there an
+// already folds this into projected points — this is for "is there an
 // immediate risk this player doesn't play at all", independent of xP.
 export type Availability = {
   status: "a" | "d" | "i" | "s" | "u" | "n";
@@ -224,14 +224,14 @@ export type Forecast = {
   parBufferProvisional: number;
   rankCalibration: RankCalibration | null; // fit for the live tracker's overall-rank estimate
   // Only set by api/forecast.py's on-demand guest lookup (never the daily
-  // cron's own committed forecast) -- lets the UI confirm "this is whose
+  // cron's own committed forecast) — lets the UI confirm "this is whose
   // team you asked for" after a team-ID switch.
   teamName?: string;
   managerName?: string;
 };
 
 /** A personal fit of log(overall rank) ~ intercept + slope*(points - gameweek
- * average) over the manager's own finished gameweeks -- FPL doesn't publish
+ * average) over the manager's own finished gameweeks — FPL doesn't publish
  * the live population's score distribution, so this is the closest
  * available stand-in. `null` until there's enough gameweek history. */
 export type RankCalibration = {
@@ -303,7 +303,7 @@ export type Scenario = {
   weeks: ScenarioWeek[];
 };
 
-// One week of a chained multi-week transfer plan -- unlike `byHorizon`'s
+// One week of a chained multi-week transfer plan — unlike `byHorizon`'s
 // single up-front decision, FT can get spent unevenly across the plan (e.g.
 // 1 transfer this week, bank the rest, 2 next week). See
 // `engine.optimise.plan_transfers` for how it's chained/its approximations.

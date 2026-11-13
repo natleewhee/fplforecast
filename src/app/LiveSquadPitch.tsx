@@ -75,10 +75,10 @@ function PlayerToken({ row, bench = false, diff = false }: { row: LeagueSquadRow
         {row.subbedIn && <span className="chip chip-accent !py-0 text-[9px]">▲</span>}
       </span>
       {row.status === "playing" && (
-        <span className="font-mono text-[10px] font-bold text-[var(--accent)]">{row.minutes}&prime;</span>
+        <span className="font-mono text-xs font-bold text-[var(--accent)]">{row.minutes}&prime;</span>
       )}
       {showRemaining && !row.noBakedXp && (
-        <span className="font-mono text-[10px] tabular-nums text-[var(--accent)]">
+        <span className="font-mono text-xs tabular-nums text-[var(--accent)]">
           +{row.remainingXp.toFixed(1)}
         </span>
       )}
@@ -92,7 +92,7 @@ function PlayerToken({ row, bench = false, diff = false }: { row: LeagueSquadRow
 /** The read-only counterpart to Pitch.tsx for someone else's team: same
  * pitch/kit formation, but every player's own number is what actually
  * happened this gameweek (FPL's own live points, captain-doubled) plus
- * this app's decayed xP projection for the rest of the gameweek -- not
+ * this app's decayed xP projection for the rest of the gameweek — not
  * this app's *forecast model* pointed at their squad (that's for the
  * squad's own holder to plan transfers/captaincy with), just "where is
  * their current team, and where's it heading". */
@@ -153,7 +153,7 @@ export default function LiveSquadPitch({
           ))}
         </div>
       </PitchScene>
-      <p className="mt-2 text-[10.5px] leading-snug text-ink-faint">
+      <p className="mt-2 text-xs leading-snug text-ink-faint">
         Number = points so far · the shirt outline fills with minutes played and glows while playing ·
         dashed = yet to start · green figure = expected points still to come
       </p>
