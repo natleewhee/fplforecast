@@ -52,11 +52,17 @@ FULL_SMALL_DIRS = ["event-live"]
 EXTRA_FILES = ["record/residuals.json"]
 
 # The daily cron's pickled build_pool_context() output (see
-# scripts/compute_forecast.py's save_pool_context()) -- a .pkl, not .json,
-# so it gets its own latest-only pass. In practice save_pool_context()
-# only ever leaves one file here, but this mirrors LATEST_ONLY_DIRS'
-# "take the latest" shape rather than assuming that.
+# scripts/compute_forecast.py's save_pool_context()) -- a .pkl, not .json.
+# It keeps the target gameweek and the one after; ship the newest
+# PKL_WEEKS_SHIPPED by gameweek number (a string sort would put gw9 after
+# gw10).
 LATEST_ONLY_PKL_DIRS = ["pool-context"]
+PKL_WEEKS_SHIPPED = 2
+
+
+def _gw_number(path: Path) -> int:
+    digits = "".join(ch for ch in path.stem if ch.isdigit())
+    return int(digits) if digits else -1
 
 
 def _gzip_file(src: Path, dst: Path) -> None:
@@ -99,11 +105,10 @@ def main() -> int:
         src_dir = DATA_DIR / name
         if not src_dir.exists():
             continue
-        files = sorted(src_dir.glob("*.pkl"))
-        if not files:
-            continue
-        _gzip_file(files[-1], OUT_DIR / name / files[-1].name)
-        total_files += 1
+        files = sorted(src_dir.glob("*.pkl"), key=_gw_number)
+        for path in files[-PKL_WEEKS_SHIPPED:]:
+            _gzip_file(path, OUT_DIR / name / path.name)
+            total_files += 1
 
     raw_size = sum(f.stat().st_size for f in DATA_DIR.rglob("*.json"))
     deploy_size = sum(f.stat().st_size for f in OUT_DIR.rglob("*.gz")) if OUT_DIR.exists() else 0

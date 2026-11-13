@@ -26,7 +26,11 @@ const EXTRA_FILES = ["record/residuals.json"];
 // The daily cron's pickled build_pool_context() output (see
 // scripts/compute_forecast.py's save_pool_context()) -- a .pkl, not .json,
 // so it needs its own latest-only pass rather than LATEST_ONLY_DIRS'.
+// It keeps the target gameweek and the one after; ship the newest
+// PKL_WEEKS_SHIPPED by gameweek number (a string sort puts gw9 after gw10).
 const LATEST_ONLY_PKL_DIRS = ["pool-context"];
+const PKL_WEEKS_SHIPPED = 2;
+const gwNumber = (name) => Number((name.match(/\d+/) ?? ["-1"])[0]);
 
 function walkJsonFiles(dir) {
   if (!existsSync(dir)) return [];
@@ -81,11 +85,11 @@ async function main() {
     if (!existsSync(dir)) continue;
     const files = readdirSync(dir)
       .filter((f) => f.endsWith(".pkl"))
-      .sort();
-    if (files.length === 0) continue;
-    const latest = files[files.length - 1];
-    await gzipFile(join(dir, latest), join(OUT_DIR, name, latest));
-    count += 1;
+      .sort((a, b) => gwNumber(a) - gwNumber(b));
+    for (const file of files.slice(-PKL_WEEKS_SHIPPED)) {
+      await gzipFile(join(dir, file), join(OUT_DIR, name, file));
+      count += 1;
+    }
   }
 
   console.log(`compress-deploy-data: ${count} files -> ${OUT_DIR}`);
