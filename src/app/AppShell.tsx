@@ -759,6 +759,21 @@ export default function AppShell({
           forecastGw={forecast.targetGameweek}
           upcoming={forecast.upcoming}
           chips={forecast.chips ?? null}
+          guestTeam={
+            isGuest
+              ? {
+                  squad: forecast.squad.players.map((p) => ({
+                    id: p.id,
+                    position: p.position,
+                    team: p.team,
+                    webName: p.webName,
+                    price: p.price,
+                  })),
+                  bank: forecast.squad.bank,
+                  freeTransfers: forecast.scenarios.freeTransfers.value,
+                }
+              : null
+          }
         />
       )}
 

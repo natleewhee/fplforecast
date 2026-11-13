@@ -40,6 +40,7 @@ from engine.optimise import (
     free_transfer_ledger,
     plan_transfers,
     solve_squad,
+    with_held_rows,
 )
 from engine.squad import (
     best_xi,
@@ -907,6 +908,10 @@ def build_scenarios(
     them (they can't be in ``pool`` so can't be re-selected), and they show
     up in ``transfers_out``. ``squad_cards`` (built from the full squad regardless
     of availability) backs the display lookup for exactly that case."""
+    # A held player who has left the league isn't in the pool; a 0-xP row
+    # lets the solver keep him as a dead slot or sell him as a real
+    # transfer that credits his sell price.
+    pool = with_held_rows(pool, squad_ids, {c["id"]: c for c in squad_cards or []})
     pool_by_id = {p["id"]: p for p in pool}
     for card in squad_cards or []:
         pool_by_id.setdefault(card["id"], card)

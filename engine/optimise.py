@@ -60,6 +60,41 @@ def _infeasible(horizon_gws: int) -> ScenarioResult:
     )
 
 
+def with_held_rows(players: list[dict], held, cards: dict) -> list[dict]:
+    """``players`` plus a zero-xP row for each held player who isn't in it.
+
+    The pool drops players who have left (status u/n), but a manager can
+    still hold one. Without a row the solver can neither keep him nor sell
+    him properly: the sale wasn't counted as a transfer and his sell price
+    wasn't credited. With a 0-xP row it does both like any other player.
+    ``cards`` maps id -> a squad card with ``elementType``, ``team``,
+    ``price`` and ``sellPrice``; ids without a usable card are skipped."""
+    in_pool = {p["id"] for p in players}
+    horizon = max((len(p.get("perGameweek") or []) for p in players), default=0)
+    extra = []
+    for pid in held:
+        card = cards.get(pid)
+        if pid in in_pool or not card or card.get("elementType") not in (1, 2, 3, 4) or card.get("team") is None:
+            continue
+        price = card.get("price") if card.get("price") is not None else card.get("sellPrice")
+        sell = card.get("sellPrice") if card.get("sellPrice") is not None else price
+        if price is None:
+            continue
+        extra.append(
+            {
+                **{k: card.get(k) for k in ("webName", "position", "availability")},
+                "id": pid,
+                "elementType": card["elementType"],
+                "team": card["team"],
+                "price": price,
+                "sellPrice": sell,
+                "perGameweek": [0.0] * horizon,
+                "opponents": [[] for _ in range(horizon)],
+            }
+        )
+    return players + extra if extra else players
+
+
 def solve_squad(
     players: list[dict],
     held: list[int] | set[int],

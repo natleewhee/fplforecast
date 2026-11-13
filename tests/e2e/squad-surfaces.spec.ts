@@ -338,6 +338,26 @@ test("checklist: when only the vice changes the captain row says vice adjusted, 
   await expect(page.getByText(/moved the armband/)).toHaveCount(0);
 });
 
+test("Scenarios: a guest's pinned re-solve sends the guest's own squad", async ({ page, context }) => {
+  const fc = latestForecast();
+  const bodies: Record<string, unknown>[] = [];
+  await page.route("**/api/solve*", async (route) => {
+    bodies.push(JSON.parse(route.request().postData() ?? "{}"));
+    await route.fulfill({ status: 422, contentType: "application/json", body: JSON.stringify({ error: "stub" }) });
+  });
+  await context.clearCookies();
+  await page.route("**/api/forecast*", (route) => route.fulfill({ contentType: "application/json", body: JSON.stringify({ ...fc, teamName: "Guest FC" }) }));
+  await page.goto("/?team=999444&tab=scenarios");
+  await page.getByRole("button", { name: /^Pin players \(0\)/ }).click();
+  await page.locator("#force-lock-body").getByRole("button").first().click();
+  await page.getByRole("button", { name: /^Solve with 1 pin/ }).click();
+  await expect.poll(() => bodies.length).toBeGreaterThan(0);
+  const team = bodies[0].team as { squad: { id: number; sellPrice: number }[]; bank: number; freeTransfers: number };
+  expect(team.squad.map((p) => p.id)).toEqual(fc.squad.players.map((p: { id: number }) => p.id));
+  expect(team.bank).toBe(fc.squad.bank);
+  expect(team.freeTransfers).toBe(fc.scenarios.freeTransfers.value);
+});
+
 test("Scenarios: chip timing prices a Free Hit in each week and only calls out a standout one", async ({ page, context }) => {
   const fc = latestForecast();
   const gw = fc.targetGameweek;

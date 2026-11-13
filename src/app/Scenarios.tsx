@@ -407,14 +407,24 @@ type LockState = "keep" | "remove";
  * since a pick is one of 15 players x keep/remove and there's no bounding
  * that combinatorially. Everything else on this page is static JSON; this
  * panel is the sole live network call. */
+/** Positions, clubs, names and prices only matter server-side for a player who has left the
+ * league (no pool row); prices otherwise come from the pool. */
+export type GuestTeam = {
+  squad: { id: number; position?: string; team?: string; webName?: string; price?: number }[];
+  bank: number;
+  freeTransfers: number;
+};
+
 function ForceLockPanel({
   squad,
   forecastGw,
   horizon,
+  guestTeam,
 }: {
   squad: ForecastPlayer[];
   forecastGw: number;
   horizon: Horizon;
+  guestTeam: GuestTeam | null;
 }) {
   const [locks, setLocks] = useState<Map<number, LockState>>(new Map());
   const [result, setResult] = useState<Scenario | null>(null);
@@ -445,7 +455,14 @@ function ForceLockPanel({
       const res = await fetch("/api/solve", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ forecastGw, type: "transfer", horizon: Number(horizon), forceIn, forceOut }),
+        body: JSON.stringify({
+          forecastGw,
+          type: "transfer",
+          horizon: Number(horizon),
+          forceIn,
+          forceOut,
+          ...(guestTeam ? { team: guestTeam } : {}),
+        }),
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || `solve failed (${res.status})`);
@@ -956,6 +973,7 @@ export default function Scenarios({
   forecastGw,
   upcoming,
   chips,
+  guestTeam = null,
 }: {
   scenarios: ScenariosData;
   pool: PoolPlayer[];
@@ -963,6 +981,9 @@ export default function Scenarios({
   forecastGw: number;
   upcoming: UpcomingGameweek[];
   chips: ChipWindow[] | null;
+  /** A guest's own squad, sell prices, bank and FTs, sent with a pinned re-solve so it starts
+   * from their 15 rather than the app owner's. Null for the owner. */
+  guestTeam?: GuestTeam | null;
 }) {
   const pitchView = usePitchView();
   const [horizon, setHorizon] = useState<Horizon>("1");
@@ -1009,7 +1030,7 @@ export default function Scenarios({
         </Carousel>
       )}
 
-      <ForceLockPanel key={squad.map((p) => p.id).join(",")} squad={squad} forecastGw={forecastGw} horizon={horizon} />
+      <ForceLockPanel key={squad.map((p) => p.id).join(",")} squad={squad} forecastGw={forecastGw} horizon={horizon} guestTeam={guestTeam} />
 
       {scenarios.plan && (
         <PlanTimeline plan={scenarios.plan} forecastGw={forecastGw} poolById={poolById} />
