@@ -99,8 +99,8 @@ test("the tab bar is a tablist: arrows move between tabs, only the open tab is a
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto("/?tab=squad");
   const list = page.getByRole("tablist", { name: "Sections" });
-  await expect(list.getByRole("tab")).toHaveCount(4);
-  const squad = list.getByRole("tab", { name: "Squad" });
+  await expect(list.getByRole("tab")).toHaveCount(3);
+  const squad = list.getByRole("tab", { name: "Team" });
   await expect(squad).toHaveAttribute("aria-selected", "true");
   await expect(list.locator("[tabindex='0']")).toHaveCount(1);
   // the open tab names its panel, and the panel is labelled by the tab
@@ -118,7 +118,7 @@ test("the tab bar is a tablist: arrows move between tabs, only the open tab is a
   await page.keyboard.press("End");
   await expect(list.getByRole("tab", { name: "Leagues" })).toHaveAttribute("aria-selected", "true");
   await page.keyboard.press("ArrowRight"); // wraps round
-  const live = list.getByRole("tab", { name: "Live" });
+  const live = list.getByRole("tab", { name: "Team" });
   await expect(live).toHaveAttribute("aria-selected", "true");
   await expect(live).toBeFocused();
   await page.keyboard.press("ArrowLeft"); // and back the other way
@@ -126,7 +126,6 @@ test("the tab bar is a tablist: arrows move between tabs, only the open tab is a
   await page.keyboard.press("Home");
   await expect(live).toHaveAttribute("aria-selected", "true");
   // quick repeat presses each move one tab, even mid-transition
-  await page.keyboard.press("ArrowRight");
   await page.keyboard.press("ArrowRight");
   await page.keyboard.press("ArrowRight");
   await expect(list.getByRole("tab", { name: "Leagues" })).toHaveAttribute("aria-selected", "true");

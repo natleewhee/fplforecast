@@ -29,6 +29,7 @@ import RecapCard from "./RecapCard";
 import Scenarios from "./Scenarios";
 import TransferForm from "./TransferForm";
 import AppTabs from "./AppTabs";
+import TeamTab from "./TeamTab";
 import {
   CLIENT_TIMEOUT_MS,
   INVALID_TEAM_ID_MESSAGE,
@@ -873,10 +874,19 @@ export default function AppShell({
         <div className="pt-1">
           <PitchDataProvider value={{ looks: pitchLooks, kits: pitchKits }}>
             <AppTabs
-              deadline={forecast.deadlineTime}
               tabs={[
-                { id: "live", label: "Live", content: liveTab },
-                { id: "squad", label: "Squad", content: squadTab },
+                {
+                  id: "team",
+                  label: "Team",
+                  content: (
+                    <TeamTab
+                      now={liveTab}
+                      next={squadTab}
+                      deadline={forecast.deadlineTime}
+                      nextGameweek={forecast.targetGameweek}
+                    />
+                  ),
+                },
                 { id: "scenarios", label: "Scenarios", content: scenariosTab },
                 { id: "leagues", label: "Leagues", content: leaguesTab },
               ]}
