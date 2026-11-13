@@ -538,6 +538,37 @@ test.describe("Rivalry duel", () => {
   });
 });
 
+test.describe("Leagues error", () => {
+  test("says what went wrong in plain words and retries on tap", async ({ page }) => {
+    await mockLive(page, { current: "a" });
+    let fail = true;
+    await page.route(/\/api\/league(\?|$)/, (route) =>
+      fail
+        ? route.fulfill({ status: 503, contentType: "application/json", body: JSON.stringify({ error: "HTTP 503" }) })
+        : route.fulfill({
+            contentType: "application/json",
+            body: JSON.stringify({
+              gameweek: 7,
+              leagues: [{ leagueId: 1, leagueName: "Mates" }],
+              league: { leagueId: 1, leagueName: "Mates", myEntryId: 100, myRank: 1, totalEntries: 1, totalEntriesIsFloor: false, appendedEntryId: null, entries: [] },
+            }),
+          }),
+    );
+    await open(page);
+    await page.getByRole("tab", { name: /^Leagues$/ }).click();
+    const box = page.getByTestId("leagues-error");
+    await expect(box).toContainText("Couldn’t load your leagues.");
+    await expect(box).toContainText("FPL isn’t answering");
+    await expect(box).not.toContainText("HTTP");
+    const retry = box.getByRole("button", { name: "Retry" });
+    expect((await retry.boundingBox())!.height).toBeGreaterThanOrEqual(43.5);
+    fail = false;
+    await retry.click();
+    await expect(box).toHaveCount(0);
+    await expect(page.getByText("Mates").first()).toBeVisible();
+  });
+});
+
 test.describe("Gameweek recap", () => {
   test("shows the card, badges and the regret machine", async ({ page }) => {
     await mockLive(page, { current: "a" });
@@ -1022,6 +1053,24 @@ test.describe("Suspension / loan-ban risk", () => {
     await expect(page.getByTestId("checklist-all-clear")).not.toContainText("suspension");
   });
 
+  test("FPL's sentence is shown once for every player it applies to, not repeated per player", async ({ page }) => {
+    const dir = join(__dirname, "..", "..", "data", "forecast");
+    const newest = readdirSync(dir).filter((f) => /^gw\d+\.json$/.test(f)).sort((a, b) => Number(b.match(/\d+/)![0]) - Number(a.match(/\d+/)![0]))[0];
+    const fc = JSON.parse(readFileSync(join(dir, newest), "utf8"));
+    const note = "This player currently has 4 Premier League yellow cards and will face a 1-match suspension on receiving their next.";
+    for (const p of fc.squad.players) p.availability = { ...p.availability, risks: [] };
+    for (const i of [0, 1]) fc.squad.players[i].availability = { ...fc.squad.players[i].availability, risks: [{ kind: "suspension_risk", gameweek: null, notes: note }] };
+    const [a, b] = [fc.squad.players[0].webName, fc.squad.players[1].webName];
+    await page.clock.install({ time: Date.parse(fc.deadlineTime) - 5 * 3_600_000 });
+    await page.route("**/api/forecast*", (route) => route.fulfill({ contentType: "application/json", body: JSON.stringify(fc) }));
+    await mockLive(page, { current: "a" });
+    await page.goto("/?team=999998&tab=squad");
+    await page.getByRole("button", { name: new RegExp(`^${a}, ${b}: one yellow`) }).click();
+    const wording = page.locator("#checklist-risk-wording li");
+    await expect(wording).toHaveCount(1);
+    await expect(wording.first()).toHaveText(`${a}, ${b}: ${note}`);
+  });
+
   test("a forecast built before the risk field existed does not say 'no risk'", async ({ page }) => {
     // Strip `risks` from the newest committed forecast (the nightly build now carries it) so this
     // keeps testing the old shape: the row must not claim FPL flags none.
@@ -1194,7 +1243,10 @@ test.describe("3D Squad pitch", () => {
     await page.goto("/?tab=squad");
     await expect(squadPitch3d(page)).toBeVisible();
     await page.evaluate(() => localStorage.removeItem("fpl-pitch-view"));
-    await squadPitch3d(page).locator("xpath=ancestor::div[contains(@class,'panel')][1]").getByRole("group", { name: "Pitch view" }).getByRole("button", { name: "2D" }).click();
+    await page.getByTestId("team-menu-button").click();
+    const item = page.getByRole("menuitemcheckbox", { name: /3D pitch/ });
+    await expect(item).toHaveAttribute("aria-checked", "true");
+    await item.click();
     await expect(page.getByTestId("pitch3d")).toHaveCount(0);
     await expect(page.locator(".floodlit-pitch").first()).toBeVisible();
     expect(await page.evaluate(() => localStorage.getItem("fpl-pitch-view"))).toBe("2d");
@@ -1210,9 +1262,15 @@ test.describe("3D Squad pitch", () => {
     await expect(page.getByRole("dialog")).toBeVisible();
   });
 
-  test("the Scenarios tab has the same 2D/3D switch", async ({ page }) => {
-    await page.goto("/?tab=scenarios");
-    await expect(page.getByRole("group", { name: "Pitch view" }).first()).toBeVisible();
+  test("the pitch style is one setting in the team menu, not a switch on every pitch", async ({ page }) => {
+    for (const tab of ["live", "squad", "scenarios"]) {
+      await page.goto(`/?tab=${tab}`);
+      await expect(page.getByRole("group", { name: "Pitch view" })).toHaveCount(0);
+      await expect(page.getByRole("button", { name: /^Passing/ })).toHaveCount(0);
+    }
+    await page.getByTestId("team-menu-button").click();
+    await expect(page.getByRole("menuitemcheckbox", { name: /3D pitch/ })).toBeVisible();
+    await expect(page.getByRole("menuitemcheckbox", { name: /Ball passing/ })).toBeVisible();
   });
 });
 
@@ -1582,11 +1640,12 @@ test.describe("Ball going round the pitch", () => {
     await page.goto("/?tab=live");
     const pitch = page.getByTestId("pitch3d").first();
     await pitch.locator("button[data-tag]").first().waitFor();
-    const toggle = page.getByRole("button", { name: /^Passing/ }).first();
-    await expect(toggle).toHaveText("Passing on");
-    await toggle.evaluate((e) => e.scrollIntoView({ block: "center" })); // not under the sticky header
+    await page.getByTestId("team-menu-button").click();
+    const toggle = page.getByRole("menuitemcheckbox", { name: /Ball passing/ });
+    await expect(toggle).toHaveAttribute("aria-checked", "true");
     await toggle.click();
-    await expect(toggle).toHaveText("Passing off");
+    await expect(toggle).toHaveAttribute("aria-checked", "false"); // the menu stays open on a toggle
+    await page.keyboard.press("Escape");
     expect(await page.evaluate(() => localStorage.getItem("fpl-pitch-passing"))).toBe("off");
     await page.waitForTimeout(800); // a pass in flight lands
     const at = await pitch.getAttribute("data-passes");
@@ -1615,7 +1674,9 @@ test.describe("Ball going round the pitch", () => {
       await pitch.locator("button[data-tag]").first().waitFor();
       await page.waitForTimeout(3000);
       await expect(pitch).not.toHaveAttribute("data-passes", /.+/);
-      await expect(page.getByRole("button", { name: /^Passing/ })).toHaveCount(0);
+      await page.getByTestId("team-menu-button").click();
+      await expect(page.getByRole("menuitemcheckbox", { name: /3D pitch/ })).toBeVisible();
+      await expect(page.getByRole("menuitemcheckbox", { name: /Ball passing/ })).toHaveCount(0);
     });
   });
 });

@@ -251,7 +251,7 @@ def solve(body: dict) -> tuple[int, dict]:
     if not result.feasible:
         return 422, {
             "error": (
-                "No feasible squad satisfies these constraints -- the forced "
+                "No feasible squad satisfies these constraints — the forced "
                 "players may not fit the budget, formation, or 3-per-club limit, "
                 "or may no longer be available to pick."
             )

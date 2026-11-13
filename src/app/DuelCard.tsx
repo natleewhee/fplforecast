@@ -93,7 +93,7 @@ export default function DuelCard({
           <button
             type="button"
             onClick={onClose}
-            className="inline-flex h-11 shrink-0 items-center rounded-full border border-line px-3 text-[11px] text-ink-soft hover:border-border-strong"
+            className="inline-flex h-11 shrink-0 items-center rounded-full border border-line px-3 text-xs text-ink-soft hover:border-border-strong"
           >
             End duel
           </button>
@@ -124,12 +124,12 @@ export default function DuelCard({
               <p className="text-sm font-semibold text-ink" data-testid="duel-odds">
                 {oddsLine(calc.odds, rivalName)}
               </p>
-              <p className="text-[10.5px] leading-snug text-ink-faint">
+              <p className="text-xs leading-snug text-ink-faint">
                 Simulated 4,000 times from points banked plus each player&rsquo;s remaining xP, with an
                 assumed boom-or-bust spread. A guide, not a promise.
               </p>
             </div>
-            <div className="grid grid-cols-2 gap-3 border-t border-line pt-2 text-[11px]">
+            <div className="grid grid-cols-2 gap-3 border-t border-line pt-2 text-xs">
               <div>
                 <p className="eyebrow mb-1">Only you own</p>
                 {calc.diffs.onlyA.length ? (

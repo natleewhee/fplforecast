@@ -20,7 +20,7 @@ import { bestWithinWindow, chipState, type ChipState } from "@/lib/chips";
 import { PitchScene } from "./PitchScene";
 import { FormBars, Halo, meanFdr } from "./Shirt";
 import { PlayerFace } from "./PlayerFace";
-import Pitch3D, { ViewSwitch, type Pitch3DPlayer } from "./pitch3d/Pitch3D";
+import Pitch3D, { type Pitch3DPlayer } from "./pitch3d/Pitch3D";
 import { usePitchView } from "@/lib/pitchView";
 import { ArmbandBadge } from "./tokenParts";
 
@@ -72,7 +72,7 @@ function ShirtToken({
         />
         {isCaptain && <ArmbandBadge role="captain" />}
       </div>
-      <span className="mt-1 max-w-full truncate text-[11px] font-semibold text-ink [text-shadow:0_1px_3px_rgba(0,0,0,0.85)]">
+      <span className="mt-1 max-w-full truncate text-xs font-semibold text-ink [text-shadow:0_1px_3px_rgba(0,0,0,0.85)]">
         {player.webName}
       </span>
       <FormBars points={player.recentPoints} />
@@ -125,7 +125,7 @@ function SwapPlayer({ player, direction }: { player: ScenarioPlayerRef; directio
         {player.webName ?? "?"}
       </span>
       {player.price != null && (
-        <span className="font-mono text-[10px] tabular-nums text-ink-faint">
+        <span className="font-mono text-xs tabular-nums text-ink-faint">
           £{player.price.toFixed(1)}
         </span>
       )}
@@ -367,11 +367,11 @@ function ChipCard({
         <h3 className="font-mono text-[12px] font-bold tracking-wide text-ink">{title}</h3>
         <div className="text-right">
           <div className="stat text-lg leading-none">{scenario.netPoints.toFixed(1)}</div>
-          <div className="text-[11px] text-ink-faint">
+          <div className="text-xs text-ink-faint">
             total over {scenario.horizonGws} GW{scenario.horizonGws > 1 ? "s" : ""}
           </div>
           {gain != null && (
-            <div className={`text-[11px] ${gain >= 0 ? "text-[var(--accent)]" : "text-[var(--danger)]"}`}>
+            <div className={`text-xs ${gain >= 0 ? "text-[var(--accent)]" : "text-[var(--danger)]"}`}>
               {fmtNet(gain)} vs current squad
             </div>
           )}
@@ -485,13 +485,13 @@ function ForceLockPanel({
           className="flex min-h-11 w-full items-center justify-between gap-2 text-left"
         >
           <span className="eyebrow">Pin players ({locks.size})</span>
-          <span className="text-[11px] text-ink-faint">
+          <span className="text-xs text-ink-faint">
             Force keep / remove <span aria-hidden>{open ? "▾" : "▸"}</span>
           </span>
         </button>
       </h3>
       <div id="force-lock-body" hidden={!open} className="space-y-3">
-      <p className="text-[11px] text-ink-faint">Tap a player: keep -&gt; remove -&gt; clear</p>
+      <p className="text-xs text-ink-faint">Tap a player: keep -&gt; remove -&gt; clear</p>
       <div className="flex flex-wrap gap-1.5">
         {squad.map((p) => {
           const lock = locks.get(p.id);
@@ -579,10 +579,10 @@ function PlanWeekRow({
             {nTransfers === 0 ? "Hold" : `${nTransfers} transfer${nTransfers > 1 ? "s" : ""}`}
           </span>
           {week.hitCost > 0 && (
-            <span className="text-[11px] text-[var(--danger)]">−{week.hitCost}</span>
+            <span className="text-xs text-[var(--danger)]">−{week.hitCost}</span>
           )}
         </div>
-        <div className="flex items-center gap-2 text-[11px] text-ink-faint">
+        <div className="flex items-center gap-2 text-xs text-ink-faint">
           <span>{week.ftBefore} FT → {week.ftAfter} FT</span>
           <span className="font-mono text-xs font-semibold text-[var(--accent)]">
             {week.weekXp.toFixed(1)}
@@ -630,7 +630,7 @@ function PlanTimeline({
     <section className="space-y-2">
       <div className="flex flex-wrap items-center justify-between gap-2 px-1">
         <h2 className="eyebrow">Multi-week plan</h2>
-        <span className="text-[11px] text-ink-faint">spend FT unevenly across the window</span>
+        <span className="text-xs text-ink-faint">spend FT unevenly across the window</span>
       </div>
       <div className="space-y-1.5">
         {feasibleWeeks.map((week) => (
@@ -644,8 +644,8 @@ function PlanTimeline({
           />
         ))}
       </div>
-      <p className="px-1 text-[11px] text-ink-faint">
-        Each week is solved as if it were the only decision -- it takes whatever transfer(s) pay off
+      <p className="px-1 text-xs text-ink-faint">
+        Each week is solved as if it were the only decision — it takes whatever transfer(s) pay off
         that week alone, not the biggest swing over the whole window, and a bought-in player&rsquo;s
         future sell price is assumed equal to what you paid (no profit-taking modelled).
       </p>
@@ -764,8 +764,8 @@ function FreeHitTiming({ weeks, pick, expiresGw }: { weeks: FreeHitWeek[]; pick:
   return (
     <div className="border-t border-line pt-2" data-testid="free-hit-timing">
       <div className="flex items-baseline justify-between gap-2">
-        <p className="text-[11px] text-ink-faint">Free Hit</p>
-        <p className="text-[11px] text-ink-faint">use by GW{expiresGw}</p>
+        <p className="text-xs text-ink-faint">Free Hit</p>
+        <p className="text-xs text-ink-faint">use by GW{expiresGw}</p>
       </div>
       <p className="text-xs text-ink-soft">
         {standout ? (
@@ -782,7 +782,7 @@ function FreeHitTiming({ weeks, pick, expiresGw }: { weeks: FreeHitWeek[]; pick:
       <ul className="mt-1 flex items-end gap-1" aria-label="Free Hit gain by gameweek">
         {weeks.map((w) => (
           <li key={w.gameweek} className="flex flex-1 flex-col items-center gap-0.5" data-best={w.gameweek === pick.gameweek || undefined}>
-            <span className="text-[11px] tabular-nums text-ink-soft">{w.gain.toFixed(1)}</span>
+            <span className="text-xs tabular-nums text-ink-soft">{w.gain.toFixed(1)}</span>
             <span
               className="w-full rounded-sm"
               style={{
@@ -790,7 +790,7 @@ function FreeHitTiming({ weeks, pick, expiresGw }: { weeks: FreeHitWeek[]; pick:
                 background: w.gameweek === pick.gameweek ? "var(--accent)" : "var(--border-strong)",
               }}
             />
-            <span className="text-[11px] text-ink-faint">{w.gameweek}</span>
+            <span className="text-xs text-ink-faint">{w.gameweek}</span>
           </li>
         ))}
       </ul>
@@ -883,19 +883,19 @@ function ChipTimingCard({
       <p className="eyebrow">Chip timing</p>
       <div className="grid grid-cols-2 gap-3">
         <div>
-          <p className="text-[11px] text-ink-faint">Bench Boost</p>
+          <p className="text-xs text-ink-faint">Bench Boost</p>
           {bboostPick && bboost.kind === "open" ? (
             <>
               <p className="stat text-lg text-ink">GW{bboostPick.pick.gameweek}</p>
               <p className="text-xs text-ink-soft">+{bboostPick.pick.benchTotal.toFixed(1)} bench pts</p>
-              <p className="text-[11px] text-ink-faint">use by GW{bboost.expiresGw}</p>
+              <p className="text-xs text-ink-faint">use by GW{bboost.expiresGw}</p>
             </>
           ) : (
             <p className="mt-1 text-sm text-ink-faint opacity-60">{closedText(bboost)}</p>
           )}
         </div>
         <div>
-          <p className="text-[11px] text-ink-faint">Triple Captain</p>
+          <p className="text-xs text-ink-faint">Triple Captain</p>
           {tcPick && tc.kind === "open" ? (
             <>
               <p className="stat text-lg text-ink">GW{tcPick.pick.gameweek}</p>
@@ -903,7 +903,7 @@ function ChipTimingCard({
                 {tcPick.pick.captainId != null ? squadById.get(tcPick.pick.captainId)?.webName ?? "?" : "—"}
                 , +{tcPick.pick.captainPoints.toFixed(1)} extra
               </p>
-              <p className="text-[11px] text-ink-faint">use by GW{tc.expiresGw}</p>
+              <p className="text-xs text-ink-faint">use by GW{tc.expiresGw}</p>
             </>
           ) : (
             <p className="mt-1 text-sm text-ink-faint opacity-60">{closedText(tc)}</p>
@@ -913,12 +913,12 @@ function ChipTimingCard({
       {fhPick && fh.kind === "open" && (
         <FreeHitTiming weeks={fhWeeks.filter((w) => w.gameweek <= fh.expiresGw)} pick={fhPick.pick} expiresGw={fh.expiresGw} />
       )}
-      <p className="text-[11px] text-ink-faint">
+      <p className="text-xs text-ink-faint">
         Best gameweek in the {upcoming.length}-GW window (up to each chip&rsquo;s last gameweek) to
         hold your squad unchanged and press the button — assumes no transfers between now and then.
       </p>
       {beyond.length > 0 && (
-        <p className="text-[11px] text-ink-soft" data-testid="chip-beyond-window">
+        <p className="text-xs text-ink-soft" data-testid="chip-beyond-window">
           {beyond.join("; ")}, but the forecast only looks ahead to GW{lastForecastGw} — a better week
           may come later.
         </p>
@@ -985,7 +985,6 @@ export default function Scenarios({
    * from their 15 rather than the app owner's. Null for the owner. */
   guestTeam?: GuestTeam | null;
 }) {
-  const pitchView = usePitchView();
   const [horizon, setHorizon] = useState<Horizon>("1");
   const poolById = new Map(pool.map((p) => [p.id, p]));
 
@@ -997,7 +996,6 @@ export default function Scenarios({
     <section className="space-y-4">
       <div className="flex flex-wrap items-center justify-between gap-2 px-1">
         <h2 className="eyebrow">Transfer scenarios</h2>
-        <ViewSwitch view={pitchView} />
         <div className="segment">
           {HORIZONS.map((h) => (
             <button key={h} data-active={horizon === h} onClick={() => setHorizon(h)}>

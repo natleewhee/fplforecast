@@ -19,7 +19,7 @@ export default function CopyOverride({ snippet, label }: { snippet: string; labe
       type="button"
       onClick={copy}
       aria-label={`Copy an override for ${label}`}
-      className="inline-flex h-11 shrink-0 items-center rounded-full border border-line px-3 text-[11px] text-ink-soft hover:border-border-strong"
+      className="inline-flex h-11 shrink-0 items-center rounded-full border border-line px-3 text-xs text-ink-soft hover:border-border-strong"
     >
       {done ? "Copied" : "Copy"}
     </button>

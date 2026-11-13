@@ -47,13 +47,13 @@ export default function CaptainShortlist({
           >
             <div className="flex items-baseline justify-between gap-2">
               <span className="min-w-0 truncate text-[13px] font-bold text-ink">
-                {c.webName} <span className="text-[10px] font-normal text-ink-faint">{c.team}</span>
+                {c.webName} <span className="text-xs font-normal text-ink-faint">{c.team}</span>
               </span>
-              <span className="shrink-0 text-[11px] text-ink-soft">
+              <span className="shrink-0 text-xs text-ink-soft">
                 <span className="stat text-[var(--accent)]">{c.xp.toFixed(1)}</span> xP
               </span>
             </div>
-            <div className="mt-0.5 flex flex-wrap items-center gap-x-2 gap-y-0.5 text-[10.5px] text-ink-soft">
+            <div className="mt-0.5 flex flex-wrap items-center gap-x-2 gap-y-0.5 text-xs text-ink-soft">
               {c.isModelPick && <span className="chip chip-accent">Model pick</span>}
               {c.isDouble && <span className="chip chip-warn">Double GW</span>}
               {more && (
@@ -70,27 +70,27 @@ export default function CaptainShortlist({
         ))}
       </ol>
       {s.edge && (
-        <div className="flex flex-wrap items-center gap-2 text-[11px] text-ink-soft">
+        <div className="flex flex-wrap items-center gap-2 text-xs text-ink-soft">
           <span className={s.edge.label === "clear edge" ? "chip chip-accent" : "chip"}>
             {s.edge.label} +{s.edge.points.toFixed(1)}
           </span>
           <span>over vice {s.edge.viceName}</span>
         </div>
       )}
-      {s.secondNote && <p className="text-[11px] leading-snug text-ink-soft">{s.secondNote.text}</p>}
+      {s.secondNote && <p className="text-xs leading-snug text-ink-soft">{s.secondNote.text}</p>}
       <button
         type="button"
         aria-expanded={more}
         aria-controls={more ? "captain-more-details" : undefined}
         data-testid="captain-more"
         onClick={() => setMore((m) => !m)}
-        className="inline-flex min-h-11 w-full items-center justify-between gap-2 rounded-lg border border-line px-3 text-[11px] font-medium text-ink-soft hover:border-border-strong"
+        className="inline-flex min-h-11 w-full items-center justify-between gap-2 rounded-lg border border-line px-3 text-xs font-medium text-ink-soft hover:border-border-strong"
       >
         <span>{more ? "Less" : `More${hiddenCount > 0 ? `: ${hiddenCount} more pick${hiddenCount === 1 ? "" : "s"}, ` : ": "}range, ownership, form`}</span>
         <span aria-hidden>{more ? "▴" : "▾"}</span>
       </button>
       {more && (
-        <p id="captain-more-details" className="text-[10px] leading-snug text-ink-faint">
+        <p id="captain-more-details" className="text-xs leading-snug text-ink-faint">
           Ranked by expected points. Ownership is FPL&rsquo;s overall figure, not effective ownership.
         </p>
       )}

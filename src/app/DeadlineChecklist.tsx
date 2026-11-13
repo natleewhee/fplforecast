@@ -5,7 +5,7 @@ import type { Forecast } from "@/lib/snapshots";
 import { chipChecklist } from "@/lib/chips";
 import { availabilityFlag, hasRiskData, risksForGameweek } from "@/lib/availability";
 import { NO_PRICE_DATA, priceRow } from "@/lib/priceWatch";
-import { countdown } from "@/lib/time";
+import { countdown, sgDateTime } from "@/lib/time";
 import { lineupFor, resolveSwaps, type PendingSwap } from "@/lib/squadView";
 
 type RowStatus = "ok" | "amber" | "red" | "info";
@@ -40,7 +40,7 @@ function ChecklistRow({
       />
       <div className="min-w-0 flex-1">
         <div className="text-xs font-medium text-ink">{label}</div>
-        {detail != null && <div className="text-[11px] text-ink-soft">{detail}</div>}
+        {detail != null && <div className="text-xs text-ink-soft">{detail}</div>}
         {children}
       </div>
     </div>
@@ -54,7 +54,7 @@ function riskPhrase(kind: string): string {
   return "flagged by FPL";
 }
 
-type Risk = { name: string; kind: string; notes: string };
+export type Risk = { name: string; kind: string; notes: string };
 
 /** "Tavernier, Groß: one yellow from a ban (FPL)": players grouped by what FPL flagged them for. */
 function shortRisks(risks: Risk[]): string {
@@ -67,9 +67,21 @@ function shortRisks(risks: Risk[]): string {
   return [...byKind].map(([kind, names]) => `${names.join(", ")}: ${riskPhrase(kind)} (FPL)`).join("; ");
 }
 
+/** FPL's own sentence, once per distinct sentence, with every player it applies to: FPL writes
+ * the same "This player currently has 4 Premier League yellow cards..." for each of them. */
+export function fplWording(risks: Risk[]): string[] {
+  const byNote = new Map<string, string[]>();
+  for (const r of risks) {
+    const names = byNote.get(r.notes) ?? [];
+    if (!names.includes(r.name)) names.push(r.name);
+    byNote.set(r.notes, names);
+  }
+  return [...byNote].map(([notes, names]) => `${names.join(", ")}: ${notes}`);
+}
+
 function RiskDetail({ risks }: { risks: Risk[] }) {
   const [open, setOpen] = useState(false);
-  const full = risks.map((r) => `${r.name}: ${r.notes}`);
+  const full = fplWording(risks);
   return (
     <>
       <button
@@ -78,7 +90,7 @@ function RiskDetail({ risks }: { risks: Risk[] }) {
         aria-controls={open ? "checklist-risk-wording" : undefined}
         title={full.join(" ")}
         onClick={() => setOpen((o) => !o)}
-        className="relative -my-1 flex min-h-11 w-full items-center justify-between gap-2 text-left text-[11px] text-ink-soft"
+        className="relative -my-1 flex min-h-11 w-full items-center justify-between gap-2 text-left text-xs text-ink-soft"
       >
         <span className="min-w-0">{shortRisks(risks)}</span>
         <span className="shrink-0 text-ink-faint" aria-hidden>
@@ -86,7 +98,7 @@ function RiskDetail({ risks }: { risks: Risk[] }) {
         </span>
       </button>
       {open && (
-        <ul id="checklist-risk-wording" className="mb-1 space-y-0.5 text-[11px] text-ink-faint">
+        <ul id="checklist-risk-wording" className="mb-1 space-y-0.5 text-xs text-ink-faint">
           {full.map((l, i) => (
             <li key={`${i}-${l}`}>{l}</li>
           ))}
@@ -185,7 +197,7 @@ export default function DeadlineChecklist({
   const transferDetail = !topScenario
     ? "No transfer scenario available yet."
     : topScenario.transfersIn.length === 0
-      ? "Rolling your transfer is the best move this week -- no swap clears the gap."
+      ? "Rolling your transfer is the best move this week — no swap clears the gap."
       : `Best move: ${topScenario.transfersOut.map((p) => p.webName).join(", ")} → ${topScenario.transfersIn
           .map((p) => p.webName)
           .join(", ")} (${topScenario.netPoints >= 0 ? "+" : ""}${topScenario.netPoints.toFixed(1)} net pts)`;
@@ -208,11 +220,11 @@ export default function DeadlineChecklist({
     ? "No captain picked yet."
     : `${captainName}${viceName ? `, vice ${viceName}` : ""}${
         capMoved
-          ? " -- the app moved the armband for your transfers; the model re-picks at the next rebuild"
+          ? " — the app moved the armband for your transfers; the model re-picks at the next rebuild"
           : viceMoved
-            ? " -- vice adjusted for your transfers; the model re-picks at the next rebuild"
+            ? " — vice adjusted for your transfers; the model re-picks at the next rebuild"
             : edge
-              ? ` -- ${edge.label} (+${edge.points.toFixed(1)})`
+              ? ` — ${edge.label} (+${edge.points.toFixed(1)})`
               : ""
       }`;
 
@@ -257,7 +269,7 @@ export default function DeadlineChecklist({
           <ChecklistRow status="amber" label="Suspension / loan-ban risk (FPL)">
             <RiskDetail risks={riskList} />
             {!riskComplete && (
-              <div className="text-[10.5px] text-ink-faint">
+              <div className="text-xs text-ink-faint">
                 FPL risk data covers {riskCovered} of {forecast.squad.players.length} players.
               </div>
             )}
@@ -283,7 +295,7 @@ export default function DeadlineChecklist({
             className="flex min-h-11 w-full items-center gap-2 py-1.5 text-left"
           >
             <span className="h-2 w-2 shrink-0 rounded-full" style={{ background: DOT_COLOR.ok }} aria-hidden />
-            <span className="min-w-0 flex-1 text-[11px] text-ink-soft" data-testid="checklist-all-clear">
+            <span className="min-w-0 flex-1 text-xs text-ink-soft" data-testid="checklist-all-clear">
               <span className="font-medium text-ink">All clear:</span> {clear.map((c) => c.short).join(", ")}
             </span>
             <span className="shrink-0 text-ink-faint" aria-hidden>
@@ -300,8 +312,8 @@ export default function DeadlineChecklist({
         </div>
       )}
 
-      <p className="mt-2 text-[10px] text-ink-faint">
-        As of last night&rsquo;s build ({new Date(forecast.generatedAt).toLocaleString()}) -- not live news.
+      <p className="mt-2 text-xs text-ink-faint">
+        As of last night&rsquo;s build ({sgDateTime(forecast.generatedAt)}) — not live news.
       </p>
     </div>
   );

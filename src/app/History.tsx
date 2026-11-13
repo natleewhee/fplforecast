@@ -70,14 +70,14 @@ export default function History({ history }: { history: SeasonHistory }) {
                 <div className="flex h-full gap-1.5">
                   {gws.map((g) => (
                     <div key={g.gameweek} className="flex h-full w-8 shrink-0 flex-col items-center">
-                      <span className="font-mono text-[9px] text-ink-soft">{g.points}</span>
+                      <span className="font-mono text-xs text-ink-soft">{g.points}</span>
                       <div className="flex w-full flex-1 items-end pt-1">
                         <div
                           className="w-full rounded-t bg-gradient-to-t from-[color-mix(in_srgb,var(--accent)_55%,transparent)] to-[var(--accent)]"
                           style={{ height: `${Math.max(4, ((g.points ?? 0) / maxPts) * 100)}%` }}
                         />
                       </div>
-                      <span className="mt-1 text-[9px] text-ink-faint">GW{g.gameweek}</span>
+                      <span className="mt-1 text-xs text-ink-faint">GW{g.gameweek}</span>
                     </div>
                   ))}
                 </div>
@@ -109,7 +109,7 @@ export default function History({ history }: { history: SeasonHistory }) {
               </div>
             </div>
 
-            <div className="mt-2 flex items-center justify-between border-t border-line pt-2 text-[10px]">
+            <div className="mt-2 flex items-center justify-between border-t border-line pt-2 text-xs">
               <span className="flex items-center gap-3 text-ink-faint">
                 <span>
                   <span className="inline-block h-2 w-2 rounded-sm bg-[var(--accent)] align-middle" />{" "}
@@ -145,7 +145,7 @@ export default function History({ history }: { history: SeasonHistory }) {
                     {compactRank(g.overallRank)} · £{g.teamValue.toFixed(1)}
                   </span>
                   {scored && (
-                    <span className="font-mono text-[10px] text-ink-soft">
+                    <span className="font-mono text-xs text-ink-soft">
                       m{mvb.model} b{mvb.baseline}
                     </span>
                   )}
@@ -159,7 +159,7 @@ export default function History({ history }: { history: SeasonHistory }) {
               aria-expanded={showAll}
               aria-controls="history-rows"
               onClick={() => setShowAll((a) => !a)}
-              className="mt-1 inline-flex min-h-11 w-full items-center justify-center rounded-lg border border-line text-[11px] font-medium text-ink-soft hover:border-border-strong"
+              className="mt-1 inline-flex min-h-11 w-full items-center justify-center rounded-lg border border-line text-xs font-medium text-ink-soft hover:border-border-strong"
             >
               {showAll ? "Show fewer" : `Show all ${gws.length} gameweeks`}
             </button>

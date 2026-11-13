@@ -65,7 +65,7 @@ export function Dropdown<T extends string | number>({
           {current?.label ?? placeholder}
         </span>
         <span
-          className={`shrink-0 text-[10px] text-ink-faint transition-transform duration-150 ${open ? "rotate-180" : ""}`}
+          className={`shrink-0 text-xs text-ink-faint transition-transform duration-150 ${open ? "rotate-180" : ""}`}
         >
           ▾
         </span>

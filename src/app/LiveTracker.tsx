@@ -193,7 +193,7 @@ function LoadFailed({ error, online, onRetry }: { error: string; online: boolean
       <button
         type="button"
         onClick={onRetry}
-        className="inline-flex h-11 shrink-0 items-center rounded-full border border-line px-3 text-[11px] text-ink-soft hover:border-border-strong"
+        className="inline-flex h-11 shrink-0 items-center rounded-full border border-line px-3 text-xs text-ink-soft hover:border-border-strong"
       >
         Retry
       </button>
@@ -268,7 +268,7 @@ function TrackerPanel({
             <span className="ml-2 text-ink-faint">final</span>
           )}
         </span>
-        <span className="text-[11px] text-ink-faint">
+        <span className="text-xs text-ink-faint">
           {fresh.level === "ok" ? fresh.text : `updated ${clockTime(lastOk)}`}
         </span>
       </div>
@@ -310,7 +310,7 @@ function TrackerPanel({
       </div>
 
       {!payload.dataChecked && view.rows.some((r) => r.subbedIn || r.subbedOut) && (
-        <p className="text-[11px] text-ink-faint" data-testid="autosub-note">
+        <p className="text-xs text-ink-faint" data-testid="autosub-note">
           Auto-subs shown here are provisional: FPL confirms them when the gameweek ends.
         </p>
       )}
@@ -324,7 +324,7 @@ function TrackerPanel({
         {view.lowConfidence && <span className="chip">low confidence</span>}
       </div>
 
-      <details className="text-[11px] text-ink-faint">
+      <details className="text-xs text-ink-faint">
         <summary className="min-h-11 cursor-pointer py-3 font-medium text-ink-soft hover:text-ink">
           How {view.estimatedRank ? "are the safety score and rank" : "is the safety score"} worked out?
         </summary>

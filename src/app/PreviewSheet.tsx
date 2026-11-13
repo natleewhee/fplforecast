@@ -56,7 +56,7 @@ export default function PreviewSheet({
           ? `Replaces ${replaces}, a transfer already made in FPL after the last model build. The model re-picks the XI and captain at the next rebuild.`
           : `Replaces ${replaces}. This is a preview: the model re-picks the XI and captain at the next rebuild.`}
       </p>
-      <dl className="mt-3 grid grid-cols-2 gap-x-3 gap-y-1.5 border-t border-line pt-3 text-[11px]">
+      <dl className="mt-3 grid grid-cols-2 gap-x-3 gap-y-1.5 border-t border-line pt-3 text-xs">
         <dt className="text-ink-faint">GW{gameweek} projection</dt>
         <dd className="text-right font-mono text-[var(--accent)]">{xp != null ? `${xp.toFixed(1)} xP` : "—"}</dd>
         <dt className="text-ink-faint">Price</dt>

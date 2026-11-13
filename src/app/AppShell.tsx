@@ -40,11 +40,14 @@ import {
   forecastErrorMessage,
   isValidTeamIdInput,
 } from "@/lib/forecastErrors";
-import { STALE_AFTER_HOURS, describeAge, forecastAgeHours } from "@/lib/time";
+import { STALE_AFTER_HOURS, describeAge, forecastAgeHours, sgDateTime } from "@/lib/time";
 import CaptainShortlist from "./CaptainShortlist";
 import FixtureTicker from "./FixtureTicker";
 import type { PendingTransfer } from "@/lib/transfers";
 import type { TransferTools } from "./ReplaceSheet";
+import { setPitchAmbient, setPitchView, usePitchAmbient, usePitchView, usePrefersReducedMotion } from "@/lib/pitchView";
+
+const MENU_ITEMS = "[role=menuitem],[role=menuitemcheckbox]";
 
 /** Thrown for a message that is already fit to show a person. */
 class ForecastRequestError extends Error {}
@@ -137,7 +140,7 @@ function TeamMenu({
 
   // Opening moves focus to the first item, so the keyboard lands inside the menu.
   useEffect(() => {
-    if (menuOpen) menuRef.current?.querySelector<HTMLElement>("[role=menuitem]")?.focus();
+    if (menuOpen) menuRef.current?.querySelector<HTMLElement>(MENU_ITEMS)?.focus();
   }, [menuOpen]);
 
   // A tap or focus anywhere outside the menu closes it.
@@ -161,7 +164,7 @@ function TeamMenu({
       closeMenu();
       return;
     }
-    const items = [...(menuRef.current?.querySelectorAll<HTMLElement>("[role=menuitem]") ?? [])];
+    const items = [...(menuRef.current?.querySelectorAll<HTMLElement>(MENU_ITEMS) ?? [])];
     const i = items.indexOf(document.activeElement as HTMLElement);
     if (e.key === "ArrowDown") {
       e.preventDefault();
@@ -179,6 +182,11 @@ function TeamMenu({
       setMenuOpen(false); // Tab carries on to wherever it was going
     }
   };
+
+  // The one place to choose the pitch style; it applies to every pitch (Live, Squad, Scenarios).
+  const pitchView = usePitchView();
+  const passing = usePitchAmbient();
+  const reducedMotion = usePrefersReducedMotion();
 
   const itemClass =
     "flex h-11 w-full items-center px-4 text-left text-xs font-medium text-ink-soft hover:bg-white/5 hover:text-ink";
@@ -211,7 +219,7 @@ function TeamMenu({
             id="team-menu"
             role="menu"
             aria-label="Team options"
-            className="absolute right-0 top-12 z-40 min-w-40 overflow-hidden rounded-xl border border-line bg-[var(--bg-2)] shadow-lg"
+            className="absolute right-0 top-12 z-40 min-w-48 overflow-hidden rounded-xl border border-line bg-[var(--bg-2)] shadow-lg"
           >
             <button
               type="button"
@@ -235,6 +243,30 @@ function TeamMenu({
             >
               Change team
             </button>
+            <div role="separator" className="border-t border-line" />
+            <button
+              type="button"
+              role="menuitemcheckbox"
+              aria-checked={pitchView === "3d"}
+              className={itemClass}
+              onClick={() => setPitchView(pitchView === "3d" ? "2d" : "3d")}
+            >
+              <span className="flex-1">3D pitch</span>
+              <span aria-hidden className="text-ink-faint">{pitchView === "3d" ? "On" : "Off"}</span>
+            </button>
+            {pitchView === "3d" && !reducedMotion && (
+              <button
+                type="button"
+                role="menuitemcheckbox"
+                aria-checked={passing}
+                title="The ball goes round the pitch while nobody is selected. Switch off to save battery."
+                className={itemClass}
+                onClick={() => setPitchAmbient(!passing)}
+              >
+                <span className="flex-1">Ball passing</span>
+                <span aria-hidden className="text-ink-faint">{passing ? "On" : "Off"}</span>
+              </button>
+            )}
           </div>
         )}
       </div>
@@ -395,7 +427,7 @@ function StaleForecastBanner({ generatedAt }: { generatedAt: string }) {
     >
       <span className="font-semibold text-[var(--warn)]">Forecast is {describeAge(hours)} old.</span>{" "}
       <span className="text-ink-soft">
-        Last rebuilt {new Date(generatedAt).toLocaleString()}. The daily rebuild may be failing, so your
+        Last rebuilt {sgDateTime(generatedAt)}. The daily rebuild may be failing, so your
         squad, scenarios and any saved transfers could be out of date.
       </span>
     </div>
