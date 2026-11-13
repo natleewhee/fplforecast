@@ -44,7 +44,7 @@ function RankHeader({ league }: { league: NonNullable<LeaguesResponse["league"]>
         <button
           type="button"
           onClick={scrollToMe}
-          className="inline-flex h-11 items-center rounded bg-white/[0.06] px-2 text-[11px] font-medium text-ink-soft hover:bg-white/[0.1]"
+          className="inline-flex h-11 items-center rounded bg-white/[0.06] px-2 text-xs font-medium text-ink-soft hover:bg-white/[0.1]"
         >
           Jump to my position ↓
         </button>
@@ -69,7 +69,7 @@ function LeagueTable({
     <section className="space-y-2">
       <div className="flex flex-wrap items-center justify-between gap-2 px-1">
         <h2 className="eyebrow">{league.leagueName}</h2>
-        <span className="text-[11px] text-ink-faint">GW{gameweek}</span>
+        <span className="text-xs text-ink-faint">GW{gameweek}</span>
       </div>
       <RankHeader league={league} />
       {/* Fixed height with its own scroll, not the page's -- a 20-manager
@@ -110,7 +110,7 @@ function LeagueTable({
                 <Fragment key={e.entryId}>
                   {showDivider && (
                     <tr key={`divider-${e.entryId}`} aria-hidden="true">
-                      <td colSpan={5} className="px-1.5 py-1 text-center text-[10px] text-ink-faint sm:px-3">
+                      <td colSpan={5} className="px-1.5 py-1 text-center text-xs text-ink-faint sm:px-3">
                         ⋯
                       </td>
                     </tr>
@@ -125,7 +125,7 @@ function LeagueTable({
                       <span className="font-mono tabular-nums">{e.rank}</span>
                       {moved !== 0 && (
                         <span
-                          className={`ml-0.5 font-mono text-[9px] ${moved > 0 ? "text-[var(--accent)]" : "text-[var(--danger)]"}`}
+                          className={`ml-0.5 font-mono text-xs ${moved > 0 ? "text-[var(--accent)]" : "text-[var(--danger)]"}`}
                         >
                           {moved > 0 ? "▲" : "▼"}
                           {Math.abs(moved)}
@@ -143,19 +143,19 @@ function LeagueTable({
                       <span className="flex w-full items-center gap-1.5 truncate font-medium text-ink group-hover:text-[var(--accent)]">
                         {e.entryName}
                         {isMe && (
-                          <span className="rounded bg-[var(--accent)] px-1 py-0.5 text-[9px] font-bold text-[var(--bg-0)]">
+                          <span className="rounded bg-[var(--accent)] px-1 py-0.5 text-xs font-bold text-[var(--bg-0)]">
                             YOU
                           </span>
                         )}
                         {e.chip && (
-                          <span className="rounded bg-[var(--accent)]/15 px-1 py-0.5 text-[9px] font-bold text-[var(--accent)]">
+                          <span className="rounded bg-[var(--accent)]/15 px-1 py-0.5 text-xs font-bold text-[var(--accent)]">
                             {e.chip}
                           </span>
                         )}
                       </span>
-                      <span className="block truncate text-[10px] text-ink-faint">{e.playerName}</span>
+                      <span className="block truncate text-xs text-ink-faint">{e.playerName}</span>
                       {(e.captainName || e.playersLive != null) && (
-                        <span className="block truncate text-[10px] text-ink-faint">
+                        <span className="block truncate text-xs text-ink-faint">
                           {e.captainName && <>C: {e.captainName}</>}
                           {e.captainName && e.playersLive != null && " · "}
                           <LiveCell entry={e} />
@@ -251,8 +251,8 @@ function ManagerSquadPreview({
         } catch {
           throw new Error(
             res.ok
-              ? "Got an unreadable response -- try again in a moment."
-              : `Server error (HTTP ${res.status}) -- try again in a moment.`,
+              ? "Got an unreadable response — try again in a moment."
+              : `Server error (HTTP ${res.status}) — try again in a moment.`,
           );
         }
         if (!res.ok) throw new Error((json as { error?: string }).error || `HTTP ${res.status}`);
@@ -268,9 +268,9 @@ function ManagerSquadPreview({
         const isNetworkError = err instanceof TypeError;
         setError(
           isAbort
-            ? "Timed out -- the model's taking too long, try again."
+            ? "Timed out — the model's taking too long, try again."
             : isNetworkError
-              ? "Network error -- the connection dropped before a response came back. Try again."
+              ? "Network error — the connection dropped before a response came back. Try again."
               : (err as Error).message,
         );
       }
@@ -295,7 +295,7 @@ function ManagerSquadPreview({
             <button
               type="button"
               onClick={onDuel}
-              className="inline-flex h-11 items-center gap-1.5 rounded-full bg-[var(--accent)] px-3 text-[11px] font-bold text-[var(--bg-0)]"
+              className="inline-flex h-11 items-center gap-1.5 rounded-full bg-[var(--accent)] px-3 text-xs font-bold text-[var(--bg-0)]"
             >
               <SwordsIcon /> Duel
             </button>
@@ -303,7 +303,7 @@ function ManagerSquadPreview({
           <button
             type="button"
             onClick={onClose}
-            className="inline-flex h-11 items-center rounded-full border border-line px-3 text-[11px] text-ink-soft hover:border-border-strong"
+            className="inline-flex h-11 items-center rounded-full border border-line px-3 text-xs text-ink-soft hover:border-border-strong"
           >
             Close
           </button>
@@ -318,7 +318,7 @@ function ManagerSquadPreview({
               setError(null);
               setAttempt((a) => a + 1);
             }}
-            className="inline-flex h-11 shrink-0 items-center rounded-full border border-line px-3 text-[11px] text-ink-soft hover:border-border-strong"
+            className="inline-flex h-11 shrink-0 items-center rounded-full border border-line px-3 text-xs text-ink-soft hover:border-border-strong"
           >
             Retry
           </button>
@@ -334,6 +334,15 @@ function ManagerSquadPreview({
       {squad && <LiveSquadPitch data={squad} />}
     </div>
   );
+}
+
+/** What went wrong, in plain words: no HTTP codes or raw exception text. */
+function leaguesErrorCopy(err: unknown): string {
+  if (err instanceof TypeError) return "The connection dropped. Check your signal and try again.";
+  const msg = err instanceof Error ? err.message : "";
+  if (/HTTP 5\d\d|timed? ?out|unavailable/i.test(msg)) return "FPL isn\u2019t answering right now. It\u2019s usually back within a few minutes.";
+  if (/HTTP 404|not found/i.test(msg)) return "FPL couldn\u2019t find a league for this team.";
+  return "Something went wrong on our side. Try again in a moment.";
 }
 
 export default function LeaguesPage({ teamId }: { teamId?: string | null } = {}) {
@@ -374,7 +383,7 @@ export default function LeaguesPage({ teamId }: { teamId?: string | null } = {})
       setError(null);
     } catch (err) {
       if (selectedIdRef.current !== requestedId) return;
-      setError((err as Error).message);
+      setError(leaguesErrorCopy(err));
     } finally {
       if (selectedIdRef.current === requestedId) setLoading(false);
     }
@@ -405,7 +414,20 @@ export default function LeaguesPage({ teamId }: { teamId?: string | null } = {})
   }
   if (error) {
     return (
-      <div className="panel p-3 text-xs text-[var(--danger)]">Leagues unavailable: {error}</div>
+      <div className="panel space-y-2 p-3" role="alert" data-testid="leagues-error">
+        <p className="text-sm text-ink">Couldn&rsquo;t load your leagues.</p>
+        <p className="text-xs text-ink-faint">{error}</p>
+        <button
+          type="button"
+          onClick={() => {
+            setLoading(true);
+            void tick();
+          }}
+          className="min-h-11 rounded-full border border-line px-4 text-sm font-semibold text-ink"
+        >
+          Retry
+        </button>
+      </div>
     );
   }
   if (!data) {
@@ -473,9 +495,9 @@ export default function LeaguesPage({ teamId }: { teamId?: string | null } = {})
         />
       )}
       {data.league && (
-        <p className="px-1 text-[11px] text-ink-faint">
+        <p className="px-1 text-xs text-ink-faint">
           Live xP is this app&rsquo;s own projection (actual points so far + decayed expected points
-          for the rest of the gameweek), not FPL&rsquo;s -- it can read slightly off for an entry
+          for the rest of the gameweek), not FPL&rsquo;s — it can read slightly off for an entry
           playing a chip this gameweek. Captain shown is who they picked, not who ends up with the
           armband if their captain doesn&rsquo;t play.
         </p>

@@ -58,7 +58,7 @@ export default function LivePlayerSheet({
             {statusText(row)}
           </p>
           {(row.otherOpponents?.length ?? 0) > 0 && (
-            <p className="mt-0.5 text-[11px] text-ink-faint">
+            <p className="mt-0.5 text-xs text-ink-faint">
               Double gameweek · also {row.otherOpponents!.join(", ")}
             </p>
           )}
@@ -106,7 +106,7 @@ export default function LivePlayerSheet({
         </p>
       )}
 
-      <dl className="mt-4 grid grid-cols-2 gap-x-3 gap-y-1.5 border-t border-line pt-3 text-[11px]">
+      <dl className="mt-4 grid grid-cols-2 gap-x-3 gap-y-1.5 border-t border-line pt-3 text-xs">
         {row.isArmband && (
           <>
             <dt className="text-ink-faint">Captain</dt>

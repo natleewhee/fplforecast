@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useEffect, useRef, useState, type ReactNode } from "react";
 import { lookFor, type PitchKits, type PitchLooks, type Position } from "@/lib/appearance";
-import { setPitchAmbient, setPitchView, usePitchAmbient, usePrefersReducedMotion, type PitchView } from "@/lib/pitchView";
+import { usePitchAmbient, usePrefersReducedMotion } from "@/lib/pitchView";
 import { decideCelebration, type CelebrationEvent } from "./celebrate";
 import { formationSpots } from "./spots";
 import type { FigureDef, StageHandle, StageState } from "./stage";
@@ -69,40 +69,6 @@ function buildDefs(xi: Pitch3DPlayer[], data: PitchData): FigureDef[] {
   const out: FigureDef[] = [];
   rows.forEach((row, r) => row.forEach((p, i) => out.push(def(p, placed[r][i], false))));
   return out;
-}
-
-/** The 3D / 2D switch, shared by every pitch, with the passing switch beside it in 3D. */
-export function ViewSwitch({ view, onChange }: { view: PitchView; onChange?: (v: PitchView) => void }) {
-  const passing = usePitchAmbient();
-  const reduced = usePrefersReducedMotion();
-  return (
-    <div className="flex items-center gap-2">
-      {view === "3d" && !reduced && (
-        <button
-          type="button"
-          aria-pressed={passing}
-          onClick={() => setPitchAmbient(!passing)}
-          className={`hit-44 relative h-8 rounded-lg border px-2.5 text-[11px] font-semibold transition ${passing ? "border-[color-mix(in_srgb,var(--accent)_50%,transparent)] text-[var(--accent)]" : "border-line text-ink-faint hover:text-ink-soft"}`}
-          title="The ball goes round the pitch while nobody is selected. Switch off to save battery."
-        >
-          Passing {passing ? "on" : "off"}
-        </button>
-      )}
-      <div className="inline-flex rounded-lg border border-line text-[11px] font-semibold" role="group" aria-label="Pitch view">
-        {(["3d", "2d"] as const).map((v) => (
-          <button
-            key={v}
-            type="button"
-            aria-pressed={view === v}
-            onClick={() => (onChange ?? setPitchView)(v)}
-            className={`hit-44 relative h-8 w-11 transition first:rounded-l-[7px] last:rounded-r-[7px] ${view === v ? "bg-[color-mix(in_srgb,var(--accent)_16%,transparent)] text-[var(--accent)]" : "text-ink-faint hover:text-ink-soft"}`}
-          >
-            {v.toUpperCase()}
-          </button>
-        ))}
-      </div>
-    </div>
-  );
 }
 
 export default function Pitch3D({

@@ -38,9 +38,33 @@ export function ageText(ms: number): string {
   return `${h}h ${m % 60}m ago`;
 }
 
-/** A local clock time like "04:19 PM", or an em dash when there is none. */
-export function clockTime(iso: string | null): string {
-  if (!iso) return "—";
+/* Dates and clock times: the app speaks Singapore Time (FPL deadlines are shown in SGT), in
+ * one 24-hour en-GB style, through the functions below only. An em dash stands in when there
+ * is no valid time. */
+const SGT = "Asia/Singapore";
+
+function valid(iso: string | null | undefined): Date | null {
+  if (!iso) return null;
   const d = new Date(iso);
-  return Number.isNaN(d.getTime()) ? "—" : d.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+  return Number.isNaN(d.getTime()) ? null : d;
+}
+
+/** A clock time in SGT, like "16:19". */
+export function clockTime(iso: string | null): string {
+  const d = valid(iso);
+  return d ? d.toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit", timeZone: SGT }) : "—";
+}
+
+/** Day and time in SGT, like "Sat 21:00" (the caller adds "SGT" where it isn't obvious). */
+export function sgDayTime(iso: string | null): string {
+  const d = valid(iso);
+  if (!d) return "—";
+  return `${d.toLocaleDateString("en-GB", { weekday: "short", timeZone: SGT })} ${clockTime(iso)}`;
+}
+
+/** Date and time in SGT, like "13 Nov, 11:00 SGT", for when something was built or saved. */
+export function sgDateTime(iso: string | null): string {
+  const d = valid(iso);
+  if (!d) return "—";
+  return `${d.toLocaleDateString("en-GB", { day: "numeric", month: "short", timeZone: SGT })}, ${clockTime(iso)} SGT`;
 }

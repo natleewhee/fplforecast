@@ -37,7 +37,7 @@ export default function Home() {
   }
 
   const footer = (
-    <p className="pt-2 text-center font-mono text-[11px] text-ink-faint">
+    <p className="pt-2 text-center font-mono text-xs text-ink-faint">
       <span className="text-[var(--accent)] opacity-60">{"// "}</span>
       snapshot {bootstrap.date}
       {fixturesDate && ` · fixtures ${fixturesDate}`}

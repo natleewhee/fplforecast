@@ -167,7 +167,7 @@ h3 {
 
 /* uppercase micro-label for HUD stat modules */
 .eyebrow {
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -195,7 +195,7 @@ h3 {
   border: 1px solid var(--border);
   background: var(--surface-strong);
   padding: 0.15rem 0.6rem;
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 600;
   color: var(--text-soft);
 }
@@ -229,7 +229,7 @@ h3 {
   min-height: 36px;
   border-radius: 999px;
   padding: 0.28rem 0.75rem;
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.02em;
   color: var(--text-soft);

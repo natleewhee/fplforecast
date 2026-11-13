@@ -215,11 +215,11 @@ export default function RecapCard({
             Share this card
           </button>
           {(note || error) && (
-            <p className="text-[11px] text-ink-faint">{note ?? `Couldn't load that week: ${error}`}</p>
+            <p className="text-xs text-ink-faint">{note ?? `Couldn't load that week: ${error}`}</p>
           )}
 
           {recap.achievements.length > 0 && (
-            <ul className="space-y-1.5 text-[11.5px]" data-testid="achievements">
+            <ul className="space-y-1.5 text-xs" data-testid="achievements">
               {recap.achievements.map((a) => (
                 <li key={a.id} className="flex items-baseline gap-2">
                   <span className={`chip shrink-0 ${a.good ? "chip-accent" : ""}`}>
@@ -242,7 +242,7 @@ export default function RecapCard({
                 <CrystalIcon /> Regret machine <ChevronIcon open={showRegrets} width={14} height={14} />
               </button>
               {showRegrets && (
-                <ul className="space-y-1.5 text-[11.5px]" data-testid="regrets">
+                <ul className="space-y-1.5 text-xs" data-testid="regrets">
                   {recap.regrets.map((r) => (
                     <li key={r.id}>{regretCopy(r)}</li>
                   ))}

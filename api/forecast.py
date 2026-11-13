@@ -131,7 +131,7 @@ def build_forecast_for_team(team_id: int) -> tuple[int, dict]:
 
     finished = [e for e in bootstrap.get("events", []) if e.get("finished")]
     if not finished:
-        return 503, {"error": "no finished gameweek yet this season -- nothing to forecast"}
+        return 503, {"error": "no finished gameweek yet this season — nothing to forecast"}
     based_on_gw = max(e["id"] for e in finished)
     target_gw = compute_forecast.upcoming_gameweek(
         bootstrap, datetime.now(timezone.utc), fallback=based_on_gw + 1
@@ -224,7 +224,7 @@ class handler(BaseHTTPRequestHandler):
         except Exception:  # noqa: BLE001 -- an on-demand lookup should never 500 silently
             # The detail goes to the function log, not to an anonymous caller.
             traceback.print_exc(file=sys.stderr)
-            self._respond(502, {"error": "forecast build failed -- try again in a minute"})
+            self._respond(502, {"error": "forecast build failed — try again in a minute"})
             return
         self._respond(status, payload)
 

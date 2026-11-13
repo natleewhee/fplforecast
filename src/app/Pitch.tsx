@@ -8,11 +8,11 @@ import PlayerBreakdownSheet from "./PlayerBreakdownSheet";
 import { PitchScene } from "./PitchScene";
 import { FormBars, Halo, meanFdr, RangeBar } from "./Shirt";
 import { FaceToggle, PlayerFace } from "./PlayerFace";
-import Pitch3D, { ViewSwitch, type Pitch3DPlayer } from "./pitch3d/Pitch3D";
+import Pitch3D, { type Pitch3DPlayer } from "./pitch3d/Pitch3D";
 import PreviewSheet from "./PreviewSheet";
 import { lineupFor, resolveSwaps } from "@/lib/squadView";
 import ReplaceSheet, { type TransferTools } from "./ReplaceSheet";
-import { setPitchView, usePitchView } from "@/lib/pitchView";
+import { usePitchView } from "@/lib/pitchView";
 import { ArmbandBadge, POSITION_DOT } from "./tokenParts";
 
 function bandLabel(band: { floor: number; ceiling: number; bandProvisional: boolean } | null | undefined) {
@@ -388,7 +388,7 @@ export default function Pitch({
                   Likely range for the XI&rsquo;s total: one realised-residual standard deviation
                   either side of the projection.
                   {forecast.xiFloorCeiling.bandProvisional &&
-                    " Provisional -- too little realised history yet, so this band is wider than it will settle to."}
+                    " Provisional — too little realised history yet, so this band is wider than it will settle to."}
                 </p>
               </details>
             )}
@@ -412,7 +412,6 @@ export default function Pitch({
           )}
           <div className="ml-auto flex items-center gap-2">
             {view === "2d" && <FaceToggle />}
-            <ViewSwitch view={view} onChange={(v) => { setNo3d(false); setPitchView(v); }} />
           </div>
         </div>
         {no3d && <p className="mb-2 text-[10.5px] text-ink-faint">3D isn&rsquo;t available on this device, so you&rsquo;re seeing the 2D pitch.</p>}

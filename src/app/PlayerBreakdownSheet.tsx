@@ -92,7 +92,7 @@ export default function PlayerBreakdownSheet({
           <div className="stat stat-glow text-3xl leading-none">{xp != null ? xp.toFixed(1) : "—"}</div>
           <div className="eyebrow mt-1">xP</div>
           {isTargetGw && player.floorCeiling && (
-            <div className="font-mono text-[10px] text-ink-faint">
+            <div className="font-mono text-xs text-ink-faint">
               {player.floorCeiling.floor.toFixed(1)}–{player.floorCeiling.ceiling.toFixed(1)}
             </div>
           )}
@@ -142,7 +142,7 @@ export default function PlayerBreakdownSheet({
         </p>
       )}
 
-      <dl className="mt-4 grid grid-cols-2 gap-x-3 gap-y-1.5 border-t border-line pt-3 text-[11px]">
+      <dl className="mt-4 grid grid-cols-2 gap-x-3 gap-y-1.5 border-t border-line pt-3 text-xs">
         {b.expectedMinutes != null && (
           <>
             <dt className="text-ink-faint">Expected minutes</dt>

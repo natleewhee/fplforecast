@@ -12,8 +12,8 @@ import { LiveFeed } from "./LiveUpdates";
 import LivePlayerSheet, { statusText } from "./LivePlayerSheet";
 import { useLiveFx, type Float } from "./useLiveFx";
 import { ArmbandBadge } from "./tokenParts";
-import Pitch3D, { ViewSwitch, type Pitch3DPlayer } from "./pitch3d/Pitch3D";
-import { setPitchView, usePitchView } from "@/lib/pitchView";
+import Pitch3D, { type Pitch3DPlayer } from "./pitch3d/Pitch3D";
+import { usePitchView } from "@/lib/pitchView";
 
 /* The Live tab's floodlit night pitch: the eleven who count right now (an
  * auto-subbed-in bench player replaces whoever didn't play), each as a token
@@ -309,7 +309,6 @@ export default function LivePitch({
         </span>
         <div className="flex shrink-0 items-center gap-2">
           {view === "2d" && <FaceToggle />}
-          <ViewSwitch view={view} onChange={(v) => { setNo3d(false); setPitchView(v); }} />
           {view === "2d" && <button
             type="button"
             aria-pressed={heat}
