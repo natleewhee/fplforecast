@@ -203,7 +203,7 @@ test.describe("Squad and Scenarios tabs", () => {
     await open(page);
     await openTab(page, "Squad");
     const scene = await visibleScene(page);
-    const group = page.getByRole("group", { name: "Player faces" }).nth(1);
+    const group = page.locator("[data-team-half='next']").getByRole("group", { name: "Player faces" });
     await group.getByRole("button", { name: "Photos" }).click();
     await expect(scene.locator("img")).not.toHaveCount(0);
     await group.getByRole("button", { name: "Shirts" }).click();
@@ -1278,7 +1278,7 @@ test.describe("3D Squad pitch", () => {
     await expect(item).toHaveAttribute("aria-checked", "true");
     await item.click();
     await expect(page.getByTestId("pitch3d")).toHaveCount(0);
-    await expect(page.locator(".floodlit-pitch").first()).toBeVisible();
+    await expect(page.locator("[data-team-half='next'] .floodlit-pitch").first()).toBeVisible();
     expect(await page.evaluate(() => localStorage.getItem("fpl-pitch-view"))).toBe("2d");
   });
 
