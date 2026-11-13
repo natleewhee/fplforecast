@@ -1059,9 +1059,49 @@ def test_main_mid_gameweek_builds_from_the_live_weeks_picks(tmp_path, monkeypatc
     assert captured["based_on_gw"] == 10
     assert captured["squad_ids"] == list(range(31, 46))
     assert captured["squad_entry_history"]["bank"] == 12
+    # the forecast says whose squad it is: GW11's, not the reviewed GW10's
+    assert captured["free_hit_reverted_from"] == 11
 
     # before the deadline (target is the week after the finished one) the live file is ignored
     monkeypatch.setattr(cf, "upcoming_gameweek", lambda *a, **k: 11)
     with pytest.raises(_Stop):
         cf.main()
     assert captured["squad_ids"] == list(range(1, 16))
+
+
+def test_a_saved_transfer_already_in_the_squad_is_skipped():
+    """Mid-gameweek the live squad already holds this week's real transfers; a
+    saved X->B on top would put B in twice (the owner made Y->B in FPL)."""
+    assert cf.apply_overrides([1, 2, 3, 99], [{"out": 1, "in": 99}]) == [1, 2, 3, 99]
+    assert cf.apply_overrides([1, 2, 3], [{"out": 1, "in": 99}]) == [99, 2, 3]
+
+
+def test_main_still_writes_the_forecast_when_next_weeks_cache_fails(tmp_path, monkeypatch):
+    picks_dir = tmp_path / f"picks-{cf.TEAM_ID}"
+    picks_dir.mkdir()
+    (picks_dir / "gw10.json").write_text(json.dumps(_fh_payload(list(range(1, 16)))))
+    monkeypatch.setattr(cf, "DATA_DIR", tmp_path)
+    monkeypatch.setattr(cf, "load_bootstrap", lambda: {"events": []})
+    monkeypatch.setattr(cf, "upcoming_gameweek", lambda *a, **k: 11)
+
+    def build(bootstrap, gw):
+        if gw == 12:
+            raise RuntimeError("model fit blew up")
+        return {"targetGw": gw}
+
+    monkeypatch.setattr(cf, "build_pool_context", build)
+    monkeypatch.setattr(cf, "save_pool_context", lambda ctx, gw, keep_from=None: tmp_path / "ctx.pkl")
+    monkeypatch.setattr(cf, "load_entry_history", lambda: {})
+    reached = {}
+
+    class _Stop(Exception):
+        pass
+
+    def fake_build(*a, **kw):
+        reached["built"] = True
+        raise _Stop
+
+    monkeypatch.setattr(cf, "build_personal_forecast", fake_build)
+    with pytest.raises(_Stop):
+        cf.main()
+    assert reached == {"built": True}

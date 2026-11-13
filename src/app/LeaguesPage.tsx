@@ -9,6 +9,7 @@ import { readItem, writeItem } from "@/lib/storage";
 import LiveSquadPitch from "./LiveSquadPitch";
 import type { LeagueEntryRow, LeaguesResponse } from "./api/league/route";
 import type { LeagueSquadResponse } from "./api/league/squad/route";
+import { LeaguesFetchError, leaguesErrorCopy, leaguesReplyCopy } from "@/lib/leaguesError";
 
 const POLL_MS = 60_000;
 const STORAGE_KEY = "fplforecast:selectedLeagueId";
@@ -336,15 +337,6 @@ function ManagerSquadPreview({
   );
 }
 
-/** What went wrong, in plain words: no HTTP codes or raw exception text. */
-function leaguesErrorCopy(err: unknown): string {
-  if (err instanceof TypeError) return "The connection dropped. Check your signal and try again.";
-  const msg = err instanceof Error ? err.message : "";
-  if (/HTTP 5\d\d|timed? ?out|unavailable/i.test(msg)) return "FPL isn\u2019t answering right now. It\u2019s usually back within a few minutes.";
-  if (/HTTP 404|not found/i.test(msg)) return "FPL couldn\u2019t find a league for this team.";
-  return "Something went wrong on our side. Try again in a moment.";
-}
-
 export default function LeaguesPage({ teamId }: { teamId?: string | null } = {}) {
   const [data, setData] = useState<LeaguesResponse | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -376,8 +368,9 @@ export default function LeaguesPage({ teamId }: { teamId?: string | null } = {})
       if (teamId) params.set("teamId", teamId);
       const qs = params.toString() ? `?${params.toString()}` : "";
       const res = await fetch(`/api/league${qs}`, { cache: "no-store" });
-      const json = await res.json();
-      if (!res.ok) throw new Error(json.error || `HTTP ${res.status}`);
+      // a non-JSON error page (a gateway timeout) is still a failed reply, not a crash
+      const json = await res.json().catch(() => ({}));
+      if (!res.ok) throw new LeaguesFetchError(leaguesReplyCopy(res.status, json as { error?: string; updating?: boolean }));
       if (selectedIdRef.current !== requestedId) return; // superseded by a newer selection
       setData(json as LeaguesResponse);
       setError(null);

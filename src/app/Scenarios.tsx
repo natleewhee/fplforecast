@@ -21,7 +21,7 @@ import { PitchScene } from "./PitchScene";
 import { FormBars, Halo, meanFdr } from "./Shirt";
 import { PlayerFace } from "./PlayerFace";
 import Pitch3D, { type Pitch3DPlayer } from "./pitch3d/Pitch3D";
-import { usePitchView } from "@/lib/pitchView";
+import { markPitch3dUnavailable, useShownPitchView } from "@/lib/pitchView";
 import { ArmbandBadge } from "./tokenParts";
 
 const HORIZONS = ["1", "3", "5"] as const;
@@ -174,10 +174,9 @@ function XiPitch({
   poolById: Map<number, PoolPlayer>;
   weekIndex: number;
 }) {
-  const savedView = usePitchView();
-  const [no3d, setNo3d] = useState(false);
+  const view = useShownPitchView();
   const bench = squad.filter((id) => !xi.includes(id));
-  if (savedView === "3d" && !no3d) {
+  if (view === "3d") {
     const to3d = (p: PoolPlayer): Pitch3DPlayer => {
       const xp = p.perGameweek[weekIndex];
       const doubt = availabilityFlag(p.availability);
@@ -195,7 +194,7 @@ function XiPitch({
       };
     };
     const byPos = (ids: number[]) => ids.map((id) => poolById.get(id)).filter((p): p is PoolPlayer => !!p);
-    return <Pitch3D xi={byPos(xi).map(to3d)} bench={byPos(bench).map((p, _i, all) => ({ ...to3d(p), benchOrder: all.filter((b) => b.position !== "GKP").indexOf(p) + 1 }))} onUnavailable={() => setNo3d(true)} compact />;
+    return <Pitch3D xi={byPos(xi).map(to3d)} bench={byPos(bench).map((p, _i, all) => ({ ...to3d(p), benchOrder: all.filter((b) => b.position !== "GKP").indexOf(p) + 1 }))} onUnavailable={markPitch3dUnavailable} compact />;
   }
   const rows = ROWS.map((pos) =>
     xi.map((id) => poolById.get(id)).filter((p): p is PoolPlayer => !!p && p.position === pos)

@@ -182,7 +182,7 @@ def snapshot_live_picks(bootstrap: dict) -> None:
         return
     try:
         payload = fetch(f"{FPL_BASE}/entry/{TEAM_ID}/event/{gw}/picks/")
-    except (urllib.error.HTTPError, urllib.error.URLError) as exc:
+    except (OSError, ValueError) as exc:  # HTTP/URL errors, timeouts, a non-JSON reply
         print(f"live picks: fetch failed ({exc}) — non-fatal, continuing")
         return
     if not payload.get("picks"):

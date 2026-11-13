@@ -88,7 +88,7 @@ export default function FixtureTicker({
           <span aria-hidden className="inline-block text-[10px] text-ink-faint transition-transform group-open:rotate-90 motion-reduce:transition-none">&#9656;</span>
           <span className="eyebrow">Fixtures &middot; next {gameweeks.length} GW</span>
         </span>
-        <span className="text-[10px] text-ink-faint">{note || "no blanks or doubles"}</span>
+        <span className="text-xs text-ink-faint">{note || "no blanks or doubles"}</span>
       </summary>
       <div className="mt-2" role="table" aria-label="Your squad's next fixtures">
         <div className={`grid ${COLS} gap-x-1 pb-1`} role="row">
@@ -133,7 +133,7 @@ export default function FixtureTicker({
           </div>
         ))}
       </div>
-      <p className="mt-2 text-[10px] leading-snug text-ink-faint">
+      <p className="mt-2 text-xs leading-snug text-ink-faint">
         H home, A away. The bar beside each opponent is FPL&rsquo;s difficulty, green easy to red hard.
         {swaps.size > 0 && " Transferred players are shown in the place of the player they replace."}
       </p>

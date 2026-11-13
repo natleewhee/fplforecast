@@ -45,7 +45,7 @@ import CaptainShortlist from "./CaptainShortlist";
 import FixtureTicker from "./FixtureTicker";
 import type { PendingTransfer } from "@/lib/transfers";
 import type { TransferTools } from "./ReplaceSheet";
-import { setPitchAmbient, setPitchView, usePitchAmbient, usePitchView, usePrefersReducedMotion } from "@/lib/pitchView";
+import { setPitchAmbient, setPitchView, usePitch3dUnavailable, usePitchAmbient, useShownPitchView, usePrefersReducedMotion } from "@/lib/pitchView";
 
 const MENU_ITEMS = "[role=menuitem],[role=menuitemcheckbox]";
 
@@ -184,7 +184,9 @@ function TeamMenu({
   };
 
   // The one place to choose the pitch style; it applies to every pitch (Live, Squad, Scenarios).
-  const pitchView = usePitchView();
+  // what the pitches actually show: 2D if 3D couldn't start on this device this visit
+  const pitchView = useShownPitchView();
+  const no3d = usePitch3dUnavailable();
   const passing = usePitchAmbient();
   const reducedMotion = usePrefersReducedMotion();
 
@@ -250,9 +252,10 @@ function TeamMenu({
               aria-checked={pitchView === "3d"}
               className={itemClass}
               onClick={() => setPitchView(pitchView === "3d" ? "2d" : "3d")}
+              title={no3d ? "3D couldn't start on this device. Tap to try again." : undefined}
             >
-              <span className="flex-1">3D pitch</span>
-              <span aria-hidden className="text-ink-faint">{pitchView === "3d" ? "On" : "Off"}</span>
+              <span className="flex-1">{no3d ? "3D pitch (not available here)" : "3D pitch"}</span>
+              <span aria-hidden className="text-ink-faint">{no3d ? "Retry" : pitchView === "3d" ? "On" : "Off"}</span>
             </button>
             {pitchView === "3d" && !reducedMotion && (
               <button
@@ -837,7 +840,7 @@ export default function AppShell({
         subtitle={
           isGuest
             ? `GW${forecast.targetGameweek} · ${forecast.teamName ?? `team ${teamId}`}`
-            : `GW${forecast.targetGameweek} · from your GW${forecast.basedOnGameweek} squad`
+            : `GW${forecast.targetGameweek} · from your GW${forecast.squadFromGameweek ?? forecast.basedOnGameweek} squad`
         }
       />
       <Shell>
