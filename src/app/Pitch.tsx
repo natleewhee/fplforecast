@@ -12,7 +12,7 @@ import Pitch3D, { type Pitch3DPlayer } from "./pitch3d/Pitch3D";
 import PreviewSheet from "./PreviewSheet";
 import { lineupFor, resolveSwaps } from "@/lib/squadView";
 import ReplaceSheet, { type TransferTools } from "./ReplaceSheet";
-import { usePitchView } from "@/lib/pitchView";
+import { markPitch3dUnavailable, usePitch3dUnavailable, useShownPitchView } from "@/lib/pitchView";
 import { ArmbandBadge, POSITION_DOT } from "./tokenParts";
 
 function bandLabel(band: { floor: number; ceiling: number; bandProvisional: boolean } | null | undefined) {
@@ -204,9 +204,8 @@ export default function Pitch({
   /** The squad as FPL has it now (from the live feed). Transfers made since the last model build show on the pitch. */
   liveSquad?: { id: number; position: string }[] | null;
 }) {
-  const savedView = usePitchView();
-  const [no3d, setNo3d] = useState(false);
-  const view = no3d ? "2d" : savedView;
+  const no3d = usePitch3dUnavailable();
+  const view = useShownPitchView();
   const { squad, upcoming } = forecast;
   const byId = new Map(squad.players.map((p) => [p.id, p]));
   const [gwIdx, setGwIdx] = useState(0);
@@ -354,7 +353,7 @@ export default function Pitch({
           {!showAllGws && upcoming.length > 1 && (
             <button
               onClick={() => setShowAllGws(true)}
-              className="min-h-11 shrink-0 rounded-xl border border-line px-3 py-1.5 text-[11px] text-ink-faint transition hover:border-border-strong hover:text-ink-soft"
+              className="min-h-11 shrink-0 rounded-xl border border-line px-3 py-1.5 text-xs text-ink-faint transition hover:border-border-strong hover:text-ink-soft"
             >
               +{upcoming.length - 1} more
             </button>
@@ -367,7 +366,7 @@ export default function Pitch({
               MODEL · GW{active.gameweek}
             </h2>
             {isTargetGw ? (
-              <p className="mt-1 text-[10.5px] leading-snug text-ink-faint">{MODEL_SHORT}</p>
+              <p className="mt-1 text-xs leading-snug text-ink-faint">{MODEL_SHORT}</p>
             ) : (
               <p className="eyebrow mt-0.5">projected lineup</p>
             )}
@@ -380,11 +379,11 @@ export default function Pitch({
             <div className="eyebrow mt-1">{previewing ? "proj pts (preview)" : adjusted ? "proj pts (adjusted)" : "proj pts"}</div>
             {isTargetGw && (
               <details className="mt-0.5">
-                <summary className="hit-44 relative cursor-pointer list-none font-mono text-[10px] text-ink-faint hover:text-ink-soft">
+                <summary className="hit-44 relative cursor-pointer list-none font-mono text-xs text-ink-faint hover:text-ink-soft">
                   {forecast.xiFloorCeiling.floor.toFixed(0)}–{forecast.xiFloorCeiling.ceiling.toFixed(0)}
                   {forecast.xiFloorCeiling.bandProvisional && " (prov.)"}
                 </summary>
-                <p className="mt-1 max-w-[10rem] text-left text-[10px] leading-snug text-ink-faint">
+                <p className="mt-1 max-w-[10rem] text-left text-xs leading-snug text-ink-faint">
                   Likely range for the XI&rsquo;s total: one realised-residual standard deviation
                   either side of the projection.
                   {forecast.xiFloorCeiling.bandProvisional &&
@@ -397,7 +396,7 @@ export default function Pitch({
 
         <div className="mb-2 flex flex-wrap items-center justify-between gap-x-2 gap-y-1.5">
           {isTargetGw ? (
-            <p className="min-w-0 text-[10.5px] leading-snug text-ink-soft" data-testid="pitch-deltas">
+            <p className="min-w-0 text-xs leading-snug text-ink-soft" data-testid="pitch-deltas">
               <span className="chip">{fmtDelta(forecast.nextGw.deltaVsNoChange)} vs no change</span>{" "}
               <span className="chip">{fmtDelta(forecast.nextGw.deltaVsBaselineXi)} vs baseline</span>
               {sync.swaps.length === 0 && !lineup.repicked && (
@@ -414,13 +413,13 @@ export default function Pitch({
             {view === "2d" && <FaceToggle />}
           </div>
         </div>
-        {no3d && <p className="mb-2 text-[10.5px] text-ink-faint">3D isn&rsquo;t available on this device, so you&rsquo;re seeing the 2D pitch.</p>}
+        {no3d && <p className="mb-2 text-xs text-ink-faint">3D isn&rsquo;t available on this device, so you&rsquo;re seeing the 2D pitch.</p>}
 
         {sync.swaps.length > 0 && (
           <div
             role="status"
             data-testid="squad-sync-banner"
-            className="mb-2 rounded-lg border border-[color-mix(in_srgb,var(--accent)_40%,transparent)] bg-[color-mix(in_srgb,var(--accent)_8%,transparent)] px-3 py-2 text-[11px] leading-snug text-ink-soft"
+            className="mb-2 rounded-lg border border-[color-mix(in_srgb,var(--accent)_40%,transparent)] bg-[color-mix(in_srgb,var(--accent)_8%,transparent)] px-3 py-2 text-xs leading-snug text-ink-soft"
           >
             <span className="font-semibold text-[var(--accent)]">Your squad has changed since the last build:</span>{" "}
             {sync.swaps
@@ -437,7 +436,7 @@ export default function Pitch({
           <div
             role="status"
             data-testid="preview-banner"
-            className="mb-2 rounded-lg border border-[color-mix(in_srgb,var(--warn)_40%,transparent)] bg-[color-mix(in_srgb,var(--warn)_8%,transparent)] px-3 py-2 text-[11px] leading-snug text-ink-soft"
+            className="mb-2 rounded-lg border border-[color-mix(in_srgb,var(--warn)_40%,transparent)] bg-[color-mix(in_srgb,var(--warn)_8%,transparent)] px-3 py-2 text-xs leading-snug text-ink-soft"
           >
             <span className="font-semibold text-[var(--warn)]">Preview:</span>{" "}
             {previewing
@@ -454,7 +453,7 @@ export default function Pitch({
               bench={benched.map((t) => ({ ...to3d(t), benchOrder: benched.filter((b) => b.position !== "GKP").indexOf(t) + 1 }))}
               selectedId={selectedId}
               onSelect={openSheet}
-              onUnavailable={() => setNo3d(true)}
+              onUnavailable={markPitch3dUnavailable}
             />
           </>
         ) : (
@@ -497,13 +496,13 @@ export default function Pitch({
             aria-expanded={showKey}
             aria-controls="pitch-key"
             onClick={() => setShowKey((k) => !k)}
-            className="flex min-h-11 w-full items-center justify-between gap-2 text-left text-[11px] font-medium text-ink-soft hover:text-ink"
+            className="flex min-h-11 w-full items-center justify-between gap-2 text-left text-xs font-medium text-ink-soft hover:text-ink"
           >
             <span>How to read the pitch</span>
             <span aria-hidden>{showKey ? "▴" : "▾"}</span>
           </button>
           {showKey && (
-            <p id="pitch-key" className="text-[10.5px] leading-snug text-ink-faint">
+            <p id="pitch-key" className="text-xs leading-snug text-ink-faint">
               {isTargetGw && `${MODEL_CAPTION} `}
               {view === "3d"
                 ? "Number = expected points · taller players are drawn taller, skin and hair are approximate · the bench sits in the dugout on the right · C captain, V vice · tap a player for the breakdown"
@@ -514,10 +513,10 @@ export default function Pitch({
 
         {isTargetGw && (
           <details className="border-t border-line">
-            <summary className="flex min-h-11 cursor-pointer items-center text-[11px] font-medium text-ink-soft hover:text-ink">
+            <summary className="flex min-h-11 cursor-pointer items-center text-xs font-medium text-ink-soft hover:text-ink">
               Why this XI?
             </summary>
-            <ul className="mt-2 space-y-1 font-mono text-[10.5px] leading-relaxed text-ink-faint [overflow-wrap:anywhere]">
+            <ul className="mt-2 space-y-1 font-mono text-xs leading-relaxed text-ink-faint [overflow-wrap:anywhere]">
               {(benchIds.filter((id) => active.bench.includes(id) && !swaps.has(id)).map((id) => byId.get(id)).filter(Boolean) as ForecastPlayer[])
                 .filter((p) => p.rationale)
                 .map((p) => (

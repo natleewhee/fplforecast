@@ -153,7 +153,7 @@ export function FaceToggle() {
       type="button"
       aria-pressed={mode === value}
       onClick={() => setFaceMode(value)}
-      className={`hit-44 relative h-8 px-3 text-[11px] font-semibold transition-colors first:rounded-l-full last:rounded-r-full ${
+      className={`hit-44 relative h-8 px-3 text-xs font-semibold transition-colors first:rounded-l-full last:rounded-r-full ${
         mode === value ? "bg-[color-mix(in_srgb,var(--accent)_16%,transparent)] text-[var(--accent)]" : "text-ink-soft hover:text-ink"
       }`}
     >

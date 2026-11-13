@@ -544,7 +544,7 @@ test.describe("Leagues error", () => {
     let fail = true;
     await page.route(/\/api\/league(\?|$)/, (route) =>
       fail
-        ? route.fulfill({ status: 503, contentType: "application/json", body: JSON.stringify({ error: "HTTP 503" }) })
+        ? route.fulfill({ status: 502, contentType: "application/json", body: JSON.stringify({ error: "FPL /leagues-classic/1/standings/ -> 500" }) })
         : route.fulfill({
             contentType: "application/json",
             body: JSON.stringify({

@@ -200,7 +200,9 @@ def build_forecast_for_team(team_id: int) -> tuple[int, dict]:
         include_model_record=False,
         squad_picks=squad_picks,
         squad_entry_history=squad_entry_history,
-        free_hit_reverted_from=reverted_from,
+        free_hit_reverted_from=(
+            reverted_from if reverted_from is not None else (squad_gw if squad_gw != based_on_gw else None)
+        ),
     )
     forecast["teamName"] = entry.get("name")
     forecast["managerName"] = f"{entry.get('player_first_name', '')} {entry.get('player_last_name', '')}".strip()

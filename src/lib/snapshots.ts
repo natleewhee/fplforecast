@@ -173,6 +173,9 @@ export type ChipWindow = {
 export type Forecast = {
   generatedAt: string;
   basedOnGameweek: number;
+  /** The gameweek whose squad the forecast starts from when it isn't basedOnGameweek's own: the
+   * live week's (after its deadline), or the one FPL restores after a Free Hit. */
+  squadFromGameweek?: number | null;
   targetGameweek: number;
   rollingWindow: number;
   overridesApplied: number;

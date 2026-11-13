@@ -98,3 +98,16 @@ def test_live_picks_are_saved_for_the_week_in_play_and_cleared_after(tmp_path, m
     boot["events"][1]["finished"] = True
     snap.snapshot_live_picks(boot)
     assert not live.exists()
+
+
+def test_a_live_picks_timeout_or_bad_reply_is_not_fatal(tmp_path, monkeypatch):
+    """It runs every night mid-gameweek; a timeout must not fail the snapshot
+    (which would skip the day's commit)."""
+    monkeypatch.setattr(snap, "DATA_DIR", tmp_path)
+    monkeypatch.setattr(snap, "TEAM_ID", "42")
+    boot = {"events": [{"id": 11, "is_current": True, "finished": False}]}
+    for exc in (TimeoutError("read timed out"), json.JSONDecodeError("x", "", 0)):
+        def boom(url, exc=exc):
+            raise exc
+        monkeypatch.setattr(snap, "fetch", boom)
+        snap.snapshot_live_picks(boot)  # must not raise

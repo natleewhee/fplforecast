@@ -30,7 +30,31 @@ export function usePitchView(): PitchView {
 
 export function setPitchView(view: PitchView) {
   writeItem(KEY, view);
+  if (view === "3d") unavailable3d = false; // choosing 3D again is a retry
   listeners.forEach((l) => l());
+}
+
+/* Whether a 3D pitch failed to start on this device this visit (no WebGL). Shared, so every
+ * pitch shows 2D and the menu can say so; not saved, so the next visit tries again. */
+let unavailable3d = false;
+
+export function usePitch3dUnavailable(): boolean {
+  return useSyncExternalStore(subscribe, () => unavailable3d, () => false);
+}
+
+export function markPitch3dUnavailable() {
+  if (unavailable3d) return;
+  unavailable3d = true;
+  listeners.forEach((l) => l());
+}
+
+/** The view a pitch actually shows: the saved choice, or 2D when 3D can't start here. */
+export function readShownPitchView(): PitchView {
+  return unavailable3d ? "2d" : read();
+}
+
+export function useShownPitchView(): PitchView {
+  return useSyncExternalStore(subscribe, readShownPitchView, () => "3d");
 }
 
 

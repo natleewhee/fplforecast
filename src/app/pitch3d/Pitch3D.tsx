@@ -307,7 +307,7 @@ export default function Pitch3D({
       {bench.length > 0 && (
         <div className="mt-2.5" data-testid="subs-strip">
           <p className="eyebrow mb-1.5 flex items-baseline gap-1.5">
-            Subs <span className="font-sans text-[10px] font-normal normal-case tracking-normal text-ink-faint">in the order they come on</span>
+            Subs <span className="font-sans text-xs font-normal normal-case tracking-normal text-ink-faint">in the order they come on</span>
           </p>
           <div className="grid gap-1.5" style={{ gridTemplateColumns: `repeat(${Math.min(bench.length, compact ? 2 : 4)}, minmax(0, 1fr))` }}>
             {bench.map((p, i) =>
@@ -324,7 +324,7 @@ export default function Pitch3D({
                     >
                       {p.position === "GKP" ? "GK" : (p.benchOrder ?? i)}
                     </span>
-                    <span className={`font-mono text-[10.5px] font-semibold ${subColor(p)}`}>{p.sub}</span>
+                    <span className={`font-mono text-xs font-semibold ${subColor(p)}`}>{p.sub}</span>
                     {badges(p, "text-[10px] leading-none")}
                   </span>
                 </>,

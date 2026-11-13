@@ -153,7 +153,7 @@ export default function LiveSquadPitch({
           ))}
         </div>
       </PitchScene>
-      <p className="mt-2 text-[10.5px] leading-snug text-ink-faint">
+      <p className="mt-2 text-xs leading-snug text-ink-faint">
         Number = points so far · the shirt outline fills with minutes played and glows while playing ·
         dashed = yet to start · green figure = expected points still to come
       </p>

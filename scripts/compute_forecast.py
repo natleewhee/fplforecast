@@ -279,7 +279,11 @@ def apply_overrides(squad_ids: list[int], overrides: list[dict]) -> list[int]:
     """Swap 'out' ids for 'in' ids. Not budget-checked -- a deferred risk."""
     ids = list(squad_ids)
     for override in overrides:
-        if override["out"] in ids:
+        if override["in"] in ids:
+            # Already held -- e.g. mid-gameweek the live squad already has this
+            # week's real transfers in it. Applying it would put him in twice.
+            print(f"overrides: 'in' player {override['in']} already in the squad, skipping")
+        elif override["out"] in ids:
             ids[ids.index(override["out"])] = override["in"]
         else:
             print(f"overrides: 'out' player {override['out']} not in current squad, skipping")
@@ -1561,8 +1565,8 @@ def build_personal_forecast(
     forecast = {
         "generatedAt": datetime.now(timezone.utc).isoformat(),
         "basedOnGameweek": based_on_gw,
-        # Set when based_on_gw was a Free Hit: the squad is this earlier
-        # gameweek's, which FPL restores at the next deadline.
+        # Set when the squad isn't based_on_gw's own: the live week's (after
+        # its deadline), or an earlier week's that FPL restores after a Free Hit.
         "squadFromGameweek": free_hit_reverted_from,
         "targetGameweek": target_gw,
         "rollingWindow": ROLLING_WINDOW,
@@ -1668,7 +1672,9 @@ def main(now: datetime | None = None) -> int:
         squad_gw, squad_chip, squad_from_picks, squad_from_entry, load_picks_snapshot
     )
     if reverted_from is not None:
-        print(f"free hit: GW{based_on_gw} was a Free Hit -- building from the GW{reverted_from} squad")
+        print(f"free hit: GW{squad_gw} was a Free Hit -- building from the GW{reverted_from} squad")
+    # which gameweek's squad the forecast starts from, when not the reviewed one
+    squad_from_gw = reverted_from if reverted_from is not None else (squad_gw if squad_gw != based_on_gw else None)
 
     overrides = load_overrides(based_on_gw)
     squad_ids = [p["element"] for p in squad_picks]
@@ -1687,8 +1693,11 @@ def main(now: datetime | None = None) -> int:
     # Also the week after: once GW{target_gw}'s deadline passes, a guest's
     # target is GW{target_gw + 1} until the next nightly run.
     if target_gw < 38:
-        next_path = save_pool_context(build_pool_context(bootstrap, target_gw + 1), target_gw + 1, keep_from=target_gw)
-        print(f"cached pool context for GW{target_gw + 1} -> {next_path}")
+        try:  # a cache for guests: never let it stop the owner's own forecast
+            next_path = save_pool_context(build_pool_context(bootstrap, target_gw + 1), target_gw + 1, keep_from=target_gw)
+            print(f"cached pool context for GW{target_gw + 1} -> {next_path}")
+        except Exception as exc:  # noqa: BLE001
+            print(f"cached pool context for GW{target_gw + 1}: FAILED ({exc}) -- guests refit live", file=sys.stderr)
     season_history = load_entry_history()
     forecast = build_personal_forecast(
         bootstrap,
@@ -1701,7 +1710,7 @@ def main(now: datetime | None = None) -> int:
         season_history=season_history,
         squad_picks=squad_picks,
         squad_entry_history=squad_entry_history,
-        free_hit_reverted_from=reverted_from,
+        free_hit_reverted_from=squad_from_gw,
     )
 
     out_dir = DATA_DIR / "forecast"
