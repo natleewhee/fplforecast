@@ -929,7 +929,7 @@ def test_main_after_a_free_hit_builds_from_the_restored_squad(tmp_path, monkeypa
     monkeypatch.setattr(cf, "load_bootstrap", lambda: {"events": []})
     monkeypatch.setattr(cf, "upcoming_gameweek", lambda *a, **k: 11)
     monkeypatch.setattr(cf, "build_pool_context", lambda b, gw: {"targetGw": gw})
-    monkeypatch.setattr(cf, "save_pool_context", lambda ctx, gw: tmp_path / "ctx.pkl")
+    monkeypatch.setattr(cf, "save_pool_context", lambda ctx, gw, keep=(): tmp_path / "ctx.pkl")
     monkeypatch.setattr(cf, "load_entry_history", lambda: {})
     captured = {}
 
@@ -998,3 +998,74 @@ def test_free_hit_by_week_uses_each_weeks_own_projection():
     w_gone = cf.free_hit_by_week(pool_wo, held, 100.0, 7, cards={gone: card})
     assert len(w_gone) == 2
     assert w_gone[0]["keepPoints"] <= weeks[0]["keepPoints"]
+
+
+def test_main_mid_gameweek_builds_from_the_live_weeks_squad(tmp_path, monkeypatch):
+    """After a deadline, main() starts from picks-live-<TEAM>/ for the week in
+    progress; the finished week is still the one reviewed."""
+    finished = _fh_payload(list(range(1, 16)), bank=5)
+    live = _fh_payload(list(range(201, 216)), bank=12)
+    (tmp_path / f"picks-{cf.TEAM_ID}").mkdir()
+    (tmp_path / f"picks-{cf.TEAM_ID}" / "gw10.json").write_text(json.dumps(finished))
+    (tmp_path / f"picks-live-{cf.TEAM_ID}").mkdir()
+    (tmp_path / f"picks-live-{cf.TEAM_ID}" / "gw11.json").write_text(json.dumps(live))
+    monkeypatch.setattr(cf, "DATA_DIR", tmp_path)
+    monkeypatch.setattr(cf, "load_bootstrap", lambda: {"events": []})
+    monkeypatch.setattr(cf, "upcoming_gameweek", lambda *a, **k: 12)
+    monkeypatch.setattr(cf, "build_pool_context", lambda b, gw: {"targetGw": gw})
+    monkeypatch.setattr(cf, "save_pool_context", lambda ctx, gw, keep=(): tmp_path / "ctx.pkl")
+    monkeypatch.setattr(cf, "load_entry_history", lambda: {})
+    captured = {}
+
+    class _Stop(Exception):
+        pass
+
+    def fake_build(bootstrap, pool_ctx, based_on_gw, picks, entry_history, squad_ids, **kw):
+        captured.update(based_on_gw=based_on_gw, picks=picks, squad_ids=squad_ids, **kw)
+        raise _Stop
+
+    monkeypatch.setattr(cf, "build_personal_forecast", fake_build)
+    with pytest.raises(_Stop):
+        cf.main()
+    assert captured["based_on_gw"] == 10
+    assert [p["element"] for p in captured["picks"]] == list(range(1, 16))  # reviewed week
+    assert captured["squad_ids"] == list(range(201, 216))
+    assert captured["squad_entry_history"]["bank"] == 12
+
+
+def test_main_before_the_deadline_ignores_a_stale_live_file(tmp_path, monkeypatch):
+    """A live file for the week that just finished (based_on) is not used."""
+    (tmp_path / f"picks-{cf.TEAM_ID}").mkdir()
+    (tmp_path / f"picks-{cf.TEAM_ID}" / "gw10.json").write_text(json.dumps(_fh_payload(list(range(1, 16)))))
+    (tmp_path / f"picks-live-{cf.TEAM_ID}").mkdir()
+    (tmp_path / f"picks-live-{cf.TEAM_ID}" / "gw10.json").write_text(json.dumps(_fh_payload(list(range(201, 216)))))
+    monkeypatch.setattr(cf, "DATA_DIR", tmp_path)
+    monkeypatch.setattr(cf, "load_bootstrap", lambda: {"events": []})
+    monkeypatch.setattr(cf, "upcoming_gameweek", lambda *a, **k: 11)
+    monkeypatch.setattr(cf, "build_pool_context", lambda b, gw: {"targetGw": gw})
+    monkeypatch.setattr(cf, "save_pool_context", lambda ctx, gw, keep=(): tmp_path / "ctx.pkl")
+    monkeypatch.setattr(cf, "load_entry_history", lambda: {})
+    captured = {}
+
+    class _Stop(Exception):
+        pass
+
+    def fake_build(bootstrap, pool_ctx, based_on_gw, picks, entry_history, squad_ids, **kw):
+        captured.update(squad_ids=squad_ids)
+        raise _Stop
+
+    monkeypatch.setattr(cf, "build_personal_forecast", fake_build)
+    with pytest.raises(_Stop):
+        cf.main()
+    assert captured["squad_ids"] == list(range(1, 16))
+
+
+def test_pool_context_cache_keeps_this_week_and_next_and_drops_the_rest(tmp_path, monkeypatch):
+    monkeypatch.setattr(cf, "DATA_DIR", tmp_path)
+    for gw in (9, 10):
+        cf.save_pool_context({"targetGw": gw}, gw)
+    cf.save_pool_context({"targetGw": 11}, 11, keep=(12,))
+    cf.save_pool_context({"targetGw": 12}, 12, keep=(11,))
+    assert sorted(p.name for p in (tmp_path / "pool-context").glob("*.pkl")) == ["gw11.pkl", "gw12.pkl"]
+    assert cf.load_cached_pool_context(12) == {"targetGw": 12}
+    assert cf.load_cached_pool_context(11) == {"targetGw": 11}

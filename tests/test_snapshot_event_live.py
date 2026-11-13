@@ -85,3 +85,23 @@ def test_a_first_fetch_that_fails_still_fails_loudly(tmp_path, monkeypatch):
 
     with pytest.raises(RuntimeError):
         snap.snapshot_event_live_history(_boot(True))
+
+
+def test_live_picks_are_saved_once_for_the_gameweek_in_progress(tmp_path, monkeypatch):
+    calls = []
+    monkeypatch.setattr(snap, "DATA_DIR", tmp_path)
+    monkeypatch.setattr(snap, "TEAM_ID", "42")
+    monkeypatch.setattr(snap, "fetch", lambda url: calls.append(url) or {"picks": [{"element": 1}], "active_chip": None})
+    boot = {"events": [{"id": 10, "finished": True}, {"id": 11, "is_current": True, "finished": False}]}
+    snap.snapshot_live_picks(boot)
+    snap.snapshot_live_picks(boot)
+    assert calls == [f"{snap.FPL_BASE}/entry/42/event/11/picks/"]
+    assert json.loads((tmp_path / "picks-live-42" / "gw11.json").read_text())["picks"] == [{"element": 1}]
+
+
+def test_no_live_picks_between_gameweeks(tmp_path, monkeypatch):
+    monkeypatch.setattr(snap, "DATA_DIR", tmp_path)
+    monkeypatch.setattr(snap, "TEAM_ID", "42")
+    monkeypatch.setattr(snap, "fetch", lambda url: (_ for _ in ()).throw(AssertionError("no fetch")))
+    snap.snapshot_live_picks({"events": [{"id": 10, "is_current": True, "finished": True}]})
+    assert not (tmp_path / "picks-live-42").exists()

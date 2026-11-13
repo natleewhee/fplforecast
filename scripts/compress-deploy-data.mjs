@@ -26,7 +26,8 @@ const EXTRA_FILES = ["record/residuals.json"];
 // The daily cron's pickled build_pool_context() output (see
 // scripts/compute_forecast.py's save_pool_context()) -- a .pkl, not .json,
 // so it needs its own latest-only pass rather than LATEST_ONLY_DIRS'.
-const LATEST_ONLY_PKL_DIRS = ["pool-context"];
+// pool-context keeps at most this week's and next week's cache (save_pool_context prunes the rest)
+const PKL_DIRS = ["pool-context"];
 
 function walkJsonFiles(dir) {
   if (!existsSync(dir)) return [];
@@ -62,10 +63,11 @@ async function main() {
     const files = readdirSync(dir)
       .filter((f) => f.endsWith(".json"))
       .sort();
-    if (files.length === 0) continue;
-    const latest = files[files.length - 1];
-    await gzipFile(join(dir, latest), join(OUT_DIR, name, latest));
-    count += 1;
+    // every cache save_pool_context() kept (this week's and next week's)
+    for (const f of files) {
+      await gzipFile(join(dir, f), join(OUT_DIR, name, f));
+      count += 1;
+    }
   }
 
   for (const rel of EXTRA_FILES) {
@@ -76,16 +78,17 @@ async function main() {
     }
   }
 
-  for (const name of LATEST_ONLY_PKL_DIRS) {
+  for (const name of PKL_DIRS) {
     const dir = join(DATA_DIR, name);
     if (!existsSync(dir)) continue;
     const files = readdirSync(dir)
       .filter((f) => f.endsWith(".pkl"))
       .sort();
-    if (files.length === 0) continue;
-    const latest = files[files.length - 1];
-    await gzipFile(join(dir, latest), join(OUT_DIR, name, latest));
-    count += 1;
+    // every cache save_pool_context() kept (this week's and next week's)
+    for (const f of files) {
+      await gzipFile(join(dir, f), join(OUT_DIR, name, f));
+      count += 1;
+    }
   }
 
   console.log(`compress-deploy-data: ${count} files -> ${OUT_DIR}`);

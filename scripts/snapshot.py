@@ -158,6 +158,41 @@ def snapshot_picks(bootstrap: dict) -> None:
     print(f"picks gw{gw}: -> {out_path}")
 
 
+def live_gameweek(bootstrap: dict) -> int | None:
+    """The gameweek whose deadline has passed but which hasn't finished, if any."""
+    for e in bootstrap.get("events", []):
+        if e.get("is_current") and not e.get("finished"):
+            return e["id"]
+    return None
+
+
+def snapshot_live_picks(bootstrap: dict) -> None:
+    """My squad for the gameweek in progress. Once its deadline passes, its picks
+    (with this week's transfers) are public. Kept apart from picks-<TEAM_ID>/,
+    which holds finished weeks only and drives the last-gameweek review; the
+    forecast uses this file only to start from the squad actually held now."""
+    if not TEAM_ID:
+        return
+    gw = live_gameweek(bootstrap)
+    if gw is None:
+        print("live picks: no gameweek in progress, skipping")
+        return
+    out_path = DATA_DIR / f"picks-live-{TEAM_ID}" / f"gw{gw}.json"
+    if out_path.exists():
+        return  # picks are fixed once the deadline has passed
+    try:
+        payload = fetch(f"{FPL_BASE}/entry/{TEAM_ID}/event/{gw}/picks/")
+    except urllib.error.HTTPError as exc:
+        print(f"live picks: fetch failed ({exc}) — non-fatal, continuing")
+        return
+    if not payload.get("picks"):
+        print("live picks: no picks in the reply — non-fatal, continuing")
+        return
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+    out_path.write_text(json.dumps(payload, indent=2, sort_keys=True))
+    print(f"live picks gw{gw}: -> {out_path}")
+
+
 def main() -> int:
     failures = []
     bootstrap: dict | None = None
@@ -174,6 +209,7 @@ def main() -> int:
             ("history", snapshot_history),
             ("event-live", lambda: snapshot_event_live_history(bootstrap)),
             ("picks", lambda: snapshot_picks(bootstrap)),
+            ("live picks", lambda: snapshot_live_picks(bootstrap)),
         ]
     else:
         print("bootstrap-static unavailable — skipping entry/event-live/picks", file=sys.stderr)
