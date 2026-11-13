@@ -85,3 +85,16 @@ def test_a_first_fetch_that_fails_still_fails_loudly(tmp_path, monkeypatch):
 
     with pytest.raises(RuntimeError):
         snap.snapshot_event_live_history(_boot(True))
+
+
+def test_live_picks_are_saved_for_the_week_in_play_and_cleared_after(tmp_path, monkeypatch):
+    monkeypatch.setattr(snap, "DATA_DIR", tmp_path)
+    monkeypatch.setattr(snap, "TEAM_ID", "42")
+    monkeypatch.setattr(snap, "fetch", lambda url: {"picks": [{"element": 1}], "url": url})
+    boot = {"events": [{"id": 10, "is_current": False, "finished": True}, {"id": 11, "is_current": True, "finished": False}]}
+    snap.snapshot_live_picks(boot)
+    live = tmp_path / "picks-42" / "live" / "gw11.json"
+    assert json.loads(live.read_text())["url"].endswith("/entry/42/event/11/picks/")
+    boot["events"][1]["finished"] = True
+    snap.snapshot_live_picks(boot)
+    assert not live.exists()

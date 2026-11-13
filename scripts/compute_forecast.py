@@ -183,6 +183,12 @@ def load_latest_picks() -> tuple[int, list[dict], dict] | None:
     return gw, data.get("picks", []), data.get("entry_history", {})
 
 
+def load_live_picks(gw: int) -> dict | None:
+    """The gameweek-in-play picks scripts/snapshot.py saved, if any."""
+    path = DATA_DIR / f"picks-{TEAM_ID}" / "live" / f"gw{gw}.json"
+    return load_json(path) if path.exists() else None
+
+
 def load_picks_snapshot(gw: int) -> dict | None:
     """The raw ``picks-<TEAM_ID>/gw<gw>.json`` snapshot, or None if absent."""
     path = DATA_DIR / f"picks-{TEAM_ID}" / f"gw{gw}.json"
@@ -1017,7 +1023,14 @@ def pool_context_cache_path(target_gw: int) -> Path:
     return DATA_DIR / "pool-context" / f"gw{target_gw}.pkl"
 
 
-def save_pool_context(pool_ctx: dict, target_gw: int) -> Path:
+# How many gameweeks of pool context to keep: the target week, plus the one
+# after it. Between a deadline and the next nightly run a guest's target is
+# already the following week; without its cache, api/forecast.py rebuilds
+# it live (~8 s, close to the function's time budget).
+POOL_CONTEXT_WEEKS_KEPT = 2
+
+
+def save_pool_context(pool_ctx: dict, target_gw: int, keep_from: int | None = None) -> Path:
     """Pickles build_pool_context()'s output (the ~8s-to-compute, team-
     agnostic model fit + pool projection) so api/forecast.py's on-demand
     per-team lookups can load it instead of refitting the model on every
@@ -1030,14 +1043,14 @@ def save_pool_context(pool_ctx: dict, target_gw: int) -> Path:
 
     path = pool_context_cache_path(target_gw)
     path.parent.mkdir(parents=True, exist_ok=True)
-    # Only ever keep the current gameweek's cache on disk -- a stray old
-    # gw<N>.pkl left from a previous run would otherwise risk being picked
-    # as "latest" by a lexicographic filename sort once gameweek numbers
-    # reach two digits (compress-deploy-data.mjs/.py's LATEST_ONLY passes
-    # both sort filenames as strings, same as they already do for the
-    # date-named snapshot directories, where that's safe but this isn't).
+    # Keep only gameweeks keep_from .. keep_from + POOL_CONTEXT_WEEKS_KEPT - 1
+    # (keep_from defaults to this one); anything older is stale. The
+    # compress-deploy-data passes ship every .pkl left here.
+    first = target_gw if keep_from is None else keep_from
+    keep = {pool_context_cache_path(gw) for gw in range(first, first + POOL_CONTEXT_WEEKS_KEPT)}
+    keep.add(path)
     for stale in path.parent.glob("gw*.pkl"):
-        if stale != path:
+        if stale not in keep:
             stale.unlink()
     payload = {
         "formatVersion": POOL_CONTEXT_FORMAT_VERSION,
@@ -1640,8 +1653,19 @@ def main(now: datetime | None = None) -> int:
     target_gw = upcoming_gameweek(bootstrap, now, fallback=based_on_gw + 1)
 
     latest_raw = load_picks_snapshot(based_on_gw) or {}
+    # Mid-gameweek, the week in play (the one before the target) has public
+    # picks with this week's transfers and bank in them; build from those,
+    # as the guest path does. The finished week is still the one reviewed.
+    squad_gw, squad_chip = based_on_gw, latest_raw.get("active_chip")
+    squad_from_picks, squad_from_entry = picks, entry_history
+    live_gw = target_gw - 1
+    live = load_live_picks(live_gw) if live_gw > based_on_gw else None
+    if live and live.get("picks"):
+        squad_gw, squad_chip = live_gw, live.get("active_chip")
+        squad_from_picks, squad_from_entry = live["picks"], live.get("entry_history", {})
+        print(f"live picks: building from the GW{live_gw} squad (deadline passed, not finished)")
     squad_picks, squad_entry_history, reverted_from = squad_after_free_hit(
-        based_on_gw, latest_raw.get("active_chip"), picks, entry_history, load_picks_snapshot
+        squad_gw, squad_chip, squad_from_picks, squad_from_entry, load_picks_snapshot
     )
     if reverted_from is not None:
         print(f"free hit: GW{based_on_gw} was a Free Hit -- building from the GW{reverted_from} squad")
@@ -1660,6 +1684,11 @@ def main(now: datetime | None = None) -> int:
     pool_ctx = build_pool_context(bootstrap, target_gw)
     cache_path = save_pool_context(pool_ctx, target_gw)
     print(f"cached pool context for GW{target_gw} -> {cache_path}")
+    # Also the week after: once GW{target_gw}'s deadline passes, a guest's
+    # target is GW{target_gw + 1} until the next nightly run.
+    if target_gw < 38:
+        next_path = save_pool_context(build_pool_context(bootstrap, target_gw + 1), target_gw + 1, keep_from=target_gw)
+        print(f"cached pool context for GW{target_gw + 1} -> {next_path}")
     season_history = load_entry_history()
     forecast = build_personal_forecast(
         bootstrap,

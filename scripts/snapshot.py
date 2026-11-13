@@ -158,6 +158,45 @@ def snapshot_picks(bootstrap: dict) -> None:
     print(f"picks gw{gw}: -> {out_path}")
 
 
+def live_gameweek(bootstrap: dict) -> int | None:
+    """The gameweek in play: its deadline has passed but it hasn't finished."""
+    for e in bootstrap.get("events", []):
+        if e.get("is_current") and not e.get("finished"):
+            return e["id"]
+    return None
+
+
+def snapshot_live_picks(bootstrap: dict) -> None:
+    """My squad for the gameweek in play. Once a deadline passes, that week's
+    picks are public and hold this week's transfers and bank, which the last
+    finished week's picks don't. Written to ``picks-<TEAM_ID>/live/gw<N>.json``
+    and refreshed every run (other live files are removed), so it never
+    shadows the finished-week files that ``load_latest_picks`` reads."""
+    if not TEAM_ID:
+        return
+    live_dir = DATA_DIR / f"picks-{TEAM_ID}" / "live"
+    gw = live_gameweek(bootstrap)
+    if gw is None:
+        for old in live_dir.glob("gw*.json"):
+            old.unlink()
+        return
+    try:
+        payload = fetch(f"{FPL_BASE}/entry/{TEAM_ID}/event/{gw}/picks/")
+    except (urllib.error.HTTPError, urllib.error.URLError) as exc:
+        print(f"live picks: fetch failed ({exc}) — non-fatal, continuing")
+        return
+    if not payload.get("picks"):
+        print("live picks: no picks in the reply — skipping")
+        return
+    live_dir.mkdir(parents=True, exist_ok=True)
+    out_path = live_dir / f"gw{gw}.json"
+    for old in live_dir.glob("gw*.json"):
+        if old != out_path:
+            old.unlink()
+    out_path.write_text(json.dumps(payload, indent=2, sort_keys=True))
+    print(f"live picks gw{gw}: -> {out_path}")
+
+
 def main() -> int:
     failures = []
     bootstrap: dict | None = None
@@ -174,6 +213,7 @@ def main() -> int:
             ("history", snapshot_history),
             ("event-live", lambda: snapshot_event_live_history(bootstrap)),
             ("picks", lambda: snapshot_picks(bootstrap)),
+            ("live picks", lambda: snapshot_live_picks(bootstrap)),
         ]
     else:
         print("bootstrap-static unavailable — skipping entry/event-live/picks", file=sys.stderr)
