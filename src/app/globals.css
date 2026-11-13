@@ -247,6 +247,15 @@ h3 {
   background: linear-gradient(180deg, var(--accent), #23c78c);
   box-shadow: 0 0 18px var(--accent-glow);
 }
+/* Team tab's Now/Next switch: two lines per button, so taller and less round than a pill. */
+.segment.team-mode {
+  border-radius: 18px;
+}
+.segment.team-mode button {
+  min-height: 52px;
+  border-radius: 14px;
+  padding: 0.4rem 0.75rem;
+}
 .segment button:disabled {
   color: var(--text-faint);
   cursor: not-allowed;

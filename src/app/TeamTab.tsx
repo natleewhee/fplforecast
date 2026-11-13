@@ -37,7 +37,10 @@ export default function TeamTab({
     // other parts of the page can ask for a half (goToTab("live") / goToTab("squad"))
     const onGoto = (e: Event) => {
       const id = (e as CustomEvent<string>).detail;
-      if (id === "live" || id === "squad") setMode(id === "live" ? "now" : "next");
+      if (id === "live" || id === "squad") {
+        chosen.current = true; // a half asked for by name is a choice too: the deadline flip leaves it
+        setMode(id === "live" ? "now" : "next");
+      }
     };
     window.addEventListener("gaffer:goto-tab", onGoto);
     return () => {
@@ -56,13 +59,13 @@ export default function TeamTab({
 
   return (
     <div className="space-y-4">
-      <div role="group" aria-label="Now or next gameweek" className="segment w-full" data-testid="team-mode">
+      <div role="group" aria-label="Now or next gameweek" className="segment team-mode w-full" data-testid="team-mode">
         <button
           type="button"
           aria-pressed={mode === "now"}
           data-active={mode === "now"}
           onClick={() => pick("now")}
-          className="flex min-h-[52px] flex-1 flex-col items-start justify-center px-3 text-left"
+          className="flex flex-1 flex-col items-start justify-center text-left"
         >
           <span className="block text-sm font-bold">Now</span>
           <span className="block text-xs opacity-80">Live points</span>
@@ -72,7 +75,7 @@ export default function TeamTab({
           aria-pressed={mode === "next"}
           data-active={mode === "next"}
           onClick={() => pick("next")}
-          className="flex min-h-[52px] flex-1 flex-col items-start justify-center px-3 text-left"
+          className="flex flex-1 flex-col items-start justify-center text-left"
         >
           <span className="block text-sm font-bold">Next</span>
           <span className="block text-xs opacity-80">
