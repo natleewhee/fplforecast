@@ -94,7 +94,7 @@
   "deadlineTime": "2026-11-21T11:00:00Z",
   "earlySeason": false,
   "effectiveGap": 5.0,
-  "generatedAt": "2026-11-13T10:44:30.679357+00:00",
+  "generatedAt": "2026-11-14T09:58:03.516999+00:00",
   "history": {
     "gameweeks": [
       {
@@ -402,7 +402,7 @@
         5,
         6
       ],
-      "selectedByPercent": 47.5,
+      "selectedByPercent": 47.6,
       "sellPrice": 6.2,
       "team": "ARS",
       "total": 26.88,
@@ -693,7 +693,7 @@
         6,
         8
       ],
-      "selectedByPercent": 26.1,
+      "selectedByPercent": 26.2,
       "sellPrice": 8.1,
       "team": "ARS",
       "total": 37.73,
@@ -2051,7 +2051,7 @@
         null,
         1
       ],
-      "selectedByPercent": 0.5,
+      "selectedByPercent": 0.4,
       "sellPrice": 5.2,
       "team": "ARS",
       "total": 7.16,
@@ -4584,7 +4584,7 @@
         9,
         11
       ],
-      "selectedByPercent": 31.2,
+      "selectedByPercent": 31.3,
       "sellPrice": 7.1,
       "team": "AVL",
       "total": 31.21,
@@ -5845,7 +5845,7 @@
         6,
         4
       ],
-      "selectedByPercent": 3.0,
+      "selectedByPercent": 3.1,
       "sellPrice": 5.6,
       "team": "BOU",
       "total": 29.45,
@@ -7700,7 +7700,7 @@
         9,
         9
       ],
-      "selectedByPercent": 23.8,
+      "selectedByPercent": 23.9,
       "sellPrice": 6.5,
       "team": "BOU",
       "total": 35.73,
@@ -9355,7 +9355,7 @@
         3,
         1
       ],
-      "selectedByPercent": 12.9,
+      "selectedByPercent": 12.8,
       "sellPrice": 6.1,
       "team": "BRE",
       "total": 22.66,
@@ -10337,7 +10337,7 @@
         9,
         -2
       ],
-      "selectedByPercent": 8.1,
+      "selectedByPercent": 8.0,
       "sellPrice": 7.8,
       "team": "BRE",
       "total": 14.83,
@@ -11507,7 +11507,7 @@
         9,
         6
       ],
-      "selectedByPercent": 47.8,
+      "selectedByPercent": 47.9,
       "sellPrice": 5.5,
       "team": "BHA",
       "total": 30.74,
@@ -13453,7 +13453,7 @@
         6,
         12
       ],
-      "selectedByPercent": 9.3,
+      "selectedByPercent": 9.4,
       "sellPrice": 5.3,
       "team": "BHA",
       "total": 27.51,
@@ -15975,7 +15975,7 @@
         null,
         null
       ],
-      "selectedByPercent": 31.7,
+      "selectedByPercent": 31.6,
       "sellPrice": 7.6,
       "team": "CHE",
       "total": 10.66,
@@ -24653,7 +24653,7 @@
         9,
         16
       ],
-      "selectedByPercent": 10.7,
+      "selectedByPercent": 10.8,
       "sellPrice": 5.7,
       "team": "EVE",
       "total": 32.88,
@@ -26108,7 +26108,7 @@
         2,
         4
       ],
-      "selectedByPercent": 0.2,
+      "selectedByPercent": 0.3,
       "sellPrice": 4.8,
       "team": "FUL",
       "total": 18.17,
@@ -30770,7 +30770,7 @@
         2,
         1
       ],
-      "selectedByPercent": 9.9,
+      "selectedByPercent": 9.8,
       "sellPrice": 3.9,
       "team": "IPS",
       "total": 16.4,
@@ -39512,7 +39512,7 @@
         null,
         0
       ],
-      "selectedByPercent": 14.1,
+      "selectedByPercent": 14.0,
       "sellPrice": 6.0,
       "team": "MCI",
       "total": 14.15,
@@ -39803,7 +39803,7 @@
         2,
         0
       ],
-      "selectedByPercent": 22.7,
+      "selectedByPercent": 22.6,
       "sellPrice": 5.6,
       "team": "MCI",
       "total": 17.87,
@@ -40288,7 +40288,7 @@
         null,
         null
       ],
-      "selectedByPercent": 5.6,
+      "selectedByPercent": 5.5,
       "sellPrice": 8.2,
       "team": "MCI",
       "total": 7.05,
@@ -40773,7 +40773,7 @@
         2,
         2
       ],
-      "selectedByPercent": 78.9,
+      "selectedByPercent": 78.8,
       "sellPrice": 15.8,
       "team": "MCI",
       "total": 45.54,
@@ -42913,7 +42913,7 @@
         null,
         null
       ],
-      "selectedByPercent": 3.3,
+      "selectedByPercent": 3.2,
       "sellPrice": 4.2,
       "team": "MUN",
       "total": 1.47,
@@ -43204,7 +43204,7 @@
         1,
         2
       ],
-      "selectedByPercent": 19.1,
+      "selectedByPercent": 19.0,
       "sellPrice": 7.9,
       "team": "MUN",
       "total": 32.16,
@@ -53027,7 +53027,7 @@
         3.55
       ],
       "position": "GKP",
-      "price": 4.9,
+      "price": 4.8,
       "recentPoints": [
         1,
         2,
@@ -53036,7 +53036,7 @@
         9
       ],
       "selectedByPercent": 1.9,
-      "sellPrice": 4.9,
+      "sellPrice": 4.8,
       "team": "SUN",
       "total": 24.01,
       "webName": "Roefs"
@@ -62847,10 +62847,10 @@
         "price": 4.7,
         "priceWatch": {
           "changeThisGw": 1,
-          "hourlyRate": 55,
+          "hourlyRate": 82,
           "likelihood": 1,
-          "netTransfers": 34802,
-          "percent": 0.7
+          "netTransfers": 35790,
+          "percent": 1.0
         },
         "projectedPoints": 3.6,
         "provisional": false,
@@ -62932,10 +62932,10 @@
         "price": 5.9,
         "priceWatch": {
           "changeThisGw": 0,
-          "hourlyRate": 53,
+          "hourlyRate": 47,
           "likelihood": 1,
-          "netTransfers": 34296,
-          "percent": 5.0
+          "netTransfers": 35103,
+          "percent": 5.9
         },
         "projectedPoints": 3.61,
         "provisional": false,
@@ -63017,10 +63017,10 @@
         "price": 4.8,
         "priceWatch": {
           "changeThisGw": 0,
-          "hourlyRate": 221,
-          "likelihood": 4,
-          "netTransfers": 127051,
-          "percent": 93.9
+          "hourlyRate": 254,
+          "likelihood": 5,
+          "netTransfers": 132319,
+          "percent": 99.0
         },
         "projectedPoints": 4.63,
         "provisional": false,
@@ -63102,10 +63102,10 @@
         "price": 5.5,
         "priceWatch": {
           "changeThisGw": 1,
-          "hourlyRate": 258,
+          "hourlyRate": 297,
           "likelihood": 1,
-          "netTransfers": 144602,
-          "percent": 13.9
+          "netTransfers": 150539,
+          "percent": 15.6
         },
         "projectedPoints": 4.1,
         "provisional": false,
@@ -63187,10 +63187,10 @@
         "price": 5.1,
         "priceWatch": {
           "changeThisGw": 1,
-          "hourlyRate": 262,
+          "hourlyRate": 376,
           "likelihood": 1,
-          "netTransfers": 171002,
-          "percent": 12.4
+          "netTransfers": 177614,
+          "percent": 14.2
         },
         "projectedPoints": 4.86,
         "provisional": false,
@@ -63272,10 +63272,10 @@
         "price": 9.8,
         "priceWatch": {
           "changeThisGw": 0,
-          "hourlyRate": -20,
+          "hourlyRate": -31,
           "likelihood": 3,
-          "netTransfers": -11866,
-          "percent": 46.4
+          "netTransfers": -12590,
+          "percent": 46.9
         },
         "projectedPoints": 4.68,
         "provisional": false,
@@ -63357,10 +63357,10 @@
         "price": 8.2,
         "priceWatch": {
           "changeThisGw": 0,
-          "hourlyRate": 81,
+          "hourlyRate": 125,
           "likelihood": 3,
-          "netTransfers": 35972,
-          "percent": 49.0
+          "netTransfers": 38245,
+          "percent": 51.3
         },
         "projectedPoints": 4.34,
         "provisional": false,
@@ -63448,10 +63448,10 @@
         "price": 6.7,
         "priceWatch": {
           "changeThisGw": 1,
-          "hourlyRate": 225,
+          "hourlyRate": 237,
           "likelihood": 1,
-          "netTransfers": 102149,
-          "percent": 16.3
+          "netTransfers": 107359,
+          "percent": 17.8
         },
         "projectedPoints": 5.15,
         "provisional": false,
@@ -63539,10 +63539,10 @@
         "price": 6.3,
         "priceWatch": {
           "changeThisGw": 1,
-          "hourlyRate": 177,
+          "hourlyRate": 205,
           "likelihood": 2,
-          "netTransfers": 95351,
-          "percent": 22.9
+          "netTransfers": 99924,
+          "percent": 24.4
         },
         "projectedPoints": 4.57,
         "provisional": false,
@@ -63624,10 +63624,10 @@
         "price": 7.1,
         "priceWatch": {
           "changeThisGw": 1,
-          "hourlyRate": 550,
+          "hourlyRate": 719,
           "likelihood": 3,
-          "netTransfers": 301047,
-          "percent": 63.8
+          "netTransfers": 314954,
+          "percent": 68.4
         },
         "projectedPoints": 4.49,
         "provisional": false,
@@ -63709,10 +63709,10 @@
         "price": 15.8,
         "priceWatch": {
           "changeThisGw": 0,
-          "hourlyRate": -37,
+          "hourlyRate": -18,
           "likelihood": 1,
-          "netTransfers": -26311,
-          "percent": 16.9
+          "netTransfers": -26786,
+          "percent": 16.8
         },
         "projectedPoints": 6.99,
         "provisional": false,
@@ -63794,10 +63794,10 @@
         "price": 4.4,
         "priceWatch": {
           "changeThisGw": 0,
-          "hourlyRate": 25,
+          "hourlyRate": 13,
           "likelihood": 2,
-          "netTransfers": 12759,
-          "percent": 34.6
+          "netTransfers": 13275,
+          "percent": 35.5
         },
         "projectedPoints": 3.32,
         "provisional": false,
@@ -63879,10 +63879,10 @@
         "price": 5.5,
         "priceWatch": {
           "changeThisGw": 0,
-          "hourlyRate": -19,
+          "hourlyRate": -21,
           "likelihood": -3,
-          "netTransfers": -20678,
-          "percent": -62.6
+          "netTransfers": -21242,
+          "percent": -65.0
         },
         "projectedPoints": 2.91,
         "provisional": false,
@@ -63964,10 +63964,10 @@
         "price": 5.9,
         "priceWatch": {
           "changeThisGw": 0,
-          "hourlyRate": -41,
+          "hourlyRate": -53,
           "likelihood": -3,
-          "netTransfers": -23361,
-          "percent": -82.3
+          "netTransfers": -24272,
+          "percent": -85.7
         },
         "projectedPoints": 3.04,
         "provisional": true,
@@ -64049,10 +64049,10 @@
         "price": 5.1,
         "priceWatch": {
           "changeThisGw": 0,
-          "hourlyRate": 27,
+          "hourlyRate": 59,
           "likelihood": 2,
-          "netTransfers": 29975,
-          "percent": 21.5
+          "netTransfers": 31025,
+          "percent": 22.4
         },
         "projectedPoints": 3.13,
         "provisional": true,
