@@ -4,7 +4,7 @@ import { createContext, useContext, useEffect, useRef, useState, type ReactNode 
 import { lookFor, type PitchKits, type PitchLooks, type Position } from "@/lib/appearance";
 import { usePitchAmbient, usePrefersReducedMotion } from "@/lib/pitchView";
 import { decideCelebration, type CelebrationEvent } from "./celebrate";
-import { formationSpots } from "./spots";
+import { formationSpots, SENT_OFF_X } from "./spots";
 import type { FigureDef, StageHandle, StageState } from "./stage";
 
 /* The 3D pitch used by the Live, Squad and Scenarios tabs: figures in kit
@@ -33,6 +33,8 @@ export type Pitch3DPlayer = {
   /** What he did this gameweek, so he can celebrate when tapped. */
   goals?: number;
   cleanSheet?: boolean;
+  /** Shown a red card: he walks off and stands by the touchline. */
+  sentOff?: boolean;
   ariaLabel: string;
   title: string;
   badges?: { key: string; node: ReactNode; title: string }[];
@@ -60,7 +62,9 @@ function buildDefs(xi: Pitch3DPlayer[], data: PitchData): FigureDef[] {
       dim: p.dim,
       goals: p.goals,
       cleanSheet: p.cleanSheet,
-      x: at.x,
+      sentOff: p.sentOff,
+      // sent off: just off the grass on his own side, level with where he played
+      x: p.sentOff ? (at.x < 0 ? -1 : 1) * SENT_OFF_X : at.x,
       z: at.z,
     };
   };
@@ -78,6 +82,7 @@ export default function Pitch3D({
   onSelect,
   onUnavailable,
   goals,
+  floats,
   compact: compactCard = false,
 }: {
   xi: Pitch3DPlayer[];
@@ -89,6 +94,8 @@ export default function Pitch3D({
   onUnavailable: () => void;
   /** Live goals from the latest poll: a starter who scored celebrates on his own (see celebrate.ts for the rules). */
   goals?: CelebrationEvent[];
+  /** Points that just changed (live): a "+N" chip rises over that player's name tag. */
+  floats?: { key: string; id: number; delta: number }[];
   /** A pitch inside a card (a scenario): when the card is narrow (under 340px) it gets a taller frame and smaller, shorter name tags, so the eleven fit without touching. */
   compact?: boolean;
 }) {
@@ -265,11 +272,21 @@ export default function Pitch3D({
 
   // Floating tags carry the whole surname on one line, and the number with the player's icons
   // (goals, assists, clean sheet, cards, bonus) on the next, so a good game shows at a glance.
+  const floatsFor = (id: number) =>
+    (floats ?? [])
+      .filter((f) => f.id === id)
+      .map((f) => (
+        <span key={f.key} aria-hidden className="fx-float font-mono text-sm" style={{ color: f.delta > 0 ? "var(--accent)" : "var(--danger)", top: "-6px" }}>
+          {f.delta > 0 ? "+" : "\u2212"}
+          {Math.abs(f.delta).toFixed(0)}
+        </span>
+      ));
   const floating = (p: Pitch3DPlayer) =>
     tagEl(
       p,
       `group pointer-events-auto absolute left-0 top-0 flex flex-col items-center rounded-md border border-white/15 bg-[rgba(8,16,24,0.82)] leading-tight text-ink will-change-transform focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--accent)] data-[tag-size=sm]:max-w-[3.6rem] data-[tag-size=xs]:max-w-[2.6rem] ${compact ? "max-w-[4.4rem] px-1 py-0" : "max-w-[9rem] px-1.5 py-px"}`,
       <>
+        {floatsFor(p.id)}
         <span className={`flex max-w-full items-center ${compact ? "gap-0.5" : "gap-1"} group-data-[tag-size=xs]:hidden`}>
           {roleBadge(p)}
           <span className={`min-w-0 truncate font-bold text-white group-data-[tag-size=sm]:text-[9px] ${compact ? "text-[10px]" : "text-[11px]"}`}>{p.webName}</span>

@@ -565,3 +565,5 @@ html[data-vt-dir="back"]::view-transition-new(tabpane) { animation: vt-in-left 2
    order and shows again when it gets keyboard focus. */
 [data-pitch-off] { opacity: 0; pointer-events: none; }
 [data-pitch-off]:focus-visible { opacity: 1; }
+/* a live goal moment: only the scorer's tag stays up */
+[data-moment] [data-tag]:not([data-star]):not(:focus-visible) { opacity: 0; transition: opacity 0.3s ease; }
