@@ -446,7 +446,7 @@ function setup(renderer: THREE.WebGLRenderer, canvas: HTMLCanvasElement, opts: S
   let leaving: { f: Figure; fromX: number; fromZ: number; toX: number; t: number; dur: number }[] = [];
   const TOUCHLINE = 13.5; // just past the side of the 22-wide pitch
   const RUN_SPEED = 7.5; // units a second, a brisk jog at this scale
-  const LEAVE_DRIFT = 2.2; // how far upfield a man going off drifts, so he clears the man coming on
+  const LEAVE_DRIFT = 3.4; // how far upfield a man going off drifts, so he clears the man coming on
   const sideOf = (x: number) => (x < 0 ? -1 : 1);
 
   /* ambient passing: the ball goes round the starting eleven, who stay where they are. */
