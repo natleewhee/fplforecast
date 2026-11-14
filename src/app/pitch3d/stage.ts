@@ -21,6 +21,7 @@ import {
   type Pose,
   type Shot,
 } from "./moves";
+import { ballShadow, pitchCanvas, skyCanvas, softShadowCanvas } from "./look";
 
 /* The 3D Squad pitch: stylised low-poly figures in kit colours on a floodlit
  * pitch, with the bench seated in a dugout at the side. Built from rounded
@@ -160,43 +161,6 @@ function hairParts(style: HairStyle, color: string): Part[] {
   return parts;
 }
 
-function pitchTexture() {
-  const c = document.createElement("canvas");
-  c.width = 470;
-  c.height = 768;
-  const g = c.getContext("2d")!;
-  const bands = 12;
-  for (let i = 0; i < bands; i++) {
-    g.fillStyle = i % 2 ? "#1d6a3a" : "#1a6035";
-    g.fillRect(0, (i * c.height) / bands, c.width, c.height / bands + 1);
-  }
-  g.strokeStyle = "rgba(255,255,255,0.7)";
-  g.lineWidth = 4;
-  const m = 20;
-  g.strokeRect(m, m, c.width - m * 2, c.height - m * 2);
-  g.beginPath();
-  g.moveTo(m, c.height / 2);
-  g.lineTo(c.width - m, c.height / 2);
-  g.stroke();
-  g.beginPath();
-  g.arc(c.width / 2, c.height / 2, 58, 0, Math.PI * 2);
-  g.stroke();
-  g.fillStyle = "rgba(255,255,255,0.7)";
-  g.beginPath();
-  g.arc(c.width / 2, c.height / 2, 4, 0, Math.PI * 2);
-  g.fill();
-  for (const [y, d] of [[m, 1], [c.height - m, -1]] as const) {
-    g.strokeRect(c.width / 2 - 115, d > 0 ? y : y - 130, 230, 130);
-    g.strokeRect(c.width / 2 - 54, d > 0 ? y : y - 48, 108, 48);
-    g.beginPath();
-    g.arc(c.width / 2, y + d * 92, 3, 0, Math.PI * 2);
-    g.fill();
-  }
-  const t = new THREE.CanvasTexture(c);
-  t.anisotropy = 4;
-  return t;
-}
-
 /** Heights about 1.5 times stronger than real, so the differences read on a phone. */
 const scaleFor = (cm: number) => 1 + ((cm - 183) / 183) * 1.5;
 
@@ -225,7 +189,7 @@ type Figure = {
   homeZ: number;
 };
 
-function buildFigure(def: FigureDef): Figure {
+function buildFigure(def: FigureDef, shadowTex: THREE.Texture): Figure {
   const { kit } = def;
   const skin = SKIN_STEPS[def.skin] ?? SKIN_STEPS[2];
   const boot = "#15171c";
@@ -294,9 +258,15 @@ function buildFigure(def: FigureDef): Figure {
   }
   if (def.bench) b.position.y = -0.43;
 
-  const blob = new THREE.Mesh(new THREE.CircleGeometry(0.95, 20), new THREE.MeshBasicMaterial({ color: 0x000000, transparent: true, opacity: 0.3 }));
+  // a soft shadow, pushed a little away from the main floodlight (high, front right)
+  const blob = new THREE.Mesh(
+    new THREE.PlaneGeometry(1.9, 1.9),
+    new THREE.MeshBasicMaterial({ color: 0x000000, alphaMap: shadowTex, transparent: true, opacity: 0.42, depthWrite: false }),
+  );
+  blob.userData.shadow = true;
   blob.rotation.x = -Math.PI / 2;
-  blob.position.y = 0.03;
+  blob.position.set(-0.14, 0.03, -0.2);
+  blob.scale.set(1.1, 1, 1);
   blob.visible = !def.bench;
   g.add(blob);
   const ring = new THREE.Mesh(new THREE.RingGeometry(1.15, 1.32, 36), new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.6, side: THREE.DoubleSide }));
@@ -396,19 +366,26 @@ function setup(renderer: THREE.WebGLRenderer, canvas: HTMLCanvasElement, opts: S
   renderer.outputColorSpace = THREE.LinearSRGBColorSpace;
 
   const scene = new THREE.Scene();
-  scene.background = new THREE.Color(0x0a1a14);
-  scene.fog = new THREE.Fog(0x0a1a14, 66, 130);
-  const camera = new THREE.PerspectiveCamera(48, 0.8, 0.5, 160);
-  const raycaster = new THREE.Raycaster();
-  scene.add(new THREE.HemisphereLight(0xe6f4ff, 0x1b3a2a, 1.0 * LIGHT));
-  const sun = new THREE.DirectionalLight(0xffffff, 0.7 * LIGHT);
-  sun.position.set(8, 18, 12);
-  scene.add(sun);
-
   const staticOwned: { dispose(): void }[] = [];
   const own = <T extends { dispose(): void }>(o: T) => (staticOwned.push(o), o);
 
-  const pitchTex = own(pitchTexture());
+  // a night sky glowing behind the far stand, fading to the dark of the stadium
+  scene.background = own(new THREE.CanvasTexture(skyCanvas()));
+  scene.fog = new THREE.Fog(0x0a1a14, 66, 130);
+  const camera = new THREE.PerspectiveCamera(48, 0.8, 0.5, 160);
+  const raycaster = new THREE.Raycaster();
+  // floodlights: a cool key from the front right, a warm rim from behind that edges the kits
+  scene.add(new THREE.HemisphereLight(0xe6f4ff, 0x1b3a2a, 0.95 * LIGHT));
+  const sun = new THREE.DirectionalLight(0xf4f8ff, 0.68 * LIGHT);
+  sun.position.set(8, 18, 12);
+  scene.add(sun);
+  const rim = new THREE.DirectionalLight(0xffdcaa, 0.32 * LIGHT);
+  rim.position.set(-7, 12, -18);
+  scene.add(rim);
+
+  const pitchTex = own(new THREE.CanvasTexture(pitchCanvas()));
+  pitchTex.anisotropy = Math.min(8, renderer.capabilities.getMaxAnisotropy());
+  const shadowTex = own(new THREE.CanvasTexture(softShadowCanvas()));
   const pitch = new THREE.Mesh(own(new THREE.PlaneGeometry(22, 36)), own(new THREE.MeshLambertMaterial({ map: pitchTex })));
   pitch.rotation.x = -Math.PI / 2;
   scene.add(pitch);
@@ -497,7 +474,25 @@ function setup(renderer: THREE.WebGLRenderer, canvas: HTMLCanvasElement, opts: S
     ball = new THREE.Mesh(own(geo), own(new THREE.MeshLambertMaterial({ vertexColors: true })));
     ball.visible = false;
     scene.add(ball);
+    ballShade = new THREE.Mesh(
+      own(new THREE.PlaneGeometry(1.1, 1.1)),
+      own(new THREE.MeshBasicMaterial({ color: 0x000000, alphaMap: shadowTex, transparent: true, opacity: 0.5, depthWrite: false })),
+    );
+    ballShade.rotation.x = -Math.PI / 2;
+    ballShade.visible = false;
+    scene.add(ballShade);
     return ball;
+  }
+  let ballShade: THREE.Mesh | null = null;
+  /** The ball's shadow follows it on the grass, shrinking and fading as a long pass lifts it. */
+  function syncBallShade() {
+    if (!ball || !ballShade) return;
+    ballShade.visible = ball.visible;
+    if (!ball.visible) return;
+    const sh = ballShadow(ball.position.y);
+    ballShade.position.set(ball.position.x - 0.08, 0.035, ball.position.z - 0.1);
+    ballShade.scale.setScalar(sh.scale);
+    (ballShade.material as THREE.MeshBasicMaterial).opacity = sh.opacity;
   }
   const legReset = (f: Figure) => {
     f.joints.hipR.rotation.x = 0;
@@ -510,6 +505,7 @@ function setup(renderer: THREE.WebGLRenderer, canvas: HTMLCanvasElement, opts: S
     settling = [];
     pass = null;
     if (ball) ball.visible = false;
+    syncBallShade();
     for (const f of figures) {
       if (f.def.bench) continue;
       f.anim.yaw = 0;
@@ -615,6 +611,7 @@ function setup(renderer: THREE.WebGLRenderer, canvas: HTMLCanvasElement, opts: S
       f.anim.yaw += (want - f.anim.yaw) * Math.min(1, 9 * dt);
       f.g.rotation.y = f.anim.yaw;
     }
+    syncBallShade();
     return true;
   }
 
@@ -983,7 +980,7 @@ function setup(renderer: THREE.WebGLRenderer, canvas: HTMLCanvasElement, opts: S
       f.mat.dispose();
       f.g.traverse((o) => {
         const m = o as THREE.Mesh;
-        if (m.isMesh && (m === f.ring || m === f.hit || m.geometry.type === "CircleGeometry")) {
+        if (m.isMesh && (m === f.ring || m === f.hit || m.userData.shadow)) {
           m.geometry.dispose();
           (m.material as THREE.Material).dispose();
         }
@@ -1014,7 +1011,7 @@ function setup(renderer: THREE.WebGLRenderer, canvas: HTMLCanvasElement, opts: S
       }
       figures = figures.filter((f) => !goers.includes(f));
       clearFigures();
-      figures = defs.map(buildFigure);
+      figures = defs.map((d) => buildFigure(d, shadowTex));
       for (const f of figures) {
         f.ring.visible = f.def.id === selected;
         const prev = before.get(f.def.id);
