@@ -13,6 +13,7 @@ import {
   clamp01,
   ease,
   focusShot,
+  goalPushShot,
   goalPose,
   momentSeconds,
   restingPose,
@@ -21,6 +22,7 @@ import {
   type Pose,
   type Shot,
 } from "./moves";
+import { buildStadium, lowPowerDevice } from "./stadium";
 import { ballShadow, pitchCanvas, skyCanvas, softShadowCanvas } from "./look";
 
 /* The 3D Squad pitch: stylised low-poly figures in kit colours on a floodlit
@@ -48,6 +50,7 @@ export type FigureDef = {
   dim?: number; // 0..1, fades players who have not played or are off
   goals?: number; // goals scored: he celebrates when tapped
   cleanSheet?: boolean; // clean sheet: he builds the brick wall when tapped
+  sentOff?: boolean; // shown a red card: he stands off the pitch by the touchline
 
   x: number;
   z: number;
@@ -169,7 +172,7 @@ type Joints = { body: THREE.Group; armL: THREE.Group; armR: THREE.Group; hipL: T
 type Anim = {
   queue: MomentKind[];
   current: { kind: MomentKind; t: number; burst: boolean } | null;
-  slide: { fromX: number; fromZ: number; t: number } | null;
+  slide: { fromX: number; fromZ: number; t: number; dur: number; walk?: boolean } | null; // walk: sent off
   pop: number | null; // seconds since he appeared, for a new arrival
   yaw: number; // how far he is turned (towards the ball while it is passed around)
 };
@@ -399,6 +402,20 @@ function setup(renderer: THREE.WebGLRenderer, canvas: HTMLCanvasElement, opts: S
     reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   } catch {}
 
+  // goals, nets and boards everywhere; stands and a crowd where the device can take them
+  const stadium = buildStadium(scene, own, {
+    crowd: !lowPowerDevice(typeof navigator === "undefined" ? undefined : (navigator as Navigator & { deviceMemory?: number; connection?: { saveData?: boolean } })),
+    reduceMotion,
+  });
+  let pushedIn = false; // the camera has pushed in on a live goal and should come back after it
+  /** During a goal moment only the scorer's tag shows, so the low shot is not a pile of names. */
+  function showMoment(id: number | null) {
+    if (id == null) delete tagLayer.dataset.moment;
+    else tagLayer.dataset.moment = String(id);
+    tagLayer.querySelectorAll<HTMLElement>("[data-tag]").forEach((el) => el.toggleAttribute("data-star", id != null && el.dataset.tag === String(id)));
+  }
+  showMoment(null); // the tag layer outlives a stage: never start with an old moment left on it
+
   // The camera: where it is now, and a glide to somewhere else. fov is for a stage 0.8 wide per
   // 1 high, widened or narrowed to the real shape.
   const cam: Shot = { pos: [...BROADCAST.pos], look: [...BROADCAST.look], fov: BROADCAST.fov };
@@ -506,7 +523,7 @@ function setup(renderer: THREE.WebGLRenderer, canvas: HTMLCanvasElement, opts: S
       if (!f.anim.current && !f.anim.slide) f.g.rotation.y = 0;
     }
   }
-  const xi = () => figures.filter((f) => !f.def.bench && !f.anim.slide && f.anim.pop == null);
+  const xi = () => figures.filter((f) => !f.def.bench && !f.def.sentOff && !f.anim.slide && f.anim.pop == null);
   /** `wait` is extra time he keeps the ball before the wind-up (a receiver may hold it a moment first);
    * `rest` is where the ball is when he starts. */
   function startPass(from: Figure, last: number | null, wait = 0, rest: { x: number; z: number } | null = null): boolean {
@@ -744,20 +761,30 @@ function setup(renderer: THREE.WebGLRenderer, canvas: HTMLCanvasElement, opts: S
       }
       if (a.slide) {
         a.slide.t += dt;
-        const k = ease(a.slide.t / 0.8);
+        const k = a.slide.walk ? Math.min(1, a.slide.t / a.slide.dur) : ease(a.slide.t / a.slide.dur);
         const x = a.slide.fromX + (f.homeX - a.slide.fromX) * k;
         const z = a.slide.fromZ + (f.homeZ - a.slide.fromZ) * k;
         f.g.position.set(x, 0.05, z);
-        const phase = a.slide.t * 11;
+        const walk = !!a.slide.walk;
+        const phase = a.slide.t * (walk ? 6 : 11);
+        const stride = walk ? 0.35 : 0.6;
         const moving = k < 1;
         const j = f.joints;
         if (moving && !f.def.bench) {
-          j.hipL.rotation.x = Math.sin(phase) * 0.6;
-          j.hipR.rotation.x = -Math.sin(phase) * 0.6;
-          j.kneeL.rotation.x = Math.max(0, Math.cos(phase)) * 0.7;
-          j.kneeR.rotation.x = Math.max(0, -Math.cos(phase)) * 0.7;
+          j.hipL.rotation.x = Math.sin(phase) * stride;
+          j.hipR.rotation.x = -Math.sin(phase) * stride;
+          j.kneeL.rotation.x = Math.max(0, Math.cos(phase)) * stride * 1.15;
+          j.kneeR.rotation.x = Math.max(0, -Math.cos(phase)) * stride * 1.15;
+        }
+        if (moving && walk) {
+          f.g.rotation.y = Math.atan2(f.homeX - a.slide.fromX, f.homeZ - a.slide.fromZ);
+          j.body.rotation.x = 0.22; // head down
         }
         if (!moving) {
+          if (walk) {
+            f.g.rotation.y = 0;
+            j.body.rotation.x = 0;
+          }
           a.slide = null;
           if (!a.current) restPose(f); // back to standing or seated, as he was built
           f.g.position.set(f.homeX, 0.05, f.homeZ);
@@ -790,6 +817,13 @@ function setup(renderer: THREE.WebGLRenderer, canvas: HTMLCanvasElement, opts: S
           active = true;
         }
       }
+    }
+    if (stadium.step(dt)) active = true;
+    if (pushedIn && celebrating === null && selected == null) {
+      pushedIn = false;
+      showMoment(null);
+      goTo(BROADCAST);
+      active = true;
     }
     if (stepConfetti(dt)) active = true;
     const passing = stepPassing(dt);
@@ -975,8 +1009,16 @@ function setup(renderer: THREE.WebGLRenderer, canvas: HTMLCanvasElement, opts: S
           f.g.rotation.y = prev.anim.yaw;
           // a different lineup (another gameweek): glide from where he stood
           const moved = Math.abs(prev.homeX - f.homeX) > 0.05 || Math.abs(prev.homeZ - f.homeZ) > 0.05;
-          if (moved && !reduceMotion) {
-            f.anim.slide = { fromX: prev.x, fromZ: prev.z, t: 0 };
+          if (!moved && prev.anim.slide && !reduceMotion) {
+            // still walking off (a live poll rebuilt the figures): he carries on from where he is
+            f.anim.slide = { ...prev.anim.slide };
+            f.g.position.set(prev.x, 0.05, prev.z);
+          } else if (moved && !reduceMotion && f.def.sentOff) {
+            // a red card: a slow walk off, head down
+            f.anim.slide = { fromX: prev.x, fromZ: prev.z, t: 0, dur: Math.max(1.6, Math.hypot(f.homeX - prev.x, f.homeZ - prev.z) / 2.4), walk: true };
+            f.g.position.set(prev.x, 0.05, prev.z);
+          } else if (moved && !reduceMotion) {
+            f.anim.slide = { fromX: prev.x, fromZ: prev.z, t: 0, dur: 0.8 };
             f.g.position.set(prev.x, 0.05, prev.z);
           }
         } else if (before.size > 0 && !reduceMotion) {
@@ -1037,6 +1079,13 @@ function setup(renderer: THREE.WebGLRenderer, canvas: HTMLCanvasElement, opts: S
       stopPassing(); // the ball is put down; he takes the moment where he stands
       f.anim.queue = [kind];
       startNext(f, 0);
+      if (kind === "goal") {
+        // the net ripples and the crowd jumps; the camera pushes part of the way in, and back after
+        stadium.goal();
+        goTo(goalPushShot(f.homeX, f.homeZ, f.scale));
+        pushedIn = true;
+        showMoment(id);
+      }
       draw();
       return "played";
     },
@@ -1057,6 +1106,10 @@ function setup(renderer: THREE.WebGLRenderer, canvas: HTMLCanvasElement, opts: S
         restPose(prev);
       }
       selected = id;
+      if (pushedIn) {
+        pushedIn = false;
+        showMoment(null);
+      }
       stopPassing(); // everyone squares up now, before his celebration is queued
       for (const f of figures) f.ring.visible = f.def.id === id;
       celebrating = null;
@@ -1075,6 +1128,7 @@ function setup(renderer: THREE.WebGLRenderer, canvas: HTMLCanvasElement, opts: S
     },
     dispose() {
       disposed = true;
+      showMoment(null); // a moment cut short (pitch scrolled away) must not leave every tag hidden
       cancelAnimationFrame(raf);
       ro.disconnect();
       canvas.removeEventListener("click", onClick);

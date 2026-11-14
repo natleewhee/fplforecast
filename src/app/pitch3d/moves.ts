@@ -30,6 +30,13 @@ export function focusShot(x: number, z: number, scale: number): Shot {
   };
 }
 
+/** A live goal, from behind the net he scored in: our eleven attack the near end, so the camera
+ * drops behind that goal, low, and looks back up the pitch at the scorer through the rippling net. */
+export const NEAR_GOAL_Z = 18 - (20 / 768) * 36;
+export function goalPushShot(x: number, z: number, scale: number): Shot {
+  return { pos: [x * 0.3, 2.4 + scale, NEAR_GOAL_Z + 6], look: [x * 0.9, 1.4 * scale, z], fov: 44 };
+}
+
 /** Seconds the camera takes to glide between shots. */
 export const GLIDE_SECONDS = 0.75;
 

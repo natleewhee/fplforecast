@@ -1342,6 +1342,27 @@ test.describe("3D pitch moves", () => {
     await expect(pitch).not.toHaveAttribute("data-celebrating", /.+/, { timeout: 25000 }); // and it ends (the stage caps each step at 0.05s, so on a slow or busy machine 3.6s of animation takes far longer in wall time)
   });
 
+  test("leaving the pitch in the middle of a goal moment does not leave the name tags hidden", async ({ page }) => {
+    const poll = { current: "a" as "a" | "b" };
+    await page.unroute("**/api/live*");
+    await mockLive(page, poll);
+    await page.goto("/?tab=live");
+    const pitch = page.getByTestId("pitch3d").first();
+    await pitch.locator('button[aria-label^="Palmer"]').waitFor();
+    poll.current = "b";
+    await page.evaluate(() => document.dispatchEvent(new Event("visibilitychange")));
+    await expect(pitch).toHaveAttribute("data-celebrating", "goal", { timeout: 10000 });
+    // away to Leagues (the pitch is released) and straight back
+    await page.getByRole("tab", { name: /^Leagues$/ }).click();
+    await expect(pitch).not.toHaveAttribute("data-celebrating", /.+/, { timeout: 10000 });
+    await page.getByRole("tab", { name: /^Team$/ }).click();
+    await pitch.locator("canvas").waitFor();
+    const tag = pitch.locator("canvas").locator("xpath=..").locator("[data-tag]").first(); // a floating tag over the eleven
+    await tag.waitFor();
+    await expect(pitch.locator("[data-moment]")).toHaveCount(0);
+    await expect.poll(async () => tag.evaluate((e) => getComputedStyle(e).opacity), { timeout: 10000 }).toBe("1");
+  });
+
   test("the ball stays put during a live celebration and the passing resumes after it", async ({ page }) => {
     test.slow(); // several waits on a stage that slows down under load add up to more than the default limit
     await page.addInitScript(() => {

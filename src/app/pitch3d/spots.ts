@@ -8,3 +8,8 @@ export function formationSpots(rows: number[]): { x: number; z: number }[][] {
     return Array.from({ length: n }, (_, i) => ({ x: (i - (n - 1) / 2) * spacing, z: zs[r] }));
   });
 }
+
+/** Where a sent-off player stands: just off the grass on his own side, level with his spot. */
+export const SENT_OFF_X = 11.7;
+/** ...and no nearer the camera than this, so the broadcast frame keeps him in view. */
+export const SENT_OFF_Z = -8;

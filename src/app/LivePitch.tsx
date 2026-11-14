@@ -282,6 +282,7 @@ export default function LivePitch({
     return {
       goals: events.goals,
       cleanSheet: events.cleanSheet > 0,
+      sentOff: events.red > 0,
       id: r.id,
       webName: r.webName,
       position: r.position,
@@ -331,6 +332,7 @@ export default function LivePitch({
             onSelect={openSheet}
             onUnavailable={markPitch3dUnavailable}
             goals={fx.goals}
+            floats={fx.floats}
           />
           <p className="mt-2 text-xs leading-snug text-ink-faint">
             Number = points so far (minutes while playing, else kickoff time) · icons = goals, assists, clean sheet, cards, bonus · faded = yet to play, off or did not play · C captain, V vice · tap a player for the breakdown · times in SGT
