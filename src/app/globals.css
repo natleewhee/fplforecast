@@ -374,6 +374,7 @@ h3 {
   background:
     radial-gradient(90% 55% at 50% -8%, rgba(255, 255, 255, 0.13), transparent 62%),
     radial-gradient(120% 90% at 50% 50%, transparent 52%, rgba(0, 0, 0, 0.5)),
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.022) 0 23%, transparent 23% 46%),
     repeating-linear-gradient(180deg, #0b3a23 0 46px, #0e4529 46px 92px);
 }
 @keyframes live-glow {
