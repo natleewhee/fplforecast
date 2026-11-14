@@ -1214,7 +1214,16 @@ test.describe("Opens on the right view for the week", () => {
     await expect(thumb).toHaveAttribute("data-at", "now");
     await teamHalf(page, "Next").click();
     await expect(thumb).toHaveAttribute("data-at", "next");
-    await expect(page.locator("[data-team-half='next'] [data-testid=pitch3d] canvas")).toBeVisible({ timeout: 15000 });
+    const pitch = page.locator("[data-team-half='next'] [data-testid=pitch3d]");
+    await expect(pitch.locator("canvas")).toBeVisible({ timeout: 15000 });
+    // the subs strip under the 3D pitch is not hidden along with the tags still waiting to be placed
+    const strip = pitch.locator("[data-tag]").filter({ hasNot: page.locator("xpath=self::*[parent::*[@data-tag-layer]]") });
+    await expect.poll(async () => strip.count()).toBeGreaterThan(0);
+    const opacities = await pitch.locator("[data-tag]").evaluateAll((els) =>
+      els.filter((e) => !e.parentElement?.hasAttribute("data-tag-layer")).map((e) => getComputedStyle(e).opacity),
+    );
+    expect(opacities.length).toBeGreaterThan(0);
+    expect(opacities.every((o) => o === "1")).toBe(true);
   });
 
   test("the Now/Next buttons are at least 44px tall", async ({ page }) => {

@@ -23,7 +23,7 @@ import {
   type Pose,
   type Shot,
 } from "./moves";
-import { ballShadow, pitchCanvas, skyCanvas, softShadowCanvas } from "./look";
+import { ballShadow, sharedPitchCanvas, sharedShadowCanvas, sharedSkyCanvas } from "./look";
 
 /* The 3D Squad pitch: stylised low-poly figures in kit colours on a floodlit
  * pitch, with the bench seated in a dugout at the side. Built from rounded
@@ -390,7 +390,7 @@ function setup(renderer: THREE.WebGLRenderer, canvas: HTMLCanvasElement, opts: S
   const own = <T extends { dispose(): void }>(o: T) => (staticOwned.push(o), o);
 
   // a night sky glowing behind the far stand, fading to the dark of the stadium
-  scene.background = own(new THREE.CanvasTexture(skyCanvas()));
+  scene.background = own(new THREE.CanvasTexture(sharedSkyCanvas()));
   scene.fog = new THREE.Fog(0x0a1a14, 66, 130);
   const camera = new THREE.PerspectiveCamera(48, 0.8, 0.5, 160);
   const raycaster = new THREE.Raycaster();
@@ -403,9 +403,9 @@ function setup(renderer: THREE.WebGLRenderer, canvas: HTMLCanvasElement, opts: S
   rim.position.set(-7, 12, -18);
   scene.add(rim);
 
-  const pitchTex = own(new THREE.CanvasTexture(pitchCanvas()));
+  const pitchTex = own(new THREE.CanvasTexture(sharedPitchCanvas()));
   pitchTex.anisotropy = Math.min(8, renderer.capabilities.getMaxAnisotropy());
-  const shadowTex = own(new THREE.CanvasTexture(softShadowCanvas()));
+  const shadowTex = own(new THREE.CanvasTexture(sharedShadowCanvas()));
   const pitch = new THREE.Mesh(own(new THREE.PlaneGeometry(22, 36)), own(new THREE.MeshLambertMaterial({ map: pitchTex })));
   pitch.rotation.x = -Math.PI / 2;
   scene.add(pitch);

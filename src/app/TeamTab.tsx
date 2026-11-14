@@ -23,6 +23,7 @@ export default function TeamTab({
   const [mode, setMode] = useState<TeamMode>("next");
   const chosen = useRef(false);
   const modeRef = useRef<TeamMode>("next");
+  const [moved, setMoved] = useState(false); // switched at least once: the highlight may slide
   const halves = useRef<Record<TeamMode, HTMLDivElement | null>>({ now: null, next: null });
 
   /** Change half with motion: the new half slides in from the side it sits on (Now left, Next
@@ -31,6 +32,7 @@ export default function TeamTab({
     if (m === modeRef.current) return;
     modeRef.current = m;
     markTeamSwitch();
+    setMoved(true);
     setMode(m);
     let reduce = false;
     try {
@@ -92,7 +94,7 @@ export default function TeamTab({
     <div className="space-y-4">
       <div role="group" aria-label="Now or next gameweek" className="segment team-mode relative w-full" data-testid="team-mode">
         {/* the highlight slides between the two buttons */}
-        <span aria-hidden="true" className="team-mode-thumb" data-at={mode} />
+        <span aria-hidden="true" className="team-mode-thumb" data-at={mode} data-moved={moved || undefined} />
         <button
           type="button"
           aria-pressed={mode === "now"}

@@ -275,6 +275,9 @@ h3 {
   border-radius: 14px;
   background: linear-gradient(180deg, var(--accent), #23c78c);
   box-shadow: 0 0 18px var(--accent-glow);
+}
+/* it only slides once the viewer has switched: on load it is simply where the page opened */
+.team-mode-thumb[data-moved] {
   transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1);
 }
 .team-mode-thumb[data-at="next"] {
@@ -596,4 +599,4 @@ html[data-vt-dir="back"]::view-transition-new(tabpane) { animation: vt-in-left 2
 [data-pitch-off] { opacity: 0; pointer-events: none; }
 [data-pitch-off]:focus-visible { opacity: 1; }
 /* a 3D tag waits unseen until the stage has put it over its player (not piled in the corner) */
-[data-tag]:not([data-placed]):not(:focus-visible) { opacity: 0; }
+[data-tag-layer] > [data-tag]:not([data-placed]):not(:focus-visible) { opacity: 0; }

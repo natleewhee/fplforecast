@@ -168,3 +168,12 @@ export function skyCanvas(): HTMLCanvasElement {
   g.fillRect(0, 0, 4, 256);
   return c;
 }
+
+/* Drawn once per page and shared: each stage makes its own texture from the same canvas, so a
+ * page with several pitches (Scenarios) does not redraw 9,000 grass blades each time. */
+let pitchOnce: HTMLCanvasElement | null = null;
+let shadowOnce: HTMLCanvasElement | null = null;
+let skyOnce: HTMLCanvasElement | null = null;
+export const sharedPitchCanvas = () => (pitchOnce ??= pitchCanvas());
+export const sharedShadowCanvas = () => (shadowOnce ??= softShadowCanvas());
+export const sharedSkyCanvas = () => (skyOnce ??= skyCanvas());
