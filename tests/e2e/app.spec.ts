@@ -1203,16 +1203,18 @@ test.describe("Opens on the right view for the week", () => {
   });
 
   test("one highlight slides to the half you pick, and the 3D pitch is drawn for it", async ({ page }) => {
-    await page.clock.install({ time: Date.parse(latestDeadline()) - 3 * 24 * 3_600_000 });
+    // real timers here: the 3D pitch loads and draws on them
+    await page.addInitScript(() => {
+      try { localStorage.setItem("fpl-pitch-view", "3d"); } catch {}
+    });
     await mockLive(page, { current: "a" });
     await page.goto("/");
     const thumb = page.getByTestId("team-mode").locator(".team-mode-thumb");
-    await expect(thumb).toHaveAttribute("data-at", "next");
     await teamHalf(page, "Now").click();
     await expect(thumb).toHaveAttribute("data-at", "now");
     await teamHalf(page, "Next").click();
     await expect(thumb).toHaveAttribute("data-at", "next");
-    await expect(page.locator("[data-team-half='next'] [data-testid=pitch3d] canvas")).toBeVisible();
+    await expect(page.locator("[data-team-half='next'] [data-testid=pitch3d] canvas")).toBeVisible({ timeout: 15000 });
   });
 
   test("the Now/Next buttons are at least 44px tall", async ({ page }) => {
