@@ -273,6 +273,40 @@ test.describe("Squad and Scenarios tabs", () => {
     await expect(pitch.locator("canvas")).toBeVisible();
   });
 
+  for (const motion of ["no-preference", "reduce"] as const) {
+    test(`Scenarios 3D: a plan's transfers are acted out on the pitch (${motion})`, async ({ page }) => {
+      await page.emulateMedia({ reducedMotion: motion });
+      await page.addInitScript(() => {
+        try { localStorage.setItem("fpl-pitch-view", "3d"); } catch {}
+      });
+      await mockLive(page, { current: "a" });
+      await page.goto("/?tab=scenarios");
+      const row = page.locator('[data-testid^="plan-row-"]', { hasText: /\d transfers?/ }).first();
+      await row.waitFor();
+      await row.scrollIntoViewIfNeeded();
+      await row.click();
+      const pitch = row.locator("xpath=..").getByTestId("pitch3d");
+      await pitch.scrollIntoViewIfNeeded();
+      await pitch.locator("canvas").waitFor({ state: "attached", timeout: 30_000 });
+      const host = pitch.locator("canvas").locator("xpath=.."); // the floating tags over the eleven (not the subs strip)
+      const ids = () => host.locator("[data-tag]").evaluateAll((els) => els.map((e) => e.getAttribute("data-tag")).sort().join(","));
+      await expect.poll(async () => (await ids()).split(",").filter(Boolean).length).toBe(11);
+      if (motion === "reduce") {
+        // the new XI from the start, nothing acted out
+        await expect(pitch).not.toHaveAttribute("data-settling", /.*/);
+        const first = await ids();
+        await page.waitForTimeout(1500);
+        expect(await ids()).toBe(first);
+        await expect(pitch).not.toHaveAttribute("data-acted", /.*/);
+      } else {
+        // the outgoing men stand in first, then the XI changes (the swap is played) and settles
+        await expect(pitch).toHaveAttribute("data-acted", "", { timeout: 15000 });
+        await expect(pitch).not.toHaveAttribute("data-settling", /.*/, { timeout: 15000 });
+        expect((await ids()).split(",")).toHaveLength(11);
+      }
+    });
+  }
+
   test("Scenarios: chip cards keep their numbers and open the XI on tap", async ({ page }) => {
     await mockLive(page, { current: "a" });
     await open(page);

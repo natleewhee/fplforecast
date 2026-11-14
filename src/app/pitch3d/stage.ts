@@ -169,7 +169,7 @@ type Joints = { body: THREE.Group; armL: THREE.Group; armR: THREE.Group; hipL: T
 type Anim = {
   queue: MomentKind[];
   current: { kind: MomentKind; t: number; burst: boolean } | null;
-  slide: { fromX: number; fromZ: number; t: number } | null;
+  slide: { fromX: number; fromZ: number; t: number; dur: number; run?: boolean } | null; // run: on from the touchline
   pop: number | null; // seconds since he appeared, for a new arrival
   yaw: number; // how far he is turned (towards the ball while it is passed around)
 };
@@ -331,7 +331,7 @@ export type StageHandle = {
 };
 
 /** What the stage reports for the page (and the tests) to show. */
-export type StageState = { focusId: number | null; celebrating: MomentKind | null };
+export type StageState = { focusId: number | null; celebrating: MomentKind | null; moving?: boolean };
 
 export type StageOptions = {
   host: HTMLElement; // sized by CSS; the stage fills it
@@ -433,13 +433,21 @@ function setup(renderer: THREE.WebGLRenderer, canvas: HTMLCanvasElement, opts: S
   let ambientOnly = false;
   let disposed = false;
   let celebrating: MomentKind | null = null;
-  let reported = { focusId: null as number | null, celebrating: null as MomentKind | null };
+  let moving = false; // players are running on or off (a new lineup is settling)
+  let reported = { focusId: null as number | null, celebrating: null as MomentKind | null, moving: false };
   const report = () => {
     // the page re-renders on this, so only say so when something it shows has changed
-    if (reported.focusId === selected && reported.celebrating === celebrating) return;
-    reported = { focusId: selected, celebrating };
-    opts.onState?.({ focusId: selected, celebrating });
+    if (reported.focusId === selected && reported.celebrating === celebrating && reported.moving === moving) return;
+    reported = { focusId: selected, celebrating, moving };
+    opts.onState?.({ focusId: selected, celebrating, moving });
   };
+
+  /* players leaving the XI (a transfer, another week's lineup): they jog off to the nearer touchline */
+  let leaving: { f: Figure; fromX: number; fromZ: number; toX: number; t: number; dur: number }[] = [];
+  const TOUCHLINE = 13.5; // just past the side of the 22-wide pitch
+  const RUN_SPEED = 7.5; // units a second, a brisk jog at this scale
+  const LEAVE_DRIFT = 3.4; // how far upfield a man going off drifts, so he clears the man coming on
+  const sideOf = (x: number) => (x < 0 ? -1 : 1);
 
   /* ambient passing: the ball goes round the starting eleven, who stay where they are. */
   let ambient = opts.ambient !== false && !reduceMotion;
@@ -744,13 +752,18 @@ function setup(renderer: THREE.WebGLRenderer, canvas: HTMLCanvasElement, opts: S
       }
       if (a.slide) {
         a.slide.t += dt;
-        const k = ease(a.slide.t / 0.8);
+        const k = a.slide.run ? Math.min(1, a.slide.t / a.slide.dur) : ease(a.slide.t / a.slide.dur);
         const x = a.slide.fromX + (f.homeX - a.slide.fromX) * k;
         const z = a.slide.fromZ + (f.homeZ - a.slide.fromZ) * k;
         f.g.position.set(x, 0.05, z);
         const phase = a.slide.t * 11;
         const moving = k < 1;
         const j = f.joints;
+        if (moving && a.slide.run) {
+          // running on: face the way he runs, turning back to the front over the last strides
+          const head = Math.atan2(f.homeX - a.slide.fromX, f.homeZ - a.slide.fromZ);
+          f.g.rotation.y = head * Math.min(1, (1 - k) * 4);
+        }
         if (moving && !f.def.bench) {
           j.hipL.rotation.x = Math.sin(phase) * 0.6;
           j.hipR.rotation.x = -Math.sin(phase) * 0.6;
@@ -758,6 +771,7 @@ function setup(renderer: THREE.WebGLRenderer, canvas: HTMLCanvasElement, opts: S
           j.kneeR.rotation.x = Math.max(0, -Math.cos(phase)) * 0.7;
         }
         if (!moving) {
+          if (a.slide.run) f.g.rotation.y = a.yaw;
           a.slide = null;
           if (!a.current) restPose(f); // back to standing or seated, as he was built
           f.g.position.set(f.homeX, 0.05, f.homeZ);
@@ -790,6 +804,39 @@ function setup(renderer: THREE.WebGLRenderer, canvas: HTMLCanvasElement, opts: S
           active = true;
         }
       }
+    }
+    for (const l of leaving) {
+      l.t += dt;
+      const k = Math.min(1, l.t / l.dur);
+      // he goes off on a slight diagonal, upfield, so he passes beside the man coming on, not through him
+      const z = l.fromZ - LEAVE_DRIFT * k;
+      l.f.g.position.set(l.fromX + (l.toX - l.fromX) * k, 0.05, z);
+      l.f.g.rotation.y = Math.atan2(l.toX - l.fromX, -LEAVE_DRIFT);
+      const phase = l.t * 11;
+      const j = l.f.joints;
+      j.hipL.rotation.x = Math.sin(phase) * 0.6;
+      j.hipR.rotation.x = -Math.sin(phase) * 0.6;
+      j.kneeL.rotation.x = Math.max(0, Math.cos(phase)) * 0.7;
+      j.kneeR.rotation.x = Math.max(0, -Math.cos(phase)) * 0.7;
+      // everything about him fades together: body, shadow and any ring
+      const fade = 1 - clamp01((k - 0.55) / 0.45);
+      l.f.g.traverse((o) => {
+        const m = (o as THREE.Mesh).material as (THREE.Material & { opacity: number; userData: { base?: number } }) | undefined;
+        if (!m || o === l.f.hit) return;
+        if (m.userData.base == null) m.userData.base = m.opacity;
+        m.transparent = true;
+        m.opacity = m.userData.base * fade;
+      });
+    }
+    if (leaving.some((l) => l.t >= l.dur)) {
+      for (const l of leaving.filter((x) => x.t >= x.dur)) disposeFigure(l.f);
+      leaving = leaving.filter((l) => l.t < l.dur);
+    }
+    if (leaving.length) active = true;
+    const nowMoving = leaving.length > 0 || figures.some((f) => f.anim.slide || f.anim.pop != null);
+    if (nowMoving !== moving) {
+      moving = nowMoving;
+      report();
     }
     if (stepConfetti(dt)) active = true;
     const passing = stepPassing(dt);
@@ -940,8 +987,8 @@ function setup(renderer: THREE.WebGLRenderer, canvas: HTMLCanvasElement, opts: S
   // a phone can drop the GL context in the background; draw again when it returns
   canvas.addEventListener("webglcontextrestored", draw);
 
-  function clearFigures() {
-    for (const f of figures) {
+  function disposeFigure(f: Figure) {
+    {
       scene.remove(f.g);
       f.owned.forEach((g) => g.dispose());
       f.disposables.forEach((d) => d.dispose());
@@ -954,6 +1001,9 @@ function setup(renderer: THREE.WebGLRenderer, canvas: HTMLCanvasElement, opts: S
         }
       });
     }
+  }
+  function clearFigures() {
+    for (const f of figures) disposeFigure(f);
     figures = [];
   }
 
@@ -963,6 +1013,20 @@ function setup(renderer: THREE.WebGLRenderer, canvas: HTMLCanvasElement, opts: S
       // a live update rebuilds the figures; keep the ball going round across it
       const saved = pass && { fromId: pass.from.def.id, toId: pass.to.def.id, phase: pass.phase, t: pass.t, legT: pass.legT, dur: pass.dur, last: pass.last, wait: pass.wait, rest: pass.rest };
       const settlingIds = settling.map((s) => ({ id: s.f.def.id, t: s.t }));
+      // starters who are not in the new lineup jog off rather than vanish (not on the first draw)
+      const nextIds = new Set(defs.map((d) => d.id));
+      const goers = before.size > 0 && !reduceMotion ? figures.filter((f) => !f.def.bench && !nextIds.has(f.def.id)) : [];
+      for (const f of goers) {
+        if (pass && (pass.from === f || pass.to === f)) stopPassing();
+        restPose(f);
+        f.anim.pop = null;
+        f.g.scale.setScalar(f.scale);
+        f.ring.visible = false;
+        const x = f.g.position.x;
+        const toX = sideOf(x) * TOUCHLINE;
+        leaving.push({ f, fromX: x, fromZ: f.g.position.z, toX, t: 0, dur: Math.max(0.9, Math.abs(toX - x) / RUN_SPEED) });
+      }
+      figures = figures.filter((f) => !goers.includes(f));
       clearFigures();
       figures = defs.map((d) => buildFigure(d, shadowTex));
       for (const f of figures) {
@@ -975,10 +1039,20 @@ function setup(renderer: THREE.WebGLRenderer, canvas: HTMLCanvasElement, opts: S
           f.g.rotation.y = prev.anim.yaw;
           // a different lineup (another gameweek): glide from where he stood
           const moved = Math.abs(prev.homeX - f.homeX) > 0.05 || Math.abs(prev.homeZ - f.homeZ) > 0.05;
-          if (moved && !reduceMotion) {
-            f.anim.slide = { fromX: prev.x, fromZ: prev.z, t: 0 };
+          if (!moved && prev.anim.slide && !reduceMotion) {
+            // still running on (a live poll rebuilt the figures): he carries on from where he is
+            f.anim.slide = { ...prev.anim.slide };
             f.g.position.set(prev.x, 0.05, prev.z);
           }
+          if (moved && !reduceMotion) {
+            f.anim.slide = { fromX: prev.x, fromZ: prev.z, t: 0, dur: 0.8 };
+            f.g.position.set(prev.x, 0.05, prev.z);
+          }
+        } else if (before.size > 0 && !reduceMotion && !f.def.bench) {
+          // a new man in the XI runs on from the nearer touchline, level with his spot
+          const fromX = sideOf(f.homeX) * TOUCHLINE;
+          f.anim.slide = { fromX, fromZ: f.homeZ, t: 0, dur: Math.max(0.9, Math.abs(f.homeX - fromX) / RUN_SPEED), run: true };
+          f.g.position.set(fromX, 0.05, f.homeZ);
         } else if (before.size > 0 && !reduceMotion) {
           f.anim.pop = 0;
           f.g.scale.setScalar(0.001);
@@ -1085,6 +1159,8 @@ function setup(renderer: THREE.WebGLRenderer, canvas: HTMLCanvasElement, opts: S
       report();
       pass = null;
       clearFigures();
+      for (const l of leaving) disposeFigure(l.f);
+      leaving = [];
       staticOwned.forEach((o) => o.dispose());
       renderer.dispose();
       renderer.forceContextLoss();

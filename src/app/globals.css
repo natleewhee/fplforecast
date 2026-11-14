@@ -452,6 +452,16 @@ h3 {
   background: radial-gradient(70% 60% at 50% 20%, rgba(255, 255, 255, 0.55), transparent 70%);
   animation: goal-flare 1.6s ease-out forwards;
 }
+/* A player just transferred in (2D scenario pitch): he drops in with a short green glow. */
+@keyframes token-arrive {
+  0% { transform: translateY(-10px) scale(0.85); opacity: 0; filter: drop-shadow(0 0 0 rgba(53, 224, 163, 0)); }
+  55% { transform: none; opacity: 1; filter: drop-shadow(0 0 10px rgba(53, 224, 163, 0.75)); }
+  100% { filter: drop-shadow(0 0 0 rgba(53, 224, 163, 0)); }
+}
+.token-arrive { animation: token-arrive 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.25s both; }
+@media (prefers-reduced-motion: reduce) {
+  .token-arrive { animation: none; }
+}
 @keyframes fx-pop {
   0% { transform: scale(0.3); opacity: 0; }
   55% { transform: scale(1.45); opacity: 1; }
