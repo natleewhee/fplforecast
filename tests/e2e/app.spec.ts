@@ -1202,6 +1202,30 @@ test.describe("Opens on the right view for the week", () => {
     await pressed(page, "Now");
   });
 
+  test("one highlight slides to the half you pick, and the 3D pitch is drawn for it", async ({ page }) => {
+    // real timers here: the 3D pitch loads and draws on them
+    await page.addInitScript(() => {
+      try { localStorage.setItem("fpl-pitch-view", "3d"); } catch {}
+    });
+    await mockLive(page, { current: "a" });
+    await page.goto("/");
+    const thumb = page.getByTestId("team-mode").locator(".team-mode-thumb");
+    await teamHalf(page, "Now").click();
+    await expect(thumb).toHaveAttribute("data-at", "now");
+    await teamHalf(page, "Next").click();
+    await expect(thumb).toHaveAttribute("data-at", "next");
+    const pitch = page.locator("[data-team-half='next'] [data-testid=pitch3d]");
+    await expect(pitch.locator("canvas")).toBeVisible({ timeout: 15000 });
+    // the subs strip under the 3D pitch is not hidden along with the tags still waiting to be placed
+    const strip = pitch.locator("[data-tag]").filter({ hasNot: page.locator("xpath=self::*[parent::*[@data-tag-layer]]") });
+    await expect.poll(async () => strip.count()).toBeGreaterThan(0);
+    const opacities = await pitch.locator("[data-tag]").evaluateAll((els) =>
+      els.filter((e) => !e.parentElement?.hasAttribute("data-tag-layer")).map((e) => getComputedStyle(e).opacity),
+    );
+    expect(opacities.length).toBeGreaterThan(0);
+    expect(opacities.every((o) => o === "1")).toBe(true);
+  });
+
   test("the Now/Next buttons are at least 44px tall", async ({ page }) => {
     await page.setViewportSize({ width: 360, height: 780 });
     await mockLive(page, { current: "a" });

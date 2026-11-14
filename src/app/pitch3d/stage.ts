@@ -1,5 +1,6 @@
 import * as THREE from "three";
 import { SKIN_STEPS, type HairStyle } from "@/lib/appearance";
+import { justSwitched } from "@/lib/teamSwitch";
 import { fitTags, type TagItem, type TagState } from "./tagLayout";
 import { ballAt, cushionLeg, facing, kickLeg, nextReceiver, passSeconds, receiveHold, setBall, BALL_REST_Y, KICK_AT, type Spot } from "./passes";
 import {
@@ -7,6 +8,7 @@ import {
   WALL_BRICKS,
   WALL_PER_COURSE,
   GLIDE_SECONDS,
+  SWEEP_FROM,
   benchCheerPose,
   blend,
   cleanSheetPose,
@@ -21,7 +23,7 @@ import {
   type Pose,
   type Shot,
 } from "./moves";
-import { ballShadow, pitchCanvas, skyCanvas, softShadowCanvas } from "./look";
+import { ballShadow, sharedPitchCanvas, sharedShadowCanvas, sharedSkyCanvas } from "./look";
 
 /* The 3D Squad pitch: stylised low-poly figures in kit colours on a floodlit
  * pitch, with the bench seated in a dugout at the side. Built from rounded
@@ -44,6 +46,7 @@ export type FigureDef = {
   skin: number; // index into SKIN_STEPS
   hair: [HairStyle, string];
   captain: boolean;
+  vice?: boolean;
   bench: boolean; // a seated figure; unused while the subs are a strip under the pitch
   dim?: number; // 0..1, fades players who have not played or are off
   goals?: number; // goals scored: he celebrates when tapped
@@ -176,6 +179,8 @@ type Anim = {
 type Figure = {
   g: THREE.Group;
   ring: THREE.Mesh;
+  band: THREE.Mesh | null; // the captain's (or vice's) ring on the grass
+  flash: number | null; // seconds into the "new captain" flash
   hit: THREE.Mesh;
   scale: number;
   def: FigureDef;
@@ -280,6 +285,19 @@ function buildFigure(def: FigureDef, shadowTex: THREE.Texture): Figure {
   hit.userData.id = def.id;
   g.add(hit);
 
+  // the armband on the grass: a gold ring under the captain, a thinner silver one under the vice
+  let band: THREE.Mesh | null = null;
+  if ((def.captain || def.vice) && !def.bench) {
+    band = new THREE.Mesh(
+      def.captain ? new THREE.RingGeometry(1.0, 1.16, 40) : new THREE.RingGeometry(1.02, 1.1, 40),
+      new THREE.MeshBasicMaterial({ color: def.captain ? 0xf3b94d : 0xc9d3dc, transparent: true, opacity: def.captain ? 0.7 : 0.45, depthWrite: false, side: THREE.DoubleSide }),
+    );
+    band.userData.band = true;
+    band.rotation.x = -Math.PI / 2;
+    band.position.y = 0.045;
+    g.add(band);
+  }
+
   const disposables: { dispose(): void }[] = [];
   let wall: THREE.InstancedMesh | null = null;
   if (def.cleanSheet) {
@@ -303,6 +321,8 @@ function buildFigure(def: FigureDef, shadowTex: THREE.Texture): Figure {
   return {
     g,
     ring,
+    band,
+    flash: null,
     hit,
     scale,
     def,
@@ -370,7 +390,7 @@ function setup(renderer: THREE.WebGLRenderer, canvas: HTMLCanvasElement, opts: S
   const own = <T extends { dispose(): void }>(o: T) => (staticOwned.push(o), o);
 
   // a night sky glowing behind the far stand, fading to the dark of the stadium
-  scene.background = own(new THREE.CanvasTexture(skyCanvas()));
+  scene.background = own(new THREE.CanvasTexture(sharedSkyCanvas()));
   scene.fog = new THREE.Fog(0x0a1a14, 66, 130);
   const camera = new THREE.PerspectiveCamera(48, 0.8, 0.5, 160);
   const raycaster = new THREE.Raycaster();
@@ -383,9 +403,9 @@ function setup(renderer: THREE.WebGLRenderer, canvas: HTMLCanvasElement, opts: S
   rim.position.set(-7, 12, -18);
   scene.add(rim);
 
-  const pitchTex = own(new THREE.CanvasTexture(pitchCanvas()));
+  const pitchTex = own(new THREE.CanvasTexture(sharedPitchCanvas()));
   pitchTex.anisotropy = Math.min(8, renderer.capabilities.getMaxAnisotropy());
-  const shadowTex = own(new THREE.CanvasTexture(softShadowCanvas()));
+  const shadowTex = own(new THREE.CanvasTexture(sharedShadowCanvas()));
   const pitch = new THREE.Mesh(own(new THREE.PlaneGeometry(22, 36)), own(new THREE.MeshLambertMaterial({ map: pitchTex })));
   pitch.rotation.x = -Math.PI / 2;
   scene.add(pitch);
@@ -426,6 +446,7 @@ function setup(renderer: THREE.WebGLRenderer, canvas: HTMLCanvasElement, opts: S
   }
 
   let figures: Figure[] = [];
+  let clock = 0;
   let selected: number | null = null;
   let size = { w: 0, h: 0 };
   let raf = 0;
@@ -791,6 +812,24 @@ function setup(renderer: THREE.WebGLRenderer, canvas: HTMLCanvasElement, opts: S
         }
       }
     }
+    clock += dt;
+    for (const f of figures) {
+      if (!f.band) continue;
+      const m = f.band.material as THREE.MeshBasicMaterial;
+      if (f.flash != null) {
+        // a new captain: the ring drops in large and bright, then settles to its usual glow
+        f.flash += dt;
+        const k = ease(Math.min(1, f.flash / 0.9));
+        f.band.scale.setScalar(1.7 - 0.7 * k);
+        m.opacity = 1 - 0.3 * k;
+        if (f.flash >= 0.9) {
+          f.flash = null;
+          f.band.scale.setScalar(1);
+        } else active = true;
+      } else if (f.def.captain) {
+        m.opacity = 0.62 + 0.1 * Math.sin(clock * 2.4); // a slow breath while the scene is moving anyway
+      }
+    }
     if (stepConfetti(dt)) active = true;
     const passing = stepPassing(dt);
     return active ? 2 : passing ? 1 : 0;
@@ -911,6 +950,7 @@ function setup(renderer: THREE.WebGLRenderer, canvas: HTMLCanvasElement, opts: S
     });
     for (const it of items) {
       it.el.style.transform = `translate(${Math.round(it.x)}px,${Math.round(it.y)}px) translate(-50%,-100%)`;
+      it.el.dataset.placed = "";
     }
   }
 
@@ -928,6 +968,14 @@ function setup(renderer: THREE.WebGLRenderer, canvas: HTMLCanvasElement, opts: S
   const ro = new ResizeObserver(resize);
   ro.observe(host);
   resize();
+  // shown by the Team tab's Now/Next switch: the camera settles in from high and wide
+  if (!reduceMotion && justSwitched()) {
+    cam.pos = [...SWEEP_FROM.pos];
+    cam.look = [...SWEEP_FROM.look];
+    cam.fov = SWEEP_FROM.fov;
+    applyCamera();
+    goTo(BROADCAST);
+  }
 
   const onClick = (e: MouseEvent) => {
     const r = canvas.getBoundingClientRect();
@@ -948,7 +996,7 @@ function setup(renderer: THREE.WebGLRenderer, canvas: HTMLCanvasElement, opts: S
       f.mat.dispose();
       f.g.traverse((o) => {
         const m = o as THREE.Mesh;
-        if (m.isMesh && (m === f.ring || m === f.hit || m.userData.shadow)) {
+        if (m.isMesh && (m === f.ring || m === f.hit || m.userData.shadow || m.userData.band)) {
           m.geometry.dispose();
           (m.material as THREE.Material).dispose();
         }
@@ -960,11 +1008,19 @@ function setup(renderer: THREE.WebGLRenderer, canvas: HTMLCanvasElement, opts: S
   return {
     setPlayers(defs) {
       const before = new Map(figures.map((f) => [f.def.id, { x: f.g.position.x, z: f.g.position.z, homeX: f.homeX, homeZ: f.homeZ, anim: f.anim }]));
+      const wasCaptain = figures.find((f) => f.def.captain)?.def.id ?? null;
+      const wasFlashing = new Map(figures.filter((f) => f.flash != null).map((f) => [f.def.id, f.flash!]));
       // a live update rebuilds the figures; keep the ball going round across it
       const saved = pass && { fromId: pass.from.def.id, toId: pass.to.def.id, phase: pass.phase, t: pass.t, legT: pass.legT, dur: pass.dur, last: pass.last, wait: pass.wait, rest: pass.rest };
       const settlingIds = settling.map((s) => ({ id: s.f.def.id, t: s.t }));
       clearFigures();
       figures = defs.map((d) => buildFigure(d, shadowTex));
+      for (const f of figures) {
+        if (!f.band) continue;
+        // the armband moved to someone else: his ring flashes in (not on the first draw)
+        if (f.def.captain && before.size > 0 && wasCaptain != null && wasCaptain !== f.def.id && !reduceMotion) f.flash = 0;
+        else if (wasFlashing.has(f.def.id)) f.flash = wasFlashing.get(f.def.id)!;
+      }
       for (const f of figures) {
         f.ring.visible = f.def.id === selected;
         const prev = before.get(f.def.id);

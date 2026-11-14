@@ -33,6 +33,10 @@ export function focusShot(x: number, z: number, scale: number): Shot {
 /** Seconds the camera takes to glide between shots. */
 export const GLIDE_SECONDS = 0.75;
 
+/** Where the camera starts when the Team tab switches half: higher and further back, so it
+ * settles down into the broadcast view like a TV cut to the wide shot. */
+export const SWEEP_FROM: Shot = { pos: [0, 31, 33], look: [0, 0, -3.5], fov: 52 };
+
 /* ---------- celebrations ---------- */
 
 export type Arm = { x: number; z: number };
