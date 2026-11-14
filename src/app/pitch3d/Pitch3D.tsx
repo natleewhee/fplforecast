@@ -56,6 +56,7 @@ function buildDefs(xi: Pitch3DPlayer[], data: PitchData): FigureDef[] {
       skin: look.skin,
       hair: look.hair,
       captain: p.role === "C",
+      vice: p.role === "V",
       bench: isBench,
       dim: p.dim,
       goals: p.goals,
