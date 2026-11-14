@@ -33,9 +33,11 @@ export function netBulge(t: number, u: number, v: number, hitU = 0.6, hitV = 0.4
 
 /** How high a fan is lifted at time t (s) after a goal: everyone jumps, each a little out of step. */
 export const CHEER_SECONDS = 1.8;
+/** The most a fan is out of step (his offset); every fan has landed before the cheer ends. */
+export const CHEER_SPREAD = 0.35;
 export function cheerLift(t: number, offset: number): number {
   const s = t - offset;
-  if (s <= 0 || s >= CHEER_SECONDS - 0.2) return 0;
+  if (s <= 0 || s >= CHEER_SECONDS - 0.2 - CHEER_SPREAD) return 0;
   return Math.max(0, Math.sin(s * 9)) * 0.28 * (1 - s / CHEER_SECONDS);
 }
 
@@ -46,6 +48,7 @@ export type Stadium = {
   step(dt: number): boolean;
 };
 
+let boardOnce: HTMLCanvasElement | null = null; // drawn once per page, shared by every stage
 function boardCanvas(): HTMLCanvasElement {
   const c = document.createElement("canvas");
   c.width = 1024;
@@ -118,7 +121,7 @@ export function buildStadium(
   }
 
   // advertising boards along both sides and behind each goal
-  const boardTex = own(new THREE.CanvasTexture(boardCanvas()));
+  const boardTex = own(new THREE.CanvasTexture((boardOnce ??= boardCanvas())));
   boardTex.wrapS = THREE.RepeatWrapping;
   const boardMat = own(new THREE.MeshBasicMaterial({ map: boardTex }));
   const sideBoard = own(new THREE.BoxGeometry(0.12, 0.62, PITCH_HALF_L * 2 + 1));
@@ -163,7 +166,7 @@ export function buildStadium(
           if (rand() < 0.12) continue;
           const a = -length / 2 + (i + 0.5) * (length / n) + (rand() - 0.5) * 0.2;
           const y = STEP_UP * (t + 1) + 0.28;
-          fans.push(alongX ? { x: a, y, z: sign * out, off: rand() * 0.35 } : { x: sign * out, y, z: a, off: rand() * 0.35 });
+          fans.push(alongX ? { x: a, y, z: sign * out, off: rand() * CHEER_SPREAD } : { x: sign * out, y, z: a, off: rand() * CHEER_SPREAD });
         }
       }
     };
@@ -173,7 +176,7 @@ export function buildStadium(
 
     const body = own(new THREE.CapsuleGeometry(0.17, 0.26, 2, 6));
     const fanMat = own(new THREE.MeshLambertMaterial({ color: 0xffffff }));
-    crowd = new THREE.InstancedMesh(body, fanMat, fans.length);
+    crowd = own(new THREE.InstancedMesh(body, fanMat, fans.length));
     const palette = ["#c8102e", "#f3f6fa", "#1d4ed8", "#35e0a3", "#f3b94d", "#6b7280", "#111827", "#7c3aed"];
     const tint = new THREE.Color();
     const m = new THREE.Matrix4();

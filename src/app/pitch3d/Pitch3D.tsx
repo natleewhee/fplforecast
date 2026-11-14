@@ -4,7 +4,7 @@ import { createContext, useContext, useEffect, useRef, useState, type ReactNode 
 import { lookFor, type PitchKits, type PitchLooks, type Position } from "@/lib/appearance";
 import { usePitchAmbient, usePrefersReducedMotion } from "@/lib/pitchView";
 import { decideCelebration, type CelebrationEvent } from "./celebrate";
-import { formationSpots, SENT_OFF_X } from "./spots";
+import { formationSpots, SENT_OFF_X, SENT_OFF_Z } from "./spots";
 import type { FigureDef, StageHandle, StageState } from "./stage";
 
 /* The 3D pitch used by the Live, Squad and Scenarios tabs: figures in kit
@@ -65,11 +65,21 @@ function buildDefs(xi: Pitch3DPlayer[], data: PitchData): FigureDef[] {
       sentOff: p.sentOff,
       // sent off: just off the grass on his own side, level with where he played
       x: p.sentOff ? (at.x < 0 ? -1 : 1) * SENT_OFF_X : at.x,
-      z: at.z,
+      // up the touchline, where the broadcast frame is wide enough to keep him (and his tag) in view;
+      // a second man sent off on the same side stands a little further up
+      z: p.sentOff ? Math.min(at.z, SENT_OFF_Z) - 2.2 * sentOffBefore(p) : at.z,
     };
   };
   const rows = ROW_ORDER.map((pos) => xi.filter((p) => p.position === pos)).filter((r) => r.length);
   const placed = formationSpots(rows.map((r) => r.length));
+  const spotOf = new Map<number, { x: number; z: number }>();
+  rows.forEach((row, r) => row.forEach((p, i) => spotOf.set(p.id, placed[r][i])));
+  // how many players already sent off on the same side, so two never stand on one spot
+  const sideOf = (p: Pitch3DPlayer) => (spotOf.get(p.id)!.x < 0 ? -1 : 1);
+  const sentOffBefore = (p: Pitch3DPlayer) => {
+    const same = xi.filter((q) => q.sentOff && sideOf(q) === sideOf(p));
+    return Math.max(0, same.indexOf(p));
+  };
   const out: FigureDef[] = [];
   rows.forEach((row, r) => row.forEach((p, i) => out.push(def(p, placed[r][i], false))));
   return out;

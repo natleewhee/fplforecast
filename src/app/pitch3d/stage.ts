@@ -414,6 +414,7 @@ function setup(renderer: THREE.WebGLRenderer, canvas: HTMLCanvasElement, opts: S
     else tagLayer.dataset.moment = String(id);
     tagLayer.querySelectorAll<HTMLElement>("[data-tag]").forEach((el) => el.toggleAttribute("data-star", id != null && el.dataset.tag === String(id)));
   }
+  showMoment(null); // the tag layer outlives a stage: never start with an old moment left on it
 
   // The camera: where it is now, and a glide to somewhere else. fov is for a stage 0.8 wide per
   // 1 high, widened or narrowed to the real shape.
@@ -1008,7 +1009,11 @@ function setup(renderer: THREE.WebGLRenderer, canvas: HTMLCanvasElement, opts: S
           f.g.rotation.y = prev.anim.yaw;
           // a different lineup (another gameweek): glide from where he stood
           const moved = Math.abs(prev.homeX - f.homeX) > 0.05 || Math.abs(prev.homeZ - f.homeZ) > 0.05;
-          if (moved && !reduceMotion && f.def.sentOff) {
+          if (!moved && prev.anim.slide && !reduceMotion) {
+            // still walking off (a live poll rebuilt the figures): he carries on from where he is
+            f.anim.slide = { ...prev.anim.slide };
+            f.g.position.set(prev.x, 0.05, prev.z);
+          } else if (moved && !reduceMotion && f.def.sentOff) {
             // a red card: a slow walk off, head down
             f.anim.slide = { fromX: prev.x, fromZ: prev.z, t: 0, dur: Math.max(1.6, Math.hypot(f.homeX - prev.x, f.homeZ - prev.z) / 2.4), walk: true };
             f.g.position.set(prev.x, 0.05, prev.z);
@@ -1123,6 +1128,7 @@ function setup(renderer: THREE.WebGLRenderer, canvas: HTMLCanvasElement, opts: S
     },
     dispose() {
       disposed = true;
+      showMoment(null); // a moment cut short (pitch scrolled away) must not leave every tag hidden
       cancelAnimationFrame(raf);
       ro.disconnect();
       canvas.removeEventListener("click", onClick);

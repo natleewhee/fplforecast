@@ -35,3 +35,9 @@ test("a goal is seen from behind the near net, looking back at the scorer", () =
   assert.ok(shot.pos[1] < 10, "low, not the broadcast height");
   assert.equal(shot.look[2], 4, "looking at the scorer");
 });
+
+test("every fan has landed before the cheer ends, however late his jump", () => {
+  for (const off of [0, 0.1, 0.2, 0.35]) {
+    for (let t = CHEER_SECONDS - 0.2; t <= CHEER_SECONDS + 0.5; t += 0.01) assert.equal(cheerLift(t, off), 0, `off ${off} at ${t.toFixed(2)}`);
+  }
+});
