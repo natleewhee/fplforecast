@@ -289,15 +289,21 @@ test.describe("Squad and Scenarios tabs", () => {
       await pitch.scrollIntoViewIfNeeded();
       await pitch.locator("canvas").waitFor({ state: "attached", timeout: 30_000 });
       const host = pitch.locator("canvas").locator("xpath=.."); // the floating tags over the eleven (not the subs strip)
-      // every lineup the pitch shows over the next few seconds, as the set of tagged players
-      const seen: string[] = [];
-      for (let i = 0; i < 30; i++) {
-        const ids = await host.locator("[data-tag]").evaluateAll((els) => els.map((e) => e.getAttribute("data-tag")).sort().join(","));
-        if (ids.split(",").filter(Boolean).length === 11 && seen.at(-1) !== ids) seen.push(ids);
-        await page.waitForTimeout(100);
+      const ids = () => host.locator("[data-tag]").evaluateAll((els) => els.map((e) => e.getAttribute("data-tag")).sort().join(","));
+      await expect.poll(async () => (await ids()).split(",").filter(Boolean).length).toBe(11);
+      if (motion === "reduce") {
+        // the new XI from the start, nothing acted out
+        await expect(pitch).not.toHaveAttribute("data-settling", /.*/);
+        const first = await ids();
+        await page.waitForTimeout(1500);
+        expect(await ids()).toBe(first);
+        await expect(pitch).not.toHaveAttribute("data-acted", /.*/);
+      } else {
+        // the outgoing men stand in first, then the XI changes (the swap is played) and settles
+        await expect(pitch).toHaveAttribute("data-acted", "", { timeout: 15000 });
+        await expect(pitch).not.toHaveAttribute("data-settling", /.*/, { timeout: 15000 });
+        expect((await ids()).split(",")).toHaveLength(11);
       }
-      // with motion the outgoing men stand in first and the XI then changes; with reduced motion it is the new XI from the start
-      expect(seen.length).toBe(motion === "reduce" ? 1 : 2);
     });
   }
 

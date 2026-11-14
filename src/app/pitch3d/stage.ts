@@ -331,7 +331,7 @@ export type StageHandle = {
 };
 
 /** What the stage reports for the page (and the tests) to show. */
-export type StageState = { focusId: number | null; celebrating: MomentKind | null };
+export type StageState = { focusId: number | null; celebrating: MomentKind | null; moving?: boolean };
 
 export type StageOptions = {
   host: HTMLElement; // sized by CSS; the stage fills it
@@ -433,12 +433,13 @@ function setup(renderer: THREE.WebGLRenderer, canvas: HTMLCanvasElement, opts: S
   let ambientOnly = false;
   let disposed = false;
   let celebrating: MomentKind | null = null;
-  let reported = { focusId: null as number | null, celebrating: null as MomentKind | null };
+  let moving = false; // players are running on or off (a new lineup is settling)
+  let reported = { focusId: null as number | null, celebrating: null as MomentKind | null, moving: false };
   const report = () => {
     // the page re-renders on this, so only say so when something it shows has changed
-    if (reported.focusId === selected && reported.celebrating === celebrating) return;
-    reported = { focusId: selected, celebrating };
-    opts.onState?.({ focusId: selected, celebrating });
+    if (reported.focusId === selected && reported.celebrating === celebrating && reported.moving === moving) return;
+    reported = { focusId: selected, celebrating, moving };
+    opts.onState?.({ focusId: selected, celebrating, moving });
   };
 
   /* players leaving the XI (a transfer, another week's lineup): they jog off to the nearer touchline */
@@ -823,6 +824,11 @@ function setup(renderer: THREE.WebGLRenderer, canvas: HTMLCanvasElement, opts: S
       leaving = leaving.filter((l) => l.t < l.dur);
     }
     if (leaving.length) active = true;
+    const nowMoving = leaving.length > 0 || figures.some((f) => f.anim.slide || f.anim.pop != null);
+    if (nowMoving !== moving) {
+      moving = nowMoving;
+      report();
+    }
     if (stepConfetti(dt)) active = true;
     const passing = stepPassing(dt);
     return active ? 2 : passing ? 1 : 0;

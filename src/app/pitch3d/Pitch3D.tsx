@@ -313,6 +313,8 @@ export default function Pitch3D({
       data-testid="pitch3d"
       data-focus={state.focusId ?? undefined}
       data-celebrating={state.celebrating ?? undefined}
+      data-settling={acting || state.moving ? "" : undefined}
+      data-acted={swapsPlayed ? "" : undefined}
     >
       <div ref={hostRef} className={`relative w-full scroll-mt-16 overflow-hidden ${compact ? "aspect-[5/6]" : "aspect-[6/5]"}  rounded-xl bg-[#0a1a14] [contain:paint]`}>
         <div ref={tagsRef} className="pointer-events-none absolute inset-0">

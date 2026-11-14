@@ -65,6 +65,8 @@ async function openCard(page: Page, width: number) {
   await expect(pitch.locator("canvas")).toBeVisible();
   const host = pitch.locator("canvas").locator("xpath=..");
   await expect.poll(async () => host.locator("[data-tag]").count()).toBe(11);
+  // the plan's transfers are acted out first (men running on and off): measure the settled pitch
+  await expect(pitch).not.toHaveAttribute("data-settling", /.*/, { timeout: 15000 });
   await page.waitForTimeout(600);
   return { pitch, host };
 }
