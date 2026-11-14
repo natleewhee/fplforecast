@@ -79,6 +79,7 @@ export default function Pitch3D({
   onUnavailable,
   goals,
   compact: compactCard = false,
+  swaps,
 }: {
   xi: Pitch3DPlayer[];
   bench: Pitch3DPlayer[];
@@ -91,6 +92,9 @@ export default function Pitch3D({
   goals?: CelebrationEvent[];
   /** A pitch inside a card (a scenario): when the card is narrow (under 340px) it gets a taller frame and smaller, shorter name tags, so the eleven fit without touching. */
   compact?: boolean;
+  /** Transfers to act out once the pitch is up: each outgoing player starts on the incoming one's spot,
+   * then jogs off as the new man runs on. Played once per pitch, never with reduced motion. */
+  swaps?: { inId: number; out: Pitch3DPlayer }[];
 }) {
   const data = useContext(PitchDataContext);
   const rootRef = useRef<HTMLDivElement>(null);
@@ -121,8 +125,15 @@ export default function Pitch3D({
     onUnavailableRef.current = onUnavailable;
   });
 
+  // Transfers acted out: the XI as it was (outgoing men on the new men's spots) until the stage has
+  // been up a moment, then the real XI, which the stage plays as one jogging off and one running on.
+  const reducedMotion = usePrefersReducedMotion();
+  const [swapsPlayed, setSwapsPlayed] = useState(false);
+  const swapMap = new Map((swaps ?? []).map((sw) => [sw.inId, sw.out]));
+  const acting = !swapsPlayed && !reducedMotion && xi.some((p) => swapMap.has(p.id));
+  const shownXi = acting ? xi.map((p) => swapMap.get(p.id) ?? p) : xi;
   // The figures depend only on this string, so a re-render with the same lineup rebuilds nothing.
-  const defsJson = JSON.stringify(buildDefs(xi, data));
+  const defsJson = JSON.stringify(buildDefs(shownXi, data));
 
   // A 3D scene holds a GPU context, and a phone allows only a few. Hidden tabs and
   // collapsed cards are not on screen, so they get none until they are.
@@ -178,6 +189,11 @@ export default function Pitch3D({
   useEffect(() => {
     if (ready) stageRef.current?.setPlayers(JSON.parse(defsJson) as FigureDef[]);
   }, [ready, defsJson]);
+  useEffect(() => {
+    if (!ready || !acting) return;
+    const t = setTimeout(() => setSwapsPlayed(true), 950);
+    return () => clearTimeout(t);
+  }, [ready, acting]);
   useEffect(() => {
     if (!ready) return;
     stageRef.current?.setSelected(selectedId);
@@ -300,7 +316,7 @@ export default function Pitch3D({
     >
       <div ref={hostRef} className={`relative w-full scroll-mt-16 overflow-hidden ${compact ? "aspect-[5/6]" : "aspect-[6/5]"}  rounded-xl bg-[#0a1a14] [contain:paint]`}>
         <div ref={tagsRef} className="pointer-events-none absolute inset-0">
-          {ready && xi.map(floating)}
+          {ready && shownXi.map(floating)}
         </div>
         {!ready && <p className="absolute inset-0 grid place-items-center text-xs text-ink-faint">Loading the 3D pitch…</p>}
       </div>

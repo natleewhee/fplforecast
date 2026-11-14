@@ -43,10 +43,13 @@ function ShirtToken({
   player,
   isCaptain,
   weekIndex,
+  arriving = false,
 }: {
   player: PoolPlayer | undefined;
   isCaptain: boolean;
   weekIndex: number;
+  /** Just transferred in: he arrives with a short flourish. */
+  arriving?: boolean;
 }) {
   if (!player) return null;
   const doubt = availabilityFlag(player.availability);
@@ -56,7 +59,8 @@ function ShirtToken({
   return (
     <div
       data-flip={player.id}
-      className="flex min-w-0 max-w-16 flex-1 basis-0 flex-col items-center gap-0.5 sm:max-w-[4.5rem]"
+      data-arriving={arriving || undefined}
+      className={`flex min-w-0 max-w-16 flex-1 basis-0 flex-col items-center gap-0.5 sm:max-w-[4.5rem] ${arriving ? "token-arrive" : ""}`}
       title={[player.webName, doubt?.label].filter(Boolean).join(" \u2014 ")}
     >
       <div className="relative" style={{ width: w, height: Math.round((w * 52) / 56) }}>
@@ -133,6 +137,11 @@ function SwapPlayer({ player, direction }: { player: ScenarioPlayerRef; directio
   );
 }
 
+/** Each transfer as the pitch acts it out: who runs on (in) for whom (out). */
+function pairSwaps(transfersIn: ScenarioPlayerRef[], transfersOut: ScenarioPlayerRef[]) {
+  return pairTransfers({ transfersIn, transfersOut }).map(({ out, in_ }) => ({ inId: in_.id, outId: out.id }));
+}
+
 function TransferPairs({
   transfersIn,
   transfersOut,
@@ -167,12 +176,15 @@ function XiPitch({
   captainId,
   poolById,
   weekIndex,
+  swaps,
 }: {
   squad: number[];
   xi: number[];
   captainId: number | null;
   poolById: Map<number, PoolPlayer>;
   weekIndex: number;
+  /** This week's transfers (in, out), acted out on the pitch when it opens. */
+  swaps?: { inId: number; outId: number }[];
 }) {
   const view = useShownPitchView();
   const bench = squad.filter((id) => !xi.includes(id));
@@ -194,7 +206,11 @@ function XiPitch({
       };
     };
     const byPos = (ids: number[]) => ids.map((id) => poolById.get(id)).filter((p): p is PoolPlayer => !!p);
-    return <Pitch3D xi={byPos(xi).map(to3d)} bench={byPos(bench).map((p, _i, all) => ({ ...to3d(p), benchOrder: all.filter((b) => b.position !== "GKP").indexOf(p) + 1 }))} onUnavailable={markPitch3dUnavailable} compact />;
+    const acted = (swaps ?? []).flatMap((sw) => {
+      const out = poolById.get(sw.outId);
+      return out ? [{ inId: sw.inId, out: { ...to3d(out), role: null } }] : [];
+    });
+    return <Pitch3D swaps={acted} xi={byPos(xi).map(to3d)} bench={byPos(bench).map((p, _i, all) => ({ ...to3d(p), benchOrder: all.filter((b) => b.position !== "GKP").indexOf(p) + 1 }))} onUnavailable={markPitch3dUnavailable} compact />;
   }
   const rows = ROWS.map((pos) =>
     xi.map((id) => poolById.get(id)).filter((p): p is PoolPlayer => !!p && p.position === pos)
@@ -207,7 +223,7 @@ function XiPitch({
           {rows.map((row, i) => (
             <div key={i} className="flex justify-center gap-x-1 gap-y-2">
               {row.map((p) => (
-                <ShirtToken key={p.id} player={p} isCaptain={p.id === captainId} weekIndex={weekIndex} />
+                <ShirtToken key={p.id} player={p} isCaptain={p.id === captainId} weekIndex={weekIndex} arriving={swaps?.some((sw) => sw.inId === p.id)} />
               ))}
             </div>
           ))}
@@ -236,12 +252,15 @@ function WeeklyXi({
   xiByGw,
   captainByGw,
   poolById,
+  firstWeekSwaps,
 }: {
   weeks: ScenarioWeek[];
   squad: number[];
   xiByGw: number[][];
   captainByGw: (number | null)[];
   poolById: Map<number, PoolPlayer>;
+  /** The plan's transfers, acted out on the first week's pitch. */
+  firstWeekSwaps?: { inId: number; outId: number }[];
 }) {
   const [weekIndex, setWeekIndex] = useState(0);
   const activeWeek = weeks[Math.min(weekIndex, weeks.length - 1)];
@@ -279,6 +298,7 @@ function WeeklyXi({
         captainId={captainByGw[weekIndex] ?? null}
         poolById={poolById}
         weekIndex={weekIndex}
+        swaps={weekIndex === 0 ? firstWeekSwaps : undefined}
       />
     </div>
   );
@@ -334,6 +354,7 @@ function TransferScenarioCard({
               xiByGw={scenario.xiByGw}
               captainByGw={scenario.captainByGw}
               poolById={poolById}
+              firstWeekSwaps={pairSwaps(scenario.transfersIn, scenario.transfersOut)}
             />
           </div>
         </details>
@@ -600,6 +621,7 @@ function PlanWeekRow({
             captainId={captainId}
             poolById={poolById}
             weekIndex={week.targetGw - forecastGw}
+            swaps={pairSwaps(week.transfersIn, week.transfersOut)}
           />
         </div>
       )}

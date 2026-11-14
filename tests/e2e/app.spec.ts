@@ -273,6 +273,34 @@ test.describe("Squad and Scenarios tabs", () => {
     await expect(pitch.locator("canvas")).toBeVisible();
   });
 
+  for (const motion of ["no-preference", "reduce"] as const) {
+    test(`Scenarios 3D: a plan's transfers are acted out on the pitch (${motion})`, async ({ page }) => {
+      await page.emulateMedia({ reducedMotion: motion });
+      await page.addInitScript(() => {
+        try { localStorage.setItem("fpl-pitch-view", "3d"); } catch {}
+      });
+      await mockLive(page, { current: "a" });
+      await page.goto("/?tab=scenarios");
+      const row = page.locator('[data-testid^="plan-row-"]', { hasText: /\d transfers?/ }).first();
+      await row.waitFor();
+      await row.scrollIntoViewIfNeeded();
+      await row.click();
+      const pitch = row.locator("xpath=..").getByTestId("pitch3d");
+      await pitch.scrollIntoViewIfNeeded();
+      await pitch.locator("canvas").waitFor({ state: "attached", timeout: 30_000 });
+      const host = pitch.locator("canvas").locator("xpath=.."); // the floating tags over the eleven (not the subs strip)
+      // every lineup the pitch shows over the next few seconds, as the set of tagged players
+      const seen: string[] = [];
+      for (let i = 0; i < 30; i++) {
+        const ids = await host.locator("[data-tag]").evaluateAll((els) => els.map((e) => e.getAttribute("data-tag")).sort().join(","));
+        if (ids.split(",").filter(Boolean).length === 11 && seen.at(-1) !== ids) seen.push(ids);
+        await page.waitForTimeout(100);
+      }
+      // with motion the outgoing men stand in first and the XI then changes; with reduced motion it is the new XI from the start
+      expect(seen.length).toBe(motion === "reduce" ? 1 : 2);
+    });
+  }
+
   test("Scenarios: chip cards keep their numbers and open the XI on tap", async ({ page }) => {
     await mockLive(page, { current: "a" });
     await open(page);
