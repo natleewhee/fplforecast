@@ -446,6 +446,7 @@ function setup(renderer: THREE.WebGLRenderer, canvas: HTMLCanvasElement, opts: S
   let leaving: { f: Figure; fromX: number; fromZ: number; toX: number; t: number; dur: number }[] = [];
   const TOUCHLINE = 13.5; // just past the side of the 22-wide pitch
   const RUN_SPEED = 7.5; // units a second, a brisk jog at this scale
+  const LEAVE_DRIFT = 2.2; // how far upfield a man going off drifts, so he clears the man coming on
   const sideOf = (x: number) => (x < 0 ? -1 : 1);
 
   /* ambient passing: the ball goes round the starting eleven, who stay where they are. */
@@ -807,17 +808,25 @@ function setup(renderer: THREE.WebGLRenderer, canvas: HTMLCanvasElement, opts: S
     for (const l of leaving) {
       l.t += dt;
       const k = Math.min(1, l.t / l.dur);
-      l.f.g.position.set(l.fromX + (l.toX - l.fromX) * k, 0.05, l.fromZ);
-      l.f.g.rotation.y = (sideOf(l.toX) * Math.PI) / 2;
+      // he goes off on a slight diagonal, upfield, so he passes beside the man coming on, not through him
+      const z = l.fromZ - LEAVE_DRIFT * k;
+      l.f.g.position.set(l.fromX + (l.toX - l.fromX) * k, 0.05, z);
+      l.f.g.rotation.y = Math.atan2(l.toX - l.fromX, -LEAVE_DRIFT);
       const phase = l.t * 11;
       const j = l.f.joints;
       j.hipL.rotation.x = Math.sin(phase) * 0.6;
       j.hipR.rotation.x = -Math.sin(phase) * 0.6;
       j.kneeL.rotation.x = Math.max(0, Math.cos(phase)) * 0.7;
       j.kneeR.rotation.x = Math.max(0, -Math.cos(phase)) * 0.7;
-      const mat = l.f.mat as THREE.MeshLambertMaterial;
-      mat.transparent = true;
-      mat.opacity = (l.f.def.dim ?? 1) * (1 - clamp01((k - 0.55) / 0.45));
+      // everything about him fades together: body, shadow and any ring
+      const fade = 1 - clamp01((k - 0.55) / 0.45);
+      l.f.g.traverse((o) => {
+        const m = (o as THREE.Mesh).material as (THREE.Material & { opacity: number; userData: { base?: number } }) | undefined;
+        if (!m || o === l.f.hit) return;
+        if (m.userData.base == null) m.userData.base = m.opacity;
+        m.transparent = true;
+        m.opacity = m.userData.base * fade;
+      });
     }
     if (leaving.some((l) => l.t >= l.dur)) {
       for (const l of leaving.filter((x) => x.t >= x.dur)) disposeFigure(l.f);
@@ -1010,6 +1019,8 @@ function setup(renderer: THREE.WebGLRenderer, canvas: HTMLCanvasElement, opts: S
       for (const f of goers) {
         if (pass && (pass.from === f || pass.to === f)) stopPassing();
         restPose(f);
+        f.anim.pop = null;
+        f.g.scale.setScalar(f.scale);
         f.ring.visible = false;
         const x = f.g.position.x;
         const toX = sideOf(x) * TOUCHLINE;
@@ -1028,6 +1039,11 @@ function setup(renderer: THREE.WebGLRenderer, canvas: HTMLCanvasElement, opts: S
           f.g.rotation.y = prev.anim.yaw;
           // a different lineup (another gameweek): glide from where he stood
           const moved = Math.abs(prev.homeX - f.homeX) > 0.05 || Math.abs(prev.homeZ - f.homeZ) > 0.05;
+          if (!moved && prev.anim.slide && !reduceMotion) {
+            // still running on (a live poll rebuilt the figures): he carries on from where he is
+            f.anim.slide = { ...prev.anim.slide };
+            f.g.position.set(prev.x, 0.05, prev.z);
+          }
           if (moved && !reduceMotion) {
             f.anim.slide = { fromX: prev.x, fromZ: prev.z, t: 0, dur: 0.8 };
             f.g.position.set(prev.x, 0.05, prev.z);
